@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 
+  map.from_plugin :loginui
+
   map.resources :grids
   # map.root :controller => "welcome"
 
