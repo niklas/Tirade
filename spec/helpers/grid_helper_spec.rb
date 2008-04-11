@@ -13,10 +13,10 @@ describe GridHelper, ' a single Grid' do
   before(:each) do
     @grid = Grid.new_by_grid_class('yui-g')
   end
-  it "should render it in a YUI div" do
+  it "should render it in a _single_ YUI div" do
     markup = render_grid(@grid)
     markup.should_not be_empty
-    markup.should have_tag('div.yui-g')
+    markup.should have_tag('div.yui-u')
   end
 end
 

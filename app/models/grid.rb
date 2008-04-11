@@ -36,4 +36,21 @@ class Grid < ActiveRecord::Base
     child_grid.move_to_child_of self
     child_grid
   end
+
+  # A wrapper to return the proper YUI class depending on +self+'s position
+  # in the hierarchy
+  def grid_classes
+    classes = []
+    if self.children.empty?
+      classes << 'yui-u'
+    else
+      classes << grid_class
+    end
+    classes << 'first' if self.is_first_child?
+    classes.join(' ')
+  end
+
+  def is_first_child?
+    self == self.parent.andand.children.andand.first
+  end
 end
