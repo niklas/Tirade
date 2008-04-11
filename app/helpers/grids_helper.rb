@@ -1,4 +1,4 @@
-module GridHelper
+module GridsHelper
   # Renders the given grid and all its containing grids (and later parts)
   # warning: recursive
   def render_grid(grid,opts = {})

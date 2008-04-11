@@ -1,16 +1,20 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe GridController do
+describe GridsController do
 
   #Delete these examples and add some real ones
-  it "should use GridController" do
-    controller.should be_an_instance_of(GridController)
+  it "should use GridsController" do
+    controller.should be_an_instance_of(GridsController)
   end
 
 
   describe "GET 'show'" do
+    before(:each) do
+      @grid = Grid.new
+      Grid.stub!(:find).and_return(@grid)
+    end
     it "should be successful" do
-      get 'show'
+      get 'show', :id => 1
       response.should be_success
     end
   end
