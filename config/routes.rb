@@ -3,6 +3,8 @@ ActionController::Routing::Routes.draw do |map|
   map.from_plugin :loginui
 
   map.resources :grids
+
+  map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
   # map.root :controller => "welcome"
 
 
