@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 1
+#
+# Table name: grids
+#
+#  id         :integer         not null, primary key
+#  parent_id  :integer         
+#  lft        :integer         
+#  rgt        :integer         
+#  grid_class :string(255)     
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class Grid < ActiveRecord::Base
   Types = {
     'yui-g'  =>   '1/2 - 1/2',
