@@ -13,4 +13,6 @@ describe Grid do
     @grid.grid_class = Grid::Types.keys.first
     @grid.should be_valid
   end
+
 end
+
