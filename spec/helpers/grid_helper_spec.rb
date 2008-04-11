@@ -45,4 +45,18 @@ describe GridHelper, ' a 50/50 Grid with both children' do
       with_tag('div.yui-u.first + div.yui-u')
     end
   end
+
+  describe 'and if we change it to a 1/3 - 2/3' do
+    before(:each) do
+      @grid.grid_class = 'yui-gc'
+    end
+    it "should render it accordingly" do
+      markup = render_grid(@grid)
+      markup.should_not be_empty
+      markup.should have_tag('div.yui-gc') do
+        with_tag('div.yui-u.first')
+        with_tag('div.yui-u.first + div.yui-u')
+      end
+    end
+  end
 end
