@@ -20,4 +20,13 @@ class User < ActiveRecord::Base
   def username_field
     'name'
   end
+
+  # permission stuff, hobo like
+  # now it is just a stub
+  def may?(*args)
+    true
+  end
+  def is_admin?
+    true
+  end
 end
