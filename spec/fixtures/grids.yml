@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  parent_id: 1
+  lft: 1
+  rgt: 1
+  grid_class: MyString
+
+two:
+  parent_id: 1
+  lft: 1
+  rgt: 1
+  grid_class: MyString
