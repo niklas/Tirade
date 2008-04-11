@@ -13,6 +13,7 @@
 #
 
 class Grid < ActiveRecord::Base
+  acts_as_nested_set 
   Types = {
     'yui-g'  =>   '1/2 - 1/2',
     'yui-gb' =>	'1/3 - 1/3 - 1/3',
@@ -21,4 +22,5 @@ class Grid < ActiveRecord::Base
     'yui-ge' =>	'3/4 - 1/4',
     'yui-gf' =>	'1/4 - 3/4'
   }
+  validates_inclusion_of :grid_class, :in => Types
 end
