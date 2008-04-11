@@ -1,0 +1,9 @@
+/* please include this only in the admin section */
+
+
+div {
+.yui-g, .yui-gb, .yui-gc, .yui-gd, .yui-ge, .yui-gf, .yui-u {
+  :hover {
+    outline: thin solid #334433;
+  }
+}
