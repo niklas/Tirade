@@ -40,8 +40,9 @@ describe GridHelper, ' a 50/50 Grid with both children' do
   it "should render the outer Grid with both children in it" do
     markup = render_grid(@grid)
     markup.should_not be_empty
-    markup.should have_tag('div.yui-g')
-    markup.should have_tag('div.yui-g > div.yui-u')
-    markup.should have_tag('div.yui-g > div.yui-u + div.yui-u')
+    markup.should have_tag('div.yui-g') do
+      with_tag('div.yui-u.first')
+      with_tag('div.yui-u.first + div.yui-u')
+    end
   end
 end
