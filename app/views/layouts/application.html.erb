@@ -2,8 +2,9 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-	<title>Tirade without title (application layout)</title>
+  <title>Tirade without title (application layout)</title>
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css">
+  <%= stylesheet_link_tag('admin') if current_user.is_admin? %>
 </head>
 <body>
   <%= yield %>
