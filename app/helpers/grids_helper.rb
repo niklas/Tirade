@@ -5,7 +5,7 @@ module GridsHelper
     if grid.children.empty?
       inner = h(grid.to_s)
     else
-      inner = grid.children.collect do |child| 
+      inner = grid.visible_children.collect do |child| 
         render_grid(child)
       end.join(' ')
     end
