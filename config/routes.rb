@@ -2,7 +2,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.from_plugin :loginui
 
-  map.resources :grids
+  map.resources :grids,
+    :member => {:create_child => :post}
 
   map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.javascripts 'javascripts/:action.:format', :controller => 'javascripts'
