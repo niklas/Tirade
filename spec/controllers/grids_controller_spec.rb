@@ -10,6 +10,7 @@ describe GridsController do
 
   describe "GET 'show'" do
     before(:each) do
+      GridsController.no_authentication_required
       @grid = Grid.new
       Grid.stub!(:find).and_return(@grid)
     end
