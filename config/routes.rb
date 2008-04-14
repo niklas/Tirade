@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :grids
 
   map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
+  map.javascripts 'javascripts/:action.:format', :controller => 'javascripts'
   # map.root :controller => "welcome"
 
 
