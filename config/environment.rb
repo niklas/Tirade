@@ -61,3 +61,4 @@ end
 
 gem 'andand'
 require 'andand'
+require 'monkey_patches'
