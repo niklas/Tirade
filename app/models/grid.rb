@@ -23,7 +23,6 @@ class Grid < ActiveRecord::Base
     'yui-gd' =>	'1/3 - 2/3',
     'yui-ge' =>	'3/4 - 1/4',
     'yui-gf' =>	'1/4 - 3/4',
-    'single'  =>  '100%',
     'yui-u'  =>   'empty'
   }
   IdealChildrenCount = {
@@ -33,7 +32,6 @@ class Grid < ActiveRecord::Base
     'yui-gd' =>	2,
     'yui-ge' =>	2,
     'yui-gf' =>	2,
-    'single' =>	1,
     'yui-u'  =>   0
   }
   validates_inclusion_of :grid_class, :in => Types
@@ -64,21 +62,18 @@ class Grid < ActiveRecord::Base
   end
 
   def ideal_children_count
-    IdealChildrenCount[self.grid_class] || 0
+    IdealChildrenCount[self.grid_class] || 2
   end
 
   # A wrapper to return the proper YUI class depending on +self+'s position
   # in the hierarchy
   def grid_classes
     classes = []
-    if self.children.empty?
-      classes << 'yui-u'
-    else
-      classes << grid_class
-    end
+    classes << 'yui-u'
+    classes << grid_class
     classes << 'first' if self.is_first_child?
     classes << 'grid'
-    classes.join(' ')
+    classes.uniq.join(' ')
   end
 
   def is_first_child?

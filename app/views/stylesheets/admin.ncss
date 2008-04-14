@@ -1,9 +1,26 @@
 /* please include this only in the admin section */
 
 
-div {
-.yui-g, .yui-gb, .yui-gc, .yui-gd, .yui-ge, .yui-gf, .yui-u {
-  :hover {
-    outline: thin solid #334433;
+div.grid {
+  background-color: #ffffff;
+  div.grid {
+    background-color: #eeeeee;
+    div.grid {
+      background-color: #dddddd;
+      div.grid {
+        background-color: #cccccc;
+      }
+    }
+  }
+  div.admin {
+    background-color: #111111;
+    color: #aaddaa;
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+  :hover > div.admin {
+    background-color: #334433;
   }
 }
