@@ -13,6 +13,8 @@
 #
 
 class Grid < ActiveRecord::Base
+  attr_protected :id, :created_at, :updated_at
+
   acts_as_nested_set 
   Types = {
     'yui-g'  =>   '1/2 - 1/2',

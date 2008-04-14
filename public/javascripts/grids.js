@@ -3,7 +3,7 @@ GridEditable = Behavior.create({
     var me = this.element;
     new Insertion.Top(this.element, 
       $div(
-        {class: 'admin'},
+        {class: 'admin', id: 'admin_'+this.element.id},
         [ 
           $a({href: edit_grid_url({id: this._numeric_id(this)})},'edit')
         ]

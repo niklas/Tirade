@@ -1,0 +1,2 @@
+grid = 'admin_'+ dom_id(@grid)
+page[grid].replace_html :partial => 'form'

@@ -1,0 +1,5 @@
+<% update_grid(@grid) do |f| %>
+  <%= f.select :grid_class, Grid::Types.invert %>
+  <%= show_grid(@grid, :label => 'cancel') %>
+  <%= submit_tag _('OK') %>
+<% end %>
