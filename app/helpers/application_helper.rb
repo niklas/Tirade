@@ -6,4 +6,8 @@ module ApplicationHelper
   def _(phrase)
     phrase
   end
+
+  def user_roles_classes
+    current_user.andand.roles_names.collect {|r| "role_#{r}"}.join(' ') || ''
+  end
 end

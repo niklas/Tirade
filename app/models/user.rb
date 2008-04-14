@@ -29,4 +29,9 @@ class User < ActiveRecord::Base
   def is_admin?
     true
   end
+
+  # The names of all roles the User has
+  def roles_names
+    %w(admin)
+  end
 end
