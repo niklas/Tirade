@@ -47,6 +47,7 @@ class Grid < ActiveRecord::Base
       classes << grid_class
     end
     classes << 'first' if self.is_first_child?
+    classes << 'grid'
     classes.join(' ')
   end
 

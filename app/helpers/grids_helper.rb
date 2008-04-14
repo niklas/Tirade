@@ -11,9 +11,8 @@ module GridsHelper
     end
     content_tag(
       :div, 
-      (current_user.andand.may?(:grid,:edit) ? link_to(_('edit'), edit_grid_path(grid)) : '') + 
       inner, 
-      {:class => grid.grid_classes}
+      {:class => grid.grid_classes, :id => dom_id(grid)}
     )
   end
 end
