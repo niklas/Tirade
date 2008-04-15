@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%=h @part.name %>
+</p>
+
+<p>
+  <b>Filename:</b>
+  <%=h @part.filename %>
+</p>
+
+<p>
+  <b>Options:</b>
+  <%=h @part.options %>
+</p>
+
+<p>
+  <b>Preferred types:</b>
+  <%=h @part.preferred_types %>
+</p>
+
+
+<%= link_to 'Edit', edit_part_path(@part) %> |
+<%= link_to 'Back', parts_path %>

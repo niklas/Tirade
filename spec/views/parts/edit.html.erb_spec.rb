@@ -1,0 +1,27 @@
+require File.dirname(__FILE__) + '/../../spec_helper'
+
+describe "/parts/edit.html.erb" do
+  include PartsHelper
+  
+  before do
+    @part = mock_model(Part)
+    @part.stub!(:name).and_return("MyString")
+    @part.stub!(:filename).and_return("MyString")
+    @part.stub!(:options).and_return("MyText")
+    @part.stub!(:preferred_types).and_return("MyText")
+    assigns[:part] = @part
+  end
+
+  it "should render edit form" do
+    render "/parts/edit.html.erb"
+    
+    response.should have_tag("form[action=#{part_path(@part)}][method=post]") do
+      with_tag('input#part_name[name=?]', "part[name]")
+      with_tag('input#part_filename[name=?]', "part[filename]")
+      with_tag('textarea#part_options[name=?]', "part[options]")
+      with_tag('textarea#part_preferred_types[name=?]', "part[preferred_types]")
+    end
+  end
+end
+
+
