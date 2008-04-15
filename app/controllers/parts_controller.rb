@@ -87,14 +87,26 @@ class PartsController < ApplicationController
   def preview
     @part = Part.find(params[:id])
     @part.attributes = params[:part]
+    @content = Struct.new(:title).new
+    @content.title = 'some Title'
     respond_to do |wants|
       wants.js do
         render :update do |page|
           if @part.valid?
-            page[:preview].replace_html :inline => @part.rhtml
+            preview =
+              begin
+                locals = {}
+                locals[@part.filename.to_sym] = @content
+                locals.merge! @part.options
+                render :inline => @part.rhtml, :locals => locals
+              rescue Exception => e
+                debug(e)
+              end
+            page[:preview].replace_html preview
           else
             page[:preview].replace_html error_messages_for(:part)
           end
+          page[:preview].visual_effect :highlight
         end
       end
     end
