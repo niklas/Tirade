@@ -36,16 +36,21 @@ class Grid < ActiveRecord::Base
   }
   validates_inclusion_of :grid_class, :in => Types
 
+  def before_destroy
+    children.each(&:destroy)
+  end
+
   def after_destroy
     parent.andand.save
   end
 
-  def before_save
-    auto_yui_class!
-  end
-
   def self.new_by_grid_class(grid_class)
     new(:grid_class => grid_class)
+  end
+
+  def grid_class=(new_class)
+    write_attribute(:grid_class,new_class)
+    auto_create_missing_children
   end
 
   def add_child(child_grid=nil)
@@ -80,15 +85,10 @@ class Grid < ActiveRecord::Base
     self == self.parent.andand.children.andand.first
   end
 
-  def auto_yui_class!
-    if ideal_children_count != children.size && new_class = self.auto_yui_class
-      self.grid_class = new_class
-    end
-  end
-
   protected
-  def auto_yui_class
-    actual_count = self.children.length
-    IdealChildrenCount.sort.find {|name,count| count == actual_count}.andand.first
+  def auto_create_missing_children
+    while children.length < ideal_children_count
+      add_child
+    end
   end
 end
