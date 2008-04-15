@@ -10,12 +10,19 @@
 
 <p>
   <b>Options:</b>
-  <%=h @part.options %>
+  <%=debug @part.options %>
 </p>
 
 <p>
   <b>Preferred types:</b>
-  <%=h @part.preferred_types %>
+  <%=h @part.preferred_types.join(', ') %>
+</p>
+
+<p>
+  <b>rHTML</b><br />
+  <pre>
+    <%=h @part.rhtml %>
+  </pre>
 </p>
 
 

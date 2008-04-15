@@ -1,0 +1,23 @@
+<%= error_messages_for :part %>
+
+<% form_for(@part) do |f| %>
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Filename</b><br />
+    <%= f.text_field :filename %>
+  </p>
+
+  <p>
+    <b>rHTML</b><br />
+    <%= f.text_area :rhtml %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
