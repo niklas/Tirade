@@ -1,4 +1,5 @@
 class PartsController < ApplicationController
+  protect_from_forgery :except => [:preview]
   # GET /parts
   # GET /parts.xml
   def index
@@ -80,6 +81,22 @@ class PartsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(parts_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def preview
+    @part = Part.find(params[:id])
+    @part.attributes = params[:part]
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          if @part.valid?
+            page[:preview].replace_html :inline => @part.rhtml
+          else
+            page[:preview].replace_html error_messages_for(:part)
+          end
+        end
+      end
     end
   end
 end

@@ -1,0 +1,22 @@
+<p>
+  <b>Name</b><br />
+  <%= fields.text_field :name %>
+</p>
+
+<p>
+  <b>Filename</b><br />
+  <%= fields.text_field :filename %>
+</p>
+
+<p>
+  <b>rHTML</b><br />
+  <%= fields.text_area :rhtml %>
+  <div id='preview'>
+    You will see a preview later
+  </div>
+</p>
+
+<p>
+  <%= fields.submit "Update" %>
+</p>
+

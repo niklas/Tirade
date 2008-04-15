@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :parts
+  map.resources :parts,
+    :member => {:preview => :put}
 
 
   map.from_plugin :loginui

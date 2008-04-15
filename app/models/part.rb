@@ -16,7 +16,7 @@
 # A Part is a representation of a rails partial
 #
 # It has a partial file attached to it and will be rendered in a Grid, using a Content.
-# It can take options to modify its apperance, which are passed as :locals
+# It can take options to modify its apperance, which are passed as :locals (this should be overridable from Rendering)
 class Part < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -27,7 +27,10 @@ class Part < ActiveRecord::Base
   serialize :options, Hash
   serialize :preferred_types, Array
 
-  BasePath = File.join(RAILS_ROOT,'app','views','parts','stock')
+  attr_accessible :name, :filename, :options, :preferred_types, :rhtml
+
+  PartsDir = 'stock'
+  BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
 
   def after_save
     save_rhtml!
@@ -53,6 +56,10 @@ class Part < ActiveRecord::Base
 
   def fullpath
     File.join(BasePath,filename_with_extention)
+  end
+
+  def partial_name
+    File.join(PartsDir,filename)
   end
 
   def filename_with_extention

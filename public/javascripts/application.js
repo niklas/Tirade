@@ -1,2 +1,5 @@
-// Place your application-specific JavaScript functions and classes here
-// This file is automatically included by javascript_include_tag :defaults
+function previewPart(element,value) {
+  new Ajax.Request(preview_part_url({id: 2}), 
+        {asynchronous:true, evalScripts:true, parameters:value});
+}
+

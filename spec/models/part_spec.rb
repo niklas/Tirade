@@ -20,7 +20,10 @@ describe Part do
     it "should have correct filename with extention" do
       @part.filename_with_extention.should == 'general_preview.html.erb'
     end
-    it "should habe correct fullpath" do
+    it "should habe correct partial_name" do
+      @part.partial_name.should == 'stock/general_preview'
+    end
+    it "should have correct fullpath" do
       @part.fullpath.should match(%r~app/views/parts/stock/general_preview.html.erb~)
     end
     it "should write its rhtml to a file" do
