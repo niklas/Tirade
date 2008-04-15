@@ -33,6 +33,14 @@ class Part < ActiveRecord::Base
     save_rhtml!
   end
 
+  def options
+    read_attribute(:options) || {}
+  end
+
+  def preferred_types
+    read_attribute(:preferred_types) || []
+  end
+
   def rhtml
      @rhtml ||= File.read(fullpath)
   rescue
@@ -54,7 +62,7 @@ class Part < ActiveRecord::Base
   private
   def save_rhtml!
     File.open(fullpath,'w') do |file|
-      file.puts new_rhtml
+      file.puts @rhtml
     end
   end
 end

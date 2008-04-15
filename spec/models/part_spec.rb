@@ -23,6 +23,11 @@ describe Part do
     it "should habe correct fullpath" do
       @part.fullpath.should match(%r~app/views/parts/stock/general_preview.html.erb~)
     end
+    it "should write its rhtml to a file" do
+      File.stub!(:open).with(any_args()).and_return(true)
+      File.should_receive(:open).with(@part.fullpath,'w')
+      @part.save
+    end
   end
 
   describe ', setting a name and filename with spaces' do
