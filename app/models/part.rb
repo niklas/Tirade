@@ -96,7 +96,7 @@ class Part < ActiveRecord::Base
   def save_rhtml!
     return if rhtml.blank?
     File.open(fullpath,'w') do |file|
-      file.puts rhtml
+      file.puts rhtml.gsub(/\r/,'')
     end
   end
 
