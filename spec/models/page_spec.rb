@@ -56,4 +56,22 @@ describe "The Pages in the fixtures" do
     end
   end
 
+  describe ", the page about Huge Brutal Hammers" do
+    before(:each) do
+      @page = pages(:hammers)
+    end
+    it "should have a special layout" do
+      @page.layout.id.should == grids(:layout33_33_33).id
+    end
+    it "should have its own final layout" do
+      @page.final_layout.id.should == @page.layout.id
+    end
+    it "should know all its ancestors" do
+      ancestors = @page.ancestors
+      ancestors.should include( pages(:main) )
+      ancestors.should include( pages(:portal) )
+      ancestors.should include( pages(:children_section) )
+    end
+  end
 end
+
