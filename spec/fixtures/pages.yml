@@ -1,0 +1,42 @@
+main:
+  id: 42000
+  title: Public_Root
+  url: ""
+  parent_id: nil
+  layout: layout50_50
+
+welcome:
+  id: 11
+  title: Welcome
+  url: 'welcome'
+  parent_id: 42000 # main
+ 
+meta:
+  id: 12
+  title: Meta
+  url: 'meta'
+  parent_id: 42000 # main
+
+about:
+  id: 121
+  title: About
+  url: 'meta/about'
+  parent_id: 12 # meta
+
+portal:
+  id: 13
+  title: Portal
+  url: 'portal'
+  parent_id: 42000 # main
+
+children_section:
+  id: 131
+  title: Children Section
+  url: 'portal/children-section'
+  parent_id: 13 # portal
+
+hammers:
+  id: 1311
+  title: Huge Brutal Hammers
+  url: 'portal/children-section/huge-brutal-hammers'
+  parent_id: 131

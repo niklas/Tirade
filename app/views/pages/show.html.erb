@@ -1,0 +1,33 @@
+<p>
+  <b>Title:</b>
+  <%=h @page.title %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @page.url %>
+</p>
+
+<p>
+  <b>Parent:</b>
+  <%=h @page.parent_id %>
+</p>
+
+<p>
+  <b>Lft:</b>
+  <%=h @page.lft %>
+</p>
+
+<p>
+  <b>Rgt:</b>
+  <%=h @page.rgt %>
+</p>
+
+<p>
+  <b>Layout:</b>
+  <%=h @page.layout_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_page_path(@page) %> |
+<%= link_to 'Back', pages_path %>
