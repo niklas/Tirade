@@ -20,6 +20,8 @@
 class Part < ActiveRecord::Base
   BlacklistesFileNames = %w(
     exit
+    filename
+    name
   )
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -33,8 +35,12 @@ class Part < ActiveRecord::Base
 
   attr_accessible :name, :filename, :options, :preferred_types, :rhtml
 
+  attr_accessor :template_binding
+
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
+
+  SaveLevel = 3
 
   def self.recognize_new_files
     pattern = File.join(BasePath,'*.html.erb')
@@ -60,6 +66,21 @@ class Part < ActiveRecord::Base
   def after_destroy
     File.delete fullpath
   rescue
+  end
+
+  def validate
+    if @template_binding
+      eval %Q[@content = FakeContent.new], @template_binding
+      begin
+        render(@template_binding)
+      rescue SecurityError => e
+        errors.add(:rhtml, 'does something illegal: ' + e.message)
+      rescue Exception => e
+        errors.add(:rhtml, 'is not renderable: ' + e.message)
+      end
+    else
+      errors.add(:rhtml, 'cannot find binding. Please hit some developers.')
+    end
   end
 
   def options
@@ -92,6 +113,14 @@ class Part < ActiveRecord::Base
     filename.match(/\.html\.erb$/) ? filename : (filename + '.html.erb')
   end
 
+  # renders the part in the given binding
+  # you must set @content to use it as a local variable named like the part
+  def render(bind,opts={})
+    eval %Q[#{filename} = @content], bind
+    erb = ERB.new(rhtml, SaveLevel)
+    erb.result(bind)
+  end
+
   private
   def save_rhtml!
     return if rhtml.blank?
@@ -102,5 +131,11 @@ class Part < ActiveRecord::Base
 
   def name_by_filename
     filename.titleize
+  end
+end
+
+class FakeContent
+  def method_missing(*args,&block)
+    "This is a fake #{args.first}"
   end
 end
