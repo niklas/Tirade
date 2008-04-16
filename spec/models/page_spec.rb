@@ -1,23 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Page do
-  before(:each) do
-    @page = Page.new
-  end
-
-  it "should not be valid" do
-    @page.should_not be_valid
-  end
-end
-
 describe "A Page with a title" do
   before(:each) do
     @page = Page.new(
       :title => "A Simple Page"
     )
-  end
-  it "should be valid" do
-    @page.should be_valid
   end
 
   it "should be able to call its parent" do
@@ -31,11 +18,18 @@ describe "The Pages in the fixtures" do
   fixtures :pages, :grids
 
   before(:each) do
+    Page.rebuild!
     @pages = Page.find(:all)
   end
 
   it "should be there" do
     @pages.should_not be_empty
+  end
+
+  it "should be valid" do
+    @pages.each do |page|
+      page.should be_valid
+    end
   end
 
   it "should have an url" do
@@ -47,6 +41,12 @@ describe "The Pages in the fixtures" do
   it "should be findable by its url" do
     @pages.each do |page|
       Page.find_by_url(page.url).id.should == page.id
+    end
+  end
+
+  it "should generate the correct url" do
+    @pages.each do |page|
+      page.generated_url.should == page.url
     end
   end
 
