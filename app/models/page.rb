@@ -25,6 +25,12 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :parent_id
   validates_uniqueness_of :url
 
+  BlacklistesTitles = %w(admin)
+
+  def validate
+    errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
+  end
+
   def before_validation
     unless self.class.rebuilding?
       self.url = generated_url 
