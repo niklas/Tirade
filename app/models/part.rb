@@ -83,8 +83,6 @@ class Part < ActiveRecord::Base
       rescue Exception => e
         errors.add(:rhtml, 'is not renderable: ' + e.message)
       end
-    else
-      errors.add(:rhtml, 'cannot find binding. Please hit some developers.')
     end
   end
 
