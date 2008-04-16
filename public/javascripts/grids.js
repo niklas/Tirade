@@ -5,11 +5,12 @@ GridEditable = Behavior.create({
       $div(
         {class: 'admin', id: 'admin_'+this.element.id},
         [ 
-          $a({href: edit_grid_url({id: this._numeric_id(this)})},'edit')
+          $a({href: edit_grid_url({id: numeric_id_for(this.element)})},'edit')
         ]
       )
     );
   },
+  // FIXME make use of this and export to a super class
   _numeric_id: function(me) {
     return(me.element.id.match(/(\d+)$/).first());
   }
