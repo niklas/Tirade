@@ -1,3 +1,19 @@
+# == Schema Information
+# Schema version: 4
+#
+# Table name: pages
+#
+#  id         :integer         not null, primary key
+#  title      :string(255)     
+#  url        :string(255)     
+#  parent_id  :integer         
+#  lft        :integer         
+#  rgt        :integer         
+#  layout_id  :integer         
+#  created_at :datetime        
+#  updated_at :datetime        
+#
+
 class Page < ActiveRecord::Base
   acts_as_nested_set
 
