@@ -32,7 +32,7 @@ class Page < ActiveRecord::Base
   end
 
   def final_layout
-    layout || parent.andand.layout
+    layout || parent.andand.final_layout
   end
 
   def generated_url

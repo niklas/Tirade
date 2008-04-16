@@ -50,4 +50,10 @@ describe "The Pages in the fixtures" do
     end
   end
 
+  it "should have a final_layout" do
+    @pages.each do |page|
+      page.final_layout.should_not be_nil
+    end
+  end
+
 end
