@@ -168,6 +168,7 @@ describe "A Part with evil erb in it" do
   end
 
   it "should raise an security error on rendering" do
+    $SAFE = 3 # this is actually set in @part.render, but the specs don't like it on the :all run
     lambda { @part.render(binding).should }.should raise_error(SecurityError)
   end
 end
