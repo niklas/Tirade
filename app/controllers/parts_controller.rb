@@ -84,21 +84,28 @@ class PartsController < ApplicationController
     end
   end
 
+  # TODO
+  # wrap all that in a db transaction, so no one can enter User.find(:first).destroy here
+  # .. they can save it and do it later... gmm
   def preview
     @part = Part.find(params[:id])
     @part.attributes = params[:part]
-    @content = Struct.new(:title).new
+    @content = Struct.new(:title, :body).new
     @content.title = 'some Title'
+    @content.body = 'I want a Lollipop, Lollipop, Lollipop. It is so sweet!'
     respond_to do |wants|
       wants.js do
         render :update do |page|
           if @part.valid?
             preview =
               begin
-                locals = {}
-                locals[@part.filename.to_sym] = @content
-                locals.merge! @part.options
-                render :inline => @part.rhtml, :locals => locals
+                #locals = {}
+                #locals[.to_sym] = @content
+                #locals.merge! @part.options
+                save_level = 3
+                eval %Q[#{@part.filename} = @content]
+                erb = ERB.new(@part.rhtml,save_level)
+                erb.result(binding)
               rescue Exception => e
                 debug(e)
               end
