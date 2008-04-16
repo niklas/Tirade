@@ -17,6 +17,8 @@
 class Page < ActiveRecord::Base
   acts_as_nested_set
 
+  attr_protected :layout_id, :created_at, :updated_at
+
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
 
   validates_presence_of :title
