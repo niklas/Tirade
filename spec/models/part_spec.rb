@@ -74,6 +74,7 @@ describe "A Part with plain HTML in it" do
       :filename => 'pure_html',
       :rhtml => "<h1>Headline</h1>\n<p>Some Text</p>"
     )
+    @part.template_binding = binding
   end
   it "should be valid" do
     @part.should be_valid
@@ -84,6 +85,28 @@ describe "A Part with plain HTML in it" do
   end
 end
 
+describe "A Part with non-matching HTML-tags in it" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'Bad HTML',
+      :filename => 'bad_html',
+      :rhtml => "<h1>Headline</h1>\n<p>Some Text without closing p"
+    )
+    @part.template_binding = binding
+  end
+  it "should not be valid" do
+    @part.should_not be_valid
+  end
+
+  it "should have an error on rhtml" do
+    @part.valid?
+    @part.should have_at_least(1).errors_on(:rhtml)
+  end
+
+  it "should render to the same HTML (even if it is invalid)" do
+    @part.render(binding).should == @part.rhtml
+  end
+end
 
 describe "A Part with a bit ERB calculations in it" do
   before(:each) do
@@ -92,6 +115,7 @@ describe "A Part with a bit ERB calculations in it" do
       :filename => 'math_html',
       :rhtml => "<p><%= 4 + 8 + 15 + 16 + 23 + 42 %></p>"
     )
+    @part.template_binding = binding
   end
   it "should be valid" do
     @part.should be_valid
@@ -102,6 +126,52 @@ describe "A Part with a bit ERB calculations in it" do
   end
 end
 
+describe "A Part with malformed erb in it" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'Malformed ERB',
+      :filename => 'malformed_rhtml',
+      :rhtml => "<h1>Headline <%= 5+ %></h1>"
+    )
+    @part.template_binding = binding
+  end
+  it "should not be valid" do
+    @part.should_not be_valid
+  end
+
+  it "should have an error on rhtml" do
+    @part.valid?
+    @part.should have_at_least(1).errors_on(:rhtml)
+  end
+
+  it "should raise an error on rendering" do
+    lambda { @part.render(binding).should }.should raise_error
+  end
+end
+
+describe "A Part with evil erb in it" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'evil ERB',
+      :filename => 'evil_rhtml',
+      :rhtml => "<h1>Headline <%= User.find(1).name %></h1>"
+    )
+    @part.template_binding = binding
+  end
+  it "should not be valid" do
+    @part.should_not be_valid
+  end
+
+  it "should have an error on rhtml" do
+    @part.valid?
+    @part.should have_at_least(1).errors_on(:rhtml)
+  end
+
+  it "should raise an security error on rendering" do
+    lambda { @part.render(binding).should }.should raise_error(SecurityError)
+  end
+end
+
 describe "A Part with ERB that accesses an Object of the same name" do
   before(:each) do
     @part = Part.new(
@@ -109,6 +179,7 @@ describe "A Part with ERB that accesses an Object of the same name" do
       :filename => 'content_preview',
       :rhtml => %Q[<h1><%= content_preview.title %></h1>\n<p><%= content_preview.body %></p>]
     )
+    @part.template_binding = binding
   end
   it "should be valid" do
     @part.should be_valid
@@ -124,6 +195,7 @@ describe "A Part with ERB that accesses an Object of the same name" do
       @controller.stub!(:truncate).and_return('A not so ...')
       @controller.instance_variable_set '@content', @content
       @binding = @controller.send(:binding)
+      @part.template_binding = @binding
     end
     it "should render the attributes of the content correctly" do
       @part.render(@binding).should == %Q[<h1>My Title</h1>\n<p>A not so long Paragraph</p>]
