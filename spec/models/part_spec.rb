@@ -36,7 +36,7 @@ describe Part do
       before(:each) do
         @part.rhtml = '<p>some content</p>'
       end
-      it "should nwrite its rhtml to a file" do
+      it "should write its rhtml to a file" do
         File.stub!(:open).with(any_args()).and_return(true)
         File.should_receive(:open).with(@part.fullpath,'w')
         lambda { @part.save! }.should_not raise_error
@@ -64,4 +64,77 @@ describe Part do
     end
   end
 
+end
+
+
+describe "A Part with plain HTML in it" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'Pure HTML',
+      :filename => 'pure_html',
+      :rhtml => "<h1>Headline</h1>\n<p>Some Text</p>"
+    )
+  end
+  it "should be valid" do
+    @part.should be_valid
+  end
+
+  it "should render to the same HTML" do
+    @part.render(binding).should == @part.rhtml
+  end
+end
+
+
+describe "A Part with a bit ERB calculations in it" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'Math HTML',
+      :filename => 'math_html',
+      :rhtml => "<p><%= 4 + 8 + 15 + 16 + 23 + 42 %></p>"
+    )
+  end
+  it "should be valid" do
+    @part.should be_valid
+  end
+
+  it "should render the calculation" do
+    @part.render(binding).should == '<p>108</p>'
+  end
+end
+
+describe "A Part with ERB that accesses an Object of the same name" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'Content Preview',
+      :filename => 'content_preview',
+      :rhtml => %Q[<h1><%= content_preview.title %></h1>\n<p><%= content_preview.body %></p>]
+    )
+  end
+  it "should be valid" do
+    @part.should be_valid
+  end
+  describe "given a @content in a PartController binding" do
+    before(:each) do
+      @content = Object.new
+      @content.stub!(:title).and_return("My Title")
+      @content.stub!(:body).and_return("A not so long Paragraph")
+      @controller = PartsController.new
+      @controller.stub!(:h).with('MY TITLE').and_return("MY TITLE")
+      @controller.stub!(:h).with('A not so ...').and_return("A not so ...")
+      @controller.stub!(:truncate).and_return('A not so ...')
+      @controller.instance_variable_set '@content', @content
+      @binding = @controller.send(:binding)
+    end
+    it "should render the attributes of the content correctly" do
+      @part.render(@binding).should == %Q[<h1>My Title</h1>\n<p>A not so long Paragraph</p>]
+    end
+    describe "And if we add some helper calls to the :rhtml" do
+      before(:each) do
+        @part.rhtml = %Q[<h1><%=h content_preview.title.upcase %></h1>\n<p><%=h truncate(content_preview.body,10) %></p>]
+      end
+      it "should render this, too" do
+        @part.render(@binding).should == %Q[<h1>MY TITLE</h1>\n<p>A not so ...</p>]
+      end
+    end
+  end
 end
