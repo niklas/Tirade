@@ -14,3 +14,9 @@ module ActiveRecord
     end
   end
 end
+
+class String
+  def urlize
+    strip.gsub(/[^\w]+/,'-').sub(/-\Z/,'').downcase
+  end
+end
