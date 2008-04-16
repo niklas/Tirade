@@ -26,10 +26,21 @@ describe Part do
     it "should have correct fullpath" do
       @part.fullpath.should match(%r~app/views/parts/stock/general_preview.html.erb~)
     end
-    it "should write its rhtml to a file" do
+    it "should not write its rhtml to a file (because it is empty)" do
       File.stub!(:open).with(any_args()).and_return(true)
-      File.should_receive(:open).with(@part.fullpath,'w')
-      @part.save
+      File.should_not_receive(:open).with(@part.fullpath,'w')
+      lambda { @part.save! }.should_not raise_error
+    end
+
+    describe "but if we set some content into it" do
+      before(:each) do
+        @part.rhtml = '<p>some content</p>'
+      end
+      it "should nwrite its rhtml to a file" do
+        File.stub!(:open).with(any_args()).and_return(true)
+        File.should_receive(:open).with(@part.fullpath,'w')
+        lambda { @part.save! }.should_not raise_error
+      end
     end
   end
 
@@ -40,6 +51,15 @@ describe Part do
     end
     it "should be valid" do
       @part.should_not be_valid
+      @part.should have_at_least(1).errors_on(:filename)
+    end
+  end
+
+  describe ', setting a filename called "filename"' do
+    before(:each) do
+      @part.filename = 'filename'
+    end
+    it "should not be valid" do
       @part.should have_at_least(1).errors_on(:filename)
     end
   end

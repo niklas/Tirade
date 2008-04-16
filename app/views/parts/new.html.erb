@@ -1,5 +1,8 @@
 <h1>New part</h1>
 
-<%= render :partial => 'form' %>
+<%= error_messages_for :part %>
+<% form_for :part, @part, :url => parts_path, :method => :post do |f| %>
+  <%= render :partial => 'fields', :object => f %>
+<% end %>
 
 <%= link_to 'Back', parts_path %>

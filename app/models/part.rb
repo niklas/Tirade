@@ -146,7 +146,7 @@ class Part < ActiveRecord::Base
   end
 
   def name_by_filename
-    filename.titleize
+    filename.andand.titleize
   end
 end
 

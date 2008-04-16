@@ -8,7 +8,8 @@ describe "/parts/edit.html.erb" do
     @part.stub!(:name).and_return("MyString")
     @part.stub!(:filename).and_return("MyString")
     @part.stub!(:options).and_return("MyText")
-    @part.stub!(:preferred_types).and_return("MyText")
+    @part.stub!(:preferred_types).and_return(['Foo', 'Bar'])
+    @part.stub!(:rhtml).and_return("<p>My RHTML</p>")
     assigns[:part] = @part
   end
 
@@ -18,8 +19,8 @@ describe "/parts/edit.html.erb" do
     response.should have_tag("form[action=#{part_path(@part)}][method=post]") do
       with_tag('input#part_name[name=?]', "part[name]")
       with_tag('input#part_filename[name=?]', "part[filename]")
-      with_tag('textarea#part_options[name=?]', "part[options]")
-      with_tag('textarea#part_preferred_types[name=?]', "part[preferred_types]")
+      with_tag("textarea#part_rhtml[name=?]", "part[rhtml]")
+      with_tag("div#preview")
     end
   end
 end
