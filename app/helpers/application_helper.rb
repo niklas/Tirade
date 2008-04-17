@@ -8,6 +8,14 @@ module ApplicationHelper
   end
 
   def user_roles_classes
-    current_user.andand.roles_names.collect {|r| "role_#{r}"}.join(' ') || ''
+    unless current_user.nil?
+      current_user.roles_names.collect {|r| "role_#{r}"}.join(' ') || ''
+    end
+  end
+  
+  def flash_messages
+    [:notice, :warning, :message].map do |f|
+      content_tag(:div, flash[f], :id => 'flash', :class => "#{f.to_s}") if flash[f]
+    end.join
   end
 end

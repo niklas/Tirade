@@ -13,5 +13,6 @@
    <%= yield :head %>
 </head>
 <body class="<%= user_roles_classes -%>">
+	<%= flash_messages %>
   <%= yield %>
 </body>

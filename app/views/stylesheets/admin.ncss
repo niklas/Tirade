@@ -1,5 +1,21 @@
 /* please include this only in the admin section */
 
+div#flash {
+	margin: 5px auto;
+	text-align: center;
+	width: 40%;
+	border: 1px solid #333;
+	padding: 5px;
+	.warning {
+		background-color: #F7DAD9;
+	}
+	.message {
+		background-color: #DFFCC0;
+	}
+	.notice {
+		background-color: #FEFBCE;
+	}
+}
 
 div.grid {
   background-color: #ffffff;
