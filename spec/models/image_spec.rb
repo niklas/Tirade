@@ -8,4 +8,8 @@ describe Image do
   it "should be valid" do
     @image.should be_valid
   end
+  
+  it "should be intergrated with paperclip" do
+    @image.should respond_to :image
+  end
 end
