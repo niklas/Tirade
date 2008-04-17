@@ -1,5 +1,4 @@
 class GridsController < ApplicationController
-  authentication_required
 
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => :destroy
@@ -23,7 +22,7 @@ class GridsController < ApplicationController
   def edit
     @grid = Grid.find(params[:id])
     respond_to do |wants|
-      wants.js
+      wants.js { render :action => 'show' }
     end
   end
 

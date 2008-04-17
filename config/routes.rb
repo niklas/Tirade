@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+
   map.resources :renderings
 
   map.resources :contents
@@ -16,10 +17,12 @@ ActionController::Routing::Routes.draw do |map|
 
   map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.javascripts 'javascripts/:action.:format', :controller => 'javascripts'
-  # map.root :controller => "welcome"
+  map.root :controller => "public"
 
 
   # Install the default routes as the lowest priority.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
+
+  map.conntent '*path', :controller => 'public', :action => 'index'
 end
