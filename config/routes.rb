@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :contents
+
   map.resources :pages
 
   map.resources :parts,
