@@ -1,0 +1,28 @@
+<p>
+  <b>Page:</b>
+  <%=h @rendering.page_id %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%=h @rendering.content_id %>
+</p>
+
+<p>
+  <b>Part:</b>
+  <%=h @rendering.part_id %>
+</p>
+
+<p>
+  <b>Grid:</b>
+  <%=h @rendering.grid_id %>
+</p>
+
+<p>
+  <b>Position:</b>
+  <%=h @rendering.position %>
+</p>
+
+
+<%= link_to 'Edit', edit_rendering_path(@rendering) %> |
+<%= link_to 'Back', renderings_path %>

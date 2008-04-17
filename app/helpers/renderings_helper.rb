@@ -1,0 +1,2 @@
+module RenderingsHelper
+end

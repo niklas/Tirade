@@ -1,0 +1,37 @@
+<h1>Editing rendering</h1>
+
+<%= error_messages_for :rendering %>
+
+<% form_for(@rendering) do |f| %>
+  <p>
+    <b>Page</b><br />
+    <%= f.text_field :page_id %>
+  </p>
+
+  <p>
+    <b>Content</b><br />
+    <%= f.text_field :content_id %>
+  </p>
+
+  <p>
+    <b>Part</b><br />
+    <%= f.text_field :part_id %>
+  </p>
+
+  <p>
+    <b>Grid</b><br />
+    <%= f.text_field :grid_id %>
+  </p>
+
+  <p>
+    <b>Position</b><br />
+    <%= f.text_field :position %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @rendering %> |
+<%= link_to 'Back', renderings_path %>
