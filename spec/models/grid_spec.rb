@@ -9,14 +9,14 @@ describe Grid do
     @grid.should_not be_valid
   end
 
-  it "should be valid if we set a grid_class" do
-    @grid.grid_class = 'yui-u'
+  it "should be valid if we set a yui" do
+    @grid.yui = 'yui-u'
     @grid.should be_valid
   end
 
   describe 'after save' do
     before(:each) do
-      @grid.grid_class = Grid::Types.keys.first
+      @grid.yui = Grid::Types.keys.first
       @grid.save!
     end
     it "should have lft and rgt attributes" do
@@ -26,10 +26,10 @@ describe Grid do
 
     describe ', setting the grid_to "50-50"' do
       before(:each) do
-        @grid.update_attribute :grid_class, 'yui-g'
+        @grid.update_attribute :yui, 'yui-g'
       end
       it "should change its gridclass to '50-50'" do
-        @grid.grid_class.should == 'yui-g'
+        @grid.yui.should == 'yui-g'
       end
 
       it "should change its ideal number of children to 2" do
@@ -42,10 +42,10 @@ describe Grid do
 
       describe ', switching that to "33-66"' do
         before(:each) do
-          @grid.update_attribute :grid_class, 'yui-gd'
+          @grid.update_attribute :yui, 'yui-gd'
         end
         it "should change its gridclass to 33-66" do
-          @grid.grid_class.should == 'yui-gd'
+          @grid.yui.should == 'yui-gd'
         end
         it "should not change its ideal number of children" do
           @grid.ideal_children_count.should == 2
@@ -56,10 +56,10 @@ describe Grid do
       end
       describe ', setting the grid_to "33-33-33"' do
         before(:each) do
-          @grid.update_attribute :grid_class, 'yui-gb'
+          @grid.update_attribute :yui, 'yui-gb'
         end
         it "should change its gridclass to '33-33-33'" do
-          @grid.grid_class.should == 'yui-gb'
+          @grid.yui.should == 'yui-gb'
         end
 
         it "should change its ideal number of children to 3" do
@@ -71,10 +71,10 @@ describe Grid do
         end
         describe ', switching that to "33-66"' do
           before(:each) do
-            @grid.update_attribute :grid_class, 'yui-gd'
+            @grid.update_attribute :yui, 'yui-gd'
           end
           it "should change its gridclass to 33-66" do
-            @grid.grid_class.should == 'yui-gd'
+            @grid.yui.should == 'yui-gd'
           end
           it "should change its ideal number of children to 2" do
             @grid.ideal_children_count.should == 2
@@ -88,10 +88,10 @@ describe Grid do
 
     describe ', setting the grid_to "33-33-33"' do
       before(:each) do
-        @grid.update_attribute :grid_class, 'yui-gb'
+        @grid.update_attribute :yui, 'yui-gb'
       end
       it "should change its gridclass to '33-33-33'" do
-        @grid.grid_class.should == 'yui-gb'
+        @grid.yui.should == 'yui-gb'
       end
 
       it "should change its ideal number of children to 3" do
@@ -103,10 +103,10 @@ describe Grid do
       end
       describe ', switching that to "33-66"' do
         before(:each) do
-          @grid.update_attribute :grid_class, 'yui-gd'
+          @grid.update_attribute :yui, 'yui-gd'
         end
         it "should change its gridclass to 33-66" do
-          @grid.grid_class.should == 'yui-gd'
+          @grid.yui.should == 'yui-gd'
         end
         it "should change its ideal number of children to 2" do
           @grid.ideal_children_count.should == 2

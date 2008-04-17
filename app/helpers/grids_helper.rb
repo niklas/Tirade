@@ -12,7 +12,7 @@ module GridsHelper
     content_tag(
       :div, 
       inner, 
-      {:class => grid.grid_classes, :id => dom_id(grid)}
+      {:class => grid.yuies, :id => dom_id(grid)}
     )
   end
 end

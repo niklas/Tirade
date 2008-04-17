@@ -2,8 +2,8 @@
 
 layout50_50:
   parent_id: nil
-  grid_class: yui-g
+  yui: yui-g
 
 layout33_33_33:
   parent_id: nil
-  grid_class: yui-gc
+  yui: yui-gc

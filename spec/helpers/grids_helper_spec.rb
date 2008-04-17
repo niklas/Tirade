@@ -11,7 +11,7 @@ end
 
 describe GridsHelper, ' a single Grid' do
   before(:each) do
-    @grid = Grid.new_by_grid_class('yui-g')
+    @grid = Grid.new_by_yui('yui-g')
   end
   it "should render it in a _single_ YUI div" do
     markup = render_grid(@grid)
@@ -22,7 +22,7 @@ end
 
 describe GridsHelper, ' a 50/50 Grid with both children' do
   before(:each) do
-    @grid = Grid.new_by_grid_class('yui-g')
+    @grid = Grid.new_by_yui('yui-g')
 
     @left_grid = @grid.add_child
     @right_grid = @grid.add_child
@@ -48,7 +48,7 @@ describe GridsHelper, ' a 50/50 Grid with both children' do
 
   describe 'and if we change it to a 1/3 - 2/3' do
     before(:each) do
-      @grid.grid_class = 'yui-gc'
+      @grid.yui = 'yui-gc'
     end
     it "should render it accordingly" do
       markup = render_grid(@grid)

@@ -7,7 +7,7 @@
 #  parent_id  :integer         
 #  lft        :integer         
 #  rgt        :integer         
-#  grid_class :string(255)     
+#  yui :string(255)     
 #  created_at :datetime        
 #  updated_at :datetime        
 #
@@ -34,7 +34,7 @@ class Grid < ActiveRecord::Base
     'yui-gf' =>	2,
     'yui-u'  =>   0
   }
-  validates_inclusion_of :grid_class, :in => Types
+  validates_inclusion_of :yui, :in => Types
 
   def before_destroy
     children.each(&:destroy)
@@ -44,18 +44,18 @@ class Grid < ActiveRecord::Base
     parent.andand.save
   end
 
-  def self.new_by_grid_class(grid_class)
-    new(:grid_class => grid_class)
+  def self.new_by_yui(grid_class)
+    new(:yui => grid_class)
   end
 
-  def grid_class=(new_class)
-    write_attribute(:grid_class,new_class)
+  def yui=(new_class)
+    write_attribute(:yui,new_class)
     auto_create_missing_children
   end
 
   def add_child(child_grid=nil)
     self.save! if new_record?
-    child_grid ||= self.class.new_by_grid_class('yui-u')
+    child_grid ||= self.class.new_by_yui('yui-u')
     child_grid.save!
     child_grid.move_to_child_of self
     self.save!
@@ -67,15 +67,15 @@ class Grid < ActiveRecord::Base
   end
 
   def ideal_children_count
-    IdealChildrenCount[self.grid_class] || 2
+    IdealChildrenCount[self.yui] || 2
   end
 
   # A wrapper to return the proper YUI class depending on +self+'s position
   # in the hierarchy
-  def grid_classes
+  def yuies
     classes = []
     classes << 'yui-u'
-    classes << grid_class
+    classes << yui
     classes << 'first' if self.is_first_child?
     classes << 'grid'
     classes.uniq.join(' ')
