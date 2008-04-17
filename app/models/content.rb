@@ -20,4 +20,9 @@
 #
 
 class Content < ActiveRecord::Base
+  acts_as_nested_set
+
+  attr_protected :type, :state, :owner_id, :owner, :published_at, :created_at, :updated_at
+
+  belongs_to :owner, :class_name => User, :foreign_key => 'owner_id'
 end
