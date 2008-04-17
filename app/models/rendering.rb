@@ -14,4 +14,12 @@
 #
 
 class Rendering < ActiveRecord::Base
+  attr_accessible :position
+  validates_presence_of :grid_id
+  validates_presence_of :page_id
+
+  belongs_to :page
+  belongs_to :grid
+  belongs_to :content
+  belongs_to :part
 end
