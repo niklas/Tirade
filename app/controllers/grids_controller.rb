@@ -22,7 +22,7 @@ class GridsController < ApplicationController
   def edit
     @grid = Grid.find(params[:id])
     respond_to do |wants|
-      wants.js { render :action => 'show' }
+      wants.js
     end
   end
 
