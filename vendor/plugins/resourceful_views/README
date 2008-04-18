@@ -1,0 +1,141 @@
+= ResourcefulViews 0.1
+
+ResourcefulViews (RV) extends the Rails 'resources' method to install a set of helpers, one for each CRUD action, for rendering consistently classed links and forms.
+
+== Why?
+
+Rails, being it's opinionated self, has strong RESTful conventions for mapping HTTP request URL/method pairs to controllers/CRUD methods. In comparison, Rails appears to have view opinions about how views should be written, let alone CSS sheets or JavaScripts. I think this is some wasted RESTful momentum worth recouping, and ResourcefulViews is here to recoup it.
+
+== How?
+
+For every resource defined in routes.rb via 'resources' or 'resource', RV defines seven helper methods (plus some extras). For each of the seven 'CRUD' actions one helper is installed that:
+
+* is named '[CRUD action name]_[resource name prefix][resource name]' ('create_table', 'destroy_table_leg', 'new_table_top', etc.)
+* renders either a link or a form, that, when clicked/submitted, will send an HTTP request that gets routed to that CRUD action on the resource's controller
+* equips the link/form with a set of standard class attributes containing the resource name, the CRUD action name, plus the two joined with '_' to help IE ('create table create_table')
+
+== Basic example:
+
+Say you have an app for furnishing your dream aparmtment, with a 'tables' resource. With ResourcefulViews installed, 'map.resources :tables' will not only install the standard named route helpers, but also the following ones:
+
+  index_tables, new_table, create_table, show_table, edit_table, update_table, destroy_table
+
+Now let's look at a vertical slice through an application, with the deletion of a 'table' resource as an example:
+
+==== Routes
+
+  map.resources :tables
+
+==== Controller
+
+  class TablesController < ActiveRecord::Base
+    def  destroy
+      @table = Table.find(params[:table])
+    end
+  end
+  
+==== View
+
+So far so familar. However, here is where Rails drops the ball. With RV, however, you can use:
+
+  <% destroy_table(@table) %>
+  
+  # will render:
+  <form action="/tables/1" method="post" class="destroy table destroy_table">
+    <input type="hidden" name="_method" value="delete" />
+    <button type="submit">Delete</button>
+  </form>
+  
+Note the auto-generated class names, allowing you to use 'resourceful' naming conventions beyond the view, for example in CSS sheets and JavaScript scripts:
+  
+==== CSS
+  
+  form.destroy_table button { background-image: url(/images/buttons/remove.png) }
+  
+==== JavaScript
+  
+  # LowPro behavior:
+  Event.addBehavior({
+    'form.destroy': ConfirmDestroyResource()
+  });
+
+
+Nice and consistent, isn't it? Plus you will save a line or two of code:
+
+  <% create_table(:type => 'DiningTable') %>
+  
+  # will render:
+  <form action="/tables" method="post" class="create table create_table">
+    <input type="text" name="table[type]" value="DiningTable" />
+    <button type="submit">Add</button>
+  </form>
+  
+  <% update_table(@table) do |f| %>
+    <%= f.text_field :title %>
+    <%= submit_button 'Save' %>
+  <% end %>
+  
+  # will render:
+  <form action="/tables/1" method="post" class="update invitation update_invitation">
+    <input type="text" name="tables[title]" value="My current table title" />
+    <button type="submit">Save</button>
+  </form>
+  
+These are just a few examples. For more information about the installed helpers and how to use them, please run rake doc:plugins and look into the RDoc documentation for the various 'build_..._helper' methods.
+
+== How about nested views?
+
+Not a problem. In fact, here is where it gets interesting:
+
+  <% edit_table_top(@table) %>
+  
+== Common options
+
+All helpers have a default value for button/link labels that can be overridden with the :label option:
+
+  <%= show_table(@table, :label => 'Details') %>
+  
+The hope is that the auto-generated class names will provide designers and scripters with a rich 'resourceful' vocabulary that will enable them to target the majority of DOM elements, without the need to come up with custom (potentially semantically meaningless) class names. However, if you absolutely need additional class names they can be specified using the :class option:
+
+  <%= index_tables(:class => 'dining') %>
+  
+  # will render:
+  <a href="/tables" class="index tables index_tables dining dining_tables">Index</a>
+  
+You can set a 'title' attribute on the link for link helpers and on the submit button for (block-less) form helpers with the :title option:
+
+  <%= delete_table(table, :title => 'Click to remove') %>
+  
+  # will render:
+  <form action="/tables/1" method="post" class="destroy table destroy_table">
+    <input type="hidden" name="_method" value="delete" />
+    <button type="submit" title="Click to remove">Delete</button>
+  </form>
+  
+Any additional options will be passed on to the underlying named route helpers in link helpers:
+
+  <%= index_tables(:my_param => 'my_value') %>
+  
+  # will render:
+  <a href="/tables?my_param=my_value" class="index table index_table vintage vintage_table">Index</a>
+
+== Tests
+
+ResourcefulViews comes with en extensive rspec test suite: rake spec:plugins PLUGIN=ResourcefulViews
+
+== Plans
+  
+ResourcefulViews 0.1 is an experimental release. Obviously I think this pattern has promise, but it has yet to prove it's usefulness over time.
+
+RV is all about the power of conventions, and about maximizing their benefits. Consequently, I have no plans to give it the flexibiliy to handle every non-standard situation. There are always the standard Rails form/link helpers to fall back to if more flexibility is needed. However, here are a couple of features that I could see being useful:
+
+* There will likely be a configurable suffix for the helper names that, when turned on, will default to '_form' for form helpers and '_link' for link helpers
+* There are situations, especially with lists, where the auto-generated classnames are quite verbose, so it will likely be possible to turn them on/off for individual helpers, or in lists only.
+* It will likely be possible to configure defaults for things like 'title' attributes
+  
+== Known problems
+
+* ActiveMerchant seems to run 'routes.rb' before ResourcefulViews loads, resulting in ResourcefulViews helpers not being defined. To fix this, make sure ResourcefulViews loads before active_merchant by putting this in your configuration: config.plugins = [ :ResourcefulViews, :all ]  
+
+== License
+Copyright (c) 2008 Ingo Weiss, released under the MIT license
