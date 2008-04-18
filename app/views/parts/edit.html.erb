@@ -1,7 +1,7 @@
 <h1>Editing part</h1>
 
 <%= error_messages_for :part %>
-<% update_part(@part, :html => {:id => 'editing_part'}) do |f| %>
+<% update_part_form(@part, :html => {:id => 'editing_part'}) do |f| %>
   <%= render :partial => 'fields', :object => f %>
 <% end %>
 
