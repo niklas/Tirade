@@ -62,7 +62,7 @@ class ResourcefulViews
   # 
   def build_index_helper(resource)
     @module.module_eval <<-end_eval
-      def index_#{resource.name_prefix}#{resource.plural}(*args)
+      def index_#{resource.name_prefix}#{resource.plural}_link(*args)
         opts = args.extract_options!
         link_to_opts = {}
         label = opts.delete(:label) || 'Index'
@@ -101,7 +101,7 @@ class ResourcefulViews
   #   
   def build_search_helper(resource)
     @module.module_eval <<-end_eval
-      def search_#{resource.name_prefix}#{resource.plural}(*args)
+      def search_#{resource.name_prefix}#{resource.plural}_form(*args)
         opts = args.extract_options!
         opts_for_button = {:type => 'submit'}
         opts_for_button[:title] = opts.delete(:title) if opts[:title]
@@ -134,7 +134,7 @@ class ResourcefulViews
   #
   def build_show_helper(resource)
     @module.module_eval <<-end_eval
-      def show_#{resource.name_prefix}#{resource.singular}(*args)
+      def show_#{resource.name_prefix}#{resource.singular}_link(*args)
         opts = args.extract_options!
         opts_for_link = {}
         opts_for_link[:title] = opts.delete(:title) if opts[:title]
@@ -167,7 +167,7 @@ class ResourcefulViews
   #
   def build_new_helper(resource)
     @module.module_eval <<-end_eval
-      def new_#{resource.name_prefix}#{resource.singular}(*args)
+      def new_#{resource.name_prefix}#{resource.singular}_link(*args)
         opts = args.extract_options!
         opts_for_link = {}
         opts_for_link[:title] = opts.delete(:title) if opts[:title]
@@ -200,7 +200,7 @@ class ResourcefulViews
   #
   def build_edit_helper(resource)
     @module.module_eval <<-end_eval
-      def edit_#{resource.name_prefix}#{resource.singular}(*args)
+      def edit_#{resource.name_prefix}#{resource.singular}_link(*args)
         opts = args.extract_options!
         opts_for_link = {}
         label = opts.delete(:label) || 'Edit'
@@ -239,7 +239,7 @@ class ResourcefulViews
   #
   def build_destroy_helper(resource)
     @module.module_eval <<-end_eval
-      def destroy_#{resource.name_prefix}#{resource.singular}(*args)
+      def destroy_#{resource.name_prefix}#{resource.singular}_link(*args)
         opts = args.extract_options!
         opts_for_button = {:type => 'submit'}
         label = opts.delete(:label) || 'Delete'
@@ -346,7 +346,7 @@ class ResourcefulViews
   #
   def build_create_helper(resource)
     @module.module_eval <<-end_eval
-      def create_#{resource.name_prefix}#{resource.singular}(*args, &block)
+      def create_#{resource.name_prefix}#{resource.singular}_form(*args, &block)
         if block_given?
           opts = args.extract_options!
           css_classnames = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'create', *(opts.delete(:class) || '').split)
@@ -409,7 +409,7 @@ class ResourcefulViews
     resource_is_singular = resource.is_a?(ActionController::Resources::SingletonResource)
     resource_is_plural = !resource_is_singular
     @module.module_eval <<-end_eval
-      def update_#{resource.name_prefix}#{resource.singular}(*args, &block)
+      def update_#{resource.name_prefix}#{resource.singular}_form(*args, &block)
         if block_given?
           opts = args.extract_options!
           args_for_fields_for = ['#{resource.singular}']
