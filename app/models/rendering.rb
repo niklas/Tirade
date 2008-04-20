@@ -22,4 +22,8 @@ class Rendering < ActiveRecord::Base
   belongs_to :grid
   belongs_to :content
   belongs_to :part
+
+  has_finder :for_grid, lambda {|gr|
+    {:conditions => ['grid_id = ?', gr.id]}
+  }
 end
