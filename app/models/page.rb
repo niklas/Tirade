@@ -23,6 +23,7 @@ class Page < ActiveRecord::Base
   has_many :renderings
   has_many :contents, :through => :renderings
   has_many :parts, :through => :renderings
+  has_many :grids, :through => :renderings
 
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :parent_id
@@ -65,4 +66,5 @@ class Page < ActiveRecord::Base
   class << self
     alias_method_chain :rebuild!, :status
   end
+
 end

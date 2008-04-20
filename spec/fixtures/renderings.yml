@@ -3,17 +3,18 @@
 main1:
   page_id: 42000
   position: 1
+  grid_id: 5050
 
 main11:
   page_id: 42000
-  grid: layout50_501
+  grid: layout_50_50_1
   content: welcome
   part: simple_preview
   position: 1
 
 main12:
   page_id: 42000
-  grid: layout50_502
+  grid: layout_50_50_2
   content: introduction
   part: simple_preview
   position: 2
