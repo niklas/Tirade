@@ -46,7 +46,7 @@ class Part < ActiveRecord::Base
     pattern = File.join(BasePath,'*.html.erb')
     created = []
     Dir.glob(pattern).each do |filename|
-      filename_without_extention = File.basename(filename).sub(%r~\.html\.erb$~,'')
+      filename_without_extention = File.basename(filename).sub(%r~\.html\.erb$~,'').sub(/^_/,'')
       puts filename_without_extention
       unless find_by_filename(filename_without_extention)
         created << create!(:filename => filename_without_extention)
@@ -121,12 +121,23 @@ class Part < ActiveRecord::Base
     File.join(BasePath,filename_with_extention)
   end
 
+  def absolute_partial_name
+    '/' + File.join('parts',PartsDir,filename)
+  end
   def partial_name
     File.join(PartsDir,filename)
   end
 
   def filename_with_extention
-    filename.match(/\.html\.erb$/) ? filename : (filename + '.html.erb')
+    real_filename.match(/\.html\.erb$/) ? real_filename : (real_filename + '.html.erb')
+  end
+
+  def real_filename
+    '_' + filename
+  end
+
+  def real_filename=(real)
+    self.filename = real.gsub(/^_*/,'')
   end
 
   # renders the part in the given binding
