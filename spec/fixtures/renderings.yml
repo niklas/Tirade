@@ -1,15 +1,19 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  page_id: 1
-  content_id: 1
-  part_id: 1
-  grid_id: 1
+main1:
+  page_id: 42000
   position: 1
 
-two:
-  page_id: 1
-  content_id: 1
-  part_id: 1
-  grid_id: 1
+main11:
+  page_id: 42000
+  grid: layout50_501
+  content: welcome
+  part: simple_preview
   position: 1
+
+main12:
+  page_id: 42000
+  grid: layout50_502
+  content: introduction
+  part: simple_preview
+  position: 2

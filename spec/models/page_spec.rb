@@ -75,3 +75,26 @@ describe "The Pages in the fixtures" do
   end
 end
 
+
+describe "The main Page with all fixtures" do
+  fixtures :all
+  before(:each) do
+    @page = pages(:main)
+    Page.rebuild!
+    Grid.rebuild!
+    Content.rebuild!
+  end
+  it "should have the right final_layout" do
+    @page.final_layout.id.should == grids(:layout50_50).id
+  end
+  it "should have some renderings" do
+    @page.should have_at_least(3).renderings
+  end
+  it "should have some contents" do
+    @page.should have_at_least(2).contents
+  end
+
+  it "should have some parts" do
+    @page.should have_at_least(2).parts
+  end
+end

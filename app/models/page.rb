@@ -20,6 +20,9 @@ class Page < ActiveRecord::Base
   attr_protected :layout_id, :created_at, :updated_at
 
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
+  has_many :renderings
+  has_many :contents, :through => :renderings
+  has_many :parts, :through => :renderings
 
   validates_presence_of :title
   validates_uniqueness_of :title, :scope => :parent_id

@@ -3,7 +3,7 @@ main:
   title: Public_Root
   url: ""
   parent_id: NULL
-  layout: layout50_50
+  layout_id: 5050
 
 welcome:
   id: 11

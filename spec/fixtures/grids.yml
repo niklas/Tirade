@@ -1,8 +1,17 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 layout50_50:
+  id: 5050
   parent_id: nil
   yui: yui-g
+
+layout_50_50_1:
+  parent_id: 5050
+  yui: yui-u
+
+layout_50_50_2:
+  parent_id: 5050
+  yui: yui-u
 
 layout33_33_33:
   parent_id: nil
