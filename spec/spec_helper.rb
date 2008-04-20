@@ -36,4 +36,9 @@ Spec::Runner.configure do |config|
   # config.mock_with :mocha
   # config.mock_with :flexmock
   # config.mock_with :rr
+  config.before(:each) do
+    Page.rebuild!
+    Grid.rebuild!
+    Content.rebuild!
+  end
 end
