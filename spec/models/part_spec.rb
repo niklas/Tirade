@@ -18,13 +18,16 @@ describe Part do
       @part.should be_valid
     end
     it "should have correct filename with extention" do
-      @part.filename_with_extention.should == 'general_preview.html.erb'
+      @part.filename_with_extention.should == '_general_preview.html.erb'
     end
-    it "should habe correct partial_name" do
+    it "should have correct partial_name" do
       @part.partial_name.should == 'stock/general_preview'
     end
+    it "should have correct absolute_partial_name" do
+      @part.absolute_partial_name.should == '/parts/stock/general_preview'
+    end
     it "should have correct fullpath" do
-      @part.fullpath.should match(%r~app/views/parts/stock/general_preview.html.erb~)
+      @part.fullpath.should match(%r~app/views/parts/stock/_general_preview.html.erb~)
     end
     it "should not write its rhtml to a file (because it is empty)" do
       File.stub!(:open).with(any_args()).and_return(true)
