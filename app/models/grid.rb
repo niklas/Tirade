@@ -82,7 +82,7 @@ class Grid < ActiveRecord::Base
   end
 
   def is_first_child?
-    self == self.parent.andand.children.andand.first
+    self == self.parent.andand.visible_children.andand.first
   end
 
   protected

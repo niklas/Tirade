@@ -4,6 +4,8 @@ describe PublicController do
   fixtures :all
   before(:each) do
     Page.rebuild!
+    Content.rebuild!
+    Grid.rebuild!
   end
 
   #Delete these examples and add some real ones
@@ -66,4 +68,5 @@ describe PublicController do
       assigns[:page].should == pages(:children_section)
     end
   end
+
 end

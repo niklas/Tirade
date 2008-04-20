@@ -18,17 +18,12 @@ describe PagesHelper, ", rendering the main page" do
     Content.rebuild!
     @page = pages(:main)
     stub!(:render).and_return('<p>fake render result</p>')
+    stub!(:render_grid_filled_with).and_return('<p>fake grid result</p>')
     @rendered = render_page(@page)
   end
 
   it "should not be blank" do
     @rendered.should_not be_blank
   end
-
-  it "should have surrounding page div"
-  it "should have surrounding div for first grid"
-  it "should have surrounding div for second grid"
-  it "should have content of first grid"
-  it "should have content of second grid"
 
 end
