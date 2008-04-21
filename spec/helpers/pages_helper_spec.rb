@@ -13,9 +13,6 @@ end
 describe PagesHelper, ", rendering the main page" do
   fixtures :all
   before(:each) do
-    Page.rebuild!
-    Grid.rebuild!
-    Content.rebuild!
     @page = pages(:main)
     stub!(:render).and_return('<p>fake render result</p>')
     stub!(:render_grid_filled_with).and_return('<p>fake grid result</p>')

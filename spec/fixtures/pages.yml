@@ -5,36 +5,49 @@ main:
   yui: doc
   parent_id: NULL
   layout_id: 5050
+  lft: 1
+  rgt: 1000
 
 welcome:
   id: 11
   title: Welcome
   url: 'welcome'
   parent_id: 42000 # main
+  lft: 2
+  rgt: 100
  
 meta:
   id: 12
   title: Meta
   url: 'meta'
   parent_id: 42000 # main
+  lft: 102
+  rgt: 200
+
 
 about:
   id: 121
   title: About
   url: 'meta/about'
   parent_id: 12 # meta
+  lft: 103
+  rgt: 110
 
 portal:
   id: 13
   title: Portal
   url: 'portal'
   parent_id: 42000 # main
+  lft: 202
+  rgt: 300
 
 children_section:
   id: 131
   title: Children Section
   url: 'portal/children-section'
   parent_id: 13 # portal
+  lft: 205
+  rgt: 220
 
 hammers:
   id: 1311
@@ -42,3 +55,5 @@ hammers:
   url: 'portal/children-section/huge-brutal-hammers'
   parent_id: 131
   layout: layout33_33_33
+  lft: 206
+  rgt: 210

@@ -2,17 +2,23 @@
 
 layout50_50:
   id: 5050
-  parent_id: nil
+  parent_id: NULL
   yui: yui-g
+  lft: 1
+  rgt: 1000
 
 layout_50_50_1:
   parent_id: 5050
   yui: yui-u
+  lft: 2
+  rgt: 10
 
 layout_50_50_2:
   parent_id: 5050
   yui: yui-u
+  lft: 12
+  rgt: 20
 
 layout33_33_33:
-  parent_id: nil
+  parent_id: NULL
   yui: yui-gc
