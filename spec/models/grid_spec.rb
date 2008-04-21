@@ -119,6 +119,17 @@ describe Grid do
 
   end
 
-
+  describe "The Grids in the fixtures" do
+    fixtures :all
+    it "should know its parent" do
+      grids(:layout50_50).parent.should be_nil
+      grids(:layout_50_50_1).parent.id.should == grids(:layout50_50).id
+      grids(:layout_50_50_2).parent.id.should == grids(:layout50_50).id
+    end
+    it "should know that it is the first child" do
+      grids(:layout_50_50_1).should be_is_first_child
+      grids(:layout_50_50_2).should_not be_is_first_child
+    end
+  end
 end
 
