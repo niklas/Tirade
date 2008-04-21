@@ -18,10 +18,20 @@ describe "/public/index" do
       response.body.should have_tag('#doc') do
         with_tag('div.grid.yui-g') do
           with_tag('div.first.grid.yui-u') do
-            have_text('Tirade is a CMS')
+            with_tag('h1') do
+              have_text('INTRODUCTION')
+            end
+            with_tag('p') do
+              have_text('Tirade is a CMS')
+            end
           end
           with_tag('div.grid.yui-u') do
-            have_text('big hug')
+            with_tag('h1') do
+              have_text('WELCOME')
+            end
+            with_tag('p') do
+              have_text('big hug')
+            end
           end
         end
       end
