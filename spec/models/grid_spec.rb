@@ -133,3 +133,18 @@ describe Grid do
   end
 end
 
+describe "Creating a 3/4 - 1/4 grid" do
+  before(:each) do
+    @grid = Grid.new_by_yui('yui-ge')
+    @grid.save!
+  end
+  it "should still be 3/4 - 1/4" do
+    @grid.yui.should == 'yui-ge'
+  end
+  it "should have ideally two children" do
+    @grid.ideal_children_count.should == 2
+  end
+  it "should have exactly two children" do
+    @grid.children.length.should == 2
+  end
+end

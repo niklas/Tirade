@@ -48,9 +48,13 @@ class Grid < ActiveRecord::Base
     new(:yui => grid_class)
   end
 
+  def after_save
+    auto_create_missing_children
+  end
+
   def yui=(new_class)
     write_attribute(:yui,new_class)
-    auto_create_missing_children
+    auto_create_missing_children unless new_record?
   end
 
   def add_child(child_grid=nil)
