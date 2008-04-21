@@ -14,7 +14,7 @@ module PagesHelper
         renderings = thepage.renderings.for_grid(thegrid)
         renderings.collect do |rendering|
           unless rendering.part.nil? || rendering.content.nil?
-            render_part_with_content(rendering.part, rendering.content)
+            render_part_with_content_for_rendering(rendering)
           else
             '[no part or content assigned]'
           end
@@ -27,7 +27,11 @@ module PagesHelper
     )
   end
 
-  def render_part_with_content(part,content)
-    render(:partial => part.absolute_partial_name, :object => content)
+  def render_part_with_content_for_rendering(rendering)
+    render(
+      :partial => rendering.part.absolute_partial_name, 
+      :object  => rendering.content, 
+      :locals => rendering.options.merge(rendering.part.options)
+    )
   end
 end

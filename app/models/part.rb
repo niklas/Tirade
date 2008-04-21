@@ -142,8 +142,16 @@ class Part < ActiveRecord::Base
 
   # renders the part in the given binding
   # you must set @content to use it as a local variable named like the part
+  # and there must be a @part instance variable
+  #
+  # it's so ugly..
   def render(bind,opts={})
-    eval %Q[#{filename} = @content], bind
+    to_eval =%Q[#{filename} = @content\n]
+    options.keys.each do |key|
+      to_eval << %Q[#{key} = @part.options[:#{key}]\n]
+    end
+    
+    eval to_eval, bind
     erb = ERB.new(rhtml, SaveLevel)
     erb.result(bind)
   end

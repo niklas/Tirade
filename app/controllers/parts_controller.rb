@@ -95,6 +95,7 @@ class PartsController < ApplicationController
         render :update do |page|
           @part.template_binding = binding
           if @part.valid?
+            local_assigns = @part.options
             page[:preview].replace_html @part.render(binding)
           else
             page[:preview].replace_html error_messages_for(:part)

@@ -26,4 +26,8 @@ class Rendering < ActiveRecord::Base
   has_finder :for_grid, lambda {|gr|
     {:conditions => ['grid_id = ?', gr.id]}
   }
+
+  def options
+    {}
+  end
 end
