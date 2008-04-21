@@ -26,8 +26,9 @@ class Page < ActiveRecord::Base
   has_many :grids, :through => :renderings
 
   validates_presence_of :title
+  validates_presence_of :yui
   validates_uniqueness_of :title, :scope => :parent_id
-  validates_uniqueness_of :url
+  validates_uniqueness_of :url, :allow_nil => true
 
   BlacklistesTitles = %w(admin)
 
@@ -36,9 +37,10 @@ class Page < ActiveRecord::Base
   end
 
   def before_validation
-    unless self.class.rebuilding?
+    unless self.class.rebuilding? || lft.nil? || rgt.nil?
       self.url = generated_url 
     end
+    self.yui ||= 'doc'
   end
 
   def final_layout
@@ -52,7 +54,6 @@ class Page < ActiveRecord::Base
   def title_unless_root
     parent_id ? title : nil
   end
-
 
   @@rebuilding = false
   def self.rebuild_with_status!
