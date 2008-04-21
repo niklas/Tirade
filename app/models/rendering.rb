@@ -14,7 +14,7 @@
 #
 
 class Rendering < ActiveRecord::Base
-  attr_accessible :position
+  attr_accessible :position, :page, :grid, :content, :part
   validates_presence_of :grid_id
   validates_presence_of :page_id
 
