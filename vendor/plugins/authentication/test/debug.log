@@ -1,0 +1,37 @@
+# Logfile created on Thu Apr 17 16:34:33 +0300 2008 by /
+  [4;36;1mSQL (0.000794)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: users: DROP TABLE users[0m
+  [4;36;1mSQL (0.004518)[0m   [0;1mCREATE TABLE users ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255) NOT NULL, "password_hash" varchar(255) DEFAULT NULL, "password_salt" varchar(255) DEFAULT NULL, "token_key" varchar(255) DEFAULT NULL, "token_expiration" datetime DEFAULT NULL, "remember_me" varchar(255) DEFAULT NULL) [0m
+  [4;35;1mSQL (0.002685)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.001669)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.001977)[0m   [0m CREATE TABLE plugin_schema_info 
+ (plugin_name varchar(255), version integer)
+[0m
+  [4;36;1mSQL (0.007670)[0m   [0;1mUPDATE schema_info SET version = 0[0m
+  [4;35;1mRecordedUser Create (0.000737)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jane', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001484)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 2) [0m
+  [4;35;1mRecordedUser Create (0.000694)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001477)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 3) [0m
+  [4;35;1mRecordedUser Create (0.000843)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001488)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 4) [0m
+  [4;35;1mRecordedUser Create (0.000706)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001460)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 5) [0m
+  [4;35;1mRecordedUser Create (0.000672)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001520)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 6) [0m
+  [4;35;1mRecordedUser Create (0.000686)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001830)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 7) [0m
+  [4;35;1mRecordedUser Create (0.000675)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001768)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 8) [0m
+  [4;35;1mRecordedUser Create (0.000674)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001535)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 9) [0m
+  [4;35;1mRecordedUser Create (0.000678)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001529)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 10) [0m
+  [4;35;1mRecordedUser Create (0.000680)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jack', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;36;1mRecordedUser Load (0.001492)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 11) [0m
+  [4;35;1mUser Create (0.000699)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('Jenny', NULL, '82a9db5f985eb1f1d33db695dd14a0205d5a14fa', 'fec654ad8b29c60a657892e7b73c3d192e06df77', NULL, NULL)[0m
+  [4;36;1mUser Load (0.001603)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 12) [0m
+  [4;35;1mUser Update (0.001076)[0m   [0mUPDATE users SET "name" = 'Jenny', "token_expiration" = NULL, "remember_me" = NULL, "token_key" = NULL, "password_hash" = 'fec654ad8b29c60a657892e7b73c3d192e06df77', "password_salt" = '82a9db5f985eb1f1d33db695dd14a0205d5a14fa' WHERE "id" = 12[0m
+  [4;36;1mUser Load (0.001476)[0m   [0;1mSELECT * FROM users WHERE (users."id" = 12) [0m
+  [4;35;1mSQL (0.000851)[0m   [0mSELECT count(*) AS count_all FROM users WHERE (id = 12 AND password_hash = 'fec654ad8b29c60a657892e7b73c3d192e06df77') [0m
+  [4;36;1mUser Create (0.000885)[0m   [0;1mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('John', NULL, NULL, NULL, NULL, NULL)[0m
+  [4;35;1mUser Create (0.000691)[0m   [0mINSERT INTO users ("name", "token_key", "password_salt", "password_hash", "remember_me", "token_expiration") VALUES('John', NULL, '82a9db5f985eb1f1d33db695dd14a0205d5a14fa', 'fec654ad8b29c60a657892e7b73c3d192e06df77', NULL, NULL)[0m

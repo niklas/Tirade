@@ -1,0 +1,14 @@
+<h1>Placeholder Home Page</h1>
+
+<p>This page is simply a placeholder home page for users. If you are seeing
+this page the developer forgot to do one of the following:</p>
+
+<ol>
+	<li>Add a file under <code>app/views/profile/home.rhtml</code> that
+	displays whatever you want in place of this.</li>
+	<li>Implement the "home" action on the ProfileController to redirect wherever
+	you want or provide application logic for your template file created in
+	option one.</li>
+</ol>
+
+<%=link_to 'Logout', logout_url if current_user%>

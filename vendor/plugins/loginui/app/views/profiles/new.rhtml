@@ -1,0 +1,30 @@
+<p id="instructions">Please enter your desired login information below to
+register an account.</p>
+
+<% form_for :user, :url => profile_path, :html => {:id => 'register'} do |f| %>
+	<% unless controller.username_field == 'email' %>
+		<div id="username">
+			<label for="user_<%=controller.username_field%>">
+			<%=controller.username_field.humanize%></label>
+			<%=f.text_field controller.username_field%>
+		</div>
+	<% end %>
+	<% if @user.respond_to? 'email' %>
+		<div id="email">
+			<label for="user_email">E-mail</label>
+			<%=f.text_field 'email'%>
+		</div>
+	<% end %>
+	<div id="password">
+		<label for="user_password">Password</label>
+		<%=f.password_field 'password'%>
+	</div>
+	<div id="password_confirmation">
+		<label for="user_password_confirmation">Password Confirmation</label>
+		<%=f.password_field 'password_confirmation'%>
+	</div>
+	<%=submit_tag 'Register'%>
+	<%=link_to 'Login with an existing account', login_url, :id => 'login'%>
+	<%=link_to 'Forgot My Password', forgot_password_url,
+		:id => 'forgot_password' if @user.respond_to? :email%>
+<% end %>

@@ -1,0 +1,7 @@
+<p>Enter your <%=controller.username_field.humanize%> below. A email will be
+sent to you which will include a link to reset your password.</p>
+
+<% form_tag password_path do%>
+	<%=text_field_tag controller.username_field.to_s%>
+	<%=submit_tag 'Send Message'%>
+<% end %>

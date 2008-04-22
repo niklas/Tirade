@@ -1,0 +1,21 @@
+<% form_for(:user, :url => session_path, :html => {:id => 'login'}) do |f| %>
+	<%=error_messages_for :user %>
+	<div id="username">
+		<label for="user_<%=controller.username_field%>">
+		<%=controller.username_field.humanize%></label>
+		<%=f.text_field controller.username_field%>
+	</div>
+	<div id="password">
+		<label for="user_password">Password</label>
+		<%=f.password_field 'password'%>
+	</div>
+	<div id="remember-me">
+		<%=check_box_tag 'user[remember_me]' %>
+		<label for="user_remember_me">Remember Me</label>
+	</div>
+	<%=submit_tag 'Login'%>
+	<%# FIXME: How can we make this conditional but not intrusive? %>
+	<%=link_to 'Register New User', register_url, :id => 'register'%>
+	<%=link_to 'Forgot My Password', forgot_password_url,
+		:id => 'forgot_password' if @user.respond_to? :email%>
+<% end %>
