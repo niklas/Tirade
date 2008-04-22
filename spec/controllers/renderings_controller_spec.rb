@@ -22,44 +22,6 @@ describe RenderingsController do
       response.should render_template('index')
     end
   
-    it "should find all renderings" do
-      Rendering.should_receive(:find).with(:all).and_return([@rendering])
-      do_get
-    end
-  
-    it "should assign the found renderings for the view" do
-      do_get
-      assigns[:renderings].should == [@rendering]
-    end
-  end
-
-  describe "handling GET /renderings.xml" do
-
-    before(:each) do
-      @rendering = mock_model(Rendering, :to_xml => "XML")
-      Rendering.stub!(:find).and_return(@rendering)
-    end
-  
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :index
-    end
-  
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-
-    it "should find all renderings" do
-      Rendering.should_receive(:find).with(:all).and_return([@rendering])
-      do_get
-    end
-  
-    it "should render the found renderings as xml" do
-      @rendering.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
   end
 
   describe "handling GET /renderings/1" do
