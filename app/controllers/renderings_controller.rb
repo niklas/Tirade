@@ -2,11 +2,10 @@ class RenderingsController < ApplicationController
   # GET /renderings
   # GET /renderings.xml
   def index
-    @renderings = Rendering.find(:all)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @renderings }
+    respond_to do |wants|
+      wants.js do
+        render :layout => false
+      end
     end
   end
 
