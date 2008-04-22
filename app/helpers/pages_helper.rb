@@ -1,8 +1,9 @@
 module PagesHelper
   def render_page(thepage)
+    layout = thepage.final_layout
     content_tag(
       :div,
-      render_grid_in_page(thepage.final_layout,thepage),
+      layout ? render_grid_in_page(layout,thepage) : 'Page has no Layout',
       {:id => thepage.yui}
     )
   end
