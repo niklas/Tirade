@@ -1,5 +1,6 @@
 class GridsController < ApplicationController
-
+  before_filter :login_required
+  
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => :destroy
 

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 9) do
+ActiveRecord::Schema.define(:version => 11) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -77,12 +77,17 @@ ActiveRecord::Schema.define(:version => 9) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "password_hash", :limit => 40
-    t.string   "password_salt", :limit => 40
-    t.datetime "verified_at"
+    t.string   "login"
     t.string   "email"
-    t.string   "remember_me",   :limit => 40
+    t.string   "remember_token"
+    t.string   "crypted_password",          :limit => 40
+    t.string   "password_reset_code",       :limit => 40
+    t.string   "salt",                      :limit => 40
+    t.string   "activation_code",           :limit => 40
+    t.datetime "remember_token_expires_at"
+    t.datetime "activated_at"
+    t.datetime "deleted_at"
+    t.string   "state",                                   :default => "passive"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

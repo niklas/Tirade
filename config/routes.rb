@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-
   map.resources :renderings
 
   map.resources :contents
@@ -8,12 +7,28 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :parts,
     :member => {:preview => :put}
-
-
-  map.from_plugin :loginui
-
+    
   map.resources :grids,
     :member => {:create_child => :post}
+    
+  map.resources :users, 
+    :member => {:suspend   => :put,
+                :unsuspend => :put,
+                :purge     => :delete}
+
+  map.resource :session
+  
+  map.with_options :controller => 'users' do |page|    
+    page.activate '/activate/:activation_code', :action => 'activate'
+    page.signup '/signup', :action => 'new'
+    page.forgot_password '/forgot_password', :action => 'forgot_password'
+    page.reset_password '/reset_password/:id', :action => 'reset_password'
+  end
+  
+  map.with_options :controller => 'sessions' do |page|
+    page.login '/login', :action => 'new'
+    page.logout '/logout', :action => 'destroy'
+  end
 
   map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.javascripts 'javascripts/:action.:format', :controller => 'javascripts'

@@ -14,7 +14,7 @@ module ApplicationHelper
   end
   
   def flash_messages
-    [:notice, :warning, :message].map do |f|
+    [:notice, :warning, :message, :error].map do |f|
       content_tag(:div, flash[f], :id => 'flash', :class => "#{f.to_s}") if flash[f]
     end.join
   end
