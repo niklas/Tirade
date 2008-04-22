@@ -33,7 +33,7 @@ class Part < ActiveRecord::Base
   serialize :options, Hash
   serialize :preferred_types, Array
 
-  attr_accessible :name, :filename, :options, :preferred_types, :rhtml
+  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml
 
   attr_accessor :template_binding
 
@@ -101,6 +101,8 @@ class Part < ActiveRecord::Base
 
   def after_initialize
     self.options ||= {}
+  rescue ActiveRecord::SerializationTypeMismatch
+    self.options = {}
   end
 
   def options_as_yaml
