@@ -8,7 +8,7 @@ describe "/parts/new.html.erb" do
     @part.stub!(:new_record?).and_return(true)
     @part.stub!(:name).and_return("MyString")
     @part.stub!(:filename).and_return("MyString")
-    @part.stub!(:options).and_return("MyText")
+    @part.stub!(:options_as_yaml).and_return("MyText")
     @part.stub!(:preferred_types).and_return("MyText")
     @part.stub!(:rhtml).and_return("<p>My RHTML</p>")
     assigns[:part] = @part
