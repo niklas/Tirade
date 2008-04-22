@@ -10,7 +10,7 @@ describe UsersController do
   it 'allows signup' do
     lambda do
       create_user
-      response.should be_redirect
+      response.should_not be_redirect
     end.should change(User, :count).by(1)
   end
 

@@ -28,7 +28,7 @@ class UsersController < ApplicationController
       current_user.activate!
       flash[:notice] = "Signup complete!"
     end
-    redirect_back_or_default('/login')
+    redirect_back_or_default('/')
   end
 
   def suspend
