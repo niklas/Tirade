@@ -1,28 +1,6 @@
-<h1>Listing renderings</h1>
+<div id="toolbox" class="maybe-not-needed">
+  <h1>Toolbox</h1>
 
-<table>
-  <tr>
-    <th>Page</th>
-    <th>Content</th>
-    <th>Part</th>
-    <th>Grid</th>
-    <th>Position</th>
-  </tr>
+  Drag me around!
 
-<% for rendering in @renderings %>
-  <tr>
-    <td><%=h rendering.page_id %></td>
-    <td><%=h rendering.content_id %></td>
-    <td><%=h rendering.part_id %></td>
-    <td><%=h rendering.grid_id %></td>
-    <td><%=h rendering.position %></td>
-    <td><%= link_to 'Show', rendering %></td>
-    <td><%= link_to 'Edit', edit_rendering_path(rendering) %></td>
-    <td><%= link_to 'Destroy', rendering, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New rendering', new_rendering_path %>
+</div>
