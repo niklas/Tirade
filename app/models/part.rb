@@ -99,8 +99,16 @@ class Part < ActiveRecord::Base
     end
   end
 
-  def options
-    read_attribute(:options) || {}
+  def after_initialize
+    self.options ||= {}
+  end
+
+  def options_as_yaml
+    self.options.to_yaml
+  end
+
+  def options_as_yaml=(new_yaml_options)
+    write_attribute :options, object_from_yaml(new_yaml_options)
   end
 
   def preferred_types

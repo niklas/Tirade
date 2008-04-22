@@ -47,6 +47,44 @@ describe Part do
     end
   end
 
+  it "should have an empty options Hash" do
+    @part.options.should == {}
+  end
+
+  it "should have a proper yaml representation of an empty hash" do
+    @part.options_as_yaml.should == {}.to_yaml
+  end
+
+  describe "after setting a key in the options (as hash)" do
+    before(:each) do
+      @part.options[:how_often] = 5
+    end
+    it "should have this valua in the hash" do
+      @part.options[:how_often].should == 5
+    end
+    it "should have a hash that contains exactly this setting" do
+      @part.options.should == {:how_often => 5}
+    end
+    it "should have a proper yaml representation" do
+      @part.options_as_yaml.should == "--- \n:how_often: 5\n"
+    end
+  end
+
+  describe "after setting a key in the options (as yaml string)" do
+    before(:each) do
+      @part.options_as_yaml = "---\n:how_often: 5\n\n"
+    end
+    it "should have this valua in the hash" do
+      @part.options[:how_often].should == 5
+    end
+    it "should have a hash that contains exactly this setting" do
+      @part.options.should == {:how_often => 5}
+    end
+    it "should have a proper yaml representation" do
+      @part.options_as_yaml.should == "--- \n:how_often: 5\n"
+    end
+  end
+
   describe ', setting a name and filename with spaces' do
     before(:each) do
       @part.name = 'Another Preview'
