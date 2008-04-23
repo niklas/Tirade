@@ -20,5 +20,5 @@ class Image < ActiveRecord::Base
                     :styles => {:thumbnail => CONFIG[:thumbnail_size]},
                     :default_style => :thumbnail
 
-  alias_method :title, :image_file_name
+  alias_attribute :title, :image_file_name
 end
