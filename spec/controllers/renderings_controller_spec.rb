@@ -56,35 +56,6 @@ describe RenderingsController do
     end
   end
 
-  describe "handling GET /renderings/1.xml" do
-
-    before(:each) do
-      @rendering = mock_model(Rendering, :to_xml => "XML")
-      Rendering.stub!(:find).and_return(@rendering)
-    end
-  
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "1"
-    end
-
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-  
-    it "should find the rendering requested" do
-      Rendering.should_receive(:find).with("1").and_return(@rendering)
-      do_get
-    end
-  
-    it "should render the found rendering as xml" do
-      @rendering.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
-  end
-
   describe "handling GET /renderings/new" do
 
     before(:each) do
@@ -226,7 +197,7 @@ describe RenderingsController do
 
       it "should redirect to the rendering" do
         do_put
-        response.should redirect_to(rendering_url("1"))
+        response.should render_template('show')
       end
 
     end
