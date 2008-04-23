@@ -55,7 +55,6 @@ class Part < ActiveRecord::Base
     created = []
     Dir.glob(pattern).each do |filename|
       filename_without_extention = File.basename(filename).sub(%r~\.html\.erb$~,'').sub(/^_/,'')
-      puts filename_without_extention
       unless find_by_filename(filename_without_extention)
         created << create!(:filename => filename_without_extention)
       end
