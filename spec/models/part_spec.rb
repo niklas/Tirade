@@ -24,7 +24,7 @@ describe Part do
       @part.partial_name.should == 'stock/general_preview'
     end
     it "should have correct absolute_partial_name" do
-      @part.absolute_partial_name.should == '/parts/stock/general_preview'
+      @part.absolute_partial_name.should == '/parts/stock/general_preview.html.erb'
     end
     it "should have correct fullpath" do
       @part.fullpath.should match(%r~app/views/parts/stock/_general_preview.html.erb~)
