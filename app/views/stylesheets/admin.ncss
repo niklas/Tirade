@@ -257,6 +257,7 @@ div.progressBar div.background {
 /* -------->>> GRID <<<--------------- */
 
 div.grid {
+position: relative;
   background-color: #ffffff;
   div.grid {
     background-color: #eeeeee;
@@ -268,6 +269,8 @@ div.grid {
     }
   }
   div.admin {
+    position: absolute;
+    right: 0;
     background-color: #111111;
     color: #aaddaa;
     a {
