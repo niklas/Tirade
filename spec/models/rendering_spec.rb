@@ -119,3 +119,49 @@ describe Rendering, ' appended to the left column of the main page, containing a
     end.should_not raise_error
   end
 end
+
+describe "The Renderings loaded by fixtures" do
+  fixtures :all
+  describe "main1" do
+    before(:each) do
+      @r = renderings(:main1)
+    end
+    it do
+      @r.grid.should_not be_nil
+    end
+  end
+  describe "main11" do
+    before(:each) do
+      @r = renderings(:main11)
+    end
+    it "its grid" do
+      @r.grid.should_not be_nil
+    end
+    it "its content" do
+      @r.content.should_not be_nil
+    end
+    it "its part" do
+      @r.part.should_not be_nil
+    end
+    it "its page" do
+      @r.page.should_not be_nil
+    end
+  end
+  describe "main12" do
+    before(:each) do
+      @r = renderings(:main12)
+    end
+    it "its grid" do
+      @r.grid.should_not be_nil
+    end
+    it "its content" do
+      @r.content.should_not be_nil
+    end
+    it "its part" do
+      @r.part.should_not be_nil
+    end
+    it "its page" do
+      @r.page.should_not be_nil
+    end
+  end
+end

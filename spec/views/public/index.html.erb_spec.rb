@@ -14,8 +14,16 @@ describe "/public/index" do
     it "should least render a div" do
       response.body.should have_tag('div')
     end
+    it "should render the grid layout" do
+      response.body.should have_tag('div#doc') do
+        with_tag('div.grid.yui-g') do
+          have_tag('div.first.grid.yui-u')
+          have_tag('div.grid.yui-u')
+        end
+      end
+    end
     it "should render the whole page completely" do
-      response.body.should have_tag('#doc') do
+      response.body.should have_tag('div#doc') do
         with_tag('div.grid.yui-g') do
           with_tag('div.first.grid.yui-u') do
             with_tag('div.rendering') do

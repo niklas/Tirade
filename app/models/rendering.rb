@@ -31,4 +31,8 @@ class Rendering < ActiveRecord::Base
   def options
     {}
   end
+
+  def final_options
+    options.merge(part.andand.options || {})
+  end
 end

@@ -34,7 +34,7 @@ module PagesHelper
       render(
         :partial => rendering.part.absolute_partial_name, 
         :object  => rendering.content, 
-        :locals => rendering.options.merge(rendering.part.options)
+        :locals => rendering.final_options
       ),
       {:id => dom_id(rendering), :class => 'rendering'}
     )
