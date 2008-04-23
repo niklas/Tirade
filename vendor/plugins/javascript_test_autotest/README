@@ -1,0 +1,47 @@
+JavascriptTestAutotest
+======================
+
+This is an extension to the Ruby on Rails Core Plugin javascript_test to provide a 'small change, run small test' script/command for javascript testing, similar to ZenTest's autotest command for Ruby testing.
+
+
+Installation
+============
+
+This plugin requires the javascript_test plugin:
+
+    ruby script/plugin install javascript_test
+    ruby script/plugin install http://drnicutilities.rubyforge.org/svn/plugins/javascript_test_autotest/
+
+This will copy two files into your script/ folder:
+    script/rstakeout
+    script/js_autotest
+
+Requirements
+============
+
+The current version requires Mac OS X and Safari.app. These are stupid requirements, since
+the javascript_test plugin has a suite of browser helper classes to load HTML files into each
+type of browser. If you get this plugin working on different O/S and browsers, please submit a patch to 
+http://groups.google.com/group/drnicutilities
+
+Usage
+=====
+
+From a command line:
+
+    script/js_autotest
+    
+Now make a change to one of your test files (e.g. test/javascript/xxx_test.html), and it will be loaded 
+automatically into your browser, and its tests executed.
+
+Now, make a change to one of your javascript files (e.g. public/javascripts/xxx.js), and the corresponding xxx_test.html file will be opened into the browser and the tests executed.
+
+Subversion
+==========
+
+This plugin is houses on Rubyforge.org via subversion:
+
+    svn://rubyforge.org/var/svn/drnicutilities/plugins/javascript_test_autotest
+
+
+Copyright (c) 2008 Dr Nic Williams (drnicwilliams@gmail.com, http://drnicwiliams.com), released under the MIT license
