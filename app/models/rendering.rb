@@ -20,7 +20,7 @@ class Rendering < ActiveRecord::Base
 
   belongs_to :page
   belongs_to :grid
-  belongs_to :content
+  belongs_to :content, :polymorphic => true
   belongs_to :part
 
   has_finder :for_grid, lambda {|gr|

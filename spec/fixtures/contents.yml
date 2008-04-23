@@ -22,3 +22,32 @@ welcome:
   parent_id: 1
   lft: 20
   rgt: 30
+
+goodbye:
+  title: Goodbye
+  description: This is goodbye to oyu
+  body: If you read this, the page has come to an end
+  type: Content
+  state: 
+  published_at: 2008-04-17 15:01:12
+  position: 3
+  parent_id: 1
+  lft: 30
+  rgt: 40
+
+love_letter:
+  title: Love Letter
+  description: For you, my Love
+  body: |-
+    Hello Bla
+  type: Document
+  state: 
+  published_at: 2008-04-17 15:01:12
+  position: 4
+  parent_id: 1
+  lft: 40
+  rgt: 50
+
+    
+
+
