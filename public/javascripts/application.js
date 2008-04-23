@@ -11,4 +11,3 @@ function previewPart(element,value) {
   new Ajax.Request(preview_part_url({id: numeric_id_for(element)}), 
         {asynchronous:true, evalScripts:true, parameters:value});
 }
-
