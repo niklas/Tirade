@@ -32,11 +32,17 @@ var Toolbox = Class.create({
       [ 
         Builder.node('div', {style: 'position:absolute;' }, 
         [
-          Builder.node('h3',  { id: 'toolbox_header', title: 'content',       style: 'cursor:move;padding:0 0 0 10px;margin:0 0 0 2px;width:'+this.contentWidth+'px;line-height:'+this.options.headerHeight+'px;'},  'header'  ),
+          Builder.node('h3',  { id: 'toolbox_header', title: 'content',  style: 'position:relative;cursor:move;padding:0 0 0 10px;margin:0 0 0 2px;width:'+this.contentWidth+'px;line-height:'+this.options.headerHeight+'px;'},
+          [
+            'header',
+            Builder.node('span',  { class: 'toolbox_close', style: 'cursor:pointer;background:url(/images/close_tiny.gif);top:11px;display:block;width:11px;height:11px;position:absolute;right:10px;'}, ''  )
+          ]  ),
           Builder.node('div', { id: 'toolbox_content',   style: 'border-bottom:1px solid #D7D7D7;border-top:1px solid #BDBDBD;background:#fff;overflow-y:auto;padding:0 0 0 10px;margin: 0 0 0 '+this.shadowWidth+'px;width:'+ this.contentWidth +'px;height:'+this.contentHeight+'px;'},  'content' ),
-          Builder.node('div', { id: 'toolbox_footer', title: 'footer',        style: 'padding:0 0 0 10px;margin:0;width:'+this.contentWidth+'px;line-height:'+this.footerHeight+'px;'},  ''  ),
+          Builder.node('div', { id: 'toolbox_footer', title: 'footer', style: 'padding:0 0 0 10px;margin:0;width:'+this.contentWidth+'px;line-height:'+this.footerHeight+'px;'},  ''  ),
         ] )
       ]);
+    this.toolbox.select('.toolbox_close').first().observe('click', this.removeToolbox.bindAsEventListener(this)  ); 
+    
     this.toolbox.appendChild(this.canvas)
     new Draggable(this.toolbox, { handle: this.toolbox.down('h3') });
     this.element.insert(this.toolbox);
@@ -134,6 +140,14 @@ var Toolbox = Class.create({
 		ctx.fill(); 
 	},
 
+  /*
+  Method:        remove toolbox
+  Description:   removes the toolbox
+  */
+  removeToolbox: function(){
+    $('toolbox').remove();
+  },
+  
 	/*
 	Method:        get content
 	Description:   with ajax
@@ -141,8 +155,12 @@ var Toolbox = Class.create({
 	getContent: function(){
     new Ajax.Request(this.contentURL, {
       method: 'get',
+      onLoading: function() {      
+        this.toolbox.select('.toolbox_close').first().setStyle({'background' : 'url(/images/spinner_tiny.gif)' })
+      }.bind(this),
       onSuccess: function(transport) {      
         $('toolbox_content').update(transport.responseText);
+        this.toolbox.select('.toolbox_close').first().setStyle({'background' : 'url(/images/close_tiny.gif)' })
       }.bind(this)
     });
 	},
