@@ -4,7 +4,9 @@ class RenderingsController < ApplicationController
   def index
     respond_to do |wants|
       wants.js do
-        render :layout => false
+        render :update do |page|
+          page[ToolboxContent].replace_html :text => 'please select a rendering'
+        end
       end
     end
   end
@@ -34,6 +36,13 @@ class RenderingsController < ApplicationController
   # GET /renderings/1/edit
   def edit
     @rendering = Rendering.find(params[:id])
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page[ToolboxContent].replace_html :partial => 'form'
+        end
+      end
+    end
   end
 
   # POST /renderings
