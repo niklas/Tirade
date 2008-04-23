@@ -1,12 +1,15 @@
 var Toolbox = Class.create({ 
-  initialize: function(options) {
+  initialize: function(element, url, options) {
     this.options = options || { };
     this.options.cornerRadius     = options.cornerRadius      || 6 ;
     this.options.headerHeight     = options.headerHeight      || 30 ;
     this.options.headerStartColor = options.headerStartColor  || [250, 250, 250] ;
     this.options.headerStopColor  = options.headerStopColor   || [228, 228, 228] ;
     this.options.bodyBgColor      = options.bodyBgColor       || [240, 240, 240] ;
-  
+    this.options.loadMethod       = options.loadMethod        || 'xhr'
+
+    this.element        = $(element)
+    this.contentURL     = url || ''
 		this.shadowWidth    = 3;
 		this.shadowOffset   = this.shadowWidth * 2;		
     this.canvas;
@@ -18,22 +21,27 @@ var Toolbox = Class.create({
     this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth)
     this.toolbox;
     this.setup();
-  }, 
+  },
+  
   setup: function() {
-    this.drawWindow();
+    // remove existing toolbox
+    if ( $('toolbox') )
+      $('toolbox').remove();
 
+    this.drawWindow();
     this.toolbox = Builder.node('div' , { id: 'toolbox', title: 'toolbox', style: 'position:absolute;height:' + this.height + 'px; width:' + this.width + 'px' },
       [ 
         Builder.node('div', {style: 'position:absolute;' }, 
         [
-          Builder.node('h3',  { title: 'content', style: 'cursor:move;padding:0 0 0 10px;margin:0 0 0 2px;width:'+this.contentWidth+'px;line-height:'+this.options.headerHeight+'px;'},  'header'  ),
-          Builder.node('div', { title: 'content', style: 'border-bottom:1px solid #D7D7D7;border-top:1px solid #BDBDBD;background:#fff;overflow-y:auto;padding:0 0 0 10px;margin: 0 0 0 '+this.shadowWidth+'px;width:'+ this.contentWidth +'px;height:'+this.contentHeight+'px;'},  'content' ),
-          Builder.node('div', { title: 'footer',  style: 'padding:0 0 0 10px;margin:0;width:'+this.contentWidth+'px;line-height:'+this.footerHeight+'px;'},  ''  ),
+          Builder.node('h3',  { title: 'content',       style: 'cursor:move;padding:0 0 0 10px;margin:0 0 0 2px;width:'+this.contentWidth+'px;line-height:'+this.options.headerHeight+'px;'},  'header'  ),
+          Builder.node('div', { id: 'toolbox_conten',   style: 'border-bottom:1px solid #D7D7D7;border-top:1px solid #BDBDBD;background:#fff;overflow-y:auto;padding:0 0 0 10px;margin: 0 0 0 '+this.shadowWidth+'px;width:'+ this.contentWidth +'px;height:'+this.contentHeight+'px;'},  'content' ),
+          Builder.node('div', { title: 'footer',        style: 'padding:0 0 0 10px;margin:0;width:'+this.contentWidth+'px;line-height:'+this.footerHeight+'px;'},  ''  ),
         ] )
       ]);
     this.toolbox.appendChild(this.canvas)
     new Draggable(this.toolbox, { handle: this.toolbox.down('h3') });
-    $('sample').insert(this.toolbox);    
+    this.getContent();
+    this.element.insert(this.toolbox);
   },
   
   /*
@@ -125,10 +133,15 @@ var Toolbox = Class.create({
 		ctx.lineTo(x + radius, y);
 		ctx.quadraticCurveTo(x, y, x, y + radius);
 		ctx.fill(); 
-	}
+	},
+
+	/*
+	Method:        get content
+	Description:   ajax/ifram/...
+	*/
+	getContent: function(){
+    new Ajax.Updater( 'toolbox_content', this.contentURL );
+	},
 });
 
-Event.observe(window, 'load', function() {
-  new Toolbox({'cornerRadius': 10})
-});
 

@@ -69,7 +69,7 @@
       assert($('toolbox').firstDescendant(), 'div toolbox exists');
       assertEqual('<div>', $('toolbox').firstDescendant().inspect(), 'Should be equal');
       assert($('toolbox').firstDescendant().down('h3'), 'h3 did not exists');
-      assert($('toolbox').firstDescendant().down('h3').next('div'), 'h3 did not exists');
+      assert($('toolbox').firstDescendant().down('h3').siblings('toolbox_conten'), 'div did not exists');
     }},
   }, {testLog: "testlog"}); 
   // For each Test.UnitRunner instance, specify the element id where results will be
