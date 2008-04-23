@@ -1,2 +1,0 @@
-page[ToolboxContent].replace_html :partial => 'form'
-
