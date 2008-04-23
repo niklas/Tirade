@@ -3,3 +3,7 @@ page[:toolbox_header].replace_html "Rendering #{@rendering.id}"
 rendering_dom = dom_id(@rendering)
 page[rendering_dom].replace render_part_with_content_for_rendering(@rendering)
 page[rendering_dom].visual_effect :highlight
+page.select('div.rendering').each do |elem|
+  elem.remove_class_name 'active'
+end
+page[dom_id(@rendering)].add_class_name 'active'
