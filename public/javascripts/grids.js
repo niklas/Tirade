@@ -38,6 +38,7 @@ Toolbox = Behavior.create({
   initialize: function() {
     var element = this.element
     Event.observe(this.element, 'click', function(event) {
+      Event.stop(event)
       new Toolbox('utilities', this.element.firstDescendant().href, {'cornerRadius': 10})
     }.bind(this));
   }

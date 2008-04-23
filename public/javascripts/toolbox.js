@@ -6,7 +6,6 @@ var Toolbox = Class.create({
     this.options.headerStartColor = options.headerStartColor  || [250, 250, 250] ;
     this.options.headerStopColor  = options.headerStopColor   || [228, 228, 228] ;
     this.options.bodyBgColor      = options.bodyBgColor       || [240, 240, 240] ;
-    this.options.loadMethod       = options.loadMethod        || 'xhr'
 
     this.element        = $(element)
     this.contentURL     = url || ''
@@ -117,7 +116,7 @@ var Toolbox = Class.create({
 		ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
 		ctx.lineTo(x + radius, y);
 		ctx.quadraticCurveTo(x, y, x, y + radius);
-		ctx.fill(); 
+		ctx.fill();
 	},
 
 	roundedRect: function(ctx, x, y, width, height, radius, rgb, a){
