@@ -1,0 +1,2 @@
+page[ToolboxContent].replace_html :text => 'please select a rendering'
+

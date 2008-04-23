@@ -3,11 +3,7 @@ class RenderingsController < ApplicationController
   # GET /renderings.xml
   def index
     respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page[ToolboxContent].replace_html :text => 'please select a rendering'
-        end
-      end
+      wants.js
     end
   end
 
@@ -37,11 +33,7 @@ class RenderingsController < ApplicationController
   def edit
     @rendering = Rendering.find(params[:id])
     respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page[ToolboxContent].replace_html :partial => 'form'
-        end
-      end
+      wants.js
     end
   end
 
