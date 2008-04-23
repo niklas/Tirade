@@ -14,5 +14,8 @@
    <%= yield :head %>
 </head>
 <body class="<%= user_roles_classes -%>">
+  <div id="utilities">
+    <%= render :partial => '/shared/loginout' %>
+  </div>
   <%= yield %>
 </body>

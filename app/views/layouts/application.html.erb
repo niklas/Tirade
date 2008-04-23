@@ -15,15 +15,10 @@
    <%= yield :head %>
 </head>
 <body class="<%= user_roles_classes -%>">
-	<div id="utilities">
-		<% if logged_in? %>
-			<%= link_to "Logout (#{current_user.login})", logout_path %>
-		<% else %>
-			<%= link_to 'Signup', signup_path %> | 
-			<%= link_to 'Login', login_path %>
-		<% end %>
-	</div>
-	
-	<%= flash_messages %>
+  <div id="utilities">
+    <%= render :partial => '/shared/loginout' %>
+  </div>
+
+  <%= flash_messages %>
   <%= yield %>
 </body>
