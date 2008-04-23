@@ -1,21 +1,24 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :renderings
 
-  map.resources :contents
+  map.with_options :path_prefix => '/manage' do |manage|
+    manage.resources :renderings
 
-  map.resources :pages
+    manage.resources :contents
 
-  map.resources :parts,
-    :member => {:preview => :put}
-    
-  map.resources :grids,
-    :member => {:create_child => :post}
-    
-  map.resources :users, 
-    :member => {:suspend   => :put,
-                :unsuspend => :put,
-                :purge     => :delete}
+    manage.resources :pages
 
+    manage.resources :parts,
+      :member => {:preview => :put}
+      
+    manage.resources :grids,
+      :member => {:create_child => :post}
+      
+    manage.resources :users, 
+      :member => {:suspend   => :put,
+                  :unsuspend => :put,
+                  :purge     => :delete}
+
+  end
   map.resource :session
   
   map.with_options :controller => 'users' do |page|    

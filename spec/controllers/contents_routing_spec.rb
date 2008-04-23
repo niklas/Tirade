@@ -3,59 +3,59 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ContentsController do
   describe "route generation" do
 
-    it "should map { :controller => 'contents', :action => 'index' } to /contents" do
-      route_for(:controller => "contents", :action => "index").should == "/contents"
+    it "should map { :controller => 'contents', :action => 'index' } to /manage/contents" do
+      route_for(:controller => "contents", :action => "index").should == "/manage/contents"
     end
   
-    it "should map { :controller => 'contents', :action => 'new' } to /contents/new" do
-      route_for(:controller => "contents", :action => "new").should == "/contents/new"
+    it "should map { :controller => 'contents', :action => 'new' } to /manage/contents/new" do
+      route_for(:controller => "contents", :action => "new").should == "/manage/contents/new"
     end
   
-    it "should map { :controller => 'contents', :action => 'show', :id => 1 } to /contents/1" do
-      route_for(:controller => "contents", :action => "show", :id => 1).should == "/contents/1"
+    it "should map { :controller => 'contents', :action => 'show', :id => 1 } to /manage/contents/1" do
+      route_for(:controller => "contents", :action => "show", :id => 1).should == "/manage/contents/1"
     end
   
-    it "should map { :controller => 'contents', :action => 'edit', :id => 1 } to /contents/1/edit" do
-      route_for(:controller => "contents", :action => "edit", :id => 1).should == "/contents/1/edit"
+    it "should map { :controller => 'contents', :action => 'edit', :id => 1 } to /manage/contents/1/edit" do
+      route_for(:controller => "contents", :action => "edit", :id => 1).should == "/manage/contents/1/edit"
     end
   
-    it "should map { :controller => 'contents', :action => 'update', :id => 1} to /contents/1" do
-      route_for(:controller => "contents", :action => "update", :id => 1).should == "/contents/1"
+    it "should map { :controller => 'contents', :action => 'update', :id => 1} to /manage/contents/1" do
+      route_for(:controller => "contents", :action => "update", :id => 1).should == "/manage/contents/1"
     end
   
-    it "should map { :controller => 'contents', :action => 'destroy', :id => 1} to /contents/1" do
-      route_for(:controller => "contents", :action => "destroy", :id => 1).should == "/contents/1"
+    it "should map { :controller => 'contents', :action => 'destroy', :id => 1} to /manage/contents/1" do
+      route_for(:controller => "contents", :action => "destroy", :id => 1).should == "/manage/contents/1"
     end
   end
 
   describe "route recognition" do
 
-    it "should generate params { :controller => 'contents', action => 'index' } from GET /contents" do
-      params_from(:get, "/contents").should == {:controller => "contents", :action => "index"}
+    it "should generate params { :controller => 'contents', action => 'index' } from GET /manage/contents" do
+      params_from(:get, "/manage/contents").should == {:controller => "contents", :action => "index"}
     end
   
-    it "should generate params { :controller => 'contents', action => 'new' } from GET /contents/new" do
-      params_from(:get, "/contents/new").should == {:controller => "contents", :action => "new"}
+    it "should generate params { :controller => 'contents', action => 'new' } from GET /manage/contents/new" do
+      params_from(:get, "/manage/contents/new").should == {:controller => "contents", :action => "new"}
     end
   
-    it "should generate params { :controller => 'contents', action => 'create' } from POST /contents" do
-      params_from(:post, "/contents").should == {:controller => "contents", :action => "create"}
+    it "should generate params { :controller => 'contents', action => 'create' } from POST /manage/contents" do
+      params_from(:post, "/manage/contents").should == {:controller => "contents", :action => "create"}
     end
   
-    it "should generate params { :controller => 'contents', action => 'show', id => '1' } from GET /contents/1" do
-      params_from(:get, "/contents/1").should == {:controller => "contents", :action => "show", :id => "1"}
+    it "should generate params { :controller => 'contents', action => 'show', id => '1' } from GET /manage/contents/1" do
+      params_from(:get, "/manage/contents/1").should == {:controller => "contents", :action => "show", :id => "1"}
     end
   
-    it "should generate params { :controller => 'contents', action => 'edit', id => '1' } from GET /contents/1;edit" do
-      params_from(:get, "/contents/1/edit").should == {:controller => "contents", :action => "edit", :id => "1"}
+    it "should generate params { :controller => 'contents', action => 'edit', id => '1' } from GET /manage/contents/1;edit" do
+      params_from(:get, "/manage/contents/1/edit").should == {:controller => "contents", :action => "edit", :id => "1"}
     end
   
-    it "should generate params { :controller => 'contents', action => 'update', id => '1' } from PUT /contents/1" do
-      params_from(:put, "/contents/1").should == {:controller => "contents", :action => "update", :id => "1"}
+    it "should generate params { :controller => 'contents', action => 'update', id => '1' } from PUT /manage/contents/1" do
+      params_from(:put, "/manage/contents/1").should == {:controller => "contents", :action => "update", :id => "1"}
     end
   
-    it "should generate params { :controller => 'contents', action => 'destroy', id => '1' } from DELETE /contents/1" do
-      params_from(:delete, "/contents/1").should == {:controller => "contents", :action => "destroy", :id => "1"}
+    it "should generate params { :controller => 'contents', action => 'destroy', id => '1' } from DELETE /manage/contents/1" do
+      params_from(:delete, "/manage/contents/1").should == {:controller => "contents", :action => "destroy", :id => "1"}
     end
   end
 end
