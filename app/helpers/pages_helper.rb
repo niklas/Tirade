@@ -29,10 +29,14 @@ module PagesHelper
   end
 
   def render_part_with_content_for_rendering(rendering)
-    render(
-      :partial => rendering.part.absolute_partial_name, 
-      :object  => rendering.content, 
-      :locals => rendering.options.merge(rendering.part.options)
+    content_tag(
+      :div,
+      render(
+        :partial => rendering.part.absolute_partial_name, 
+        :object  => rendering.content, 
+        :locals => rendering.options.merge(rendering.part.options)
+      ),
+      {:id => dom_id(rendering), :class => 'rendering'}
     )
   end
 end
