@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  private
+  def fetch_rendering
+    @rendering = Rendering.find(params[:rendering_id])
+  end
   
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store

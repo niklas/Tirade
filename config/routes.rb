@@ -1,7 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.with_options :path_prefix => '/manage' do |manage|
-    manage.resources :renderings
+    manage.resources :renderings do |renderings|
+      renderings.resource :grid, :controller => 'rendering/grid'
+    end
 
     manage.resources :contents
 

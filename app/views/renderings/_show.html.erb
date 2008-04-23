@@ -5,3 +5,7 @@
 <%= content.title %>
 (<%= content.class %>: <%= content.id %>)
 <% end %>
+
+<h4>Grid</h4>
+<%= debug(rendering.grid) %>
+<%= link_to 'edit', edit_rendering_grid_path(rendering) %>
