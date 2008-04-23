@@ -28,7 +28,7 @@ var Toolbox = Class.create({
       $('toolbox').remove();
 
     this.drawWindow();
-    this.toolbox = Builder.node('div' , { id: 'toolbox', title: 'toolbox', style: 'position:absolute;height:' + this.height + 'px; width:' + this.width + 'px' },
+    this.toolbox = Builder.node('div' , { id: 'toolbox', title: 'toolbox', style: 'text-align:left;position:absolute;height:' + this.height + 'px; width:' + this.width + 'px' },
       [ 
         Builder.node('div', {style: 'position:absolute;' }, 
         [
