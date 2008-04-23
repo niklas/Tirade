@@ -1,4 +1,5 @@
 class RenderingsController < ApplicationController
+  protect_from_forgery :only => []
   # GET /renderings
   # GET /renderings.xml
   def index
