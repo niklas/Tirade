@@ -7,5 +7,6 @@ class PublicController < ApplicationController
     else
       @page = Page.root
     end
+    store_location
   end
 end
