@@ -8,4 +8,6 @@ describe Content do
   it "should be valid" do
     @content.should be_valid
   end
+
+  it "should know about its owner"
 end

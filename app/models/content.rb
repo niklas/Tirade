@@ -24,5 +24,9 @@ class Content < ActiveRecord::Base
 
   attr_protected :type, :state, :owner_id, :owner, :published_at, :created_at, :updated_at
 
-  belongs_to :owner, :class_name => User, :foreign_key => 'owner_id'
+
+  # FIXME please spec
+  belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
+
+  has_fulltext_search :title, :description, :body
 end
