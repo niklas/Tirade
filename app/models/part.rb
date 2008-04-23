@@ -42,6 +42,14 @@ class Part < ActiveRecord::Base
 
   SaveLevel = 3
 
+  # FIXME why doesn't has_finder work here?
+  #has_finder :for_content, lambda {|cont|
+  #  {:conditions => ['1=1']}
+  #}
+  def self.for_content(cont)
+    find(:all)
+  end
+
   def self.recognize_new_files
     pattern = File.join(BasePath,'*.html.erb')
     created = []
@@ -132,7 +140,7 @@ class Part < ActiveRecord::Base
   end
 
   def absolute_partial_name
-    '/' + File.join('parts',PartsDir,filename)
+    '/' + File.join('parts',PartsDir,filename) + '.html.erb'
   end
   def partial_name
     File.join(PartsDir,filename)

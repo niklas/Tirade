@@ -13,9 +13,8 @@ class RenderingsController < ApplicationController
   def show
     @rendering = Rendering.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @rendering }
+    respond_to do |wants|
+      wants.js
     end
   end
 
@@ -56,18 +55,17 @@ class RenderingsController < ApplicationController
   end
 
   # PUT /renderings/1
-  # PUT /renderings/1.xml
   def update
     @rendering = Rendering.find(params[:id])
 
-    respond_to do |format|
-      if @rendering.update_attributes(params[:rendering])
-        flash[:notice] = 'Rendering was successfully updated.'
-        format.html { redirect_to(@rendering) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @rendering.errors, :status => :unprocessable_entity }
+    respond_to do |wants|
+      wants.js do
+        if @rendering.update_attributes(params[:rendering])
+          flash[:notice] = 'Rendering was successfully updated.'
+          render :action => 'show'
+        else
+          render :action => 'edit'
+        end
       end
     end
   end

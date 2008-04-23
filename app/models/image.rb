@@ -19,4 +19,6 @@ class Image < ActiveRecord::Base
   has_attached_file :image,
                     :styles => {:thumbnail => CONFIG[:thumbnail_size]},
                     :default_style => :thumbnail
+
+  alias_method :title, :image_file_name
 end

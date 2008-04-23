@@ -1,0 +1,5 @@
+page[:toolbox_content].replace_html :partial => 'show', :object => @rendering
+page[:toolbox_header].replace_html "Rendering #{@rendering.id}"
+rendering_dom = dom_id(@rendering)
+page[rendering_dom].replace render_part_with_content_for_rendering(@rendering)
+page[rendering_dom].visual_effect :highlight
