@@ -22,7 +22,9 @@ class Page < ActiveRecord::Base
 
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
   has_many :renderings
-  has_many :contents, :through => :renderings
+  # FIXME cannot do that because:
+  # Cannot have a has_many :through association 'Page#contents' on the polymorphic object 'Content#content'
+  # has_many :contents, :through => :renderings
   has_many :parts, :through => :renderings
   has_many :grids, :through => :renderings
 
