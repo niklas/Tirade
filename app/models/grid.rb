@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 6
+# Schema version: 12
 #
 # Table name: grids
 #
@@ -7,7 +7,7 @@
 #  parent_id  :integer         
 #  lft        :integer         
 #  rgt        :integer         
-#  yui :string(255)     
+#  yui        :string(255)     
 #  created_at :datetime        
 #  updated_at :datetime        
 #

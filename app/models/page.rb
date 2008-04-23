@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 6
+# Schema version: 12
 #
 # Table name: pages
 #
@@ -12,6 +12,7 @@
 #  layout_id  :integer         
 #  created_at :datetime        
 #  updated_at :datetime        
+#  yui        :string(10)      
 #
 
 class Page < ActiveRecord::Base
