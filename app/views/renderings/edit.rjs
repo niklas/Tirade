@@ -1,2 +1,2 @@
 page[:toolbox_content].replace_html :partial => 'form'
-
+page[:toolbox_header].replace_html "Edit Rendering #{@rendering.id}"
