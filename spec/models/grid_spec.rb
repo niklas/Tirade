@@ -39,6 +39,9 @@ describe Grid do
       it "should add two children automatically" do
         @grid.children.length.should == 2
       end
+      it "should have a proper name (for da humanz)" do
+        @grid.name.should == '1/2 - 1/2'
+      end
 
       describe ', switching that to "33-66"' do
         before(:each) do
@@ -52,6 +55,9 @@ describe Grid do
         end
         it "should not add more children" do
           @grid.ideal_children_count.should == 2
+        end
+        it "should have a proper name (for da humanz)" do
+          @grid.name.should == '1/3 - 2/3'
         end
       end
       describe ', setting the grid_to "33-33-33"' do
@@ -69,6 +75,9 @@ describe Grid do
         it "should add three children automatically" do
           @grid.children.length.should == 3
         end
+        it "should have a proper name (for da humanz)" do
+          @grid.name.should == '1/3 - 1/3 - 1/3'
+        end
         describe ', switching that to "33-66"' do
           before(:each) do
             @grid.update_attribute :yui, 'yui-gd'
@@ -81,6 +90,9 @@ describe Grid do
           end
           it "should not delete the additional child" do
             @grid.children.length.should == 3
+          end
+          it "should have a proper name (for da humanz)" do
+            @grid.name.should == '1/3 - 2/3'
           end
         end
       end
@@ -101,6 +113,9 @@ describe Grid do
       it "should add three children automatically" do
         @grid.children.length.should == 3
       end
+      it "should have a proper name (for da humanz)" do
+        @grid.name.should == '1/3 - 1/3 - 1/3'
+      end
       describe ', switching that to "33-66"' do
         before(:each) do
           @grid.update_attribute :yui, 'yui-gd'
@@ -113,6 +128,9 @@ describe Grid do
         end
         it "should not delete the additional child" do
           @grid.children.length.should == 3
+        end
+        it "should have a proper name (for da humanz)" do
+          @grid.name.should == '1/3 - 2/3'
         end
       end
     end
@@ -130,6 +148,9 @@ describe Grid do
       grids(:layout_50_50_1).should be_is_first_child
       grids(:layout_50_50_2).should_not be_is_first_child
     end
+    it "should have a proper name (for da humanz)" do
+      grids(:layout50_50).name.should == '1/2 - 1/2'
+    end
   end
 end
 
@@ -146,5 +167,8 @@ describe "Creating a 3/4 - 1/4 grid" do
   end
   it "should have exactly two children" do
     @grid.children.length.should == 2
+  end
+  it "should have a proper name (for da humanz)" do
+    @grid.name.should == '3/4 - 1/4'
   end
 end
