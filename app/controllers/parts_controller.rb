@@ -65,9 +65,17 @@ class PartsController < ApplicationController
         flash[:notice] = 'Part was successfully updated.'
         format.html { redirect_to(@part) }
         format.xml  { head :ok }
+        format.js do
+          @rendering = Rendering.find(params[:rendering_id])
+          render :template => '/renderings/show'
+        end
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
+        format.js do
+          @rendering = Rendering.find(params[:rendering_id])
+          render :template => '/rendering/part/edit'
+        end
       end
     end
   end

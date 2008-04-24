@@ -1,10 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
 
   map.with_options :path_prefix => '/manage' do |manage|
-    manage.resources :renderings do |renderings|
+    manage.resources :renderings,
+      :member => {:preview => :put} do |renderings|
       renderings.resource :grid, :controller => 'rendering/grid'
-      renderings.resource :part, :controller => 'rendering/part',
-        :member => {:preview => :put}
+      renderings.resource :part, :controller => 'rendering/part'
       renderings.resource :content, :controller => 'rendering/content'
     end
 

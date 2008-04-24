@@ -9,5 +9,5 @@ Event.addBehavior({
     'div.admin'     : Toolbox,
     'div#toolbox form': Remote,
     'div#toolbox a': Remote,
-    'div#toolbox form.part': Observed(previewRenderingPart,{frequency: 5})
+    'div#toolbox form.update': Observed(previewRendering,{frequency: 5})
 });

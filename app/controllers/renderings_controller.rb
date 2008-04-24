@@ -81,4 +81,14 @@ class RenderingsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  def preview
+    @rendering = Rendering.find(params[:id])
+    @part = @rendering.part
+    @part.attributes = params[:part] if params[:part]
+    @rendering.grid.attributes = params[:grid] if params[:grid]
+    @rendering.content.attributes = params[:content] if params[:content]
+    respond_to do |wants|
+      wants.js
+    end
+  end
 end

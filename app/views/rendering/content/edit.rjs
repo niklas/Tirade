@@ -1,0 +1,4 @@
+page[dom_id(@rendering)].visual_effect :highlight
+page[:toolbox_header].replace_html "Edit #{@content.title}"
+page[:toolbox_content].replace_html :partial => 'form'
+

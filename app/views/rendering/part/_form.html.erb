@@ -1,6 +1,6 @@
 <%= warning_tag 'Editing this part may change the appearance of other pages' %>
 <%= error_messages_for :part %>
-<% update_rendering_part_form(@rendering) do |f| %>
+<% update_part_form(@part) do |f| %>
   <dl>
     <dt> Name </dt>
     <dd> <%= f.text_field :name %> </dd>
@@ -11,6 +11,7 @@
     <dt> Filename </dt>
     <dd> <%= f.text_field :filename %> </dd>
   </dl>
+  <%= hidden_field_tag :rendering_id, @rendering.id %>
 
   <%= show_rendering_link(@rendering, :label => 'cancel') %>
   <%= f.submit "Update" %>

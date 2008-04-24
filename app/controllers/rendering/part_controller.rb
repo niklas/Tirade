@@ -7,13 +7,6 @@ class Rendering::PartController < ApplicationController
     end
   end
 
-  def preview
-    @part.attributes = params[:part]
-    respond_to do |wants|
-      wants.js
-    end
-  end
-
   def update
     respond_to do |wants|
       wants.js do
