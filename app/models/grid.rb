@@ -89,6 +89,10 @@ class Grid < ActiveRecord::Base
     self == self.parent.andand.visible_children.andand.first || false
   end
 
+  def name
+    Types[yui] || '[unknown]'
+  end
+
   protected
   def auto_create_missing_children
     while children.length < ideal_children_count

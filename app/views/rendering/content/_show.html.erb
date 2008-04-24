@@ -1,0 +1,12 @@
+<dt>Content</dt>
+<dd>
+<% if content = show.content %>
+  <%= content.title %>
+  (<%= content.class %>: <%= content.id %>)
+  <%= link_to 'edit', edit_rendering_content_path(show) %>
+<% else %>
+  <%=_ 'none' %>
+<% end %>
+</dd>
+
+

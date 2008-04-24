@@ -23,7 +23,7 @@ ContentEditable = Behavior.create({
       $div(
         {class: 'admin', id: 'admin_'+this.element.id},
         [ 
-          $a({href: edit_rendering_url({id: numeric_id_for(this.element)})},'edit')
+          $a({href: rendering_url({id: numeric_id_for(this.element)})},'edit')
         ]
       )
     );

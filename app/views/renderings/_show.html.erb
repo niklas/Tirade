@@ -1,11 +1,9 @@
 <% rendering = show %>
 
-<% if content = rendering.content %>
-<h4>Content</h4>
-<%= content.title %>
-(<%= content.class %>: <%= content.id %>)
-<% end %>
+<dl classs="rendering">
+<%= render :partial => '/rendering/content/show', :object => rendering %>
+<%= render :partial => '/rendering/grid/show', :object => rendering %>
+<%= render :partial => '/rendering/part/show', :object => rendering %>
+</dl>
 
-<h4>Grid</h4>
-<%= debug(rendering.grid) %>
-<%= link_to 'edit', edit_rendering_grid_path(rendering) %>
+
