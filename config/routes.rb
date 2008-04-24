@@ -16,7 +16,7 @@ ActionController::Routing::Routes.draw do |map|
       :member => {:preview => :put}
       
     manage.resources :grids,
-      :member => {:create_child => :post}
+      :member => {:create_child => :post, :order_renderings => :post}
       
     manage.resources :users, 
       :member => {:suspend   => :put,

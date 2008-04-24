@@ -44,3 +44,27 @@ Toolbox = Behavior.create({
   }
 });
 
+SortableRenderings = Behavior.create({
+  initialize: function() {
+    this._createSortable();
+    //Event.observe(this.element,'changed',function() { alert('changed') });
+  },
+  _createSortable: function() {
+    Sortable.create(
+      this.element, {
+        dropOnEmpty: false,
+        constraint: 'vertical',
+        tag: 'div',
+        only: 'rendering',
+        onUpdate: this._onOrdering
+      }
+    );
+    //alert('sortable created for ' + this.element.id);
+  },
+  _onOrdering: function(element) {
+    poststring = Sortable.serialize(element, {tag: 'div', name: 'renderings'});
+    url = order_renderings_grid_url({ id: numeric_id_for(element) })
+    new Ajax.Request(url, {asynchronous:true, evalScripts:true, parameters:poststring});
+  }
+});
+

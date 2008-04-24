@@ -1,0 +1,2 @@
+page[dom_id(@grid)].replace render_grid_in_page(@grid,@page)
+page[dom_id(@grid)].visual_effect :highlight

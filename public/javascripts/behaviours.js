@@ -9,5 +9,6 @@ Event.addBehavior({
     'div.admin'     : Toolbox,
     'div#toolbox form': Remote,
     'div#toolbox a': Remote,
-    'div#toolbox form.update': Observed(previewRendering,{frequency: 5})
+    'div#toolbox form.update': Observed(previewRendering,{frequency: 5}),
+    'body.role_admin div.grid.yui-u': SortableRenderings
 });

@@ -2,7 +2,7 @@ class GridsController < ApplicationController
   before_filter :login_required
   
   # FIXME (must be done in ressourcefull_views plugin)
-  protect_from_forgery :except => :destroy
+  protect_from_forgery :except => [:destroy,:order_renderings]
 
   def show
     @grid = Grid.find(params[:id])
@@ -48,6 +48,22 @@ class GridsController < ApplicationController
       else
         wants.js { render :action => 'edit' }
       end
+    end
+  end
+
+  def order_renderings
+    Rendering.transaction do
+      @grid = Grid.find(params[:id])
+      renderings_ids = params[:renderings]
+      renderings_ids.andand.each_with_index do |r,i|
+        rendering = Rendering.find(r)
+        rendering.position = i+1
+        rendering.save!
+      end
+      @page = Rendering.find(renderings_ids.first).page
+    end
+    respond_to do |wants|
+      wants.js { render :template => '/rendering/grid/show' }
     end
   end
 end

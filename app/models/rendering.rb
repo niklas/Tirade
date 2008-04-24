@@ -25,8 +25,10 @@ class Rendering < ActiveRecord::Base
   belongs_to :content, :polymorphic => true
   belongs_to :part
 
+  acts_as_list :scope => :grid_id
+
   has_finder :for_grid, lambda {|gr|
-    {:conditions => ['grid_id = ?', gr.id]}
+    {:conditions => ['renderings.grid_id = ?', gr.id], :order => 'renderings.position'}
   }
 
   def options
