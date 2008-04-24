@@ -1,0 +1,17 @@
+<%= warning_tag 'Editing this part may change the appearance of other pages' %>
+<%= error_messages_for :part %>
+<% update_rendering_part_form(@rendering) do |f| %>
+  <dl>
+    <dt> Name </dt>
+    <dd> <%= f.text_field :name %> </dd>
+    <dt> rHTML </dt>
+    <dd> <%= f.text_area :rhtml, :rows => 10 %> </dd>
+    <dt> Options </dt>
+    <dd> <%= f.text_area :options_as_yaml, :rows => 5 %> </dd>
+    <dt> Filename </dt>
+    <dd> <%= f.text_field :filename %> </dd>
+  </dl>
+
+  <%= show_rendering_link(@rendering, :label => 'cancel') %>
+  <%= f.submit "Update" %>
+<% end %>

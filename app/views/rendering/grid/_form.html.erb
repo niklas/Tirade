@@ -1,0 +1,7 @@
+<%= warning_tag 'Editing this grid may change the appearance of other pages' %>
+<%= error_messages_for :grid %>
+<% update_grid_form(@grid) do |f| %>
+  <%= f.select :yui, Grid::Types.invert %>
+  <%= show_rendering_link(@rendering, :label => 'cancel') %>
+  <%= submit_tag _('OK') %>
+<% end %>

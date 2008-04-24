@@ -81,9 +81,10 @@ class Part < ActiveRecord::Base
 
   def validate_rhtml
     if @template_binding
-      eval %Q[@content = FakeContent.new], @template_binding
+      eval %Q[@content ||= FakeContent.new], @template_binding
       begin
-        @html = render(@template_binding)
+        #@html = render(@template_binding, SaveLevel)
+        @html = render(@template_binding,0)
         validate_html
       rescue SecurityError => e
         errors.add(:rhtml, 'does something illegal: ' + e.message)
@@ -162,14 +163,14 @@ class Part < ActiveRecord::Base
   # and there must be a @part instance variable
   #
   # it's so ugly..
-  def render(bind,opts={})
+  def render(bind,save_level=0,opts={})
     to_eval =%Q[#{filename} = @content\n]
     options.keys.each do |key|
       to_eval << %Q[#{key} = @part.options[:#{key}]\n]
     end
     
     eval to_eval, bind
-    erb = ERB.new(rhtml, SaveLevel)
+    erb = ERB.new(rhtml, save_level)
     erb.result(bind)
   end
 

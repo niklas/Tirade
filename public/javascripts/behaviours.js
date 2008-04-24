@@ -5,9 +5,9 @@ Event.addBehavior({
     'div.grid a.grid': Remote,
     'div.grid form.update.grid': Remote,
     'div.grid form.destroy.grid': Remote,
-    'form.part' : Observed(previewPart,{frequency: 5}),
     'body.role_admin div.rendering' : ContentEditable,
     'div.admin'     : Toolbox,
     'div#toolbox form': Remote,
-    'div#toolbox a': Remote
+    'div#toolbox a': Remote,
+    'div#toolbox form.part': Observed(previewRenderingPart,{frequency: 5})
 });

@@ -20,4 +20,8 @@ module ApplicationHelper
       content_tag(:div, flash[f], :id => 'flash', :class => "#{f.to_s}") if flash[f]
     end.join
   end
+
+  def warning_tag(text)
+    content_tag(:div,text,{:class => 'warning'})
+  end
 end

@@ -1,0 +1,11 @@
+rendering_dom = dom_id(@rendering)
+@part.template_binding = binding
+@content = @rendering.content
+if @part.valid?
+  @content = @rendering.content
+  page[rendering_dom].replace_html @part.render(binding)
+else
+  page[rendering_dom].replace_html error_messages_for(:part)
+end
+page[rendering_dom].visual_effect :highlight
+
