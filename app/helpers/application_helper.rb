@@ -24,4 +24,9 @@ module ApplicationHelper
   def warning_tag(text)
     content_tag(:div,text,{:class => 'warning'})
   end
+
+  def context
+    page.instance_variable_get("@context").instance_variable_get("@template")
+  end
+
 end
