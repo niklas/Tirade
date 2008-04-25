@@ -66,11 +66,6 @@ ActiveRecord::Schema.define(:version => 12) do
     t.datetime "updated_at"
   end
 
-  create_table "plugin_schema_info", :id => false, :force => true do |t|
-    t.string  "plugin_name"
-    t.integer "version"
-  end
-
   create_table "renderings", :force => true do |t|
     t.integer  "page_id"
     t.integer  "content_id"

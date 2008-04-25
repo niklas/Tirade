@@ -34,6 +34,7 @@ var Toolbox = Class.create({
         [
           Builder.node('h3',  { title: 'content',  style: 'position:relative;cursor:move;padding:0 0 0 10px;margin:0 0 0 2px;width:'+this.contentWidth+'px;line-height:'+this.options.headerHeight+'px;'},
           [
+            '',
             Builder.node('span',  { id: 'toolbox_header'}, 'header'  ),
             Builder.node('span',  { class: 'toolbox_close', style: 'cursor:pointer;background:url(/images/close_tiny.gif);top:11px;display:block;width:11px;height:11px;position:absolute;right:10px;'}, ''  )
           ]  ),
