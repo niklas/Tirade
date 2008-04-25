@@ -21,4 +21,5 @@ class Image < ActiveRecord::Base
                     :default_style => :thumbnail
 
   alias_attribute :title, :image_file_name
+  has_fulltext_search :image_file_name
 end

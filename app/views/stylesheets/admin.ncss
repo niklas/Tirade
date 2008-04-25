@@ -287,6 +287,12 @@ div.active {
   outline: thin solid #664455;
 }
 
+div.search-result {
+  cursor: pointer;
+  :hover {
+    background-color: #aaddee;
+  }
+}
 
 /* ----------------------------------------------- */
 /* ----------->>> Site CSS / GLOBAL <<<----------- */

@@ -73,3 +73,18 @@ Element.addMethods({
       $(element).$$assigned = null;
     }
 });
+
+SearchResults = Behavior.create({
+  onclick: function(e) {
+    var source = Event.element(e);
+    Event.stop(e);
+    return this._select(source);
+  },
+  _select: function(result) {
+    var splot = result.id.split('_');
+    new Effect.Highlight('rendering_content_type');
+    $('rendering_content_type').value = splot[0].capitalize().camelize();
+    new Effect.Highlight('rendering_content_id');
+    $('rendering_content_id').value = splot[1];
+  }
+});

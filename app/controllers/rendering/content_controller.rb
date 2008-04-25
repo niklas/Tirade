@@ -1,6 +1,17 @@
 class Rendering::ContentController < ApplicationController
+  protect_from_forgery :except => :new
   before_filter :fetch_rendering
   before_filter :fetch_content
+  # Search for all valid content types
+  def new
+    @term = params[:term]
+    @contents = Rendering.valid_content_types.inject([]) do |found,klass|
+      found + klass.search(@term)
+    end.flatten
+    respond_to do |wants|
+      wants.js
+    end
+  end
   def edit
     respond_to do |wants|
       wants.js

@@ -1,0 +1,2 @@
+page[:search_results].replace_html :partial => '/rendering/content/for_select', :collection => @contents
+page[:search_results].show

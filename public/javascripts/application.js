@@ -18,3 +18,11 @@ function previewRendering(element,value) {
   new Ajax.Request(preview_rendering_url({id: rendering_id}), 
         {asynchronous:true, evalScripts:true, parameters:value});
 }
+
+function searchAllContents(element,value) {
+  rendering_id = $$('#toolbox_content a.rendering').first().href.match(/(\d+)$/).last();
+  // TODO escape
+  new Ajax.Request(new_rendering_content_url({rendering_id: rendering_id}), 
+      {method: 'get', asynchronous:true, evalScripts:true, parameters:'term=' + value}
+  );
+}
