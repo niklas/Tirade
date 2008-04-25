@@ -34,8 +34,8 @@ var Toolbox = Class.create({
         [
           Builder.node('h3',  { title: 'content',  style: 'position:relative;cursor:move;padding:0 0 0 10px;margin:0 0 0 2px;width:'+this.contentWidth+'px;line-height:'+this.options.headerHeight+'px;'},
           [
-            'header',
-            Builder.node('span',  { id: 'toolbox_header', class: 'toolbox_close', style: 'cursor:pointer;background:url(/images/close_tiny.gif);top:11px;display:block;width:11px;height:11px;position:absolute;right:10px;'}, ''  )
+            Builder.node('span',  { id: 'toolbox_header'}, 'header'  ),
+            Builder.node('span',  { class: 'toolbox_close', style: 'cursor:pointer;background:url(/images/close_tiny.gif);top:11px;display:block;width:11px;height:11px;position:absolute;right:10px;'}, ''  )
           ]  ),
           Builder.node('div', { id: 'toolbox_content',   style: 'border-bottom:1px solid #D7D7D7;border-top:1px solid #BDBDBD;background:#fff;overflow-y:auto;padding:0 0 0 10px;margin: 0 0 0 '+this.shadowWidth+'px;width:'+ this.contentWidth +'px;height:'+this.contentHeight+'px;'},  'content' ),
           Builder.node('div', { id: 'toolbox_footer', title: 'footer', style: 'padding:0 0 0 10px;margin:0;width:'+this.contentWidth+'px;line-height:'+this.footerHeight+'px;'},  ''  ),
