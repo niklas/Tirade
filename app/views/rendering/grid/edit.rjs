@@ -1,3 +1,4 @@
-page[dom_id(@grid)].visual_effect :highlight
-page[:toolbox_header].replace_html "Edit Grid #{@grid.id}"
-page[:toolbox_content].replace_html :partial => 'form'
+page.update_toolbox(
+  :header => "Edit Grid #{@grid.id}",
+  :content => {:partial => '/rendering/grid/form'}
+)

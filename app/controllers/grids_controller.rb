@@ -60,7 +60,7 @@ class GridsController < ApplicationController
         rendering.position = i+1
         rendering.save!
       end
-      @page = Rendering.find(renderings_ids.first).page
+      @rendering = Rendering.find(renderings_ids.first)
     end
     respond_to do |wants|
       wants.js { render :template => '/rendering/grid/show' }

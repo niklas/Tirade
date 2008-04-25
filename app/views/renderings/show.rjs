@@ -1,15 +1,11 @@
-page[:toolbox_content].replace_html :partial => '/renderings/show', :object => @rendering
-page[:toolbox_header].replace_html "Rendering #{@rendering.id}"
-
+page.update_toolbox(
+  :header => "Rendering #{@rendering.id}",
+  :content => {:partial => '/renderings/show', :object => @rendering}
+)
+page.update_rendering(@rendering)
 @rendering.brothers_by_part.each do |brother|
-  page[dom_id(brother)].replace_html rendering_contents(brother)
-  page << %Q[Element.resetBehavior($('#{dom_id(brother)}'));]
+  page.update_rendering(brother)
 end if params[:part]
 
-rendering_dom = dom_id(@rendering)
-page[rendering_dom].visual_effect :highlight
-page.select('div.active').each do |elem|
-  elem.remove_class_name 'active'
-end
-page[rendering_dom].add_class_name 'active'
-page[dom_id(@rendering.grid)].add_class_name 'active'
+page.unmark_all_active
+page.mark_as_active(@rendering)

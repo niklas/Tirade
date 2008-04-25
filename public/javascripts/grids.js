@@ -68,4 +68,8 @@ SortableRenderings = Behavior.create({
   }
 });
 
-Element.resetBehavior = function(element) { element.$$assigned = null };
+Element.addMethods({
+    resetBehavior: function(element) {
+      $(element).$$assigned = null;
+    }
+});

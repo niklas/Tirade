@@ -146,6 +146,10 @@ var Toolbox = Class.create({
   Description:   removes the toolbox
   */
   removeToolbox: function(){
+    $$("div.active").each(function(value, index) {
+      value.removeClassName("active"); 
+      value.resetBehavior();
+    });
     $('toolbox').remove();
   },
   
