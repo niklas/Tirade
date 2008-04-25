@@ -21,7 +21,7 @@ var Toolbox = Class.create({
     this.toolbox;
     this.setup();
   },
-  
+
   setup: function() {
     // remove existing toolbox
     if ( $('toolbox') )
