@@ -83,6 +83,7 @@ class RenderingsController < ApplicationController
   end
   def preview
     @rendering = Rendering.find(params[:id])
+    @rendering.attributes = params[:rendering] if params[:rendering]
     @part = @rendering.part
     @part.attributes = params[:part] if params[:part]
     @rendering.grid.attributes = params[:grid] if params[:grid]

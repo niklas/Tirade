@@ -1,6 +1,6 @@
 page.update_toolbox(
   :header => "Edit Rendering #{@rendering.id}",
-  :content => {:partial => '/rendering/form'}
+  :content => {:partial => '/renderings/form'}
 )
 
 page.unmark_all_active

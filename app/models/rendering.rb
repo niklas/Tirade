@@ -15,10 +15,17 @@
 #
 
 class Rendering < ActiveRecord::Base
-  attr_accessible :position, :page, :grid, :content, :part, :part_id
+  # FIXME dynamic
+  ValidContentTypes = [Content, Document, Image]
+  def self.valid_content_types
+    ValidContentTypes
+  end
+
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
+  validates_inclusion_of :content_type, :in => ValidContentTypes.collect(&:to_s), :if => :content_id
 
   belongs_to :page
   belongs_to :grid
@@ -26,6 +33,7 @@ class Rendering < ActiveRecord::Base
   belongs_to :part
 
   acts_as_list :scope => :grid_id
+
 
   has_finder :for_grid, lambda {|gr|
     {:conditions => ['renderings.grid_id = ?', gr.id], :order => 'renderings.position'}

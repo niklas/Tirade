@@ -1,21 +1,30 @@
 <%= error_messages_for :rendering %>
 
-<% form_for(@rendering) do |f| %>
-  <p>
-    <b>Content</b><br />
-    <%= f.text_field :content_id %>
-  </p>
+<% update_rendering_form(@rendering) do |f| %>
+  <dl>
+    <dt>Content</dt>
+    <a name="content" />
+    <dd>
+      <dl>
+        <dt>Type</dt>
+        <dd>
+          <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :to_s  %>
+        </dd>
+        <dt>id</dt>
+        <dd>
+          <%= f.text_field :content_id %>
+        </dd>
+      </dl>
+    </dd>
 
-  <p>
-    <b>Part</b><br />
-    <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :name %>
-  </p>
+    <dt>Part</dt>
+    <a name="part" />
+    <dd>
+      <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :name %>
+    </dd>
+  </dl>
 
-  <p>
-    <%= f.submit @rendering.new_record? ? "Create" : "Update" %>
-  </p>
+  <%= show_rendering_link(@rendering, :label => 'cancel') %>
+  <%= f.submit @rendering.new_record? ? "Create" : "Update" %>
 <% end %>
 
-<% unless @rendering.new_record? %>
-  <%= link_to "cancel", rendering_path(@rendering) %>
-<% end %>
