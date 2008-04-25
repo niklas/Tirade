@@ -68,3 +68,4 @@ SortableRenderings = Behavior.create({
   }
 });
 
+Element.resetBehavior = function(element) { element.$$assigned = null };

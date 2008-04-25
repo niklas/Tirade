@@ -283,6 +283,10 @@ position: relative;
   }
 }
 
+div.active {
+  outline: thin solid #664455;
+}
+
 
 /* ----------------------------------------------- */
 /* ----------->>> Site CSS / GLOBAL <<<----------- */

@@ -31,6 +31,14 @@ class Rendering < ActiveRecord::Base
     {:conditions => ['renderings.grid_id = ?', gr.id], :order => 'renderings.position'}
   }
 
+  has_finder :with_part, lambda {|part|
+    {:conditions => ['renderings.part_id = ?', part.id], :order => 'renderings.position'}
+  }
+
+  def brothers_by_part
+    page.renderings.with_part(self.part)
+  end
+
   def options
     {}
   end
