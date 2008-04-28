@@ -102,3 +102,13 @@ describe "The main Page with all fixtures" do
     @page.should have_at_least(3).grids
   end
 end
+
+describe "Having all fixtures loaded" do
+  fixtures :all
+  it "destroying the about page should succeed" do
+    # this checks for the AR#update_all monkepatch
+    lambda do
+      pages(:about).destroy
+    end.should_not raise_error
+  end
+end
