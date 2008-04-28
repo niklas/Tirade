@@ -1,14 +1,18 @@
 GridEditable = Behavior.create({
   initialize: function() {
     var me = this.element;
-    new Insertion.Top(this.element, 
-      $div(
-        {class: 'admin', id: 'admin_'+this.element.id},
-        [ 
-          $a({href: edit_grid_url({id: numeric_id_for(this.element)})},'edit')
-        ]
-      )
-    );
+    admin_id = 'admin_'+this.element.id;
+    if (!$(admin_id)) {
+      new Insertion.Top(this.element, 
+        $div(
+          {class: 'admin', id: admin_id},
+          [ 
+            $a({href: edit_grid_url({id: numeric_id_for(this.element)})},'edit')
+          ]
+        )
+      );
+      Event.addBehavior({'div.grid > div.admin > a': Remote.LinkWithToolbox})
+    }
   },
   // FIXME make use of this and export to a super class
   _numeric_id: function(me) {
@@ -19,14 +23,18 @@ GridEditable = Behavior.create({
 ContentEditable = Behavior.create({
   initialize: function() {
     var me = this.element;
-    new Insertion.Top(this.element, 
-      $div(
-        {class: 'admin', id: 'admin_'+this.element.id},
-        [ 
-          $a({href: rendering_url({id: numeric_id_for(this.element)})},'edit')
-        ]
-      )
-    );
+    admin_id = 'admin_'+this.element.id;
+    if (!$(admin_id)) {
+      new Insertion.Top(this.element, 
+        $div(
+          {class: 'admin', id: admin_id},
+          [ 
+            $a({href: rendering_url({id: numeric_id_for(this.element)})},'edit')
+          ]
+        )
+      );
+      Event.addBehavior({'div.rendering > div.admin > a': Remote.LinkWithToolbox})
+    }
   },
   // FIXME make use of this and export to a super class
   _numeric_id: function(me) {
@@ -34,13 +42,13 @@ ContentEditable = Behavior.create({
   }
 });
 
-Toolbox = Behavior.create({
+Remote.LinkWithToolbox = Behavior.create({
   initialize: function() {
-    var element = this.element
-    Event.observe(this.element, 'click', function(event) {
-      element.href = ""
-      new Toolbox('utilities', this.element.firstDescendant().href, {'cornerRadius': 10})
-    }.bind(this));
+    return new Remote.Link(this.element, { 
+      onCreate: function() {
+        new Toolbox('utilities', 'blabla', {'cornerRadius': 10})
+      }
+    })
   }
 });
 

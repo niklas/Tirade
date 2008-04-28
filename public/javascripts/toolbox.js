@@ -47,7 +47,6 @@ var Toolbox = Class.create({
     this.toolbox.appendChild(this.canvas)
     this.element.insert(this.toolbox);
     new Draggable(this.toolbox, { handle: this.toolbox.down('h3') });
-    this.getContent();
   },
   
   /*
