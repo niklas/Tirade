@@ -1,0 +1,7 @@
+page.update_toolbox(
+  :header => "Rendering #{@rendering.id}",
+  :content => {:partial => '/renderings/show', :object => @rendering}
+)
+page.update_grid_for(@rendering)
+page.unmark_all_active
+page.mark_as_active(@rendering)

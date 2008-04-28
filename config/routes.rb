@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :path_prefix => '/manage' do |manage|
     manage.admin 'admin/:action/:id', :controller => 'admin'
     manage.resources :renderings,
-      :member => {:preview => :put} do |renderings|
+      :member => {:preview => :put, :duplicate => :put} do |renderings|
       renderings.resource :grid, :controller => 'rendering/grid'
       renderings.resource :part, :controller => 'rendering/part'
       renderings.resource :content, :controller => 'rendering/content'

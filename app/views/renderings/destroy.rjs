@@ -1,0 +1,3 @@
+page.close_toolbox
+page.update_grid_for(@rendering)
+page.unmark_all_active

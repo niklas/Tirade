@@ -37,6 +37,15 @@ class RenderingsController < ApplicationController
     end
   end
 
+  def duplicate
+    @original_rendering = Rendering.find(params[:id])
+    respond_to do |wants|
+      if (@rendering = @original_rendering.clone) && @rendering.save
+        wants.js {render :action => 'create'}
+      end
+    end
+  end
+
   # POST /renderings
   # POST /renderings.xml
   def create
@@ -47,9 +56,11 @@ class RenderingsController < ApplicationController
         flash[:notice] = 'Rendering was successfully created.'
         format.html { redirect_to(@rendering) }
         format.xml  { render :xml => @rendering, :status => :created, :location => @rendering }
+        format.js 
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @rendering.errors, :status => :unprocessable_entity }
+        format.js   { render :action => "edit" }
       end
     end
   end
@@ -79,6 +90,7 @@ class RenderingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(renderings_url) }
       format.xml  { head :ok }
+      format.js
     end
   end
   def preview

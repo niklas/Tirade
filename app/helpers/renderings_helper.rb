@@ -7,6 +7,10 @@ module RenderingsHelper
       page[:toolbox_footer].replace_html footer
     end
   end
+
+  def close_toolbox
+    page[:toolbox].remove
+  end
   def update_rendering(rendering)
     dom = page.context.dom_id(rendering)
     page[dom].replace_html rendering_contents(rendering)
