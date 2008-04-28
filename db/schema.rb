@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 12) do
+ActiveRecord::Schema.define(:version => 13) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -66,6 +66,11 @@ ActiveRecord::Schema.define(:version => 12) do
     t.datetime "updated_at"
   end
 
+  create_table "plugin_schema_info", :id => false, :force => true do |t|
+    t.string  "plugin_name"
+    t.integer "version"
+  end
+
   create_table "renderings", :force => true do |t|
     t.integer  "page_id"
     t.integer  "content_id"
@@ -75,6 +80,13 @@ ActiveRecord::Schema.define(:version => 12) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content_type"
+  end
+
+  create_table "settings", :force => true do |t|
+    t.string   "var",        :null => false
+    t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

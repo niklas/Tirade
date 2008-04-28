@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
+  theme :current_theme
   
   # ==================
   # = Authentication =
@@ -23,11 +24,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+  def current_theme
+    @current_theme ||= if controller_name == 'public'
+                         Settings.public_theme
+                       else
+                         Settings.backend_theme
+                       end
+  end
+  hide_action :current_theme
+  
+
   private
   def fetch_rendering
     @rendering = Rendering.find(params[:rendering_id])
   end
-  
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'da7c5d7c04e209653d264f43028c248a'
