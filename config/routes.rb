@@ -1,9 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   
-  # kalle
-  map.connect ':controller/:action/:id', :controller => 'admin'
-  
   map.with_options :path_prefix => '/manage' do |manage|
+    manage.admin 'admin/:action/:id', :controller => 'admin'
     manage.resources :renderings,
       :member => {:preview => :put} do |renderings|
       renderings.resource :grid, :controller => 'rendering/grid'
