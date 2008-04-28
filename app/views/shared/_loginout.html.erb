@@ -1,5 +1,6 @@
 <% if logged_in? %>
-   <%= link_to "Logout (#{current_user.login})", logout_path %>
+   <span>Wilkommen, <%= current_user.login %></span>
+   <%= link_to "Log out", logout_path %>
 <% else %>
    <%= link_to 'Signup', signup_path %> | 
    <%= link_to 'Login', login_path %>

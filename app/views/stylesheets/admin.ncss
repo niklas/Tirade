@@ -24,6 +24,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
         font-size: 100%;
         font-family: inherit;
         vertical-align: baseline;
+        text-align: left;
 }
 
 body { line-height: 1.5; background: #E6E7E8; }
@@ -43,17 +44,17 @@ a img { border: none; }
 body { font-size: 75%; }
 
 body {
-  color: #222;
+  color: #333333;
   font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
 }
 h1,h2,h3,h4,h5,h6 {
-  color: #111;
+  color: #333333;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* ------->>> Headings <<<--------- */
 
-h1,h2,h3,h4,h5,h6 { font-weight: normal; }
+h1,h2,h3,h4,h5,h6 { font-weight: bold; }
 
 h1 { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
 h2 { font-size: 2em; margin-bottom: 0.75em; }
@@ -85,8 +86,8 @@ address     { margin-top: 1.5em; font-style: italic; }
 del         { color:#666; }
 
 a:focus,
-a:hover     { color: #000; }
-a           { color: #009; text-decoration: underline; }
+a:hover     { color: #0099ff; text-decoration: underline; }
+a           { color: #0099ff; text-decoration: none; }
 
 blockquote  { margin: 1.5em; color: #666; font-style: italic; }
 strong      { font-weight: bold; }
@@ -99,8 +100,8 @@ tt          { display: block; margin: 1.5em 0; line-height: 1.5; }
 /* ------->>> Tables <<<--------- */
 
 table   { margin-bottom: 1.4em; }
-th      { border-bottom: 2px solid #ccc; font-weight: bold; }
-td      { border-bottom: 1px solid #ddd; }
+th      { border-bottom: 1px solid #ccc; font-weight: bold; }
+td      { border-bottom: 1px dotted #ddd; }
 th,td   { padding: 4px 10px 4px 0; }
 tfoot   { font-style: italic; }
 caption { background: #ffc; }
@@ -127,18 +128,18 @@ table .last { padding-right: 0; }
 /* ----------------------------------------------- */
 
 /* float clearing for IE6 */
-* html .clear, * html .ref {
+* html .clear, * html .center {
   height: 1%;
   overflow: visible;
 }
 
 /* float clearing for IE7 */
-*+html .clear{
+*+html .clear, *+html .center{
   min-height: 1%;
 }
 
 /* float clearing for everyone else */
-.clear:after{
+.clear:after, .center:after{
   clear: both;
   content: ".";
   display: block;
@@ -168,13 +169,46 @@ pre {
 /* -------->>> Pattern CSS / GLOBAL <<<----------- */
 /* ----------------------------------------------- */
 
-/* -------->>> Forms <<<--------------- */
-div#utilities {
-	padding: 20px;
-	width: 95%;
-	text-align: right;
+/* -------->>> icon links <<<--------------- */
+a.link_publish, a.link_add_page, a.link_go_up_directory{
+  padding-left: 10px;
+}
+a.link_publish{
+  background: url(/images/icon_small_publish.gif) no-repeat center left;
+}
+a.link_add_page{
+  background: url(/images/icon_small_add_new_page.gif) no-repeat center left;
+}
+a.link_go_up_directory{
+  background: url(/images/icon_small_arrow_up.gif) no-repeat center left;
 }
 
+/* -------->>> tools icon links <<<--------------- */
+.tools_edit, .tools_copy, .tools_delete, .tools_unpublish{
+  display: block;
+  margin-right: 4px;
+  float: left;
+  width: 11px;
+  height: 13px;
+}
+
+
+.tools_edit{
+  background: url(/images/icon_small_edit.gif);
+}
+.tools_copy{
+  background: url(/images/icon_small_copy.gif) no-repeat;
+}
+.tools_delete{
+  background: url(/images/icon_small_delete.gif) no-repeat;
+}
+.tools_unpublish{
+  background: url(/images/icon_small_unpublish.gif) no-repeat;
+}
+
+
+
+/* -------->>> Forms <<<--------------- */
 div#flash {
 	margin: 5px auto;
 	text-align: center;
@@ -254,54 +288,258 @@ div.progressBar div.background {
   width: 0%;
 }
 
-/* -------->>> GRID <<<--------------- */
 
-div.grid {
-position: relative;
-  background-color: #ffffff;
-  div.grid {
-    background-color: #eeeeee;
-    div.grid {
-      background-color: #dddddd;
-      div.grid {
-        background-color: #cccccc;
-      }
-    }
-  }
-  div.admin {
-    position: absolute;
-    right: 0;
-    background-color: #111111;
-    color: #aaddaa;
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-  }
-  :hover > div.admin {
-    background-color: #334433;
-  }
-}
-
-div.active {
-  outline: thin solid #664455;
-}
-
-div.search-result {
-  cursor: pointer;
-  :hover {
-    background-color: #aaddee;
-  }
-}
 
 /* ----------------------------------------------- */
 /* ----------->>> Site CSS / GLOBAL <<<----------- */
 /* ----------------------------------------------- */
 /* -------->>> Layout / GLOBAL <<<--------------- */
 
+BODY#admin{
+  background: #e6e6d2 url(/images/admin_bg.gif) repeat-x;
+  DIV#utilities{
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    span{
+      margin-right: 10px;
+      color: #cccccc;
+    }
+    a{
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      background: #0099ff;
+      padding: 2px 9px;
+      color: white;
+      text-decoration: none;
+    }
+    a:hover{
+      text-decoration: underline;
+    }
+  }
+}
+
+BODY#admin{
+  DIV.center{
+    position: relative;
+    width: 940px;
+    margin: 0 auto;  
+  }
+  
+  DIV.center.header{
+    height: 100px;
+    h1{
+      margin:0;
+      padding: 15px 0px 0pt 0pt;
+      background: url(/images/backend_logo.png) no-repeat right bottom;
+      text-indent: -9000px;
+      height: 72px;
+      width: 100px;
+      float: left;
+    }
+    ul{
+      margin: 0 0 0 85px;
+      padding: 042px 0 0 0;
+      li{
+        a{
+          color: #ddd;
+          text-transform: uppercase;
+          float: left;
+          display: block;
+          width: 95px;
+          height: 49px;
+          padding: 3px;
+          border-right: 1px dotted #aaa;
+          text-decoration: none;
+        }
+        a.action{
+          color: #ff9933;
+        }
+        a:hover{
+          background: #333;
+          text-decoration: underline;
+        }
+        a.active{
+          background: #333333;
+        }
+      }
+    }
+    form{
+      float: right;
+      text-align: left;
+      width: 262px;
+      padding: 10px 0;
+      
+      input#search{
+        width: 177px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+BODY#admin{
+  DIV.center.content{
+    margin: -3pt auto;
+    h2{
+      padding: 8px 10px 0;
+      border-bottom: 1px solid #333;
+    }
+    DIV.site_nav{
+      float: left;
+      width: 275px;
+      DIV.panal{
+        -moz-border-radius-topleft: 3px;
+        -moz-border-radius-topright: 3px;
+        -webkit-border-radius-topleft: 3px;
+        -webkit-border-radius-topright: 3px;
+        background: #fff;
+        h5, h5.with_tabs{
+          font-weight: normal;
+          text-transform: uppercase;
+          border-bottom: 1px solid #aaa;
+          padding: 0 10px 10px;
+          height:20px;
+          line-height:31px;
+          margin-bottom: 0;
+        }
+        h5.with_tabs{
+          border-bottom: 1px solid #333;
+          padding: 0 0 10px 0;
+          ul{
+            margin: 0;
+            li{
+              a{
+                color: #DDDDDD;
+                display: block;
+                float: left;
+                padding: 0 67px 0 10px;
+                border-bottom: 4px solid #fff;
+              }
+              a.active, a:hover{
+                color: #333;
+                border-bottom: 4px solid #333;
+              }
+            }
+          }
+        }      
+        ul{
+          
+        }
+      }
+    }
+    DIV.main_content{
+      float: right;
+      width: 655px;
+      ul.nav{
+        margin: 0;
+        height: 27px;
+        border-bottom: 4px solid #333;
+        li{
+          a{
+            text-transform: uppercase;
+            -moz-border-radius-topleft: 3px;
+            -moz-border-radius-topright: 3px;
+            -webkit-border-radius-topleft: 3px;
+            -webkit-border-radius-topright: 3px;
+            display: block;
+            width: 50px;
+            color: #ddd;
+            float: left;
+            background: #999999;
+            line-height: 27px;
+            margin: 0pt 6px 0pt 0pt;
+            padding: 0pt 34px;
+            text-decoration: none;
+          }
+          a.active{
+            background: #333333;
+            color: #fff;
+          }
+          a:hover{
+            background: #333333;
+            text-decoration: underline;
+          }
+        }
+      }
+      table{
+        width: 100%;
+        
+        caption{
+          background: #cccccc;
+          ul.prime_options{
+            padding: 0 0 0 10px;
+            margin: 0;
+            li{
+              a{
+                line-height: 40px;
+                display: block;
+                float: left;
+                margin-right: 21px;
+                padding-left: 17px;
+              }
+            }
+          }
+          ul.sec_options{
+            padding: 0 0 0 10px;
+            margin: 0;
+            float: right;
+            li{
+              float: left;
+              a{
+                text-transform: uppercase;
+                -moz-border-radius: 1px;
+                -webkit-border-radius: 1px;
+                background: #0099ff;
+                color: #fff;
+                line-height: 17px;
+                display: block;
+                float: left;
+                margin: 10px 6px;
+                padding:0 10px;
+              }
+            }
+          }
+        }
+        thead{
+          tr{
+            th{
+             line-height: 23px;
+             padding: 4px 10px 4px 10pt;
+             background: #fff;
+            }
+          }
+        }
+        tbody{
+          tr{
+            td{
+              background: #fff;
+              padding: 7pt 0pt 0pt 10px;
+              input{
+                width: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+BODY#admin{
+  DIV#footer{
+    text-align: center;
+    h5{  
+      text-align: center;
+      background: #333333;
+      text-transform: uppercase;
+      color: #fff;    
+      margin: 0;
+      font-weight: normal;
+      height: 100px;
+    }
+  }
+}  
+
+
+
 /* -------->>> Index.html / local <<<--------------- */
-BODY#index{
-}
-/* -------->>> contact.html / local <<<--------------- */
-BODY#index{
-}

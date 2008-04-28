@@ -3,6 +3,9 @@ module ApplicationHelper
 
   ToolboxContent = 'toolbox_content'
 
+  def controller_name
+    controller.controller_name
+  end
 
   # just a placeholder for translations (localisation plugin)
   def _(phrase)
