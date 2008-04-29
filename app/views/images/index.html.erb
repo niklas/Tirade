@@ -1,4 +1,7 @@
 <ul>
-	<li>Test</li>
-	<li>Test 2</li>
+	<% for image in @images %>
+		<li><%= image_tag image.image.url %> <%= image.title %> (<%= link_to 'Remove', image, :method => :delete %>)</li>
+	<% end %>
 </ul>
+
+<%= link_to 'Upload Images', new_image_path %>
