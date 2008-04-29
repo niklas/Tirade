@@ -34,10 +34,14 @@
 
   <%= flash_messages %>
   <div class="center content">
+    <h2>Site Manager</h2>
+
+    <%= render :partial => '/layouts/admin_navigation' %>
+
     <%= yield %>
   </div>
 
-  <div idtirade="footer">
+  <div id="footer">
     <h5>Site List</h5>
   </div>  
 </body>

@@ -1,0 +1,22 @@
+<div class="site_nav">
+  <% panel( Proc.new do %>
+    <%= panel_item(link_to('Catagories', {}, :class => (@content.nil? ? '' : 'active'))) %>
+    <%= panel_item(link_to('Sitemap', {}, :class => (@page.nil? ? '' : 'active'))) %>
+  <%        end)  do %>
+    <%= panel_item(index_pages_link :label => 'Music') %>
+    <%= panel_item(index_pages_link :label => 'People') %>
+    <%= panel_item(index_pages_link :label => 'Lifestyle') %>
+  <% end %>
+
+  <% panel "Assets" do %>
+    <%= panel_item(index_images_link :label => 'Images') %>
+    <%= panel_item(index_videos_link :label => 'Videos') %>
+  <% end %>
+
+  <% panel "Parts" do %>
+    <%= panel_item(index_parts_link :label => 'All') %>
+    <%= panel_item(index_parts_link :label => 'Headlines') %>
+    <%= panel_item(index_parts_link :label => 'List') %>
+    <%= panel_item(index_parts_link :label => 'Teaser') %>
+  <% end %>
+</div>

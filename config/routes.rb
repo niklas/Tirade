@@ -24,6 +24,10 @@ ActionController::Routing::Routes.draw do |map|
                   :unsuspend => :put,
                   :purge     => :delete}
 
+    # TODO just for completeness
+    manage.resources :images
+    manage.resources :videos
+
   end
   map.resource :session
   
