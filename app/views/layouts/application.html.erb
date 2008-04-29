@@ -15,10 +15,10 @@
    <%= yield :head %>
 </head>
 <body id="<%= controller_name -%>" class="<%= user_roles_classes -%>">
-  <div id="utilities">
+  <%= flash_messages %>
+  <%= yield %>
+  <div id="footer">
     <%= render :partial => '/shared/loginout' %>
   </div>
 
-  <%= flash_messages %>
-  <%= yield %>
 </body>

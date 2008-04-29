@@ -4,7 +4,8 @@ module PagesHelper
     content_tag(
       :div,
       render(:partial => '/public/header', :object => thepage) + 
-      (layout ? render_grid_in_page(layout,thepage) : 'Page has no Layout'),
+      (layout ? render_grid_in_page(layout,thepage) : 'Page has no Layout') +
+      render(:partial => '/public/footer', :object => thepage),
       {:id => thepage.yui}
     )
   end

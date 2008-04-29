@@ -46,7 +46,7 @@ Remote.LinkWithToolbox = Behavior.create({
   initialize: function() {
     return new Remote.Link(this.element, { 
       onCreate: function() {
-        new Toolbox('utilities', 'blabla', {'cornerRadius': 10})
+        new Toolbox('footer', 'blabla', {'cornerRadius': 10})
       }
     })
   }

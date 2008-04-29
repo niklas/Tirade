@@ -169,7 +169,7 @@ pre {
 /* ----------------------------------------------- */
 
 /* -------->>> Forms <<<--------------- */
-div#utilities {
+div#footer {
 	padding: 20px;
 	width: 95%;
 	text-align: right;
