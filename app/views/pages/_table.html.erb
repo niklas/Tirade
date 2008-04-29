@@ -40,7 +40,7 @@
       <td><input type="checkbox"></td>
       <td><%=show_page_link(page, :label => h(page.title)) %></td>
       <td><%=h page.url %></td>
-      <td><%=h page.final_layout.name %></td>
+      <td><%=h page.andand.final_layout.andand.name %></td>
       <td>no state</td>
       <td><%= time_ago_in_words(page.updated_at) %></td>
       <td>
