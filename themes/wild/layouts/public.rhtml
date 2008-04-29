@@ -6,7 +6,7 @@
 			<%= render :partial => '/layouts/head' %>
       <%= theme_stylesheet_link_tag 'wild' %>
    </head>
-   <body>
+   <body class="<%= user_roles_classes -%>">
       <%= @content_for_layout %>
    </body>
 </html>
