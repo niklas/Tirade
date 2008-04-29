@@ -15,6 +15,8 @@ var Toolbox = Class.create({
     this.width          = 400;
     this.radius         = 6;
     this.height         = 500;
+		this.top						= 30;
+		this.left						= 30;
     this.footerHeight   = 30
     this.contentHeight  = this.height - this.footerHeight - this.options.headerHeight
     this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth)
@@ -28,7 +30,7 @@ var Toolbox = Class.create({
       $('toolbox').remove();
 
     this.drawWindow();
-    this.toolbox = Builder.node('div' , { id: 'toolbox', title: 'toolbox', style: 'text-align:left;position:absolute;z-index:10;height:' + this.height + 'px; width:' + this.width + 'px' },
+    this.toolbox = Builder.node('div' , { id: 'toolbox', title: 'toolbox', style: 'text-align:left;position:absolute;z-index:10;height:' + this.height + 'px; width:' + this.width + 'px;top:' + this.top + 'px; left:' + this.left + 'px'  },
       [ 
         Builder.node('div', {style: 'position:absolute;' }, 
         [

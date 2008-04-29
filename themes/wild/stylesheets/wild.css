@@ -73,6 +73,13 @@ textarea {
 
 /* overall structure */
 
+#custom-doc {
+	margin:auto;text-align:left; 
+	width:60.23em;
+	*width:58.78em;
+	min-width:783px;
+}
+
 body {
 }
 
@@ -106,3 +113,11 @@ body {
     background-color: #FFFFFF;
     color: #c72c1e;
 }
+
+#footer {
+	margin: 10px 0;
+	padding: 0 5px;
+	background-color: #d7dbde;
+	text-align:right;
+}
+
