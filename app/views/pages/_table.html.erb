@@ -1,0 +1,57 @@
+<table>
+  <colgroup>
+    <col width="50"/>
+    <col width="60"/>
+    <col width="65"/>
+    <col width="65"/>
+    <col width="60"/>
+    <col width="60"/>
+    <col width="60"/>
+  </colgroup>
+  <caption>
+    <ul class="prime_options">
+      <li><a class="link_publish" href="#">Publish</a></li>
+      <li><%= link_to 'Add Page', new_page_path %></li>
+      <% if @page %>
+        <li><%= link_to 'Go Up Directory', @page.parent, :class => 'link_go_up_directory' %></li>
+      <% end %>
+    </ul>
+    <ul class="sec_options">
+      <li><a class="action" href="#">Refresh</a></li>
+      <li><a href="#">Save</a></li>
+    </ul>
+  </caption>
+
+  <thead>
+    <tr>
+      <th><input type="checkbox"></input></th>
+      <th><a href="#">Title</a></th>
+      <th><a href="#">URL</a></th>
+      <th><a href="#">Priority</a></th>
+      <th><a href="#">Status</a></th>
+      <th><a href="#">Last updated</a></th>
+      <th>Tools</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% table.each do |page| %>
+    <tr>
+      <td><input type="checkbox"></td>
+      <td><%=h page.title %></td>
+      <td><%=h page.url %></td>
+      <td><input type="text" value="1"></td>
+      <td>no state</td>
+      <td><%= time_ago_in_words(page.updated_at) %></td>
+      <td>
+        O O O O
+        <% link_to 'Show', page %>
+        <% link_to 'Edit', edit_page_path(page) %>
+        <% link_to 'Destroy', page, :confirm => 'Are you sure?', :method => :delete %>
+        <% link_to 'Show in Public Page', page %>
+      </td>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>
+

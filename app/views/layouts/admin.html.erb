@@ -2,16 +2,10 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <title>Tirade without title (application layout)</title>
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css">
-	 <%= stylesheet_link_tag('admin') if current_user.andand.is_admin? %>
-   <%= javascript_include_tag *%w(prototype effects dragdrop controls) %>
-   <%= javascript_include_tag *%w(application) %>
-   <%= javascript_include_tag *%w(lowpro) %>
-   <%= javascript_include_tag *%w(named_routes grids) %>
-   <%= javascript_include_tag *%w(behaviours) %>
-   <%= javascript_include_tag *%w(builder) %>
-   <%= yield :head %>
+  <title>Tirade without title (admin layout)</title>
+  <%= render :partial => '/layouts/head' %>
+  <%= stylesheet_link_tag('admin') if current_user.andand.is_admin? %>
+  <%= yield :head %>
 </head>
 <body id="<%= controller_name -%>" class="<%= user_roles_classes -%>">
   <div class="center header">
@@ -38,7 +32,14 @@
 
     <%= render :partial => '/layouts/admin_navigation' %>
 
-    <%= yield %>
+    <div class="main_content">
+      <ul class="nav">
+        <li><a class="active" href="#">pages</a></li>
+        <li><a href="#">Publish</a></li>
+      </ul>
+
+      <%= yield %>
+    </div>
   </div>
 
   <div id="footer">
