@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 12
+# Schema version: 14
 #
 # Table name: images
 #
@@ -9,11 +9,12 @@
 #  image_file_size    :integer         
 #  created_at         :datetime        
 #  updated_at         :datetime        
+#  title              :string(255)     
 #
 
 # FIXME: Temporary location for the image styles configuration
 CONFIG = {}
-CONFIG[:thumbnail_size] = '100x100#'
+CONFIG[:thumbnail_size] = '60x60#'
 CONFIG[:upload_images_path] = '/public/upload/'
 
 class Image < ActiveRecord::Base
@@ -22,6 +23,6 @@ class Image < ActiveRecord::Base
                     :default_style => :thumbnail,
                     :path => ":rails_root#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
 
-  alias_attribute :title, :image_file_name
-  has_fulltext_search :image_file_name
+  
+  has_fulltext_search :title
 end
