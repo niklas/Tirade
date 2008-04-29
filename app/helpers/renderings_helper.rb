@@ -9,7 +9,7 @@ module RenderingsHelper
   end
 
   def close_toolbox
-    page[:toolbox].remove
+    page.select('#toolbox').each {|tb| tb.remove }
   end
   def update_rendering(rendering)
     dom = page.context.dom_id(rendering)
