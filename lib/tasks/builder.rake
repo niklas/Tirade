@@ -58,6 +58,7 @@ namespace :tirade do
           :grid => right_column,
           :part => part
         )
+        Grid.rebuild!
       end
     end
   end
