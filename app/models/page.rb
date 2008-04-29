@@ -33,7 +33,7 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :parent_id
   validates_uniqueness_of :url, :allow_nil => true
 
-  BlacklistesTitles = %w(admin)
+  BlacklistesTitles = %w(manage themes)
 
   def validate
     errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
