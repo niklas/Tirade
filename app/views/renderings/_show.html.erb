@@ -1,11 +1,14 @@
 <% rendering = show %>
 
 <dl class="rendering">
+  <dt>This Rendering</dt>
+  <dd>
+    <%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put %>
+    <%= link_to_remote 'delete', :url => rendering_path(rendering), :method => :delete, :confirm => 'Really Destroy this Rendering?' %>
+  </dd>
 <%= render :partial => '/rendering/content/show', :object => rendering %>
 <%= render :partial => '/rendering/grid/show', :object => rendering %>
 <%= render :partial => '/rendering/part/show', :object => rendering %>
-<%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put %>
-<%= link_to_remote 'delete', :url => rendering_path(rendering), :method => :delete, :confirm => 'Really Destroy this Rendering?' %>
 </dl>
 
 
