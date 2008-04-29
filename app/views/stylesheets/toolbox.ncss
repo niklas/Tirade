@@ -2,7 +2,7 @@
     p {
        padding: 5px 0px;
     }
-    dl.rendering {
+    dl {
 	   margin: 0;
 	   dt {
 	       margin-top: 10px;
@@ -36,4 +36,8 @@
             font-weight:bold;
         }
     }
+}
+
+div.rendering.active {
+    border: #c72c1e 1px dotted;
 }
