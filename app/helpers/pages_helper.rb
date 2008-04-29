@@ -3,7 +3,8 @@ module PagesHelper
     layout = thepage.final_layout
     content_tag(
       :div,
-      layout ? render_grid_in_page(layout,thepage) : 'Page has no Layout',
+      render(:partial => '/public/header', :object => thepage) + 
+      (layout ? render_grid_in_page(layout,thepage) : 'Page has no Layout'),
       {:id => thepage.yui}
     )
   end
