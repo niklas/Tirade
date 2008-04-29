@@ -36,6 +36,12 @@
             font-weight:bold;
         }
     }
+    ul {
+      margin-left: 2.3em;
+    }
+    span.active {
+      font-weight: bold;
+    }
 }
 
 div.rendering.active {
