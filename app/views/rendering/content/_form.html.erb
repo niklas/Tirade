@@ -1,11 +1,8 @@
 <%= warning_tag 'Editing this Content will change its appearance on other pages' %>
 <%= error_messages_for :content %>
 <% update_content_form(@content) do |f| %>
-  <dl>
   <%= render :partial => field_partial_for(@content), :object => f %>
-  </dl>
   <%= hidden_field_tag :rendering_id, @rendering.id %>
-  <%= show_rendering_link(@rendering, :label => 'cancel') %>
-  <%= submit_tag _('OK') %>
+  <p><%= submit_tag _('Submit'), :class => 'submit' %> or <%= show_rendering_link(@rendering, :label => 'cancel') %></p>
 <% end %>
 

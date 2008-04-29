@@ -1,0 +1,39 @@
+#toolbox  {
+    p {
+       padding: 5px 0px;
+    }
+    dl.rendering {
+	   margin: 0;
+	   dt {
+	       margin-top: 10px;
+	       font-weight:bold;
+	   }
+	}
+    div.warning {
+        margin-top: 10px;
+        color: #c72c1e;
+        font-weight: bold;
+    }
+    
+    form {
+        margin-top:5px;
+        input, textarea, select {
+            width:95%;
+            padding: 2px;
+            border: #AAAAAA 1px solid;
+            background-color: #efefef;
+        } 
+        select {
+            
+        }
+        input.submit {
+            width: auto;
+            border: #c72c1e 1px solid;
+        }
+        
+        label {
+            display:block;
+            font-weight:bold;
+        }
+    }
+}
