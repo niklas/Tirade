@@ -6,6 +6,7 @@
 		<%= f.select :yui, Grid::Types.invert %>
 	</p>
   <p>
+   <%= f.hidden_field :rendering_id %>
   	<%= submit_tag _('Apply'), :class => 'submit' %> or <%= show_rendering_link(@rendering, :label => 'cancel') %>
 	</p>
 <% end %>

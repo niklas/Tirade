@@ -23,7 +23,7 @@ class Grid < ActiveRecord::Base
     'yui-gd' =>	'1/3 - 2/3',
     'yui-ge' =>	'3/4 - 1/4',
     'yui-gf' =>	'1/4 - 3/4',
-    'yui-u'  =>   'empty'
+    'yui-u'  =>   'single'
   }
   IdealChildrenCount = {
     'yui-g'  =>   2,
@@ -35,6 +35,9 @@ class Grid < ActiveRecord::Base
     'yui-u'  =>   0
   }
   validates_inclusion_of :yui, :in => Types
+
+  # save the rendering context
+  attr_accessor :rendering_id
 
   def before_destroy
     children.each(&:destroy)

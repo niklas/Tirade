@@ -23,17 +23,35 @@ class GridsController < ApplicationController
   def edit
     @grid = Grid.find(params[:id])
     respond_to do |wants|
-      wants.js
+      wants.js do
+        if (rid = params[:rendering_id]) && (@rendering = Rendering.find_by_id(rid))
+          @grid.rendering_id = rid
+          render :template => '/rendering/grid/edit'
+        else
+          render
+        end
+      end
     end
   end
 
   def update
     @grid = Grid.find(params[:id])
     respond_to do |wants|
-      if @grid.update_attributes(params[:grid])
-        wants.js { render :action => 'show' }
-      else
-        wants.js { render :action => 'edit' }
+      wants.js do
+        @rendering = (rid = params[:grid][:rendering_id]) ? Rendering.find_by_id(rid) : nil
+        if @grid.update_attributes(params[:grid])
+          if @rendering
+            render :template => '/rendering/grid/show'
+          else
+            render :action => 'show'
+          end
+        else
+          if @rendering
+            render :template => '/rendering/grid/edit'
+          else
+            render :action => 'edit'
+          end
+        end
       end
     end
   end
