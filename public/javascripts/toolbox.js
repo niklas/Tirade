@@ -12,9 +12,9 @@ var Toolbox = Class.create({
 		this.shadowWidth    = 3;
 		this.shadowOffset   = this.shadowWidth * 2;		
     this.canvas;
-    this.width          = 300;
+    this.width          = 400;
     this.radius         = 6;
-    this.height         = 400;
+    this.height         = 500;
     this.footerHeight   = 30
     this.contentHeight  = this.height - this.footerHeight - this.options.headerHeight
     this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth)
