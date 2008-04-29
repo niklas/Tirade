@@ -49,6 +49,14 @@ Remote.LinkWithToolbox = Behavior.create({
         new Toolbox('footer', 'blabla', {'cornerRadius': 10})
       }
     })
+  },
+  onmouseover: function() {
+    parent_div = this.element.parentNode.parentNode;
+    parent_div.addClassName('hover');
+  },
+  onmouseout: function() {
+    parent_div = this.element.parentNode.parentNode;
+    parent_div.removeClassName('hover');
   }
 });
 
