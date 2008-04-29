@@ -15,6 +15,7 @@ class PagesController < ApplicationController
   # GET /pages/1.xml
   def show
     @page = Page.find(params[:id])
+    @pages = @page.children
 
     respond_to do |format|
       format.html # show.html.erb

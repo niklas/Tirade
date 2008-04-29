@@ -5,7 +5,7 @@
     <li><a href="#">Publish</a></li>
   </ul>
 
-  <%= render_table_for((1..10).to_a.collect {|i| Document.new(:title => 'foo')}) %>
+  <%= render_table_for @contents %>
   
   <div class="pagination_bottom">
     Will Paginate later

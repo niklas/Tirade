@@ -24,10 +24,10 @@
 
   <thead>
     <tr>
-      <th><input type="checkbox"></input></th>
+      <th><input type="checkbox" /></th>
       <th><a href="#">Title</a></th>
       <th><a href="#">URL</a></th>
-      <th><a href="#">Priority</a></th>
+      <th><a href="#">Layout</a></th>
       <th><a href="#">Status</a></th>
       <th><a href="#">Last updated</a></th>
       <th>Tools</th>
@@ -38,9 +38,9 @@
     <% table.each do |page| %>
     <tr>
       <td><input type="checkbox"></td>
-      <td><%=h page.title %></td>
+      <td><%=show_page_link(page, :label => h(page.title)) %></td>
       <td><%=h page.url %></td>
-      <td><input type="text" value="1"></td>
+      <td><%=h page.final_layout.name %></td>
       <td>no state</td>
       <td><%= time_ago_in_words(page.updated_at) %></td>
       <td>

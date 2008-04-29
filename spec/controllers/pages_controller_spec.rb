@@ -66,6 +66,7 @@ describe PagesController do
 
     before(:each) do
       @page = mock_model(Page)
+      @page.stub!(:children).and_return([@page,@page])
       Page.stub!(:find).and_return(@page)
     end
   
@@ -98,6 +99,7 @@ describe PagesController do
 
     before(:each) do
       @page = mock_model(Page, :to_xml => "XML")
+      @page.stub!(:children).and_return([@page,@page])
       Page.stub!(:find).and_return(@page)
     end
   
