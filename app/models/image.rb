@@ -26,7 +26,16 @@ class Image < ActiveRecord::Base
   
   has_fulltext_search :title
   
+  # validates_presence_of :image_file_name
+  validates_attachment_presence :image
+  
   before_create :generate_title
+  
+  def multiple_images=(images)
+    images.each do |attributes|
+      Image.create(attributes) unless attributes[:image].class.to_s == 'String'
+    end
+  end
   
   private
   def generate_title

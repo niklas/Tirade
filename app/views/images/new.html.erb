@@ -1,10 +1,13 @@
 <h4>Upload Images</h4>
+<%= error_messages_for :image %>
 
-<% form_for Image.new, :html => { :multipart => true } do |f| %>
-	<%= f.label :title %>
-	<%= f.text_field :title %><br />
-	<%= f.label :image %>
+<% form_for @image, :html => {:multipart => true} do |f|%>
+	<div id="upload_images">
 	<%= f.file_field :image %><br />
+		
+	</div>
 	
+	<%= add_image_link 'Add another image' %>
+	<br />
 	<%= f.submit 'Upload Images' %>
 <% end %>
