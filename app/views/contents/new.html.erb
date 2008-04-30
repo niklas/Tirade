@@ -4,6 +4,11 @@
 
 <% form_for(:content, @content, :url => contents_path) do |f| %>
   <p>
+    <label for="page_parent_id">Parent</label>
+    <%= f.collection_select :wanted_parent_id, NewsFolder.find(:all), :id, :title  %>
+  </p>
+
+  <p>
     <b>Title</b><br />
     <%= f.text_field :title %>
   </p>
