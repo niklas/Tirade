@@ -16,7 +16,7 @@
 
 class Rendering < ActiveRecord::Base
   # FIXME dynamic
-  ValidContentTypes = [Content, Document, Image]
+  ValidContentTypes = [Content, Document, Image, NewsFolder, NewsItem]
   def self.valid_content_types
     ValidContentTypes
   end
