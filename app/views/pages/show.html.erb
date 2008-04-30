@@ -10,22 +10,13 @@
 
 <p>
   <b>Parent:</b>
-  <%=h @page.parent_id %>
+  <%=h @page.parent.andand.title %>
 </p>
 
-<p>
-  <b>Lft:</b>
-  <%=h @page.lft %>
-</p>
-
-<p>
-  <b>Rgt:</b>
-  <%=h @page.rgt %>
-</p>
 
 <p>
   <b>Layout:</b>
-  <%=h @page.layout_id %>
+  <%=h @page.final_layout.andand.label || 'none!' %>
 </p>
 
 

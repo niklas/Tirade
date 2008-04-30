@@ -18,7 +18,7 @@
 class Page < ActiveRecord::Base
   acts_as_nested_set
 
-  attr_protected :layout_id, :created_at, :updated_at
+  attr_protected :created_at, :updated_at
 
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
   has_many :renderings
@@ -34,6 +34,10 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :url, :allow_nil => true
 
   BlacklistesTitles = %w(manage themes)
+
+  has_finder :all_except, lambda {|me|
+    {:conditions => ['id != ?',me.id]}
+  }
 
   def validate
     errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
@@ -52,6 +56,20 @@ class Page < ActiveRecord::Base
 
   def generated_url
     self_and_ancestors.collect(&:title_unless_root).compact.collect(&:urlize).join('/')
+  end
+
+  def wanted_parent_id
+    self.read_attribute(:parent_id)
+  end
+
+  def wanted_parent_id=(new_parent_id)
+    if new_parent = self.class.find_by_id(new_parent_id)
+      transaction do
+        self.save!
+        self.move_to_child_of new_parent
+        self.save!
+      end
+    end
   end
 
   def title_unless_root
