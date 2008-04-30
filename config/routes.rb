@@ -24,8 +24,10 @@ ActionController::Routing::Routes.draw do |map|
                   :unsuspend => :put,
                   :purge     => :delete}
 
+    manage.resources :images,
+      :member => {:set_image_title => :post}
+      
     # TODO just for completeness
-    manage.resources :images
     manage.resources :videos
 
   end

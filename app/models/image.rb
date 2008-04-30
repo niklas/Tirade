@@ -22,7 +22,7 @@ class Image < ActiveRecord::Base
                     :styles => {:thumbnail => CONFIG[:thumbnail_size]},
                     :default_style => :thumbnail,
                     :path => ":rails_root/public#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension",
-                    :url => "#{CONFIG[:upload_images_path]}/:attachment/:id/:style/:basename.:extension"
+                    :url => "#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
   
   has_fulltext_search :title
   
@@ -30,6 +30,10 @@ class Image < ActiveRecord::Base
   validates_attachment_presence :image
   
   before_create :generate_title
+  
+  def url
+    image.url if image
+  end
   
   def multiple_images=(images)
     images.each do |attributes|

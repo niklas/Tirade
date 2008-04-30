@@ -1,5 +1,8 @@
 class ImagesController < ApplicationController
+  protect_from_forgery :only => [:create, :destroy]
+
   layout 'admin'
+  in_place_edit_for :image, :title
   
   def index
     # TODO: Pagination
@@ -26,5 +29,19 @@ class ImagesController < ApplicationController
     @image.destroy
     
     redirect_to(images_path)
+  end
+  
+  # ===========
+  # = Members =
+  # ===========
+  def set_image_title
+    @image = Image.find(params[:id])
+    @image.update_attribute :title, params[:value]
+    respond_to do |format|
+      format.html
+      format.js do
+        render :text => @image.title
+      end
+    end
   end
 end

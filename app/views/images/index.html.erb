@@ -1,8 +1,6 @@
 <ul>
-	<%# TODO Add Inline edit functionality for title  %>
-	<% for image in @images %>
-		<li><%= image_tag image.image.url %> <%= image.title %> (<%= link_to 'Remove', image, :method => :delete %>)</li>
-	<% end %>
+	<%= render :partial => @images %>
 </ul>
+	
 
 <%= link_to 'Upload Images', new_image_path %>
