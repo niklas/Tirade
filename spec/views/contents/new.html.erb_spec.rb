@@ -20,7 +20,7 @@ describe "/contents/new.html.erb" do
       with_tag("input#content_title[name=?]", "content[title]")
       with_tag("textarea#content_description[name=?]", "content[description]")
       with_tag("textarea#content_body[name=?]", "content[body]")
-      with_tag("input#content_type[name=?]", "content[type]")
+      with_tag("select#content_type[name=?]", "content[type]")
       without_tag("input#content_state[name=?]", "content[state]")
       without_tag("input#content_position[name=?]", "content[position]")
       without_tag("input#content_lft[name=?]", "content[lft]")
