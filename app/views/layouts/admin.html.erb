@@ -34,8 +34,8 @@
 
     <div class="main_content">
       <ul class="nav">
-        <li><a class="active" href="#">pages</a></li>
-        <li><a href="#">Publish</a></li>
+        <li><%= index_pages_link(:label => 'Pages') %></li>
+        <li><%= index_contents_link(:label => 'Contents') %></li>
       </ul>
 
       <%= yield %>
