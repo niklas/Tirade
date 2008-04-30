@@ -1,0 +1,10 @@
+<dl>
+  <% short_headlines.items.last(4).each do |item|  %>
+    <dt>
+      <%=h item.title %>
+    </dt>
+    <dd>
+      <%=h truncate(item.body,20) %>
+    </dd>
+<% end %>
+</dl>
