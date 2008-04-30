@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   layout 'admin'
 
   def index
-    @content = Content.find :all
+    @contents = Content.find :all
   end
 
   def show
