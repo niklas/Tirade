@@ -33,6 +33,15 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :parent_id
   validates_uniqueness_of :url, :allow_nil => true
 
+  Types = {
+    'doc'  =>   '750px',
+    'doc2'  =>   '950px',
+    'doc3'  =>   '100%',
+    'doc4'  =>   '974px'
+  }
+  def yui_name
+    Types[yui] || 'custom'
+  end
   BlacklistesTitles = %w(manage themes)
 
   has_finder :all_except, lambda {|me|

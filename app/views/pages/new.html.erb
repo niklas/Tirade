@@ -19,6 +19,12 @@
   </p>
 
   <p>
+    <label for="page_yui">Width</label>
+    <%= f.select :yui, Page::Types.invert %>
+  </p>
+
+
+  <p>
     <%= f.submit "Create", :class => "submit" %> or <%= link_to 'Back', pages_path %>
   </p>
 <% end %>

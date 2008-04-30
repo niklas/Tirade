@@ -3,9 +3,17 @@
     <%= panel_item(link_to('Categories', {}, :class => (@content.nil? ? '' : 'active'))) %>
     <%= panel_item(link_to('Sitemap', {}, :class => (@page.nil? ? '' : 'active'))) %>
   <%        end)  do %>
-    <%= panel_item(index_pages_link :label => 'Music') %>
-    <%= panel_item(index_pages_link :label => 'People') %>
-    <%= panel_item(index_pages_link :label => 'Lifestyle') %>
+    <% if (news_folders = NewsFolder.find(:all)).empty?  %>
+      <%= panel_item("No News Categories yet") %>
+    <% else %>
+      <% news_folders.each do |news_folder| %>
+      <%= panel_item( 
+            h(news_folder.title) + 
+            '   '  + 
+            link_to('new item', new_content_path(:content => {:type => 'NewsItem', :wanted_parent_id => news_folder.id}))
+          ) %>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% panel "Assets" do %>

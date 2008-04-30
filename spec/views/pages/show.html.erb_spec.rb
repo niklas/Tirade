@@ -8,9 +8,9 @@ describe "/pages/show.html.erb" do
     @page.stub!(:title).and_return("MyString")
     @page.stub!(:url).and_return("MyString")
     @page.stub!(:parent_id).and_return("1")
-    @page.stub!(:lft).and_return("1")
-    @page.stub!(:rgt).and_return("1")
-    @page.stub!(:layout_id).and_return("1")
+    @page.stub!(:parent).and_return(nil)
+    @page.stub!(:final_layout).and_return(nil)
+    @page.stub!(:yui_name).and_return('111%')
 
     assigns[:page] = @page
   end
