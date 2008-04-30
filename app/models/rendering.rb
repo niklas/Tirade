@@ -54,4 +54,8 @@ class Rendering < ActiveRecord::Base
   def final_options
     options.merge(part.andand.options || {})
   end
+
+  def content_type=(new_content_type)
+    write_attribute(:content_type, new_content_type.classify)
+  end
 end

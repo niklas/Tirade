@@ -97,10 +97,11 @@ SearchResults = Behavior.create({
     return this._select(source);
   },
   _select: function(result) {
-    var splot = result.id.split('_');
-    new Effect.Highlight('rendering_content_type');
-    $('rendering_content_type').value = splot[0].capitalize().camelize();
-    new Effect.Highlight('rendering_content_id');
-    $('rendering_content_id').value = splot[1];
+    if (match = result.id.match(/^(.+)_(\d+)$/)) {
+      new Effect.Highlight('rendering_content_type');
+      $('rendering_content_type').value = match[1];
+      new Effect.Highlight('rendering_content_id');
+      $('rendering_content_id').value = match[2];
+    }
   }
 });

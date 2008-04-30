@@ -11,6 +11,14 @@ module ActiveRecord
         add_limit!(sql, options, nil)
         connection.update(sql, "#{name} Update")
       end
+
+      def label
+        self.to_s
+      end
+
+      def name_for_js
+        label.underscore
+      end
     end
   end
 end
