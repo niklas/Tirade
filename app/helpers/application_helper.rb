@@ -32,4 +32,9 @@ module ApplicationHelper
     page.instance_variable_get("@context").instance_variable_get("@template")
   end
 
+  def public_content_link(content,opts = {})
+    label = opts.delete(:label) || content.title
+    link_to(label,content_path(content.url))
+  end
+
 end
