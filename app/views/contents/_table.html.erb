@@ -11,7 +11,7 @@
   <caption>
     <ul class="prime_options">
       <li><%= link_to 'New Content', new_content_path %></li>
-      <li><%= link_to 'New NewsFolder', new_content_path(:type => 'NewsFolder') %></li>
+      <li><%= link_to 'New NewsFolder', new_content_path(:content => {:type => 'NewsFolder'}) %></li>
       <% if @content %>
         <li><%= link_to 'Go Up', @content.parent, :class => 'link_go_up_directory' %></li>
       <% end %>
@@ -39,14 +39,14 @@
     <tr>
       <td><input type="checkbox"></td>
       <td><%=show_content_link(content, :label => h(content.title)) %></td>
-      <td><%=h(truncate(content.description,42))%></td>
-      <td><%=h(truncate(content.body,42))%></td>
+      <td><%=h(truncate(content.description,23))%></td>
+      <td><%=h(truncate(content.body,23))%></td>
       <td>no state</td>
       <td><%= time_ago_in_words(content.updated_at) %></td>
       <td>
-        <%= link_to 'Show', content %>
-        <%= link_to 'Edit', edit_content_path(content) %>
-        <%= link_to 'Destroy', content, :confirm => 'Are you sure?', :method => :delete %>
+        <%= show_content_link(content, :label => 'show') %>
+        <%= edit_content_link(content, :label => 'edit') %>
+        <%= link_to 'Destroy', content_path(content), :confirm => 'Are you sure?', :method => :delete %>
       </td>
     </tr>
     <% end -%>

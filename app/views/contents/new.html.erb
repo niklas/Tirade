@@ -2,7 +2,7 @@
 
 <%= error_messages_for :content %>
 
-<% form_for(@content) do |f| %>
+<% form_for(:content, @content, :url => contents_path) do |f| %>
   <p>
     <b>Title</b><br />
     <%= f.text_field :title %>
@@ -20,42 +20,7 @@
 
   <p>
     <b>Type</b><br />
-    <%= f.text_field :type %>
-  </p>
-
-  <p>
-    <b>State</b><br />
-    <%= f.text_field :state %>
-  </p>
-
-  <p>
-    <b>Owner</b><br />
-    <%= f.text_field :owner_id %>
-  </p>
-
-  <p>
-    <b>Published at</b><br />
-    <%= f.datetime_select :published_at %>
-  </p>
-
-  <p>
-    <b>Position</b><br />
-    <%= f.text_field :position %>
-  </p>
-
-  <p>
-    <b>Parent</b><br />
-    <%= f.text_field :parent_id %>
-  </p>
-
-  <p>
-    <b>Lft</b><br />
-    <%= f.text_field :lft %>
-  </p>
-
-  <p>
-    <b>Rgt</b><br />
-    <%= f.text_field :rgt %>
+    <%= f.collection_select :type, Content.valid_types, :to_s, :to_s %>
   </p>
 
   <p>

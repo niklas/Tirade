@@ -1,4 +1,6 @@
 class ContentsController < ApplicationController
+  layout 'admin'
+  before_filter :which_content_type, :only => [:create, :new]
   # GET /contents
   # GET /contents.xml
   def index
@@ -24,7 +26,7 @@ class ContentsController < ApplicationController
   # GET /contents/new
   # GET /contents/new.xml
   def new
-    @content = Content.new
+    @content = @klass.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,12 +42,12 @@ class ContentsController < ApplicationController
   # POST /contents
   # POST /contents.xml
   def create
-    @content = Content.new(params[:content])
+    @content = @klass.new(params[:content])
 
     respond_to do |format|
       if @content.save
         flash[:notice] = 'Content was successfully created.'
-        format.html { redirect_to(@content) }
+        format.html { redirect_to(content_path(@content)) }
         format.xml  { render :xml => @content, :status => :created, :location => @content }
       else
         format.html { render :action => "new" }
@@ -62,7 +64,7 @@ class ContentsController < ApplicationController
     respond_to do |format|
       if @content.update_attributes(params[:content])
         flash[:notice] = 'Content was successfully updated.'
-        format.html { redirect_to(@content) }
+        format.html { redirect_to(content_path(@content)) }
         format.xml  { head :ok }
         format.js do
           @rendering = Rendering.find(params[:rendering_id])
@@ -89,5 +91,12 @@ class ContentsController < ApplicationController
       format.html { redirect_to(contents_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+
+  def which_content_type
+    @klass = params[:content].andand[:type].andand.constantize || Document
+    @klass < Content ? @klass : Document
   end
 end
