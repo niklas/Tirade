@@ -96,6 +96,10 @@ class Grid < ActiveRecord::Base
     Types[yui] || '[unknown]'
   end
 
+  def label
+    [title,name].compact.join(' - ')
+  end
+
   protected
   def auto_create_missing_children
     while children.length < ideal_children_count
