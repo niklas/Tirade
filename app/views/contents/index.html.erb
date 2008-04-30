@@ -1,40 +1,4 @@
 <h1>Listing contents</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-    <th>Body</th>
-    <th>Type</th>
-    <th>State</th>
-    <th>Owner</th>
-    <th>Published at</th>
-    <th>Position</th>
-    <th>Parent</th>
-    <th>Lft</th>
-    <th>Rgt</th>
-  </tr>
+<%= render :partial => '/contents/table', :object => @contents %>
 
-<% for content in @contents %>
-  <tr>
-    <td><%=h content.title %></td>
-    <td><%=h content.description %></td>
-    <td><%=h content.body %></td>
-    <td><%=h content.type %></td>
-    <td><%=h content.state %></td>
-    <td><%=h content.owner_id %></td>
-    <td><%=h content.published_at %></td>
-    <td><%=h content.position %></td>
-    <td><%=h content.parent_id %></td>
-    <td><%=h content.lft %></td>
-    <td><%=h content.rgt %></td>
-    <td><%= link_to 'Show', content %></td>
-    <td><%= link_to 'Edit', edit_content_path(content) %></td>
-    <td><%= link_to 'Destroy', content, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New content', new_content_path %>
