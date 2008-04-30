@@ -33,6 +33,8 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :parent_id
   validates_uniqueness_of :url, :allow_nil => true
 
+  # TODO yui form parent
+
   Types = {
     'doc'  =>   '750px',
     'doc2'  =>   '950px',
