@@ -14,6 +14,7 @@
           ) %>
       <% end %>
     <% end %>
+    <%= panel_item(link_to('New', new_content_path(:content => {:type => 'NewsFolder'}))) %>
   <% end %>
 
   <% panel "Assets" do %>
