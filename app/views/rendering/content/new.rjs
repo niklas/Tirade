@@ -1,2 +1,6 @@
-page[:search_results].replace_html :partial => '/rendering/content/for_select', :collection => @contents
+if @contents.empty?
+  page[:search_results].replace_html 'nothing found, enter another search string'
+else
+  page[:search_results].replace_html :partial => '/rendering/content/for_select', :collection => @contents
+end
 page[:search_results].show
