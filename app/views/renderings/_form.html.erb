@@ -1,28 +1,30 @@
 <%= error_messages_for :rendering %>
 
-<dl>
-  <dt>Search Content</dt>
-  <dd>
-    <%= text_field_tag 'search' %>
-    <div id="search_results">
-    </div>
-  </dd>
-<% update_rendering_form(@rendering) do |f| %>
-  <dt>Content (Type, id)</dt>
-  <a name="content" />
-  <dd>
-    <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :to_s  %>
-    <%= f.text_field :content_id %>
-  </dd>
 
-  <dt>Part</dt>
+  	<form>
+  		<label>Search Content</label>
+    	<%= text_field_tag 'search' %>
+		</form>
+		
+    <ul id="search_results">
+    </ul>
+
+<% update_rendering_form(@rendering) do |f| %>
+  <p>
+  	<label for="content_type">Content (Type, id)</label>
+  	<a name="content" />
+    <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :to_s  %>
+    </p>
+		<p>
+			<label for="content_id">Content (Type, id)</label>
+			<%= f.text_field :content_id %>
+		</p>
+<p>
+  <label>Part</label>
   <a name="part" />
-  <dd>
     <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :name %>
-  </dd>
+</p>
 
   <%= show_rendering_link(@rendering, :label => 'cancel') %>
   <%= f.submit @rendering.new_record? ? "Create" : "Update" %>
 <% end %>
-</dl>
-
