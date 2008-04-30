@@ -49,5 +49,20 @@ love_letter:
   rgt: 50
 
     
+cheezeburgaz:
+  id: 1337
+  title: Cheezeburga Newz
+  description: I cna has Cheezeburga?
+  type: NewsFolder
+  state: 'published'
+  published_at: 2008-04-01 23:42:05
+  parent_id: 1
 
+ate_cookie:
+  title: I made you a Cookie
+  description: "... but I eated it"
+  type: NewsItem
+  state: 'published'
+  published_at: 2008-04-01 23:42:05
+  parent_id: 1337   # cheezeburgaz
 
