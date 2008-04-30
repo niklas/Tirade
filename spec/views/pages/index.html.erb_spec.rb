@@ -7,12 +7,12 @@ describe "/pages/index.html.erb" do
   before(:each) do
     page_98 = mock_model(Page)
     page_98.should_receive(:title).and_return("Title1")
-    page_98.should_receive(:url).and_return("url1")
+    page_98.should_receive(:url).twice.and_return("url1")
     page_98.should_receive(:final_layout).and_return(grids(:layout50_50))
     page_98.should_receive(:updated_at).and_return(Time.now.yesterday)
     page_99 = mock_model(Page)
     page_99.should_receive(:title).and_return("Title2")
-    page_99.should_receive(:url).and_return("url2")
+    page_99.should_receive(:url).twice.and_return("url2")
     page_99.should_receive(:final_layout).and_return(grids(:layout50_50))
     page_99.should_receive(:updated_at).and_return(Time.now.yesterday.yesterday)
 
