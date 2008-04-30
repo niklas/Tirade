@@ -1,1 +1,56 @@
+<table>
+  <colgroup>
+    <col width="50"/>
+    <col width="60"/>
+    <col width="65"/>
+    <col width="65"/>
+    <col width="60"/>
+    <col width="60"/>
+    <col width="60"/>
+  </colgroup>
+  <caption>
+    <ul class="prime_options">
+      <li><%= link_to 'New Content', new_content_path %></li>
+      <li><%= link_to 'New NewsFolder', new_content_path(:type => 'NewsFolder') %></li>
+      <% if @content %>
+        <li><%= link_to 'Go Up', @content.parent, :class => 'link_go_up_directory' %></li>
+      <% end %>
+    </ul>
+    <ul class="sec_options">
+      <li><a class="action" href="#">Refresh</a></li>
+      <li><a href="#">Save</a></li>
+    </ul>
+  </caption>
+
+  <thead>
+    <tr>
+      <th><input type="checkbox" /></th>
+      <th><a href="#">Title</a></th>
+      <th><a href="#">Description</a></th>
+      <th><a href="#">Body</a></th>
+      <th><a href="#">Status</a></th>
+      <th><a href="#">Last updated</a></th>
+      <th>Tools</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% table.each do |content| %>
+    <tr>
+      <td><input type="checkbox"></td>
+      <td><%=show_content_link(content, :label => h(content.title)) %></td>
+      <td><%=h(truncate(content.description,42))%></td>
+      <td><%=h(truncate(content.body,42))%></td>
+      <td>no state</td>
+      <td><%= time_ago_in_words(content.updated_at) %></td>
+      <td>
+        <%= link_to 'Show', content %>
+        <%= link_to 'Edit', edit_content_path(content) %>
+        <%= link_to 'Destroy', content, :confirm => 'Are you sure?', :method => :delete %>
+      </td>
+    </tr>
+    <% end -%>
+  </tbody>
+</table>
+
 Contents Table
