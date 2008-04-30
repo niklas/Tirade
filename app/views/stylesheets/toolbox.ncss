@@ -35,6 +35,9 @@
             display:block;
             font-weight:bold;
         }
+        select#rendering_content_type, input#rendering_content_id {
+          width: 43%;
+        }
     }
     ul {
       margin-left: 2.3em;
