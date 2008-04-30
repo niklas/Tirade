@@ -34,7 +34,7 @@ module ApplicationHelper
 
   def public_content_link(content,opts = {})
     label = opts.delete(:label) || content.title
-    link_to(label,content_path(content.url))
+    link_to(label,public_content_path(content.url))
   end
 
 end
