@@ -1,267 +1,204 @@
-/* ----------------------------------------------- */
-/* -------->>> Farben <<<--------------- */
-/* ----------------------------------------------- */
+/* basic styles */
 
-.white{
-  color: #fff
-}
+p,li,td,th,body {
+  font-family: Verdana, Arial, Geneva, sans-serif;
+  font-size: 11px;
+  line-height: 13px;
+  color: #5c5c5c;
+  background: transparent; }
 
-/* ----------------------------------------------- */
-/* ---------->>> RESET CSS / GLOBAL <<<----------- */
-/* ----------------------------------------------- */
+p {
+  padding: 3px 0; }
 
-html, body, div, span, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, code,
-del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td {            
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-weight: inherit;
-        font-style: inherit;
-        font-size: 100%;
-        font-family: inherit;
-        vertical-align: baseline;
-}
-
-body { line-height: 1.5; background: #E6E7E8; }
-
-table { border-collapse: separate; border-spacing: 0; }
-caption, th, td { text-align: left; font-weight:400; }
-
-blockquote:before, blockquote:after, q:before, q:after { content: ""; }
-blockquote, q { quotes: "" ""; }
-
-a img { border: none; }
-
-/* ----------------------------------------------- */
-/* ------->>> Typography CSS / GLOBAL <<<--------- */
-/* ----------------------------------------------- */
-
-body { font-size: 75%; }
+html, body {
+  height: 100.01%; }
 
 body {
-  color: #222;
-  font-family: "Helvetica Neue", "Lucida Grande", Helvetica, Arial, Verdana, sans-serif;
-}
-h1,h2,h3,h4,h5,h6 {
-  color: #111;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+  background-color: #FFFFFF; }
 
-/* ------->>> Headings <<<--------- */
+a {
+  color: #c72c1e;
+  text-decoration: none; }
 
-h1,h2,h3,h4,h5,h6 { font-weight: normal; }
+a:hover {
+  color: #c72c1e;
+  text-decoration: underline; }
 
-h1 { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
-h2 { font-size: 2em; margin-bottom: 0.75em; }
-h3 { font-size: 1.5em; line-height: 1; margin-bottom: 1em; }
-h4 { font-size: 1.2em; line-height: 1.25; margin-bottom: 1.25em; }
-h5 { font-size: 1em; font-weight: bold; margin-bottom: 1.5em; }
-h6 { font-size: 1em; font-weight: bold; }
+h1 {
+  font-size: 24px;
+  margin: 5px 0 10px 0;
+  font-weight: normal;
+  color: #c72c1e;
+ }
 
-/* ------->>> Text elements <<<--------- */
-
-p           { margin: 0 0 1.5em; }
-p.last      { margin-bottom: 0; }
-p img       { float: left; margin: 1.5em 1.5em 1.5em 0; padding: 0; }
-p img.top   { margin-top: 0; } /* Use this if the image is at the top of the
-
-. */
-img         { margin: 0 0 1.5em; }
-
-ul, ol      { margin:0 1.5em 1.5em 1.5em; }
-ul          { list-style-type: circle; }
-ol          { list-style-type: decimal; }
-dl          { margin: 0 0 1.5em 0; }
-dl dt       { font-weight: bold; }
-dd          { margin-left: 1.5em;}
-
-abbr,
-acronym     { border-bottom: 1px dotted #666; }
-address     { margin-top: 1.5em; font-style: italic; }
-del         { color:#666; }
-
-a:focus,
-a:hover     { color: #000; }
-a           { color: #009; text-decoration: underline; }
-
-blockquote  { margin: 1.5em; color: #666; font-style: italic; }
-strong      { font-weight: bold; }
-em,dfn      { font-style: italic; background: #ffc; }
-dfn         { font-weight: bold; }
-pre,code    { margin: 1.5em 0; white-space: pre; }
-pre,code,tt { font: 1em 'andale mono', 'monotype.com', 'lucida console', monospace; line-height: 1.5; }
-tt          { display: block; margin: 1.5em 0; line-height: 1.5; }
-
-/* ------->>> Tables <<<--------- */
-
-table   { margin-bottom: 1.4em; }
-th      { border-bottom: 2px solid #ccc; font-weight: bold; }
-td      { border-bottom: 1px solid #ddd; }
-th,td   { padding: 4px 10px 4px 0; }
-tfoot   { font-style: italic; }
-caption { background: #ffc; }
-
-/* Use this if you use span-x classes on th/td. */
-table .last { padding-right: 0; } 
-
-/* ------->>> default classes <<<--------- */
-
-.small      { font-size: .8em; margin-bottom: 1.875em; line-height: 1.875em; }
-.large      { font-size: 1.2em; line-height: 2.5em; margin-bottom: 1.25em; }
-.quiet      { color: #666; }
-
-.hide       { display: none; }
-.highlight  { background:#ff0; }
-.added      { color:#060; }
-.removed    { color:#900; }
-
-.top        { margin-top:0; padding-top:0; }
-.bottom     { margin-bottom:0; padding-bottom:0; }
-
-/* ----------------------------------------------- */
-/* ------->>> CLEARING CSS / GLOBAL <<<----------- */
-/* ----------------------------------------------- */
-
-/* float clearing for IE6 */
-* html .clear, * html .ref {
-  height: 1%;
-  overflow: visible;
-}
-
-/* float clearing for IE7 */
-*+html .clear{
-  min-height: 1%;
-}
-
-/* float clearing for everyone else */
-.clear:after{
-  clear: both;
-  content: ".";
-  display: block;
-  height: 0;
-  visibility: hidden;
-}
-
-/* ----------------------------------------------- */
-/* ---------->>> Class CSS / GLOBAL <<<----------- */
-/* ----------------------------------------------- */
-
-.float_left{
-        float: left;
-}
-.yellow{
-        color: #DECC46;
-}
-
-pre {
-  background-color: #eee;
-  padding: 10px;
-  font-size: 11px;
-}
-
-
-/* ----------------------------------------------- */
-/* -------->>> Pattern CSS / GLOBAL <<<----------- */
-/* ----------------------------------------------- */
-
-/* -------->>> Forms <<<--------------- */
-div#footer {
-	padding: 20px;
-	width: 95%;
-	text-align: right;
-}
-
-div#flash {
-	margin: 5px auto;
-	text-align: center;
-	width: 40%;
-	border: 1px solid #333;
-	padding: 5px;
-	.warning {
-		background-color: #F7DAD9;
-	}
-	.error {
-		background-color: #A33C36;
-	}
-	.message {
-		background-color: #DFFCC0;
-	}
-	.notice {
-		background-color: #FEFBCE;
-	}
-}
-
-/* -------->>> Forms <<<--------------- */
-.fieldWithErrors {
-  padding: 2px;
-  background-color: red;
-  display: table;
-}
-
-#errorExplanation {
-  width: 400px;
-  border: 2px solid red;
-  padding: 7px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-}
-
-#errorExplanation h2 {
-  text-align: left;
+h1, h2 {
+  margin: 5px 0 10px 0;
+  font-size: 18px;
   font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: -7px;
-  background-color: #c00;
-  color: #fff;
+  color: #c72c1e;
+
 }
 
-#errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 5px;
+h3, h4, h5 {
+    font-family: Arial, sans-serif;
+  margin: 10px 0 5px 0;
+  font-size: 10px;
+  line-height: 14px;
+  color: #5c5c5c;
+  font-weight: bold; }
+
+
+a h1, a h2, a h3, a h4, a h5 {
+  text-decoration: underline;
+  color: #3e8400; }
+
+a:hover h1, a:hover h2, a:hover h3, a:hover h4, a:hover h5 {
+  text-decoration: underline;
+  color: #71c22a; }
+
+strong {
+  font-weight: bold; }
+
+button {
+  border: none; 
 }
 
-#errorExplanation ul li {
-  font-size: 12px;
-  list-style: square;
+textarea {
+  width: 325px;
+  font-family: Verdana, Arial, Geneva, sans-serif; 
 }
 
-/* -------->>> UPLOAD <<<--------------- */
-
-div.uploadStatus {
-  margin: 5px;
+.checkbox, .radio {
+  width: auto;
+  background: none;
+  border: none; 
 }
 
-div.progressBar {
-  margin: 5px;
+/* overall structure */
+
+#custom-doc {
+	margin:auto;text-align:left; 
+	width:60.23em;
+	*width:58.78em;
+	min-width:783px;
 }
 
-div.progressBar div.border {
-  background-color: #fff;
-  border: 1px solid gray;
-  width: 100%;
+body {
 }
 
-div.progressBar div.background {
-  background-color: #333;
-  height: 18px;
-  width: 0%;
+.header {
+    background: #FFFFFF url(../images/header_back.jpg) left top no-repeat;
+    height: 111px;
 }
-/* ----------------------------------------------- */
-/* ----------->>> Site CSS / GLOBAL <<<----------- */
-/* ----------------------------------------------- */
-/* -------->>> Layout / GLOBAL <<<--------------- */
 
-/* -------->>> Index.html / local <<<--------------- */
-BODY#index{
+#primary_navigation {
+    float: left;
+    margin: 66px 0 0px 125px;
 }
-/* -------->>> contact.html / local <<<--------------- */
-BODY#index{
+
+#primary_navigation li {
+    float: left;
+}
+
+#primary_navigation a {
+    display: block;
+    float: left;
+    font-size: 12px;
+    padding: 0 20px;
+    font-family: Arial, sans_serif;
+    line-height: 25px;
+    color: #5c5c5c;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+#primary_navigation li.active a,  #primary_navigation a:hover {
+    background-color: #FFFFFF;
+    color: #c72c1e;
+}
+
+#footer {
+	margin: 10px 0;
+	padding: 0 5px;
+	background-color: #d7dbde;
+	text-align:right;
+}
+
+
+    p {
+       padding: 5px 0px;
+    }
+    dl {
+	   margin: 0;
+	   dt {
+	       margin-top: 10px;
+	       font-weight:bold;
+	   }
+	}
+    div.warning {
+        margin-top: 10px;
+        color: #c72c1e;
+        font-weight: bold;
+    }
+    
+    form {
+        margin-top:5px;
+        input, textarea, select {
+            width:150px;
+            padding: 2px;
+            border: #AAAAAA 1px solid;
+            background-color: #efefef;
+        } 
+        input.checkbox, label.checkbox {
+           width:auto;
+        }
+        label.checkbox {
+            display:inline
+        }
+        
+        select {
+            
+        }
+        input.submit {
+            width: auto;
+            border: #c72c1e 1px solid;
+        }
+        
+        label {
+            display:block;
+            font-weight:bold;
+        }
+        p {
+            margin:0;
+        }
+    }
+    ul {
+      margin-left: 2.3em;
+    }
+    span.active {
+      font-weight: bold;
+    }
+
+div.fieldWithErrors input {
+     border: #c72c1e 1px dotted;
+}
+
+div.errorExplanation {
+    width: 450px;
+    margin: 10px;
+    padding:10px;
+    background:#eeeeee;
+    border: #c72c1e 1px dotted;
+    h2 {
+        font-size: 12px;
+        margin-bottom:0px;
+    }
+    ul {
+        list-style-type:square;
+        li {
+            list-style-type:square;
+            font-weight:bold;
+        }
+    }
 }
 

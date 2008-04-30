@@ -1,42 +1,30 @@
-<h1>Editing page</h1>
+<h3>Edit page</h3>
 
 <%= error_messages_for :page %>
 
 <% form_for(@page) do |f| %>
   <p>
-    <b>Title</b><br />
+    <label>Title</label>
     <%= f.text_field :title %>
   </p>
 
   <p>
-    <b>Url</b><br />
+    <label>Url</label>
     <%= f.text_field :url %>
   </p>
 
   <p>
-    <b>Parent</b><br />
+    <label>Parent</label>
     <%= f.text_field :parent_id %>
   </p>
 
   <p>
-    <b>Lft</b><br />
-    <%= f.text_field :lft %>
-  </p>
-
-  <p>
-    <b>Rgt</b><br />
-    <%= f.text_field :rgt %>
-  </p>
-
-  <p>
-    <b>Layout</b><br />
+    <label>Layout</label>
     <%= f.text_field :layout_id %>
   </p>
 
   <p>
-    <%= f.submit "Update" %>
+    <%= f.submit "Update", :class=> 'submit' %> or  <%= link_to 'Show', @page %> | <%= link_to 'Back', pages_path %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @page %> |
-<%= link_to 'Back', pages_path %>

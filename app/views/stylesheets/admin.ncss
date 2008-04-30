@@ -58,7 +58,7 @@ h1,h2,h3,h4,h5,h6 { font-weight: bold; }
 
 h1 { font-size: 3em; line-height: 1; margin-bottom: 0.5em; }
 h2 { font-size: 2em; margin-bottom: 0.75em; }
-h3 { font-size: 1.5em; line-height: 1; margin-bottom: 1em; }
+h3 { font-size: 1.5em; line-height: 1; margin-bottom: 0.5em; }
 h4 { font-size: 1.2em; line-height: 1.25; margin-bottom: 1.25em; }
 h5 { font-size: 1em; font-weight: bold; margin-bottom: 1.5em; }
 h6 { font-size: 1em; font-weight: bold; }
@@ -184,14 +184,21 @@ a.link_go_up_directory{
 }
 
 /* -------->>> tools icon links <<<--------------- */
-.tools_edit, .tools_copy, .tools_delete, .tools_unpublish{
+.tools_edit, .tools_copy, .tools_delete, .tools_unpublish, .tools_show{
   display: block;
   margin-right: 4px;
+  margin-bottom:5px;
   float: left;
   width: 11px;
   height: 13px;
+  text-indent:-5000px;
+  outline:0;
 }
 
+.tools_show {
+  background: url(/images/icon_small_publish.gif);
+  height: 12px;
+}
 
 .tools_edit{
   background: url(/images/icon_small_edit.gif);
@@ -401,19 +408,20 @@ BODY.role_admin{
           padding: 0 10px 10px;
           height:20px;
           line-height:31px;
-          margin-bottom: 0;
+          margin-bottom:5px;
         }
         h5.with_tabs{
           border-bottom: 1px solid #333;
-          padding: 0 0 10px 0;
+          padding: 0 0 15px 0;
+          margin-bottom:5px;
           ul{
-            margin: 0;
+            margin:0 0 0 0;
             li{
               a{
                 color: #DDDDDD;
                 display: block;
                 float: left;
-                padding: 0 67px 0 10px;
+                padding: 0 64px 0 10px;
                 border-bottom: 4px solid #fff;
               }
               a.active, a:hover{
@@ -432,7 +440,7 @@ BODY.role_admin{
       float: right;
       width: 655px;
       ul.nav{
-        margin: 0;
+        margin: 0 0 10px 0;
         height: 27px;
         border-bottom: 4px solid #333;
         li{
@@ -518,6 +526,9 @@ BODY.role_admin{
               input{
                 width: 30px;
               }
+              input.checkbox {
+                width:auto;
+              }
             }
           }
         }
@@ -539,6 +550,49 @@ BODY.role_admin{
     }
   }
 }  
+
+    form {
+        margin-top:5px;
+        input, textarea, select {
+            width:150px;
+            padding: 2px;
+            border: #AAAAAA 1px solid;
+            background-color: #efefef;
+        }
+        p {
+            margin-bottom:0px;
+            padding: 3px 0;
+        } 
+        input.checkbox, label.checkbox {
+           width:auto;
+        }
+        label.checkbox {
+            display:inline
+        }
+        
+        select {
+            
+        }
+        input.submit {
+            width: auto;
+            border: #c72c1e 1px solid;
+        }
+        
+        label {
+            display:block;
+            font-weight:bold;
+        }
+    }
+
+form.search {
+    input {
+        width:auto;
+    }
+}
+
+div#utilities p {
+    color:#FFF;
+}
 
 
 

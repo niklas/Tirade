@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <title>Tirade without title (application layout)</title>
+  <title>Tirade application layout</title>
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css">
    <%= stylesheet_link_tag('main') %>
 	 <%= stylesheet_link_tag('admin') if current_user.andand.is_admin? %>
@@ -16,9 +16,10 @@
 </head>
 <body id="<%= controller_name -%>" class="<%= user_roles_classes -%>">
   <%= flash_messages %>
-  <%= yield %>
+  <div id="doc">
+	<%= yield %>
   <div id="footer">
     <%= render :partial => '/shared/loginout' %>
   </div>
-
+	</div>
 </body>

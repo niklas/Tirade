@@ -1,6 +1,6 @@
 <div class="site_nav">
   <% panel( Proc.new do %>
-    <%= panel_item(link_to('Catagories', {}, :class => (@content.nil? ? '' : 'active'))) %>
+    <%= panel_item(link_to('Categories', {}, :class => (@content.nil? ? '' : 'active'))) %>
     <%= panel_item(link_to('Sitemap', {}, :class => (@page.nil? ? '' : 'active'))) %>
   <%        end)  do %>
     <%= panel_item(index_pages_link :label => 'Music') %>

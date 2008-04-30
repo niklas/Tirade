@@ -43,13 +43,3 @@
       font-weight: bold;
     }
 }
-
-div.rendering.active {
-    border: #c72c1e 1px dotted;
-}
-div.grid.active {
-    border: #c72c1e 3px dotted;
-}
-div.hover {
-  background-color: #2cc71e;
-}

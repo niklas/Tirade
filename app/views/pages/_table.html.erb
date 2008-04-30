@@ -24,7 +24,7 @@
 
   <thead>
     <tr>
-      <th><input type="checkbox" /></th>
+      <th><input type="checkbox" class="checkbox" /></th>
       <th><a href="#">Title</a></th>
       <th><a href="#">URL</a></th>
       <th><a href="#">Layout</a></th>
@@ -37,18 +37,17 @@
   <tbody>
     <% table.each do |page| %>
     <tr>
-      <td><input type="checkbox"></td>
+      <td><input type="checkbox" class="checkbox" /></td>
       <td><%=show_page_link(page, :label => h(page.title)) %></td>
       <td><%=h page.url %></td>
       <td><%=h page.andand.final_layout.andand.name %></td>
       <td>no state</td>
       <td><%= time_ago_in_words(page.updated_at) %></td>
       <td>
-        O O O O
-        <% link_to 'Show', page %>
-        <% link_to 'Edit', edit_page_path(page) %>
-        <% link_to 'Destroy', page, :confirm => 'Are you sure?', :method => :delete %>
-        <% link_to 'Show in Public Page', page %>
+        <%= link_to 'Show', page, {:class => 'tools_show', :title => 'Show page'} %>
+        <%= link_to 'Edit', edit_page_path(page), {:class => 'tools_edit', :title => 'Edit page'} %>
+        <%= link_to 'Destroy', page, {:confirm => 'Are you sure?', :method => :delete, :class => 'tools_delete', :title => 'Delete page'} %>
+        <%= link_to 'Show in Public Page', page, {:class => 'tools_unpublish', :title => 'Show in public Page'} %>
       </td>
     </tr>
     <% end -%>
