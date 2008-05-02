@@ -42,7 +42,7 @@
       <td><%=h(truncate(content.description,23))%></td>
       <td><%=h(truncate(content.body,23))%></td>
       <td>no state</td>
-      <td><%= time_ago_in_words(content.updated_at) %></td>
+      <td><%= time_ago_in_words(content.updated_at) %> ago</td>
       <td>
         <%= show_content_link(content, :label => 'show') %>
         <%= edit_content_link(content, :label => 'edit') %>
