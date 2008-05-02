@@ -1,7 +1,7 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 introduction:
-  title: Introdction
+  title: Introduction
   description: What is that all about?
   body: Tirade is a CMS (Content Management System). This is the first rewrite.
   type: Content

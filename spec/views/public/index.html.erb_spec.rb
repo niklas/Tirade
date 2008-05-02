@@ -27,22 +27,14 @@ describe "/public/index" do
         with_tag('div.grid.yui-g') do
           with_tag('div.first.grid.yui-u') do
             with_tag('div.rendering') do
-              with_tag('h1') do
-                have_text('INTRODUCTION')
-              end
-              with_tag('p') do
-                have_text('Tirade is a CMS')
-              end
+              with_tag('h2', 'Welcome')
+              with_tag('p', /big hug/)
             end
           end
-          with_tag('div.grid.yui-u') do
+          with_tag('div.first.grid + div.grid.yui-u') do
             with_tag('div.rendering') do
-              with_tag('h1') do
-                have_text('WELCOME')
-              end
-              with_tag('p') do
-                have_text('big hug')
-              end
+              with_tag('h2','Introduction')
+              with_tag('p',/Tirade is a CMS/)
             end
           end
         end
