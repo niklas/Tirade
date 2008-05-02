@@ -126,8 +126,9 @@ describe ContentsController do
   describe "handling GET /contents/new" do
 
     before(:each) do
-      @content = mock_model(Content)
-      Content.stub!(:new).and_return(@content)
+      @klass = Document
+      @content = mock_model(@klass)
+      Document.stub!(:new).and_return(@content)
     end
   
     def do_get
@@ -144,8 +145,8 @@ describe ContentsController do
       response.should render_template('new')
     end
   
-    it "should create an new content" do
-      Content.should_receive(:new).and_return(@content)
+    it "should create an new Document (default type)" do
+      Document.should_receive(:new).and_return(@content)
       do_get
     end
   
@@ -195,8 +196,9 @@ describe ContentsController do
   describe "handling POST /contents" do
 
     before(:each) do
-      @content = mock_model(Content, :to_param => "1")
-      Content.stub!(:new).and_return(@content)
+      @klass = Document
+      @content = mock_model(@klass, :to_param => "1")
+      Document.stub!(:new).and_return(@content)
     end
     
     describe "with successful save" do
@@ -207,7 +209,7 @@ describe ContentsController do
       end
   
       it "should create a new content" do
-        Content.should_receive(:new).with({}).and_return(@content)
+        Document.should_receive(:new).with({}).and_return(@content)
         do_post
       end
 
