@@ -9,7 +9,8 @@ describe "/contents/new.html.erb" do
     @content.stub!(:title).and_return("MyString")
     @content.stub!(:description).and_return("MyText")
     @content.stub!(:body).and_return("MyText")
-    @content.stub!(:type).and_return("MyString")
+    @content.stub!(:type).and_return("NewsItem")
+    @content.stub!(:wanted_parent_id).and_return(3)
     assigns[:content] = @content
   end
 
@@ -21,12 +22,15 @@ describe "/contents/new.html.erb" do
       with_tag("textarea#content_description[name=?]", "content[description]")
       with_tag("textarea#content_body[name=?]", "content[body]")
       with_tag("select#content_type[name=?]", "content[type]")
+      with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
       without_tag("input#content_state[name=?]", "content[state]")
       without_tag("input#content_position[name=?]", "content[position]")
       without_tag("input#content_lft[name=?]", "content[lft]")
       without_tag("input#content_rgt[name=?]", "content[rgt]")
     end
   end
+
+  it "should render new form depending on the wanted type"
 end
 
 
