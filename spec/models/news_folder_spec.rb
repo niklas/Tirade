@@ -37,7 +37,7 @@ describe "Cheezeburga News" do
     end
     it "should contain the cookie (fails mysteriously)" do
       @cookie = contents(:ate_cookie)
-      @items.should include( @cookie )
+      @items.collect(&:title).should include( @cookie.title )
     end
   end
 end
