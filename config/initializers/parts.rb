@@ -1,4 +1,8 @@
 require 'fileutils'
 
 FileUtils.mkpath(Part::BasePath) unless File.directory?(Part::BasePath)
-Part.recognize_new_files
+begin
+  Part.recognize_new_files
+rescue Exception => e
+  # yeah...
+end
