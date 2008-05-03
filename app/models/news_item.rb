@@ -19,4 +19,13 @@ class NewsItem < Content
     between(from,to)
   }
 
+  def self.sample
+    new(
+      :title => 'A Sample Newsitem',
+      :description => 'Big News! read more in the body',
+      :body => 'More big news. But you already know everything from the description',
+      :published_at => Time.now.yesterday
+    )
+  end
+
 end

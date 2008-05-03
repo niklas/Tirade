@@ -33,10 +33,19 @@ class Content < ActiveRecord::Base
 
   has_fulltext_search :title, :description, :body
 
+  def self.sample
+    new(
+      :title => "Example Content Record",
+      :description => "A brief but solid description",
+      :body => "A looooong and beautiful body four your Example Content"
+    )
+  end
+
   def validate
     errors.add(:type, 'illegal Type') unless self.class <= Content
   end
 
+  # FIXME dynamic
   def self.valid_types
     [Document, NewsItem, NewsFolder]
   end
