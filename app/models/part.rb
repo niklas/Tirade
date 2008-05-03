@@ -18,6 +18,7 @@
 # It has a partial file attached to it and will be rendered in a Grid, using a Content.
 # It can take options to modify its apperance, which are passed as :locals (this should be overridable from Rendering)
 class Part < ActiveRecord::Base
+  acts_as_renderer
   BlacklistesFileNames = %w(
     exit
     filename
@@ -34,8 +35,6 @@ class Part < ActiveRecord::Base
   serialize :preferred_types, Array
 
   attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml
-
-  attr_accessor :template_binding
 
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
@@ -80,17 +79,13 @@ class Part < ActiveRecord::Base
   end
 
   def validate_rhtml
-    if @template_binding
-      eval %Q[@content ||= FakeContent.new], @template_binding
-      begin
-        #@html = render(@template_binding, SaveLevel)
-        @html = render(@template_binding,0)
-        validate_html
-      rescue SecurityError => e
-        errors.add(:rhtml, 'does something illegal: ' + e.message)
-      rescue Exception => e
-        errors.add(:rhtml, 'is not renderable: ' + e.message)
-      end
+    begin
+      @html = self.render
+      validate_html
+    rescue SecurityError => e
+      errors.add(:rhtml, 'does something illegal: ' + e.message)
+    rescue Exception => e
+      errors.add(:rhtml, 'is not renderable: ' + e.message)
     end
   end
 
@@ -163,15 +158,19 @@ class Part < ActiveRecord::Base
   # and there must be a @part instance variable
   #
   # it's so ugly..
-  def render(bind,save_level=0,opts={})
-    to_eval =%Q[#{filename} = @content\n]
-    options.keys.each do |key|
-      to_eval << %Q[#{key} = @part.options[:#{key}]\n]
-    end
-    
-    eval to_eval, bind
-    erb = ERB.new(rhtml, save_level)
-    erb.result(bind)
+  def render_with_content(content, assigns={})
+    assigns.merge! options_with_object(content)
+    render_to_string(:inline => self.rhtml, :locals => assigns  )
+  end
+
+  def render(assigns={})
+    render_with_content(fake_content)
+  end
+
+  def options_with_object(obj)
+    options.merge({
+      filename.to_sym => obj
+    })
   end
 
   private
@@ -185,10 +184,8 @@ class Part < ActiveRecord::Base
   def name_by_filename
     filename.andand.titleize
   end
-end
 
-class FakeContent
-  def method_missing(*args,&block)
-    "This is a fake #{args.first}"
+  def fake_content
+    (preferred_types.andand.first || Document).sample
   end
 end
