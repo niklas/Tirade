@@ -50,4 +50,15 @@ module RenderHelper
       opts
     )
   end
+
+  def render_page(thepage)
+    layout = thepage.final_layout
+    content_tag(
+      :div,
+      thepage.render_to_string(:partial => '/public/header', :object => thepage) + 
+      (layout.andand.render_in_page(thepage) || 'Page has no Layout') +
+      thepage.render_to_string(:partial => '/public/footer', :object => thepage),
+      {:id => thepage.yui}
+    )
+  end
 end

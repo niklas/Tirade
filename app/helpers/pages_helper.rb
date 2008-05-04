@@ -1,14 +1,4 @@
 module PagesHelper
-  def render_page(thepage)
-    layout = thepage.final_layout
-    content_tag(
-      :div,
-      render(:partial => '/public/header', :object => thepage) + 
-      (layout ? render_grid_in_page(layout,thepage) : 'Page has no Layout') +
-      render(:partial => '/public/footer', :object => thepage),
-      {:id => thepage.yui}
-    )
-  end
 
   def render_part_with_content_for_rendering(rendering)
     content_tag(
