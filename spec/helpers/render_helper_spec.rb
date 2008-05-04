@@ -60,3 +60,16 @@ describe RenderHelper, ' a 50/50 Grid with both children' do
     end
   end
 end
+
+describe RenderHelper, ", rendering the main page" do
+  fixtures :all
+  before(:each) do
+    @page = pages(:main)
+    @html = render_page(@page)
+  end
+
+  it "should not be blank" do
+    @html.should_not be_blank
+  end
+
+end

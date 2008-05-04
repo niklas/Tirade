@@ -9,18 +9,3 @@ describe PagesHelper do
   end
   
 end
-
-describe PagesHelper, ", rendering the main page" do
-  fixtures :all
-  before(:each) do
-    @page = pages(:main)
-    stub!(:render).and_return('<p>fake render result</p>')
-    stub!(:render_grid_filled_with).and_return('<p>fake grid result</p>')
-    @rendered = render_page(@page)
-  end
-
-  it "should not be blank" do
-    @rendered.should_not be_blank
-  end
-
-end
