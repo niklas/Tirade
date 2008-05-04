@@ -1,13 +1,1 @@
-rendering_dom = dom_id(@rendering)
-@part.template_binding = binding
-if @part.valid?
-  if @content = @rendering.content
-    page[rendering_dom].replace_html @part.render(binding)
-  else
-    page[rendering_dom].replace_html "Content not found"
-  end
-else
-  page[rendering_dom].replace_html error_messages_for(:part)
-end
-page[rendering_dom].visual_effect :highlight
-
+page.preview_rendering(@rendering)

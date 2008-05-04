@@ -49,4 +49,18 @@ module RenderingsHelper
       elem.reset_behavior
     end
   end
+
+  def preview_rendering(rendering)
+    dom = context.dom_id(rendering)
+    if rendering.part.valid?
+      if content = rendering.content
+        page[dom].replace_html rendering.render
+      else
+        page[dom].replace_html "Content not found"
+      end
+    else
+      page[dom].replace_html context.error_messages_for(:part, :object => rendering.part)
+    end
+    page[dom].visual_effect :highlight
+  end
 end
