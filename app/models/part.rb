@@ -80,6 +80,10 @@ class Part < ActiveRecord::Base
 
   def validate_rhtml
     begin
+      if errors.on(:filename)
+        errors.add(:rhtml, 'Will check RHTML only if filename is valid')
+        return
+      end
       @html = self.render
       validate_html
     rescue SecurityError => e
@@ -153,14 +157,8 @@ class Part < ActiveRecord::Base
     self.filename = real.gsub(/^_*/,'')
   end
 
-  # renders the part in the given binding
-  # you must set @content to use it as a local variable named like the part
-  # and there must be a @part instance variable
-  #
-  # it's so ugly..
   def render_with_content(content, assigns={})
-    assigns.merge! options_with_object(content)
-    render_to_string(:inline => self.rhtml, :locals => assigns  )
+    render_to_string(:inline => self.rhtml, :locals => assigns.merge(options_with_object(content)))
   end
 
   def render(assigns={})
