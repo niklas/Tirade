@@ -10,26 +10,6 @@ module PagesHelper
     )
   end
 
-  def render_grid_in_page(thegrid,thepage)
-    render_grid_filled_with(
-      thegrid,
-      if thegrid.visible_children.empty?
-        renderings = thepage.renderings.for_grid(thegrid)
-        renderings.collect do |rendering|
-          unless rendering.part.nil? || rendering.content.nil?
-            render_part_with_content_for_rendering(rendering)
-          else
-            '[no part or content assigned]'
-          end
-        end
-      else
-        thegrid.visible_children.collect do |child|
-          render_grid_in_page(child,thepage)
-        end
-      end.join(' ')
-    )
-  end
-
   def render_part_with_content_for_rendering(rendering)
     content_tag(
       :div,

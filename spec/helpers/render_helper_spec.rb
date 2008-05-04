@@ -1,15 +1,15 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe GridsHelper do
+describe RenderHelper do
   
-  it "should include the GridsHelper" do
+  it "should include the RenderHelper" do
     included_modules = self.metaclass.send :included_modules
-    included_modules.should include(GridsHelper)
+    included_modules.should include(RenderHelper)
   end
 
 end
 
-describe GridsHelper, ' a single Grid' do
+describe RenderHelper, ' a single Grid' do
   before(:each) do
     @grid = Grid.new_by_yui('yui-g')
   end
@@ -20,7 +20,7 @@ describe GridsHelper, ' a single Grid' do
   end
 end
 
-describe GridsHelper, ' a 50/50 Grid with both children' do
+describe RenderHelper, ' a 50/50 Grid with both children' do
   before(:each) do
     @grid = Grid.new_by_yui('yui-g')
 

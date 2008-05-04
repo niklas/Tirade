@@ -16,6 +16,7 @@ class Grid < ActiveRecord::Base
   attr_protected :id, :created_at, :updated_at
 
   acts_as_nested_set 
+  acts_as_renderer
   Types = {
     'yui-g'  =>   '1/2 - 1/2',
     'yui-gb' =>	'1/3 - 1/3 - 1/3',
@@ -98,6 +99,16 @@ class Grid < ActiveRecord::Base
 
   def label
     [title,name].compact.join(' - ')
+  end
+
+  # Renders just the grid (without any contents)
+  def render
+    render_to_string(:inline => '<%= render_grid(grid) %>', :locals => {:grid => self})
+  end
+
+  #Renders the Grids with all the Renderings for that page
+  def render_in_page(thepage)
+    render_to_string(:inline => '<%= render_grid_in_page(grid,page) %>', :locals => {:grid => self, :page => thepage})
   end
 
   protected

@@ -151,8 +151,89 @@ describe Grid do
     it "should have a proper name (for da humanz)" do
       grids(:layout50_50).name.should == '1/2 - 1/2'
     end
+
+    describe ", rendering the left column" do
+      before(:each) do
+        @html = grids(:layout_50_50_1).render
+      end
+      it do
+        @html.should have_tag('div.grid.yui-u')
+      end
+    end
+
+    describe ", rendering the left column in the main page" do
+      before(:each) do
+        @html = grids(:layout_50_50_1).render_in_page(pages(:main))
+      end
+      it do
+        @html.should have_tag('div.grid.yui-u') do
+          with_tag('div.rendering.simple_preview.document') do
+            with_tag('h2', 'Welcome')
+            with_tag('p', /If you read this, you earned a big hug!/)
+          end
+        end
+      end
+    end
+
+    describe ", rendering the right column" do
+      before(:each) do
+        @html = grids(:layout_50_50_2).render
+      end
+      it do
+        @html.should have_tag('div.grid.yui-u')
+      end
+    end
+
+    describe ", rendering the right column in the main page" do
+      before(:each) do
+        @html = grids(:layout_50_50_2).render_in_page(pages(:main))
+      end
+      it do
+        @html.should have_tag('div.grid.yui-u') do
+          with_tag('div.rendering.simple_preview.document') do
+            with_tag('h2', 'Introduction')
+            with_tag('p', /Tirade is a CMS/)
+          end
+        end
+      end
+    end
+
+    describe ", rendering both the columns in the 50/50 layout" do
+      before(:each) do
+        @html = grids(:layout50_50).render
+      end
+      it do
+        @html.should have_tag('div.grid.yui-g') do
+          with_tag('div.grid.yui-u.first')
+          with_tag('div.grid.yui-u.first + div.grid.yui-u')
+        end
+      end
+    end
+
+    describe ", rendering both the columns in the 50/50 layout for the main page" do
+      before(:each) do
+        @html = grids(:layout50_50).render_in_page(pages(:main))
+      end
+      it do
+        @html.should have_tag('div.grid.yui-g') do
+          with_tag('div.grid.yui-u.first') do
+            with_tag('div.rendering.simple_preview.document') do
+              with_tag('h2', 'Welcome')
+              with_tag('p', /If you read this, you earned a big hug!/)
+            end
+          end
+          with_tag('div.grid.yui-u.first + div.grid.yui-u') do
+            with_tag('div.rendering.simple_preview.document') do
+              with_tag('h2', 'Introduction')
+              with_tag('p', /Tirade is a CMS/)
+            end
+          end
+        end
+      end
+    end
   end
 end
+
 
 describe "Creating a 3/4 - 1/4 grid" do
   before(:each) do
