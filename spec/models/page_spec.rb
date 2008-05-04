@@ -101,6 +101,44 @@ describe "The main Page with all fixtures" do
   it "should have some grids" do
     @page.should have_at_least(3).grids
   end
+
+  describe ", rendering it" do
+    before(:each) do
+      @page.active_controller = MockController.new
+      @html = @page.render
+    end
+    it "should not be empty" do
+      @html.should_not be_empty
+    end
+    it "should have the complete page structure" do
+      @html.should have_tag('div#doc') do
+        with_tag('div.grid.yui-g') do
+          with_tag('div.first.grid.yui-u') do
+            with_tag('div.rendering.simple_preview.document') do
+              with_tag('h2', 'Welcome')
+              with_tag('p', /big hug/)
+            end
+          end
+          with_tag('div.first.grid + div.grid.yui-u') do
+            with_tag('div.rendering.simple_preview.document') do
+              with_tag('h2','Introduction')
+              with_tag('p',/Tirade is a CMS/)
+            end
+          end
+        end
+      end
+    end
+    it "should have a header" do
+      @html.should have_tag('div#doc') do
+        with_tag('div#header')
+      end
+    end
+    it "should habe a footer" do
+      @html.should have_tag('div#doc') do
+        with_tag('div#footer')
+      end
+    end
+  end
 end
 
 describe "Having all fixtures loaded" do
