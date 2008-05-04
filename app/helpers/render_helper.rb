@@ -53,11 +53,12 @@ module RenderHelper
 
   def render_page(thepage)
     layout = thepage.final_layout
+    layout.andand.active_controller = @controller
     content_tag(
       :div,
-      thepage.render_to_string(:partial => '/public/header', :object => thepage) + 
+      render(:partial => '/public/header', :object => thepage) + 
       (layout.andand.render_in_page(thepage) || 'Page has no Layout') +
-      thepage.render_to_string(:partial => '/public/footer', :object => thepage),
+      render(:partial => '/public/footer', :object => thepage),
       {:id => thepage.yui}
     )
   end
