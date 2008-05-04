@@ -1,5 +1,5 @@
 #require_dependency 'controllers/application'
-
+require 'mock_controller'
 module ActiveRecord
   module Acts #:nodoc:
     module Renderer #:nodoc:
@@ -12,6 +12,7 @@ module ActiveRecord
         def acts_as_renderer
           class_eval <<-EOV, __FILE__, __LINE__
             include ActiveRecord::Acts::Renderer::InstanceMethods
+            require_dependency 'controllers/application'
           
             # Renders a template to a file with the included variable assignments
             def self.render_file(template, destination, assigns)
@@ -23,12 +24,12 @@ module ActiveRecord
             end
 
             # Renders a template to a string with the included variable assignments
-            def self.render_string(template, assigns)
-              viewer = Class.new(ApplicationController)
-              view = Class.new(ActionView::Base)
-              view.send(:include, viewer.master_helper_module)
-              path = ActionController::Base.view_paths rescue ActionController::Base.view_root
-              view.new(path, assigns, viewer).render(template)
+            def self.render_string(render_template, assigns, contr)
+              controller = contr || MockController.new
+              path = controller.view_paths rescue controller.view_root
+              template = ActionView::Base.new(path, assigns, controller)
+              template.extend controller.master_helper_module
+              template.render(render_template)
             end
           EOV
         end
@@ -49,8 +50,12 @@ module ActiveRecord
         # Renders a record instance to a string using the provided template and additional variables.
         def render_to_string(template, variables={})
           assigns = variables.reverse_merge(self.class.class_name.underscore.to_sym => self)
-          self.class.render_string(template, assigns)
-        end    
+          self.class.render_string(template, assigns, @active_controller)
+        end
+
+        def active_controller=(ac)
+          @active_controller = ac
+        end
       end
     end
   end
