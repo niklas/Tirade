@@ -20,6 +20,8 @@ class Page < ActiveRecord::Base
 
   attr_protected :created_at, :updated_at
 
+  acts_as_renderer
+
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
   has_many :renderings
   # FIXME cannot do that because:
@@ -99,6 +101,10 @@ class Page < ActiveRecord::Base
   end
   class << self
     alias_method_chain :rebuild!, :status
+  end
+
+  def render
+    render_to_string(:inline => '<%= render_page(page)  %>', :locals => { :page => self })
   end
 
 end
