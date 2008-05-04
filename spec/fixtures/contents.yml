@@ -4,7 +4,7 @@ introduction:
   title: Introduction
   description: What is that all about?
   body: Tirade is a CMS (Content Management System). This is the first rewrite.
-  type: Content
+  type: Document
   state: 
   position: 1
   parent_id: 1
@@ -15,7 +15,7 @@ welcome:
   title: Welcome
   description: Here you are!
   body: If you read this, you earned a big hug!
-  type: Content
+  type: Document
   state: 
   published_at: 2008-04-17 15:01:12
   position: 2
@@ -27,7 +27,7 @@ goodbye:
   title: Goodbye
   description: This is goodbye to oyu
   body: If you read this, the page has come to an end
-  type: Content
+  type: Document
   state: 
   published_at: 2008-04-17 15:01:12
   position: 3

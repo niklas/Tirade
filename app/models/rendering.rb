@@ -15,17 +15,18 @@
 #
 
 class Rendering < ActiveRecord::Base
-  # FIXME dynamic
-  ValidContentTypes = [Content, Document, Image, NewsFolder, NewsItem]
+  # For now, all associatable Conten Types should at least have a 'title' column
   def self.valid_content_types
-    ValidContentTypes
+    ActiveRecord::Base.send(:subclasses).select do |k| 
+      k.table_exists? &&
+        k.columns.collect(&:name).include?('title') rescue false
+    end
   end
 
   attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
-  validates_inclusion_of :content_type, :in => ValidContentTypes.collect(&:to_s), :if => :content_id
 
   belongs_to :page
   belongs_to :grid
@@ -42,6 +43,14 @@ class Rendering < ActiveRecord::Base
   has_finder :with_part, lambda {|part|
     {:conditions => ['renderings.part_id = ?', part.id], :order => 'renderings.position'}
   }
+
+  def validate
+    if self.content_id
+      unless self.class.valid_content_types.collect(&:to_s).include?(self.content_type)
+        errors.add(:content_type, "Invalid Content Type: #{self.content_type}") 
+      end
+    end
+  end
 
   def brothers_by_part
     page.renderings.with_part(self.part)
