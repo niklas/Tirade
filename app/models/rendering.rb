@@ -15,6 +15,8 @@
 #
 
 class Rendering < ActiveRecord::Base
+  acts_as_renderer
+
   # For now, all associatable Conten Types should at least have a 'title' column
   def self.valid_content_types
     ActiveRecord::Base.send(:subclasses).select do |k| 
@@ -66,5 +68,9 @@ class Rendering < ActiveRecord::Base
 
   def content_type=(new_content_type)
     write_attribute(:content_type, new_content_type.classify)
+  end
+
+  def render
+    render_to_string(:inline => '<%= render_rendering(rendering) %>', :locals => {:rendering => self})
   end
 end
