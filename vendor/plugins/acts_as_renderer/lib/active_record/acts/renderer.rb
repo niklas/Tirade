@@ -1,4 +1,4 @@
-require 'controllers/application'
+#require_dependency 'controllers/application'
 
 module ActiveRecord
   module Acts #:nodoc:
@@ -25,8 +25,10 @@ module ActiveRecord
             # Renders a template to a string with the included variable assignments
             def self.render_string(template, assigns)
               viewer = Class.new(ApplicationController)
+              view = Class.new(ActionView::Base)
+              view.send(:include, viewer.master_helper_module)
               path = ActionController::Base.view_paths rescue ActionController::Base.view_root
-              ActionView::Base.new(path, assigns, viewer).render(template)
+              view.new(path, assigns, viewer).render(template)
             end
           EOV
         end
