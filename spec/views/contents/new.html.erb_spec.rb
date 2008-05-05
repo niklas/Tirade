@@ -94,7 +94,7 @@ describe "/contents/new.html.erb" do
     end
   end
 
-  describe "for a completly unknown content type" do
+  describe "for a completly unknown content type that inherits directly from Content" do
     before(:each) do
       class ZweiHimmelHundeAufDemWegZurHoelle < Content; end
       @content = mock_model(ZweiHimmelHundeAufDemWegZurHoelle)
@@ -105,7 +105,7 @@ describe "/contents/new.html.erb" do
       assigns[:content] = @content
     end
 
-    it "should render new form with default fields an warning" do
+    it "should render new form with default fields and warning" do
       render "/contents/new.html.erb"
       
       response.should have_tag("form[action=?][method=post]", contents_path) do
@@ -119,6 +119,52 @@ describe "/contents/new.html.erb" do
         with_tag('p.title') do
           with_tag('label', 'Title')
           with_tag("input#content_title[name=?]", "content[title]")
+        end
+      end
+    end
+  end
+
+  describe "for a completly unknown content type that inherits from Document" do
+    before(:each) do
+      class ZweiEinhalbHimmelHundeAufDemWegZurHoelle < Document; end
+      @content = mock_model(ZweiEinhalbHimmelHundeAufDemWegZurHoelle)
+      @content.stub!(:new_record?).and_return(true)
+      @content.stub!(:title).and_return("Hölle hölle hölle")
+      @content.stub!(:type).and_return("ZweiEinhalbHimmelHundeAufDemWegZurHoelle")
+      @content.stub!(:description).and_return("Bud Spencer")
+      @content.stub!(:body).and_return("Italo Zingarelli")
+      @content.stub!(:wanted_parent_id).and_return(88-66+42)
+      assigns[:content] = @content
+    end
+
+    it "should render new form for Document (its superclass)" do
+      render "/contents/new.html.erb"
+      
+      response.should have_tag("form[action=?][method=post]", contents_path) do
+        without_tag('p.default.warning')
+        without_tag("input#content_state[name=?]", "content[state]")
+        without_tag("input#content_position[name=?]", "content[position]")
+        without_tag("input#content_lft[name=?]", "content[lft]")
+        without_tag("input#content_rgt[name=?]", "content[rgt]")
+        with_tag('p.title') do
+          with_tag('label', 'Title')
+          with_tag("input#content_title[name=?]", "content[title]")
+        end
+        with_tag('p.description') do
+          with_tag('label', 'Description')
+          with_tag("textarea#content_description[name=?]", "content[description]")
+        end
+        with_tag('p.body') do
+          with_tag('label', 'Body')
+          with_tag("textarea#content_body[name=?]", "content[body]")
+        end
+        with_tag('p.type') do
+          with_tag('label', 'Type')
+          with_tag("select#content_type[name=?]", "content[type]")
+        end
+         with_tag('p.wanted_parent_id') do
+          with_tag('label', 'Parent')
+          with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end
       end
     end
