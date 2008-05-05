@@ -1,8 +1,7 @@
-<p>
-	<label for ="title" >Title</label>
-	<%= content_fields.text_field :title %>
-</p>
-<p>
-	<label for="body">Body</label>
-	<%= content_fields.text_area :body %>
+<p class="default warning">
+  This is a default form. It was chosen, because there was no form for <tt><%= content_fields.object.class.to_s %></tt> or it had errors.
+
+  <% @errors.each do |error| %>
+     <pre><%=h error.message %></pre>
+  <% end %>
 </p>

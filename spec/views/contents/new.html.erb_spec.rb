@@ -3,34 +3,126 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe "/contents/new.html.erb" do
   include ContentsHelper
   
-  before(:each) do
-    @content = mock_model(Content)
-    @content.stub!(:new_record?).and_return(true)
-    @content.stub!(:title).and_return("MyString")
-    @content.stub!(:description).and_return("MyText")
-    @content.stub!(:body).and_return("MyText")
-    @content.stub!(:type).and_return("NewsItem")
-    @content.stub!(:wanted_parent_id).and_return(3)
-    assigns[:content] = @content
-  end
+  describe "for a NewsItem" do
+    before(:each) do
+      @content = mock_model(NewsItem)
+      @content.stub!(:new_record?).and_return(true)
+      @content.stub!(:title).and_return("New News")
+      @content.stub!(:description).and_return("nothing")
+      @content.stub!(:body).and_return("great news everyone!")
+      @content.stub!(:type).and_return("NewsItem")
+      @content.stub!(:wanted_parent_id).and_return(3)
+      assigns[:content] = @content
+    end
 
-  it "should render new form" do
-    render "/contents/new.html.erb"
-    
-    response.should have_tag("form[action=?][method=post]", contents_path) do
-      with_tag("input#content_title[name=?]", "content[title]")
-      with_tag("textarea#content_description[name=?]", "content[description]")
-      with_tag("textarea#content_body[name=?]", "content[body]")
-      with_tag("select#content_type[name=?]", "content[type]")
-      with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
-      without_tag("input#content_state[name=?]", "content[state]")
-      without_tag("input#content_position[name=?]", "content[position]")
-      without_tag("input#content_lft[name=?]", "content[lft]")
-      without_tag("input#content_rgt[name=?]", "content[rgt]")
+    it "should render new form" do
+      render "/contents/new.html.erb"
+      
+      response.should have_tag("form[action=?][method=post]", contents_path) do
+        without_tag('p.default.warning')
+        without_tag("input#content_state[name=?]", "content[state]")
+        without_tag("input#content_position[name=?]", "content[position]")
+        without_tag("input#content_lft[name=?]", "content[lft]")
+        without_tag("input#content_rgt[name=?]", "content[rgt]")
+        without_tag("textarea#content_body", "content[body]")
+        with_tag('p.title') do
+          with_tag('label', 'Title')
+          with_tag("input#content_title[name=?]", "content[title]")
+        end
+        #with_tag('p') do
+        #  with_tag('label', 'Description')
+        #  with_tag("textarea#content_description[name=?]", "content[description]")
+        #end
+        with_tag('p.body') do
+          with_tag('label', 'Body')
+          with_tag("textarea#content_body[name=?]", "content[body]")
+        end
+        with_tag('p.type') do
+          with_tag('label', 'Type')
+          with_tag("select#content_type[name=?]", "content[type]")
+        end
+         with_tag('p.wanted_parent_id') do
+          with_tag('label', 'Parent')
+          with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
+        end
+      end
     end
   end
 
-  it "should render new form depending on the wanted type"
+  describe "for a Document" do
+    before(:each) do
+      @content = mock_model(Document)
+      @content.stub!(:new_record?).and_return(true)
+      @content.stub!(:title).and_return("New Document")
+      @content.stub!(:description).and_return("Document Description")
+      @content.stub!(:body).and_return("Document Body")
+      @content.stub!(:type).and_return("Document")
+      @content.stub!(:wanted_parent_id).and_return(3)
+      assigns[:content] = @content
+    end
+
+    it "should render new form" do
+      render "/contents/new.html.erb"
+      
+      response.should have_tag("form[action=?][method=post]", contents_path) do
+        without_tag('p.default.warning')
+        without_tag("input#content_state[name=?]", "content[state]")
+        without_tag("input#content_position[name=?]", "content[position]")
+        without_tag("input#content_lft[name=?]", "content[lft]")
+        without_tag("input#content_rgt[name=?]", "content[rgt]")
+        with_tag('p.title') do
+          with_tag('label', 'Title')
+          with_tag("input#content_title[name=?]", "content[title]")
+        end
+        with_tag('p.description') do
+          with_tag('label', 'Description')
+          with_tag("textarea#content_description[name=?]", "content[description]")
+        end
+        with_tag('p.body') do
+          with_tag('label', 'Body')
+          with_tag("textarea#content_body[name=?]", "content[body]")
+        end
+        with_tag('p.type') do
+          with_tag('label', 'Type')
+          with_tag("select#content_type[name=?]", "content[type]")
+        end
+         with_tag('p.wanted_parent_id') do
+          with_tag('label', 'Parent')
+          with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
+        end
+      end
+    end
+  end
+
+  describe "for a completly unknown content type" do
+    before(:each) do
+      class ZweiHimmelHundeAufDemWegZurHoelle < Content; end
+      @content = mock_model(ZweiHimmelHundeAufDemWegZurHoelle)
+      @content.stub!(:new_record?).and_return(true)
+      @content.stub!(:title).and_return("Hölle hölle hölle")
+      @content.stub!(:type).and_return("ZweiHimmelHundeAufDemWegZurHoelle")
+      @content.stub!(:wanted_parent_id).and_return(88-66+23)
+      assigns[:content] = @content
+    end
+
+    it "should render new form with default fields an warning" do
+      render "/contents/new.html.erb"
+      
+      response.should have_tag("form[action=?][method=post]", contents_path) do
+        with_tag('p.default.warning') do
+          with_tag('pre', %r~Couldn't find template file for /contents/_zwei_himmel_hunde_auf_dem_weg_zur_hoelle_fields~)
+        end
+        without_tag("input#content_state[name=?]", "content[state]")
+        without_tag("input#content_position[name=?]", "content[position]")
+        without_tag("input#content_lft[name=?]", "content[lft]")
+        without_tag("input#content_rgt[name=?]", "content[rgt]")
+        with_tag('p.title') do
+          with_tag('label', 'Title')
+          with_tag("input#content_title[name=?]", "content[title]")
+        end
+      end
+    end
+  end
 end
 
 
