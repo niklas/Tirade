@@ -45,9 +45,8 @@ class Content < ActiveRecord::Base
     errors.add(:type, 'illegal Type') unless self.class <= Content
   end
 
-  # FIXME dynamic
   def self.valid_types
-    [Document, NewsItem, NewsFolder]
+    subclasses
   end
 
   def wanted_parent_id
