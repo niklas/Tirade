@@ -40,10 +40,50 @@ describe NormalFormBuilder, 'in a form' do
           _erbout << f.text_area(:body, :label => 'The skinny Body')
       end
     end
-    it "should have a paragraph and the text input with a label" do
+    it "should have a paragraph and the textarea with a label" do
       @html.should have_tag('p') do
         with_tag('label', "The skinny Body")
         with_tag('textarea#content_body[name=?]', "content[body]")
+      end
+    end
+  end
+
+  describe "with a select" do
+    before(:each) do
+      @html = _erbout = ''
+      select_options = {:foo => 1, :bar => 2, :baz => 3}
+      @view.form_for(:content, Content.new, :url => '/foo', :builder => NormalFormBuilder) do |f|
+          _erbout << f.select(:state, select_options, { :label => 'Select the type' })
+      end
+    end
+    it "should have a paragraph and the select field with options and a label" do
+      @html.should have_tag('p') do
+        with_tag('label', "Select the type")
+        with_tag('select#content_state[name=?]', "content[state]") do
+          with_tag('option[value=?]', 1, 'foo')
+          with_tag('option[value=?]', 2, 'bar')
+          with_tag('option[value=?]', 3, 'baz')
+        end
+      end
+    end
+  end
+
+  describe "with a collection_select" do
+    before(:each) do
+      @html = _erbout = ''
+      select_options = [["foo",1], ["bar", 2], ["baz", 3]]
+      @view.form_for(:content, Content.new, :url => '/foo', :builder => NormalFormBuilder) do |f|
+          _erbout << f.collection_select(:state, select_options, :last, :first, { :label => 'Select the type' })
+      end
+    end
+    it "should have a paragraph and the select field with options and a label" do
+      @html.should have_tag('p') do
+        with_tag('label', "Select the type")
+        with_tag('select#content_state[name=?]', "content[state]") do
+          with_tag('option[value=?]', 1, 'foo')
+          with_tag('option[value=?]', 2, 'bar')
+          with_tag('option[value=?]', 3, 'baz')
+        end
       end
     end
   end

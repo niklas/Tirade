@@ -1,19 +1,27 @@
 class NormalFormBuilder < ActionView::Helpers::FormBuilder
 
-  def text_field(method, options = {})
-    wrap(method, options, super(method,options))
+  def text_field(field, options = {})
+    wrap(field, options, super(field,options))
   end
 
-  def text_area(method, options = {})
-    wrap(method, options, super(method,options))
+  def text_area(field, options = {})
+    wrap(field, options, super(field,options))
+  end
+
+  def collection_select(field, collection, value_method, text_method, options = {}, html_options = {})
+    wrap(field, options, super(field, collection, value_method, text_method, options, html_options))
+  end
+
+  def select(field, choices, options = {}, html_options = {})
+    wrap(field,options, super(field, choices, options, html_options))
   end
 
   private
-  def wrap(method, options, tag_output)
+  def wrap(field, options, tag_output)
     label = @template.content_tag(
       :label,
-      (options.delete(:label) || method.to_s.humanize),
-      {:for => "#{@object_name.to_s}_#{method}"}
+      (options.delete(:label) || field.to_s.humanize),
+      {:for => "#{@object_name.to_s}_#{field}"}
     )
     @template.content_tag(
       :p,
