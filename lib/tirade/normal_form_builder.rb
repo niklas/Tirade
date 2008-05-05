@@ -25,7 +25,8 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
     )
     @template.content_tag(
       :p,
-      label + ' ' + tag_output
+      label + ' ' + tag_output,
+      {:class => field.to_s}
     )
   end
 end
