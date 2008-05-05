@@ -2,26 +2,14 @@
 
 <%= error_messages_for :page %>
 
-<% form_for(@page) do |f| %>
-  <p>
-    <label for="page_title">Title</label>
-    <%= f.text_field :title %>
-  </p>
+<% form_for(@page, :builder => NormalFormBuilder) do |f| %>
+  <%= f.text_field :title %>
 
-  <p>
-    <label for="page_parent_id">Parent Page</label>
-    <%= f.collection_select :wanted_parent_id, Page.all_except(@page), :id, :title  %>
-  </p>
+  <%= f.collection_select :wanted_parent_id, Page.all_except(@page), :id, :title, :label => 'Parent Page'  %>
 
-  <p>
-    <label for="page_layout_id">Layout</label>
-    <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:prompt => 'from parent Page'}  %>
-  </p>
+  <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:prompt => 'from parent Page', :label => 'Layout'}  %>
 
-  <p>
-    <label for="page_yui">Width</label>
-    <%= f.select :yui, Page::Types.invert %>
-  </p>
+  <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
 
   <p>
     <%= f.submit "Update", :class=> 'submit' %> or  <%= link_to 'Show', @page %> | <%= link_to 'Back', pages_path %>
