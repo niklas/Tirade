@@ -44,7 +44,8 @@ module ActionView
                end
                return rendered_template
             end
-            raise ActionViewError, "No #{template_handler_preferences.to_sentence} template found for #{template_path} in #{view_paths.inspect}"
+            #raise ActionViewError, "No #{template_handler_preferences.to_sentence} template found for #{template_path} in #{view_paths.inspect}"
+            theme_support_old_render_file(template_path, use_full_path, local_assigns)
          else
             theme_support_old_render_file(template_path, use_full_path, local_assigns)
          end
