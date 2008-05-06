@@ -20,7 +20,6 @@ CONFIG[:upload_images_path] = '/upload/'
 class Image < ActiveRecord::Base
   has_attached_file :image,
                     :styles => {:thumbnail => CONFIG[:thumbnail_size]},
-                    :default_style => :thumbnail,
                     :path => ":rails_root/public#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension",
                     :url => "#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
   
@@ -39,6 +38,17 @@ class Image < ActiveRecord::Base
     images.each do |attributes|
       Image.create(attributes) unless attributes[:image].class.to_s == 'String'
     end
+  end
+
+  def custom_thumbnail_url(geom)
+    thumb = Paperclip::Thumbnail::new(image, geom)
+    tempfile = thumb.make
+    geom = thumb.target_geometry.to_s
+    scaled_name = 'custom-' + geom 
+    scaled_path = image.path(scaled_name)
+    FileUtils.mkdir_p(File.dirname(scaled_path))
+    tempfile.stream_to(scaled_path) unless File.exists?(scaled_path)
+    image.url(scaled_name)
   end
   
   private
