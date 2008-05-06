@@ -48,7 +48,7 @@ class Image < ActiveRecord::Base
     scaled_path = image.path(scaled_name)
     FileUtils.mkdir_p(File.dirname(scaled_path))
     tempfile.stream_to(scaled_path) unless File.exists?(scaled_path)
-    image.url(scaled_name)
+    image.url(URI.escape(scaled_name))
   end
   
   private
