@@ -63,9 +63,8 @@ describe "The XML fixture 'flv_videos'" do
           @video.title.should == "Bang Bang"
         end
 
-        it "should have 2 urls" do
-          @video.urls[:high].should =~ /2342556.+hi/
-          @video.urls[:low].should =~ /2342556.+lo/
+        it "should have an url" do
+          @video.url.should =~ /2342556/
         end
 
         it do
@@ -94,9 +93,8 @@ describe "The XML fixture 'flv_videos'" do
           @video.title.should == "Don't let me be misunderstood"
         end
 
-        it "should have 2 urls" do
-          @video.urls[:high].should =~ /4223556.+hi/
-          @video.urls[:low].should =~ /4223556.+lo/
+        it "should have an url" do
+          @video.url.should =~ /4223556/
         end
 
         it do

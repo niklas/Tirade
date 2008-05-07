@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 16
+# Schema version: 17
 #
 # Table name: videos
 #
@@ -7,18 +7,17 @@
 #  title       :string(255)     
 #  artist_id   :integer         
 #  artist_name :string(255)     
-#  urls        :text            
 #  image_url   :string(255)     
 #  created_at  :datetime        
 #  updated_at  :datetime        
+#  url         :string(255)     
 #
 
 require 'uri'
 require 'net/http'
 require 'xmlsimple'
 class Video < ActiveRecord::Base
-  attr_accessible :id, :title, :artist_name, :urls, :image_url
-  serialize :urls, Hash
+  attr_accessible :id, :title, :artist_name, :url, :image_url
 
   validates_uniqueness_of :id
 
@@ -29,10 +28,7 @@ class Video < ActiveRecord::Base
       n = new(
         :title => hsh['title'],
         :artist_name => hsh['artist'],
-        :urls => {
-          :high => hsh['videourl'], 
-          :low => hsh['videourllo']
-        },
+        :url => hsh['videourl'].match(/^(.*vid=\d+)/).andand[1],
         :image_url => hsh['image']
       )
       n.id = hsh['videoId']
