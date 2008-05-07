@@ -17,6 +17,8 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def check_box(field, options = {}, checked_value = "1", unchecked_value = "0")
+    options[:class] ||= ''
+    options[:class] += ' checkbox'
     wrap(field, options,super(field, options, checked_value, unchecked_value))
   end
 
