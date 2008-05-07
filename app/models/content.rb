@@ -41,6 +41,11 @@ class Content < ActiveRecord::Base
     )
   end
 
+  # TODO use acts_as_picturable
+  def image
+    Image.find(:first)
+  end
+
   def validate
     errors.add(:type, 'illegal Type') unless self.class <= Content
   end
