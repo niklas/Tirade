@@ -41,7 +41,7 @@ class Video < ActiveRecord::Base
   end
 
   def self.sync(url_str)
-    url = URI.parse
+    url = URI.parse url_str
     xml = Net::HTTP.get url
     create_from_xml_unless_exist(xml)
   end
