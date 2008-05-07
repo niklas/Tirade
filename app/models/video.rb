@@ -49,4 +49,8 @@ class Video < ActiveRecord::Base
     end
     created
   end
+
+  def full_url
+    APP_CONFIG['video_base_url'] + self.url
+  end
 end

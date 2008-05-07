@@ -1,0 +1,9 @@
+development:
+  video_feed_url: 'http://de.esperanto.mtvi.com/global/reporting/videos/video_rights_list.jhtml?regionCode=DE&previousDays=1'
+  video_base_url: 'http://de.esperanto.mtvi.com'
+
+test:
+  video_feed_url: 'http://example.com/video/feeds'
+  video_base_url: 'http://example.com/videos'
+
+production:

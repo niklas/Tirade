@@ -67,6 +67,10 @@ describe "The XML fixture 'flv_videos'" do
           @video.url.should =~ /2342556/
         end
 
+        it "should have a full url" do
+          @video.full_url.should == 'http://example.com/videos/www/xml/flv/flvgen.jhtml?vid=2342556'
+        end
+
         it do
           @video.image_url.should == 'http://example.com/nancy_sinatra_-_bang_bang.jpg'
         end
@@ -95,6 +99,10 @@ describe "The XML fixture 'flv_videos'" do
 
         it "should have an url" do
           @video.url.should =~ /4223556/
+        end
+
+        it "should have a full url" do
+          @video.full_url.should == 'http://example.com/videos/www/xml/flv/flvgen.jhtml?vid=4223556'
         end
 
         it do
