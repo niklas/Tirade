@@ -224,7 +224,7 @@ describe "A Part with ERB that accesses an Object of the same name" do
       :name => 'Content Preview',
       :filename => 'content_preview',
       :rhtml => %Q[<h1><%= content_preview.title %></h1>\n<p><%= content_preview.body %></p>],
-      :preferred_types => [Document]
+      :preferred_types => ["Document"]
     )
   end
   it "should be valid" do
