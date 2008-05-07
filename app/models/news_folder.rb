@@ -30,9 +30,13 @@ class NewsFolder < Content
       :body => 'Read more papers on the toil.. in the bathroom.'
     )
     3.times { s.items << wanted_item_class.sample }
+    s
   end
 
-  def wanted_item_class
+  def self.wanted_item_class
     NewsItem
+  end
+  def wanted_item_class
+    self.class.wanted_item_class
   end
 end
