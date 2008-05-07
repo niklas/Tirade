@@ -92,7 +92,7 @@ class Part < ActiveRecord::Base
     rescue SecurityError => e
       errors.add(:rhtml, 'does something illegal: ' + e.message)
     rescue Exception => e
-      errors.add(:rhtml, 'is not renderable: ' + e.message)
+      errors.add(:rhtml, 'is not renderable: ' + ERB::Util::html_escape(e.message))
     end
   end
 
