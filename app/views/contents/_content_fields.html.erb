@@ -3,5 +3,5 @@
 
   <% @errors.each do |error| %>
      <pre><%=h error.message %></pre>
-  <% end %>
+  <% end if @errors %>
 </p>
