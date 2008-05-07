@@ -1,4 +1,5 @@
 class PartsController < ApplicationController
+  layout 'admin'
   protect_from_forgery :except => [:preview]
   # GET /parts
   # GET /parts.xml
