@@ -19,7 +19,7 @@
   <p>
     <label>Part</label>
     <a name="part" />
-      <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :name %>
+      <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :fullname %>
   </p>
 
   <%= show_rendering_link(@rendering, :label => 'cancel') %> or

@@ -38,6 +38,8 @@ class Part < ActiveRecord::Base
 
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
+  BaseGlob = File.join(BasePath, '_*.html.erb')
+  ThemesGlob = File.join(RAILS_ROOT, 'themes', '*', 'views', 'parts', PartsDir, '_*.html.erb')
 
   SaveLevel = 3
 
@@ -50,12 +52,13 @@ class Part < ActiveRecord::Base
   end
 
   def self.recognize_new_files
-    pattern = File.join(BasePath,'*.html.erb')
     created = []
-    Dir.glob(pattern).each do |filename|
-      filename_without_extention = File.basename(filename).sub(%r~\.html\.erb$~,'').sub(/^_/,'')
-      unless find_by_filename(filename_without_extention)
-        created << create!(:filename => filename_without_extention)
+    [BaseGlob, ThemesGlob].each do |pattern|
+      Dir.glob(pattern).each do |filename|
+        filename_without_extention = File.basename(filename).sub(%r~\.html\.erb$~,'').sub(/^_/,'')
+        unless find_by_filename(filename_without_extention)
+          created << create!(:filename => filename_without_extention)
+        end
       end
     end
     created
@@ -107,6 +110,7 @@ class Part < ActiveRecord::Base
   end
 
   def after_initialize
+    @use_theme = true
     self.options ||= {}
   rescue ActiveRecord::SerializationTypeMismatch
     self.options = {}
@@ -124,8 +128,9 @@ class Part < ActiveRecord::Base
     read_attribute(:preferred_types) || []
   end
 
-  def rhtml
-     @rhtml ||= File.read(fullpath)
+  def rhtml(reload=false)
+    @rhtml = nil if reload
+    @rhtml ||= File.read(fullpath)
   rescue
     ''
   end
@@ -134,12 +139,22 @@ class Part < ActiveRecord::Base
     @rhtml = new_rhtml
   end
 
+  # Returns the path to the existing part file, theme is tried first
   def fullpath(theme=nil)
-    if theme || (use_theme && (theme = current_theme))
-      File.join(RAILS_ROOT,'themes',theme,'views', 'parts', PartsDir, filename_with_extention)
-    else
-      File.join(BasePath,filename_with_extention)
-    end
+    paths = []
+    paths << fullpath_for_theme(theme) if (theme || use_theme)
+    paths << default_fullpath
+
+    paths.find {|p| File.exists?(p)} || default_fullpath
+  end
+
+  def default_fullpath
+    File.join(BasePath,filename_with_extention)
+  end
+
+  def fullpath_for_theme(theme=nil)
+    theme ||= current_theme
+    File.join(RAILS_ROOT,'themes',theme,'views', 'parts', PartsDir, filename_with_extention)
   end
 
   def absolute_partial_name
@@ -180,11 +195,15 @@ class Part < ActiveRecord::Base
 
   # Does a counterpart of this file exists in the given theme, defaults to the current theme of the +active_controller+
   def in_theme?(theme_name=nil)
-    File.exists? fullpath(theme_name || current_theme)
+    File.exists? fullpath_for_theme(theme_name)
   end
 
   def current_theme
     active_controller.andand.current_theme
+  end
+
+  def fullname
+    in_theme? ? "#{name} (#{current_theme})" : name
   end
 
   private

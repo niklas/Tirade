@@ -261,27 +261,37 @@ describe "The simple preview Part" do
   end
 
   it "should know about its path for a given a theme" do
-    @part.fullpath('cool_theme').should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
+    @part.fullpath_for_theme('cool_theme').should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
   end
 
   it "should know about its path in the theme if we want to use a theme" do
     @part.use_theme = true
-    @part.fullpath.should =~ %r~themes/default/views/parts/stock/_simple_preview.html.erb$~
+    @part.fullpath_for_theme.should =~ %r~themes/default/views/parts/stock/_simple_preview.html.erb$~
   end
 
   it "should know about its path in the theme if we want to use a theme, set in the controller" do
     @part.use_theme = true
     @part.should_receive(:current_theme).and_return('cool_theme')
-    @part.fullpath.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
+    @part.fullpath_for_theme.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
   end
 
   it "should know it is in the theme if the part file exists there" do
-    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).and_return(true)
+    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).twice.and_return(true)
     @part.should be_in_theme('cool_theme')
+    @part.use_theme = true
+    @part.should_receive(:current_theme).and_return('cool_theme')
+    @part.fullpath.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
   end
   it "should know it is not in the theme if the part file does not exist there" do
     File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).and_return(false)
     @part.should_not be_in_theme('cool_theme')
+  end
+
+  it "should not be in the default theme unless it exists" do
+    @part.use_theme = true
+    File.should_receive(:exists?).with(%r~themes/default/views/parts/stock/_simple_preview.html.erb$~).and_return(false)
+    File.should_receive(:exists?).with(%r~app/views/parts/stock/_simple_preview.html.erb$~).and_return(true)
+    @part.fullpath.should =~ %r~app/views/parts/stock/_simple_preview.html.erb$~
   end
 
 end
