@@ -124,6 +124,12 @@ class Part < ActiveRecord::Base
     write_attribute :options, object_from_yaml(new_yaml_options)
   end
 
+  # FIXME dynamicx, reusable!
+  def self.valid_content_types
+    # Rendering.valid_content_types
+    [Document,NewsItem,NewsFolder]
+  end
+
   def preferred_types
     read_attribute(:preferred_types) || []
   end
@@ -219,6 +225,6 @@ class Part < ActiveRecord::Base
   end
 
   def fake_content
-    (preferred_types.andand.first || Document).sample
+    (preferred_types.andand.first || "Document").constantize.sample
   end
 end
