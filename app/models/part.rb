@@ -126,8 +126,7 @@ class Part < ActiveRecord::Base
 
   # FIXME dynamicx, reusable!
   def self.valid_content_types
-    # Rendering.valid_content_types
-    [Document,NewsItem,NewsFolder]
+    Rendering.valid_content_types
   end
 
   def preferred_types
