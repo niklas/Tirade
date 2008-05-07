@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 14
+# Schema version: 16
 #
 # Table name: grids
 #
@@ -10,6 +10,7 @@
 #  yui        :string(255)     
 #  created_at :datetime        
 #  updated_at :datetime        
+#  title      :string(255)     
 #
 
 class Grid < ActiveRecord::Base
