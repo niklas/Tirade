@@ -1,0 +1,2 @@
+spec/db/*.sqlite3
+*.log
