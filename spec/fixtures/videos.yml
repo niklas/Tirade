@@ -5,7 +5,7 @@ one:
   title: MyString
   artist_id: 1
   artist_name: MyString
-  urls: MyText
+  url: MyText
   image_url: MyString
 
 two:
@@ -13,5 +13,5 @@ two:
   title: MyString
   artist_id: 1
   artist_name: MyString
-  urls: MyText
+  url: MyText
   image_url: MyString
