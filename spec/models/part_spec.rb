@@ -249,3 +249,39 @@ describe "A Part with ERB that accesses an Object of the same name" do
     end
   end
 end
+
+describe "The simple preview Part" do
+  fixtures :all
+  before(:each) do
+    @part = parts(:simple_preview)
+  end
+
+  it "should be located in the correct directory" do
+    @part.fullpath.should =~ %r~app/views/parts/stock/_simple_preview.html.erb$~
+  end
+
+  it "should know about its path for a given a theme" do
+    @part.fullpath('cool_theme').should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
+  end
+
+  it "should know about its path in the theme if we want to use a theme" do
+    @part.use_theme = true
+    @part.fullpath.should =~ %r~themes/default/views/parts/stock/_simple_preview.html.erb$~
+  end
+
+  it "should know about its path in the theme if we want to use a theme, set in the controller" do
+    @part.use_theme = true
+    @part.should_receive(:current_theme).and_return('cool_theme')
+    @part.fullpath.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
+  end
+
+  it "should know it is in the theme if the part file exists there" do
+    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).and_return(true)
+    @part.should be_in_theme('cool_theme')
+  end
+  it "should know it is not in the theme if the part file does not exist there" do
+    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).and_return(false)
+    @part.should_not be_in_theme('cool_theme')
+  end
+
+end

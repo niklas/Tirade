@@ -134,8 +134,12 @@ class Part < ActiveRecord::Base
     @rhtml = new_rhtml
   end
 
-  def fullpath
-    File.join(BasePath,filename_with_extention)
+  def fullpath(theme=nil)
+    if theme || (use_theme && (theme = current_theme))
+      File.join(RAILS_ROOT,'themes',theme,'views', 'parts', PartsDir, filename_with_extention)
+    else
+      File.join(BasePath,filename_with_extention)
+    end
   end
 
   def absolute_partial_name
@@ -169,6 +173,18 @@ class Part < ActiveRecord::Base
     options.merge({
       filename.to_sym => obj
     })
+  end
+
+  # Theme stuff
+  attr_accessor :use_theme
+
+  # Does a counterpart of this file exists in the given theme, defaults to the current theme of the +active_controller+
+  def in_theme?(theme_name=nil)
+    File.exists? fullpath(theme_name || current_theme)
+  end
+
+  def current_theme
+    active_controller.andand.current_theme
   end
 
   private
