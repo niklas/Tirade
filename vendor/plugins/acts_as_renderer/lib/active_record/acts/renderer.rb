@@ -25,7 +25,7 @@ module ActiveRecord
 
             # Renders a template to a string with the included variable assignments
             def self.render_string(render_template, assigns, contr)
-              controller = contr || MockController.new
+              controller = contr 
               path = controller.view_paths rescue controller.view_root
               template = ActionView::Base.new(path, assigns, controller)
               template.extend controller.master_helper_module
@@ -50,11 +50,15 @@ module ActiveRecord
         # Renders a record instance to a string using the provided template and additional variables.
         def render_to_string(template, variables={})
           assigns = variables.reverse_merge(self.class.class_name.underscore.to_sym => self)
-          self.class.render_string(template, assigns, @active_controller)
+          self.class.render_string(template, assigns, active_controller)
         end
 
         def active_controller=(ac)
           @active_controller = ac
+        end
+
+        def active_controller
+          @active_controller || MockController.new 
         end
       end
     end
