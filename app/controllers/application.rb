@@ -26,11 +26,7 @@ class ApplicationController < ActionController::Base
 
 
   def current_theme
-    @current_theme ||= if controller_name == 'public'
-                         Settings.public_theme
-                       else
-                         Settings.backend_theme
-                       end
+    @current_theme ||= (Settings.public_theme || Settings.current_theme)
   end
   hide_action :current_theme
   
