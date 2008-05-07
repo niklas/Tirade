@@ -16,6 +16,10 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
     wrap(field,options, super(field, choices, options, html_options))
   end
 
+  def check_box(field, options = {}, checked_value = "1", unchecked_value = "0")
+    wrap(field, options,super(field, options, checked_value, unchecked_value))
+  end
+
   private
   def wrap(field, options, tag_output)
     label = @template.content_tag(

@@ -87,5 +87,23 @@ describe NormalFormBuilder, 'in a form' do
       end
     end
   end
+  describe "with a check_nox" do
+    before(:each) do
+      @html = _erbout = ''
+      @view.form_for(:content, Content.new, :url => '/foo', :builder => NormalFormBuilder) do |f|
+          _erbout << f.check_box(:title, :label => 'A Checkbox for a String??')
+      end
+    end
+    it "should render something" do
+      @html.should_not be_empty
+    end
+    it "should have a paragraph and the text input with a label" do
+      @html.should have_tag('p') do
+        with_tag('label', 'A Checkbox for a String??')
+        with_tag('input#content_title[name=?]', "content[title]")
+      end
+    end
+  end
+
 end
 
