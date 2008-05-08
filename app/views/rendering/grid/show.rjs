@@ -1,3 +1,2 @@
-page.close_toolbox
 page[dom_id(@grid.root)].replace page.context.render_grid_in_page(@grid.root,@rendering.page)
 page.unmark_all_active
