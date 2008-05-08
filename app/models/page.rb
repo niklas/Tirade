@@ -59,7 +59,7 @@ class Page < ActiveRecord::Base
 
   def after_save
     final_layout.leafs.each do |leaf_grid|
-      self.renderings.create!(:grid => leaf_grid) if self.renderings.empty?
+      self.renderings.create!(:grid => leaf_grid) if self.renderings.for_grid(leaf_grid).empty?
     end
   end
 
