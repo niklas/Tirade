@@ -26,7 +26,7 @@ class ContentsController < ApplicationController
   # GET /contents/new
   # GET /contents/new.xml
   def new
-    @content = @klass.new
+    @content = @klass.new(params[:content])
 
     respond_to do |format|
       format.html # new.html.erb

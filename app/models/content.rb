@@ -55,11 +55,11 @@ class Content < ActiveRecord::Base
   end
 
   def wanted_parent_id
-    self.read_attribute(:parent_id)
+     @wanted_parent_id || self.read_attribute(:parent_id)
   end
 
   def wanted_parent_id=(new_parent_id)
-    @wanted_parent_id = new_parent_id
+    @wanted_parent_id = new_parent_id.to_i
   end
 
   after_save :move_to_parent_if_wanted
