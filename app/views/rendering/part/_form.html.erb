@@ -1,13 +1,22 @@
 <%= warning_tag 'Editing this part may change the appearance of other pages' %>
 <%= error_messages_for :part %>
-<% form_for :part, @part, :url => part_path(@part), :html => {:method => :post, :class => 'update part' }, :builder => NormalFormBuilder do |f| %>
-	 <%= f.text_field :name %> 
+<% form_for :part, @part, :url => part_path(@part), :html => {:method => :put, :class => 'update part' }, :builder => NormalFormBuilder do |f| %>
+    <%= f.text_field :name %> 
+
+    <p>
     <% theme = @controller.current_theme %>
     <% if @part.in_theme? %>
-      <%= f.check_box :use_theme, :label => "Use Theme Version ('#{theme}')" %> 
+      <% if @part.use_theme %>
+        <%= link_to_remote 'use original', :url => edit_rendering_part_path(@rendering,@part, :use_theme => false) %>
+      <% else %>
+        <%= link_to_remote "use theme (#{theme})", :url => edit_rendering_part_path(@rendering,@part, :use_theme => true) %>
+      <% end %>
     <% else %>
-      <p>Link to create themed version (in '<%= theme %>')</p>
+      <%= link_to_remote "make themable in '#{theme}'", :url => make_themable_rendering_part_path(@rendering) %>
     <% end %>
+    <%= f.hidden_field :use_theme %>
+    </p>
+
     <%= f.text_area :rhtml, :rows => 10 %>
     <%= f.text_area :options_as_yaml, :rows => 5 %>
     <%= f.text_field :filename %>
