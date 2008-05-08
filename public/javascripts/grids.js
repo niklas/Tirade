@@ -46,7 +46,7 @@ Remote.LinkWithToolbox = Behavior.create({
   initialize: function() {
     return new Remote.Link(this.element, { 
       onCreate: function() {
-        new Toolbox('header', 'Toolbox', {'cornerRadius': 4})
+        new Toolbox('body', 'Toolbox', {'cornerRadius': 4})
       }
     })
   },
@@ -114,7 +114,9 @@ AddableImages = Behavior.create({
   },
   _addToList: function(image) {
     if (match = image.id.match(/^image_(\d+)$/)) {
+      hiddenfield = $input({type: 'hidden', id: 'content[image_ids][]', name: 'content[image_ids][]', value: match[1]});
       $('pictures_list').appendChild(image);
+      image.appendChild(hiddenfield);
     }
   }
 });
