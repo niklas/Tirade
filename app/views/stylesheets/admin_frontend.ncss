@@ -1,7 +1,9 @@
 /* -------->>> tools icon links <<<--------------- */
 div.admin a {
   display: block;
-  float:right;
+  position: absolute;
+  right:3px;
+  top:2px;
   width: 11px;
   height: 13px;
   background: url(/images/icon_small_edit.gif);
@@ -9,12 +11,17 @@ div.admin a {
   outline: 0;
 }
 
-div.rendering.active {
+body.role_admin {
+    div.rendering {
+        border: #FFFFFF 1px dotted;
+    }
+    div.rendering.active {
+        border: #c72c1e 1px dotted;
+    }
+    div.grid.active {
+        border: #85c71e 0px dotted;
+    }  
+    div.hover {
     border: #c72c1e 1px dotted;
-}
-div.grid.active {
-    border: #c72c1e 3px dotted;
-}
-div.hover {
-  background-color: #2cc71e;
+    }
 }

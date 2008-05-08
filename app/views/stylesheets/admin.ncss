@@ -338,10 +338,10 @@ BODY.role_admin{
     h1{
       margin:0;
       padding: 15px 0px 0pt 0pt;
-      background: url(/images/backend_logo.png) no-repeat right bottom;
+      background: url(/images/wild_logo.png) no-repeat right bottom;
       text-indent: -9000px;
-      height: 72px;
-      width: 100px;
+      height: 88px;
+      width: 118px;
       float: left;
     }
     ul{
@@ -554,10 +554,14 @@ BODY.role_admin{
     form {
         margin-top:5px;
         input, textarea, select {
-            width:150px;
+            width:350px;
             padding: 2px;
             border: #AAAAAA 1px solid;
             background-color: #efefef;
+        }
+        textarea {
+            width: 550px;
+            font-family: courier, serif;
         }
         p {
             margin-bottom:0px;
@@ -567,7 +571,7 @@ BODY.role_admin{
            width:auto;
         }
         label.checkbox {
-            display:inline
+            display:inline;
         }
         
         select {
@@ -575,7 +579,7 @@ BODY.role_admin{
         }
         input.submit {
             width: auto;
-            border: #c72c1e 1px solid;
+            border: #FF9933 1px solid;
         }
         
         label {
@@ -593,7 +597,6 @@ form.search {
 div#utilities p {
     color:#FFF;
 }
-
 
 
 /* -------->>> Index.html / local <<<--------------- */
