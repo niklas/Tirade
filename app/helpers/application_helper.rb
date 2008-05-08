@@ -33,6 +33,7 @@ module ApplicationHelper
   end
 
   def public_content_link(content,opts = {})
+    content = Page.find_by_url(content) if content.is_a?(String)
     label = opts.delete(:label) || content.title
     url = [ public_content_path(content.url), opts.delete(:item_id)].compact.join('/')
     link_to(label,url,opts)
