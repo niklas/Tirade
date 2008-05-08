@@ -34,31 +34,31 @@ describe PublicController do
     it "should accept ''" do
       Page.should_receive(:root).and_return( pages(:main) )
       get :index
-      assigns[:url].should == ''
+      assigns[:page_url].should == ''
       assigns[:page].should_not be_nil
     end
     it "should accept '/foo/bar'" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
       get :index, :path => ['foo','bar']
-      assigns[:url].should == 'foo/bar'
+      assigns[:page_url].should == 'foo/bar'
       assigns[:page].should be_nil
     end
     it "should accept '/foo/bar' with extra param" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
       get :index, :path => ['foo','bar'], :q => 'some param'
-      assigns[:url].should == 'foo/bar'
+      assigns[:page_url].should == 'foo/bar'
       assigns[:page].should be_nil
     end
     it "should accept '/foo/bar' with extra params" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
       get :index, :path => ['foo','bar'], :q => 'some param', :x => 'you know', :y => 'do we need this?'
-      assigns[:url].should == 'foo/bar'
+      assigns[:page_url].should == 'foo/bar'
       assigns[:page].should be_nil
     end
     it "should accept '/portal/children-section'" do
       Page.should_receive(:find_by_url).with('portal/children-section').and_return( pages(:children_section) )
       get :index, :path => ['portal','children-section']
-      assigns[:url].should == 'portal/children-section'
+      assigns[:page_url].should == 'portal/children-section'
       assigns[:page].should == pages(:children_section)
     end
   end

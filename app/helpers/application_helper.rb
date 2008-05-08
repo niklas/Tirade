@@ -34,7 +34,8 @@ module ApplicationHelper
 
   def public_content_link(content,opts = {})
     label = opts.delete(:label) || content.title
-    link_to(label,public_content_path(content.url))
+    url = [ public_content_path(content.url), opts.delete(:item_id)].compact.join('/')
+    link_to(label,url,opts)
   end
 
   # copied without shame from http://blog.vixiom.com/2007/06/05/rails-helper-for-swfobject/
