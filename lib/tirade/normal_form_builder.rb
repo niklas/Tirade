@@ -22,6 +22,23 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
     wrap(field, options,super(field, options, checked_value, unchecked_value))
   end
 
+  def select_picture
+    unless @object.class.reflections.has_key?(:picturizations)
+      return 'does not know about pictures'
+    end
+    inner = ''
+    inner << "Will select Picture for #{@object.title}"
+
+    list_dom = "pictures_list"
+    inner << @template.content_tag(:div,@template.render(:partial => '/images/for_select', :collection => @object.images), {:id => list_dom, :class => 'pictures_list'})
+
+    inner << @template.text_field_tag('search_images')
+    results_dom = "search_results"
+    inner << @template.content_tag(:div,'results', {:id => results_dom, :class => 'pictures_list'})
+    inner << @template.hidden_field_tag("#{@object_name}[image_ids][]","empty")
+    wrap('select picture', {}, inner)
+  end
+
   private
   def wrap(field, options, tag_output)
     label = @template.content_tag(
