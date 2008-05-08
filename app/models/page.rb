@@ -57,9 +57,9 @@ class Page < ActiveRecord::Base
     errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
   end
 
-  def after_create
+  def after_save
     final_layout.leafs.each do |leaf_grid|
-      self.renderings.create!(:grid => leaf_grid)
+      self.renderings.create!(:grid => leaf_grid) if self.renderings.empty?
     end
   end
 
