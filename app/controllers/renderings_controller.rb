@@ -40,9 +40,15 @@ class RenderingsController < ApplicationController
   def duplicate
     @original_rendering = Rendering.find(params[:id])
     respond_to do |wants|
-      if (@rendering = @original_rendering.clone) && @rendering.save
-        wants.js {render :action => 'create'}
-      end
+        wants.js {
+          if (@rendering = @original_rendering.clone) && @rendering.save
+            render :action => 'create'
+          else
+            render :update do |page|
+              page.alert @rendering.andand.errors.full_messages
+            end
+          end
+        }
     end
   end
 
