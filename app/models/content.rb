@@ -51,7 +51,7 @@ class Content < ActiveRecord::Base
   end
 
   def self.valid_types
-    subclasses
+    [Document, Folder, NewsFolder, NewsItem]
   end
 
   def wanted_parent_id
