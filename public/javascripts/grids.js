@@ -42,21 +42,27 @@ ContentEditable = Behavior.create({
   }
 });
 
+var currently_hovered_div = null;
+
 Remote.LinkWithToolbox = Behavior.create({
   initialize: function() {
     return new Remote.Link(this.element, { 
       onCreate: function() {
-        new Toolbox('body', 'Toolbox', {'cornerRadius': 4})
+        new Toolbox('Toolbox', {'cornerRadius': 4, 
+          'top': currently_hovered_div.offsetTop, 
+          'left': (currently_hovered_div.offsetLeft + currently_hovered_div.offsetWidth)})
       }
     })
   },
   onmouseover: function() {
     parent_div = this.element.parentNode.parentNode;
     parent_div.addClassName('hover');
+    currently_hovered_div = parent_div;
   },
   onmouseout: function() {
     parent_div = this.element.parentNode.parentNode;
     parent_div.removeClassName('hover');
+    currently_hovered_div = null;
   }
 });
 
