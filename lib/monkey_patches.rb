@@ -27,6 +27,9 @@ class String
   def urlize
     strip.gsub(/[^\w]+/,'-').sub(/-\Z/,'').downcase
   end
+  def domify
+    strip.gsub(/[^\w]+/,'_').sub(/_\Z/,'').downcase
+  end
 end
 
 
