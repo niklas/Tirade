@@ -42,7 +42,7 @@ describe "/contents/new.html.erb" do
           with_tag("select#content_type[name=?]", "content[type]")
         end
          with_tag('p.wanted_parent_id') do
-          with_tag('label', 'Parent')
+          with_tag('label', 'Parent NewsFolder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end
       end
@@ -87,7 +87,7 @@ describe "/contents/new.html.erb" do
           with_tag("select#content_type[name=?]", "content[type]")
         end
          with_tag('p.wanted_parent_id') do
-          with_tag('label', 'Parent')
+          with_tag('label', 'Parent Folder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end
       end
@@ -163,7 +163,7 @@ describe "/contents/new.html.erb" do
           with_tag("select#content_type[name=?]", "content[type]")
         end
          with_tag('p.wanted_parent_id') do
-          with_tag('label', 'Parent')
+          with_tag('label', 'Parent Folder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end
       end
