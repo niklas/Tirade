@@ -34,25 +34,17 @@
 </p>
 
 <p>
-  <b>Position:</b>
-  <%=h @content.position %>
-</p>
-
-<p>
   <b>Parent:</b>
   <%=h @content.parent_id %>
 </p>
 
 <p>
-  <b>Lft:</b>
-  <%=h @content.lft %>
-</p>
+  <b>Images</b>
+  <div class="pictures_list">
+    <%= render :partial => '/images/for_select', :collection => @content.images %>
+  </div>
 
-<p>
-  <b>Rgt:</b>
-  <%=h @content.rgt %>
 </p>
-
 
 <%= link_to 'Edit', edit_content_path(@content) %> |
 <%= link_to 'Back', contents_path %>

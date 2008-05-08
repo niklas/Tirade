@@ -87,7 +87,7 @@ describe NormalFormBuilder, 'in a form' do
       end
     end
   end
-  describe "with a check_nox" do
+  describe "with a check_box" do
     before(:each) do
       @html = _erbout = ''
       @view.form_for(:content, Content.new, :url => '/foo', :builder => NormalFormBuilder) do |f|
@@ -102,6 +102,18 @@ describe NormalFormBuilder, 'in a form' do
         with_tag('label', 'A Checkbox for a String??')
         with_tag('input#content_title[name=?]', "content[title]")
       end
+    end
+  end
+
+  describe "with a select_picture" do
+    before(:each) do
+      @html = _erbout = ''
+      @view.form_for(:content, Content.new, :url => '/foo', :builder => NormalFormBuilder) do |f|
+          _erbout << f.select_picture
+      end
+    end
+    it "should render something" do
+      @html.should_not be_empty
     end
   end
 

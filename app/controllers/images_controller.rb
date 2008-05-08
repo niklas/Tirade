@@ -6,7 +6,12 @@ class ImagesController < ApplicationController
   
   def index
     # TODO: Pagination
-    @images = Image.find(:all, :order => 'created_at DESC')
+    @images = Image.search(params[:term]).find(:all, :order => 'created_at DESC')
+
+    respond_to do |wants|
+      wants.html
+      wants.js { render :action => 'search_results'}
+    end
     
   end
   

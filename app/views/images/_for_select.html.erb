@@ -1,0 +1,6 @@
+<% image = for_select %>
+
+<% div_for image do %>
+  <%= image_tag(image.image.url(:thumbnail)) %>
+  <%= hidden_field_tag 'content[image_ids][]', image.id %>
+<% end %>

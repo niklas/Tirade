@@ -32,6 +32,7 @@ class Content < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
 
   has_fulltext_search :title, :description, :body
+  acts_as_pictureable
 
   def self.sample
     new(
@@ -39,11 +40,6 @@ class Content < ActiveRecord::Base
       :description => "A brief but solid description",
       :body => "A looooong and beautiful body four your Example Content"
     )
-  end
-
-  # TODO use acts_as_picturable
-  def image
-    Image.find(:first)
   end
 
   def validate

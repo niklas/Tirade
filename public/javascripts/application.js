@@ -26,3 +26,9 @@ function searchAllContents(element,value) {
       {method: 'get', asynchronous:true, evalScripts:true, parameters:'term=' + value}
   );
 }
+function searchImages(element,value) {
+  // TODO escape
+  new Ajax.Request(images_url(), 
+      {method: 'get', asynchronous:true, evalScripts:true, parameters:'term=' + value}
+  );
+}

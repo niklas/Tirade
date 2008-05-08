@@ -14,5 +14,8 @@ Event.addBehavior({
     'div#toolbox form.update.part': Observed(previewRendering,{frequency: 5}),
     'body.role_admin div.grid.yui-u': SortableRenderings,
     'div#toolbox_content #search': Observed(searchAllContents,{frequency: 1}),
-    'div#toolbox_content #search_results': SearchResults
+    'div#toolbox_content #search_results': ContentSearchResults,
+    '#search_images': Observed(searchImages,{frequency: 1}),
+    '#search_results': AddableImages,
+    '#pictures_list': RemovableImages
 });

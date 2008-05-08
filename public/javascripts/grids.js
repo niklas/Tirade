@@ -90,7 +90,7 @@ Element.addMethods({
     }
 });
 
-SearchResults = Behavior.create({
+ContentSearchResults = Behavior.create({
   onclick: function(e) {
     var source = Event.element(e);
     Event.stop(e);
@@ -102,6 +102,33 @@ SearchResults = Behavior.create({
       $('rendering_content_type').value = match[1].gsub(/_/,'-').capitalize().camelize();
       new Effect.Highlight('rendering_content_id');
       $('rendering_content_id').value = match[2];
+    }
+  }
+});
+
+AddableImages = Behavior.create({
+  onclick: function(e) {
+    var source = Event.element(e);
+    Event.stop(e);
+    return this._addToList(source.parentNode);
+  },
+  _addToList: function(image) {
+    if (match = image.id.match(/^image_(\d+)$/)) {
+      $('pictures_list').appendChild(image);
+    }
+  }
+});
+RemovableImages = Behavior.create({
+  onclick: function(e) {
+    var source = Event.element(e);
+    Event.stop(e);
+    if (confirm("Remove Image?")) {
+      return this._removeFromList(source.parentNode);
+    }
+  },
+  _removeFromList: function(image) {
+    if (match = image.id.match(/^image_(\d+)$/)) {
+      image.remove();
     }
   }
 });
