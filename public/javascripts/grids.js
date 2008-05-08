@@ -99,7 +99,7 @@ SearchResults = Behavior.create({
   _select: function(result) {
     if (match = result.id.match(/^(.+)_(\d+)$/)) {
       new Effect.Highlight('rendering_content_type');
-      $('rendering_content_type').value = match[1];
+      $('rendering_content_type').value = match[1].gsub(/_/,'-').capitalize().camelize();
       new Effect.Highlight('rendering_content_id');
       $('rendering_content_id').value = match[2];
     }

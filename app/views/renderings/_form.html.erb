@@ -13,7 +13,7 @@
   <p>
   	 <label for="content_type">Content (Type, id)</label>
   	 <a name="content" />
-    <%= f.collection_select :content_type, Rendering.valid_content_types, :name_for_js, :label  %>
+    <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :label  %>
     <%= f.text_field :content_id %>
   </p>
   <p>
