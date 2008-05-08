@@ -21,6 +21,8 @@ class Video < ActiveRecord::Base
 
   validates_uniqueness_of :id
 
+  has_fulltext_search :title, :artist_name, :image_url
+
 
   def self.new_from_xml(xml)
     @document = XmlSimple.xml_in(xml,{ 'Cache' => 'mem_share', 'ForceArray' => false})
