@@ -112,6 +112,10 @@ class Grid < ActiveRecord::Base
     render_to_string(:inline => '<%= render_grid_in_page(grid,page) %>', :locals => {:grid => self, :page => thepage})
   end
 
+  def leafs
+    descendants.select {|n| n.children.empty? }
+  end
+
   protected
   def auto_create_missing_children
     while children.length < ideal_children_count

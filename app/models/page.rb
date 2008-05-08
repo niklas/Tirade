@@ -57,6 +57,12 @@ class Page < ActiveRecord::Base
     errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
   end
 
+  def after_create
+    final_layout.leafs.each do |leaf_grid|
+      self.renderings.create!(:grid => leaf_grid)
+    end
+  end
+
   def before_validation
     unless self.class.rebuilding? || lft.nil? || rgt.nil?
       self.url = generated_url 
