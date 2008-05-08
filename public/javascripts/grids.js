@@ -122,13 +122,13 @@ RemovableImages = Behavior.create({
   onclick: function(e) {
     var source = Event.element(e);
     Event.stop(e);
-    if (confirm("Remove Image?")) {
-      return this._removeFromList(source.parentNode);
-    }
+    return this._removeFromList(source.parentNode);
   },
   _removeFromList: function(image) {
     if (match = image.id.match(/^image_(\d+)$/)) {
-      image.remove();
+      if (confirm("Remove Image?")) {
+        image.remove();
+      }
     }
   }
 });
