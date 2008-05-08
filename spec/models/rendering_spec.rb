@@ -60,6 +60,10 @@ describe Rendering, ' appended to the left column of the main page, containing a
   it "should be the last item in the left column" do
     @page.renderings.for_grid(@grid).last.should == @rendering
   end
+  it "should set the content_type correctly"
+  #do
+  #  @rendering.content_type.should == 'Document'
+  #end
   it "should find the content" do
     lambda do
       found_content = @page.renderings.for_grid(@grid).last.content
@@ -98,6 +102,10 @@ describe Rendering, ' appended to the left column of the main page, containing a
   it "should be the last item in the left column" do
     @page.renderings.for_grid(@grid).last.should == @rendering
   end
+  it "should set the content_type correctly"
+  #do
+  #  @rendering.content_type.should == 'Document'
+  #end
   it "should find the content" do
     lambda do
       found_content = @page.renderings.for_grid(@grid).last.content
@@ -208,19 +216,27 @@ describe "The Renderings loaded by fixtures" do
   end
   describe "the clone of main12" do
     before(:each) do
-      @r = renderings(:main12).clone
+      @o = renderings(:main12)
+      @r = @o.clone
     end
-    it "its grid" do
+    it "should have the same grid" do
       @r.grid.should_not be_nil
+      @r.grid.should == @o.grid
     end
-    it "its content" do
+    it "should have the same content" do
       @r.content.should_not be_nil
+      @r.content.should == @o.content
     end
-    it "its part" do
+    it "should have the same part" do
       @r.part.should_not be_nil
+      @r.part.should == @o.part
     end
-    it "its page" do
+    it "should have the same page" do
       @r.page.should_not be_nil
+      @r.page.should == @o.page
+    end
+    it "should be valid" do
+      @r.should be_valid
     end
   end
 
