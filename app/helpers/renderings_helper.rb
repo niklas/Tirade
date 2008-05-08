@@ -13,7 +13,7 @@ module RenderingsHelper
   end
   def update_rendering(rendering)
     dom = page.context.dom_id(rendering)
-    page[dom].replace_html rendering.render
+    page[dom].replace rendering.render
     page[dom].reset_behavior
   end
 
