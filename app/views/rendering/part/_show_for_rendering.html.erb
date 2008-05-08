@@ -1,7 +1,7 @@
 <% part = show_for_rendering.part %>
 <dt>Part</dt>
 <dd>
-  <%= part.name %>
+  <%= part ? part.name : 'none' %>
   <%= link_to 'edit', edit_rendering_part_path(show_for_rendering) %>
   <%= link_to 'select', edit_rendering_path(show_for_rendering, :anchor => 'part') %>
 </dd>

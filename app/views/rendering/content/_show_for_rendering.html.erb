@@ -3,11 +3,11 @@
 <% if content = show_for_rendering.content %>
   <%= content.title %>
   (<%= content.class %>: <%= content.id %>)
-  <%= link_to 'edit', edit_rendering_content_path(show_for_rendering) %>
-  <%= link_to 'select', edit_rendering_path(show_for_rendering, :anchor => 'content') %>
 <% else %>
   <%=_ 'none' %>
 <% end %>
+  <%= link_to 'edit', edit_rendering_content_path(show_for_rendering) %>
+  <%= link_to 'select', edit_rendering_path(show_for_rendering, :anchor => 'content') %>
 </dd>
 
 
