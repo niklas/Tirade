@@ -26,6 +26,10 @@ class NewsItem < Content
     {:order => 'published_at DESC, updated_at DESC', :limit => num}
   }
 
+  has_finder :skip, lambda { |num|
+    {:offset => num }
+  }
+
   has_finder :between, lambda { |from,to|
     {:conditions => ['published_at BETWEEN ? AND ?', from, to], :order => 'published_at DESC, updated_at DESC'}
   }

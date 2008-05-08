@@ -40,4 +40,16 @@ describe "Cheezeburga News" do
       @items.collect(&:title).should include( @cookie.title )
     end
   end
+  describe "last 2 items, 2 skipped" do
+    before(:each) do
+      @items = @news.items.last(2).skip(2)
+    end
+    it do
+      @items.should be_empty
+    end
+    it "should contain the cookie (fails mysteriously)" do
+      @cookie = contents(:ate_cookie)
+      @items.collect(&:title).should_not include( @cookie.title )
+    end
+  end
 end
