@@ -1,3 +1,5 @@
+<%= document_fields.collection_select :wanted_parent_id, Folder.find(:all), :id, :title, :label => 'Parent Folder'  %>
+
 <%= document_fields.text_area :description %>
 
 <%= document_fields.text_area :body %>
