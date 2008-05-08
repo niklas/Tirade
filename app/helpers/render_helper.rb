@@ -47,7 +47,7 @@ module RenderHelper
       if thegrid.visible_children.empty?
         renderings = thepage.renderings.for_grid(thegrid)
         if renderings.empty? && current_user.is_admin?
-          [link_to_remote('create rendering', {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),:loading  => "new Toolbox($$('body').first(), 'Toolbox', {'cornerRadius': 4})"},:method => :post), ]
+          [link_to_remote('create rendering', {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),:loading  => "new Toolbox('Toolbox', {'cornerRadius': 4})"},:method => :post), ]
         else
           renderings.collect do |rendering|
             rendering.render 

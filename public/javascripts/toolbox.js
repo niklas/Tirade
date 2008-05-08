@@ -1,5 +1,5 @@
 var Toolbox = Class.create({ 
-  initialize: function(element, url, options) {
+  initialize: function(url, options) {
     this.options = options || { };
     this.options.cornerRadius     = options.cornerRadius      || 6 ;
     this.options.headerHeight     = options.headerHeight      || 30 ;
@@ -7,7 +7,7 @@ var Toolbox = Class.create({
     this.options.headerStopColor  = options.headerStopColor   || [228, 228, 228] ;
     this.options.bodyBgColor      = options.bodyBgColor       || [240, 240, 240] ;
 
-    this.element        = $(element)
+    this.element        = $$('body').first() ;
     this.contentURL     = url || ''
 		this.shadowWidth    = 3;
 		this.shadowOffset   = this.shadowWidth * 2;		
@@ -15,8 +15,8 @@ var Toolbox = Class.create({
     this.width          = 400;
     this.radius         = 6;
     this.height         = 500;
-		this.top						= 140;
-		this.left						= 480;
+    this.top						= options.top || 140;
+    this.left						= options.left || 480;
     this.footerHeight   = 30
     this.contentHeight  = this.height - this.footerHeight - this.options.headerHeight
     this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth)
