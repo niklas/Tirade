@@ -26,4 +26,8 @@ module AdminHelper
     partial_name = %Q[/#{for_type}/table]
     render :partial => partial_name, :object => collection
   end
+
+  def section(text)
+    content_for(:section) { text }
+  end
 end
