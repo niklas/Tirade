@@ -26,7 +26,7 @@ class Rendering < ActiveRecord::Base
     ([Content,Image,Video] + Content.valid_types).uniq
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
