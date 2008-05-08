@@ -27,7 +27,7 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
       return 'does not know about pictures'
     end
     inner = ''
-    inner << "Will select Picture for #{@object.title}"
+    inner << "Search + click to add/remove pictures for '#{@object.title}'"
 
     list_dom = "pictures_list"
     inner << @template.content_tag(:div,@template.render(:partial => '/images/for_select', :collection => @object.images), {:id => list_dom, :class => 'pictures_list'})
