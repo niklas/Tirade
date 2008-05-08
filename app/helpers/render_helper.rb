@@ -1,10 +1,21 @@
 # The RenderHelper should contain all the helpers to render Pages, Grids, Randerings and Parts
 module RenderHelper
   def render_rendering(rendering)
+    render_rendering_filled_with(
+      rendering,
+      unless rendering.part.nil? || rendering.content.nil?
+        rendering.part.render_with_content(rendering.content)
+      else
+        content_tag(:div, 'no part or content assigned', {:class => 'warning'})
+      end
+    )
+  end
+
+  def render_rendering_filled_with(rendering,inner,opts={})
     content_tag(
       :div,
-      rendering.part.render_with_content(rendering.content),
-      {:id => dom_id(rendering), :class => "rendering #{rendering.part.filename} #{rendering.content.class.to_s.underscore}"}
+      inner,
+      {:id => dom_id(rendering), :class => "rendering #{rendering.part.andand.filename} #{rendering.content.andand.class.to_s.underscore}"}
     )
   end
 
@@ -36,11 +47,7 @@ module RenderHelper
       if thegrid.visible_children.empty?
         renderings = thepage.renderings.for_grid(thegrid)
         renderings.collect do |rendering|
-          unless rendering.part.nil? || rendering.content.nil?
-            rendering.render 
-          else
-            '[no part or content assigned]'
-          end
+          rendering.render 
         end
       else
         thegrid.visible_children.collect do |child|
