@@ -18,8 +18,8 @@ describe Part do
     it "should be valid" do
       @part.should be_valid
     end
-    it "should not use a theme" do
-      @part.use_theme.should be_false
+    it "should have theme support enabled" do
+      @part.should be_use_theme
     end
     it "should have correct filename with extention" do
       @part.filename_with_extention.should == '_general_preview.html.erb'
@@ -30,12 +30,12 @@ describe Part do
     it "should have correct absolute_partial_name" do
       @part.absolute_partial_name.should == '/parts/stock/general_preview.html.erb'
     end
-    it "should have correct fullpath" do
-      @part.fullpath.should match(%r~app/views/parts/stock/_general_preview.html.erb~)
+    it "should have correct existing fullpath" do
+      @part.existing_fullpath.should match(%r~app/views/parts/stock/_general_preview.html.erb~)
     end
     it "should not write its rhtml to a file (because it is empty)" do
       File.stub!(:open).with(any_args()).and_return(true)
-      File.should_not_receive(:open).with(@part.fullpath,'w')
+      File.should_not_receive(:open).with(@part.existing_fullpath,'w')
       lambda { @part.save! }.should_not raise_error
     end
 
@@ -260,7 +260,7 @@ describe "The simple preview Part" do
   end
 
   it "should be located in the correct directory" do
-    @part.fullpath.should =~ %r~app/views/parts/stock/_simple_preview.html.erb$~
+    @part.existing_fullpath.should =~ %r~app/views/parts/stock/_simple_preview.html.erb$~
   end
 
   it "should know about its path for a given a theme" do

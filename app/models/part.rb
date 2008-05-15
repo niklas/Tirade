@@ -110,7 +110,7 @@ class Part < ActiveRecord::Base
   end
 
   def after_initialize
-    @use_theme = false
+    @use_theme = true
     self.options ||= {}
   rescue ActiveRecord::SerializationTypeMismatch
     self.options = {}
@@ -136,25 +136,24 @@ class Part < ActiveRecord::Base
   def rhtml(reload=false)
     @rhtml = nil if reload
     @rhtml ||= File.read(existing_fullpath)
-  rescue
-    ''
+  rescue Exception => e
+    e.message
   end
 
   def rhtml=(new_rhtml)
     @rhtml = new_rhtml
   end
 
-  # Returns the path to the existing part file, theme is tried first
   def existing_fullpath(theme=nil)
-    paths = []
-    paths << fullpath_for_theme(theme) if (theme || use_theme)
-    paths << default_fullpath
-
-    paths.find {|p| File.exists?(p)} || default_fullpath
+    if in_theme?(theme)
+      fullpath_for_theme(theme)
+    else
+      default_fullpath
+    end
   end
 
   def fullpath
-    if use_theme
+    if use_theme?
       fullpath_for_theme
     else
       default_fullpath
@@ -205,7 +204,7 @@ class Part < ActiveRecord::Base
 
   # Theme stuff
   def use_theme=(useit)
-    @use_theme = ![false, "false", "f", 0, "0", nil].include?(useit)
+    @use_theme = ![false, "false", "f", 0, "0", nil, ""].include?(useit)
   end
   def use_theme
     @use_theme
