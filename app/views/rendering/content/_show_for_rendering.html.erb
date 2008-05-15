@@ -2,7 +2,7 @@
 <dd>
 <% if content = show_for_rendering.content %>
   <%= content.title %>
-  (<%= content.class %>: <%= content.id %>)
+  (<%= content.class -%>: <%= content.id -%>)
 <% else %>
   <%=_ 'none' %>
 <% end %>
