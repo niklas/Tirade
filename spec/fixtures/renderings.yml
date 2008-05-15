@@ -1,11 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 main1:
+  id: 42100
   page_id: 42000
   position: 1
   grid_id: 5050
 
 main11:
+  id: 42101
   page_id: 42000
   grid: layout_50_50_1
   content: welcome
@@ -14,6 +16,7 @@ main11:
   position: 1
 
 main12:
+  id: 42102
   page_id: 42000
   grid: layout_50_50_2
   content: introduction
