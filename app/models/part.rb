@@ -110,7 +110,7 @@ class Part < ActiveRecord::Base
   end
 
   def after_initialize
-    @use_theme = true
+    @use_theme = false
     self.options ||= {}
   rescue ActiveRecord::SerializationTypeMismatch
     self.options = {}
@@ -145,12 +145,20 @@ class Part < ActiveRecord::Base
   end
 
   # Returns the path to the existing part file, theme is tried first
-  def fullpath(theme=nil)
+  def existing_fullpath(theme=nil)
     paths = []
     paths << fullpath_for_theme(theme) if (theme || use_theme)
     paths << default_fullpath
 
     paths.find {|p| File.exists?(p)} || default_fullpath
+  end
+
+  def fullpath
+    if use_theme
+      fullpath_for_theme
+    else
+      default_fullpath
+    end
   end
 
   def default_fullpath
@@ -211,10 +219,30 @@ class Part < ActiveRecord::Base
     in_theme? ? "#{name} (#{current_theme})" : name
   end
 
+  def make_themable!(theme_name=nil)
+    theme_name ||= current_theme
+    self.use_theme = true
+    if in_theme?(theme_name)
+      return true
+    else
+      save_rhtml_in_theme!
+    end
+  end
+
   private
   def save_rhtml!
     return if rhtml.blank?
-    File.open(fullpath,'w') do |file|
+    save_rhtml_to! fullpath
+  end
+
+  def save_rhtml_in_theme!
+    return if rhtml.blank?
+    save_rhtml_to! fullpath_for_theme
+  end
+
+  def save_rhtml_to!(path)
+    FileUtils.mkdir_p(File.dirname(path))
+    File.open(path,'w') do |file|
       file.puts rhtml.gsub(/\r/,'')
     end
   end

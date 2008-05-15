@@ -18,6 +18,9 @@ describe Part do
     it "should be valid" do
       @part.should be_valid
     end
+    it "should not use a theme" do
+      @part.use_theme.should be_false
+    end
     it "should have correct filename with extention" do
       @part.filename_with_extention.should == '_general_preview.html.erb'
     end
@@ -264,34 +267,51 @@ describe "The simple preview Part" do
     @part.fullpath_for_theme('cool_theme').should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
   end
 
-  it "should know about its path in the theme if we want to use a theme" do
-    @part.use_theme = true
-    @part.fullpath_for_theme.should =~ %r~themes/default/views/parts/stock/_simple_preview.html.erb$~
-  end
-
-  it "should know about its path in the theme if we want to use a theme, set in the controller" do
-    @part.use_theme = true
-    @part.should_receive(:current_theme).and_return('cool_theme')
-    @part.fullpath_for_theme.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
-  end
-
   it "should know it is in the theme if the part file exists there" do
-    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).twice.and_return(true)
+    File.stub!(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).and_return(true)
     @part.should be_in_theme('cool_theme')
-    @part.use_theme = true
-    @part.should_receive(:current_theme).and_return('cool_theme')
-    @part.fullpath.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
   end
   it "should know it is not in the theme if the part file does not exist there" do
     File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~).and_return(false)
     @part.should_not be_in_theme('cool_theme')
   end
 
-  it "should not be in the default theme unless it exists" do
-    @part.use_theme = true
-    File.should_receive(:exists?).with(%r~themes/default/views/parts/stock/_simple_preview.html.erb$~).and_return(false)
-    File.should_receive(:exists?).with(%r~app/views/parts/stock/_simple_preview.html.erb$~).and_return(true)
-    @part.fullpath.should =~ %r~app/views/parts/stock/_simple_preview.html.erb$~
+  describe ", enabling theme support" do
+    before(:each) do
+      @part.use_theme = true
+    end
+
+    it "should know about its path in the default theme" do
+      @part.fullpath.should =~ %r~themes/default/views/parts/stock/_simple_preview.html.erb$~
+    end
+    it "should know about its path in the theme set by the controller" do
+      @part.should_receive(:current_theme).and_return('cool_theme')
+      @part.fullpath.should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
+    end
+  end
+
+
+  describe "making it themable (file does not exist yet)" do
+    before(:each) do
+      @target_re = %r~themes/cool_theme/views/parts/stock/_simple_preview.html.erb$~
+      @part.should_receive(:current_theme).any_number_of_times.and_return('cool_theme')
+
+      File.stub!(:exists?).with(@target_re).once.and_return(false)
+      
+      @part.stub!(:save_rhtml_in_theme!).and_return(true)
+      @part.make_themable!
+    end
+
+    it "should be in theme" do
+      File.stub!(:exists?).with(@target_re).and_return(true)
+      @part.should_not be_nil
+      @part.should be_in_theme
+    end
+
+    it "should save the rhtml to the theme location" do
+      @part.stub!(:save_rhtml_to!).with(@target_re).and_return(true)
+      @part.save
+    end
   end
 
 end
