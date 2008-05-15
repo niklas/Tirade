@@ -34,7 +34,7 @@ class Part < ActiveRecord::Base
   serialize :options, Hash
   serialize :preferred_types, Array
 
-  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml
+  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme
 
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
@@ -135,7 +135,7 @@ class Part < ActiveRecord::Base
 
   def rhtml(reload=false)
     @rhtml = nil if reload
-    @rhtml ||= File.read(fullpath)
+    @rhtml ||= File.read(existing_fullpath)
   rescue
     ''
   end
@@ -204,7 +204,15 @@ class Part < ActiveRecord::Base
   end
 
   # Theme stuff
-  attr_accessor :use_theme
+  def use_theme=(useit)
+    @use_theme = ![false, "false", "f", 0, "0", nil].include?(useit)
+  end
+  def use_theme
+    @use_theme
+  end
+  def use_theme?
+    use_theme
+  end
 
   # Does a counterpart of this file exists in the given theme, defaults to the current theme of the +active_controller+
   def in_theme?(theme_name=nil)
@@ -227,6 +235,14 @@ class Part < ActiveRecord::Base
     else
       save_rhtml_in_theme!
     end
+  end
+
+  def make_unthemable!(theme_name=nil)
+    theme_name ||= current_theme
+    if in_theme?(theme_name)
+      File.delete fullpath_for_theme(theme_name)
+    end
+    self.use_theme = false
   end
 
   private

@@ -6,13 +6,14 @@
     <p>
     <% theme = @controller.current_theme %>
     <% if @part.in_theme? %>
-      <% if @part.use_theme %>
-        <%= link_to_remote 'use original', :url => edit_rendering_part_path(@rendering,@part, :use_theme => false) %>
+      <% if @part.use_theme? %>
+        <%= link_to_remote 'use original', :url => rendering_part_theme_path(@rendering, :use_theme => false), :method => :put %>
       <% else %>
-        <%= link_to_remote "use theme (#{theme})", :url => edit_rendering_part_path(@rendering,@part, :use_theme => true) %>
-      <% end %>
+        <%= link_to_remote "use theme (#{theme})", :url => rendering_part_theme_path(@rendering, :use_theme => true), :method => :put %>
+      <% end %> |
+      <%= link_to_remote "remove theme '#{theme}'", :url => rendering_part_theme_path(@rendering), :method => :delete, :confirm => 'Really delete the themed version?' %>
     <% else %>
-      <%= link_to_remote "make themable in '#{theme}'", :url => make_themable_rendering_part_path(@rendering) %>
+      <%= link_to_remote "make themable in '#{theme}'", :url => rendering_part_theme_path(@rendering), :method => :post %>
     <% end %>
     <%= f.hidden_field :use_theme %>
     </p>

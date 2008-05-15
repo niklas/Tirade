@@ -276,9 +276,64 @@ describe "The simple preview Part" do
     @part.should_not be_in_theme('cool_theme')
   end
 
+  describe "Setting the use theme flag" do
+    describe "by boolean to true" do
+      it "should use the theme" do
+        @part.use_theme = true
+        @part.should be_use_theme
+      end
+    end
+    describe "by boolean to false" do
+      it "should use the theme" do
+        @part.use_theme = false
+        @part.should_not be_use_theme
+      end
+    end
+    describe "by string to true" do
+      it "should use the theme" do
+        @part.use_theme = "true"
+        @part.should be_use_theme
+      end
+    end
+    describe "by string to false" do
+      it "should use the theme" do
+        @part.use_theme = "false"
+        @part.should_not be_use_theme
+      end
+    end
+    describe "by number to true" do
+      it "should use the theme" do
+        @part.use_theme = 1
+        @part.should be_use_theme
+      end
+    end
+    describe "by number to false" do
+      it "should use the theme" do
+        @part.use_theme = 0
+        @part.should_not be_use_theme
+      end
+    end
+    describe "by stringified number to true" do
+      it "should use the theme" do
+        @part.use_theme = "1"
+        @part.should be_use_theme
+      end
+    end
+    describe "by stringified number to false" do
+      it "should use the theme" do
+        @part.use_theme = "0"
+        @part.should_not be_use_theme
+      end
+    end
+  end
+
   describe ", enabling theme support" do
     before(:each) do
       @part.use_theme = true
+    end
+
+    it "should use_theme" do
+      @part.should be_use_theme
     end
 
     it "should know about its path in the default theme" do
