@@ -61,15 +61,19 @@ describe "/renderings/show (js)" do
   end
 
   it "should unmark all active" do
-    response.body.should have_text(%r~\$\$\("div.active"\).*value\.removeClassName.*resetBehavior~m)
+    response.body.should deactivate_all
   end
 
   it "should mark the rendering as active" do
-    response.body.should have_text(%r~\$\("rendering_42101"\)\.addClassName\("active"\)~)
+    response.body.should activate_dom_id("rendering_42101")
+  end
+
+  it "should not mark the other rendering as active" do
+    response.body.should_not activate_dom_id("rendering_42102")
   end
 
   it "should mark the rendering's grid as active" do
     gid = renderings(:main11).grid_id
-    response.body.should have_text(%r~\$\("grid_#{gid}"\)\.addClassName\("active"\)~)
+    response.body.should activate_dom_id("grid_#{gid}")
   end
 end

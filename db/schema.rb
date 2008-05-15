@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 18) do
+ActiveRecord::Schema.define(:version => 19) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -68,9 +68,13 @@ ActiveRecord::Schema.define(:version => 18) do
     t.datetime "updated_at"
   end
 
-  create_table "plugin_schema_info", :id => false, :force => true do |t|
-    t.string  "plugin_name"
-    t.integer "version"
+  create_table "picturizations", :force => true do |t|
+    t.integer  "image_id"
+    t.integer  "pictureable_id"
+    t.string   "pictureable_type"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "renderings", :force => true do |t|

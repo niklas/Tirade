@@ -7,6 +7,9 @@ require 'spec/rails'
 include AuthenticatedTestHelper
 require 'mock_controller'
 
+require File.dirname(__FILE__) + '/toolbox_spec_helper'
+include ToolboxSpecHelper
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record

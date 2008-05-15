@@ -5,7 +5,8 @@ ActionController::Routing::Routes.draw do |map|
     manage.resources :renderings,
       :member => {:preview => :put, :duplicate => :put} do |renderings|
       renderings.resource :grid, :controller => 'rendering/grid'
-      renderings.resource :part, :controller => 'rendering/part'
+      renderings.resource :part, :controller => 'rendering/part',
+      :member => {:make_themable=> :put}
       renderings.resource :content, :controller => 'rendering/content'
     end
 
