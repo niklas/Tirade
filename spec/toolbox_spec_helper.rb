@@ -50,5 +50,9 @@ module ToolboxSpecHelper
   def deactivate_all
     DeactivateAll.new
   end
+  def set_toolbox_header(expected)
+    have_rjs(:chained_replace_html,'toolbox_header')
+    have_text(expected)
+  end
 
 end

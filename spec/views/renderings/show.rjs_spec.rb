@@ -16,9 +16,7 @@ describe "/renderings/show (js)" do
   end
 
   it "should update the Toolbox header" do
-    response.should have_rjs(:chained_replace_html,'toolbox_header') do
-      response.should have_text(/Rendering \d+/)
-    end
+    response.should set_toolbox_header(/Rendering \d+/)
   end
 
   it "should show the Rendering and its components in the toolbox" do
