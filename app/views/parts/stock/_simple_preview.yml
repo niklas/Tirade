@@ -1,0 +1,8 @@
+--- 
+:options: {}
+
+:preferred_types: 
+- Document
+- Folder
+- NewsFolder
+- NewsItem
