@@ -54,7 +54,7 @@ module RenderingsHelper
     dom = context.dom_id(rendering)
     if rendering.part.valid?
       if content = rendering.content
-        page[dom].replace_html rendering.render
+        page[dom].replace rendering.render
       else
         page[dom].replace_html "Content not found"
       end
