@@ -4,6 +4,7 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   theme :current_theme
+  before_filter :require_http_auth
   
   # ==================
   # = Authentication =
@@ -34,6 +35,16 @@ class ApplicationController < ActionController::Base
   private
   def fetch_rendering
     @rendering = Rendering.find(params[:rendering_id])
+  end
+
+  def require_http_auth
+    if `hostname` =~ /soykaf|lanpartei/i 
+      if auth =  APP_CONFIG['http_auth']
+        authenticate_or_request_with_http_basic do |user_name, password|
+          user_name == auth['name'] && password == auth['password']
+        end      
+      end
+    end
   end
 
   # See ActionController::RequestForgeryProtection for details
