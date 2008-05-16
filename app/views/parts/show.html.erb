@@ -19,7 +19,7 @@
 </p>
 
 <p>
-  <b>rHTML</b><br />
+  <b>rHTML</b> <%= "(Theme: '#{@controller.current_theme}')" if @part.in_theme? %><br />
   <pre>
     <%=h @part.rhtml %>
   </pre>

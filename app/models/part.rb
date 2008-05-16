@@ -70,6 +70,7 @@ class Part < ActiveRecord::Base
 
   def after_save
     save_rhtml!
+    sync_attributes
   end
 
   def after_destroy
@@ -111,6 +112,7 @@ class Part < ActiveRecord::Base
 
   def after_initialize
     @use_theme = true
+    sync_attributes
     self.options ||= {}
   rescue ActiveRecord::SerializationTypeMismatch
     self.options = {}
@@ -268,5 +270,34 @@ class Part < ActiveRecord::Base
 
   def fake_content
     (preferred_types.andand.first || "Document").constantize.sample
+  end
+
+  # returns the path to a yml file where the rhtml exists
+  def existing_yml_path
+    existing_fullpath.sub(/.html.erb$/,'.yml')
+  end
+
+  # Saves the needed attributes to a .yml file or reads them in from there
+  def sync_attributes
+    yaml_path = existing_yml_path rescue nil
+    unless yaml_path.blank?
+      if File.exist?(yaml_path) and File.mtime(yaml_path) > (updated_at || Time.now)
+        at = YAML.load_file(yaml_path)
+        self.update_attributes at
+        # FIXME is there another wy to prevent conf saving in tests?
+      elsif !new_record? and RAILS_ENV != 'test'
+        write_attributes_to_yml_file(yaml_path)
+      end
+    end
+  end
+
+  def write_attributes_to_yml_file(yaml_path)
+    File.open(yaml_path, 'w') do |f|
+      at = {
+        :preferred_types => preferred_types,
+        :options => options
+      }
+      f.write(at.to_yaml)
+    end
   end
 end
