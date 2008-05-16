@@ -1,0 +1,13 @@
+0000000000000000000000000000000000000000 fc728c2dd321ab044ba84333eb0a37eab25bc86e Niklas Hofer <niklas+dev@lanpartei.de> 1210690528 +0200
+fc728c2dd321ab044ba84333eb0a37eab25bc86e 29838cb5998f612a82ba74f174b73fedde58b1cc Niklas Hofer <niklas+dev@lanpartei.de> 1210692794 +0200	commit: ignore swp
+29838cb5998f612a82ba74f174b73fedde58b1cc 914cea2995e2cc32c5978d2128c4e269c5c61792 Niklas Hofer <niklas+dev@lanpartei.de> 1210692806 +0200	commit: basic specs
+914cea2995e2cc32c5978d2128c4e269c5c61792 5574071a4b6b77819fd3f2f91df7151f5c189ffa Niklas Hofer <niklas+dev@lanpartei.de> 1210695072 +0200	commit: optionsproxy
+5574071a4b6b77819fd3f2f91df7151f5c189ffa 334ded0e45ea700e79138f99b58f21d252941f51 Niklas Hofer <niklas+dev@lanpartei.de> 1210701848 +0200	commit: use the settingsproxy - a bit
+334ded0e45ea700e79138f99b58f21d252941f51 cf2dbfaee92642020712b66f2000191ba1d5190a Niklas Hofer <niklas+dev@lanpartei.de> 1210704759 +0200	commit: full featureset works, delegating values to its owner
+cf2dbfaee92642020712b66f2000191ba1d5190a 2a891d438677fd6eca5f4229fdf051de29eaccd9 Niklas Hofer <niklas+dev@lanpartei.de> 1210705700 +0200	commit: a little Documentation
+2a891d438677fd6eca5f4229fdf051de29eaccd9 1a13ca565db90ade24091332265607b1fbb91a46 Niklas Hofer <niklas+dev@lanpartei.de> 1210789618 +0200	commit: setting options per params hash
+1a13ca565db90ade24091332265607b1fbb91a46 0e0bcef4566ef3e698558ec07c7e4ae03b4bdc23 Niklas Hofer <niklas+dev@lanpartei.de> 1210796901 +0200	commit: working autotest
+0e0bcef4566ef3e698558ec07c7e4ae03b4bdc23 9abb4f15b5061b61a94a93b8f0decaceae73a234 Niklas Hofer <niklas+dev@lanpartei.de> 1210796930 +0200	commit: a formbuilderhelper would be nice
+9abb4f15b5061b61a94a93b8f0decaceae73a234 ff3c24943a014cf9806be42b7b4e538744b67e9c Niklas Hofer <niklas+dev@lanpartei.de> 1210796979 +0200	commit: use spec_helper from rails, basic spec for select_options
+ff3c24943a014cf9806be42b7b4e538744b67e9c abaff920ad79bcf5a97a8f11fa61f5ced64324a6 Niklas Hofer <niklas+dev@lanpartei.de> 1210798410 +0200	commit: pack all the options in an ul/li
+abaff920ad79bcf5a97a8f11fa61f5ced64324a6 1ddbea534a130f6ad3cd09e4986214841d9d2f10 Niklas Hofer <niklas+dev@lanpartei.de> 1210950818 +0200	commit: formbuilder.define_options, re-create options on every access (else to late.. well see)

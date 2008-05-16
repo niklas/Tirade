@@ -1,0 +1,1 @@
+formbuilder.define_options, re-create options on every access (else to late.. well see)
