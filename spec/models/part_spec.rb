@@ -14,12 +14,13 @@ describe Part do
       @part = Part.new
       @part.name = 'General Preview'
       @part.filename = 'general_preview'
+      @part.rhtml = ''
     end
     it "should be valid" do
       @part.should be_valid
     end
     it "should have theme support enabled" do
-      @part.should be_use_theme
+      @part.should_not be_use_theme
     end
     it "should have correct filename with extention" do
       @part.filename_with_extention.should == '_general_preview.html.erb'
@@ -33,8 +34,8 @@ describe Part do
     it "should have correct existing fullpath" do
       @part.existing_fullpath.should match(%r~app/views/parts/stock/_general_preview.html.erb~)
     end
-    it "should not write its rhtml to a file (because it is empty)" do
-      File.stub!(:open).with(any_args()).and_return(true)
+    it "should not write its rhtml to a file (because it is blank)" do
+      #File.stub!(:open).with(any_args()).and_return(true)
       File.should_not_receive(:open).with(@part.existing_fullpath,'w')
       lambda { @part.save! }.should_not raise_error
     end
@@ -45,7 +46,7 @@ describe Part do
       end
       it "should write its rhtml to a file" do
         File.stub!(:open).with(any_args()).and_return(true)
-        File.should_receive(:open).with(@part.fullpath,'w')
+        File.should_receive(:open).with(@part.existing_fullpath,'w')
         lambda { @part.save! }.should_not raise_error
       end
     end

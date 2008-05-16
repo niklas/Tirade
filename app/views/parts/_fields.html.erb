@@ -14,7 +14,14 @@
 </p>
 
 <p>
-  <b>rHTML</b><br />
+  <b>rHTML</b> 
+  <% if fields.object.in_theme? %>
+    <%= "(Theme: '#{@controller.current_theme}')" %>
+    <%= fields.check_box :use_theme %>
+  <% else %>
+    <%= fields.hidden_field :use_theme %>
+  <% end %>
+  <br />
   <%= fields.text_area :rhtml %>
   <div id='preview'>
     You will see a preview later

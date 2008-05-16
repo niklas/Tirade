@@ -111,11 +111,14 @@ class Part < ActiveRecord::Base
   end
 
   def after_initialize
-    @use_theme = true
-    sync_attributes
     self.options ||= {}
   rescue ActiveRecord::SerializationTypeMismatch
     self.options = {}
+  end
+
+  def after_find
+    @use_theme = in_theme?
+    sync_attributes
   end
 
   def options_as_yaml

@@ -1,4 +1,6 @@
-<h1>Editing part</h1>
+<% content_for :section do %>
+  Editing part
+<% end %>
 
 <%= error_messages_for :part %>
 <% update_part_form(@part, :html => {:id => 'editing_part'}) do |f| %>
