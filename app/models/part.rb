@@ -31,7 +31,7 @@ class Part < ActiveRecord::Base
   validates_format_of :filename, :with => /\A[\w_]+\Z/
   validates_exclusion_of :filename, :in => BlacklistesFileNames
   belongs_to :subpart, :class_name => 'Part', :foreign_key => 'subpart_id'
-  serialize :options, Hash
+  acts_as_custom_configurable
   serialize :preferred_types, Array
 
   attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme
@@ -126,7 +126,7 @@ class Part < ActiveRecord::Base
   end
 
   def options_as_yaml=(new_yaml_options)
-    write_attribute :options, object_from_yaml(new_yaml_options)
+    self.options = object_from_yaml(new_yaml_options)
   end
 
   # FIXME dynamicx, reusable!
@@ -202,7 +202,7 @@ class Part < ActiveRecord::Base
   end
 
   def options_with_object(obj)
-    options.merge({
+    options.to_hash.merge({
       filename.to_sym => obj
     })
   end

@@ -19,7 +19,7 @@
     </p>
 
     <%= f.text_area :rhtml, :rows => 10 %>
-    <%= f.text_area :options_as_yaml, :rows => 5 %>
+    <%= f.define_options %>
     <%= f.text_field :filename %>
 
     <%= hidden_field_tag :rendering_id, @rendering.id %>

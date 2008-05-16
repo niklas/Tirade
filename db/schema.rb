@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 19) do
+ActiveRecord::Schema.define(:version => 20) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 19) do
     t.integer  "subpart_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "defined_options"
   end
 
   create_table "picturizations", :force => true do |t|
