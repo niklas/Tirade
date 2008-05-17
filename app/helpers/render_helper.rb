@@ -4,7 +4,7 @@ module RenderHelper
     render_rendering_filled_with(
       rendering,
       unless rendering.part.nil? || rendering.content.nil?
-        rendering.part.render_with_content(rendering.content)
+        rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
       else
         content_tag(:div, 'no part or content assigned', {:class => 'warning'})
       end

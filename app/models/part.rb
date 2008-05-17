@@ -194,7 +194,7 @@ class Part < ActiveRecord::Base
   end
 
   def render_with_content(content, assigns={})
-    render_to_string(:inline => self.rhtml, :locals => assigns.merge(options_with_object(content)))
+    render_to_string(:inline => self.rhtml, :locals => options_with_object(content).merge(assigns))
   end
 
   def render(assigns={})

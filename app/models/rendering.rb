@@ -26,7 +26,7 @@ class Rendering < ActiveRecord::Base
     ([Content,Image,Video] + Content.valid_types).uniq
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
@@ -38,6 +38,7 @@ class Rendering < ActiveRecord::Base
 
   acts_as_list :scope => :grid_id
 
+  acts_as_custom_configurable :using => :options, :defined_by => :part
 
   has_finder :for_grid, lambda {|gr|
     {:conditions => ['renderings.grid_id = ?', gr.id], :order => 'renderings.position'}
@@ -57,10 +58,6 @@ class Rendering < ActiveRecord::Base
 
   def brothers_by_part
     page.renderings.with_part(self.part)
-  end
-
-  def options
-    {}
   end
 
   def final_options

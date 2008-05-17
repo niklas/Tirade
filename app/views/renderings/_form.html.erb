@@ -22,6 +22,11 @@
       <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :fullname %>
   </p>
 
+  <p>
+    <label>Options (Part specific)</label>
+    <%= f.select_options %>
+  </p>
+
   <%= show_rendering_link(@rendering, :label => 'cancel') %> or
   <%= submit_tag @rendering.new_record? ? "Create" : "Update", :class => 'submit' %>
 <% end %>
