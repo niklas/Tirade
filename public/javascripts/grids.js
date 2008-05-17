@@ -1,6 +1,7 @@
 GridEditable = Behavior.create({
   initialize: function() {
     var me = this.element;
+    if (me.hasClassName('fake')) return; 
     admin_id = 'admin_'+this.element.id;
     if (!$(admin_id)) {
       new Insertion.Top(this.element, 
@@ -23,6 +24,7 @@ GridEditable = Behavior.create({
 ContentEditable = Behavior.create({
   initialize: function() {
     var me = this.element;
+    if (me.hasClassName('fake')) return; 
     admin_id = 'admin_'+this.element.id;
     if (!$(admin_id)) {
       new Insertion.Top(this.element, 
@@ -84,7 +86,6 @@ SortableRenderings = Behavior.create({
         onUpdate: this._onOrdering
       }
     );
-    //alert('sortable created for ' + this.element.id);
   },
   _onOrdering: function(element) {
     poststring = Sortable.serialize(element, {tag: 'div', name: 'renderings'});

@@ -72,7 +72,7 @@ class GridsController < ApplicationController
   def order_renderings
     Rendering.transaction do
       @grid = Grid.find(params[:id])
-      renderings_ids = params[:renderings]
+      renderings_ids = params[:renderings].reject(&:blank?)
       renderings_ids.andand.each_with_index do |r,i|
         rendering = Rendering.find(r)
         rendering.position = i+1
