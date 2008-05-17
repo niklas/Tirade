@@ -7,7 +7,7 @@ GridEditable = Behavior.create({
         $div(
           {class: 'admin', id: admin_id},
           [ 
-            $a({href: edit_grid_url({id: numeric_id_for(this.element)})},'edit')
+            $a({href: edit_grid_url({id: numeric_id_for(this.element)}), class: 'edit grid'},'edit')
           ]
         )
       );
@@ -29,7 +29,8 @@ ContentEditable = Behavior.create({
         $div(
           {class: 'admin', id: admin_id},
           [ 
-            $a({href: rendering_url({id: numeric_id_for(this.element)})},'edit')
+            $a({href: rendering_url({id: numeric_id_for(this.element)}), class: 'edit rendering'},'edit'),
+            $span({class: 'handle'},'drag')
           ]
         )
       );
@@ -76,6 +77,7 @@ SortableRenderings = Behavior.create({
       this.element, {
         dropOnEmpty: false,
         constraint: null,
+        handle: 'handle',
         containment: false,
         tag: 'div',
         only: 'rendering',

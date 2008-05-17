@@ -1,15 +1,22 @@
 /* -------->>> tools icon links <<<--------------- */
-div.admin a {
-  display: block;
-  position: absolute;
-  right:3px;
-  top:2px;
-  width: 11px;
-  height: 13px;
-  background: url(/images/icon_small_edit.gif);
-  text-indent: -5000px;
-  outline: 0;
-}
+div.admin {
+  span, a {
+    display: block;
+    position: absolute;
+    top:2px;
+    width: 16px;
+    height: 16px;
+    text-indent: -5000px;
+    outline: 0;
+  }
+  span.handle {
+    right:22px;
+    background: url(../images/icons/small/move.gif);
+  }
+  a.edit {
+    right:3px;
+    background: url(../images/icons/small/edit.gif);
+  }
 
 body.role_admin {
     div.rendering {
