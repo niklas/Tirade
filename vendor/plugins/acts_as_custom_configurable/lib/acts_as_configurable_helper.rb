@@ -11,25 +11,30 @@ module ActsAsConfigurable
     end
 
     def define_options
+      list_dom = "#{@object_name}_defined_options"
       returning "" do |html|
-        html << %Q[<ul id="#{@object_name}_defined_options">]
+        html << %Q[<ul id="#{list_dom}" class="define_options">]
         @object.options.each_item do |item_name, item|
           html << @template.content_tag(:li, define_option_item_fields(item) )
         end
         html << %q[</ul>]
+        new_field = @template.content_tag(:li, define_option_item_fields(StringItem.new('new', :default => 'default')))
+        html << @template.link_to_function("add option") do |page|
+          page[list_dom].insert new_field
+        end
       end
     end
 
     def define_option_item_fields(item)
       returning "" do |html|
-        html << @template.text_field_tag("#{@object_name}[defined_options][name][]", item.name)
+        html << @template.text_field_tag("#{@object_name}[define_options][name][]", item.name)
         html << option_type_selector(item)
-        html << @template.text_field_tag("#{@object_name}[defined_options][default][]", item.default)
+        html << @template.text_field_tag("#{@object_name}[define_options][default][]", item.default)
       end
     end
 
     def option_type_selector(item)
-      @template.select_tag("#{@object_name}[defined_options][type][]", option_type_option_group(item))
+      @template.select_tag("#{@object_name}[define_options][type][]", option_type_option_group(item))
     end
 
     def option_type_option_group(item)

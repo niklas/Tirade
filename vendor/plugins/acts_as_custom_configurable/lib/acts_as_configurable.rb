@@ -100,8 +100,9 @@ module ActsAsConfigurable
       @name = name.to_s
       @default = options[:default]
     end
+    # FIXME: This can be done much easier..
     def type_to_s
-      self.class.to_s.underscore.split('_').first
+      self.class.to_s.split('::').last.underscore.split('_').first
     end
     attr_reader :name, :default
 
@@ -175,6 +176,30 @@ module ActsAsConfigurable
         options[name] = new_val
       end
     end
+    # define the options through a form
+    def define_options
+      define = {
+        'name' => [],
+        'type' => [],
+        'default' => []
+      }
+      options.each_item do |name, item|
+        define['name'] << name
+        define['type'] << item.type_to_s
+        define['default'] << item.default
+      end
+      define
+    end
+
+    def define_options=(defs)
+      defined = {}
+      return if defs.empty?
+      0.upto(defs['name'].length-1) do |i|
+        defined[defs['name'][i]] = [ defs['type'][i], defs['default'][i] ]
+      end
+
+      self.defined_options = defined
+    end
   end
 
   class OptionsProxy
@@ -196,8 +221,20 @@ module ActsAsConfigurable
       @record.read_attribute(f)
     end
 
+    def defaults
+      defs = {}
+      each_item do |name, item|
+        defs[name] = item.default
+      end
+      defs
+    end
+
     def to_hash
       values
+    end
+
+    def to_hash_with_defaults
+      defaults.merge(to_hash)
     end
 
     def to_yaml
@@ -205,7 +242,7 @@ module ActsAsConfigurable
     end
 
     def each_item
-      @items.each do |name,item|
+      @items.sort.each do |name,item|
         yield name, item
       end
     end

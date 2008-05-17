@@ -359,10 +359,12 @@ describe 'A nice House' do
       end
     end
   end
-  describe "deifning in a Form spiced up with", ActsAsConfigurable::FormBuilder do
+  describe "defining in a Form spiced up with", ActsAsConfigurable::FormBuilder do
     before(:each) do
       # TODO remove them
       extend ActionView::Helpers::TagHelper
+      extend ActionView::Helpers::PrototypeHelper
+      extend ActionView::Helpers::JavaScriptHelper
       extend ActionView::Helpers::FormTagHelper
       extend ActionView::Helpers::FormOptionsHelper
       @builder = ActionView::Helpers::FormBuilder.new(:house, @house, self, {}, nil)
@@ -375,11 +377,11 @@ describe 'A nice House' do
     end
 
     it "should have a all already defined options of house" do
-      @form.should have_tag('ul#house_defined_options') do
+      @form.should have_tag('ul#house_defined_options.define_options') do
         with_tag('li') do
-          with_tag('input[name=?][type=text]', 'house[defined_options][name][]')
-          with_tag('input[name=?][type=text]', 'house[defined_options][default][]')
-          with_tag('select[name=?]', 'house[defined_options][type][]') do
+          with_tag('input[name=?][type=text]', 'house[define_options][name][]')
+          with_tag('input[name=?][type=text]', 'house[define_options][default][]')
+          with_tag('select[name=?]', 'house[define_options][type][]') do
             with_tag('option[value=?]', 'string')
             with_tag('option[value=?]', 'integer')
             with_tag('option[value=?]', 'boolean')
@@ -388,6 +390,59 @@ describe 'A nice House' do
       end
     end
   end
+
 end
 
+describe "Defining opts of a house" do
+  before(:each) do
+    @house = House.new(:label => 'Skyscraper')
+    # defined in alphabetic order, since comparing is easier
+    @def_form = {
+      :name => %w(nickname public story_count),
+      :default => ["Tally", false, 42],
+      :type => %w(string boolean integer)
+    }.with_indifferent_access
+    @def_saved = {
+      'story_count' => ['integer', 42],
+      'nickname' => ['string', "Tally"],
+      'public' => ['boolean', false]
+    }
+    @options_hash = {
+      'story_count' => 42,
+      'nickname' => 'Tally',
+      'public' => false
+    }
+  end
+  describe "from a Form" do
+    before(:each) do
+      @house.define_options = @def_form
+    end
+    it "should have the valid saved definitions" do
+      @house.defined_options.should == @def_saved
+    end
+    it "should have the valid form definitions" do
+      @house.define_options.should == @def_form
+    end
+    it "should be able to export the definitions" do
+      @house.defined_options.to_yaml.should_not be_empty
+    end
+    it "should have the options with default values" do
+      @house.options.to_hash_with_defaults.should == @options_hash
+    end
+  end
 
+  describe "from saved" do
+    before(:each) do
+      @house.defined_options = @def_saved
+    end
+    it "should have the valid form definitions" do
+      @house.define_options.should  == @def_form
+    end
+    it "should have the valid saved definitions" do
+      @house.defined_options.should == @def_saved
+    end
+    it "should be able to export the definitions" do
+      @house.defined_options.to_yaml.should_not be_empty
+    end
+  end
+end

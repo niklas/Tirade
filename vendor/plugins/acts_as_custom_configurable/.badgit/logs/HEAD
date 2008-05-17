@@ -11,3 +11,7 @@ cf2dbfaee92642020712b66f2000191ba1d5190a 2a891d438677fd6eca5f4229fdf051de29eaccd
 9abb4f15b5061b61a94a93b8f0decaceae73a234 ff3c24943a014cf9806be42b7b4e538744b67e9c Niklas Hofer <niklas+dev@lanpartei.de> 1210796979 +0200	commit: use spec_helper from rails, basic spec for select_options
 ff3c24943a014cf9806be42b7b4e538744b67e9c abaff920ad79bcf5a97a8f11fa61f5ced64324a6 Niklas Hofer <niklas+dev@lanpartei.de> 1210798410 +0200	commit: pack all the options in an ul/li
 abaff920ad79bcf5a97a8f11fa61f5ced64324a6 1ddbea534a130f6ad3cd09e4986214841d9d2f10 Niklas Hofer <niklas+dev@lanpartei.de> 1210950818 +0200	commit: formbuilder.define_options, re-create options on every access (else to late.. well see)
+1ddbea534a130f6ad3cd09e4986214841d9d2f10 871430d6a826f0f3820d6ca4aaacf54e286d0c20 Niklas Hofer <niklas+dev@lanpartei.de> 1211044926 +0200	commit: ignore svn metadirs
+871430d6a826f0f3820d6ca4aaacf54e286d0c20 bfa8b7cc6231d72f13b758871bb81791aee77c1c Niklas Hofer <niklas+dev@lanpartei.de> 1211044952 +0200	commit: getting/setter for form
+bfa8b7cc6231d72f13b758871bb81791aee77c1c 892e99d3508266120f68fff8ff288b7efa968275 Niklas Hofer <niklas+dev@lanpartei.de> 1211045000 +0200	commit: using the getters in the generated forms
+892e99d3508266120f68fff8ff288b7efa968275 f6770b22c77e507979c18e945d2cc4be45a1a267 Niklas Hofer <niklas+dev@lanpartei.de> 1211046527 +0200	commit: #options.to_hash_with_defaults (not nice, but works)
