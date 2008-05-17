@@ -3,6 +3,9 @@
   number_of_the_day: 
   - integer
   - "42"
+  motd: 
+  - string
+  - nothing to say
 :preferred_types: 
 - Document
 - Folder

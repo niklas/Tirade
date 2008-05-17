@@ -1,5 +1,10 @@
 --- 
-:options: 
-  :how_often: 3
+:defined_options: 
+  message: 
+  - string
+  - We don't need no education
+  how_often: 
+  - integer
+  - "5"
 :preferred_types: []
 
