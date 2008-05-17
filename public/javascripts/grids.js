@@ -75,7 +75,8 @@ SortableRenderings = Behavior.create({
     Sortable.create(
       this.element, {
         dropOnEmpty: false,
-        constraint: 'vertical',
+        constraint: null,
+        containment: false,
         tag: 'div',
         only: 'rendering',
         onUpdate: this._onOrdering

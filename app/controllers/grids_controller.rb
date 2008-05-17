@@ -76,6 +76,7 @@ class GridsController < ApplicationController
       renderings_ids.andand.each_with_index do |r,i|
         rendering = Rendering.find(r)
         rendering.position = i+1
+        rendering.grid = @grid
         rendering.save!
       end
       @rendering = Rendering.find(renderings_ids.first)
