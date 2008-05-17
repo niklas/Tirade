@@ -39,6 +39,14 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
     wrap('select picture', {}, inner)
   end
 
+  def define_options
+    wrap('Define Options', {}, super)
+  end
+
+  def select_options
+    wrap('Options', {}, super)
+  end
+
   private
   def wrap(field, options, tag_output)
     label = @template.content_tag(

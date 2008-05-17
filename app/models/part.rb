@@ -34,7 +34,7 @@ class Part < ActiveRecord::Base
   acts_as_custom_configurable
   serialize :preferred_types, Array
 
-  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme
+  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme, :define_options
 
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
@@ -202,7 +202,7 @@ class Part < ActiveRecord::Base
   end
 
   def options_with_object(obj)
-    options.to_hash.merge({
+    options.to_hash_with_defaults.merge({
       filename.to_sym => obj
     })
   end
@@ -286,7 +286,9 @@ class Part < ActiveRecord::Base
     unless yaml_path.blank?
       if File.exist?(yaml_path) and File.mtime(yaml_path) > (updated_at || Time.now)
         at = YAML.load_file(yaml_path)
-        self.update_attributes at
+        unless at.blank?
+          self.update_attributes at
+        end
         # FIXME is there another wy to prevent conf saving in tests?
       elsif !new_record? and RAILS_ENV != 'test'
         write_attributes_to_yml_file(yaml_path)
@@ -298,9 +300,9 @@ class Part < ActiveRecord::Base
     File.open(yaml_path, 'w') do |f|
       at = {
         :preferred_types => preferred_types,
-        :options => options
+        :defined_options => defined_options
       }
-      f.write(at.to_yaml)
+      f.puts at.to_yaml
     end
   end
 end

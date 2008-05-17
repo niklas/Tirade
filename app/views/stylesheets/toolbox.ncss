@@ -38,6 +38,12 @@
         select#rendering_content_type, input#rendering_content_id {
           width: 43%;
         }
+
+        ul.define_options {
+          li {
+            input, select { width: 30%; }
+          }
+        }
     }
     ul {
       margin-left: 2.3em;

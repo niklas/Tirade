@@ -1,0 +1,10 @@
+--- 
+:defined_options: 
+  number_of_the_day: 
+  - integer
+  - "42"
+:preferred_types: 
+- Document
+- Folder
+- NewsFolder
+- NewsItem
