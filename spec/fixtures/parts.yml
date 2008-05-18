@@ -7,3 +7,16 @@ basic_calculation:
 simple_preview:
   name: Simple Preview
   filename: simple_preview
+  :defined_options: 
+    number_of_the_day: 
+    - integer
+    - "42"
+    motd: 
+    - string
+    - nothing to say
+  :preferred_types: 
+  - Document
+  - Folder
+  - NewsFolder
+  - NewsItem
+
