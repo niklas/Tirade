@@ -48,6 +48,16 @@ class Rendering < ActiveRecord::Base
     {:conditions => ['renderings.part_id = ?', part.id], :order => 'renderings.position'}
   }
 
+  def content_type=(new_content_type)
+    write_attribute(:content_type, new_content_type.to_s) unless new_content_type.blank?
+  end
+  def content_id=(new_content_id)
+    write_attribute(:content_id, new_content_id.to_i) unless new_content_id.to_i == 0
+  end
+  def has_content?
+    !content_type.blank? && content_id.to_i != 0
+  end
+
   def validate
     if self.content_id
       unless self.class.valid_content_types.collect(&:to_s).include?(self.content_type)
