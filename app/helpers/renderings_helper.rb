@@ -6,7 +6,16 @@ module RenderingsHelper
     if footer = (opts[:footer] || page.context.flash[:notice])
       page[:toolbox_footer].replace_html footer
     end
-    page[:toolbox_sidebar].replace_html %q[<ul><li><a>aa aa aa</a></li><li><a>bbb bbbb</a></li><li>c cccccc</li></ul>]
+    if nav_name = opts[:nav]
+      page[:toolbox_sidebar].replace_html tabnav_to_s(nav_name)
+    else
+      page[:toolbox_sidebar].replace_html tabnav_to_s('main')
+    end
+  end
+
+  def tabnav_to_s(name)
+    partial_name = "widgets/#{name}_tabnav"
+    render :partial => partial_name
   end
 
   def close_toolbox

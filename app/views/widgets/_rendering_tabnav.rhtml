@@ -1,0 +1,10 @@
+<%  
+render_tabnav :rendering, 
+              :generate_css => false do 
+    
+  add_tab do |t|
+    t.named 'Edit Rendering'
+    t.links_to edit_rendering_path(@rendering)
+  end
+end 
+%>

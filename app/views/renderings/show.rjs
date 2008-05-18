@@ -1,6 +1,7 @@
 page.update_toolbox(
   :header => "Rendering #{@rendering.id}",
-  :content => {:partial => '/renderings/show', :object => @rendering}
+  :content => {:partial => '/renderings/show', :object => @rendering},
+  :nav => 'rendering'
 )
 page.update_rendering(@rendering)
 @rendering.brothers_by_part.each do |brother|
