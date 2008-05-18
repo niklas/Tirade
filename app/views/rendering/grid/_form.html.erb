@@ -5,7 +5,23 @@
 		<label for="yui">Gridtype</label>
 		<%= f.select :yui, Grid::Types.invert %>
 	</p>
-  <p>
+   <% unless (grids_renderings = Rendering.for_grid(@grid)).empty? %>
+   <p>
+     <h3>Contained Renderings (anywhere): </h3>
+     <ul>
+       <% grids_renderings.group_by {|r| r.page }.each do |page,renderings| %>
+         <li><h4><%= page.title %></h4>
+         <ul>
+           <% renderings.each do |rendering| %>
+             <li><%= rendering.part.name %> <%= rendering.content.andand.title %> </li>
+           <% end %>
+         </ul>
+         </li>
+       <% end %>
+     </ul>
+   </p>
+   <% end %>
+   <p>
    <%= f.hidden_field :rendering_id %>
   	<%= submit_tag _('Apply'), :class => 'submit' %> or <%= show_rendering_link(@rendering, :label => 'cancel') %>
 	</p>

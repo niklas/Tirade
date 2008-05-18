@@ -6,6 +6,7 @@ module RenderingsHelper
     if footer = (opts[:footer] || page.context.flash[:notice])
       page[:toolbox_footer].replace_html footer
     end
+    page[:toolbox_sidebar].replace_html %q[<ul><li><a>aa aa aa</a></li><li><a>bbb bbbb</a></li><li>c cccccc</li></ul>]
   end
 
   def close_toolbox

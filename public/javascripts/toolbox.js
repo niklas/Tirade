@@ -17,9 +17,13 @@ var Toolbox = Class.create({
     this.height         = 500;
     this.top						= options.top || 140;
     this.left						= options.left || 480;
-    this.footerHeight   = 30
-    this.contentHeight  = this.height - this.footerHeight - this.options.headerHeight
-    this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth)
+    this.footerHeight   = 30;
+    this.contentHeight  = this.height - this.footerHeight - this.options.headerHeight;
+    this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth);
+    this.sidebarHeight = this.height - 2*(this.footerHeight + this.options.headerHeight);
+    this.sidebarWidth = this.contentWidth * 0.6;
+    this.sidebarLeft = this.width - (2*this.shadowWidth);
+    this.sidebarTop = -this.contentHeight + this.options.headerHeight;
     this.toolbox;
     this.setup();
   },
@@ -41,6 +45,7 @@ var Toolbox = Class.create({
             Builder.node('span',  { class: 'toolbox_close', style: 'cursor:pointer;background:url(/images/close_tiny.gif);top:11px;display:block;width:11px;height:11px;position:absolute;right:10px;'}, ''  )
           ]  ),
           Builder.node('div', { id: 'toolbox_content',   style: 'border-bottom:1px solid #D7D7D7;border-top:1px solid #BDBDBD;background:#fff;overflow-y:auto;padding:0 0 0 10px;margin: 0 0 0 '+this.shadowWidth+'px;width:'+ this.contentWidth +'px;height:'+this.contentHeight+'px;'},  'content' ),
+          Builder.node('div', { id: 'toolbox_sidebar',   style: 'width:'+ this.sidebarWidth +'px;height:'+this.sidebarHeight+'px;left:'+this.sidebarLeft +'px;top:'+this.sidebarTop+'px'},  'sidebar' ),
           Builder.node('div', { id: 'toolbox_footer', title: 'footer', style: 'padding:0 0 0 10px;margin:0;width:'+this.contentWidth+'px;line-height:'+this.footerHeight+'px;'},  ''  ),
         ] )
       ]);
