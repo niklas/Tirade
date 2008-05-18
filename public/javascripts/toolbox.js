@@ -7,7 +7,7 @@ var Toolbox = Class.create({
     this.options.headerStopColor  = options.headerStopColor   || [228, 228, 228] ;
     this.options.bodyBgColor      = options.bodyBgColor       || [240, 240, 240] ;
 
-    this.element        = $$('body').first() ;
+    this.insertInto        = $$('body').first() ;
     this.contentURL     = url || ''
 		this.shadowWidth    = 3;
 		this.shadowOffset   = this.shadowWidth * 2;		
@@ -52,8 +52,8 @@ var Toolbox = Class.create({
     this.toolbox.select('.toolbox_close').first().observe('click', this.removeToolbox.bindAsEventListener(this)  ); 
     
     this.toolbox.appendChild(this.canvas)
-    this.element.insert(this.toolbox);
-    new Draggable(this.toolbox, { handle: this.toolbox.down('h3') });
+    this.insertInto.insert(this.toolbox);
+    new Draggable($('toolbox'), { handle: this.toolbox.down('h3'), onEnd: function(){ $$('body').first().appendChild($('toolbox'))} });
   },
   
   /*
