@@ -77,7 +77,6 @@ module RenderHelper
 
   def render_page(thepage)
     layout = thepage.final_layout
-    layout.andand.active_controller = @controller
     content_tag(
       :div,
       render(:partial => '/public/header', :object => thepage) + 

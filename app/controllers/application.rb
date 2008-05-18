@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   theme :current_theme
   before_filter :require_http_auth
+  before_filter :violate_mvc
   
   # ==================
   # = Authentication =
@@ -33,6 +34,9 @@ class ApplicationController < ActionController::Base
   
 
   private
+  def violate_mvc
+    [Grid, Rendering, Part].each { |k| k.active_controller = self }
+  end
   def fetch_rendering
     @rendering = Rendering.find(params[:rendering_id])
   end

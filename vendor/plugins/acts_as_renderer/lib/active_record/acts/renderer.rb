@@ -9,6 +9,13 @@ module ActiveRecord
     
       # Allows models to support render_to_file and render_to_string methods
       module ClassMethods
+        def active_controller=(ac)
+          @@active_controller = ac
+        end
+
+        def active_controller
+          @@active_controller
+        end
         def acts_as_renderer
           class_eval <<-EOV, __FILE__, __LINE__
             include ActiveRecord::Acts::Renderer::InstanceMethods
@@ -31,6 +38,7 @@ module ActiveRecord
               template.extend controller.master_helper_module
               template.render(render_template)
             end
+            @@active_controller = MockController.new 
           EOV
         end
       end
@@ -54,11 +62,11 @@ module ActiveRecord
         end
 
         def active_controller=(ac)
-          @active_controller = ac
+          self.class.active_controller = ac
         end
 
         def active_controller
-          @active_controller || MockController.new 
+          self.class.active_controller || MockController.new 
         end
       end
     end
