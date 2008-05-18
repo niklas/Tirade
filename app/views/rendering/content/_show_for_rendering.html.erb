@@ -1,6 +1,6 @@
 <dt>Content</dt>
 <dd>
-<% if content = show_for_rendering.content %>
+<% if show_for_rendering.has_content? && (content = show_for_rendering.content) %>
   <%= content.title %>
   (<%= content.class -%>: <%= content.id -%>)
 <% else %>
