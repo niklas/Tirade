@@ -12,6 +12,7 @@ div.admin {
   span.handle {
     right:22px;
     background: url(../images/icons/small/move.gif);
+    cursor: move;
   }
   a.edit {
     right:3px;
