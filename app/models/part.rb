@@ -198,7 +198,7 @@ class Part < ActiveRecord::Base
   end
 
   def render(assigns={})
-    render_with_content(fake_content)
+    render_with_content(fake_content, assigns)
   end
 
   def options_with_object(obj)
