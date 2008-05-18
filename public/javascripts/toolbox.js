@@ -20,10 +20,10 @@ var Toolbox = Class.create({
     this.footerHeight   = 30;
     this.contentHeight  = this.height - this.footerHeight - this.options.headerHeight;
     this.contentWidth   = this.width-2*(2*this.shadowWidth-1+this.shadowWidth);
-    this.sidebarHeight = this.height - 2*(this.footerHeight + this.options.headerHeight);
+    this.sidebarHeight = this.height - (this.footerHeight + this.options.headerHeight);
     this.sidebarWidth = this.contentWidth * 0.6;
     this.sidebarLeft = this.width - (2*this.shadowWidth);
-    this.sidebarTop = -this.contentHeight + this.options.headerHeight;
+    this.sidebarTop = -this.height + 2*this.options.headerHeight;
     this.toolbox;
     this.setup();
   },
