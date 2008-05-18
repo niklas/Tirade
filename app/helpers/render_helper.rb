@@ -86,4 +86,16 @@ module RenderHelper
       {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
     )
   end
+
+  def remove_page
+    page.select(Page::Types.keys.collect {|t| "##{t}"}.join(', ')).each do |p|
+      p.remove
+    end
+  end
+
+  def insert_page(thepage)
+    page.select('body').each do |b|
+      b.insert render(:inline => "<%= render_page(thepage) %>" , :locals => {:thepage => thepage})
+    end
+  end
 end

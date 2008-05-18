@@ -13,6 +13,11 @@ class PublicController < ApplicationController
       page_not_found
       return
     end
+
+    respond_to do |wants|
+      wants.html
+      wants.js
+    end
   end
 
   def page_not_found

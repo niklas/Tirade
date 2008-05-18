@@ -138,6 +138,10 @@ class Part < ActiveRecord::Base
     read_attribute(:preferred_types) || []
   end
 
+  def label
+    name
+  end
+
   def rhtml(reload=false)
     @rhtml = nil if reload
     @rhtml ||= File.read(existing_fullpath)

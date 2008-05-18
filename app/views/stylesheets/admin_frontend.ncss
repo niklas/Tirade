@@ -22,6 +22,10 @@ div {
   }
 }
 
+div.rendering {
+  position: relative;
+}
+
 body.role_admin {
     div.rendering {
         border: #FFFFFF 1px dotted;

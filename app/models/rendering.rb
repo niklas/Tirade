@@ -66,6 +66,13 @@ class Rendering < ActiveRecord::Base
     end
   end
 
+  def label
+    [
+      part.label,
+      (has_content? ? content.title : nil)
+    ].compact.join(' with ')
+  end
+
   def brothers_by_part
     page.renderings.with_part(self.part)
   end

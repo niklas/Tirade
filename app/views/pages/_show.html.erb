@@ -4,14 +4,16 @@
   <dd> <%=h thepage.title %> </dd>
   <dt>URL</dt>
   <dd> <%=h thepage.url %> </dd>
+  <% unless thepage.root? %>
   <dt>Parent</dt>
-  <dd> <%= link_to thepage.parent.title, thepage.parent %> </dd>
+  <dd> <%= public_content_link(thepage.parent) %> </dd>
+  <% end %>
   <% unless thepage.children.empty? %>
   <dt>Subpages</dt>
   <dd>
     <ul>
       <% thepage.children.each do |subpage| %>
-        <li> <%= link_to subpage.title, subpage %> </li>
+        <li> <%= public_content_link(subpage) %> </li>
       <% end %>
     </ul>
   </dd>
@@ -25,4 +27,16 @@
     <%= link_to 'Edit', edit_page_path(thepage) %> |
     <%= link_to 'Back', pages_path %>
   </dd>
+
+  <% unless thepage.renderings.empty? %>
+  <dt>Renderings</dt>
+  <dd>
+    <ul>
+      <% thepage.renderings.each do |rendering| %>
+        <li> <%= link_to rendering.label, rendering_path(rendering) %> </li>
+      <% end %>
+    </ul>
+  </dd>
+  <% end %>
+
 </dl>
