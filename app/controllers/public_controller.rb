@@ -2,7 +2,11 @@ class PublicController < ApplicationController
 
   def index
     @path = params[:path]
-    @item_id = @path.andand.last =~ /^\d+$/ ? @path.pop : nil
+    if @path.andand.last =~ /^(\d+)$/
+      # FIXME this item_id gets not recognized in parts, using PublicHelper#dangling_id for now
+      @item_id = $1.to_i
+      @path = @path[0...-1]
+    end
     unless (@page_url = @path.andand.collect(&:downcase).andand.join('/') || '').blank?
       @page = Page.find_by_url(@page_url)
     else
