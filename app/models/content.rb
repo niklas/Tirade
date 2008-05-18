@@ -21,6 +21,7 @@
 
 class Content < ActiveRecord::Base
   acts_as_nested_set
+  include LazyNestedSet
 
   # TODO how to handle the #type correctly .. and when?
   attr_protected :type, :state, :owner_id, :owner, :published_at, :created_at, :updated_at
@@ -48,24 +49,6 @@ class Content < ActiveRecord::Base
 
   def self.valid_types
     [Document, Folder, NewsFolder, NewsItem]
-  end
-
-  def wanted_parent_id
-     @wanted_parent_id || self.read_attribute(:parent_id)
-  end
-
-  def wanted_parent_id=(new_parent_id)
-    @wanted_parent_id = new_parent_id.to_i
-  end
-
-  after_save :move_to_parent_if_wanted
-  def move_to_parent_if_wanted
-    if !@wanted_parent_id.nil? && (new_parent = Content.find_by_id(@wanted_parent_id))
-      transaction do
-        self.move_to_child_of new_parent
-      end
-    end
-    @wanted_parent_id = nil
   end
 
 end
