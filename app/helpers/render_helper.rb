@@ -3,10 +3,14 @@ module RenderHelper
   def render_rendering(rendering)
     render_rendering_filled_with(
       rendering,
-      unless rendering.part.nil? || rendering.content.nil?
-        rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
+      if rendering.part.nil?
+        content_tag(:div, 'no part assigned', {:class => 'warning'})
       else
-        content_tag(:div, 'no part or content assigned', {:class => 'warning'})
+        if rendering.has_content?
+          rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
+        else
+          rendering.part.render(rendering.options.to_hash)
+        end
       end
     )
   end
@@ -15,7 +19,7 @@ module RenderHelper
     content_tag(
       :div,
       inner,
-      {:id => dom_id(rendering), :class => "rendering #{rendering.part.andand.filename} #{rendering.content.andand.class.to_s.underscore}"}
+      {:id => dom_id(rendering), :class => "rendering #{rendering.part.andand.filename} #{rendering.content.class.to_s.underscore if rendering.has_content?}"}
     )
   end
 
@@ -79,7 +83,7 @@ module RenderHelper
       render(:partial => '/public/header', :object => thepage) + 
       (layout.andand.render_in_page(thepage) || 'Page has no Layout') +
       render(:partial => '/public/footer', :object => thepage),
-      {:id => thepage.yui}
+      {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
     )
   end
 end

@@ -1,0 +1,28 @@
+<% thepage = show || @page %>
+<dl class="page">
+  <dt>Title</dt>
+  <dd> <%=h thepage.title %> </dd>
+  <dt>URL</dt>
+  <dd> <%=h thepage.url %> </dd>
+  <dt>Parent</dt>
+  <dd> <%= link_to thepage.parent.title, thepage.parent %> </dd>
+  <% unless thepage.children.empty? %>
+  <dt>Subpages</dt>
+  <dd>
+    <ul>
+      <% thepage.children.each do |subpage| %>
+        <li> <%= link_to subpage.title, subpage %> </li>
+      <% end %>
+    </ul>
+  </dd>
+  <% end %>
+  <dt>Layout</dt>
+  <dd> <%=h thepage.final_layout.andand.label || 'none!' %> </dd>
+  <dt>Width</dt>
+  <dd> <%=h thepage.yui_name %> </dd>
+  <dt>Actions</dt>
+  <dd>
+    <%= link_to 'Edit', edit_page_path(thepage) %> |
+    <%= link_to 'Back', pages_path %>
+  </dd>
+</dl>

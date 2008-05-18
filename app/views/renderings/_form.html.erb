@@ -13,19 +13,25 @@
   <p>
   	 <label for="content_type">Content (Type, id)</label>
   	 <a name="content" />
-    <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :label  %>
+    <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :label, :include_blank => true  %>
     <%= f.text_field :content_id %>
   </p>
   <p>
     <label>Part</label>
     <a name="part" />
-      <%= f.collection_select :part_id, Part.for_content(@rendering.content), :id, :fullname %>
+      <% if f.object.has_content? %>
+        <%= f.collection_select :part_id, Part.for_content(f.object.content), :id, :fullname, :include_blank => true %>
+      <% else %>
+        <%= f.collection_select :part_id, Part.find(:all), :id, :fullname, :include_blank => true %>
+      <% end %>
   </p>
 
+  <% if f.object.part %>
   <p>
     <label>Options (Part specific)</label>
     <%= f.select_options %>
   </p>
+  <% end %>
 
   <%= show_rendering_link(@rendering, :label => 'cancel') %> or
   <%= submit_tag @rendering.new_record? ? "Create" : "Update", :class => 'submit' %>

@@ -1,30 +1,3 @@
-<h3>New page</h3>
+<%= section "Create page" %>
 
-<%= error_messages_for :page %>
-
-<% form_for(@page) do |f| %>
-  <p>
-    <label for="page_title">Title</label>
-    <%= f.text_field :title %>
-  </p>
-
-  <p>
-    <label for="page_parent_id">Parent Page</label>
-    <%= f.collection_select :wanted_parent_id, Page.all_except(@page), :id, :title  %>
-  </p>
-
-  <p>
-    <label for="page_layout_id">Layout</label>
-    <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:prompt => 'from parent Page'}  %>
-  </p>
-
-  <p>
-    <label for="page_yui">Width</label>
-    <%= f.select :yui, Page::Types.invert %>
-  </p>
-
-
-  <p>
-    <%= f.submit "Create", :class => "submit" %> or <%= link_to 'Back', pages_path %>
-  </p>
-<% end %>
+<%= render :partial => '/pages/form' %>

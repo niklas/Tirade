@@ -1,0 +1,4 @@
+page.update_toolbox(
+  :header => "Page '#{@page.title}'",
+  :content => {:partial => '/pages/show', :object => @page }
+)

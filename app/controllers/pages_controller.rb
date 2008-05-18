@@ -20,23 +20,29 @@ class PagesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @page }
+      format.js
     end
   end
 
   # GET /pages/new
   # GET /pages/new.xml
   def new
-    @page = Page.new
+    @page = Page.new(params[:page])
 
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @page }
+      format.js
     end
   end
 
   # GET /pages/1/edit
   def edit
     @page = Page.find(params[:id])
+    respond_to do |format|
+      format.html # new.html.erb
+      format.js
+    end
   end
 
   # POST /pages
@@ -49,9 +55,15 @@ class PagesController < ApplicationController
         flash[:notice] = 'Page was successfully created.'
         format.html { redirect_to(@page) }
         format.xml  { render :xml => @page, :status => :created, :location => @page }
+        format.js   do
+          render :update do |page| 
+            page.redirect_to(public_content_url(@page.url))
+          end
+        end
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        format.js   { render :action => 'new' }
       end
     end
   end
@@ -66,9 +78,15 @@ class PagesController < ApplicationController
         flash[:notice] = 'Page was successfully updated.'
         format.html { redirect_to(@page) }
         format.xml  { head :ok }
+        format.js   do
+          render :update do |page| 
+            page.redirect_to(public_content_url(@page.url))
+          end
+        end
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @page.errors, :status => :unprocessable_entity }
+        format.js   { render :action => 'edit' }
       end
     end
   end

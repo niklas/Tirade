@@ -73,6 +73,69 @@ describe "The Pages in the fixtures" do
       ancestors.should include( pages(:children_section) )
     end
   end
+
+  describe ', creating a new page under meta/about' do
+    before(:each) do
+      @page = Page.new(
+        :title => 'yourself',
+        :wanted_parent_id => pages(:about).id
+      )
+    end
+    it "should be valid" do
+      @page.should be_valid
+    end
+    it "should still be a new record" do
+      @page.should be_new_record
+    end
+    describe "Saving and reloading it" do
+      before(:each) do
+        lambda do
+          @page.save!
+          @page = Page.find(@page.id)
+        end.should_not raise_error
+      end
+      it "should still be valid" do
+        @page.should be_valid
+      end
+      it "should not be a new record anymore" do
+        @page.should_not be_new_record
+      end
+      it "should have a correct parent_id" do
+        @page.parent_id.should == pages(:about).id
+      end
+      it "should have the about page as parent" do
+        @page.parent.should == pages(:about)
+      end
+      it "should have the proper url" do
+        @page.url.should == 'meta/about/yourself'
+      end
+
+      describe "Setting a new title, reloading" do
+        before(:each) do
+          lambda do
+            @page.title = 'your neighbor'
+            @page.save!
+            @page = Page.find(@page.id)
+          end.should_not raise_error
+        end
+        it "should still be valid" do
+          @page.should be_valid
+        end
+        it "should not be a new record anymore" do
+          @page.should_not be_new_record
+        end
+        it "should have a correct parent_id" do
+          @page.parent_id.should == pages(:about).id
+        end
+        it "should have the about page as parent" do
+          @page.parent.should == pages(:about)
+        end
+        it "should have the proper url" do
+          @page.url.should == 'meta/about/your-neighbor'
+        end
+      end
+    end
+  end
 end
 
 
@@ -133,7 +196,7 @@ describe "The main Page with all fixtures" do
         with_tag('div#header')
       end
     end
-    it "should habe a footer" do
+    it "should have a footer" do
       @html.should have_tag('div#doc') do
         with_tag('div#footer')
       end

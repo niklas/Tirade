@@ -1,18 +1,3 @@
-<h3>Edit page</h3>
+<%= section "Edit page" %>
 
-<%= error_messages_for :page %>
-
-<% form_for(@page, :builder => NormalFormBuilder) do |f| %>
-  <%= f.text_field :title %>
-
-  <%= f.collection_select :wanted_parent_id, Page.all_except(@page), :id, :title, :label => 'Parent Page'  %>
-
-  <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:prompt => 'from parent Page', :label => 'Layout'}  %>
-
-  <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
-
-  <p>
-    <%= f.submit "Update", :class=> 'submit' %> or  <%= link_to 'Show', @page %> | <%= link_to 'Back', pages_path %>
-  </p>
-<% end %>
-
+<%= render :partial => '/pages/form' %>

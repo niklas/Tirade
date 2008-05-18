@@ -24,6 +24,6 @@ class Rendering::ContentController < ApplicationController
 
   private
   def fetch_content
-    @content = @rendering.content
+    @content = @rendering.content if @rendering.has_content?
   end
 end

@@ -1,7 +1,8 @@
 Event.addBehavior.reassignAfterAjax = true
 Event.addBehavior({
-    'body.role_admin div.grid' : GridEditable,
-    'div.grid > div.admin > a': Remote,
+//    'body.role_admin div.grid' : GridEditable,
+    'div.admin > a': Remote.LinkWithToolbox,
+    'body.role_admin div.page': PageEditable,
     'div.rendering > div.admin > a': Remote.LinkWithToolbox,
     'div.grid a.grid': Remote,
     'div.grid form.update.grid': Remote,

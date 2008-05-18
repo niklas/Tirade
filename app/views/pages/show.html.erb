@@ -1,28 +1,3 @@
-<p>
-  <b>Title:</b>
-  <%=h @page.title %>
-</p>
+<% section "Page '#{@page.title}'" %>
 
-<p>
-  <b>Url:</b>
-  <%=h @page.url %>
-</p>
-
-<p>
-  <b>Parent:</b>
-  <%=h @page.parent.andand.title %>
-</p>
-
-<p>
-  <b>Layout:</b>
-  <%=h @page.final_layout.andand.label || 'none!' %>
-</p>
-
-<p>
-  <b>Width:</b>
-  <%=h @page.yui_name %>
-</p>
-
-
-<%= link_to 'Edit', edit_page_path(@page) %> |
-<%= link_to 'Back', pages_path %>
+<%= render :partial => '/pages/show', :object => @page %>

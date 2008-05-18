@@ -9,5 +9,13 @@ class PublicController < ApplicationController
       @page = Page.root
     end
     store_location
+    unless @page
+      page_not_found
+      return
+    end
+  end
+
+  def page_not_found
+    render :action => 'page_not_found'
   end
 end

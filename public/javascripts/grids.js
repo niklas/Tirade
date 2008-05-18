@@ -1,3 +1,23 @@
+PageEditable = Behavior.create({
+  initialize: function() {
+    var me = this.element;
+    if (me.hasClassName('fake')) return;
+    page_id = me.className.match(/\bpage_(\d+)\b/)[1];
+    admin_id = 'admin_page_' + page_id;
+    if (!$(admin_id)) {
+      new Insertion.Top(this.element, 
+        $div(
+          {class: 'admin', id: admin_id},
+          [ 
+            $a({href: page_url({id: page_id}), class: 'edit page'},'edit')
+          ]
+        )
+      );
+      Event.addBehavior({'div.admin > a': Remote.LinkWithToolbox})
+    }
+  }
+});
+
 GridEditable = Behavior.create({
   initialize: function() {
     var me = this.element;
@@ -51,21 +71,31 @@ Remote.LinkWithToolbox = Behavior.create({
   initialize: function() {
     return new Remote.Link(this.element, { 
       onCreate: function() {
+        if (currently_hovered_div) {
+          from_top = currently_hovered_div.offsetTop;
+          from_left = currently_hovered_div.offsetLeft + currently_hovered_div.offsetWidth;
+        } else {
+          from_top = null;
+          from_left = null;
+        }
         new Toolbox('Toolbox', {'cornerRadius': 4, 
-          'top': currently_hovered_div.offsetTop, 
-          'left': (currently_hovered_div.offsetLeft + currently_hovered_div.offsetWidth)})
+          'top': from_top, 'left': from_left})
       }
     })
   },
   onmouseover: function() {
     parent_div = this.element.parentNode.parentNode;
-    parent_div.addClassName('hover');
-    currently_hovered_div = parent_div;
+    if (parent_div.nodeName != 'BODY') {
+      parent_div.addClassName('hover');
+      currently_hovered_div = parent_div;
+    }
   },
   onmouseout: function() {
     parent_div = this.element.parentNode.parentNode;
-    parent_div.removeClassName('hover');
-    currently_hovered_div = null;
+    if (parent_div.nodeName != 'BODY') {
+      parent_div.removeClassName('hover');
+      currently_hovered_div = null;
+    }
   }
 });
 

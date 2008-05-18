@@ -1,0 +1,23 @@
+<% page = form %>
+
+<%= error_messages_for :page, :object => page %>
+
+<% form_for(page, :builder => NormalFormBuilder) do |f| %>
+  <%= f.text_field :title %>
+
+  <%= f.collection_select :wanted_parent_id, Page.all_except(page), :id, :title, :label => 'Parent Page'  %>
+
+  <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:prompt => 'from parent Page', :label => 'Layout'}  %>
+
+  <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
+
+  <p>
+    <% if page.new_record? %>
+      <%= f.submit "Create", :class=> 'submit' %> or  
+      <%= link_to 'cancel', pages_path %>
+    <% else %>
+      <%= f.submit "Save", :class=> 'submit' %> or  
+     <%= link_to 'cancel', page %> | <%= link_to 'Back', pages_path %>
+    <% end %>
+  </p>
+<% end %>

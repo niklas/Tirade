@@ -1,0 +1,4 @@
+page.update_toolbox(
+  :header => 'Create Page',
+  :content => {:partial => '/pages/form', :object => @page}
+)

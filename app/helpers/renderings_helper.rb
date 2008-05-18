@@ -63,11 +63,7 @@ module RenderingsHelper
   def preview_rendering(rendering)
     dom = context.dom_id(rendering)
     if rendering.part.valid?
-      if content = rendering.content
-        page[dom].replace rendering.render
-      else
-        page[dom].replace_html "Content not found"
-      end
+      page[dom].replace rendering.render
     else
       page[dom].replace_html context.error_messages_for(:part, :object => rendering.part)
     end

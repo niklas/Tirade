@@ -1,23 +1,26 @@
 /* -------->>> tools icon links <<<--------------- */
-div.admin {
-  span, a {
-    display: block;
-    position: absolute;
-    top:2px;
-    width: 16px;
-    height: 16px;
-    text-indent: -5000px;
-    outline: 0;
+div {
+  div.admin {
+    span, a {
+      display: block;
+      position: absolute;
+      top:2px;
+      width: 16px;
+      height: 16px;
+      text-indent: -5000px;
+      outline: 0;
+    }
+    span.handle {
+      right:22px;
+      background: url(../images/icons/small/move.gif);
+      cursor: move;
+    }
+    a.edit {
+      right:3px;
+      background: url(../images/icons/small/edit.gif);
+    }
   }
-  span.handle {
-    right:22px;
-    background: url(../images/icons/small/move.gif);
-    cursor: move;
-  }
-  a.edit {
-    right:3px;
-    background: url(../images/icons/small/edit.gif);
-  }
+}
 
 body.role_admin {
     div.rendering {

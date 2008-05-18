@@ -168,7 +168,7 @@ describe "A Part with plain HTML in it" do
   end
 
   it "should render to the same HTML" do
-    @part.render(binding).should == @part.rhtml
+    @part.render.should == @part.rhtml
   end
 end
 
@@ -190,7 +190,7 @@ describe "A Part with non-matching HTML-tags in it" do
   end
 
   it "should render to the same HTML (even if it is invalid)" do
-    @part.render(binding).should == @part.rhtml
+    @part.render.should == @part.rhtml
   end
 end
 
@@ -207,7 +207,7 @@ describe "A Part with a bit ERB calculations in it" do
   end
 
   it "should render the calculation" do
-    @part.render(binding).should == '<p>108</p>'
+    @part.render.should == '<p>108</p>'
   end
 end
 
@@ -229,7 +229,7 @@ describe "A Part with malformed erb in it" do
   end
 
   it "should raise an error on rendering" do
-    lambda { @part.render(binding).should }.should raise_error
+    lambda { @part.render.should }.should raise_error
   end
 end
 

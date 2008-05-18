@@ -17,8 +17,9 @@
 
 class Page < ActiveRecord::Base
   acts_as_nested_set
+  include LazyNestedSet
 
-  attr_protected :created_at, :updated_at
+  attr_protected :created_at, :updated_at, :url
 
   acts_as_renderer
 
@@ -50,23 +51,23 @@ class Page < ActiveRecord::Base
   BlacklistesTitles = %w(manage themes)
 
   has_finder :all_except, lambda {|me|
-    {:conditions => ['id != ?',me.id]}
+    me.new_record? ? {} : {:conditions => ['id != ?',me.id]}
   }
 
   def validate
     errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
   end
 
-  def after_save
-    final_layout.leafs.each do |leaf_grid|
-      self.renderings.create!(:grid => leaf_grid) if self.renderings.for_grid(leaf_grid).empty?
-    end
+  def before_validation
+    self.url = generated_url 
+    self.yui ||= 'doc'
   end
 
-  def before_validation
-    unless self.class.rebuilding? || lft.nil? || rgt.nil?
-      self.url = generated_url 
-    end
+  def after_move
+    self.url = generated_url 
+  end
+
+  def after_initialize
     self.yui ||= 'doc'
   end
 
@@ -75,25 +76,21 @@ class Page < ActiveRecord::Base
   end
 
   def generated_url
-    self_and_ancestors.collect(&:title_unless_root).compact.collect(&:urlize).join('/')
-  end
-
-  def wanted_parent_id
-    self.read_attribute(:parent_id)
-  end
-
-  def wanted_parent_id=(new_parent_id)
-    if new_parent = self.class.find_by_id(new_parent_id)
-      transaction do
-        self.save!
-        self.move_to_child_of new_parent
-        self.save!
-      end
+    if !parent_id.nil?
+      [parent.url, self.title.urlize].compact.join('/').sub(%r(^/),'')
+    elsif !@wanted_parent_id.nil?
+      [Page.find_by_id(@wanted_parent_id).andand.url, title.urlize].compact.join('/').sub(%r(^/),'')
+    else
+      ''
     end
   end
 
   def title_unless_root
     parent_id ? title : nil
+  end
+
+  def title_with_url
+    "#{title} (#{url})"
   end
 
   @@rebuilding = false
