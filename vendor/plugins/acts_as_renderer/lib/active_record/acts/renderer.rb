@@ -14,7 +14,7 @@ module ActiveRecord
         end
 
         def active_controller
-          @@active_controller
+          @@active_controller ||= MockController.new 
         end
         def acts_as_renderer
           class_eval <<-EOV, __FILE__, __LINE__
@@ -38,7 +38,6 @@ module ActiveRecord
               template.extend controller.master_helper_module
               template.render(render_template)
             end
-            @@active_controller = MockController.new 
           EOV
         end
       end
