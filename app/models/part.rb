@@ -73,6 +73,7 @@ class Part < ActiveRecord::Base
 
   def before_validation_on_create
     self.name ||= name_by_filename
+    sync_attributes
   end
 
   def after_save
@@ -266,6 +267,7 @@ class Part < ActiveRecord::Base
     unless yaml_path.blank?
       if File.exist?(yaml_path) and File.mtime(yaml_path) > (updated_at || Time.now.yesterday)
         load_attributes_from_yml_file(yaml_path)
+        save! unless new_record?
         # FIXME is there another wy to prevent conf saving in tests?
       elsif !new_record? and RAILS_ENV != 'test'
         write_attributes_to_yml_file(yaml_path)
@@ -317,7 +319,7 @@ class Part < ActiveRecord::Base
   def load_attributes_from_yml_file(yaml_path)
     atts = YAML.load_file(yaml_path)
     unless atts.blank?
-      self.update_attributes atts
+      self.attributes = atts
     end
   end
 end
