@@ -5,8 +5,7 @@ describe "/pages/layout/create" do
     render 'pages/layout/create'
   end
   
-  #Delete this example and add some real ones or delete this file
-  it "should tell you where to find the file" do
-    response.should have_tag('p', /Find me in app\/views\/pages/layout\/create/)
+  it "should render successfully" do
+    response.should be_success
   end
 end
