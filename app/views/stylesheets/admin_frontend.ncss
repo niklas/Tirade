@@ -1,5 +1,5 @@
 /* -------->>> tools icon links <<<--------------- */
-div {
+div.grid, div.rendering, div.page {
   div.admin {
     span, a {
       display: block;
@@ -18,6 +18,10 @@ div {
     a.edit {
       right:3px;
       background: url(../images/icons/small/edit.gif);
+    }
+    a.create.layout {
+      right:3px;
+      background: url(../images/icons/small/template.gif);
     }
   }
 }

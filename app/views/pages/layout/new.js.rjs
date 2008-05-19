@@ -1,0 +1,4 @@
+page.update_toolbox(
+                    :header => "Create Grid/Layout",
+                    :content => {:partial => '/rendering/grid/form', :object => @grid}
+                   )

@@ -20,6 +20,32 @@ class GridsController < ApplicationController
     end
   end
 
+  def new
+    @grid = Grid.new(params[:grid])
+    respond_to do |wants|
+      wants.js { render :template => '/pages/layout/new' }
+    end
+  end
+
+  def create
+    @grid = Grid.new(params[:grid])
+    respond_to do |wants|
+      wants.js do
+        if @grid.save
+          if (@page = Page.find(params[:page_id]))
+            @page.layout = @grid
+            @page.save
+            render :template => '/public/index'
+          else
+            render :template => '/rendering/grid/show'
+          end
+        else
+          render :action => 'new'
+        end
+      end
+    end
+  end
+
   def edit
     @grid = Grid.find(params[:id])
     respond_to do |wants|

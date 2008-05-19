@@ -13,7 +13,9 @@ ActionController::Routing::Routes.draw do |map|
 
     manage.resources :contents
 
-    manage.resources :pages
+    manage.resources :pages do |pages|
+      pages.resource :layout, :controller => 'pages/layout'
+    end
 
     manage.resources :parts,
       :member => {:preview => :put}

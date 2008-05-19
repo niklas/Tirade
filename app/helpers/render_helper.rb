@@ -80,10 +80,16 @@ module RenderHelper
     content_tag(
       :div,
       render(:partial => '/public/header', :object => thepage) + 
-      (layout.andand.render_in_page(thepage) || 'Page has no Layout') +
+      (layout.andand.render_in_page(thepage) || page_without_layout_warning(thepage)) +
       render(:partial => '/public/footer', :object => thepage),
       {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
     )
+  end
+
+  def page_without_layout_warning(thepage)
+    content_tag(:div,
+                'Page has no Layout ' + link_to("create layout", new_page_layout_path(thepage), :class => 'create layout with_toolbox'),
+               :class => 'warning')
   end
 
   def remove_page

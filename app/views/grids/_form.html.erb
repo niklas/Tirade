@@ -1,9 +1,11 @@
-<%= destroy_grid_link(@grid, :confirm => _('Really delete?')) %>
-<%= link_to_remote 'add child', :url => create_child_grid_path(@grid), :method => :post %>
-<% update_grid_form(@grid) do |f| %>
+<% grid = form || @grid %>
+<%= destroy_grid_link(grid, :confirm => _('Really delete?')) %>
+<%= link_to_remote 'add child', :url => create_child_grid_path(grid), :method => :post %>
+<% update_grid_form(grid) do |f| %>
   <%= f.select :yui, Grid::Types.invert %>
   <%= f.text_field :title %>
   <%= f.hidden_field :rendering_id %>
-  <%= show_grid_link(@grid, :label => 'cancel') %>
+  <%= hidden_field :page_id, @page.id %>
+  <%= show_grid_link(grid, :label => 'cancel') %>
   <%= submit_tag _('OK') %>
 <% end %>

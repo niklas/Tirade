@@ -19,7 +19,13 @@
   </dd>
   <% end %>
   <dt>Layout</dt>
-  <dd> <%=h thepage.final_layout.andand.label || 'none!' %> </dd>
+  <dd> 
+    <% unless thepage.final_layout.nil? %>
+      <%=h thepage.final_layout.andand.label %>
+    <% else %>
+      none! <%= link_to_remote('create layout', :url => page_layout_path(thepage), :method => :post) %>
+    <% end %>
+  </dd>
   <dt>Width</dt>
   <dd> <%=h thepage.yui_name %> </dd>
   <dt>Actions</dt>
