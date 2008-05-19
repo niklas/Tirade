@@ -55,4 +55,13 @@ class Video < ActiveRecord::Base
   def full_url
     APP_CONFIG['video_base_url'] + self.url
   end
+  
+  def self.sample
+    new(
+        :title => "Sample Video",
+        :artist_name => 'Henry Sample',
+        :url => 'http://example.com/no_video',
+        :image_url => 'http://example.com/no_image.jpg'
+       )
+  end
 end
