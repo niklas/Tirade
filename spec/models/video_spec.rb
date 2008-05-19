@@ -52,7 +52,7 @@ describe "The XML fixture 'flv_videos'" do
         end
 
         it "should have correct id" do
-          @video.id.should == '2342556'
+          @video.id.should == 2342556
         end
 
         it do
@@ -86,7 +86,7 @@ describe "The XML fixture 'flv_videos'" do
         end
 
         it "should have correct id" do
-          @video.id.should == "4223556"
+          @video.id.should == 4223556
         end
 
         it do
@@ -154,7 +154,7 @@ describe "The Youtube feed" do
 
     describe ", parsing it" do
       before(:each) do
-        @videos = YoutubeVideo.new_from_rss(@rss)
+        @videos = YoutubeVideo.new_from_xml(@rss)
       end
       it "should return something" do
         @videos.should_not be_nil
@@ -184,7 +184,7 @@ describe "The Youtube feed" do
         end
 
         it "should have an url" do
-          @video.url.should == 'http://youtube.com/?v=GEtZlR3zp4c'
+          @video.url.should == 'http://youtube.com/v/GEtZlR3zp4c.swf'
         end
         it "sshould have correct image url "do
           @video.image_url.should == 'http://s4.ytimg.com/vi/GEtZlR3zp4c/default.jpg'
@@ -201,7 +201,7 @@ describe "The Youtube feed" do
           end
 
           it "should have correct id" do
-            @video.id.should == 'GEtZlR3zp4c'
+            @video.id.should == 428886364
           end
         end
 
@@ -228,7 +228,7 @@ describe "The Youtube feed" do
         end
 
         it "should have an url" do
-          @video.url.should == 'http://youtube.com/?v=Y18LUMkVt2Y'
+          @video.url.should == 'http://youtube.com/v/Y18LUMkVt2Y.swf'
         end
         it "sshould have correct image url "do
           @video.image_url.should == 'http://s2.ytimg.com/vi/Y18LUMkVt2Y/default.jpg'
@@ -245,7 +245,7 @@ describe "The Youtube feed" do
           end
 
           it "should have correct id" do
-            @video.id.should == 'Y18LUMkVt2Y'
+            @video.id.should == 996884670
           end
         end
 
