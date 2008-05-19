@@ -154,7 +154,7 @@ class Part < ActiveRecord::Base
     @rhtml = nil if reload
     @rhtml ||= File.read(existing_fullpath)
   rescue Exception => e
-    e.message
+    ''
   end
 
   def rhtml=(new_rhtml)
