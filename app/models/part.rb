@@ -48,7 +48,7 @@ class Part < ActiveRecord::Base
   #  {:conditions => ['1=1']}
   #}
   def self.for_content(cont)
-    find(:all)
+    find(:all, :order => 'name')
   end
 
   def self.sync_from_filesystem

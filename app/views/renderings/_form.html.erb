@@ -22,7 +22,7 @@
       <% if f.object.has_content? %>
         <%= f.collection_select :part_id, Part.for_content(f.object.content), :id, :fullname, :include_blank => true %>
       <% else %>
-        <%= f.collection_select :part_id, Part.find(:all), :id, :fullname, :include_blank => true %>
+      <%= f.collection_select :part_id, Part.find(:all, :order => 'name'), :id, :fullname, :include_blank => true %>
       <% end %>
   </p>
 
