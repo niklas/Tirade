@@ -39,6 +39,12 @@ module ApplicationHelper
     url = [ public_content_path(content.url), opts.delete(:item_id)].compact.join('/')
     link_to(label,url,opts)
   end
+  alias :public_page_link :public_content_link
+
+  def public_item_link_with_scaled_image(item,geom)
+    parent = item.parent
+    public_page_link(parent.title, :item_id => item.id, :label => scaled_image_tag(item,geom))
+  end
 
   # copied without shame from http://blog.vixiom.com/2007/06/05/rails-helper-for-swfobject/
   def swf_object(swf, id, width, height, flash_version, background_color, params = {}, vars = {}, create_div = false)
