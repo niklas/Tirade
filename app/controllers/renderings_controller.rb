@@ -105,6 +105,9 @@ class RenderingsController < ApplicationController
     @rendering.part.attributes = params[:part] if params[:part]
     @rendering.grid.attributes = params[:grid] if params[:grid]
     @rendering.content.attributes = params[:content] if params[:content]
+    if @rendering.has_content? && @rendering.content.respond_to?(:items)
+      @item_id = @rendering.content.items.first.andand.id
+    end
     respond_to do |wants|
       wants.js
     end
