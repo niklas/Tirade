@@ -68,7 +68,7 @@ class Rendering < ActiveRecord::Base
 
   def label
     [
-      part.label,
+      part.andand.label|| '[brand new]',
       (has_content? ? content.title : nil)
     ].compact.join(' with ')
   end
