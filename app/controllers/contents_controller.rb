@@ -4,11 +4,12 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.xml
   def index
-    @contents = Content.find(:all)
+    @contents = Content.search(params[:term]).paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @contents }
+      format.js
     end
   end
 
@@ -20,6 +21,7 @@ class ContentsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @content }
+      format.js
     end
   end
 
@@ -31,12 +33,17 @@ class ContentsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @content }
+      format.js
     end
   end
 
   # GET /contents/1/edit
   def edit
     @content = Content.find(params[:id])
+    respond_to do |format|
+      format.html # edit.html.erb
+      format.js
+    end
   end
 
   # POST /contents
@@ -49,9 +56,11 @@ class ContentsController < ApplicationController
         flash[:notice] = 'Content was successfully created.'
         format.html { redirect_to(content_path(@content)) }
         format.xml  { render :xml => @content, :status => :created, :location => @content }
+        format.js  { render :template => '/contents/show' }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @content.errors, :status => :unprocessable_entity }
+        format.js { render :template=> "/contents/new" }
       end
     end
   end

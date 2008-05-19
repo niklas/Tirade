@@ -1,0 +1,6 @@
+page.update_toolbox(
+                   :header => "#{@content.class} '#{@content.title || 'Content'}'",
+                   :content => {:partial => '/contents/show', :object => @content},
+                   :nav => 'contents'
+                   )
+

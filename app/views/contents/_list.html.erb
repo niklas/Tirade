@@ -1,0 +1,5 @@
+<ul>
+<% list.each do |content| %>
+<li><%= link_to content.title, content_path(content) %></li>
+<% end %>
+</ul>

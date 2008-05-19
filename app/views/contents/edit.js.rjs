@@ -1,0 +1,6 @@
+page.update_toolbox(
+                   :header => "Edit #{@content.class} '#{@content.title || 'Content'}'",
+                   :content => {:partial => '/contents/form', :object => @content},
+                   :nav => 'contents'
+                   )
+

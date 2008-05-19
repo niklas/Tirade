@@ -1,0 +1,6 @@
+page.update_toolbox(
+                   :header => "Create #{@content.class.to_s}",
+                   :content => {:partial => '/contents/form', :object => @content},
+                   :nav => 'contents'
+                   )
+

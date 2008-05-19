@@ -1,0 +1,11 @@
+<% content = show || @content %>
+<dl class="content">
+  <dt>Title</dt>
+  <dd> <%=h content.title %>
+
+  <dt>Actions</dt>
+  <dd>
+    <%= link_to 'Edit', edit_content_path(@content) %> |
+    <%= link_to 'Back', contents_path %>
+  </dd>
+</dl>

@@ -1,18 +1,3 @@
 <% section "Editing #{@content.class}" %>
 
-<%= error_messages_for :content %>
-
-<% form_for(:content, @content, :url => content_path(@content), :html => {:method => :put}, :builder => NormalFormBuilder ) do |f| %>
-    <%= f.text_field :title %>
-    <%= f.text_area :description %>
-    <%= f.text_area :body %>
-
-    <%= f.select_picture %>
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
-
-<%= show_content_link(@content, :label => 'Show') %>
-<%= index_contents_link(:label => 'Back to List') %>
+<%= render :partial => '/contents/form', :object => @content %>

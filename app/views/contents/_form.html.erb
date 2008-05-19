@@ -1,0 +1,21 @@
+<% content = form || @content %>
+
+<%= error_messages_for :object => content %>
+
+<% path = content.new_record? ? contents_path : content_path(content) %>
+<% method = content.new_record? ? :post : :put %>
+<% form_for(:content, content, :url => path, :method => method, :builder => NormalFormBuilder ) do |f| %>
+    <%= f.text_field :title %>
+    <%= f.hidden_field :type %>
+    <%= render_form_fields_for(f) %>
+    <%= f.select_picture unless content.new_record? %>
+
+    <% if content.new_record? %>
+      <%= f.submit "Create" %> or
+      <%= link_to 'cancel', contents_path %>
+    <% else %>
+      <%= f.submit "Update" %> or
+      <%= link_to 'cancel', content_path(content) %> |
+      <%= index_contents_link(:label => 'Back to List') %>
+    <% end %>
+<% end %>

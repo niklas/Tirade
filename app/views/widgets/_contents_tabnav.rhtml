@@ -1,0 +1,51 @@
+<%  
+render_tabnav :contents, 
+              :generate_css => false do 
+    
+  add_tab do |t|
+    t.named 'List'
+    t.titled 'All Contents'
+    t.links_to hash_for_contents_path
+  end 
+
+  Content.valid_types.each do |klass|
+    type = klass.to_s
+    add_tab do |t|
+      t.named "New #{type}"
+      t.titled "Create #{type}"
+      t.links_to hash_for_new_content_path(:content => {:type => type})
+    end 
+  end
+  #  
+  # you can use restful routes with:
+  #
+  #add_tab do |t|
+  #  t.named 'Users'
+  #  t.links_to hash_for_users_path
+  #end
+  #
+  #add_tab do |t|
+  #  t.named 'Customers'
+  #  t.links_to :controller => 'customers'
+  #end
+  #  
+  # # A tab can be initialized with a Hash like this:
+  # 
+  # add_tab :name => 'welcome', :link => {:controller=>'welcome'}
+  #
+  # # You can have a dynamic name or link 
+  # # (this partial is evaluated in the page context, so it sees every helper or instance variable)
+  #  
+  # add_tab do |t|
+  #   t.named "#{current_user} details"
+  #   t.links_to :controller => 'users', :action => 'show', :id => current_user.id
+  # end
+  #
+  # # You can have an image inside 
+  #
+  # add_tab do |t|
+  #   t.named image_tag('test')
+  #   t.links_to :controller => 'users', :action => 'show', :id => current_user.id
+  # end
+end 
+%>
