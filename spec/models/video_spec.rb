@@ -251,5 +251,49 @@ describe "The Youtube feed" do
 
       end
     end
+    describe ", importing the videos" do
+      before(:each) do
+        lambda {
+          @created_videos = YoutubeVideo.create_from_xml_unless_exist(@rss)
+        }.should change(Video,:count).by(15)
+      end
+
+      describe "A YoutubeVideoCollection" do
+        before(:each) do
+          @collection = YoutubeVideoCollection.new(:title => 'youtube')
+        end
+        it "should have videos" do
+          @collection.should have_at_least(15).videos
+        end
+        it "should have videos as items" do
+          @collection.should have_at_least(15).items
+        end
+
+        describe ", subselectiing a video" do
+          before(:each) do
+            lambda do
+              @video = @collection.videos.find(996884670)
+            end.should_not raise_error
+          end
+          it "should be a YoutubeVideo" do
+            @video.should be_instance_of(YoutubeVideo)
+          end
+
+        end
+      end
+
+      describe ", reimporting them" do
+        before(:each) do
+          lambda {
+            @re_created_videos = YoutubeVideo.create_from_xml_unless_exist(@rss)
+          }.should_not change(Video,:count)
+        end
+
+        it "should not create any video" do
+          @re_created_videos.should be_empty
+        end
+      end
+
+    end
   end
 end

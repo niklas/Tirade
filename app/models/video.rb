@@ -23,6 +23,8 @@ class Video < ActiveRecord::Base
 
   has_fulltext_search :title, :artist_name, :image_url
 
+  has_finder :all, {:conditions => '1=1'}
+
 
   def self.new_from_xml(xml)
     @document = XmlSimple.xml_in(xml,{ 'Cache' => 'mem_share', 'ForceArray' => false})

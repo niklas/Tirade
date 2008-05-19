@@ -23,7 +23,7 @@ class Rendering < ActiveRecord::Base
     #  k.table_exists? &&
     #    k.columns.collect(&:name).include?('title') rescue false
     #end
-    ([Content,Image,Video] + Content.valid_types).uniq
+    ([Content,Image,Video,YoutubeVideoCollection] + Content.valid_types).uniq
   end
 
   attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options
