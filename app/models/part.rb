@@ -34,7 +34,7 @@ class Part < ActiveRecord::Base
   acts_as_custom_configurable
   serialize :preferred_types, Array
 
-  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme, :define_options
+  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme, :define_options, :defined_options
 
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
@@ -51,7 +51,7 @@ class Part < ActiveRecord::Base
     find(:all)
   end
 
-  def self.recognize_new_files
+  def self.sync_from_filesystem
     created = []
     [BaseGlob, ThemesGlob].each do |pattern|
       Dir.glob(pattern).each do |filename|
@@ -62,6 +62,13 @@ class Part < ActiveRecord::Base
       end
     end
     created
+  end
+
+  def self.sync!
+    find(:all).each do |part|
+      part.sync_attributes
+    end
+    sync_from_filesystem
   end
 
   def before_validation_on_create
@@ -253,6 +260,19 @@ class Part < ActiveRecord::Base
     self.use_theme = false
   end
 
+  # Saves the needed attributes to a .yml file or reads them in from there
+  def sync_attributes
+    yaml_path = existing_yml_path rescue nil
+    unless yaml_path.blank?
+      if File.exist?(yaml_path) and File.mtime(yaml_path) > (updated_at || Time.now.yesterday)
+        load_attributes_from_yml_file(yaml_path)
+        # FIXME is there another wy to prevent conf saving in tests?
+      elsif !new_record? and RAILS_ENV != 'test'
+        write_attributes_to_yml_file(yaml_path)
+      end
+    end
+  end
+
   private
   def save_rhtml!
     return if rhtml.blank?
@@ -284,22 +304,6 @@ class Part < ActiveRecord::Base
     existing_fullpath.sub(/.html.erb$/,'.yml')
   end
 
-  # Saves the needed attributes to a .yml file or reads them in from there
-  def sync_attributes
-    yaml_path = existing_yml_path rescue nil
-    unless yaml_path.blank?
-      if File.exist?(yaml_path) and File.mtime(yaml_path) > (updated_at || Time.now)
-        at = YAML.load_file(yaml_path)
-        unless at.blank?
-          self.update_attributes at
-        end
-        # FIXME is there another wy to prevent conf saving in tests?
-      elsif !new_record? and RAILS_ENV != 'test'
-        write_attributes_to_yml_file(yaml_path)
-      end
-    end
-  end
-
   def write_attributes_to_yml_file(yaml_path)
     File.open(yaml_path, 'w') do |f|
       at = {
@@ -307,6 +311,13 @@ class Part < ActiveRecord::Base
         :defined_options => defined_options
       }
       f.puts at.to_yaml
+    end
+  end
+
+  def load_attributes_from_yml_file(yaml_path)
+    atts = YAML.load_file(yaml_path)
+    unless atts.blank?
+      self.update_attributes atts
     end
   end
 end
