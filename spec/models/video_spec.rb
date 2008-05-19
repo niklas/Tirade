@@ -52,7 +52,7 @@ describe "The XML fixture 'flv_videos'" do
         end
 
         it "should have correct id" do
-          @video.id.should == 2342556
+          @video.id.should == '2342556'
         end
 
         it do
@@ -86,7 +86,7 @@ describe "The XML fixture 'flv_videos'" do
         end
 
         it "should have correct id" do
-          @video.id.should == 4223556
+          @video.id.should == "4223556"
         end
 
         it do
@@ -132,5 +132,124 @@ describe "The XML fixture 'flv_videos'" do
 
     end
 
+  end
+end
+
+describe "The Youtube feed" do
+  before(:each) do
+    @feed = File.join(File.dirname(__FILE__), '../fixtures/top_rated_today.rss')
+  end
+
+  it "should exist" do
+    File.exists?(@feed).should be_true
+  end
+
+  describe ", reading it" do
+    before(:each) do
+      @rss = File.read(@feed)
+    end
+    it "should contain some data" do
+      @rss.should_not be_empty
+    end
+
+    describe ", parsing it" do
+      before(:each) do
+        @videos = YoutubeVideo.new_from_rss(@rss)
+      end
+      it "should return something" do
+        @videos.should_not be_nil
+      end
+
+      it "should have at least two videos in it" do
+        @videos.should have_at_least(15).records
+      end
+      describe ". The first Video" do
+        before(:each) do
+          @video = @videos.first
+        end
+        it "should be valid" do
+          @video.should be_valid
+        end
+
+        it "should have correct id" do
+          @video.id.should_not be_nil
+        end
+
+        it do
+          @video.artist_name.should =~ /bravenewfilms/
+        end
+
+        it do
+          @video.title.should == "McCain's YouTube Problem Just Became a Nightmare"
+        end
+
+        it "should have an url" do
+          @video.url.should == 'http://youtube.com/?v=GEtZlR3zp4c'
+        end
+        it "sshould have correct image url "do
+          @video.image_url.should == 'http://s4.ytimg.com/vi/GEtZlR3zp4c/default.jpg'
+        end
+
+        describe ", saving it" do
+          before(:each) do
+            lambda do 
+              @video.save
+            end.should_not raise_error
+          end
+          it "should have an id" do
+            @video.id.should_not be_nil
+          end
+
+          it "should have correct id" do
+            @video.id.should == 'GEtZlR3zp4c'
+          end
+        end
+
+      end
+
+      describe ". The second Video" do
+        before(:each) do
+          @video = @videos[1]
+        end
+        it "should be valid" do
+          @video.should be_valid
+        end
+
+        it "should have correct id" do
+          @video.id.should_not be_nil
+        end
+
+        it do
+          @video.artist_name.should == 'NeilCicierega'
+        end
+
+        it do
+          @video.title.should == 'Potter Puppet Pals in "The Vortex"'
+        end
+
+        it "should have an url" do
+          @video.url.should == 'http://youtube.com/?v=Y18LUMkVt2Y'
+        end
+        it "sshould have correct image url "do
+          @video.image_url.should == 'http://s2.ytimg.com/vi/Y18LUMkVt2Y/default.jpg'
+        end
+
+        describe ", saving it" do
+          before(:each) do
+            lambda do 
+              @video.save
+            end.should_not raise_error
+          end
+          it "should have an id" do
+            @video.id.should_not be_nil
+          end
+
+          it "should have correct id" do
+            @video.id.should == 'Y18LUMkVt2Y'
+          end
+        end
+
+      end
+    end
   end
 end

@@ -1,9 +1,4 @@
 --- 
-:preferred_types: 
-- Document
-- Folder
-- NewsFolder
-- NewsItem
 :defined_options: 
   number_of_the_day: 
   - integer
@@ -11,3 +6,8 @@
   motd: 
   - string
   - nothing to say
+:preferred_types: 
+- Document
+- Folder
+- NewsFolder
+- NewsItem
