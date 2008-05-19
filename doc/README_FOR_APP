@@ -3,4 +3,5 @@ This is a rewrite of Tirade, yet another CMS on rails
 
 
 
-Gems: andand
+Gems: andand has_finder haml libxml-ruby
+Packages: 
