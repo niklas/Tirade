@@ -30,6 +30,7 @@ class Part < ActiveRecord::Base
   validates_uniqueness_of :filename
   validates_format_of :filename, :with => /\A[\w_]+\Z/
   validates_exclusion_of :filename, :in => BlacklistesFileNames
+  validates_length_of :preferred_types, :minimum => 1, :message => 'are not enough. Please select at least one.'
   belongs_to :subpart, :class_name => 'Part', :foreign_key => 'subpart_id'
   acts_as_custom_configurable
   serialize :preferred_types, Array
