@@ -5,7 +5,7 @@
   <%= f.select :yui, Grid::Types.invert %>
   <%= f.text_field :title %>
   <%= f.hidden_field :rendering_id %>
-  <%= hidden_field :page_id, @page.id %>
+  <%= hidden_field :page_id, @page.id if @page %>
   <%= show_grid_link(grid, :label => 'cancel') %>
   <%= submit_tag _('OK') %>
 <% end %>
