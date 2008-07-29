@@ -78,8 +78,7 @@ Remote.LinkWithToolbox = Behavior.create({
           from_top = null;
           from_left = null;
         }
-        new Toolbox('Toolbox', {'cornerRadius': 4, 
-          'top': from_top, 'left': from_left})
+        new Toolbox({'top': from_top, 'left': from_left})
       }
     })
   },

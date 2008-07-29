@@ -1,10 +1,14 @@
 module RenderingsHelper
 
   def update_toolbox(opts = {})
-    page[:toolbox_header].replace_html opts[:header] if opts[:header]
+    if header = (opts[:header] || opts[:top])
+      page[:toolbox_top].replace_html header
+    end
+
     page[:toolbox_content].replace_html opts[:content] if opts[:content]
-    if footer = (opts[:footer] || page.context.flash[:notice])
-      page[:toolbox_footer].replace_html footer
+    
+    if footer = (opts[:footer] || opts[:bottom] || page.context.flash[:notice])
+      page[:toolbox_bottom].replace_html footer
     end
     if nav_name = opts[:nav]
       page[:toolbox_sidebar].replace_html tabnav_to_s(nav_name)
