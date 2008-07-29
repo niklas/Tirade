@@ -10,6 +10,7 @@ describe "/pages/new.html.erb" do
     @page.stub!(:wanted_parent_id).and_return(1)
     @page.stub!(:layout_id).and_return("1")
     @page.stub!(:yui).and_return("doc")
+    @page.stub!(:root?).and_return(true)
     assigns[:page] = @page
   end
 
