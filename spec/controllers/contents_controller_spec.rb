@@ -23,7 +23,7 @@ describe ContentsController do
     end
   
     it "should find all contents" do
-      Content.should_receive(:find).with(:all).and_return([@content])
+      Content.should_receive(:browse).and_return([@content])
       do_get
     end
   
@@ -37,7 +37,7 @@ describe ContentsController do
 
     before(:each) do
       @content = mock_model(Content, :to_xml => "XML")
-      Content.stub!(:find).and_return(@content)
+      Content.stub!(:browse).and_return(@content)
     end
   
     def do_get
@@ -51,7 +51,7 @@ describe ContentsController do
     end
 
     it "should find all contents" do
-      Content.should_receive(:find).with(:all).and_return([@content])
+      Content.should_receive(:browse).and_return([@content])
       do_get
     end
   

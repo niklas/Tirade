@@ -4,7 +4,7 @@ class ContentsController < ApplicationController
   # GET /contents
   # GET /contents.xml
   def index
-    @contents = Content.search(params[:term]).paginate(:page => params[:page])
+    @contents = Content.browse(params)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -32,6 +32,10 @@ class Content < ActiveRecord::Base
   # FIXME please spec
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
 
+  def self.browse(params={})
+    search(params[:term]).paginate(:page => params[:page])
+  end
+
   has_fulltext_search :title, :description, :body
   acts_as_pictureable
 
