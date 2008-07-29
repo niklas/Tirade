@@ -18,8 +18,8 @@ describe "/contents/edit.html.erb" do
     
     response.should have_tag("form[action=#{content_path(@content)}][method=post]") do
       with_tag('input#content_title[name=?]', "content[title]")
-      with_tag('textarea#content_description[name=?]', "content[description]")
-      with_tag('textarea#content_body[name=?]', "content[body]")
+      #with_tag('textarea#content_description[name=?]', "content[description]")
+      #with_tag('textarea#content_body[name=?]', "content[body]")
       with_tag('input[name=?]', "content[image_ids][]")
       without_tag('input#content_type[name=?]', "content[type]")
       without_tag('input#content_state[name=?]', "content[state]")

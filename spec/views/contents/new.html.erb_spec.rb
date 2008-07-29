@@ -37,10 +37,10 @@ describe "/contents/new.html.erb" do
           with_tag('label', 'Body')
           with_tag("textarea#content_body[name=?]", "content[body]")
         end
-        with_tag('p.type') do
-          with_tag('label', 'Type')
-          with_tag("select#content_type[name=?]", "content[type]")
-        end
+        #with_tag('p.type') do
+        #  with_tag('label', 'Type')
+        #  with_tag("select#content_type[name=?]", "content[type]")
+        #end
          with_tag('p.wanted_parent_id') do
           with_tag('label', 'Parent NewsFolder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
@@ -82,10 +82,10 @@ describe "/contents/new.html.erb" do
           with_tag('label', 'Body')
           with_tag("textarea#content_body[name=?]", "content[body]")
         end
-        with_tag('p.type') do
-          with_tag('label', 'Type')
-          with_tag("select#content_type[name=?]", "content[type]")
-        end
+        #with_tag('p.type') do
+        #  with_tag('label', 'Type')
+        #  with_tag("select#content_type[name=?]", "content[type]")
+        #end
          with_tag('p.wanted_parent_id') do
           with_tag('label', 'Parent Folder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
@@ -158,10 +158,10 @@ describe "/contents/new.html.erb" do
           with_tag('label', 'Body')
           with_tag("textarea#content_body[name=?]", "content[body]")
         end
-        with_tag('p.type') do
-          with_tag('label', 'Type')
-          with_tag("select#content_type[name=?]", "content[type]")
-        end
+        #with_tag('p.type') do
+        #  with_tag('label', 'Type')
+        #  with_tag("select#content_type[name=?]", "content[type]")
+        #end
          with_tag('p.wanted_parent_id') do
           with_tag('label', 'Parent Folder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
