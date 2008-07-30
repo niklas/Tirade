@@ -5,6 +5,7 @@ render_tabnav :rendering,
   add_tab do |t|
     t.named 'Edit Rendering'
     t.links_to edit_rendering_path(@rendering)
+    t.html[:class] = "edit rendering #{dom_id(@rendering)}"
   end
 end 
 %>
