@@ -77,9 +77,12 @@ class Part < ActiveRecord::Base
     sync_attributes
   end
 
+  def before_validation
+    self.preferred_types = ['Document'] if preferred_types.empty?
+  end
+
   def after_save
     save_rhtml!
-    sync_attributes
   end
 
   def after_destroy

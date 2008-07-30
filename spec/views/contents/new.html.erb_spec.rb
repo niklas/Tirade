@@ -110,7 +110,7 @@ describe "/contents/new.html.erb" do
       
       response.should have_tag("form[action=?][method=post]", contents_path) do
         with_tag('p.default.warning') do
-          with_tag('pre', %r~Couldn't find template file for /contents/_zwei_himmel_hunde_auf_dem_weg_zur_hoelle_fields~)
+          with_tag('pre', %r~Missing template contents/_zwei_himmel_hunde_auf_dem_weg_zur_hoelle_fields~)
         end
         without_tag("input#content_state[name=?]", "content[state]")
         without_tag("input#content_position[name=?]", "content[position]")

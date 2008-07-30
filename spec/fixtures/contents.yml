@@ -55,7 +55,7 @@ cheezeburgaz:
   description: I cna has Cheezeburga?
   type: NewsFolder
   state: 'published'
-  published_at: 2008-04-01 23:42:05
+  published_at: 2008-04-01 00:42:05
   parent_id: 1
 
 ate_cookie:
@@ -63,6 +63,15 @@ ate_cookie:
   description: "... but I eated it"
   type: NewsItem
   state: 'published'
-  published_at: 2008-04-01 23:42:05
+  published_at: 2008-04-01 13:42:05
   parent_id: 1337   # cheezeburgaz
 
+<% 14.times do |num| %>
+cheezy_entry_<%= num %>:
+  id: <%= num + 13370 %>
+  title: "More Cheeze <%= num %>"
+  type: NewsItem
+  state: 'published'
+  published_at: 2008-04-01 <%= num %>:42:05
+  parent_id: 1337   # cheezeburgaz
+<% end %>

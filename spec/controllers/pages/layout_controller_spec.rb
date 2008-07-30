@@ -1,6 +1,11 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Pages::LayoutController do
+  fixtures :all
+
+  before do
+    @page = pages(:main)
+  end
 
   #Delete these examples and add some real ones
   it "should use Pages::LayoutController" do
@@ -10,14 +15,16 @@ describe Pages::LayoutController do
 
   describe "GET 'create'" do
     it "should be successful" do
-      get 'create'
+      Page.should_receive(:find).with("1").and_return(@page)
+      get 'create', :page_id => 1
       response.should be_success
     end
   end
 
   describe "GET 'update'" do
     it "should be successful" do
-      get 'update'
+      Page.should_receive(:find).with("1").and_return(@page)
+      get 'create', :page_id => 1
       response.should be_success
     end
   end

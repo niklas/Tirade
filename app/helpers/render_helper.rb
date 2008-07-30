@@ -50,7 +50,7 @@ module RenderHelper
       thegrid,
       if thegrid.visible_children.empty?
         renderings = thepage.renderings.for_grid(thegrid)
-        if renderings.empty? && current_user.is_admin?
+        if renderings.empty? && current_user.andand.is_admin?
           [
             content_tag(:div,
               link_to_remote('create rendering', 

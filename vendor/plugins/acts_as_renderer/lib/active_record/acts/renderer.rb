@@ -35,6 +35,7 @@ module ActiveRecord
               controller = contr 
               path = controller.view_paths rescue controller.view_root
               template = ActionView::Base.new(path, assigns, controller)
+              template.template_format = :html
               template.extend controller.master_helper_module
               template.render(render_template)
             end
