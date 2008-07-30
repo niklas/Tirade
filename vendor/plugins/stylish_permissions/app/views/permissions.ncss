@@ -5,14 +5,18 @@ a, form {
 }
 
 body.role_admin {
-   a {
-      .create, .update, .destroy, .show, .edit {
-         display: inline;
-      }
-   }
-   form {
-      .create, .update, .destroy, .show, .edit {
-         display: block;
-      }
-   }
+   a { display: inline; }
+   form { display: block; }
 }
+
+
+<% @roles.each do |role| %>
+body.role_<%= role.short_name %> {
+   <% role.permissions.group_by(&:app_controller).each do |res, perms| %>
+      <% perms.each do |perm| %>
+         a.<%= res %>.<%= perm.app_method %> { display: inline; }
+         form.<%= res %>.<%= perm.app_method %> { display: block; }
+      <% end %>
+   <% end %>
+}
+<% end %>

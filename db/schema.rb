@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 22) do
+ActiveRecord::Schema.define(:version => 20080730175405) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -35,6 +35,23 @@ ActiveRecord::Schema.define(:version => 22) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups_roles", :force => true do |t|
+    t.integer "group_id"
+    t.integer "role_id"
+  end
+
+  create_table "groups_users", :force => true do |t|
+    t.integer "group_id"
+    t.integer "user_id"
   end
 
   create_table "images", :force => true do |t|
@@ -69,6 +86,19 @@ ActiveRecord::Schema.define(:version => 22) do
     t.text     "defined_options"
   end
 
+  create_table "permissions", :force => true do |t|
+    t.string   "app_controller"
+    t.string   "app_method"
+    t.boolean  "processed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "permissions_roles", :force => true do |t|
+    t.integer "role_id"
+    t.integer "permission_id"
+  end
+
   create_table "picturizations", :force => true do |t|
     t.integer  "image_id"
     t.integer  "pictureable_id"
@@ -95,9 +125,24 @@ ActiveRecord::Schema.define(:version => 22) do
     t.text     "options"
   end
 
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.boolean  "is_public"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "settings", :force => true do |t|
     t.string   "var",        :null => false
     t.text     "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_roles", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

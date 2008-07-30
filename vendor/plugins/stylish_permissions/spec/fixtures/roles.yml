@@ -1,0 +1,9 @@
+editor:
+  name: 'Editor'
+  short_name: 'editor'
+  permissions: edit_pages, update_pages, sort_renderings
+
+designer:
+  name: 'Designer'
+  short_name: 'designer'
+  permissions: edit_parts, update_parts, sort_renderings

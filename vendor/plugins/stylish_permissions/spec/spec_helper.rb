@@ -3,6 +3,9 @@ require File.expand_path(File.dirname(__FILE__) + "/../../../../config/environme
 require 'spec'
 require 'spec/rails'
 
+require File.dirname(__FILE__) + '/css_spec_helper'
+include CssSpecHelper
+
 Spec::Runner.configure do |config|
   config.fixture_path = "#{File.dirname(__FILE__)}/../spec/fixtures"
 end
