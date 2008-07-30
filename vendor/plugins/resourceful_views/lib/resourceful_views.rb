@@ -1,6 +1,8 @@
 class ResourcefulViews
   
-  def initialize
+  cattr_accessor :form_helpers_suffix, :link_helpers_suffix
+  
+  def initialize # :nodoc:    
     @module ||= Module.new
     yield self
   end
@@ -16,8 +18,8 @@ class ResourcefulViews
     classnames.join(' ')
   end
   
-  # Build resourceful helpers for a resource and install them into ActionView::Base
-  def build_and_install_helpers_for_resource(resource)
+  # Build resourceful helpers for a plural resource and install them into ActionView::Base
+  def build_and_install_helpers_for_resource(resource) # :nodoc:
     build_index_helper(resource)
     build_search_helper(resource)
     build_show_helper(resource)
@@ -30,8 +32,8 @@ class ResourcefulViews
     install_helpers
   end
   
-  # Build resourceful helpers for a resource and install them into ActionView::Base
-  def build_and_install_helpers_for_singular_resource(resource)
+  # Build resourceful helpers for a singular resource and install them into ActionView::Base
+  def build_and_install_helpers_for_singular_resource(resource) # :nodoc:
     build_show_helper(resource)
     build_new_helper(resource)
     build_edit_helper(resource)
@@ -54,23 +56,23 @@ class ResourcefulViews
   # 
   #   <a href="/tables" class="index tables index_tables">Index</a>
   #
-  #   <% index_tables(:label => 'List') %>
+  #   <% index_table_legs(@table, :id => 'back_button', :label => 'Back') %>
   #
   #   renders:
   #
-  #   <a href="/tables" class="index tables index_tables">List</a>
+  #   <a href="/tables/1/legs" id="back_button" class="index legs index_legs">Back</a>
   # 
   def build_index_helper(resource)
+    helper_name = "index_#{resource.name_prefix}#{resource.plural}#{@@link_helpers_suffix}"
+    return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
-      def index_#{resource.name_prefix}#{resource.plural}_link(*args)
+      def #{helper_name}(*args)
         opts = args.extract_options!
-        link_to_opts = {}
         label = opts.delete(:label) || 'Index'
         custom_classes = opts.delete(:class) || ''
-        link_to_opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.plural}', 'index', *custom_classes.split)
-        link_to_opts[:title] = opts.delete(:title) if opts[:title]
-        args << opts unless opts.empty? #excess options are passed on to named route helper
-        link_to(label, #{resource.name_prefix}#{resource.plural}_path(*args), link_to_opts)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.plural}', 'index', *custom_classes.split)
+        args << opts.delete(:parameters) if opts[:parameters]
+        link_to(label, #{resource.name_prefix}#{resource.plural}_path(*args), opts)
       end
     end_eval
   end
@@ -86,35 +88,68 @@ class ResourcefulViews
   #   renders:
   # 
   #   <form action="/tables" method="get" class="index tables index_tables search search_tables">
-	#	    <input type="text" name="query" />
-	# 	  <button type="submit">Search</button>
-	#   </form>
+  #     <input type="text" name="query" />
+  #     <button type="submit">Search</button>
+  #   </form>
   #
-  #   <% search_tables(:label => 'Find') %>
+  #   <%= search_tables(:label => 'Find', :parameters => {:order => 'material'}) %>
   # 
   #   renders:
   # 
   #   <form action="/tables" method="get" class="index tables index_tables search search_tables">
-	#	    <input type="text" name="query" />
-	# 	  <button type="submit">Find</button>
-	#   </form>
-  #   
+  #     <input type="text" name="query" />
+  #     <input type="hidden" name="order" value="material" />
+  #     <button type="submit">Find</button>
+  #   </form>
+  #
+  #   <% search_table_legs(table, :parameters => {:order => 'price'}) do %>
+  #     <%= select_tag 'filter', '<option>wood</option><option>metal</option>', :id => false %>
+  #     <%= submit_button 'Search' %>
+  #   <% end %>
+  #
+  #   renders:
+  # 
+  #   <form action="/tables/1/legs" method="get" class="index tables index_tables search search_tables">
+  #     <input type="text" name="query" />
+  #     <input type="hidden" name="order" value="price" />
+  #     <select name="filter"><option>wood</option><option>glass</option></select>
+  #     <button type="submit">Search</button>
+  #   </form>
+  #    
   def build_search_helper(resource)
+    helper_name = "search_#{resource.name_prefix}#{resource.plural}#{@@form_helpers_suffix}"
+    return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
-      def search_#{resource.name_prefix}#{resource.plural}_form(*args)
+      def #{helper_name}(*args, &block)
         opts = args.extract_options!
-        opts_for_button = {:type => 'submit'}
-        opts_for_button[:title] = opts.delete(:title) if opts[:title]
-        label = opts.delete(:label) || 'Search'
-        custom_classes = opts.delete(:class) || ''
-        content_tag('form', :action => #{resource.name_prefix}#{resource.plural}_path(*args), :method => :get, :class => ResourcefulViews.resourceful_classnames('#{resource.plural}', 'search', *custom_classes.split)) do
-          token_tag.to_s +
-          text_field_tag(:query, @query, :id => nil) +
-          content_tag(:button, label, opts_for_button)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.plural}', 'search', *(opts.delete(:class) || '').split)
+        opts[:method] = :get
+        parameters = opts.delete(:parameters) || {}
+        if block_given?
+          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts), block.binding)
+            parameters.collect{ |key, value|
+              concat(hidden_field_tag(key.to_s, value, :id => nil), block.binding)
+            }
+            yield
+          concat('</form>', block.binding)
+        else
+          opts_for_button = opts.delete(:button) || {}
+          opts_for_button.merge!(:type => 'submit')
+          label = opts.delete(:label) || 'Search'
+          opts[:action] = #{resource.name_prefix}#{resource.plural}_path(*args)
+           content_tag('form', opts) do
+            text_field_tag(:query, @query, :id => nil) +
+            parameters.collect{ |key, value|
+              hidden_field_tag(key.to_s, value, :id => nil)
+            }.join +
+            content_tag(:button, label, opts_for_button)
+          end
         end
       end
     end_eval
   end
+  
+  
   
   # Build the 'show_[resource]' helper
   # 
@@ -126,23 +161,22 @@ class ResourcefulViews
   # 
   #   <a href="/tables/1/top" class="show top show_top">Show</a>
   #
-  #   <% show_table_top(@table, @top, :label => @top.material) %>
+  #   <% show_table(@table, :label => @top.material) %>
   # 
   #   renders:
   # 
-  #   <a href="/tables/1/top" class="show top show_top">Linoleum</a>
+  #   <a href="/tables/1" class="show table show_table">Linoleum</a>
   #
   def build_show_helper(resource)
+    helper_name = "show_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
+    return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
-      def show_#{resource.name_prefix}#{resource.singular}_link(*args)
+      def #{helper_name}(*args)
         opts = args.extract_options!
-        opts_for_link = {}
-        opts_for_link[:title] = opts.delete(:title) if opts[:title]
         label = opts.delete(:label) || 'Show'
-        custom_class = opts.delete(:class) || ''
-        opts_for_link[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'show', *custom_class.split)
-        args << opts unless opts.empty?
-        link_to(label, #{resource.name_prefix}#{resource.singular}_path(*args), opts_for_link)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'show', *(opts.delete(:class) || '').split)
+        args << opts.delete(:parameters) if opts[:parameters]
+        link_to(label, #{resource.name_prefix}#{resource.singular}_path(*args), opts)
       end
     end_eval
   end
@@ -159,23 +193,33 @@ class ResourcefulViews
   # 
   #   <a href="/tables/new" class="new table new_table">New</a>
   #
-  #   <% new_table(:label => 'Add a table') %>
+  #   <% new_table_top(@table, :label => 'Add a top', :id => 'add_button') %>
   # 
   #   renders:
   # 
-  #   <a href="/tables/new" class="new table new_table">Add a table</a>
+  #   <a href="/tables/1/top/new" id="add_button" class="new top new_top">Add a top</a>
   #
   def build_new_helper(resource)
+    helper_name = "new_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
+    return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
-      def new_#{resource.name_prefix}#{resource.singular}_link(*args)
+      def #{helper_name}(*args, &block)
         opts = args.extract_options!
-        opts_for_link = {}
-        opts_for_link[:title] = opts.delete(:title) if opts[:title]
-        label = opts.delete(:label) || 'New'
-        custom_class = opts.delete(:class) || ''
-        opts_for_link[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'new', *custom_class.split)
-        args << opts unless opts.empty?
-        link_to(label, new_#{resource.name_prefix}#{resource.singular}_path(*args), opts_for_link)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'new', *(opts.delete(:class) || '').split)
+        parameters = opts.delete(:parameters) || {}
+        parameters.merge!(opts.delete(:attributes).inject({}){|attributes, (key, value)| attributes['#{resource.singular}[' + key.to_s + ']'] = value; attributes}) if opts[:attributes]
+        if block_given?
+          opts[:method] = :get
+          args_for_fields_for = ['#{resource.singular}']
+          concat(form_tag(new_#{resource.name_prefix}#{resource.singular}_path(*args), opts), block.binding)
+          concat(parameters.collect{|key, value| hidden_field_tag(key.to_s, value, :id => nil)}.join, block.binding) unless parameters.empty?
+          fields_for(*args_for_fields_for, &block)
+          concat('</form>', block.binding)
+        else
+          label = opts.delete(:label) || 'New'
+          args << parameters unless parameters.empty?
+          link_to(label, new_#{resource.name_prefix}#{resource.singular}_path(*args), opts)
+        end
       end
     end_eval
   end
@@ -199,16 +243,15 @@ class ResourcefulViews
   #   <a href="/tables/1/top/edit" class="edit top edit_top">Change top</a>
   #
   def build_edit_helper(resource)
+    helper_name = "edit_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
+    return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
-      def edit_#{resource.name_prefix}#{resource.singular}_link(*args)
+      def #{helper_name}(*args)
         opts = args.extract_options!
-        opts_for_link = {}
         label = opts.delete(:label) || 'Edit'
-        custom_class = opts.delete(:class) || ''
-        opts_for_link[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'edit', *custom_class.split)
-        opts_for_link[:title] = opts.delete(:title) if opts[:title]
-        args << opts unless opts.empty?
-        link_to(label, edit_#{resource.name_prefix}#{resource.singular}_path(*args), opts_for_link)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'edit', *(opts.delete(:class) || '').split)
+        args << opts.delete(:parameters) if opts[:parameters]
+        link_to(label, edit_#{resource.name_prefix}#{resource.singular}_path(*args), opts)
       end
     end_eval
   end
@@ -228,24 +271,29 @@ class ResourcefulViews
   #     <button type="submit">Delete</button>
   #   </form>
   #
-  #   <% destroy_table_leg(@table, @leg, :label => 'Remove leg') %>
+  #   <% destroy_table_leg(@table, @leg, :button => {:title => 'Click to remove'}) %>
   # 
   #   renders:
   # 
   #   <form action="/tables/1/legs/1" class="leg destroy destroy_leg" method="post">
   #     <input name="_method" type="hidden" value="delete" />
-  #     <button type="submit">Remove leg</button>
+  #     <button type="submit" title="Click to remove">Delete</button>
   #   </form>
   #
   def build_destroy_helper(resource)
+    helper_name = "destroy_#{resource.name_prefix}#{resource.singular}#{@@form_helpers_suffix}"
+    return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
-      def destroy_#{resource.name_prefix}#{resource.singular}_link(*args)
+      def #{helper_name}(*args)
         opts = args.extract_options!
-        opts_for_button = {:type => 'submit'}
+        opts_for_button = opts.delete(:button) || {}
+        opts_for_button.merge!(:type => 'submit')
         label = opts.delete(:label) || 'Delete'
         opts_for_button[:title] = opts.delete(:title) if opts[:title]
-        custom_class = opts.delete(:class) || ''
-        content_tag('form', :action => #{resource.name_prefix}#{resource.singular}_path(*args), :method => :post, :class => ResourcefulViews.resourceful_classnames('#{resource.singular}', 'destroy', *custom_class.split)) do
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'destroy', *(opts.delete(:class) || '').split)
+        opts[:method] = :post
+        opts[:action] = #{resource.name_prefix}#{resource.singular}_path(*args) 
+        content_tag('form', opts) do
           hidden_field_tag(:_method, :delete, :id => nil) +
           token_tag.to_s +
           content_tag(:button, label, opts_for_button)
@@ -256,39 +304,51 @@ class ResourcefulViews
   
 
 
-  # Builds the list helpers
+  # Build the list helpers
   #
   # === Examples
   #
-  #   <% table_list do %>...<%- end -%>
+  #   <% table_list do %>
+  #     ...
+  #   <%- end -%>
   # 
   #   renders:
   # 
-  #   <ul class="table_list">...</ul>
+  #   <ul class="table_list">
+  #     ...
+  #   </ul>
   # 
-  #   <% the_table_list do %>..<% end %>
+  #   <% the_table_list do %>
+  #     ...
+  #   <% end %>
   # 
   #   renders:
   # 
-  #   <ul id="table_list">...</ul>
+  #   <ul id="table_list">
+  #     ...
+  #   </ul>
   # 
   def build_list_helpers(resource)
     @module.module_eval <<-end_eval
       def #{resource.singular}_list(opts={}, &block)
         content = capture(&block)
-        concat(content_tag(:ul, content, :class => ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)), block.binding)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)
+        concat(content_tag(:ul, content, opts), block.binding)
       end
       def the_#{resource.singular}_list(opts={}, &block)
         content = capture(&block)
-        concat(content_tag(:ul, content, :id => '#{resource.singular}_list'), block.binding)
+        opts[:id] = '#{resource.singular}_list'
+        concat(content_tag(:ul, content, opts), block.binding)
       end
       def ordered_#{resource.singular}_list(opts={}, &block)
         content = capture(&block)
-        concat(content_tag(:ol, content, :class => ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)), block.binding)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)
+        concat(content_tag(:ol, content, opts), block.binding)
       end
       def the_ordered_#{resource.singular}_list(opts={}, &block)
         content = capture(&block)
-        concat(content_tag(:ol, content, :id => '#{resource.singular}_list'), block.binding)
+        opts[:id] = '#{resource.singular}_list'
+        concat(content_tag(:ol, content, opts), block.binding)
       end
     end_eval
   end
@@ -297,32 +357,18 @@ class ResourcefulViews
 
   # Build the 'create_[resource]' helper
   #
-  # == Examples without block
+  # === Examples without block
   #
-  #   <% create_table_top(:material => 'Mahogany') %>
+  #   <% create_table_top(@table, :attributes => {:material => 'Mahogany'}) %>
   #
   #   renders:
   #
-  #   <form action="/tables" class="table create create_table" method="post">
-  #     <input type="hidden" type="table[material]" value="Mahogany" />
+  #   <form action="/tables/1/top" class="top create create_top" method="post">
+  #     <input type="hidden" type="top[material]" value="Mahogany" />
   #     <button type="submit">Save</button>
   #   </form>
   #
-  # If only the last argument is a hash (as above), it is interpreted as the attribute hash for the model.
-  # If the last two arguments are hashes, the first is interpreted as the attribute hash, the second as the options hash:
-  #
-  #   <% create_table_leg(@table, {:material => 'Aluminum'}, :label => 'Add aluminum leg') %>
-  #   
-  #   renders:
-  # 
-  #   <form action="/tables/1/legs" class="leg create create_leg" method="post">
-  #     <input type="hidden" type="table[magerial]" value="Aluminum" />
-  #     <button type="submit">Add aluminum leg</button>
-  #   </form>
-  #
-  # This means that if you want to pass only an options hash, you need to use an empty (attributes-)hash as the first argument:
-  #
-  #   <% create_table({}, :label => 'Add table') %>
+  #   <% create_table(:label => 'Add table') %>
   #   
   #   renders:
   #
@@ -330,7 +376,7 @@ class ResourcefulViews
   #     <button type="submit">Add table</button>
   #   </form>   
   #
-  # == Examples with block
+  # === Examples with block
   #
   #   <% create_table do |form| %>
   #     <%= form.text_field :title %>
@@ -345,31 +391,38 @@ class ResourcefulViews
   #   </form>
   #
   def build_create_helper(resource)
+    helper_name = "create_#{resource.name_prefix}#{resource.singular}#{@@form_helpers_suffix}"
+    return if already_defined?(helper_name)
+    number_of_expected_args = number_of_args_expected_by_named_route_helper([resource.name_prefix, resource.plural].join)
     @module.module_eval <<-end_eval
-      def create_#{resource.name_prefix}#{resource.singular}_form(*args, &block)
+      def #{helper_name}(*args, &block)
+        opts = args.extract_options!
+        resource_attributes = opts.delete(:attributes) || {}
+        parameters = opts.delete(:parameters) || {}
         if block_given?
-          opts = args.extract_options!
-          css_classnames = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'create', *(opts.delete(:class) || '').split)
-          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), {:class => css_classnames}), block.binding)
-            fields_for('#{resource.singular}', &block)
+          args_for_fields_for = ['#{resource.singular}']
+          args_for_fields_for.push(args.pop) if args.length > #{number_of_expected_args}
+          opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'create', *(opts.delete(:class) || '').split)
+          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts), block.binding)
+            concat(resource_attributes.collect{|key, value| hidden_field_tag('#{resource.singular}[' + key.to_s + ']', value, :id => nil)}.join, block.binding)
+            concat(parameters.collect{|key, value| hidden_field_tag(key, value, :id => nil)}.join, block.binding)
+            fields_for(*args_for_fields_for, &block)
           concat('</form>', block.binding)
         else
-          opts = args.extract_options!
-          if args.last.is_a?(Hash)
-            resource_attributes = args.pop
-          else #if only one hash is provided, it is assumed to be the resource attributes hash
-            resource_attributes = opts
-            opts = {}
-          end
           label = opts.delete(:label) || 'Add'
-          opts_for_button = {:type => 'submit'}
-          opts_for_button[:title] = opts.delete(:title) if opts[:title]
-          css_classnames = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'create', *(opts.delete(:class) || '').split)
-          content_tag('form', :method => :post, :action => #{resource.name_prefix}#{resource.plural}_path(*args), :class => css_classnames) do
+          opts_for_button = opts.delete(:button) || {}
+          opts_for_button.merge!(:type => 'submit')
+          opts[:method] = :post
+          opts[:action] = #{resource.name_prefix}#{resource.plural}_path(*args)
+          opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'create', *(opts.delete(:class) || '').split)
+          content_tag('form', opts) do
             token_tag.to_s +
+            parameters.collect{|key, value| 
+              hidden_field_tag(key, value, :id => nil)
+            }.join +
             resource_attributes.collect{ |key, value|
               hidden_field_tag('#{resource.singular}[' + key.to_s + ']', value, :id => nil)
-            }.join <<
+            }.join +
             content_tag(:button, label, opts_for_button)
           end
         end
@@ -381,7 +434,7 @@ class ResourcefulViews
 
   # Build the 'update_[resource](resource)' helper
   #
-  # == Examples
+  # === Examples without block
   #
   #   <% update_table(@table, :title => 'My new title') %>
   #
@@ -392,6 +445,8 @@ class ResourcefulViews
   #     <input type="hidden" name="table[title]" value="My new title" />
   #     <button type="submit">Save</button>
   #   </form>
+  #
+  # === Examples with block
   #
   #   <% update_table(@table) do |form| %>
   #     <%= form.text_field :title %>
@@ -405,33 +460,33 @@ class ResourcefulViews
   #   </form>
   #
   def build_update_helper(resource)
+    helper_name = "update_#{resource.name_prefix}#{resource.singular}#{@@form_helpers_suffix}"
+    return if already_defined?(helper_name)
     number_of_expected_args = number_of_args_expected_by_named_route_helper([resource.name_prefix, resource.singular].join)
     resource_is_singular = resource.is_a?(ActionController::Resources::SingletonResource)
     resource_is_plural = !resource_is_singular
     @module.module_eval <<-end_eval
-      def update_#{resource.name_prefix}#{resource.singular}_form(*args, &block)
+      def #{helper_name}(*args, &block)
         if block_given?
           opts = args.extract_options!
           args_for_fields_for = ['#{resource.singular}']
           #{'args_for_fields_for.push(args.pop) if args.length > ' + number_of_expected_args.to_s if resource_is_singular}
           #{'args_for_fields_for.push(args.last)' if resource_is_plural}
-          css_classnames = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'update', *(opts.delete(:class) || '').split)
-          concat(form_tag(#{resource.name_prefix}#{resource.singular}_path(*args), {:class => css_classnames, :method => :put}), block.binding)
+          opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'update', *(opts.delete(:class) || '').split)
+          opts[:method] = :put
+          concat(form_tag(#{resource.name_prefix}#{resource.singular}_path(*args), opts), block.binding)
           fields_for(*args_for_fields_for, &block)
           concat('</form>', block.binding)
         else
           opts = args.extract_options!
-          if args.last.is_a?(Hash)
-            resource_attributes = args.pop
-          else #if only one hash is provided, it is assumed to be the resource attributes hash
-            resource_attributes = opts
-            opts = {}
-          end
           label = opts.delete(:label) || 'Save'
-          opts_for_button = {:type => 'submit'}
-          opts_for_button[:title] = opts.delete(:title) if opts[:title]
-          css_classnames = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'update', *(opts.delete(:class) || '').split)
-          content_tag('form', :method => :post, :action => #{resource.name_prefix}#{resource.singular}_path(*args), :class => css_classnames) do
+          resource_attributes = opts.delete(:attributes) || {}
+          opts_for_button = opts.delete(:button) || {}
+          opts_for_button.merge!(:type => 'submit')
+          opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'update', *(opts.delete(:class) || '').split)
+          opts[:method] = :post
+          opts[:action] = #{resource.name_prefix}#{resource.singular}_path(*args)
+          content_tag('form', opts) do
             token_tag.to_s +
             resource_attributes.collect{ |key, value|
               hidden_field_tag('#{resource.singular}[' + key.to_s + ']', value, :id => nil)
@@ -446,15 +501,21 @@ class ResourcefulViews
   
     
    # include the module (loaded with helper methods) into ActionView::Base
-  def install_helpers
+  def install_helpers # :nodoc:
     ActionView::Base.send! :include, @module
+  end
+  
+  protected
+  
+  # Check whether method is already defined
+  def already_defined?(helper_name)
+    ActionView::Base.instance_methods.include?(helper_name) or @module.methods.include?(helper_name)
   end
   
   # determine how many arguments a specific named route helper expects
   def number_of_args_expected_by_named_route_helper(helper_name)
     ActionController::Routing::Routes.named_routes.routes[helper_name.to_sym].segment_keys.size
-  end
-  
+  end  
   
 end
 

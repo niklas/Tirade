@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'show_resource with plural resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -40,7 +41,7 @@ describe 'show_resource with plural resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:table_path).with(@table, :my_param => 'my_value').and_return('/table/1?my_param=my_value')
-    markup = @view.show_table(@table, :my_param => 'my_value')
+    markup = @view.show_table(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/table/1?my_param=my_value]')
   end
   
@@ -55,6 +56,7 @@ end
 describe 'show_resource with plural nested resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -94,7 +96,7 @@ describe 'show_resource with plural nested resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:table_leg_path).with(@table, @leg, :my_param => 'my_value').and_return('/table/1/leg?my_param=my_value')
-    markup = @view.show_table_leg(@table, @leg, :my_param => 'my_value')
+    markup = @view.show_table_leg(@table, @leg, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/table/1/leg?my_param=my_value]')
   end
   
@@ -109,6 +111,7 @@ end
 describe 'show_resource for singular nested resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -149,7 +152,7 @@ describe 'show_resource for singular nested resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:table_top_path).with(@table, @top, :my_param => 'my_value').and_return('/table/1/top?my_param=my_value')
-    markup = @view.show_table_top(@table, @top, :my_param => 'my_value')
+    markup = @view.show_table_top(@table, @top, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/table/1/top?my_param=my_value]')
   end
   
@@ -160,3 +163,23 @@ describe 'show_resource for singular nested resource' do
   
 end
 
+describe 'show_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.link_helpers_suffix = '_link'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:show_table_link)
+    @view.should respond_to(:show_table_leg_link)
+    @view.should respond_to(:show_table_top_link)
+  end                        
+  
+end

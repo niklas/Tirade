@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'update_resource with plural resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -19,12 +20,17 @@ describe 'update_resource with plural resource' do
   end
   
   it "should allow for passing in additions custom classes" do
-    markup = @view.update_table(@table, {}, :class => 'dining')
+    markup = @view.update_table(@table, :class => 'dining')
     markup.should have_tag('form.update.table.dining.update_table.dining_table')
   end
   
+  it "should allow for giving the form an id via the :id option" do
+    markup = @view.update_table(@table, :id => 'update_table_form')
+    markup.should have_tag('form#update_table_form')
+  end
+  
   it "should submit to resource path" do
-    @view.should_receive(:table_path).and_return('/tables/1')
+    @view.should_receive(:table_path).with(@table).and_return('/tables/1')
     markup = @view.update_table(@table)
     markup.should have_tag('form[action=/tables/1]')
   end
@@ -35,7 +41,7 @@ describe 'update_resource with plural resource' do
   end
   
   it "should render hidden fields for passed-in attributes" do
-    markup = @view.update_table(@table, :category => 'dining', :material => 'wood')
+    markup = @view.update_table(@table, :attributes => {:category => 'dining', :material => 'wood'})
     markup.should have_tag('form') do
       with_tag("input[type=hidden][name='table[category]'][value=dining]")
       with_tag("input[type=hidden][name='table[material]'][value=wood]")
@@ -50,14 +56,14 @@ describe 'update_resource with plural resource' do
   end
   
   it "should allow passing in a custom label for the submit button" do
-    markup = @view.update_table(@table, {}, :label => 'Update')
+    markup = @view.update_table(@table, :label => 'Update')
     markup.should have_tag('form') do
       with_tag('button[type=submit]', 'Update')
     end
   end
   
-  it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.update_table(@table, {}, :title => 'Click to update')
+  it "should allow for setting the title attribute of the submit button via the :button option" do
+    markup = @view.update_table(@table, :button => {:title => 'Click to update'})
     markup.should have_tag('form') do
       with_tag('button[title=Click to update]')
     end
@@ -69,6 +75,7 @@ end
 describe 'update_resource with plural resource and block' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -136,6 +143,7 @@ end
 describe 'update_resource with plural nested resource and block' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -186,7 +194,8 @@ end
 
 describe 'update_resource with singular nested resource and block' do
   
-  before do
+  before do 
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resource :top
@@ -253,4 +262,26 @@ describe 'update_resource with singular nested resource and block' do
     _erbout.should have_tag("input[type=text][name='top[material]'][value=linoleum]")
   end
 
+end 
+
+
+describe 'update_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.form_helpers_suffix = '_form'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:update_table_form)
+    @view.should respond_to(:update_table_leg_form)
+    @view.should respond_to(:update_table_top_form)
+  end                        
+  
 end

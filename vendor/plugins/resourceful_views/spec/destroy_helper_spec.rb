@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'destroy_resource with plural resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -23,6 +24,11 @@ describe 'destroy_resource with plural resource' do
     @view.destroy_table(@table)
   end
 
+  it "should allow giving the form an id via the :id option" do
+    markup = @view.destroy_table(@table, :id => 'logout_form')
+    markup.should have_tag('form#logout_form')
+  end
+  
   it "should allow adding custom classes" do
     markup = @view.destroy_table(@table, :class => 'dining')
     markup.should have_tag('form.destroy.table.dining.destroy_table.dining_table')
@@ -39,11 +45,6 @@ describe 'destroy_resource with plural resource' do
     markup.should have_tag('form input[type=hidden][name=_method][value=delete]')
   end
   
-  it "should render the authenticity_token field" do
-    @view.should_receive(:token_tag)
-    @view.destroy_table(@table)
-  end
-  
   it "should have a submit button labeled 'Delete' by default" do
     markup = @view.destroy_table(@table)
     markup.should have_tag('form button[type=submit]', 'Delete')
@@ -55,7 +56,7 @@ describe 'destroy_resource with plural resource' do
   end
   
   it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.destroy_table(@table, :title => 'Click to remove table')
+    markup = @view.destroy_table(@table, :button => {:title => 'Click to remove table'})
     markup.should have_tag('form.destroy_table') do
       with_tag('button[type=submit][title=Click to remove table]')
     end
@@ -68,6 +69,7 @@ end
 describe 'destroy_resource with plural nested resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -112,7 +114,7 @@ describe 'destroy_resource with plural nested resource' do
   end
   
   it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.destroy_table_leg(@table, @leg, :title => 'Click to remove leg')
+    markup = @view.destroy_table_leg(@table, @leg, :button => {:title => 'Click to remove leg'})
     markup.should have_tag('form.destroy_leg') do
       with_tag('button[type=submit][title=Click to remove leg]')
     end
@@ -125,6 +127,7 @@ end
 describe 'destroy_resource with singular nested resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resource :top
@@ -168,10 +171,32 @@ describe 'destroy_resource with singular nested resource' do
   end
   
   it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.destroy_table_top(@table, :title => 'Click to remove top')
+    markup = @view.destroy_table_top(@table, :button => {:title => 'Click to remove top'})
     markup.should have_tag('form.destroy_top') do
       with_tag('button[type=submit][title=Click to remove top]')
     end
+  end
+  
+end
+
+
+describe 'destroy_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.form_helpers_suffix = '_form'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:destroy_table_form)
+    @view.should respond_to(:destroy_table_leg_form)
+    @view.should respond_to(:destroy_table_top_form)
   end
   
 end

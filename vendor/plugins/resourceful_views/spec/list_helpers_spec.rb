@@ -25,6 +25,14 @@ describe 'resource_list' do
     _erbout.should have_tag('ul.table_list.dining.dining_table_list', 'some-content')
   end
   
+  it "should allow giving the list an id via the :id option" do
+    _erbout = ''
+    @view.table_list(:id => 'dining_list') do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('ul#dining_list', 'some-content')
+  end
+  
 end
 
 

@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'new_resource with plural resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -42,10 +43,89 @@ describe 'new_resource with plural resource' do
     markup.should have_tag('a[title=Click to create new]')
   end
   
-  it "should pass additional options on to the named route helper" do
+  it "should support :parameters option" do
     @view.should_receive(:new_table_path).with(:my_param => 'my_value').and_return('/tables/new?my_param=my_value')
-    markup = @view.new_table(:my_param => 'my_value')
+    markup = @view.new_table(:parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables/new?my_param=my_value]')
+  end
+  
+  it "should support :attributes option" do
+    @view.should_receive(:new_table_path).with('table[my_attribute]' => 'my_value').and_return('/tables/new?table[my_attribute]=my_value')
+    markup = @view.new_table(:attributes => {:my_attribute => 'my_value'})
+    markup.should have_tag("a[href='/tables/new?table[my_attribute]=my_value']")
+  end
+  
+  it "should support :parameters and :attributes options together (exposes bug)" do  
+    @view.should_receive(:new_table_path).with('table[my_attribute]' => 'my_value', :my_param => 'my_value').and_return('/tables/new?table[my_attribute]=my_value&my_param=my_value')
+    markup = @view.new_table(:attributes => {:my_attribute => 'my_value'}, :parameters => {:my_param => 'my_value'})
+    # markup.should have_tag("a[href='/tables/new?table[my_attribute]=my_value&my_param=my_value]']")
+  end
+
+end
+
+describe 'new_resource with plural resource and block' do
+  
+  before do
+    ResourcefulViews.link_helpers_suffix = nil
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables
+    end
+    @view = ActionView::Base.new
+    @view.stub!(:new_table_path).and_return('/tables/new')
+  end
+  
+  it "should create a form with resourceful classes" do
+    _erbout = ''
+    @view.new_table do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form.new_table')
+  end
+  
+  it "should allow adding custom classes" do
+    _erbout = ''
+    @view.new_table(:class => 'vintage') do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form.new_table.vintage_table')
+  end
+  
+  it "should GET to the new_resource_path" do
+    _erbout = ''
+    @view.new_table do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form[method=get][action=/tables/new]')
+  end     
+  
+  it "should support :parameters option" do
+    _erbout = ''
+    @view.new_table(:parameters => {:my_param => 'my_value'}) do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form.new_table') do
+       with_tag('input[type=hidden][name=my_param][value=my_value]')
+    end
+  end
+  
+  it "should support :attributes option" do
+    _erbout = ''
+    @view.new_table(:attributes => {:material => 'wood'}) do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form.new_table') do
+       with_tag("input[type=hidden][name='table[material]'][value=wood]")
+    end
+  end
+  
+  it "should allow for building form fields with yielded form builder" do
+    _erbout = ''
+    @view.new_table do |form|
+       _erbout << form.text_field(:name)
+    end
+    _erbout.should have_tag("form.new_table") do
+       with_tag("input[type=text][name='table[name]']")
+    end
   end
   
 end
@@ -54,6 +134,7 @@ end
 describe 'new_resource with plural nested resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -97,7 +178,7 @@ describe 'new_resource with plural nested resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:new_table_leg_path).with(@table, :my_param => 'my_value').and_return('/tables/1/legs/new?my_param=my_value')
-    markup = @view.new_table_leg(@table, :my_param => 'my_value')
+    markup = @view.new_table_leg(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables/1/legs/new?my_param=my_value]')
   end
   
@@ -107,6 +188,7 @@ end
 describe 'new_resource for singular nested resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resource :top
@@ -150,8 +232,31 @@ describe 'new_resource for singular nested resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:new_table_top_path).with(@table, :my_param => 'my_value').and_return('/tables/1/top/new?my_param=my_value')
-    markup = @view.new_table_top(@table, :my_param => 'my_value')
+    markup = @view.new_table_top(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables/1/top/new?my_param=my_value]')
   end
+  
+  
+end
+
+
+describe 'new_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.link_helpers_suffix = '_link'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:new_table_link)
+    @view.should respond_to(:new_table_leg_link)
+    @view.should respond_to(:new_table_top_link)
+  end                        
   
 end

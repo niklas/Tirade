@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'index_resource with plural resource' do
   
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -43,9 +44,14 @@ describe 'index_resource with plural resource' do
     markup.should have_tag('a[title=Click to go back to index]')
   end
   
-  it "should pass additional options on to the named route helper" do
+  it "should allow for giving the link an id via the :id option" do
+    markup = @view.index_tables(:id => 'back_button')
+    markup.should have_tag('a#back_button')
+  end
+  
+  it "should allow passing additional parameters to the named route helper via the :parameters option" do
     @view.should_receive(:tables_path).with(:my_param => 'my_value').and_return('/tables?my_param=my_value')
-    markup = @view.index_tables(:label => 'Back', :my_param => 'my_value')
+    markup = @view.index_tables(:parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables?my_param=my_value]')
   end
   
@@ -55,6 +61,7 @@ end
 describe 'index_resource with plural nested resource' do
   
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -98,8 +105,29 @@ describe 'index_resource with plural nested resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:table_legs_path).with(@table, :my_param => 'my_value').and_return('/tables/1/legs?my_param=my_value')
-    markup = @view.index_table_legs(@table, :my_param => 'my_value')
+    markup = @view.index_table_legs(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables/1/legs?my_param=my_value]')
   end
+  
+end
+
+
+describe 'index_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.link_helpers_suffix = '_link'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:index_tables_link)
+    @view.should respond_to(:index_table_legs_link)
+  end                        
   
 end

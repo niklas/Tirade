@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'create_resource with plural resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -18,8 +19,13 @@ describe 'create_resource with plural resource' do
   end
   
   it "should allow for passing in additions custom classes" do
-    markup = @view.create_table({}, :class => 'dining')
+    markup = @view.create_table(:class => 'dining')
     markup.should have_tag('form.create.table.dining.create_table.dining_table')
+  end
+  
+  it "should allow for giving the form an id with the :id option" do
+    markup = @view.create_table(:id => 'table_form')
+    markup.should have_tag('form#table_form')
   end
   
   it "should submit to resource path" do
@@ -29,10 +35,17 @@ describe 'create_resource with plural resource' do
   end
   
   it "should render hidden fields for passed-in attributes" do
-    markup = @view.create_table(:category => 'dining', :material => 'linoleum')
+    markup = @view.create_table(:attributes => {:category => 'dining', :material => 'linoleum'})
     markup.should have_tag('form.create_table') do
       with_tag("input[type=hidden][name='table[category]'][value=dining]")
       with_tag("input[type=hidden][name='table[material]'][value=linoleum]")
+    end
+  end
+  
+  it "should render hidden fields for passed-in parameters" do
+    markup = @view.create_table(:parameters => {:context => 'special'}) 
+    markup.should have_tag('form.create_table') do
+      with_tag("input[type=hidden][name='context'][value=special]")
     end
   end
   
@@ -44,14 +57,14 @@ describe 'create_resource with plural resource' do
   end
   
   it "should allow passing in a custom label for the submit button" do
-    markup = @view.create_table({}, :label => 'Create')
+    markup = @view.create_table(:label => 'Create')
     markup.should have_tag('form.create_table') do
       with_tag('button[type=submit]', 'Create')
     end
   end
   
   it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.create_table({}, :title => 'Click to create table')
+    markup = @view.create_table(:button => {:title => 'Click to create table'})
     markup.should have_tag('form.create_table') do
       with_tag('button[type=submit][title=Click to create table]')
     end
@@ -63,6 +76,7 @@ end
 describe 'create_resource with plural resource and block' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -94,7 +108,32 @@ describe 'create_resource with plural resource and block' do
     end
     _erbout.should have_tag("form.create.table input[type=text][name='table[category]']")
   end
-
+  
+  it "should be able to pick up the resource's attributes from the model passed as last argument" do
+    table = mock('table', :category => 'dining')
+    _erbout = ''
+    @view.create_table(table) do |form|
+       _erbout << form.text_field(:category)
+    end
+    _erbout.should have_tag("input[type=text][name='table[category]'][value=dining]")
+  end
+  
+  it "should render hidden fields for passed-in parameters" do
+    _erbout = ''
+    @view.create_table(:parameters => {:mode => 'wizard'}) do |form|
+       _erbout << form.text_field(:category)
+    end
+    _erbout.should have_tag('input[type=hidden][name=mode][value=wizard]')
+  end
+  
+  it "should render hidden fields for passed-in attributes" do
+    _erbout = ''
+    @view.create_table(:attributes => {:material => 'wood'}) do |form|
+       _erbout << form.text_field(:category)
+    end
+    _erbout.should have_tag("input[type=hidden][name='table[material]'][value=wood]")
+  end
+  
 end
 
 
@@ -102,6 +141,7 @@ end
 describe 'create_resource with plural nested resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -119,7 +159,7 @@ describe 'create_resource with plural nested resource' do
   end
   
   it "should allow for passing in additions custom classes" do
-    markup = @view.create_table_leg(@table, {}, :class => 'metal')
+    markup = @view.create_table_leg(@table, :class => 'metal')
     markup.should have_tag('form.create.leg.metal.create_leg.metal_leg')
   end
   
@@ -130,7 +170,7 @@ describe 'create_resource with plural nested resource' do
   end
   
   it "should render hidden fields for passed-in attributes" do
-    markup = @view.create_table_leg(@table, :material => 'metal')
+    markup = @view.create_table_leg(@table, :attributes => {:material => 'metal'})
     markup.should have_tag('form') do
       with_tag("input[type=hidden][name='leg[material]'][value=metal]")
     end
@@ -144,14 +184,14 @@ describe 'create_resource with plural nested resource' do
   end
   
   it "should allow passing in a custom label for the submit button" do
-    markup = @view.create_table_leg(@table, {}, :label => 'Create')
+    markup = @view.create_table_leg(@table, :label => 'Create')
     markup.should have_tag('form') do
       with_tag('button[type=submit]', 'Create')
     end
   end
   
   it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.create_table_leg(@table, {}, :title => 'Click to add leg')
+    markup = @view.create_table_leg(@table, :button => {:title => 'Click to add leg'})
     markup.should have_tag('form.create_leg') do
       with_tag('button[type=submit][title=Click to add leg]')
     end
@@ -163,6 +203,7 @@ end
 describe 'create_resource with plural nested resource and block' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -197,6 +238,15 @@ describe 'create_resource with plural nested resource and block' do
     end
     _erbout.should have_tag("form.create_leg input[type=text][name='leg[material]']")
   end
+  
+  it "should be able to pick up the resource's attributes from the model passed as last argument" do
+    leg = mock('leg', :material => 'Metal')
+    _erbout = ''
+    @view.create_table_leg(@table, leg) do |form|
+       _erbout << form.text_field(:material)
+    end
+    _erbout.should have_tag("form.create_leg input[type=text][name='leg[material]'][value=Metal]")
+  end
 
 end 
 
@@ -205,6 +255,7 @@ end
 describe 'create_resource for singular nested resource' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resource :top
@@ -222,7 +273,7 @@ describe 'create_resource for singular nested resource' do
   end
   
   it "should allow for passing in additions custom classes" do
-    markup = @view.create_table_top(@table, {}, :class => 'wood')
+    markup = @view.create_table_top(@table, :class => 'wood')
     markup.should have_tag('form.create.top.wood.create_top.wood_top')
   end
   
@@ -233,7 +284,7 @@ describe 'create_resource for singular nested resource' do
   end
   
   it "should render hidden fields for passed-in attributes" do
-    markup = @view.create_table_top(@table, :material => 'wood')
+    markup = @view.create_table_top(@table, :attributes => {:material => 'wood'})
     markup.should have_tag('form') do
       with_tag("input[type=hidden][name='top[material]'][value=wood]")
     end
@@ -247,14 +298,14 @@ describe 'create_resource for singular nested resource' do
   end
   
   it "should allow passing in a custom label for the submit button" do
-    markup = @view.create_table_top(@table, {}, :label => 'Create')
+    markup = @view.create_table_top(@table, :label => 'Create')
     markup.should have_tag('form') do
       with_tag('button[type=submit]', 'Create')
     end
   end
   
   it "should allow for setting the title attribute of the submit button via the :title option" do
-    markup = @view.create_table_top(@table, {}, :title => 'Click to add top')
+    markup = @view.create_table_top(@table, :button => {:title => 'Click to add top'})
     markup.should have_tag('form.create_top') do
       with_tag('button[type=submit][title=Click to add top]')
     end
@@ -267,6 +318,7 @@ end
 describe 'create_resource with singular nested resource and block' do
   
   before do
+    ResourcefulViews.form_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resource :top
@@ -304,3 +356,23 @@ describe 'create_resource with singular nested resource and block' do
 
 end 
 
+describe 'create_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.form_helpers_suffix = '_form'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:create_table_form)
+    @view.should respond_to(:create_table_leg_form)
+    @view.should respond_to(:create_table_top_form)
+  end                        
+  
+end

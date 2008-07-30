@@ -4,6 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe 'edit_resource with plural resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables
     end
@@ -38,9 +39,9 @@ describe 'edit_resource with plural resource' do
     markup.should have_tag('a', 'Change')
   end
   
-  it "should pass additional options on to the named route helper" do
+  it "should allow passing additional parameters to the named route helper via the :parameters option" do
     @view.should_receive(:edit_table_path).with(@table, :my_param => 'my_value').and_return('/tables/1/edit?my_param=my_value')
-    markup = @view.edit_table(@table, :my_param => 'my_value')
+    markup = @view.edit_table(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a.edit_table[href=/tables/1/edit?my_param=my_value]')
   end
   
@@ -55,6 +56,7 @@ end
 describe 'edit_resource with plural nested resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resources :legs
@@ -92,9 +94,9 @@ describe 'edit_resource with plural nested resource' do
     markup.should have_tag('a', 'Change')
   end
   
-  it "should pass additional options on to the named route helper" do
+  it "should allow passing additional parameters to the named route helper via the :parameters option" do
     @view.should_receive(:edit_table_leg_path).with(@table, @leg, :my_param => 'my_value').and_return('/tables/1/legs/1/edit?my_param=my_value')
-    markup = @view.edit_table_leg(@table, @leg, :my_param => 'my_value')
+    markup = @view.edit_table_leg(@table, @leg, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a.edit_leg[href=/tables/1/legs/1/edit?my_param=my_value]')
   end
   
@@ -110,6 +112,7 @@ end
 describe 'edit_resource for singular nested resource' do
 
   before do
+    ResourcefulViews.link_helpers_suffix = nil
     ActionController::Routing::Routes.draw do |map|
       map.resources :tables do |table|
         table.resource :top
@@ -148,7 +151,7 @@ describe 'edit_resource for singular nested resource' do
   
   it "should pass additional options on to the named route helper" do
     @view.should_receive(:edit_table_top_path).with(@table, :my_param => 'my_value').and_return('/tables/1/top/edit?my_param=my_value')
-    markup = @view.edit_table_top(@table, :my_param => 'my_value')
+    markup = @view.edit_table_top(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a.edit_top[href=/tables/1/top/edit?my_param=my_value]')
   end
   
@@ -156,6 +159,27 @@ describe 'edit_resource for singular nested resource' do
     markup = @view.edit_table_top(@table, :title => 'Click to edit top')
     markup.should have_tag('a.edit_top[title=Click to edit top]')
   end
+  
+end
+
+describe 'edit_resource with form_helpers_suffix set' do
+  
+  before do
+    ResourcefulViews.link_helpers_suffix = '_link'
+    ActionController::Routing::Routes.draw do |map|
+      map.resources :tables do |table|
+        table.resources :legs
+        table.resource :top
+      end
+    end
+    @view = ActionView::Base.new
+  end
+  
+  it "should define helpers with suffix" do
+    @view.should respond_to(:edit_table_link)
+    @view.should respond_to(:edit_table_leg_link)
+    @view.should respond_to(:edit_table_top_link)
+  end                        
   
 end
 
