@@ -24,8 +24,10 @@ describe "/renderings/show (js)" do
       response.should have_tag('dl.rendering') do
         with_tag('dt', 'This Rendering')
         with_tag('dd') do
-          with_tag('a','clone')
-          with_tag('a','delete')
+          with_tag('a','Clone')
+          with_tag('form.destroy_rendering') do
+            with_tag('button','Delete')
+          end
         end
 
         with_tag('dt', 'Content')
