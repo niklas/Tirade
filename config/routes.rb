@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.routes_from_plugin(:stylish_permissions)
+
   
   map.with_options :path_prefix => '/manage' do |manage|
     manage.admin 'admin/:action/:id', :controller => 'admin'
