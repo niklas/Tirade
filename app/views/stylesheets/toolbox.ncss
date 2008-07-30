@@ -33,6 +33,14 @@
          }
       }
     }
+    *.dialog_content {
+      text-align: left;
+      color: #000000;
+      background-color: #FFFFFF;
+    }
+    div#toolbox_content > * {
+      margin: 1em;
+    }
     p {
        padding: 5px 0px;
     }
@@ -42,6 +50,9 @@
 	       margin-top: 10px;
 	       font-weight:bold;
 	   }
+      dd {
+        margin-left: 0.9em;
+      }
 	}
     div.warning {
         margin-top: 10px;
