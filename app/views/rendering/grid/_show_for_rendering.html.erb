@@ -4,7 +4,7 @@
 <%= 
 grid_tree_list_from(grid.root) do |g|
   content_tag( :span, g.name, :class => (g==grid ? 'active' : '')) + '  ' + 
-  edit_grid_link(g, :label => 'edit', :rendering_id => @rendering.id)
+    edit_grid_link(g, :label => 'edit', :parameters => { :rendering_id => @rendering.id })
 end
 %>
 </dd>

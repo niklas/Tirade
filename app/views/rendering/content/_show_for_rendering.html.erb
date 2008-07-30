@@ -6,8 +6,8 @@
 <% else %>
   <%=_ 'none' %>
 <% end %>
-  <%= link_to 'edit', edit_rendering_content_path(show_for_rendering) %>
-  <%= link_to 'select', edit_rendering_path(show_for_rendering, :anchor => 'content') %>
+  <%= edit_rendering_content_link(show_for_rendering) %>
+  <%= edit_rendering_content_link(show_for_rendering, :label => 'Select', :parameters => {:anchor => 'content'}) %>
 </dd>
 
 

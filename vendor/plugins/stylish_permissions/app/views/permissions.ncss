@@ -1,18 +1,18 @@
 a, form {
-   .create, .update, .delete, .show, .edit {
+   .create, .update, .destroy, .show, .edit {
       display: none;
    }
 }
 
 body.role_admin {
    a {
-      .create, .update, .delete, .show, .edit {
+      .create, .update, .destroy, .show, .edit {
          display: inline;
       }
    }
    form {
-      .create, .update, .delete, .show, .edit {
-         display: inline;
+      .create, .update, .destroy, .show, .edit {
+         display: block;
       }
    }
 }

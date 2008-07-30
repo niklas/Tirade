@@ -3,8 +3,8 @@
 <dl class="rendering">
   <dt>This Rendering</dt>
   <dd>
-    <%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put %>
-    <%= link_to_remote 'delete', :url => rendering_path(rendering), :method => :delete, :confirm => 'Really Destroy this Rendering?' %>
+  <%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
+    <%= destroy_rendering_form(rendering) %>
   </dd>
 <%= render :partial => '/rendering/content/show_for_rendering', :object => rendering %>
 <%= render :partial => '/rendering/grid/show_for_rendering', :object => rendering %>
