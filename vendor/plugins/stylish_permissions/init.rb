@@ -1,0 +1,1 @@
+require_plugin 'restful_authentication'

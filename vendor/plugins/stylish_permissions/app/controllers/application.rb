@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  before_filter :set_current_permissions
+  before_filter :check_permissions
   # Check the users permissions. If the current user is allowed to access, return
   # true, otherwise redirect to '/'. This method is used as a
   # before_filter in all controllers
@@ -13,7 +15,8 @@ class ApplicationController < ActionController::Base
 
     unless current_user_may_access?(controller, action) then
       # FIXME should be 401
-      redirect_to '/'
+      render :text => 'You are now allowed to do this. go away!'
+      return false
     end
   end
 
@@ -46,10 +49,19 @@ class ApplicationController < ActionController::Base
     yield if current_user_may_access?(controller, action)
   end
 
+  def current_permissions_names
+    session[:current_permissions_names] || []
+  end
+
   protected
+  # TODO does not realize when a Permission (...) is deleted (no changes in #updated_at)
   def set_current_permissions
-    if !session[:permissions_synced_at] || session[:permissions_synced_at] < 15.minutes.ago
+    if !session[:permissions_synced_at] || 
+        session[:permissions_synced_at] < 15.minutes.ago ||
+        [Permission, UserRole, Role].any? {|k| session[:permissions_synced_at] < k.maximum(:updated_at) } then
+
       session[:current_permissions_names] = current_user.permissions_names
+      session[:permissions_synced_at] = Time.now
     end
     true
   end

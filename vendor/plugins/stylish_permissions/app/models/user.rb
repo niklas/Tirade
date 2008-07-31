@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     permissions.map { |perm| perm.name }
   end
 
+  def roles_names
+    roles.all.map {|r| r.name }
+  end
+
   def roles_short_names
     roles.all.map {|r| r.short_name }
   end

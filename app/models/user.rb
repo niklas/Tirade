@@ -48,11 +48,7 @@ class User < ActiveRecord::Base
   end
   
   def is_admin?
-    true
-  end
-  
-  def roles_names
-    %w(admin)
+    false
   end
   
   # =========================

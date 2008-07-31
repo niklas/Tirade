@@ -5,6 +5,7 @@ require 'spec/rails'
 
 require File.dirname(__FILE__) + '/css_spec_helper'
 include CssSpecHelper
+include AuthenticatedTestHelper
 
 Spec::Runner.configure do |config|
   config.fixture_path = "#{File.dirname(__FILE__)}/../spec/fixtures"
