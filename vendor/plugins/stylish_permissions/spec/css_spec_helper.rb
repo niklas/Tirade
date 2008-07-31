@@ -39,16 +39,21 @@ module CssSpecHelper
 
   class ShowTag < CssMatchesRegexp
     def regexp
-      %r~#{tag}\.#{clean_classes}\s+\{\s+display:\s*#{notnone}\s*;\s*\}~m
+      prefix = @prefix.blank? ? '' : Regexp.escape(@prefix)
+      %r~#{prefix}\s+#{tag}\.#{clean_classes}\s+\{\s+display:\s*#{notnone}\s*;\s*\}~m
     end
     def notnone
       "(?:block|inline)"
     end
     def failure_message
-      "Did not show #{tag}.#{clean_classes}, got CSS:\n#{@generated_css}\nRegexp: #{regexp.inspect}"
+      "Did not show #{@prefix} #{tag}.#{clean_classes}, got CSS:\n#{@generated_css}\nRegexp: #{regexp.inspect}"
     end
     def negative_failure_message
-      "Should not show #{tag}.#{clean_classes}, but it did. got CSS:\n#{@generated_css}\nRegexp: #{regexp}"
+      "Should not show #{@prefix} #{tag}.#{clean_classes}, but it did. got CSS:\n#{@generated_css}\nRegexp: #{regexp}"
+    end
+    def for(prefix)
+      @prefix = prefix
+      self
     end
   end
 

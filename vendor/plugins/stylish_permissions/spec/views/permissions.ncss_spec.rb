@@ -37,15 +37,15 @@ describe "Styled Permissions for Fixtures" do
     end
 
     it "should show the Editor's permitted actions" do
-      @css.should show_form('pages.edit')
-      @css.should show_form('pages.update')
-      @css.should show_form('grids.order_renderings')
+      @css.should show_form('pages.edit').for('.role_editor')
+      @css.should show_form('pages.update').for('.role_editor')
+      @css.should show_form('grids.order_renderings').for('.role_editor')
     end
 
     it "should show the Designers's permitted actions" do
-      @css.should show_form('parts.edit')
-      @css.should show_form('parts.update')
-      @css.should show_form('grids.order_renderings')
+      @css.should show_form('parts.edit').for('.role_designer')
+      @css.should show_form('parts.update').for('.role_designer')
+      @css.should show_form('grids.order_renderings').for('.role_designer')
     end
 
   end

@@ -11,7 +11,7 @@ body.role_admin {
 
 
 <% @roles.each do |role| %>
-body.role_<%= role.short_name %> {
+*.role_<%= role.short_name %> {
    <% role.permissions.group_by(&:app_controller).each do |res, perms| %>
       <% perms.each do |perm| %>
          a.<%= res %>.<%= perm.app_method %> { display: inline; }

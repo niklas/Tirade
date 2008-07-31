@@ -1,0 +1,9 @@
+quentin_is_designer:
+  user: quentin
+  role: designer
+quentin_is_editor:
+  user: quentin
+  role: editor
+aaron_is_designer:
+  user: aaron
+  role: designer

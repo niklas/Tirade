@@ -7,7 +7,7 @@ class Group < ActiveRecord::Base
   has_many :sub_groups,
      :class_name => 'Group',
      :foreign_key => 'group_id'
-    # Return the permissions of this group and all the permissions of a super group
+  # Return the permissions of this group and all the permissions of a super group
   # Since cycles can occur, we do a traversal of the permissions, instead of
   # just getting the group permissions and all super group permissions recusively.
   def permissions
