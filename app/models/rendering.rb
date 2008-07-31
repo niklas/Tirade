@@ -40,11 +40,11 @@ class Rendering < ActiveRecord::Base
 
   acts_as_custom_configurable :using => :options, :defined_by => :part
 
-  has_finder :for_grid, lambda {|gr|
+  named_scope :for_grid, lambda {|gr|
     {:conditions => ['renderings.grid_id = ?', gr.id], :order => 'renderings.position'}
   }
 
-  has_finder :with_part, lambda {|part|
+  named_scope :with_part, lambda {|part|
     {:conditions => ['renderings.part_id = ?', part.id], :order => 'renderings.position'}
   }
 

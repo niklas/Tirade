@@ -50,7 +50,7 @@ class Page < ActiveRecord::Base
   end
   BlacklistesTitles = %w(manage themes)
 
-  has_finder :all_except, lambda {|me|
+  named_scope :all_except, lambda {|me|
     me.new_record? ? {} : {:conditions => ['id != ?',me.id]}
   }
 

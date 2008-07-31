@@ -22,20 +22,20 @@
 class NewsItem < Content
   belongs_to :newsfolder, :foreign_key => 'parent_id', :class_name => 'NewsFolder'
 
-  has_finder :last, lambda { |num|
+  named_scope :last, lambda { |num|
     {:order => 'published_at DESC, updated_at DESC', :limit => num}
   }
 
-  has_finder :skip, lambda { |num|
+  named_scope :skip, lambda { |num|
     {:offset => num }
   }
 
-  has_finder :between, lambda { |from,to|
+  named_scope :between, lambda { |from,to|
     {:conditions => ['published_at BETWEEN ? AND ?', from, to], :order => 'published_at DESC, updated_at DESC'}
   }
 
   # stolen from typo (http://www.typosphere.org/trac/browser/trunk/app/models/article.rb:217)
-  has_finder :by_date, lambda { |year,month,day|
+  named_scope :by_date, lambda { |year,month,day|
     from = Time.mktime(year, month || 1, day || 1)
     to = from.next_year
     to = from.next_month unless month.blank?
