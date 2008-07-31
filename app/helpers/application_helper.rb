@@ -14,7 +14,7 @@ module ApplicationHelper
 
   def user_roles_classes
     unless current_user.nil?
-      current_user.roles_names.collect {|r| "role_#{r}"}.join(' ') || ''
+      current_user.roles_short_names.collect {|r| "role_#{r}"}.join(' ') || ''
     end
   end
   

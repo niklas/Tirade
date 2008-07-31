@@ -30,7 +30,7 @@ div.rendering {
   position: relative;
 }
 
-body.role_admin {
+body {
     div.rendering {
         border: #FFFFFF 1px dotted;
     }

@@ -18,6 +18,10 @@ describe Role do
     it do
       @editor.should have_at_least(3).permissions
     end
+
+    it "may manupulate pages" do
+      Role.manipulators_for('pages').should include(@editor)
+    end
   end
 
   describe "Designer" do

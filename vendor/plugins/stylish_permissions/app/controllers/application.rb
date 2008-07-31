@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
     unless current_user_may_access?(controller, action) then
       # FIXME should be 401
-      render :text => 'You are now allowed to do this. go away!'
+      render :text => "You are now allowed to #{action} #{controller}. Go away!"
       return false
     end
   end
