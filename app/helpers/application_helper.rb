@@ -12,9 +12,12 @@ module ApplicationHelper
     phrase
   end
 
+  # Sets css classes, each for every Role the current_user belongs to.
   def user_roles_classes
     unless current_user.nil?
-      current_user.roles_short_names.collect {|r| "role_#{r}"}.join(' ') || ''
+      css = current_user.roles_short_names.collect {|r| "role_#{r}"}.join(' ') || ''
+      css << " role_admin" if current_user.is_admin?
+      return css
     end
   end
   

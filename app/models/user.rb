@@ -47,10 +47,6 @@ class User < ActiveRecord::Base
     true
   end
   
-  def is_admin?
-    false
-  end
-  
   # =========================
   # = Acts As State Machine =
   # =========================
