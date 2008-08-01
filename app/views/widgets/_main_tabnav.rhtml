@@ -2,14 +2,12 @@
 render_tabnav :main, 
               :generate_css => false do 
     
-  # this generates a tab for every controller in your app
-  # you'll probably want to delete this and
-  # add tabs one by one as shown below
-  %w(contents grids images pages parts).each do |name|
+  primary_controller_names.each do |name|
     add_tab do |t|
       t.named name.camelize
       t.titled "Go to #{name.camelize}"
       t.links_to :controller => name
+      t.html[:class] = "index #{name}"
     end
   end 
 end 

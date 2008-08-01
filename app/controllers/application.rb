@@ -31,6 +31,18 @@ class ApplicationController < ActionController::Base
     @current_theme ||= (Settings.public_theme || Settings.current_theme)
   end
   hide_action :current_theme
+
+  # Returns the names of all controllers that should be interacted with (resourceful)
+  #  * must be plural
+  #  * no slashes (aka supcontrollers)
+  #
+  # => ["users", "roles", "images"] ...
+  def primary_controller_names
+    ActionController::Routing::Routes.routes.collect {|r| r.defaults[:controller] }.uniq.compact.
+      reject { |c| c=~%r~/~}.
+      select { |c| c=~%r~s$~ } - %w(sessions javascripts)
+  end
+  helper_method :primary_controller_names
   
 
   private
