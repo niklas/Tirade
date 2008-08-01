@@ -94,6 +94,10 @@
         color: <%= colors[:warning] %>;
         font-weight: bold;
     }
+
+    div.show {
+      margin: 1em;
+    }
     
     form {
         margin-top:5px;
