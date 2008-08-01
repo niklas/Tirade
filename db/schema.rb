@@ -44,12 +44,12 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
     t.datetime "updated_at"
   end
 
-  create_table "groups_roles", :force => true do |t|
+  create_table "groups_roles", :id => false, :force => true do |t|
     t.integer "group_id"
     t.integer "role_id"
   end
 
-  create_table "groups_users", :force => true do |t|
+  create_table "groups_users", :id => false, :force => true do |t|
     t.integer "group_id"
     t.integer "user_id"
   end
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
     t.datetime "updated_at"
   end
 
-  create_table "permissions_roles", :force => true do |t|
+  create_table "permissions_roles", :id => false, :force => true do |t|
     t.integer "role_id"
     t.integer "permission_id"
   end
@@ -140,7 +140,7 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
     t.datetime "updated_at"
   end
 
-  create_table "user_roles", :force => true do |t|
+  create_table "user_roles", :id => false, :force => true do |t|
     t.integer  "user_id"
     t.integer  "role_id"
     t.datetime "created_at"

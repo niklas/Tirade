@@ -6,12 +6,12 @@ class InitializeStylishPermissions < ActiveRecord::Migration
      t.timestamps
    end
 
-   create_table "groups_roles" do |t|
+   create_table "groups_roles", :id => false do |t|
      t.integer "group_id"
      t.integer "role_id"
    end
 
-   create_table "groups_users" do |t|
+   create_table "groups_users", :id => false do |t|
      t.integer "group_id"
      t.integer "user_id"
    end
@@ -23,7 +23,7 @@ class InitializeStylishPermissions < ActiveRecord::Migration
      t.timestamps
    end
 
-   create_table "permissions_roles" do |t|
+   create_table "permissions_roles", :id => false do |t|
      t.integer "role_id"
      t.integer "permission_id"
    end
@@ -35,7 +35,7 @@ class InitializeStylishPermissions < ActiveRecord::Migration
      t.timestamps
    end
 
-   create_table "user_roles" do |t|
+   create_table "user_roles", :id => false do |t|
      t.integer  "user_id"
      t.integer  "role_id"
      t.timestamps
