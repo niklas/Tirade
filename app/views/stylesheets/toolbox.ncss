@@ -68,6 +68,9 @@
       *.accordion_content {
         overflow: hidden;
       }
+      div.accordion {
+        margin-left: 1em;
+      }
     }
     *.dialog_content {
       text-align: left;
