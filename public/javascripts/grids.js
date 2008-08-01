@@ -173,3 +173,4 @@ RemovableImages = Behavior.create({
     }
   }
 });
+

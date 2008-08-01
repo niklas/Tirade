@@ -1,21 +1,23 @@
 <% rendering = show %>
 
-<dl class="rendering">
-  <dt>This Rendering</dt>
-  <dd>
-  <%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
+<% accordion do %>
+  <% accordion_item "This Rendering" do %>
+    <%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
     <%= destroy_rendering_form(rendering) %>
-  </dd>
-<%= render :partial => '/rendering/content/show_for_rendering', :object => rendering %>
-<%= render :partial => '/rendering/grid/show_for_rendering', :object => rendering %>
-<%= render :partial => '/rendering/part/show_for_rendering', :object => rendering %>
-
-
-  <% thepage = rendering.page %>
-  <dt>Page</dt>
-  <dd>
-   <%= link_to thepage.title, thepage %> (URL: <%= public_content_link(thepage, :label => thepage.url) %>)
-  </dd>
-</dl>
+  <% end %>
+  <% accordion_item "Page" do %>
+    <% thepage = rendering.page %>
+    <%= link_to thepage.title, thepage %> (URL: <%= public_content_link(thepage, :label => thepage.url) %>)
+  <% end %>
+  <% accordion_item "Content" do %>
+    <%= render :partial => '/rendering/content/show_for_rendering', :object => rendering %>
+  <% end %>
+  <% accordion_item "Grid" do %>
+    <%= render :partial => '/rendering/grid/show_for_rendering', :object => rendering %>
+  <% end %>
+  <% accordion_item "Part" do %>
+    <%= render :partial => '/rendering/part/show_for_rendering', :object => rendering %>
+  <% end %>
+<% end %>
 
 

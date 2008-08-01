@@ -1,5 +1,4 @@
-<dt>Content</dt>
-<dd>
+<div class="show content">
 <% if show_for_rendering.has_content? && (content = show_for_rendering.content) %>
   <%= content.title %>
   (<%= content.class -%>: <%= content.id -%>)
@@ -8,6 +7,5 @@
 <% end %>
   <%= edit_rendering_content_link(show_for_rendering) %>
   <%= edit_rendering_content_link(show_for_rendering, :label => 'Select', :parameters => {:anchor => 'content'}) %>
-</dd>
-
+</div>
 

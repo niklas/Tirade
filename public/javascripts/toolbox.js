@@ -1,4 +1,4 @@
-var Toolbox = Class.create({ 
+Toolbox = Class.create({ 
   initialize: function(options) {
     options = options || { };
     this.options = options;
@@ -34,6 +34,27 @@ var Toolbox = Class.create({
       this.win.showCenter();
     }
   },
+});
+
+Toolbox.Accordion = Behavior.create({
+  initialize: function() {
+    this.accordion = new Fx.Accordion(
+      $$('#' + this.element.id + ' *.accordion_toggle'), 
+      $$('#' + this.element.id + ' *.accordion_content'), 
+      {
+        display: 0,
+        alwaysHide: true,
+        onActive: function(toggler, element) {
+          toggler.addClassName('accordion_toggle_active');
+        },
+        onBackground: function(toggler, element) {
+          toggler.removeClassName('accordion_toggle_active');
+        }
+
+      }
+    );
+
+  }
 });
 
 
