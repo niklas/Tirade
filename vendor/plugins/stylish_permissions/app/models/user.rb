@@ -3,6 +3,12 @@ class User < ActiveRecord::Base
   has_many :user_roles
   has_and_belongs_to_many :groups
 
+
+  # FIXME use first_name and last_name
+  def full_name
+    login
+  end
+
   def permissions
     (
       roles.map {|r| r.permissions } +

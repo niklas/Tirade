@@ -1,0 +1,34 @@
+<% role = form %>
+
+<%= error_messages_for :role, :object => role %>
+
+<% form_for(role, :builder => NormalFormBuilder) do |f| %>
+  <% accordion do %>
+
+    <% accordion_item 'General' do %>
+      <%= f.text_field :name %>
+      <%= f.text_field :short_name %>
+      <%= f.check_box :is_public %>
+    <% end %>
+
+    <% accordion_item 'Permissions' do %>
+      <% accordion :id => 'role_permissions' do %>
+        <% Permission.grouped_by_controller.each do |cont, permissions| %>
+          <% accordion_item cont.humanize do %>
+            <ul class="permissions">
+              <% permissions.each do |permission| %>
+                <li>
+                  <%= check_box_tag 'role[permission_ids][]', permission.id, f.object.permissions.include?(permission) %>
+                  <%= permission.app_method %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

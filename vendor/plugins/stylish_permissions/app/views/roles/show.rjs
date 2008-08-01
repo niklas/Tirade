@@ -1,0 +1,5 @@
+page.update_toolbox(
+                   :header => "#{@role.name} Role (#{@role.id})",
+                   :content => {:partial => '/roles/show', :object => @role}
+                   )
+

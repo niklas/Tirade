@@ -1,0 +1,8 @@
+<% if list.empty? %>
+  no Groups
+<% else %>
+  <ul class="show groups">
+    <%= render :partial => '/groups/list_item', :collection => list %>
+  </ul>
+<% end %>
+

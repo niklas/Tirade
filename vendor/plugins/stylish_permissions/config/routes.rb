@@ -3,3 +3,8 @@
 
 # resources :stylish_permissions
 stylish_permissions 'stylesheets/permissions.css', :controller => 'stylesheets', :action => 'permissions'
+with_options :path_prefix => '/manage' do |manage|
+  manage.resources :roles
+  manage.resources :groups
+  manage.resources :permissions
+end

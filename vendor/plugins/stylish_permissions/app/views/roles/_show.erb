@@ -1,0 +1,29 @@
+<% role ||= show %>
+
+<%= show_role_link role %>
+<%= edit_role_link role %>
+<%= index_roles_link :label => 'Back to List' %>
+<% accordion do %>
+
+  <% accordion_item "Permissions" do %>
+    <% accordion :id => 'role_permissions' do %>
+      <% role.permissions.group_by(&:app_controller).each do |cont, permissions| %>
+        <% accordion_item cont.humanize do %>
+          <ul class="permissions">
+            <% permissions.each do |permission| %>
+              <li><%= permission.app_method %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% accordion_item "Users" do %>
+    <%= render :partial => '/users/list', :object => role.users %>
+  <% end %>
+
+  <% accordion_item "Groups" do %>
+    <%= render :partial => '/groups/list', :object => role.groups %>
+  <% end %>
+<% end %>
