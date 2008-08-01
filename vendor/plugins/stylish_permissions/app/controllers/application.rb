@@ -57,9 +57,9 @@ class ApplicationController < ActionController::Base
   # TODO does not realize when a Permission (...) is deleted (no changes in #updated_at)
   def set_current_permissions
     return unless current_user
-    if !session[:permissions_synced_at] || 
-        session[:permissions_synced_at] < 15.minutes.ago ||
-        [Permission, UserRole, Role].any? {|k| session[:permissions_synced_at] < k.maximum(:updated_at) } then
+    if  session[:permissions_synced_at].nil? or
+        session[:permissions_synced_at] < 15.minutes.ago or
+        [Permission, UserRole, Role].any? {|k| session[:permissions_synced_at] < (k.maximum(:updated_at) || 15.minutes.ago) } then
 
       session[:current_permissions_names] = current_user.permissions_names
       session[:permissions_synced_at] = Time.now
