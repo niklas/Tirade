@@ -47,6 +47,20 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
     wrap('Options', {}, super)
   end
 
+  def submit(label="Submit", opts={})
+    returning '' do |html|
+      if @object.new_record?
+        html << super('Create', :class => 'submit create')
+        html << @template.link_to('cancel', {:controller => @object_name.pluralize}) 
+      else
+        html << super('Save', :class => 'submit save')
+        html << @template.link_to('cancel', @object) 
+        html << " | "
+        html << @template.link_to('back', {:controller => @object_name.pluralize}) 
+      end
+    end
+  end
+
   private
   def wrap(field, options, tag_output)
     label = @template.content_tag(
