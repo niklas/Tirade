@@ -39,8 +39,8 @@ Toolbox = Class.create({
 Toolbox.Accordion = Behavior.create({
   initialize: function() {
     this.accordion = new Fx.Accordion(
-      $$('#' + this.element.id + ' *.accordion_toggle'), 
-      $$('#' + this.element.id + ' *.accordion_content'), 
+      $$('#' + this.element.id + ' > *.accordion_toggle'), 
+      $$('#' + this.element.id + ' > *.accordion_content'), 
       {
         display: 0,
         alwaysHide: true,
