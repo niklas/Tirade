@@ -49,13 +49,15 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
 
   def submit(label="Submit", opts={})
     html = []
+
+    controller = @object_name.to_s.pluralize
     if @object.new_record?
       html << super('Create', :class => 'submit create')
-      html << @template.link_to('cancel', {:controller => @object_name.pluralize}) 
+      html << @template.link_to('cancel', {:controller => controller}) 
     else
       html << super('Save', :class => 'submit save')
-      html << @template.link_to('cancel', @object) 
-      html << @template.link_to('back', {:controller => @object_name.pluralize}) 
+      html << @template.link_to('cancel', {:controller => controller, :action => 'show', :id => @object}) 
+      html << @template.link_to('back', {:controller => @object_name.to_s.pluralize}) 
     end
     html.map {|b| @template.content_tag(:li,b)}.join(' ')
   end
