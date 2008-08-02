@@ -94,6 +94,9 @@
           color: <%= colors[:base] %>;
           text-decoration:none;
         }
+        button, input.submit {
+          float: right;
+        }
       }
     }
     *.dialog_content {
