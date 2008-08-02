@@ -21,6 +21,15 @@ module Tirade
             define_method :render_toolbox_action do |action|
               render :template => "/model/#{action}"
             end
+            define_method :redirect_toolbox_to do |args|
+              respond_to do |wants|
+                wants.html { redirect_to args }
+                wants.js do
+                  action = args[:action]
+                  self.send action
+                end
+              end
+            end
             define_method :index do
               instance_variable_set "@#{model_plural}", model_class.find(:all) 
               instance_variable_set '@models', instance_variable_get("@#{model_plural}")
@@ -34,6 +43,7 @@ module Tirade
             end
             define_method :new do
               instance_variable_set "@#{model_name}", model_class.new
+              instance_variable_set '@model', instance_variable_get("@#{model_name}")
               render_toolbox_action :new
             end
             define_method :create do
@@ -41,7 +51,7 @@ module Tirade
               model = instance_variable_get "@#{model_name}"
               if model.save
                 flash[:notice] = "#{model_class_name} #{model.id} created."
-                redirect_to :action => 'show', :id => model
+                redirect_toolbox_to :action => 'show', :id => model
               else
                 flash[:notice] = "Creating #{model_class_name} failed."
                 render_toolbox_action :new
@@ -51,7 +61,7 @@ module Tirade
               model = instance_variable_get "@#{model_name}"
               if model.update_attributes(params[model_name])
                 flash[:notice] = "#{model_class_name} #{model.id} updated."
-                redirect_to :action => 'show', :id => model
+                redirect_toolbox_to :action => 'show', :id => model
               else
                 flash[:notice] = "Updating #{model_class_name} #{model.id} failed."
                 render_toolbox_action :edit
@@ -61,10 +71,10 @@ module Tirade
               model = instance_variable_get "@#{model_name}"
               if model.destroy
                 flash[:notice] = "#{model_class_name} #{model.id} destroyed."
-                redirect_to :action => 'index'
+                redirect_toolbox_to :action => 'index'
               else
                 flash[:notice] = "Destroying #{model_class_name} #{model.id} failed."
-                redirect_to :action => 'show', :id => model
+                redirect_toolbox_to :action => 'show', :id => model
               end
             end
           end
