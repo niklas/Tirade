@@ -15,8 +15,11 @@ module InterfaceHelper
   end
 
   def accordion_item(title="Accordion Item", opts={}, &block)
+    tag2 = opts.delete(:content_tag) || :div
+    opts[:class] ||= ''
+    opts[:class] += ' accordion_content'
     concat content_tag(:h3,title, :class => 'accordion_toggle'), block.binding
-    concat content_tag(:div,capture(&block), :class => 'accordion_content'), block.binding
+    concat content_tag(tag2,capture(&block), opts), block.binding
   end
 
   # Creates a bar of links
@@ -34,5 +37,9 @@ module InterfaceHelper
 
   def li_link_to_remote(name, options = {}, html_options = nil)
     content_tag(:li,link_to_remote(name,options,html_options))
+  end
+
+  def table_of(rows)
+
   end
 end
