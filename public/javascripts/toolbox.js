@@ -44,8 +44,13 @@ Toolbox.Accordion = Behavior.create({
       {
         display: 0,
         alwaysHide: true,
-        onActive: function(toggler, element) {
+        onActive: function(toggler, i) {
           toggler.addClassName('accordion_toggle_active');
+          element = this.elements[i];
+          // reset height to auto, so that livesearches work again
+          setTimeout(function() {
+            element.style.height = "auto";
+          },1000);
         },
         onBackground: function(toggler, element) {
           toggler.removeClassName('accordion_toggle_active');
