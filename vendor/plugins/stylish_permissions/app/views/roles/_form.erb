@@ -14,7 +14,8 @@
     <% accordion_item 'Permissions' do %>
       <% accordion :id => 'role_permissions' do %>
         <% Permission.grouped_by_controller.each do |cont, permissions| %>
-          <% accordion_item cont.humanize do %>
+          <% checked = permissions.length - (permissions - f.object.permissions).length %>
+          <% accordion_item "#{cont.humanize} (#{pluralize(checked,'action')} permitted)" do %>
             <ul class="permissions">
               <% permissions.each do |permission| %>
                 <li>
@@ -30,5 +31,7 @@
 
   <% end %>
 
-  <%= f.submit %>
+  <% links do %>
+    <%= f.submit %>
+  <% end %>
 <% end %>

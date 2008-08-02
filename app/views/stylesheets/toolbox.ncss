@@ -3,9 +3,10 @@
     :warning => '#c72c1e',
     :active => '#bdbdbd',
     :base => '#ffffff',
-    :accordion_bg => '#dddddd',
+    :element => '#dddddd',
     :border_light => '#d7d7d7',
     :border_dark => '#bdbdbd',
+    :clickable => '#133B5E',
   }
 %>
 #toolbox  {
@@ -49,7 +50,7 @@
     }
     div.accordion {
       *.accordion_toggle {
-        background: <%= colors[:accordion_bg] %>;
+        background: <%= colors[:element] %>;
         border-bottom: 1px solid <%= colors[:base] %>;
         color:#000000;
         cursor:pointer;
@@ -70,6 +71,29 @@
       }
       div.accordion {
         margin-left: 1em;
+      }
+    }
+    ul.linkbar {
+      background: <%= colors[:element] %>;
+      border-bottom: 1px solid <%= colors[:base] %>;
+      color:#000000;
+      display:block;
+      font-size:12px;
+      font-weight:normal;
+      height:30px;
+      line-height:30px;
+      margin:0pt;
+      padding:0pt 10px;
+      text-decoration:none;
+      li {
+        a,button,input.submit {
+          float: left;
+          padding: 0.3em;
+          margin: 0.4em;
+          background: <%= colors[:clickable] %>;
+          color: <%= colors[:base] %>;
+          text-decoration:none;
+        }
       }
     }
     *.dialog_content {

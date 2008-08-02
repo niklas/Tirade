@@ -1,10 +1,11 @@
 <% rendering = show %>
 
+<% links do %>
+  <%= li_link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
+  <%= li_link_to_remote 'delete', :url => rendering_path(rendering), :method => :delete, :html => {:class => 'destroy rendering'} %>
+<% end %>
+
 <% accordion do %>
-  <% accordion_item "This Rendering" do %>
-    <%= link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
-    <%= destroy_rendering_form(rendering) %>
-  <% end %>
   <% accordion_item "Page" do %>
     <% thepage = rendering.page %>
     <%= link_to thepage.title, thepage %> (URL: <%= public_content_link(thepage, :label => thepage.url) %>)

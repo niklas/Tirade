@@ -1,14 +1,14 @@
 <% role ||= show %>
-
-<%= show_role_link role %>
-<%= edit_role_link role %>
-<%= index_roles_link :label => 'Back to List' %>
+<% links do %>
+  <li><%= edit_role_link role %></li>
+  <li><%= index_roles_link :label => 'Back to List' %></li>
+<% end %>
 <% accordion do %>
 
   <% accordion_item "Permissions" do %>
     <% accordion :id => 'role_permissions' do %>
       <% role.permissions.group_by(&:app_controller).each do |cont, permissions| %>
-        <% accordion_item cont.humanize do %>
+        <% accordion_item "#{cont.humanize} (#{pluralize(permissions.length,'action')})" do %>
           <ul class="permissions">
             <% permissions.each do |permission| %>
               <li><%= permission.app_method %></li>
