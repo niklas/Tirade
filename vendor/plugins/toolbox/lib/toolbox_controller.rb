@@ -3,6 +3,7 @@ module Tirade
     module Controller
       def self.included(base)
         base.extend(ClassMethods)
+        base.helper :interface
         #base.include(InstanceMethods)
       end
       module ClassMethods
@@ -13,7 +14,6 @@ module Tirade
           model_class = model_class_name.constantize
           class_eval do
             before_filter "fetch_#{model_name}", :only => [:show, :edit, :update, :destroy]
-            helper 'interface'
             define_method "fetch_#{model_name}" do
               instance_variable_set "@#{model_name}", model_class.find(params[:id])
               instance_variable_set '@model', instance_variable_get("@#{model_name}")
