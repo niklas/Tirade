@@ -1,4 +1,0 @@
-page.update_toolbox(
-  :header => "Edit Page '#{@page.title}'",
-  :content => {:partial => '/pages/form', :object => @page}
-)

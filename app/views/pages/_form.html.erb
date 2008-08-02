@@ -1,24 +1,28 @@
-<% page = form %>
+<% page ||= form %>
 
 <%= error_messages_for :page, :object => page %>
 
 <% form_for(page, :builder => NormalFormBuilder) do |f| %>
-  <%= f.text_field :title %>
+  <% accordion do %>
 
-  <%= f.collection_select :wanted_parent_id, Page.all_except(page), :id, :title, :label => 'Parent Page', :include_blank => true  %>
-
-  <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:include_blank => (f.object.root? ? false : 'from parent Page'), :label => 'Layout'}  %>
-  <%= link_to "create new layout", new_page_layout_path(f.object) %>
-
-  <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
-
-  <p>
-    <% if page.new_record? %>
-      <%= f.submit "Create", :class=> 'submit' %> or  
-      <%= link_to 'cancel', pages_path %>
-    <% else %>
-      <%= f.submit "Save", :class=> 'submit' %> or  
-     <%= link_to 'cancel', page %> | <%= link_to 'Back', pages_path %>
+    <% accordion_item "General" do %>
+      <%= f.text_field :title %>
     <% end %>
-  </p>
+
+    <% accordion_item "Hierarchy" do %>
+      <%= f.collection_select :wanted_parent_id, Page.all_except(page), :id, :title, :label => 'Parent Page', :include_blank => true  %>
+    <% end %>
+
+
+    <% accordion_item "Layout" do %>
+      <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:include_blank => (f.object.root? ? false : 'from parent Page'), :label => 'Layout'}  %>
+      <%= link_to "create new layout", new_page_layout_path(f.object) %>
+      <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
+    <% end %>
+
+  <% end %>
+
+  <% links do %>
+    <%= f.submit %>
+  <% end %>
 <% end %>
