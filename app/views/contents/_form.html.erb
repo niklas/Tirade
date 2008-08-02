@@ -1,21 +1,31 @@
-<% content = form || @content %>
+<% content ||= form || @content %>
 
-<%= error_messages_for :object => content %>
+<%= error_messages_for :content, :object => content %>
 
 <% path = content.new_record? ? contents_path : content_path(content) %>
 <% method = content.new_record? ? :post : :put %>
-<% form_for(:content, content, :url => path, :method => method, :builder => NormalFormBuilder ) do |f| %>
-    <%= f.text_field :title %>
-    <%= render_form_fields_for(f) %>
-    <%= f.select_picture unless content.new_record? %>
+<% classes = content.new_record? ? 'create content' : 'edit content' %>
+<% form_for(:content, content, :url => path, :builder => NormalFormBuilder, :html => {:method => method, :class => classes} ) do |f| %>
+  <% accordion do %>
 
-    <% if content.new_record? %>
-      <%= f.submit "Create" %> or
-      <%= link_to 'cancel', contents_path %>
-      <%= f.hidden_field :type %>
-    <% else %>
-      <%= f.submit "Update" %> or
-      <%= link_to 'cancel', content_path(content) %> |
-      <%= index_contents_link(:label => 'Back to List') %>
+    <% accordion_item "General" do %>
+      <%= f.text_field :title %>
+      <%= f.hidden_field :type if content.new_record? %>
     <% end %>
+
+    <% accordion_item "Specific" do %>
+      <%= render_form_fields_for(f) %>
+    <% end %>
+
+    <% unless content.new_record? || !content.respond_to?(:picturizations) %>
+      <% accordion_item "Pictures" do %>
+        <%= f.select_picture %>
+      <% end %>
+    <% end %>
+
+    <% links do %>
+      <%= f.submit %>
+    <% end %>
+
+  <% end %>
 <% end %>

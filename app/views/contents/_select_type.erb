@@ -1,0 +1,11 @@
+<% links do %>
+  <li><%= index_contents_link(:label => 'Back to List') %></li>
+<% end %>
+<ul class="create content">
+<% Content.valid_types.each do |klass| %>
+  <% type = klass.to_s %>
+  <li>
+  <%= new_content_link(:parameters => {:content => {:type => type}}, :label => "New #{type}") %>
+  </li>
+<% end %>
+</ul>

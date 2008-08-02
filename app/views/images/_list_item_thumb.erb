@@ -1,0 +1,5 @@
+<% image ||= list_item_thumb %>
+
+<% div_for image do %>
+  <%= image_tag(image.image.url(:thumbnail)) %>
+<% end %>

@@ -22,6 +22,7 @@ describe '/rendering/content/edit (js)' do
       response.should have_tag('form.content.update') do
         with_tag('input[type=text][name=?]', 'content[title]')
         with_tag('input[type=hidden][name=rendering_id]')
+        with_tag('input[type=hidden][name=_method]')
         with_tag('a', 'cancel')
       end
     end

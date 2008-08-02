@@ -1,0 +1,6 @@
+<% content ||= list_item %>
+<li>
+  <%=h content.title %>
+  <%= show_content_link(content) %>
+  <%= edit_content_link(content) %>
+</li>
