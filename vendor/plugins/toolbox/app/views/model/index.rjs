@@ -1,0 +1,4 @@
+page.update_toolbox(
+                   :header => @models.first.class_name.pluralize,
+                   :content => {:partial => "/#{@models.first.table_name}/list", :object => @models}
+                   )

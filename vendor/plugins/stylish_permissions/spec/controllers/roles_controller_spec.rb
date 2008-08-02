@@ -19,7 +19,7 @@ describe RolesController do
 
     it "should render index template" do
       do_get
-      response.should render_template('/roles/index')
+      response.should render_template('/model/index')
     end
   
     it "should find all Roles" do
@@ -51,7 +51,7 @@ describe RolesController do
   
     it "should render show template" do
       do_get
-      response.should render_template('/roles/show')
+      response.should render_template('/model/show')
     end
   
     it "should find the Role requested" do
@@ -83,7 +83,7 @@ describe RolesController do
   
     it "should render new template" do
       do_get
-      response.should render_template('/roles/new')
+      response.should render_template('/model/new')
     end
   
     it "should create an new Role" do
@@ -120,7 +120,7 @@ describe RolesController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('/roles/edit')
+      response.should render_template('/model/edit')
     end
   
     it "should find the Role requested" do
@@ -169,7 +169,7 @@ describe RolesController do
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('/roles/new')
+        response.should render_template('/model/new')
       end
       
     end
@@ -225,7 +225,7 @@ describe RolesController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('/roles/edit')
+        response.should render_template('/model/edit')
       end
 
     end

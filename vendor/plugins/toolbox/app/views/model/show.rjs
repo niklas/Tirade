@@ -1,0 +1,5 @@
+page.update_toolbox(
+                   :header => "#{@model.class_name} (#{@model.id})",
+                   :content => {:partial => "/#{@model.table_name}/show", :object => @model}
+                   )
+

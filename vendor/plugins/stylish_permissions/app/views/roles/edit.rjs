@@ -1,5 +1,0 @@
-page.update_toolbox(
-                   :header => "Edit Role #{@role.name} (#{@role.id})",
-                   :content => {:partial => '/roles/form', :object => @role}
-                   )
-

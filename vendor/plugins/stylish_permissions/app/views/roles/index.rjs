@@ -1,4 +1,0 @@
-page.update_toolbox(
-                   :header => "Roles",
-                   :content => {:partial => '/roles/list', :object => @roles}
-                   )

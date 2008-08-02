@@ -1,0 +1,5 @@
+page.update_toolbox(
+                   :header => "New #{@model.class_name}",
+                   :content => {:partial => "/#{@model.table_name}/form", :object => @model}
+                   )
+
