@@ -30,7 +30,7 @@ class RolesController < ApplicationController
   end
 
   def update
-    params[:role][:permission_ids] ||= [] if params[:role]
+    params[:role][:permission_ids] ||= [] if (params[:role] ||= {})
     if @role.update_attributes(params[:role])
       flash[:notice] = "Role #{@role.id} updated" 
       redirect_to role_path(@role)

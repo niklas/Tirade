@@ -189,6 +189,11 @@ describe RolesController do
         put :update, :id => "1"
       end
 
+      it "should (re)set the permission_ids, even if not supplied" do
+        @role.should_receive(:update_attributes).with({'permission_ids' => []}).and_return(true)
+        put :update, :id => "1"
+      end
+
       it "should find the Role requested" do
         Role.should_receive(:find).with("1").and_return(@role)
         do_put
