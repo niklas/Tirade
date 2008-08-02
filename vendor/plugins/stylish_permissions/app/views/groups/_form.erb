@@ -1,0 +1,40 @@
+<% group = form %>
+
+<%= error_messages_for :group, :object => group %>
+
+<% form_for(group, :builder => NormalFormBuilder) do |f| %>
+  <% accordion do %>
+
+    <% accordion_item 'General' do %>
+      <%= f.text_field :name %>
+    <% end %>
+
+    <% accordion_item 'Users' do %>
+      <ul class="users">
+        <% User.all.each do |user| %>
+          <li>
+            <%= check_box_tag 'group[user_ids][]', user.id, f.object.users.include?(user) %>
+            <%= user.full_name %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% accordion_item 'Roles' do %>
+      <ul class="roles">
+        <% Role.all.each do |role| %>
+          <li>
+            <%= check_box_tag 'group[role_ids][]', role.id, f.object.roles.include?(role) %>
+            <%= role.name %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  <% end %>
+
+  <% links do %>
+    <%= f.submit %>
+  <% end %>
+<% end %>
+

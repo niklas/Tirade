@@ -1,3 +1,7 @@
 <% group ||= list_item %>
-<li><%= group.name %></li>
+<li>
+  <%= group.name %>
+  <%= show_group_link group %>
+  <%= edit_group_link group %>
+</li>
 
