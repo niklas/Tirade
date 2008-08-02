@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  before_filter :fetch_role, :only => [:show, :edit, :update]
+  before_filter :fetch_role, :only => [:show, :edit, :update, :destroy]
   def index
     @roles = Role.find :all
     render :template => '/roles/index'
@@ -22,7 +22,7 @@ class RolesController < ApplicationController
     @role = Role.new(params[:role])
     if @role.save
       flash[:notice] = "Role #{@role.id} created" 
-      render :template => '/roles/show'
+      redirect_to role_path(@role)
     else
       flash[:notice] = "Creating Role #{@role.id} failed" 
       render :template => '/roles/new'
@@ -30,13 +30,23 @@ class RolesController < ApplicationController
   end
 
   def update
-    params[:role][:permission_ids] ||= []
+    params[:role][:permission_ids] ||= [] if params[:role]
     if @role.update_attributes(params[:role])
       flash[:notice] = "Role #{@role.id} updated" 
-      render :template => '/roles/show'
+      redirect_to role_path(@role)
     else
       flash[:notice] = "Updating Role #{@role.id} failed" 
       render :template => '/roles/edit'
+    end
+  end
+
+  def destroy
+    if @role.destroy
+      flash[:notice] = "Role #{@role.id} destroyed." 
+      redirect_to roles_path
+    else
+      flash[:notice] = "Destroying Role #{@role.id} failed" 
+      render :template => '/roles/show'
     end
   end
 
