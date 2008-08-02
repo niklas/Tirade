@@ -18,18 +18,16 @@ module AlexPodaras
             # TODO what to do without an Image class. Cry?
           end
           include InstanceMethods
+          alias_method_chain :image_ids=, :robustness
         end
       end
 
       module InstanceMethods
-        def image_ids=(new_ids_from_params)
+        def image_ids_with_robustness=(new_ids_from_params)
           new_ids = new_ids_from_params.collect(&:to_i).compact.select(&:nonzero?).uniq
           if new_ids != image_ids
             transaction do
-              self.picturizations.clear
-              new_ids.each do |new_id|
-                self.images << Image.find(new_id)
-              end
+              self.image_ids_without_robustness = new_ids
             end
           end
         end
