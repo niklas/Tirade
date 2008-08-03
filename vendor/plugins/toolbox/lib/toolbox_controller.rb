@@ -4,7 +4,8 @@ module Tirade
       def self.included(base)
         base.extend(ClassMethods)
         base.helper :interface
-        #base.include(InstanceMethods)
+        base.helper :toolbox
+        base.class_eval { include(InstanceMethods) }
       end
       module ClassMethods
         def feeds_toolbox_with model_name
@@ -17,18 +18,6 @@ module Tirade
             define_method "fetch_#{model_name}" do
               instance_variable_set "@#{model_name}", model_class.find(params[:id])
               instance_variable_set '@model', instance_variable_get("@#{model_name}")
-            end
-            define_method :render_toolbox_action do |action|
-              render :template => "/model/#{action}"
-            end
-            define_method :redirect_toolbox_to do |args|
-              respond_to do |wants|
-                wants.html { redirect_to args }
-                wants.js do
-                  action = args[:action]
-                  self.send action
-                end
-              end
             end
             define_method :index do
               instance_variable_set "@#{model_plural}", model_class.find(:all) 
@@ -48,6 +37,7 @@ module Tirade
             end
             define_method :create do
               instance_variable_set "@#{model_name}", model_class.new(params[model_name])
+              instance_variable_set '@model', instance_variable_get("@#{model_name}")
               model = instance_variable_get "@#{model_name}"
               if model.save
                 flash[:notice] = "#{model_class_name} #{model.id} created."
@@ -80,6 +70,59 @@ module Tirade
           end
         end
       end
+    end
+    module InstanceMethods
+      def redirect_toolbox_to args
+        respond_to do |wants|
+          wants.html { redirect_to args }
+          wants.js do
+            action = args[:action]
+            self.send action
+          end
+        end
+      end
+      def render_toolbox_action action
+        respond_to do |wants|
+          wants.html { render :template => "/model/#{action}" }
+          wants.js do
+            render :update do |page|
+              [ "before_update_toolbox_for_#{action}",
+                "update_toolbox_for_#{action}", 
+                "after_update_toolbox_for_#{action}"].each do |meth|
+                  controller.send(meth,page) if controller.respond_to?(meth)
+                end
+            end
+          end
+        end
+      end
+      def update_toolbox_for_index(page)
+        page.update_toolbox(
+          :header => self.controller_name.humanize,
+          :content => {
+            :partial => "/#{self.controller_name}/list", 
+            :object => @models
+          }
+        )
+      end
+      def update_toolbox_for_edit(page)
+        page.update_toolbox(
+          :header => "Edit #{@model.class_name} (#{@model.id})",
+          :content => {:partial => "/#{@model.table_name}/form", :object => @model}
+        )
+      end
+      def update_toolbox_for_new(page)
+        page.update_toolbox(
+          :header => "New #{@model.class_name}",
+          :content => {:partial => "/#{@model.table_name}/form", :object => @model}
+        )
+      end
+      def update_toolbox_for_show(page)
+        page.update_toolbox(
+          :header => "#{@model.class_name} (#{@model.id})",
+          :content => {:partial => "/#{@model.table_name}/show", :object => @model}
+        )
+      end
+
     end
   end
 end
