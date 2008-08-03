@@ -2,7 +2,7 @@
 
 <% links do %>
   <%= li_link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
-  <%= li_link_to_remote 'delete', :url => rendering_path(rendering), :method => :delete, :html => {:class => 'destroy rendering'} %>
+  <%= li_link_to_remote 'delete', :url => rendering_path(rendering), :method => :delete, :html => {:class => 'destroy rendering'}, :confirm => 'Really destroy?' %>
 <% end %>
 
 <% accordion do %>

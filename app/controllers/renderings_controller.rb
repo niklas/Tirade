@@ -1,39 +1,45 @@
 class RenderingsController < ApplicationController
   protect_from_forgery :only => []
-  # GET /renderings
-  # GET /renderings.xml
-  def index
-    respond_to do |wants|
-      wants.js
+  feeds_toolbox_with :rendering
+
+  def after_update_toolbox_for_create(page)
+    page.update_grid_for(@rendering)
+    page.unmark_all_active
+    page.mark_as_active(@rendering)
+  end
+
+  def after_update_toolbox_for_edit(page)
+    page.unmark_all_active
+    page.mark_as_active(@rendering)
+  end
+
+  def after_update_toolbox_for_show(page)
+    unless self.action_name == 'create'
+      page.update_rendering(@rendering) 
+      @rendering.brothers_by_part.each do |brother|
+        page.update_rendering(brother)
+      end if params[:part]
+      page.unmark_all_active
+      page.mark_as_active(@rendering)
+    else
+      page.update_grid_for(@rendering)
+      page.unmark_all_active
     end
   end
 
-  # GET /renderings/1
-  # GET /renderings/1.xml
-  def show
-    @rendering = Rendering.find(params[:id])
-
-    respond_to do |wants|
-      wants.js
-    end
-  end
-
-  # GET /renderings/new
-  # GET /renderings/new.xml
-  def new
-    @rendering = Rendering.new
+  def destroy
+    @rendering.destroy
 
     respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @rendering }
-    end
-  end
-
-  # GET /renderings/1/edit
-  def edit
-    @rendering = Rendering.find(params[:id])
-    respond_to do |wants|
-      wants.js
+      format.html { redirect_to(public_content_url(:path => @rendering.page.path)) }
+      format.xml  { head :ok }
+      format.js do
+        render :update do |page|
+          page.close_toolbox
+          page.update_grid_for(@rendering)
+          page.unmark_all_active
+        end
+      end
     end
   end
 
@@ -52,53 +58,6 @@ class RenderingsController < ApplicationController
     end
   end
 
-  # POST /renderings
-  # POST /renderings.xml
-  def create
-    @rendering = Rendering.new(params[:rendering])
-
-    respond_to do |format|
-      if @rendering.save
-        flash[:notice] = 'Rendering was successfully created.'
-        format.html { redirect_to(@rendering) }
-        format.xml  { render :xml => @rendering, :status => :created, :location => @rendering }
-        format.js 
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @rendering.errors, :status => :unprocessable_entity }
-        format.js   { render :action => "edit" }
-      end
-    end
-  end
-
-  # PUT /renderings/1
-  def update
-    @rendering = Rendering.find(params[:id])
-
-    respond_to do |wants|
-      wants.js do
-        if @rendering.update_attributes(params[:rendering])
-          flash[:notice] = 'Rendering was successfully updated.'
-          render :action => 'show'
-        else
-          render :action => 'edit'
-        end
-      end
-    end
-  end
-
-  # DELETE /renderings/1
-  # DELETE /renderings/1.xml
-  def destroy
-    @rendering = Rendering.find(params[:id])
-    @rendering.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(renderings_url) }
-      format.xml  { head :ok }
-      format.js
-    end
-  end
   def preview
     @rendering = Rendering.find(params[:id])
     @rendering.attributes = params[:rendering] if params[:rendering]
