@@ -16,8 +16,7 @@ module InterfaceHelper
 
   def accordion_item(title="Accordion Item", opts={}, &block)
     tag2 = opts.delete(:content_tag) || :div
-    opts[:class] ||= ''
-    opts[:class] += ' accordion_content'
+    add_class_to_html_options(opts, 'accordion_content')
     concat content_tag(:h3,title, :class => 'accordion_toggle'), block.binding
     concat content_tag(tag2,capture(&block), opts), block.binding
   end
@@ -27,8 +26,12 @@ module InterfaceHelper
   #      <li><%= link_to "Home", root_url %></li>
   #      <%= li_link_to "Home", root_url %>
   #    <% end %>
-  def links(&block)
-    concat content_tag(:ul,capture(&block), :class => 'linkbar'), block.binding
+  def links(content=nil,opts={}, &block)
+    inner ||= capture(&block)
+    add_class_to_html_options(opts, 'linkbar')
+    html = content_tag(:ul, inner, opts)
+    concat html, block.binding if block_given?
+    html
   end
 
   def li_link_to(name, options = {}, html_options = nil)
@@ -39,7 +42,50 @@ module InterfaceHelper
     content_tag(:li,link_to_remote(name,options,html_options))
   end
 
-  def table_of(rows)
+  # You need a partial '/resources/list_item' and must write the +li+
+  def list_of(things,opts={})
+    kind = things.first.table_name
+    add_class_to_html_options(opts, kind)
+    content_tag(
+      :ul,
+      render(:partial => "/#{kind}/list_item", :collection => things),
+      opts
+    )
+  end
 
+  # You need a partial '/resources/table_row' and must write the +tr+
+  def table_of(things,opts={})
+    kind = things.first.table_name
+    # columns = things.first.visible_columns
+    add_class_to_html_options(opts, kind)
+    content_tag(
+      :table,
+      render(:partial => "/#{kind}/table_row", :collection => things),
+      opts
+    )
+  end
+
+  # You need a partial '/resources/accordion_item' and should call the
+  # helper +accordion_item+ from there using a block.
+  def accorion_of(things,opts={})
+    kind = things.first.table_name
+    add_class_to_html_options(opts, kind)
+    add_class_to_html_options(opts, "accordion")
+    content_tag(
+      :div,
+      render(:partial => "/#{kind}/accordion_item", :collection => things),
+      opts
+    )
+  end
+
+  # Makes sure that the given class is in the options which are used for
+  # tag helpers like content_tag, link_to etc.
+  def add_class_to_html_options(options,name)
+    if options.has_key? :class
+      options[:class] += " #{name}"
+    else
+      options[:class] = name
+    end
+    options
   end
 end
