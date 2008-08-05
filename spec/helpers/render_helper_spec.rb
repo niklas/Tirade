@@ -5,7 +5,7 @@ describe RenderHelper, ' a single Grid' do
     @grid = Grid.new_by_yui('yui-g')
   end
   it "should render it in a _single_ YUI div" do
-    markup = render_grid(@grid)
+    markup = helper.render_grid(@grid)
     markup.should_not be_empty
     markup.should have_tag('div.yui-u')
   end
@@ -19,17 +19,17 @@ describe RenderHelper, ' a 50/50 Grid with both children' do
     @right_grid = @grid.add_child
   end
   it "should render the left sub-grid for itself" do
-    markup = render_grid(@left_grid)
+    markup = helper.render_grid(@left_grid)
     markup.should_not be_empty
     markup.should have_tag('div.yui-u')
   end
   it "should render the right sub-grid for itself" do
-    markup = render_grid(@right_grid)
+    markup = helper.render_grid(@right_grid)
     markup.should_not be_empty
     markup.should have_tag('div.yui-u')
   end
   it "should render the outer Grid with both children in it" do
-    markup = render_grid(@grid)
+    markup = helper.render_grid(@grid)
     markup.should_not be_empty
     markup.should have_tag('div.yui-g') do
       with_tag('div.yui-u.first')
@@ -42,7 +42,7 @@ describe RenderHelper, ' a 50/50 Grid with both children' do
       @grid.yui = 'yui-gc'
     end
     it "should render it accordingly" do
-      markup = render_grid(@grid)
+      markup = helper.render_grid(@grid)
       markup.should_not be_empty
       markup.should have_tag('div.yui-gc') do
         with_tag('div.yui-u.first')

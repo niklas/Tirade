@@ -10,7 +10,7 @@ describe Image do
   end
   
   it "should be intergrated with paperclip" do
-    @image.should respond_to :image
+    @image.should respond_to(:image)
   end
 end
 
