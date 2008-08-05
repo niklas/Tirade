@@ -1,0 +1,3 @@
+<h3>Edit <%= current_model.class_name %> (<%= current_model.id %>)</h3>
+
+<%= render :partial => "/#{current_model.table_name}/form", :object => current_model %>
