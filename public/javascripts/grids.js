@@ -2,18 +2,20 @@ PageEditable = Behavior.create({
   initialize: function() {
     var me = this.element;
     if (me.hasClassName('fake')) return;
-    page_id = me.className.match(/\bpage_(\d+)\b/)[1];
-    admin_id = 'admin_page_' + page_id;
-    if (!$(admin_id)) {
-      new Insertion.Top(this.element, 
-        $div(
-          {class: 'admin', id: admin_id},
-          [ 
-            $a({href: page_url({id: page_id}), class: 'edit page'},'edit')
-          ]
-        )
-      );
-      Event.addBehavior({'div.admin > a': Remote.LinkWithToolbox})
+    if (matched = me.className.match(/\bpage_(\d+)\b/)) {
+      page_id = matched[1];
+      admin_id = 'admin_page_' + page_id;
+      if (!$(admin_id)) {
+        new Insertion.Top(this.element, 
+          $div(
+            {class: 'admin', id: admin_id},
+            [ 
+              $a({href: page_url({id: page_id}), class: 'edit page'},'edit')
+            ]
+          )
+        );
+        Event.addBehavior({'div.admin > a': Remote.LinkWithToolbox})
+      }
     }
   }
 });
