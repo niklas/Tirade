@@ -1,12 +1,12 @@
-a, form {
-   .create, .update, .destroy, .show, .edit {
+a, form, div, span {
+   .create, .update, .destroy, .show, .edit, .new {
       display: none;
    }
 }
 
 body.role_admin {
-   a { display: inline; }
-   form { display: block; }
+   a,span { display: inline; }
+   form,div { display: block; }
 }
 
 
@@ -16,6 +16,8 @@ body.role_admin {
       <% perms.each do |perm| %>
          a.<%= res %>.<%= perm.app_method %> { display: inline; }
          form.<%= res %>.<%= perm.app_method %> { display: block; }
+         div.<%= res %>.<%= perm.app_method %> { display: block; }
+         span.<%= res %>.<%= perm.app_method %> { display: inline; }
       <% end %>
    <% end %>
 }
