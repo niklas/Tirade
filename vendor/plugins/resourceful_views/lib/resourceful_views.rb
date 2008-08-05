@@ -300,6 +300,20 @@ class ResourcefulViews
         end
       end
     end_eval
+    if @@link_helpers_suffix
+      helper_name = "destroy_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
+      return if already_defined?(helper_name)
+      @module.module_eval <<-end_eval
+        def #{helper_name}(*args)
+          opts = args.extract_options!
+          label = opts.delete(:label) || 'Delete'
+          opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'destroy', *(opts.delete(:class) || '').split)
+          opts[:method] = :delete
+          path = #{resource.name_prefix}#{resource.singular}_path(*args) 
+          link_to(label,path,opts)
+        end
+      end_eval
+    end
   end
   
 
