@@ -19,7 +19,7 @@ describe ContentsController do
 
     it "should render index template" do
       do_get
-      response.should render_template('index')
+      response.should render_template('/model/index')
     end
   
     it "should find all contents" do
@@ -33,34 +33,34 @@ describe ContentsController do
     end
   end
 
-  describe "handling GET /contents.xml" do
-
-    before(:each) do
-      @content = mock_model(Content, :to_xml => "XML")
-      Content.stub!(:browse).and_return(@content)
-    end
-  
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :index
-    end
-  
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-
-    it "should find all contents" do
-      Content.should_receive(:browse).and_return([@content])
-      do_get
-    end
-  
-    it "should render the found contents as xml" do
-      @content.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
-  end
+#  describe "handling GET /contents.xml" do
+#
+#    before(:each) do
+#      @content = mock_model(Content, :to_xml => "XML")
+#      Content.stub!(:browse).and_return(@content)
+#    end
+#  
+#    def do_get
+#      @request.env["HTTP_ACCEPT"] = "application/xml"
+#      get :index
+#    end
+#  
+#    it "should be successful" do
+#      do_get
+#      response.should be_success
+#    end
+#
+#    it "should find all contents" do
+#      Content.should_receive(:browse).and_return([@content])
+#      do_get
+#    end
+#  
+#    it "should render the found contents as xml" do
+#      @content.should_receive(:to_xml).and_return("XML")
+#      do_get
+#      response.body.should == "XML"
+#    end
+#  end
 
   describe "handling GET /contents/1" do
 
@@ -80,7 +80,7 @@ describe ContentsController do
   
     it "should render show template" do
       do_get
-      response.should render_template('show')
+      response.should render_template('/model/show')
     end
   
     it "should find the content requested" do
@@ -94,32 +94,47 @@ describe ContentsController do
     end
   end
 
-  describe "handling GET /contents/1.xml" do
-
-    before(:each) do
-      @content = mock_model(Content, :to_xml => "XML")
-      Content.stub!(:find).and_return(@content)
-    end
+#  describe "handling GET /contents/1.xml" do
+#
+#    before(:each) do
+#      @content = mock_model(Content, :to_xml => "XML")
+#      Content.stub!(:find).and_return(@content)
+#    end
+#  
+#    def do_get
+#      @request.env["HTTP_ACCEPT"] = "application/xml"
+#      get :show, :id => "1"
+#    end
+#
+#    it "should be successful" do
+#      do_get
+#      response.should be_success
+#    end
+#  
+#    it "should find the content requested" do
+#      Content.should_receive(:find).with("1").and_return(@content)
+#      do_get
+#    end
+#  
+#    it "should render the found content as xml" do
+#      @content.should_receive(:to_xml).and_return("XML")
+#      do_get
+#      response.body.should == "XML"
+#    end
+#  end
   
+  describe "handling GET /contents/new without :content_type" do
     def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "1"
+      get :new
     end
-
     it "should be successful" do
       do_get
       response.should be_success
     end
   
-    it "should find the content requested" do
-      Content.should_receive(:find).with("1").and_return(@content)
+    it "should render new template" do
       do_get
-    end
-  
-    it "should render the found content as xml" do
-      @content.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
+      response.should render_template('contents/select_type')
     end
   end
 
@@ -132,7 +147,7 @@ describe ContentsController do
     end
   
     def do_get
-      get :new
+      get :new, :content => {:type => 'Document'}
     end
 
     it "should be successful" do
@@ -142,7 +157,7 @@ describe ContentsController do
   
     it "should render new template" do
       do_get
-      response.should render_template('new')
+      response.should render_template('/model/new')
     end
   
     it "should create an new Document (default type)" do
@@ -179,7 +194,7 @@ describe ContentsController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('edit')
+      response.should render_template('/model/edit')
     end
   
     it "should find the content requested" do
@@ -205,7 +220,7 @@ describe ContentsController do
   
       def do_post
         @content.should_receive(:save).and_return(true)
-        post :create, :content => {}
+        post :create, :content => {:type => 'Document'}
       end
   
       it "should create a new content" do
@@ -215,7 +230,7 @@ describe ContentsController do
 
       it "should redirect to the new content" do
         do_post
-        response.should redirect_to(content_url("1"))
+        response.should redirect_to(content_url(@content))
       end
       
     end
@@ -224,12 +239,12 @@ describe ContentsController do
 
       def do_post
         @content.should_receive(:save).and_return(false)
-        post :create, :content => {}
+        post :create, :content => {:type => 'Document'}
       end
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('new')
+        response.should render_template('/model/new')
       end
       
     end
@@ -280,7 +295,7 @@ describe ContentsController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('edit')
+        response.should render_template('/model/edit')
       end
 
     end

@@ -21,14 +21,12 @@ class ContentsController < ApplicationController
   def create
     @model = @content = @klass.new(params[:content])
 
-    respond_to do |format|
-      if @content.save
-        flash[:notice] = "Content #{@content.id} was successfully created."
-        redirect_toolbox_to :action => 'show'
-      else
-        flash[:notice] = "Could not create Content."
-        render_toolbox_action :new
-      end
+    if @content.save
+      flash[:notice] = "Content #{@content.id} was successfully created."
+      redirect_toolbox_to :action => 'show', :id => @content
+    else
+      flash[:notice] = "Could not create Content."
+      render_toolbox_action :new
     end
   end
 
@@ -39,6 +37,8 @@ class ContentsController < ApplicationController
     if @klass.nil? || @klass > Content
       @klass = nil
       render :action => 'select_type'
+    else
+      params[:content].andand.delete(:type)
     end
   end
 
