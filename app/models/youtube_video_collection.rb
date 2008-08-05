@@ -1,6 +1,6 @@
 class YoutubeVideoCollection < Content
   def videos
-    YoutubeVideo.all
+    YoutubeVideo.find(:all)
   end
   alias :items :videos
 
