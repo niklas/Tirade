@@ -19,7 +19,7 @@ describe RenderingsController do
 
     it "should render index template" do
       do_get
-      response.should render_template('index')
+      response.should render_template('/model/index')
     end
   
   end
@@ -42,7 +42,7 @@ describe RenderingsController do
   
     it "should render show template" do
       do_get
-      response.should render_template('show')
+      response.should render_template('/model/show')
     end
   
     it "should find the rendering requested" do
@@ -74,7 +74,7 @@ describe RenderingsController do
   
     it "should render new template" do
       do_get
-      response.should render_template('new')
+      response.should render_template('/model/new')
     end
   
     it "should create an new rendering" do
@@ -111,7 +111,7 @@ describe RenderingsController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('edit')
+      response.should render_template('/model/edit')
     end
   
     it "should find the rendering requested" do
@@ -160,7 +160,7 @@ describe RenderingsController do
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('new')
+        response.should render_template('/model/new')
       end
       
     end
@@ -197,7 +197,7 @@ describe RenderingsController do
 
       it "should redirect to the rendering" do
         do_put
-        response.should render_template('show')
+        response.should redirect_to(rendering_path(@rendering))
       end
 
     end
@@ -211,7 +211,7 @@ describe RenderingsController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('edit')
+        response.should render_template('/model/edit')
       end
 
     end
@@ -220,7 +220,7 @@ describe RenderingsController do
   describe "handling DELETE /renderings/1" do
 
     before(:each) do
-      @rendering = mock_model(Rendering, :destroy => true)
+      @rendering = mock_model(Rendering, :destroy => true, :page => nil)
       Rendering.stub!(:find).and_return(@rendering)
     end
   
@@ -238,9 +238,9 @@ describe RenderingsController do
       do_delete
     end
   
-    it "should redirect to the renderings list" do
+    it "should redirect to the page of the destroyed rendering or '/'" do
       do_delete
-      response.should redirect_to(renderings_url)
+      response.should redirect_to('/')
     end
   end
 end

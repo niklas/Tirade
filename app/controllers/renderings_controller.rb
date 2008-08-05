@@ -31,7 +31,7 @@ class RenderingsController < ApplicationController
     @rendering.destroy
 
     respond_to do |format|
-      format.html { redirect_to(public_content_url(:path => @rendering.page.path)) }
+      format.html { redirect_to( @rendering.page.nil? ? '/' : public_content_url(:path => @rendering.page.path)) }
       format.xml  { head :ok }
       format.js do
         render :update do |page|
