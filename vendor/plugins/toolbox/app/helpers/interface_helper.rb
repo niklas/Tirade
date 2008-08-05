@@ -45,10 +45,12 @@ module InterfaceHelper
   # You need a partial '/resources/list_item' and must write the +li+
   def list_of(things,opts={})
     kind = things.first.table_name
+    partial = opts[:partial] || 'list_item'
+    partial = "/#{kind}/#{partial}" unless partial =~ %r~^/~
     add_class_to_html_options(opts, kind)
     content_tag(
       :ul,
-      render(:partial => "/#{kind}/list_item", :collection => things),
+      render(:partial => partial, :collection => things),
       opts
     )
   end
@@ -87,5 +89,10 @@ module InterfaceHelper
       options[:class] = name
     end
     options
+  end
+
+  # helps to genric find the current_model in @model or @#{ressource}
+  def current_model
+    @model || instance_variable_get("@#{@controller.controller_name.singularize}") || raise("no model loaded")
   end
 end
