@@ -1,4 +1,4 @@
 page.update_toolbox(
-                   :header => "Edit #{@model.class_name} (#{@model.id})",
-                   :content => {:partial => "/#{@model.table_name}/form", :object => @model}
+                   :header => "Edit #{current_model.class_name} (#{current_model.id})",
+                   :content => {:partial => "/#{current_model.table_name}/form", :object => current_model}
                    )

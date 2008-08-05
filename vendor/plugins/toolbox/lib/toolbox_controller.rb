@@ -18,6 +18,7 @@ module Tirade
             define_method "fetch_#{model_name}" do
               instance_variable_set "@#{model_name}", model_class.find(params[:id])
               instance_variable_set '@model', instance_variable_get("@#{model_name}")
+              instance_variable_set '@model_name', model_name
             end
             define_method :index do
               instance_variable_set "@#{model_plural}", model_class.find(:all) 
@@ -31,14 +32,12 @@ module Tirade
               render_toolbox_action :edit
             end
             define_method :new do
-              instance_variable_set "@#{model_name}", model_class.new
-              instance_variable_set '@model', instance_variable_get("@#{model_name}")
+              instance_variable_set '@model', model_class.new
               render_toolbox_action :new
             end
             define_method :create do
-              instance_variable_set "@#{model_name}", model_class.new(params[model_name])
-              instance_variable_set '@model', instance_variable_get("@#{model_name}")
-              model = instance_variable_get "@#{model_name}"
+              instance_variable_set '@model', model_class.new(params[model_name])
+              model = instance_variable_get "@model"
               if model.save
                 flash[:notice] = "#{model_class_name} #{model.id} created."
                 redirect_toolbox_to :action => 'show', :id => model
@@ -48,7 +47,7 @@ module Tirade
               end
             end
             define_method :update do
-              model = instance_variable_get "@#{model_name}"
+              model = instance_variable_get "@model"
               if model.update_attributes(params[model_name])
                 flash[:notice] = "#{model_class_name} #{model.id} updated."
                 redirect_toolbox_to :action => 'show', :id => model
