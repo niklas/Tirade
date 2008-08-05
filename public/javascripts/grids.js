@@ -98,6 +98,29 @@ Remote.LinkWithToolbox = Behavior.create({
   }
 });
 
+Remote.MultipartForm = Behavior.create({
+  initialize: function(options) {
+    if (this.element.enctype == "multipart/form-data") {
+      iframe_id = this.addIframe();
+      this.element.target = iframe_id;
+      if (this.element.action.match(/\?/)) 
+        this.element.action += "&iframe_remote=1&format=js";
+      else 
+        this.element.action += "?iframe_remote=1&format=js";
+    } else {
+      return new Remote.Form(this.element, options);
+    }
+  },
+  addIframe: function() {
+    ifid = this.element.id ? "iframe_for_" + this.element.id : 'iframe_for_upload';
+    new Insertion.Top(this.element,
+      DOM.Builder.create('iframe', { id: ifid, name: ifid, src: 'about:blank', 
+        style: "width:1px;height:1px;border:0px"})
+    );
+    return(ifid);
+  }
+});
+
 SortableRenderings = Behavior.create({
   initialize: function() {
     this._createSortable();
