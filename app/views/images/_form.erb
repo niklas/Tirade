@@ -1,0 +1,13 @@
+<%= error_messages_for :image %>
+
+<% form_for @image, :builder => NormalFormBuilder, :html => {:multipart => true} do |f|%>
+  <div id="upload_images">
+    <%= f.file_field :image %>
+  </div>
+  <%= link_to_function 'Add another image' do |page|
+        page.insert_html :bottom, :upload_images, :partial => 'fields_for_additional_image', :object => Image.new
+      end %>
+  <% links do %>
+    <%= f.submit 'Upload Images' %>
+  <% end %>
+<% end %>

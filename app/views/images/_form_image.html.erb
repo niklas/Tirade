@@ -1,6 +1,0 @@
-<div class="upload_image">
-	<% fields_for 'image[multiple_images][]', form_image do |image_form| -%>
-    <%= image_form.file_field :image %>
-    <%= link_to_function 'Remove', "$(this).up('.upload_image').remove()" %>
-  <% end -%>
-</div>

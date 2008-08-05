@@ -3,38 +3,55 @@ class ImagesController < ApplicationController
 
   layout 'admin'
   in_place_edit_for :image, :title
+  feeds_toolbox_with :image
   
   def index
     # TODO: Pagination
-    @images = Image.search(params[:term]).find(:all, :order => 'created_at DESC')
+    @models = @images = Image.search(params[:term]).find(:all, :order => 'created_at DESC')
 
-    respond_to do |wants|
-      wants.html
-      wants.js { render :action => 'search_results'}
+    if params[:for_select]
+      respond_to do |wants|
+        wants.html
+        wants.js { render :action => 'search_results'}
+      end
+    else
+      render_toolbox_action :index
     end
-    
   end
-  
-  def new
-    @image = Image.new
-  end
-  
+
+  # TODO append .js in multipartform
   def create
     @image = Image.new(params[:image])
+
     
     if @image.save
-      redirect_to images_path
+      @models = @images = [@image] + @image.multiple_images
+      the_action = @images.length > 1 ? :index : :show
+      if params[:iframe_remote]
+        # successful, from iframe => show created image(s)
+        responds_to_parent do
+          render_toolbox_action the_action
+        end
+      else
+        # successful, normal cases
+        respond_to do |wants|
+          wants.html
+          wants.js { render_toolbox_action the_action }
+        end
+      end
     else
-      render :action => 'new'
-    end
-  end
-  
-  def destroy
-    @image = Image.find(params[:id])
-    @image.destroy
-    
-    redirect_to(images_path)
-  end
+      if params[:iframe_remote]
+        # unsuccessful from iframe
+        responds_to_parent do
+          render_toolbox_action :new
+        end
+      else
+        respond_to do |wants|
+          wants.html
+          wants.js { render_toolbox_action :new }
+        end
+     end
+   end
   
   # ===========
   # = Members =

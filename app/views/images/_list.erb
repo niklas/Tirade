@@ -1,0 +1,10 @@
+<% images ||= list %>
+
+<% links do %>
+  <li><%= new_image_link :label => 'Upload' %></li>
+<% end %>
+<% if images.empty? %>
+  <p>No Images Found</p>
+<% else %>
+  <%= list_of images %>
+<% end %>

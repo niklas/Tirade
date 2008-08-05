@@ -35,9 +35,14 @@ class Image < ActiveRecord::Base
   end
   
   def multiple_images=(images)
+    @multiple_images ||= []
     images.each do |attributes|
-      Image.create(attributes) unless attributes[:image].class.to_s == 'String'
+      @multiple_images << Image.create(attributes) unless attributes[:image].is_a?(String)
     end
+  end
+
+  def multiple_images
+    @multiple_images ||= []
   end
 
   def custom_thumbnail_url(geom)

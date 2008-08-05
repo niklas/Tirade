@@ -1,0 +1,11 @@
+<% image ||= show %>
+
+<% links do %>
+  <li><%= edit_image_link(image) %></li>
+  <li><%= new_image_link :label => 'Upload' %></li>
+  <li><%= index_images_link :label => 'Back to List' %></li>
+<% end %>
+
+<% div_for image do %>
+  <%= image_tag(image.image.url, :style => 'max-width: 100%') %>
+<% end %>
