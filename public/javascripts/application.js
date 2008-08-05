@@ -29,6 +29,6 @@ function searchAllContents(element,value) {
 function searchImages(element,value) {
   // TODO escape
   new Ajax.Request(images_url(), 
-      {method: 'get', asynchronous:true, evalScripts:true, parameters:'term=' + value}
+      {method: 'get', asynchronous:true, evalScripts:true, parameters:'for_select=1&term=' + value}
   );
 }
