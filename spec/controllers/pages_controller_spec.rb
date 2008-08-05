@@ -19,7 +19,7 @@ describe PagesController do
 
     it "should render index template" do
       do_get
-      response.should render_template('index')
+      response.should render_template('/model/index')
     end
   
     it "should find all pages" do
@@ -33,34 +33,34 @@ describe PagesController do
     end
   end
 
-  describe "handling GET /pages.xml" do
-
-    before(:each) do
-      @page = mock_model(Page, :to_xml => "XML")
-      Page.stub!(:find).and_return(@page)
-    end
-  
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :index
-    end
-  
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-
-    it "should find all pages" do
-      Page.should_receive(:find).with(:all).and_return([@page])
-      do_get
-    end
-  
-    it "should render the found pages as xml" do
-      @page.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
-  end
+#  describe "handling GET /pages.xml" do
+#
+#    before(:each) do
+#      @page = mock_model(Page, :to_xml => "XML")
+#      Page.stub!(:find).and_return(@page)
+#    end
+#  
+#    def do_get
+#      @request.env["HTTP_ACCEPT"] = "application/xml"
+#      get :index
+#    end
+#  
+#    it "should be successful" do
+#      do_get
+#      response.should be_success
+#    end
+#
+#    it "should find all pages" do
+#      Page.should_receive(:find).with(:all).and_return([@page])
+#      do_get
+#    end
+#  
+#    it "should render the found pages as xml" do
+#      @page.should_receive(:to_xml).and_return("XML")
+#      do_get
+#      response.body.should == "XML"
+#    end
+#  end
 
   describe "handling GET /pages/1" do
 
@@ -81,7 +81,7 @@ describe PagesController do
   
     it "should render show template" do
       do_get
-      response.should render_template('show')
+      response.should render_template('/model/show')
     end
   
     it "should find the page requested" do
@@ -95,35 +95,35 @@ describe PagesController do
     end
   end
 
-  describe "handling GET /pages/1.xml" do
-
-    before(:each) do
-      @page = mock_model(Page, :to_xml => "XML")
-      @page.stub!(:children).and_return([@page,@page])
-      Page.stub!(:find).and_return(@page)
-    end
-  
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :show, :id => "1"
-    end
-
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-  
-    it "should find the page requested" do
-      Page.should_receive(:find).with("1").and_return(@page)
-      do_get
-    end
-  
-    it "should render the found page as xml" do
-      @page.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
-    end
-  end
+#  describe "handling GET /pages/1.xml" do
+#
+#    before(:each) do
+#      @page = mock_model(Page, :to_xml => "XML")
+#      @page.stub!(:children).and_return([@page,@page])
+#      Page.stub!(:find).and_return(@page)
+#    end
+#  
+#    def do_get
+#      @request.env["HTTP_ACCEPT"] = "application/xml"
+#      get :show, :id => "1"
+#    end
+#
+#    it "should be successful" do
+#      do_get
+#      response.should be_success
+#    end
+#  
+#    it "should find the page requested" do
+#      Page.should_receive(:find).with("1").and_return(@page)
+#      do_get
+#    end
+#  
+#    it "should render the found page as xml" do
+#      @page.should_receive(:to_xml).and_return("XML")
+#      do_get
+#      response.body.should == "XML"
+#    end
+#  end
 
   describe "handling GET /pages/new" do
 
@@ -143,7 +143,7 @@ describe PagesController do
   
     it "should render new template" do
       do_get
-      response.should render_template('new')
+      response.should render_template('/model/new')
     end
   
     it "should create an new page" do
@@ -180,7 +180,7 @@ describe PagesController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('edit')
+      response.should render_template('/model/edit')
     end
   
     it "should find the page requested" do
@@ -229,7 +229,7 @@ describe PagesController do
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('new')
+        response.should render_template('/model/new')
       end
       
     end
@@ -280,7 +280,7 @@ describe PagesController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('edit')
+        response.should render_template('/model/edit')
       end
 
     end
