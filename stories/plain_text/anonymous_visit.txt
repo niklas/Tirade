@@ -31,4 +31,4 @@ Story: Anonymous visitor clicks
     And he should see element: #footer
     And he should see element: a.login
     And he should see element: a.signup
-    And he should not see element: a.new.page
+    And he should not see link to new page

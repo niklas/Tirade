@@ -16,3 +16,23 @@ Story: Admin clicks
     And she should see element div.admin#admin_rendering_42101 a.edit.rendering
     And she should see element div.admin#admin_rendering_42102 a.edit.rendering
     And she should see link to edit rendering
+
+  Scenario: Visiting a non-existing Page
+    Given a fresh open browser window
+    And visitor logged in as quentin
+    And visitor is admin
+    When admin goes to /meaning-of-life
+    And admin looks at Page
+    Then he should see text: Page not found
+    And she should see element: #header
+    And she should see element: #footer
+    And she should see link to new page
+
+  Scenario: Creating a new Page
+    Given a fresh open browser window
+    And visitor logged in as quentin
+    And visitor is admin
+    And gone to /meaning-of-life
+    When she clicks on remote link to new page
+    Then the Toolbox should open
+    

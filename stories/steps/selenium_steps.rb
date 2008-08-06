@@ -10,6 +10,10 @@ steps_for(:selenium) do
     end
   end
 
+  Given  "gone to $path" do |path|   
+    $browser.open('http://localhost:4000' + path)    
+  end    
+
   When "$actor goes to $path" do |actor, path|   
     $browser.open('http://localhost:4000' + path)    
   end    
@@ -79,6 +83,15 @@ steps_for(:selenium) do
   When "clicks on '$link'" do |link|
     $browser.click "link=#{link}"
     $browser.wait_for_page_to_load
+  end
+
+  When /(he|she) clicks on (remote link|link) to (\w+) (\w+)/ do |_,remote_or_not,action,controller|
+    $browser.click "css=a.#{action}.#{controller}"
+    if remote_or_not =~ /remote/
+      wait_for_ajax
+    else
+      $browser.wait_for_page_to_load
+    end
   end
 
   When "fills in $field with '$value'" do |field, value|  

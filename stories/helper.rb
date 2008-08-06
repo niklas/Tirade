@@ -17,6 +17,12 @@ def selenium_driver
   Selenium::SeleniumDriver.new("localhost", 4444, ENV['SELENIUM_BROWSER'] || "*firefox", "http://localhost:4000", 15000)
 end    
 
+def wait_for_ajax(timeout = 15000)
+  $browser.wait_for_condition "window.Ajax.activeRequestCount == 0", timeout
+end
+
 require_step_group :selenium
 require_step_group :database
 require_step_group :authorization
+require_step_group :toolbox
+
