@@ -1,0 +1,17 @@
+Story: Admin clicks
+
+  As an User with Role 'admin'
+  I click through some public Pages
+  So I can see their Contents
+  And edit their Renderings
+
+  Scenario: Visiting Main Page
+    Given an open browser window
+    And visitor logged in as quentin
+    And visitor is admin
+    When admin goes to /
+    And admin looks at Page
+    Then she should see element a.logout
+    And she should see element body.role_admin
+    And she should see element div.admin#admin_rendering_42101 a.edit.rendering
+    And she should see element div.admin#admin_rendering_42102 a.edit.rendering

@@ -16,3 +16,7 @@ end
 def selenium_driver
   Selenium::SeleniumDriver.new("localhost", 4444, ENV['SELENIUM_BROWSER'] || "*firefox", "http://localhost:4000", 15000)
 end    
+
+require_step_group :selenium
+require_step_group :database
+require_step_group :authorization

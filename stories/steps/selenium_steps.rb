@@ -1,9 +1,12 @@
 steps_for(:selenium) do
 
-  When "$actor opens browser" do |actor|
+  Given /a(n| fresh) open browser window/ do |fresh_or_not|
     unless $browser
       $browser = selenium_driver
       $browser.start
+    end
+    if fresh_or_not =~ /fresh/
+      $browser.delete_all_visible_cookies
     end
   end
 
