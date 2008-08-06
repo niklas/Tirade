@@ -15,3 +15,4 @@ Story: Admin clicks
     And she should see element body.role_admin
     And she should see element div.admin#admin_rendering_42101 a.edit.rendering
     And she should see element div.admin#admin_rendering_42102 a.edit.rendering
+    And she should see link to edit rendering
