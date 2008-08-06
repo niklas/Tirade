@@ -42,7 +42,6 @@
                display: block;
                :hover {
                   background-color: #bdbdbd;
-                  cursor: pointer;
                }
             }
          }
