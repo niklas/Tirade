@@ -1,4 +1,5 @@
 class PublicController < ApplicationController
+  skip_before_filter :check_permissions
 
   def index
     @path = params[:path]
