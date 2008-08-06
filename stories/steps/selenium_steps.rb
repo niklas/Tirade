@@ -28,7 +28,7 @@ steps_for(:selenium) do
   end
 
   Then "$he_or_she should see $element" do |he_or_she, element|
-    response.should have_tag(element)
+    $browser.is_element_present("css=#{element}").should be_true
   end
 
   Then "page should include text: $text" do |text|
