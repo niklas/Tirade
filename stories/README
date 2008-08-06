@@ -1,0 +1,12 @@
+1. Run the webserver in test mode
+    script/server -e test -p 4000
+2. Run the Selenium Server
+    script/selenium
+3. Run your story
+    ruby stories/runner/anonynous_visit.rb
+
+
+TROUBLESHOOTING
+* If cannot find FIREFOX, set env vars to your Firefox lib dir (for step 2 and 3)
+    export SELENIUM_BROWSER="*firefox /usr/lib/firefox/firefox-2-bin"
+    export LD_LIBRARY_PATH="/usr/lib/firefox $LD_LIBRARY_PATH"

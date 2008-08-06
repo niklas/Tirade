@@ -1,0 +1,12 @@
+Story: Anonymous visitor clicks
+
+  As an anonymous visitor
+  I click through some Pages
+  So I can see their Contents
+
+  Scenario: Visiting Main Page
+    When visitor opens browser
+    And visitor goes to /
+    And visitor looks at Page
+    Then he should see #header
+    And he should see #footer
