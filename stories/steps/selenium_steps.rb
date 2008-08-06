@@ -1,8 +1,10 @@
 steps_for(:selenium) do
 
   When "$actor opens browser" do |actor|
-    $browser = selenium_driver
-    $browser.start
+    unless $browser
+      $browser = selenium_driver
+      $browser.start
+    end
   end
 
   When "$actor goes to $path" do |actor, path|   
@@ -29,6 +31,7 @@ steps_for(:selenium) do
 
   Then "$he_or_she should see $element" do |he_or_she, element|
     $browser.is_element_present("css=#{element}").should be_true
+    $browser.is_visible("css=#{element}").should be_true
   end
 
   Then "page should include text: $text" do |text|
