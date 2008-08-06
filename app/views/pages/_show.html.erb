@@ -1,35 +1,30 @@
 <% thepage ||= show || @page %>
 
 <% links do %>
-  <li><%= edit_page_link(thepage) %> </li>
+  <% unless thepage.root? %>
+    <li><%= show_page_link(thepage.parent, :label => 'Back') %> </li>
+  <% end %>
   <li><%= index_pages_link(:label => 'Back to List') %></li>
+  <li><%= edit_page_link(thepage) %> </li>
 <% end %>
 
+<dl class="index page">
+  <dt>Title (URL)</dt>
+  <dd> 
+    <%=h thepage.title %> 
+    (<%=h thepage.url %>)
+  </dd>
+  <% unless thepage.children.empty? %>
+  <dt>Subpages</dt>
+  <dd>
+    <ul>
+      <%= render :partial => '/pages/list_item', :collection => thepage.children %>
+    </ul>
+  </dd>
+  <% end %>
+</dl>
+
 <% accordion do %>
-
-  <% accordion_item "General", :content_tag => :dl do %>
-    <dt>Title</dt>
-    <dd> <%=h thepage.title %> </dd>
-    <dt>URL</dt>
-    <dd> '<%=h thepage.url %>' </dd>
-  <% end %>
-
-  <% accordion_item "Hierarchy", :content_tag => :dl do %>
-    <% unless thepage.root? %>
-    <dt>Parent</dt>
-    <dd> <%= public_content_link(thepage.parent) %> </dd>
-    <% end %>
-    <% unless thepage.children.empty? %>
-    <dt>Subpages</dt>
-    <dd>
-      <ul>
-        <% thepage.children.each do |subpage| %>
-          <li> <%= public_content_link(subpage) %> </li>
-        <% end %>
-      </ul>
-    </dd>
-    <% end %>
-  <% end %>
 
   <% accordion_item "Layout", :content_tag => :dl do %>
     <dt>Layout</dt>
