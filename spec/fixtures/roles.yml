@@ -1,0 +1,4 @@
+guest:
+  name: "Guest"
+  short_name: 'guest'
+  permissions: may_signup

@@ -4,7 +4,6 @@
 <head>
   <title>Tirade without title (admin layout)</title>
   <%= render :partial => '/layouts/head' %>
-  <%= stylesheet_link_tag('admin') if current_user.andand.is_admin? %>
   <%= yield :head %>
 </head>
 <body id="<%= controller_name -%>" class="<%= user_roles_classes -%>">

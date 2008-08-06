@@ -17,7 +17,10 @@ module ApplicationHelper
     unless current_user.nil?
       css = current_user.roles_short_names.collect {|r| "role_#{r}"}.join(' ') || ''
       css << " role_admin" if current_user.is_admin?
-      return css
+      css << "role_guest"
+      css
+    else
+      "role_guest"
     end
   end
   

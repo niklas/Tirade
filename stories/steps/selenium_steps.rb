@@ -29,13 +29,24 @@ steps_for(:selenium) do
     # post_via_redirect "/#{resource.downcase.pluralize}", {resource.downcase => attributes.to_hash_from_story}
   end
 
-  Then "$he_or_she should see $element" do |he_or_she, element|
-    $browser.is_element_present("css=#{element}").should be_true
-    $browser.is_visible("css=#{element}").should be_true
+  Then /(he|she) (should|should not) see element(?::)? (.*)/ do |_, yes_or_no, selector|
+    if yes_or_no == 'should'
+      $browser.is_element_present("css=#{selector}")
+      $browser.is_visible("css=#{selector}").should be_true
+    else
+      (
+        !$browser.is_element_present("css=#{selector}") ||
+        !$browser.is_visible("css=#{selector}")
+      ).should be_true
+    end
   end
 
-  Then "page should include text: $text" do |text|
-    # response.should have_text(/#{text}/)
+  Then /(he|she) (should|should_not) see text(?::)? (.*)/ do |_, yes_or_no, text|
+    if yes_or_no == 'should'
+      $browser.is_text_present(text).should be_true
+    else
+      $browser.is_text_present(text).should_not be_true
+    end
   end
 
   Then "page should include a notice ‘$notice_message’" do |notice_message|
@@ -55,7 +66,6 @@ steps_for(:selenium) do
   end
 
   When "fills in $field with '$value'" do |field, value|  
-    User.destroy_all
     $browser.type "css=##{field}", value 
   end  
 

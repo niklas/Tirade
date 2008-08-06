@@ -8,16 +8,27 @@ Story: Anonymous visitor clicks
     When visitor opens browser
     And visitor goes to /
     And visitor looks at Page
-    Then he should see #header
-    And he should see #footer
-    And he should see a.login
-    And he should see a.signup
+    Then he should see element: #header
+    And he should see element: #footer
+    And he should see element: a.login
+    And he should see element: a.signup
 
   Scenario: Visiting Welcome Page
     When visitor opens browser
     And visitor goes to /welcome
     And visitor looks at Page
-    Then he should see #header
-    And he should see #footer
-    And he should see a.login
-    And he should see a.signup
+    Then he should see element: #header
+    And he should see element: #footer
+    And he should see element: a.login
+    And he should see element: a.signup
+
+  Scenario: Visiting non-existing Page
+    When visitor opens browser
+    And visitor goes to /meaning-of-life
+    And visitor looks at Page
+    Then he should see text: Page not found
+    And he should see element: #header
+    And he should see element: #footer
+    And he should see element: a.login
+    And he should see element: a.signup
+    And he should not see element: a.new.page

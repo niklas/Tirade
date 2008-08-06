@@ -1,0 +1,3 @@
+may_signup:
+  app_method: 'new'
+  app_controller: 'user'
