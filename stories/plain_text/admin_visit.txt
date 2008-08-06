@@ -6,7 +6,7 @@ Story: Admin clicks
   And edit their Renderings
 
   Scenario: Visiting Main Page
-    Given an open browser window
+    Given a fresh open browser window
     And visitor logged in as quentin
     And visitor is admin
     When admin goes to /
