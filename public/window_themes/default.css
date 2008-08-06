@@ -20,7 +20,7 @@
 
 .dialog_n {
 	background: transparent url(default/top_mid.gif) repeat-x 0 0;	
-	height: 23px;
+	/* height: 23px; */
 }
 
 .dialog_ne {
