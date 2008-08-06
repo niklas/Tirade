@@ -10,3 +10,14 @@ Story: Anonymous visitor clicks
     And visitor looks at Page
     Then he should see #header
     And he should see #footer
+    And he should see a.login
+    And he should see a.signup
+
+  Scenario: Visiting Welcome Page
+    When visitor opens browser
+    And visitor goes to /welcome
+    And visitor looks at Page
+    Then he should see #header
+    And he should see #footer
+    And he should see a.login
+    And he should see a.signup
