@@ -1,7 +1,6 @@
 steps_for(:authorization) do
   Given "$actor logged in as $user_name" do |actor,user_name|
     @user = User.find_by_login(user_name)
-    $browser.start
     $browser.open '/login'
     $browser.type 'login', user_name
     $browser.type 'password', 'test'
