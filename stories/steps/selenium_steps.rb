@@ -61,6 +61,12 @@ steps_for(:selenium) do
     end
   end
 
+  Then /(he|she) should see field (\w+) filled with '(.*)'/ do |_, field_name, content|
+    selector = "css=##{field}"
+    $browser.is_element_present(selector).should be_true
+    $browser.get_value(selector).should == content
+  end
+
   Then /(he|she) (should|should_not) see text(?::)? (.*)/ do |_, yes_or_no, text|
     if yes_or_no == 'should'
       $browser.is_text_present(text).should be_true
@@ -94,11 +100,11 @@ steps_for(:selenium) do
     end
   end
 
-  When "fills in $field with '$value'" do |field, value|  
+  When "filling in $field with '$value'" do |field, value|  
     $browser.type "css=##{field}", value 
   end  
 
-  When "selects $field as '$option'" do |field, option|
+  When "selecting $field as '$option'" do |field, option|
     #selects option, :from => field
   end
 

@@ -3,36 +3,34 @@ Story: Admin clicks
   As an User with Role 'admin'
   I click through some public Pages
   So I can see their Contents
-  And edit their Renderings
+    And edit their Renderings
 
   Scenario: Visiting Main Page
     Given a fresh open browser window
-    And visitor logged in as quentin
-    And visitor is admin
+      And visitor logged in as quentin
+      And visitor is admin
     When admin goes to /
-    And admin looks at Page
+      And admin looks at Page
     Then she should see element a.logout
-    And she should see element body.role_admin
-    And she should see element div.admin#admin_rendering_42101 a.edit.rendering
-    And she should see element div.admin#admin_rendering_42102 a.edit.rendering
-    And she should see link to edit rendering
+      And she should see element body.role_admin
+      And she should see element div.admin#admin_rendering_42101 a.edit.rendering
+      And she should see element div.admin#admin_rendering_42102 a.edit.rendering
+      And she should see link to edit rendering
 
   Scenario: Visiting a non-existing Page
     Given a fresh open browser window
-    And visitor logged in as quentin
-    And visitor is admin
+      And visitor logged in as quentin
+      And visitor is admin
     When admin goes to /meaning-of-life
-    And admin looks at Page
-    Then he should see text: Page not found
-    And she should see element: #header
-    And she should see element: #footer
-    And she should see link to new page
-
-  Scenario: Creating a new Page
-    Given a fresh open browser window
-    And visitor logged in as quentin
-    And visitor is admin
-    And gone to /meaning-of-life
+      And admin looks at Page
+    Then she should see text: Page not found
+      And she should see element: #header
+      And she should see element: #footer
+      And she should see link to new page
     When she clicks on remote link to new page
     Then the Toolbox should open
+      And she should see field page_url filled with 'meaning-of-life'
+    When filling in page_title with 'The Meaning of Life"
+      And submitting toolbox form new_page
+    Then she should see text The Meaning of Life
     
