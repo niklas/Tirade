@@ -19,7 +19,7 @@ class Page < ActiveRecord::Base
   acts_as_nested_set
   include LazyNestedSet
 
-  attr_protected :created_at, :updated_at, :url
+  attr_protected :created_at, :updated_at
 
   acts_as_renderer
 
