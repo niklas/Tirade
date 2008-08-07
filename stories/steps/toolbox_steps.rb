@@ -5,7 +5,7 @@ steps_for(:toolbox) do
     $browser.is_visible("css=div#toolbox")
   end
 
-  When 'submitting toolbox form $form' do
+  When 'submitting toolbox form $form' do |form|
     $browser.submit form
     wait_for_ajax
   end
