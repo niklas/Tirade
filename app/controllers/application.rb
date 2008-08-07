@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
     @current_theme ||= (Settings.public_theme || Settings.current_theme)
   end
   hide_action :current_theme
+  helper_method :current_theme
 
   # Returns the names of all controllers that should be interacted with (resourceful)
   #  * must be plural
