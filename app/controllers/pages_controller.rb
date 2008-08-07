@@ -1,7 +1,22 @@
 class PagesController < ApplicationController
   feeds_toolbox_with :page
 
-  def after_update_toolbox_for_show(page)
-    page.unmark_all_active
+
+  def create
+    @model = @page = Page.new(params[:page])
+    if @page.save
+      flash[:notice] = "Page #{@page.title} created."
+      render_toolbox_action :show
+    else
+      flash[:notice] = "Creating Page failed."
+      render_toolbox_action :new
+    end
   end
+
+
+  def after_update_toolbox_for_show(page)
+    page.clear
+    page.insert_page(@page)
+  end
+
 end
