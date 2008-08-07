@@ -89,7 +89,11 @@ module Tirade
               [ "before_update_toolbox_for_#{action}",
                 "update_toolbox_for_#{action}", 
                 "after_update_toolbox_for_#{action}"].each do |meth|
-                  controller.send(meth,page) if controller.respond_to?(meth)
+                  begin
+                    ActiveRecord::Base.logger.debug("Toolbox: calling #{controller}##{meth}")
+                    controller.send(meth,page)
+                  rescue NoMethodError
+                  end
                 end
             end
           end
