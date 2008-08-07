@@ -30,7 +30,8 @@ Story: Admin clicks
     When she clicks on remote link to new page
     Then the Toolbox should open
       And she should see field page_url filled with 'meaning-of-life'
-    When filling in page_title with 'The Meaning of Life"
-      And submitting toolbox form new_page
+    When filling in page_title with "The Meaning of Life"
+      And she clicks on remote button named Create
     Then she should see text The Meaning of Life
+      And she should see text Page has no Layout
     

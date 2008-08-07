@@ -62,7 +62,7 @@ steps_for(:selenium) do
   end
 
   Then /(he|she) should see field (\w+) filled with '(.*)'/ do |_, field_name, content|
-    selector = "css=##{field}"
+    selector = "css=##{field_name}"
     $browser.is_element_present(selector).should be_true
     $browser.get_value(selector).should == content
   end
@@ -100,7 +100,16 @@ steps_for(:selenium) do
     end
   end
 
-  When "filling in $field with '$value'" do |field, value|  
+  When /(he|she) clicks on (remote button|button) named (\w+)/ do |_,remote_or_not,name|
+    $browser.click "name=commit value=#{name}"
+    if remote_or_not =~ /remote/
+      wait_for_ajax
+    else
+      $browser.wait_for_page_to_load
+    end
+  end
+
+  When /filling in (\S+) with "(.*)"/ do |field, value|  
     $browser.type "css=##{field}", value 
   end  
 
