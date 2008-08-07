@@ -59,7 +59,7 @@ class Page < ActiveRecord::Base
   end
 
   def before_validation
-    self.url = generated_url 
+    self.url = generated_url if self.url.blank?
     self.yui ||= 'doc'
   end
 
