@@ -32,7 +32,7 @@ module Tirade
               render_toolbox_action :edit
             end
             define_method :new do
-              instance_variable_set "@#{model_name}", model_class.new
+              instance_variable_set "@#{model_name}", model_class.new(params[model_name])
               instance_variable_set '@model', instance_variable_get("@#{model_name}")
               render_toolbox_action :new
             end
