@@ -46,12 +46,14 @@ class ImagesController < ApplicationController
           render_toolbox_action :new
         end
       else
+        # unsuccessful, normal case
         respond_to do |wants|
           wants.html
           wants.js { render_toolbox_action :new }
         end
      end
    end
+  end
   
   # ===========
   # = Members =
