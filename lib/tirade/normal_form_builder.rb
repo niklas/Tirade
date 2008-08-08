@@ -56,8 +56,8 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
       html << @template.link_to('cancel', {:controller => controller}) 
     else
       html << super('Save', :class => 'submit save')
-      html << @template.link_to('cancel', {:controller => controller, :action => 'show', :id => @object}) 
-      html << @template.link_to('back', {:controller => @object_name.to_s.pluralize}) 
+      html << @template.link_to('cancel', {:controller => controller, :action => 'show', :id => @object}, :class => "show #{@object_name}") 
+      html << @template.link_to('back', {:controller => @object_name.to_s.pluralize}, :class => "index #{@object_name}") 
     end
     html.map {|b| @template.content_tag(:li,b)}.join(' ')
   end
