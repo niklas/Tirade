@@ -17,7 +17,8 @@ module InterfaceHelper
   def accordion_item(title="Accordion Item", opts={}, &block)
     tag2 = opts.delete(:content_tag) || :div
     add_class_to_html_options(opts, 'accordion_content')
-    concat content_tag(:h3,title, :class => 'accordion_toggle'), block.binding
+    toggle_class = "accordion_toggle #{title.urlize}"
+    concat content_tag(:h3,title, :class => toggle_class), block.binding
     concat content_tag(tag2,capture(&block), opts), block.binding
   end
 
