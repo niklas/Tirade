@@ -67,7 +67,7 @@ steps_for(:selenium) do
     $browser.get_value(selector).should == content
   end
 
-  Then /(he|she) (should|should_not) see text(?::)? (.*)/ do |_, yes_or_no, text|
+  Then /(he|she) (should|should_not) see text(?::)? (.*?)/ do |_, yes_or_no, text|
     if yes_or_no == 'should'
       $browser.is_text_present(text).should be_true
     else
