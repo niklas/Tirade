@@ -19,6 +19,20 @@ module ActionView
         local_assigns['active_theme'] = get_current_theme(local_assigns)
         theme_support_old_render_file(template_path, use_full_path, local_assigns)
       end
+
+      def render_with_theme_support(options = {}, local_assigns = {}, &block)
+        search_path = [
+        "#{RAILS_ROOT}/themes/#{controller.current_theme}/views",       # for components
+        "#{RAILS_ROOT}/themes/#{controller.current_theme}",             # for layouts
+        ]
+
+        @finder.prepend_view_path(search_path)
+        @finder.prepend_view_path(search_path)
+        local_assigns['active_theme'] = get_current_theme(local_assigns)
+        render_without_theme_support(options, local_assigns, &block)
+      end
+
+      alias_method_chain :render, :theme_support
       
    private
    
