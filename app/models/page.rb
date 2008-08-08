@@ -115,8 +115,13 @@ class Page < ActiveRecord::Base
     @fresh
   end
   after_create :set_freshness
+  before_save :set_freshness_before_save
   private
   def set_freshness
     @fresh = true
+  end
+
+  def set_freshness_before_save
+    @fresh = true if layout_id_changed? or yui_changed?
   end
 end
