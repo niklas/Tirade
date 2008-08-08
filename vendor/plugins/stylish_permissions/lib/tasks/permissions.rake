@@ -26,7 +26,7 @@ namespace :tirade do
           end
         end
         Permission.find_all_by_processed(false).each do |p| 
-          p.destroy!
+          p.destroy
           puts "Destroying #{p.name}"
         end
       end
