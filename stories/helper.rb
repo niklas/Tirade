@@ -21,6 +21,11 @@ def wait_for_ajax(timeout = 15000)
   $browser.wait_for_condition "window.Ajax.activeRequestCount == 0", timeout
 end
 
+# TODO does not recognize moo.fx (ie. the accordion)
+def wait_for_effect(timeout = 15000)
+  $browser.wait_for_condition "window.Effect.Queue.size() == 0", timeout
+end
+
 require_step_group :selenium
 require_step_group :database
 require_step_group :authorization
