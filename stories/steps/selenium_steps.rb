@@ -113,8 +113,9 @@ steps_for(:selenium) do
     $browser.type "css=##{field}", value 
   end  
 
-  When "selecting $field as '$option'" do |field, option|
-    #selects option, :from => field
+  When /(she|he) selects (\S+) as '(\S+)'/ do |_,field, value|
+    field = "##{field}" unless field =~ /^#/
+    $browser.select "css=#{field}", "value=#{value}"
   end
 
   When "checks $checkbox" do |checkbox|
