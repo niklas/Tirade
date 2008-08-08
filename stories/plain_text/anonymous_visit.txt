@@ -24,7 +24,7 @@ Story: Anonymous visitor clicks
 
   Scenario: Visiting non-existing Page
     Given a fresh open browser window
-    When visitor goes to /meaning-of-life
+    When visitor goes to /meaning-of-my-life
       And visitor looks at Page
     Then he should see text: Page not found
       And he should see element: #header
