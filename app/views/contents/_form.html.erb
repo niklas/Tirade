@@ -11,9 +11,6 @@
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
       <%= f.hidden_field :type if content.new_record? %>
-    <% end %>
-
-    <% accordion_item "Specific" do %>
       <%= render_form_fields_for(f) %>
     <% end %>
 
