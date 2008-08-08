@@ -86,9 +86,9 @@ steps_for(:selenium) do
     # end 
   end
   
-  When "clicks on '$link'" do |link|
+  When /(he|she) clicks on '(.*)'( and continue|)/ do |_,link,continue|
     $browser.click "link=#{link}"
-    $browser.wait_for_page_to_load
+    $browser.wait_for_page_to_load if continue =~ /continue/
   end
 
   When /(he|she) clicks on (remote link|link) to (\w+) (\w+)/ do |_,remote_or_not,action,controller|
@@ -109,7 +109,11 @@ steps_for(:selenium) do
     end
   end
 
+  # TODO make third person (replace all old calls)
   When /filling in (\S+) with "(.*)"/ do |field, value|  
+    $browser.type "css=##{field}", value 
+  end  
+  When /(he|she) fills in (\S+) with '(.*)'/ do |_,field, value|  
     $browser.type "css=##{field}", value 
   end  
 
@@ -120,6 +124,11 @@ steps_for(:selenium) do
 
   When "checks $checkbox" do |checkbox|
     #checks checkbox
+  end
+
+  When /(she |he |)waits a bit for ajax/ do |_|
+    sleep 2.5
+    wait_for_ajax(1500)
   end
 
   Then "$actor closes browser" do |actor|

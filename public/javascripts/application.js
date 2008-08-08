@@ -20,7 +20,7 @@ function previewRendering(element,value) {
 }
 
 function searchAllContents(element,value) {
-  rendering_id = $$('#toolbox_content a.rendering').first().href.match(/(\d+)$/).last();
+  rendering_id = numeric_id_for($$('#toolbox_content form.edit_rendering').first());
   // TODO escape
   new Ajax.Request(new_rendering_content_url({rendering_id: rendering_id}), 
       {method: 'get', asynchronous:true, evalScripts:true, parameters:'term=' + value}

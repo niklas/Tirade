@@ -1,4 +1,5 @@
-<%= error_messages_for :rendering %>
+<% rendering ||= form %>
+<%= error_messages_for :rendering, :object => rendering %>
 
 
   	<form>
@@ -9,16 +10,12 @@
     <ul id="search_results">
     </ul>
 
-<% update_rendering_form(@rendering) do |f| %>
+  <% form_for(@rendering, :builder => NormalFormBuilder) do |f| %>
   <p>
-  	 <label for="content_type">Content (Type, id)</label>
-  	 <a name="content" />
     <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :label, :include_blank => true  %>
     <%= f.text_field :content_id %>
   </p>
   <p>
-    <label>Part</label>
-    <a name="part" />
       <% if f.object.has_content? %>
         <%= f.collection_select :part_id, Part.for_content(f.object.content), :id, :fullname, :include_blank => true %>
       <% else %>
@@ -28,11 +25,11 @@
 
   <% if f.object.part %>
   <p>
-    <label>Options (Part specific)</label>
     <%= f.select_options %>
   </p>
   <% end %>
 
-  <%= show_rendering_link(@rendering, :label => 'cancel') %> or
-  <%= submit_tag @rendering.new_record? ? "Create" : "Update", :class => 'submit' %>
+  <% links do %>
+    <%= f.submit %>
+  <% end %>
 <% end %>
