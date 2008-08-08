@@ -55,8 +55,8 @@ module RenderHelper
             content_tag(:div,
               link_to_remote('create rendering', 
                 {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),
-                 :html => {:class => 'create rendering create_rendering'},
                  :loading  => "new Toolbox('Toolbox', {'cornerRadius': 4})"},
+                 :class => 'create rendering create_rendering',
                  :method => :post) +
                  ' ' +
               content_tag('span', 'or drag one here'),
