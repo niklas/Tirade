@@ -34,4 +34,7 @@ Story: Admin clicks
       And she clicks on remote button named Create
     Then she should see text The Meaning of Life
       And she should see text Page has no Layout
+      And she should not see text: Page not found
+      And she should not see link to new page
+      And she should not see element: div.error
     
