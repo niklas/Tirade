@@ -82,7 +82,7 @@ module RenderHelper
       render(:partial => '/public/header', :object => thepage) + 
       (layout.andand.render_in_page(thepage) || page_without_layout_warning(thepage)) +
       render(:partial => '/public/footer', :object => thepage),
-      {:id => thepage.yui, :class => "page #{dom_id(thepage)} #{current_theme}"}
+      {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
     )
   end
 
@@ -100,6 +100,9 @@ module RenderHelper
 
   def clear
     remove_page
+    page.select("body > .header, body > .footer, body > .admin, body > .error").each do |p|
+      p.remove
+    end
   end
 
   def insert_page(thepage)
