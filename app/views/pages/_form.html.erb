@@ -17,7 +17,7 @@
 
     <% accordion_item "Layout" do %>
       <%= f.collection_select :layout_id, Grid.roots, :id, :label, {:include_blank => (f.object.root? ? false : 'from parent Page'), :label => 'Layout'}  %>
-      <%= link_to "create new layout", new_page_layout_path(f.object) %>
+      <%= new_page_layout_link f.object,  :label => "Create a new layout" %>
       <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
     <% end %>
 

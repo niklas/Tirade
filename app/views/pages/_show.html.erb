@@ -32,7 +32,8 @@
       <% unless thepage.final_layout.nil? %>
         <%=h thepage.final_layout.andand.label %>
       <% else %>
-        none! <%= link_to_remote('create layout', :url => page_layout_path(thepage), :method => :post) %>
+        none!
+        <%= edit_page_link thepage, :label => "select one", :parameters => {:anchor => 'layout'} %>
       <% end %>
     </dd>
     <dt>Width</dt>

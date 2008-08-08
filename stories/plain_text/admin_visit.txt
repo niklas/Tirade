@@ -31,10 +31,25 @@ Story: Admin clicks
     Then the Toolbox should open
       And she should see field page_url filled with 'meaning-of-life'
     When filling in page_title with "The Meaning of Life"
-      And she clicks on remote button named Create
+      And she clicks on toolbox button named Create
     Then she should see text The Meaning of Life
       And she should see text Page has no Layout
       And she should not see text: Page not found
       And she should not see link to new page
       And she should not see element: div.error
+    When she clicks on toolbox link to edit page
+    Then the Toolbox should stay open
+    When she opens accordion layout
+    Then she should see element: #page_layout_id
+    When she selects page_layout_id as '5050'
+      And she selects page_yui as 'doc4'
+      And she clicks on toolbox button named Save
+    Then the Toolbox should stay open
+      And she should see text: 1/2 - 1/2
+      And she should see text: 974px
+      And she should not see text Page has no Layout
+      And she should see link to create rendering
+    When she closes the Toolbox
+      Then the Toolbox should not be open
+
     
