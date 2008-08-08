@@ -83,14 +83,14 @@ module Tirade
       end
       def render_toolbox_action action
         respond_to do |wants|
-          wants.html { render :template => "/model/#{action}" }
+          # TODO should we really hard code the layout here?
+          wants.html { render :template => action.to_s, :layout => 'admin' }
           wants.js do
             render :update do |page|
               [ "before_update_toolbox_for_#{action}",
                 "update_toolbox_for_#{action}", 
                 "after_update_toolbox_for_#{action}"].each do |meth|
                   begin
-                    ActiveRecord::Base.logger.debug("Toolbox: calling #{controller}##{meth}")
                     controller.send(meth,page)
                   rescue NoMethodError
                   end
