@@ -110,4 +110,13 @@ class Page < ActiveRecord::Base
     render_to_string(:inline => '<%= render_page(page)  %>', :locals => { :page => self })
   end
 
+  attr_accessor :fresh
+  def fresh?
+    @fresh
+  end
+  after_create :set_freshness
+  private
+  def set_freshness
+    @fresh = true
+  end
 end
