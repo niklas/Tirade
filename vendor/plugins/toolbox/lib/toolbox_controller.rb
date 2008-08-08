@@ -39,6 +39,7 @@ module Tirade
             define_method :create do
               instance_variable_set '@model', model_class.new(params[model_name])
               model = instance_variable_get "@model"
+              instance_variable_set "@#{model_name}", model
               if model.save
                 flash[:notice] = "#{model_class_name} #{model.id} created."
                 redirect_toolbox_to :action => 'show', :id => model
