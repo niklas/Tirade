@@ -15,8 +15,10 @@ class PagesController < ApplicationController
 
 
   def after_update_toolbox_for_show(page)
-    page.clear
-    page.insert_page(@page)
+    if @page.fresh?
+      page.clear
+      page.insert_page(@page)
+    end
   end
 
 end
