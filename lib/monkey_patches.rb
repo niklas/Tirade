@@ -32,6 +32,11 @@ class String
   end
 end
 
+class Array
+  def skip(num=1)
+    self[num..-1]
+  end
+end
 
 module Sass
   module ThemeSupport
