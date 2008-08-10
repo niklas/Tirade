@@ -24,6 +24,12 @@ Toolbox = Class.create({
         recenterAuto:false});
       this.win.setStatusBar("&nbsp;");
       new Insertion.Bottom(this.win.element, Builder.node('div', { id: 'toolbox_sidebar'}, 'sidebar' ));
+      new Insertion.Bottom( $('toolbox_content'), 
+        $div({ id: 'scroller'},
+          $div({ class: 'frame', id: 'dashboard'}, "TODO: Dashboard")
+        )
+      );
+      this.scroller = $('scroller');
       this.win.setCloseCallback( function() {
         $$("div.active").each(function(value, index) {
           value.removeClassName("active"); 
@@ -33,14 +39,34 @@ Toolbox = Class.create({
       });
       this.win.showCenter();
     }
+    window['toolbox'] = this;
+    window['Toolbox'] = this;
   },
+  push: function() {
+    new Effect.Move(this.scroller, {duration: 0.5, mode: 'relative', y: 0, x: -this.win.width})
+  },
+  pop: function() {
+    new Effect.Move(this.scroller, {
+      duration: 0.5, mode: 'relative', 
+      y: 0, x: this.win.width,
+      afterFinish: function(scroller) {
+        Toolbox.scroller.getElementsBySelector('div.frame').last().remove();
+      }
+    })
+  }
+});
+
+Toolbox.Back = Behavior.create({
+  onclick: function() {
+    Toolbox.pop();
+  }
 });
 
 Toolbox.Accordion = Behavior.create({
   initialize: function() {
     this.accordion = new Fx.Accordion(
-      $$('#' + this.element.id + ' > *.accordion_toggle'), 
-      $$('#' + this.element.id + ' > *.accordion_content'), 
+      this.element.getElementsBySelector('*.accordion_toggle'),
+      this.element.getElementsBySelector('*.accordion_content'),
       {
         display: 0,
         alwaysHide: true,

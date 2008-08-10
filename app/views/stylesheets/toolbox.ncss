@@ -13,6 +13,20 @@
    tbody {
       overflow: auto; /* HACK so that toolbox elements are on top of flash */
    }
+   <% max_frames = 10 %>
+   div#toolbox_content {
+      overflow: hidden;
+      div#scroller {
+         height: 100%;
+         width: <%= max_frames * 100 %>%; /* yes, very wide */
+         div.frame {
+            overflow: auto;
+            height: 100%;
+            float: left;
+            width: <%= 100.0 / max_frames %>%;
+         }
+      }
+   }
    td#toolbox_table_content {
       border-left: 1px solid <%= colors[:border_dark] %>;
       border-right: 1px solid <%= colors[:border_dark] %>;

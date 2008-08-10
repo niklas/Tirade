@@ -16,6 +16,12 @@ module ToolboxHelper
     end
   end
 
+  def append_toolbox_frame(frame_content)
+    frame_content = render(frame_content) if frame_content.is_a? Hash
+    page.insert_html :bottom, :scroller, context.content_tag(:div,frame_content,:class => 'frame')
+    page.toolbox.push
+  end
+
   def tabnav_to_s(name)
     partial_name = "widgets/#{name}_tabnav"
     render :partial => partial_name
@@ -23,6 +29,10 @@ module ToolboxHelper
 
   def close_toolbox
     page.select('#toolbox').each {|tb| tb.remove }
+  end
+
+  def toolbox_back_button(label='back')
+    link_to(label,'#', :class => 'back')
   end
 
 end

@@ -122,10 +122,7 @@ module Tirade
         )
       end
       def update_toolbox_for_show(page)
-        page.update_toolbox(
-          :header => "#{@model.class_name} (#{@model.id})",
-          :content => {:partial => "/#{@model.table_name}/show", :object => @model}
-        )
+        page.append_toolbox_frame(:partial => "/#{@model.table_name}/show", :object => @model)
       end
 
     end

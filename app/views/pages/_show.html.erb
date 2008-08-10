@@ -1,9 +1,7 @@
 <% thepage ||= show || @page %>
 
 <% links do %>
-  <% unless thepage.root? %>
-    <li><%= show_page_link(thepage.parent, :label => 'Back') %> </li>
-  <% end %>
+  <li> <%= toolbox_back_button %> </li>
   <li><%= index_pages_link(:label => 'Back to List') %></li>
   <li><%= edit_page_link(thepage) %> </li>
 <% end %>
