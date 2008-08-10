@@ -10,6 +10,9 @@
   }
 %>
 #toolbox  {
+   tbody {
+      overflow: auto; /* HACK so that toolbox elements are on top of flash */
+   }
    td#toolbox_table_content {
       border-left: 1px solid <%= colors[:border_dark] %>;
       border-right: 1px solid <%= colors[:border_dark] %>;
