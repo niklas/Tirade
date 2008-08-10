@@ -80,7 +80,7 @@ Remote.LinkWithToolbox = Behavior.create({
           from_top = null;
           from_left = null;
         }
-        new Toolbox({'top': from_top, 'left': from_left})
+        new Tirade.Toolbox({'top': from_top, 'left': from_left})
       }
     })
   },

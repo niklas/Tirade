@@ -1,7 +1,6 @@
 <% thepage ||= show || @page %>
 
 <% links do %>
-  <li> <%= toolbox_back_button %> </li>
   <li><%= index_pages_link(:label => 'Back to List') %></li>
   <li><%= edit_page_link(thepage) %> </li>
 <% end %>

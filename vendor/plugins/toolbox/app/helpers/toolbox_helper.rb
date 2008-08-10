@@ -16,10 +16,14 @@ module ToolboxHelper
     end
   end
 
-  def append_toolbox_frame(frame_content)
-    frame_content = render(frame_content) if frame_content.is_a? Hash
-    page.insert_html :bottom, :scroller, context.content_tag(:div,frame_content,:class => 'frame')
-    page.toolbox.push
+  def push_toolbox_content(content)
+    content = render(content) if content.is_a? Hash
+    page.toolbox.push_content content
+  end
+
+  def update_last_toolbox_frame(content)
+    content = render(content) if content.is_a? Hash
+    page.toolbox.update_last_frame content
   end
 
   def tabnav_to_s(name)
@@ -29,10 +33,6 @@ module ToolboxHelper
 
   def close_toolbox
     page.select('#toolbox').each {|tb| tb.remove }
-  end
-
-  def toolbox_back_button(label='back')
-    link_to(label,'#', :class => 'back')
   end
 
 end

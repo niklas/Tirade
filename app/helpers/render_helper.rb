@@ -55,7 +55,7 @@ module RenderHelper
             content_tag(:div,
               link_to_remote('create rendering', 
                 {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),
-                 :loading  => "new Toolbox('Toolbox', {'cornerRadius': 4})"},
+                 :loading  => "new Tirade.Toolbox('Toolbox', {'cornerRadius': 4})"},
                  :class => 'create rendering create_rendering',
                  :method => :post) +
                  ' ' +

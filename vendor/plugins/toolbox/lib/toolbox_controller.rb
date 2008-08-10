@@ -42,30 +42,30 @@ module Tirade
               instance_variable_set "@#{model_name}", model
               if model.save
                 flash[:notice] = "#{model_class_name} #{model.id} created."
-                redirect_toolbox_to :action => 'show', :id => model
+                render_toolbox_action :created
               else
                 flash[:notice] = "Creating #{model_class_name} failed."
-                render_toolbox_action :new
+                render_toolbox_action :fail_created
               end
             end
             define_method :update do
               model = instance_variable_get "@model"
               if model.update_attributes(params[model_name])
                 flash[:notice] = "#{model_class_name} #{model.id} updated."
-                redirect_toolbox_to :action => 'show', :id => model
+                render_toolbox_action :updated
               else
                 flash[:notice] = "Updating #{model_class_name} #{model.id} failed."
-                render_toolbox_action :edit
+                render_toolbox_action :failed_update
               end
             end
             define_method :destroy do
               model = instance_variable_get "@#{model_name}"
               if model.destroy
                 flash[:notice] = "#{model_class_name} #{model.id} destroyed."
-                redirect_toolbox_to :action => 'index'
+                render_toolbox_action :destroyed
               else
                 flash[:notice] = "Destroying #{model_class_name} #{model.id} failed."
-                redirect_toolbox_to :action => 'show', :id => model
+                render_toolbox_action :failed_destroy
               end
             end
           end
@@ -74,6 +74,7 @@ module Tirade
     end
     module InstanceMethods
       def redirect_toolbox_to args
+        raise "this is depricated"
         respond_to do |wants|
           wants.html { redirect_to args }
           wants.js do
@@ -101,28 +102,42 @@ module Tirade
         end
       end
       def update_toolbox_for_index(page)
-        page.update_toolbox(
-          :header => self.controller_name.humanize,
-          :content => {
-            :partial => "/#{self.controller_name}/list", 
-            :object => @models
-          }
-        )
+        page.toolbox.push_title self.controller_name.humanize
+        page.push_toolbox_content( :partial => "/#{self.controller_name}/list", :object => @models)
       end
       def update_toolbox_for_edit(page)
-        page.update_toolbox(
-          :header => "Edit #{@model.class_name} (#{@model.id})",
-          :content => {:partial => "/#{@model.table_name}/form", :object => @model}
-        )
+        page.toolbox.push_title "Edit #{@model.class_name} (#{@model.id})"
+        page.push_toolbox_content(:partial => "/#{@model.table_name}/form", :object => @model)
       end
       def update_toolbox_for_new(page)
-        page.update_toolbox(
-          :header => "New #{@model.class_name}",
-          :content => {:partial => "/#{@model.table_name}/form", :object => @model}
-        )
+        page.toolbox.push_title "New #{@model.class_name}"
+        page.push_toolbox_content(:partial => "/#{@model.table_name}/form", :object => @model)
       end
       def update_toolbox_for_show(page)
-        page.append_toolbox_frame(:partial => "/#{@model.table_name}/show", :object => @model)
+        page.toolbox.push_title "#{@model.class_name} (#{@model.id})"
+        page.push_toolbox_content(:partial => "/#{@model.table_name}/show", :object => @model)
+      end
+
+      def update_toolbox_for_created(page)
+        page.toolbox.pop
+      end
+
+      def update_toolbox_for_updated(page)
+        page.toolbox.pop
+      end
+
+      def update_toolbox_for_destroyed(page)
+        page.toolbox.pop
+      end
+
+      def update_toolbox_for_failed_create(page)
+        page.update_last_toolbox_frame(:partial => "/#{@model.table_name}/form", :object => @model)
+      end
+      def update_toolbox_for_failed_update(page)
+        page.update_last_toolbox_frame(:partial => "/#{@model.table_name}/form", :object => @model)
+      end
+      def update_toolbox_for_failed_destroy(page)
+        page.update_last_toolbox_frame(:partial => "/#{@model.table_name}/show", :object => @model)
       end
 
     end
