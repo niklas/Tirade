@@ -1,0 +1,73 @@
+Story: Admin creates news from scratch
+
+  As a User with Role 'admin'
+  I create a new Page
+    And I create its Layout
+    And I create a NewsFolder
+  And add some Items
+  So public visitors can read news.
+
+  Scenario: Visiting a non-existing Page
+    Given a fresh open browser window
+      And visitor logged in as quentin
+      And visitor is admin
+    When admin goes to /meaning-of-life
+      And admin looks at Page
+    Then she should see text: Page not found
+      And she should see element: #header
+      And she should see element: #footer
+      And she should see link to new page
+
+    When she clicks on remote link to new page
+    Then the Toolbox should open
+      And she should see field page_url filled with 'meaning-of-life'
+
+    When filling in page_title with "The Meaning of Life"
+      And she clicks on toolbox button named Create
+    Then she should see text The Meaning of Life
+      And she should see text Page has no Layout
+      And she should not see text: Page not found
+      And she should not see link to new page
+      And she should not see element: div.error
+
+    When she clicks on toolbox link to edit page
+    Then the Toolbox should stay open
+
+    When she opens accordion layout
+    Then she should see element: #page_layout_id
+
+    When she selects page_layout_id as '5050'
+      And she selects page_yui as 'doc4'
+      And she clicks on toolbox button named Save
+    Then the Toolbox should stay open
+      And she should see text: 1/2 - 1/2
+      And she should see text: 974px
+      And she should not see text Page has no Layout
+      And she should see link to create rendering
+
+    When she clicks on remote link to create rendering
+    Then the Toolbox should stay open
+      And she should see text: no part assigned
+      And she should see link to edit rendering
+
+    When she clicks on toolbox link to edit rendering
+    Then she should see text Edit Rendering
+      And she should see element input#search
+      And she should see element select#rendering_content_type
+      And she should see element input#rendering_content_id
+      And she should see element select#rendering_part_id
+      And she should see link to show rendering
+
+    When she fills in search with 'welcome'
+      And she waits a bit for ajax
+    Then she should see element #search_results a.use.result
+
+    When she clicks on 'Welcome'
+      And she selects rendering_part_id as '255618338'
+      And she clicks on toolbox button named Save
+    Then she should see element div.active.rendering.simple_preview.document
+      And she should see text: If you read this, you earned a big hug! 
+      And she should see text: Welcome
+
+    When she closes the Toolbox
+      Then the Toolbox should not be open

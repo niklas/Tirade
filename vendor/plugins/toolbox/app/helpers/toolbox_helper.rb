@@ -17,8 +17,13 @@ module ToolboxHelper
   end
 
   def push_toolbox_content(content)
-    content = render(content) if content.is_a? Hash
-    page.toolbox.push_content content
+    if content.is_a? Hash
+      title = content.delete(:title)
+      content = render(content)
+    else
+      title = "#{context.controller.action_name} #{context.controller.controller_name}"
+    end
+    page.toolbox.push_content content, :href => context.request.url, :title => title
   end
 
   def update_last_toolbox_frame(content)

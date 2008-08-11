@@ -97,37 +97,63 @@ module Tirade
                   rescue NoMethodError
                   end
                 end
+              controller.update_toolbox_status(page)
             end
           end
         end
       end
       def update_toolbox_for_index(page)
-        page.toolbox.push_title self.controller_name.humanize
-        page.push_toolbox_content( :partial => "/#{self.controller_name}/list", :object => @models)
+        page.push_toolbox_content( 
+          :partial => "/#{self.controller_name}/list", :object => @models,
+          :title => self.controller_name.humanize
+        )
+        page.toolbox.slide_left
       end
       def update_toolbox_for_edit(page)
-        page.toolbox.push_title "Edit #{@model.class_name} (#{@model.id})"
-        page.push_toolbox_content(:partial => "/#{@model.table_name}/form", :object => @model)
+        page.push_toolbox_content(
+          :partial => "/#{@model.table_name}/form", :object => @model,
+          :title => "Edit #{@model.class_name} (#{@model.id})"
+        )
+        page.toolbox.slide_left
       end
       def update_toolbox_for_new(page)
-        page.toolbox.push_title "New #{@model.class_name}"
-        page.push_toolbox_content(:partial => "/#{@model.table_name}/form", :object => @model)
+        page.push_toolbox_content(
+          :partial => "/#{@model.table_name}/form", :object => @model,
+          :title => "New #{@model.class_name}"
+        )
+        page.toolbox.slide_left
       end
       def update_toolbox_for_show(page)
-        page.toolbox.push_title "#{@model.class_name} (#{@model.id})"
-        page.push_toolbox_content(:partial => "/#{@model.table_name}/show", :object => @model)
+        page.push_toolbox_content(
+          :partial => "/#{@model.table_name}/show", :object => @model,
+          :title => "#{@model.class_name} (#{@model.id})"
+        )
+        page.toolbox.slide_left
       end
 
       def update_toolbox_for_created(page)
-        page.toolbox.pop
+        page.push_toolbox_content(
+          :partial => "/#{@model.table_name}/show", :object => @model,
+          :title => "#{@model.class_name} (#{@model.id})"
+        )
+        page.toolbox.remove_second_last
       end
 
       def update_toolbox_for_updated(page)
-        page.toolbox.pop
+        page.push_toolbox_content(
+          :partial => "/#{@model.table_name}/show", :object => @model,
+          :title => "#{@model.class_name} (#{@model.id})"
+        )
+        page.toolbox.remove_second_last
       end
 
+      # TODO destroy from show (must load @models)
       def update_toolbox_for_destroyed(page)
-        page.toolbox.pop
+        page.push_toolbox_content( 
+          :partial => "/#{self.controller_name}/list", :object => @models,
+          :title => self.controller_name.humanize
+        )
+        page.toolbox.slide_left
       end
 
       def update_toolbox_for_failed_create(page)
@@ -138,6 +164,18 @@ module Tirade
       end
       def update_toolbox_for_failed_destroy(page)
         page.update_last_toolbox_frame(:partial => "/#{@model.table_name}/show", :object => @model)
+      end
+
+      def update_toolbox_status(page)
+        page.toolbox.set_status(
+          if notice = page.context.flash[:notice]
+            notice
+          elsif error = page.context.flash[:error]
+            error
+          else
+            "Done"
+          end
+        )
       end
 
     end
