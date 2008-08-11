@@ -71,3 +71,12 @@ Story: Admin creates news from scratch
 
     When she closes the Toolbox
       Then the Toolbox should not be open
+
+    When she clicks on remote link to create rendering
+    Then the Toolbox should open
+      And she should see text: no part assigned
+      And she should see link to edit rendering
+
+    When she opens accordion content
+    Then she should see text: none
+      And she should see link to edit rendering

@@ -1,11 +1,12 @@
+<% rendering ||= show_for_rendering %>
 <div class="show content">
-<% if show_for_rendering.has_content? && (content = show_for_rendering.content) %>
+<% if rendering.has_content? && (content = rendering.content) %>
   <%= content.title %>
   (<%= content.class -%>: <%= content.id -%>)
+  <%= edit_rendering_content_link(rendering) %>
 <% else %>
   <%=_ 'none' %>
 <% end %>
-  <%= edit_rendering_content_link(show_for_rendering) %>
-  <%= edit_rendering_content_link(show_for_rendering, :label => 'Select', :parameters => {:anchor => 'content'}) %>
+  <%= edit_rendering_link(rendering, :label => 'Select', :parameters => {:anchor => 'content'}) %>
 </div>
 
