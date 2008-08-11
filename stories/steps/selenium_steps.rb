@@ -38,7 +38,7 @@ steps_for(:selenium) do
 
   Then /(he|she) (should|should not) see element(?::)? (.*)/ do |_, yes_or_no, selector|
     if yes_or_no == 'should'
-      $browser.is_element_present("css=#{selector}")
+      $browser.is_element_present("css=#{selector}").should be_true
       $browser.is_visible("css=#{selector}").should be_true
     else
       (
