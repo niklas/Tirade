@@ -74,14 +74,19 @@ Tirade.Toolbox = Class.create({
   frames: function() {
     return this.scroller.getElementsBySelector('div.frame');
   },
+  syncLastFrame: function() {
+    if ( last_frame = Toolbox.frames().last() ) {
+      this.win.setTitle(last_frame.title);
+      this.markLastFrame();
+    }
+  },
   pop: function() {
     new Effect.Move(this.scroller, {
       duration: 0.3, mode: 'relative', 
       y: 0, x: this.win.width,
       afterFinish: function(scroller) {
         Toolbox.frames().last().remove();
-        Toolbox.win.setTitle(Toolbox.frames().last().title);
-        Toolbox.markLastFrame();
+        Toolbox.syncLastFrame();
       }
     })
   },
