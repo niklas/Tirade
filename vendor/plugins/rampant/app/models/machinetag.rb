@@ -1,7 +1,7 @@
 class Machinetag < ActiveRecord::Base
   has_many :machinetaggings
 
-  FullNameRegexp = /\A(\w+):(\w+)=['"]?(.+?)['"]?\Z/x
+  FullNameRegexp = /\A([a-z]\w+):([a-z]\w+)=['"]?(.+?)['"]?\Z/x
   # TODO this would be MUCH cooler (and stricter), but I'm doing something wrong
   #FullNameRegexp = /
   #                  (?:\A(\w+):(\w+)="(.+?)"\Z) | 
