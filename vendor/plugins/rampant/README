@@ -1,0 +1,12 @@
+Rampant is a Ruby on Rails Plugin, spiced with Desert to make loosely Associtation between text containing Models.
+
+Its a combination of:
+* autotags (http://expressica.com/auto_tags/)
+* machine_tags
+
+So, if a Model.acts_as_rampant, its content will be analyzed before it is saved.
+This analysis (from Yahoo) gives back some terms htat are relevant for this Model.
+These are saved in our DB too.
+
+Now, you can search, group, recommend or associate all the Models, independent of their Class etc.
+So, if you have n different Models in your app, you won't need n*n join tables anymore.
