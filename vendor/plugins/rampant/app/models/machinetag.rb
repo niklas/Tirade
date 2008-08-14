@@ -1,6 +1,19 @@
 class Machinetag < ActiveRecord::Base
   has_many :machinetaggings
 
+  FullNameRegexp = /\A(\w+):(\w+)=['"]?(.+?)['"]?\Z/x
+  # TODO this would be MUCH cooler (and stricter), but I'm doing something wrong
+  #FullNameRegexp = /
+  #                  (?:\A(\w+):(\w+)="(.+?)"\Z) | 
+  #                  (?:\A(\w+):(\w+)='(.+?)'\Z) |
+  #                  (?:\A(\w+):(\w+)=(.+)\Z)
+  #                 /x
+
+  validates_format_of :full_name, :with => FullNameRegexp, :allow_blank => true
+  validates_format_of :namespace, :with => /\w+/
+  validates_format_of :key, :with => /\w+/
+  validates_format_of :value, :with => /[\w\s]+/
+
   def full_name
     if value =~ /\s+/
       %Q[#{namespace}:#{key}="#{value}"]
@@ -9,32 +22,24 @@ class Machinetag < ActiveRecord::Base
     end
   end
 
-  # We want only downcased strings
-  [:namespace,:key,:value].each do |field|
-    define_method "#{field}=" do |rval|
-      self[field] = rval.downcase
-    end
-  end
-
   def full_name=(new_full_name)
-    if new_full_name =~ /^(\w+):(\w+)="(.+)"$/
-      self.namespace =      $1
-      self.key =                  $2
-      self.value =                      $3
-    elsif new_full_name =~ /^(\w+):(\w+)='(.+)'$/
-      self.namespace =         $1
-      self.key =                     $2
-      self.value =                         $3
-    elsif new_full_name =~ /^(\w+):(\w+)=(.+)$/
-      self.namespace =         $1
-      self.key =                     $2
-      self.value =                        $3
+    if match = FullNameRegexp.match(new_full_name)
+      self.namespace = match[1]
+      self.key = match[2]
+      self.value = match[3]
     else
-      errors.add(:full_name, "not a valid")
+      self.errors.add(:full_name, "is not a valid machine tag string")
     end
   end
   alias_method :fullname, :full_name
   alias_method :fullname=, :full_name=
+
+  # We want only downcased strings
+  [:namespace,:key,:value].each do |field|
+    define_method "#{field}=" do |rval|
+      self[field] = rval.downcase unless rval.blank?
+    end
+  end
 
   def self.new_from_string(stringed)
     # FIXME this forbids commas in the value
@@ -106,8 +111,7 @@ class Machinetag < ActiveRecord::Base
   
   # Return the machinetag's name
   def to_s
-    name
+    full_name
   end
   
-  validates_presence_of :name
 end

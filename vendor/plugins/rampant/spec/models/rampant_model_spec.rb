@@ -27,6 +27,5 @@ describe Thingy do
     it "should remember the fields to auto tag" do
       @class.auto_tag_fields.should include(:name)
     end
-
   end
 end
