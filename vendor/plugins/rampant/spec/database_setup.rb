@@ -1,5 +1,5 @@
 module DatabaseSetup
-  ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :dbfile => ":memory:")
+  #ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :dbfile => ":memory:")
  
   # AR keeps printing annoying schema statements
   #$stdout = StringIO.new
@@ -7,7 +7,7 @@ module DatabaseSetup
   def setup_db
     ActiveRecord::Base.logger
     ActiveRecord::Migration.verbose = false
-    ActiveRecord::Schema.define(:version => 1) do
+    ActiveRecord::Schema.define do
       create_table :thingies do |t|
         t.string :name
       end
