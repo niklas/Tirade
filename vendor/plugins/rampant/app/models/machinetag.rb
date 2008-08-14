@@ -1,6 +1,65 @@
 class Machinetag < ActiveRecord::Base
   has_many :machinetaggings
 
+  def full_name
+    if value =~ /\s+/
+      %Q[#{namespace}:#{key}="#{value}"]
+    else
+      %Q[#{namespace}:#{key}=#{value}]
+    end
+  end
+
+  # We want only downcased strings
+  [:namespace,:key,:value].each do |field|
+    define_method "#{field}=" do |rval|
+      self[field] = rval.downcase
+    end
+  end
+
+  def full_name=(new_full_name)
+    if new_full_name =~ /^(\w+):(\w+)="(.+)"$/
+      self.namespace =      $1
+      self.key =                  $2
+      self.value =                      $3
+    elsif new_full_name =~ /^(\w+):(\w+)='(.+)'$/
+      self.namespace =         $1
+      self.key =                     $2
+      self.value =                         $3
+    elsif new_full_name =~ /^(\w+):(\w+)=(.+)$/
+      self.namespace =         $1
+      self.key =                     $2
+      self.value =                        $3
+    else
+      errors.add(:full_name, "not a valid")
+    end
+  end
+  alias_method :fullname, :full_name
+  alias_method :fullname=, :full_name=
+
+  def self.new_from_string(stringed)
+    # FIXME this forbids commas in the value
+    list = stringed.split(/,/)
+    tags = []
+    list.each do |name|
+      tag = new :full_name => name
+      tags << tag if tag.errors.empty?
+    end
+    tags
+  end
+
+  # Returns conditions array that can be used in ActiveRecord:Base.find or similar
+  # TODO use a named_scope
+  # TODO take options to ie. ignore namespaces
+  def self.conditions_from_string(string, opts={})
+    new_from_string(string).collect do |tag|
+      tag.to_condition(opts)
+    end.join(' AND ')
+  end
+
+  def to_condition(opts={})
+    sanitize_sql(['(namespace = ? AND key = ? AND value = ?)', namespace, key, value])
+  end
+
   # Parse a text string into an array of tokens for use as machinetags
   def self.parse(list)
     machinetag_names = []

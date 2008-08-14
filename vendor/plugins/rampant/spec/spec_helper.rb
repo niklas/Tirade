@@ -8,10 +8,4 @@ include DatabaseSetup
 
 Spec::Runner.configure do |config|
   config.fixture_path = "#{File.dirname(__FILE__)}/../spec/fixtures"
-  config.before(:each) do
-    setup_db
-  end
-  config.after(:each) do
-    teardown_db
-  end
 end
