@@ -1,3 +1,4 @@
+require_dependency 'acts_as_machinetaggable'
 module Rampant
   def self.included(base)
     base.class_eval { extend SingletonMethods }
@@ -16,6 +17,13 @@ module Rampant
         include InstanceMethods
         extend ClassMethods
         cattr_accessor :auto_tag_fields
+
+        extend ActiveRecord::Acts::Machinetaggable::SingletonMethods          
+        include ActiveRecord::Acts::Machinetaggable::InstanceMethods
+        has_many :machinetaggings, :as => :machinetaggable, :dependent => :destroy, :include => :machinetag
+        has_many :machinetags, :through => :machinetaggings
+          
+        after_save :update_machinetags
       end
 
 
