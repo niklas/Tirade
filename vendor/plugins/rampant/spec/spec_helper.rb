@@ -14,7 +14,4 @@ Spec::Runner.configure do |config|
   config.after(:each) do
     teardown_db
   end
-  config.after(:all) do
-    teardown_db
-  end
 end
