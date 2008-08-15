@@ -7,21 +7,23 @@ module ActiveRecord
         # Options:
         #   :match - Match machinetaggables matching :all or :any of the machinetags, defaults to :any
         #   :user  - Limits results to those owned by a particular user
-        def find_machinetagged_with(machinetags, options = {})
+        def find_machinetagged_with(tag_string, options = {})
           options.assert_valid_keys([:match, :user])
+
+          conditions = Machinetag.conditions_from_string(tag_string, options)
+          return [] if conditions.blank?
           
-          machinetags = Machinetag.parse(machinetags)
-          return [] if machinetags.empty?
+          this_taggings = "#{table_name}_machinetaggings"
+          this_tags = "#{table_name}_machinetags"
           
-          group = "#{table_name}_machinetaggings.machinetaggable_id HAVING COUNT(#{table_name}_machinetaggings.machinetaggable_id) = #{machinetags.size}" if options[:match] == :all
-          conditions = sanitize_sql(["#{table_name}_machinetags.name IN (?)", machinetags])
-          conditions += sanitize_sql([" AND #{table_name}_machinetaggings.user_id = ?", options[:user]]) if options[:user]
-          
+          conditions += sanitize_sql([" AND #{this_taggings}.user_id = ?", options[:user]]) if options[:user]
+          group = "#{this_taggings}.machinetaggable_id HAVING COUNT(#{this_taggings}.machinetaggable_id) = #{machinetags.size}" if options[:match] == :all
+
           find(:all, 
             { 
               :select =>  "DISTINCT #{table_name}.*",
-              :joins  =>  "LEFT OUTER JOIN machinetaggings #{table_name}_machinetaggings ON #{table_name}_machinetaggings.machinetaggable_id = #{table_name}.#{primary_key} AND #{table_name}_machinetaggings.machinetaggable_type = '#{name}' " +
-                          "LEFT OUTER JOIN machinetags #{table_name}_machinetags ON #{table_name}_machinetags.id = #{table_name}_machinetaggings.machinetag_id",
+              :joins  =>  "LEFT OUTER JOIN machinetaggings #{this_taggings} ON #{this_taggings}.machinetaggable_id = #{table_name}.#{primary_key} AND #{this_taggings}.machinetaggable_type = '#{name}' " +
+                          "LEFT OUTER JOIN machinetags #{this_tags} ON #{this_tags}.id = #{this_taggings}.machinetag_id",
               :conditions => conditions,
               :group  =>  group
             })
@@ -44,16 +46,17 @@ module ActiveRecord
           end
         end
         
+        # FIXME this may break other functionality, srsly
         def user_id=(new_user_id)
           @new_user_id = User.find(new_user_id).id
         end
         
         def machinetag_list(user = nil)
           unless user
-            machinetags.collect { |machinetag| machinetag.name.include?(" ") ? %("#{machinetag.name}") : machinetag.name }.join(" ")
+            machinetags
           else
-            machinetags.delete_if { |machinetag| !user.machinetags.include?(machinetag) }.collect { |machinetag| machinetag.name.include?(" ") ? %("#{machinetag.name}") : machinetag.name }.join(" ")
-          end
+            machinetags.delete_if { |machinetag| !user.machinetags.include?(machinetag) }
+          end.collect(&:full_name).join(" ")
         end
         
         def update_machinetags
@@ -62,13 +65,13 @@ module ActiveRecord
               unless @new_user_id
                 machinetaggings.destroy_all
               else
-                machinetaggings.find(:all, :conditions => "user_id = #{@new_user_id}").each do |machinetagging|
+                machinetaggings.for_user(@new_user_id).each do |machinetagging|
                   machinetagging.destroy
                 end
               end
             
-              Machinetag.parse(@new_machinetag_list).each do |name|
-                Machinetag.find_or_create_by_name(name).machinetag(self, @new_user_id)
+              Machinetag.new_from_string(@new_machinetag_list).each do |tag|
+                Machinetag.find_or_create_by_full_name(tag.full_name).apply_to!(self, @new_user_id)
               end
 
               machinetags.reset

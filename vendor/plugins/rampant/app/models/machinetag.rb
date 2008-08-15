@@ -41,13 +41,18 @@ class Machinetag < ActiveRecord::Base
     end
   end
 
+  def self.find_or_create_by_full_name(full_name)
+    t = new :full_name => full_name
+    find_or_create_by_namespace_and_key_and_value(t.namespace, t.key, t.value)
+  end
+
   def self.new_from_string(stringed)
     # FIXME this forbids commas in the value
     list = stringed.split(/,/)
     tags = []
     list.each do |name|
       tag = new :full_name => name
-      tags << tag if tag.errors.empty?
+      tags << tag if tag.valid?
     end
     tags
   end
@@ -58,42 +63,17 @@ class Machinetag < ActiveRecord::Base
   def self.conditions_from_string(string, opts={})
     new_from_string(string).collect do |tag|
       tag.to_condition(opts)
-    end.join(' AND ')
+    end.join(' OR ')
   end
 
   def to_condition(opts={})
-    sanitize_sql(['(namespace = ? AND key = ? AND value = ?)', namespace, key, value])
-  end
-
-  # Parse a text string into an array of tokens for use as machinetags
-  def self.parse(list)
-    machinetag_names = []
-    
-    return machinetag_names if list.blank?
-    
-    # first, pull out the quoted machinetags
-    list.gsub!(/\"(.*?)\"\s*/) { machinetag_names << $1; "" }
-    
-    # then, replace all commas with a space
-    list.gsub!(/,/, " ")
-    
-    # then, get whatever is left
-    machinetag_names.concat(list.split(/\s/))
-    
-    # delete any blank machinetag names
-    machinetag_names = machinetag_names.delete_if { |t| t.empty? }
-    
-    # downcase all machinetags
-    machinetag_names = machinetag_names.map! { |t| t.downcase }
-    
-    # remove duplicates
-    machinetag_names = machinetag_names.uniq
-    
-    return machinetag_names
+    t = self.class.table_name
+    sanitize_sql(["(#{t}.namespace = ? AND #{t}.key = ? AND #{t}.value = ?)", namespace, key, value])
   end
   
-  # Machinetag a machinetaggable with this machinetag, optionally add user to add owner to machinetagging
-  def machinetag(machinetaggable, user_id = nil)
+  # apply a machinetaggable with this machinetag, optionally add user to add owner to machinetagging
+  def apply_to!(machinetaggable, user_id = nil)
+    save if new_record?
     machinetaggings.create :machinetaggable => machinetaggable, :user_id => user_id
     machinetaggings.reset
     @machinetagged = nil
@@ -105,8 +85,8 @@ class Machinetag < ActiveRecord::Base
   end
   
   # Compare machinetags by name
-  def ==(comparison_object)
-    super || name == comparison_object.to_s
+  def ==(other)
+    super || self.full_name == other.full_name
   end
   
   # Return the machinetag's name
