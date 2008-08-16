@@ -2,20 +2,22 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 class Thingy < ActiveRecord::Base
   acts_as_rampant :fields => :name
+  validates_uniqueness_of :name
 end
 
 describe Thingy do
   before(:all) do
     setup_db
+    Machinetag.destroy_all
+    Machinetagging.destroy_all
+    @class = Thingy
+    @rampanted = @class.new :name => "Homer Simpson's Villa"
   end
   after(:all) do
+    @rampanted.destroy unless @rampanted.nil?
     teardown_db
   end
   describe "that acts as rampant" do
-    before(:each) do
-      @class = Thingy
-      @rampanted = @class.new :name => "Homer Simpson's Villa"
-    end
     it "should be an ActiveRecord Model" do
       @class.should < ActiveRecord::Base
     end
@@ -49,7 +51,7 @@ describe Thingy do
       end
     end
 
-    describe "applying some machinetags and saving" do
+    describe "which got some machinetags applied and saved" do
       before(:each) do
         @given_tagstring = %[geo:home="Gulf of Youtube",fluid:wet=water]
         @mtags = [ 
@@ -57,37 +59,37 @@ describe Thingy do
           Machinetag.new(:namespace => 'fluid', :key => 'wet', :value => "water")  ,
         ]
         @rampanted.machinetag_list = @given_tagstring
-        #@saving = lambda { @rampanted.save }
-        @rampanted.save
+        @rampanted.save.should be_true
       end
 
-      # WORKS but too much load for the poor Yahoo guys
-      #it "should parse the given string" do
-      #  Machinetag.should_receive(:new_from_string).with(@given_tagstring).and_return(@mtags)
-      #  @saving.call
-      #end
-
-      #it "should update machinetags" do
-      #  @rampanted.should_receive(:update_machinetags).and_return(true)
-      #  @saving.call
-      #end
-
-      it "should leave 2 Machinetags" do
-        Machinetag.should have_at_least(2).records
+      it "should leave 3 Machinetags" do
+        Machinetag.should have_at_least(3).records
       end
 
-      it "should leave 2 Machinetaggings" do
-        Machinetagging.should have_at_least(2).records
+      it "should leave 3 Machinetaggings" do
+        Machinetagging.should have_at_least(3).records
       end
 
-      it "should return the same machinetags" do
+      it "should have one auto tag" do
+        @rampanted.machinetags.auto.count.should == 1
+      end
+
+      it "should not generate more thingies" do
+        Thingy.should have(1).record
+      end
+
+      it "should have two no-auto tags" do
+        @rampanted.machinetags.without_auto.count.should == 2
+      end
+
+      it "should return the manual machinetags" do
         @rampanted.machinetag_list.should include(%[geo:home="gulf of youtube"])
         @rampanted.machinetag_list.should include(%[fluid:wet=water])
       end
 
-      it "should still have the auto:ca tags" do
-        @rampanted.machinetag_list.should include(%[auto:ca="homer simpson"])
-      end
+      #it "should still have the auto:ca tags" do
+      #  @rampanted.machinetag_list.should include(%[auto:ca="homer simpson"])
+      #end
     end
   end
 end

@@ -13,6 +13,14 @@ class Machinetag < ActiveRecord::Base
   validates_format_of :namespace, :with => /\w+/
   validates_format_of :key, :with => /\w+/
   validates_format_of :value, :with => /[\w\s]+/
+  validates_uniqueness_of :value, :scope => [:namespace,:key]
+
+  named_scope :in_namespace, lambda {|ns| {:conditions => ['namespace = ?', ns]}}
+  named_scope :for_key, lambda {|key| {:conditions => ['key = ?', key]}}
+  named_scope :with_value, lambda {|val| {:conditions => ['value = ?', val]}}
+
+  named_scope :without_auto, {:conditions => ['namespace != ?', 'auto']}
+  named_scope :auto, {:conditions => ['namespace = ?', 'auto']}
 
   def full_name
     if value =~ /\s+/
@@ -42,8 +50,13 @@ class Machinetag < ActiveRecord::Base
   end
 
   def self.find_or_create_by_full_name(full_name)
-    t = new :full_name => full_name
-    find_or_create_by_namespace_and_key_and_value(t.namespace, t.key, t.value)
+    tag = new :full_name => full_name
+    if found = find_by_namespace_and_key_and_value(tag.namespace, tag.key, tag.value)
+      return found
+    else
+      tag.save!
+      return tag
+    end
   end
 
   def self.new_from_string(stringed)
@@ -72,11 +85,14 @@ class Machinetag < ActiveRecord::Base
   end
   
   # apply a machinetaggable with this machinetag, optionally add user to add owner to machinetagging
-  def apply_to!(machinetaggable, user_id = nil)
-    save if new_record?
-    machinetaggings.create :machinetaggable => machinetaggable, :user_id => user_id
-    machinetaggings.reset
-    @machinetagged = nil
+  def apply_to!(record, user_id = nil)
+    logger.debug("applying #{self.full_name} to #{record.to_s}")
+    if new_record?
+      self.class.find_or_create_by_full_name(self.full_name).apply_to!(record, user_id)
+    else
+      machinetaggings.create! :machinetaggable => record, :user_id => user_id
+      @machinetagged = nil
+    end
   end
   
   # A list of all the objects machinetagged with this machinetag

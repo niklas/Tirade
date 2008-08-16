@@ -42,7 +42,7 @@ module ActiveRecord
       module InstanceMethods
         def machinetag_list=(new_machinetag_list)
           unless machinetag_list == new_machinetag_list
-            @new_machinetag_list = new_machinetag_list
+            @new_machinetags = Machinetag.new_from_string new_machinetag_list
           end
         end
         
@@ -53,33 +53,34 @@ module ActiveRecord
         
         def machinetag_list(user = nil)
           unless user
-            machinetags
+            machinetags(true)
           else
             machinetags.delete_if { |machinetag| !user.machinetags.include?(machinetag) }
-          end.collect(&:full_name).join(" ")
+          end.collect(&:full_name).join(',')
         end
         
         def update_machinetags
-          if @new_machinetag_list
+          logger.debug("called update_machinetags.. pending #{@new_machinetags.andand.length}")
+          unless @new_machinetags.blank?
             Machinetag.transaction do
               unless @new_user_id
-                machinetaggings.destroy_all
+                machinetaggings.without_auto.destroy_all
               else
-                machinetaggings.for_user(@new_user_id).each do |machinetagging|
-                  machinetagging.destroy
-                end
+                machinetaggings.without_auto.for_user(@new_user_id).destroy_all
               end
             
-              Machinetag.new_from_string(@new_machinetag_list).each do |tag|
-                Machinetag.find_or_create_by_full_name(tag.full_name).apply_to!(self, @new_user_id)
+              @new_machinetags.each do |tag|
+                tag.apply_to!(self, @new_user_id)
               end
 
               machinetags.reset
               machinetaggings.reset
-              @new_machinetag_list = nil
+              @new_machinetags = []
             end
           end
+          true
         end
+
       end
     end
   end
