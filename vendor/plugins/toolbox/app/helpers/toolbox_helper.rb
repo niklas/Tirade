@@ -27,7 +27,12 @@ module ToolboxHelper
   end
 
   def update_last_toolbox_frame(content)
-    content = render(content) if content.is_a? Hash
+    if content.is_a? Hash
+      if title = content.delete(:title)
+        page.toolbox.set_title title
+      end
+      content = render(content) 
+    end
     page.toolbox.update_last_frame content
   end
 

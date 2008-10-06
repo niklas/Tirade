@@ -1,0 +1,22 @@
+<% links do %>
+  <li><%= link_to 'cancel', toolbox_demo_path, :class => 'index cancel back' %></li>
+  <li> <%= submit_tag 'Save' %> </li>
+<% end %>
+
+<% accordion do %>
+  <% ["A small bit of text", "Another bit of text", "Hallo Dani, wie gehts", "Ich bin bekifft."].each do |snippet| %>
+    <% accordion_item snippet do %>
+      <%= show snippet, :length %>
+      <% show snippet, :content do %>
+        <%= snippet %>
+      <% end %>
+      <% show snippet, :words do %>
+        <ul>
+          <% snippet.split(' ').each do |word| %>
+            <li><%= word %> </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

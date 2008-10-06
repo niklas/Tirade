@@ -22,7 +22,10 @@ Tirade.Toolbox = Class.create({
         minHeight: 500,
         destroyOnClose: true, 
         minimizable: false,
-        recenterAuto:false});
+        recenterAuto:false,
+      onResize: function() { Toolbox.adjustFrames(); },
+      onMaximize: function() { Toolbox.adjustFrames(); }
+      });
       this.win.setStatusBar("&nbsp;");
       new Insertion.Bottom(this.win.element, Builder.node('div', { id: 'toolbox_sidebar'}, 'sidebar' ));
       new Insertion.Bottom( $('toolbox_content'), 
@@ -43,6 +46,15 @@ Tirade.Toolbox = Class.create({
     }
     return true;
   },
+  adjustFrames: function() {
+    var width = $('toolbox_content').getWidth();
+    var height = $('toolbox_content').getHeight();
+    console.debug("adjusting Frames", width, height);
+    new Effect.Move(this.scroller, {duration: 0, mode: 'absolute', x: (1-this.frames().size())*width});
+    this.frames().each(function(frame) {
+      frame.setSize(width,height);
+    });
+  },
   pushContent: function(content,options) {
     var options = Object.extend({
       class:      'frame',
@@ -52,8 +64,11 @@ Tirade.Toolbox = Class.create({
     frame = new Element('div', options);
     frame.insert(content);
     this.scroller.insert({bottom: frame});
-    this.win.setTitle(frame.title);
+    this.setTitle(frame.title);
     this.markLastFrame();
+  },
+  setTitle: function(title) {
+    this.win.setTitle(title);
   },
   slideLeft: function() {
     new Effect.Move(this.scroller, {duration: 0.3, mode: 'relative', y: 0, x: -this.win.width})
@@ -126,6 +141,7 @@ Tirade.Toolbox.Back = Behavior.create({
 
 Tirade.Toolbox.Accordion = Behavior.create({
   initialize: function() {
+    console.debug("Accordion on", this.element);
     this.accordion = new Fx.Accordion(
       this.element.getElementsBySelector('*.accordion_toggle'),
       this.element.getElementsBySelector('*.accordion_content'),

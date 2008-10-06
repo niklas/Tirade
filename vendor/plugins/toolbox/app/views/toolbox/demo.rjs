@@ -1,0 +1,5 @@
+page.push_toolbox_content(
+                   :title => "Toolbox Demo #{@demo}",
+                   :partial => "/toolbox/demo#{@demo}"
+                   )
+page.toolbox.slide_left                   

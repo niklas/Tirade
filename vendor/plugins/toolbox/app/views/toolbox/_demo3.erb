@@ -1,0 +1,16 @@
+<% links do %>
+  <li><%= link_to 'Back to Demo 1', '', :class => 'index back' %></li>
+  <li><%= link_to 'Edit', toolbox_demo_path(2), :class => 'edit' %></li>
+<% end %>
+
+<% accordion do %>
+  <% ["A small bit of text", "Another bit of text"].each do |snippet| %>
+    <% accordion_item snippet do %>
+      <% snippet.split(' ').each do |a| %>
+        <% snippet.split(' ').each do |b| %>
+          <%= a %> <%= b %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

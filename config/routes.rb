@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.routes_from_plugin(:stylish_permissions)
+  map.routes_from_plugin(:toolbox)
 
   
   map.with_options :path_prefix => '/manage' do |manage|

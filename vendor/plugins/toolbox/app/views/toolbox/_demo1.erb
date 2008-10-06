@@ -1,0 +1,29 @@
+<% links do %>
+  <li><%= link_to 'Edit', toolbox_demo_path(2), :class => 'edit' %></li>
+<% end %>
+
+<% accordion do %>
+  <% ["A small bit of text", "Another bit of text"].each do |snippet| %>
+    <% accordion_item snippet do %>
+      <%= show snippet, :length %>
+      <% show snippet, :content do %>
+        <%= snippet %>
+        <%= link_to 'Edit', toolbox_demo_path(2), :class => 'edit' %>
+      <% end %>
+      <% show snippet, :reverse_content do %>
+        <%= snippet.reverse %>
+      <% end %>
+      <% show snippet, :explosion do %>
+        Over 9000 letter parts! 
+        <%= link_to "Explode!", toolbox_demo_path(3) %>
+      <% end %>
+      <% show snippet, :words do %>
+        <ul>
+          <% snippet.split(' ').each do |word| %>
+            <li><%= word %> </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

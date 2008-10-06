@@ -78,6 +78,7 @@
         margin:0pt;
         padding:0pt 10px;
         text-decoration:none;
+        clear: both;
       }
       *.accordion_toggle_active {
         background: <%= colors[:active] %>;
@@ -127,12 +128,33 @@
     }
     dl {
 	   margin: 0;
-	   dt {
-	       margin-top: 10px;
-	       font-weight:bold;
-	   }
-      dd {
-        margin-left: 0.9em;
+      float: left;
+      width: 100%;
+      di {
+        width: 100%;
+        float: left;
+        clear: both;
+        border-bottom: thin solid #aaa;
+        .odd {
+          background-color: #ffffff;
+        }
+        .even {
+          background-color: #eeeeee;
+        }
+        dt {
+          font-weight:bold;
+          float: left;
+          clear: left;
+          margin: 0.3em;
+        }
+        dd {
+          margin: 0.3em;
+          float: right;
+          clear: right;
+          ul {
+            margin: 0;
+          }
+        }
       }
 	}
     div.warning {

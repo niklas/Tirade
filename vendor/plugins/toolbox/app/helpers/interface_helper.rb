@@ -15,7 +15,7 @@ module InterfaceHelper
   end
 
   def accordion_item(title="Accordion Item", opts={}, &block)
-    tag2 = opts.delete(:content_tag) || :div
+    tag2 = opts.delete(:content_tag) || :dl
     add_class_to_html_options(opts, 'accordion_content')
     toggle_class = "accordion_toggle #{title.urlize}"
     concat content_tag(:h3,title, :class => toggle_class), block.binding
@@ -95,5 +95,26 @@ module InterfaceHelper
   # helps to genric find the current_model in @model or @#{ressource}
   def current_model
     @model || instance_variable_get("@#{@controller.controller_name.singularize}") || raise("no model loaded")
+  end
+
+  def show(obj,name,opts={}, &block)
+    label = opts[:label] || _(name.to_s.humanize)
+    if block_given?
+      concat di_dt_dd(label, capture(&block)), block.binding
+    else
+      di_dt_dd(label, obj.send(name))
+    end
+  end
+
+  def di_dt_dd(dt,dd)
+    content_tag(:di,
+                content_tag(:dt, dt) +
+                content_tag(:dd, dd),
+                :class => toolbox_row_cycle
+               )
+  end
+
+  def toolbox_row_cycle
+    cycle('odd', 'even', :name => 'toolbox_rows')
   end
 end
