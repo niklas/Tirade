@@ -9,7 +9,6 @@ Event.addBehavior({
     'div.grid form.destroy.grid': Remote,
     'div#toolbox form[enctype="multipart/form-data"]': Remote.MultipartForm,
     'div#toolbox form:not([enctype="multipart/form-data"])': Remote.MultipartForm,
-    'div#toolbox a[href!="#"]:not([class~=back])': Remote,
     'div#toolbox form.update.rendering': Observed(previewRendering,{frequency: 5}),
     'div#toolbox form.update.content': Observed(previewRendering,{frequency: 5}),
     'div#toolbox form.update.part': Observed(previewRendering,{frequency: 5}),
@@ -31,7 +30,4 @@ Event.addBehavior({
       'body.role_admin div.grid.yui-u': SortableRenderings,
 
     '#pictures_list': RemovableImages,
-    'div#toolbox div#toolbox_content div.frame div.accordion': Tirade.Toolbox.Accordion,
-    'div#toolbox div#toolbox_content div.frame': Tirade.Toolbox.Frame,
-    'div#toolbox div#toolbox_content div.frame ul.linkbar a.back': Tirade.Toolbox.Back
 });

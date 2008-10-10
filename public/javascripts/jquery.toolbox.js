@@ -56,16 +56,23 @@ var Toolbox = {
           // TODO download dashboard if not already loaded
         })
       });
+      $('div#toolbox > div.body > div.content > div.frame form').livequery(function() { $(this).ajaxifyForm() });
+      $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').livequery(function() { 
+        console.debug("New Linkbar!");
+        if ($(this).find('> li > a.back').length == 0) {
+          $(this).appendDom([Toolbox.newBackButton()])
+        }
+      });
     };
     this.setSizes();
     return this.element();
   },
   setSizes: function() {
-    $('div#toolbox div.body').height(
-      $('div#toolbox').height() - $('div#toolbox div.head').height() - $('div#toolbox div.foot').height()
+    this.scroller().height(
+      $('div#toolbox').height() - $('div#toolbox > div.head').height() - $('div#toolbox > div.foot').height()
     );
     $('div#toolbox > div.body > div.content > div.frame').height( $('div#toolbox > div.body'));
-    // $('div#toolbox > div.body').scrollTo('div.frame:last',{axis:'x'});
+    this.scroller().scrollTo('div.frame:last',{axis:'x'});
   },
   push: function(content,options) {
     var options = jQuery.extend({
@@ -76,9 +83,6 @@ var Toolbox = {
       .appendDom([
         {tagName: 'div', class: 'frame', href: options.href, innerHTML: content }
       ]);
-    if (this.last().find('> ul.linkbar > li > a.back').length == 0) {
-      this.last().find('> ul.linkbar').appendDom([this.newBackButton()])
-    }
     this.next();
     this.setTitle(options.title);
   },
@@ -99,10 +103,11 @@ var Toolbox = {
     var options = jQuery.extend({
       title:      '[No Title]'
     }, options);
-    this.element()
-      .find('> div.body > div.content > div.frame[@href=href]')
-        .html(content);
+    this.frameByHref(href).html(content).css('background','yellow');
     this.setTitle(options.title);
+  },
+  frameByHref: function(href) {
+    return this.element().find('> div.body > div.content > div.frame[@href=' + href + ']')
   },
   popAndRefreshWith: function(content,options) {
     var options = jQuery.extend({
@@ -169,4 +174,23 @@ jQuery.fn.useToolbox = function(options) {
       dataType: 'script'
     });
   });
+};
+
+jQuery.fn.ajaxifyForm = function() {
+  if ($(this).attr('enctype') == "multipart/form-data") {
+    name_and_id = "iframe_for_" + $(this).attr('id');
+    $(this).appendDom([
+      {tagName: 'iframe', name: name_and_id, id: name_and_id, 
+       src: 'about:blank', style: "width:1px;height:1px;border:0px" }
+    ]);
+    action = $(this).attr('action');
+    if (action.match(/\?/))
+      $(this).attr('action', action + '&iframe_remote=1&format=js');
+    else
+      $(this).attr('action', action + '?iframe_remote=1&format=js');
+    return $(this);
+  } else {
+    // Standard Form
+    return $(this).ajaxForm({dataType: 'script'});
+  }
 };

@@ -17,7 +17,10 @@ class SessionsController < ApplicationController
       flash[:notice] = "Logged in successfully"
     else
       flash[:notice] = "Logged in failed. Is your name and password correct?"
-      render :action => 'new'
+      respond_to do |wants|
+        wants.js   { render :action => 'new' }
+        wants.html { render :action => 'new' }
+      end
     end
   end
 

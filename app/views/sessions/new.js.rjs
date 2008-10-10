@@ -1,1 +1,1 @@
-page.push_toolbox_content(:partial => "form", :title => 'Log in')
+page.push_or_refresh_last(:partial => "form", :title => 'Log in')

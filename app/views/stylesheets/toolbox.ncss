@@ -188,7 +188,7 @@ div#muster {
       background-repeat:no-repeat; */
       float: left;
       display: block;
-      font-size: 130%;
+      font-size: 85%;
     }
   }
   img.resize {
