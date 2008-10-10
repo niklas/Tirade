@@ -36,8 +36,7 @@ module ToolboxHelper
 
   def update_last_toolbox_frame(content)
     title, content = prepare_content(content)
-    page.toolbox.set_title title if title
-    page.toolbox.update_last_frame content
+    page.toolbox.update_last_frame content, :title => title
   end
 
   def tabnav_to_s(name)
@@ -56,6 +55,7 @@ module ToolboxHelper
         content[:partial] = "/#{@model.table_name}/#{part}"
         content[:object] ||= @model || @models
       end
+      content[:layout] ||= '/layouts/toolbox'
       [content.delete(:title), render(content)]
     else
       ["#{context.controller.action_name} #{context.controller.controller_name}", content]

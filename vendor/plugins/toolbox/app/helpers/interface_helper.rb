@@ -22,17 +22,13 @@ module InterfaceHelper
     concat content_tag(tag2,capture(&block), opts), block.binding
   end
 
-  # Creates a bar of links
+  # Creates a bar of links (get it later  per yield(:linkbar), as seen in /layouts/_toolbox
   #    <% links do %>
   #      <li><%= link_to "Home", root_url %></li>
   #      <%= li_link_to "Home", root_url %>
   #    <% end %>
   def links(content=nil,opts={}, &block)
-    inner ||= capture(&block)
-    add_class_to_html_options(opts, 'linkbar')
-    html = content_tag(:ul, inner, opts)
-    concat html, block.binding if block_given?
-    html
+    content_for(:linkbar, capture(&block))
   end
 
   def li_link_to(name, options = {}, html_options = nil)
