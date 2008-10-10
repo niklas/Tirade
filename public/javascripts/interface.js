@@ -14,6 +14,7 @@ jQuery.fn.resourceId = function() {
 
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); })
+  $('a.login').livequery(function() { $(this).useToolbox(); })
   $('a.with_toolbox').livequery(function() { $(this).useToolbox(); })
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not([class=back])').livequery(function() { $(this).useToolbox(); })
   $('body div.grid').each(function(i) {

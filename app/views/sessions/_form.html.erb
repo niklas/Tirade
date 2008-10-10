@@ -1,0 +1,30 @@
+<% links do %>
+  <%= li_link_to "Sign up", signup_path %>
+  <%= li_link_to "Forgot Password?", forgot_password_path %>
+<% end %>
+
+<% form_tag session_path do -%>
+
+<p>
+  <label for="login">Login</label>
+  <%= text_field_tag 'login' %>
+</p>
+
+<p>
+  <label for="password">Password</label>
+  <%= password_field_tag 'password' %>
+</p>
+
+<p>
+  <%= check_box_tag 'remember_me', '', false,:class => 'checkbox' %> 
+  <label for="remember_me" class="checkbox">Remember Me</label>
+</p>
+
+<p>
+  <%= submit_tag 'Log in', :class => 'submit' %>
+</p>
+<p>
+  <%= link_to "Forgot Password?", forgot_password_path %>
+</p>
+<% end -%>
+

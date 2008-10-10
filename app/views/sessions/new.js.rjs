@@ -1,0 +1,1 @@
+page.push_toolbox_content(:partial => "form", :title => 'Log in')
