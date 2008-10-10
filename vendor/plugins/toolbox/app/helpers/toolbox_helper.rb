@@ -16,23 +16,27 @@ module ToolboxHelper
     end
   end
 
-  def push_toolbox_content(content)
-    if content.is_a? Hash
-      title = content.delete(:title)
-      content = render(content)
+  def push_or_refresh(content)
+    if context.params[:refresh].blank?
+      push_toolbox_content(content)
     else
-      title = "#{context.controller.action_name} #{context.controller.controller_name}"
+      refresh_toolbox_content(content)
     end
-    page.toolbox.push_content content, :href => context.request.url, :title => title
+  end
+
+  def push_toolbox_content(content)
+    title, content = prepare_content(content)
+    page.toolbox.push content, :href => context.request.url, :title => title
+  end
+
+  def refresh_toolbox_content(content)
+    title, content = prepare_content(content)
+    page.toolbox.update_frame_by_href context.request.url, content, :title => title
   end
 
   def update_last_toolbox_frame(content)
-    if content.is_a? Hash
-      if title = content.delete(:title)
-        page.toolbox.set_title title
-      end
-      content = render(content) 
-    end
+    title, content = prepare_content(content)
+    page.toolbox.set_title title if title
     page.toolbox.update_last_frame content
   end
 
@@ -44,5 +48,19 @@ module ToolboxHelper
   def close_toolbox
     page.select('#toolbox').each {|tb| tb.remove }
   end
+
+  private
+  def prepare_content(content)
+    if content.is_a? Hash
+      if part = content[:partial] && part.is_a?(String)
+        content[:partial] = "/#{@model.table_name}/#{part}"
+        content[:object] ||= @model || @models
+      end
+      [content.delete(:title), render(content)]
+    else
+      ["#{context.controller.action_name} #{context.controller.controller_name}", content]
+    end
+  end
+
 
 end

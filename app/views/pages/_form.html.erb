@@ -1,8 +1,8 @@
-<% page ||= form %>
+<% thepage ||= form %>
 
-<%= error_messages_for :page, :object => page %>
+<%= error_messages_for :page, :object => thepage %>
 
-<% form_for(page, :builder => NormalFormBuilder) do |f| %>
+<% form_for(thepage, :builder => NormalFormBuilder) do |f| %>
   <% accordion do %>
 
     <% accordion_item "General" do %>
@@ -11,7 +11,7 @@
     <% end %>
 
     <% accordion_item "Hierarchy" do %>
-      <%= f.collection_select :wanted_parent_id, Page.all_except(page), :id, :title, :label => 'Parent Page', :include_blank => true  %>
+      <%= f.collection_select :wanted_parent_id, Page.all_except(thepage), :id, :title, :label => 'Parent Page', :include_blank => true  %>
     <% end %>
 
 

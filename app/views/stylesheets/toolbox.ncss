@@ -86,10 +86,93 @@ div#muster {
       width: 1000%; /* 10 frames maximum (default) */
       height: 100%;
       div.frame {
-         overflow: auto;
+         overflow: hidden; /* auto would be better, but flickers on mozilla */
          float: left;
          height: 100%;
          width: 10%; /* just default */
+         ul.linkbar {
+           background: <%= colors[:element] %>;
+           border-bottom: 1px solid <%= colors[:base] %>;
+           color:#000000;
+           display:block;
+           font-size:12px;
+           font-weight:normal;
+           height:30px;
+           line-height:30px;
+           margin:0pt;
+           padding:0pt 10px;
+           text-decoration:none;
+           li {
+             a,button,input.submit {
+               float: right;
+               padding: 0.3em;
+               margin: 0.4em;
+               background: <%= colors[:clickable] %>;
+               color: <%= colors[:base] %>;
+               text-decoration:none;
+               .back {
+                 float: left;
+               }
+             }
+           }
+         }
+         div.accordion {
+           *.accordion_toggle {
+             background: <%= colors[:element] %>;
+             border-bottom: 1px solid <%= colors[:base] %>;
+             color:#000000;
+             cursor:pointer;
+             display:block;
+             font-size:12px;
+             font-weight:normal;
+             height:30px;
+             line-height:30px;
+             margin:0pt;
+             padding:0pt 10px;
+             text-decoration:none;
+             clear: both;
+           }
+           *.accordion_toggle_active {
+             background: <%= colors[:active] %>;
+           }
+           *.accordion_content {
+             overflow: hidden;
+           }
+           div.accordion {
+             margin-left: 1em;
+           }
+         }
+         dl {
+           margin: 0;
+           float: left;
+           width: 100%;
+           di {
+             width: 100%;
+             float: left;
+             clear: both;
+             border-bottom: thin solid #aaa;
+             .odd {
+               background-color: #ffffff;
+             }
+             .even {
+               background-color: #eeeeee;
+             }
+             dt {
+               font-weight:bold;
+               float: left;
+               clear: left;
+               margin: 0.3em;
+             }
+             dd {
+               margin: 0.3em;
+               float: right;
+               clear: right;
+               ul {
+                 margin: 0;
+               }
+             }
+           }
+         }
       }
     }
   }
@@ -168,58 +251,6 @@ div#muster {
       border-left: 1px solid <%= colors[:border_dark] %>;
       border-right: 1px solid <%= colors[:border_dark] %>;
    }
-    div.accordion {
-      *.accordion_toggle {
-        background: <%= colors[:element] %>;
-        border-bottom: 1px solid <%= colors[:base] %>;
-        color:#000000;
-        cursor:pointer;
-        display:block;
-        font-size:12px;
-        font-weight:normal;
-        height:30px;
-        line-height:30px;
-        margin:0pt;
-        padding:0pt 10px;
-        text-decoration:none;
-        clear: both;
-      }
-      *.accordion_toggle_active {
-        background: <%= colors[:active] %>;
-      }
-      *.accordion_content {
-        overflow: hidden;
-      }
-      div.accordion {
-        margin-left: 1em;
-      }
-    }
-    ul.linkbar {
-      background: <%= colors[:element] %>;
-      border-bottom: 1px solid <%= colors[:base] %>;
-      color:#000000;
-      display:block;
-      font-size:12px;
-      font-weight:normal;
-      height:30px;
-      line-height:30px;
-      margin:0pt;
-      padding:0pt 10px;
-      text-decoration:none;
-      li {
-        a,button,input.submit {
-          float: left;
-          padding: 0.3em;
-          margin: 0.4em;
-          background: <%= colors[:clickable] %>;
-          color: <%= colors[:base] %>;
-          text-decoration:none;
-        }
-        button, input.submit {
-          float: right;
-        }
-      }
-    }
     *.dialog_content {
       text-align: left;
       color: #000000;
@@ -230,37 +261,6 @@ div#muster {
     p {
        padding: 5px 0px;
     }
-    dl {
-	   margin: 0;
-      float: left;
-      width: 100%;
-      di {
-        width: 100%;
-        float: left;
-        clear: both;
-        border-bottom: thin solid #aaa;
-        .odd {
-          background-color: #ffffff;
-        }
-        .even {
-          background-color: #eeeeee;
-        }
-        dt {
-          font-weight:bold;
-          float: left;
-          clear: left;
-          margin: 0.3em;
-        }
-        dd {
-          margin: 0.3em;
-          float: right;
-          clear: right;
-          ul {
-            margin: 0;
-          }
-        }
-      }
-	}
     div.warning {
         margin-top: 10px;
         color: <%= colors[:warning] %>;

@@ -1,7 +1,7 @@
 
 var Toolbox = {
   findOrCreate: function() {
-    if ( $('div#toolbox').length == 0 ) {
+    if ( this.element().length == 0 ) {
       $('body').appendDom([
         { tagName: 'div', id: 'toolbox', childNodes: [
           { tagName: 'div', class: 'head', childNodes: [
@@ -16,18 +16,15 @@ var Toolbox = {
           { tagName: 'div', class: 'body', childNodes: [
             { tagName: 'div', class: 'content', id: 'toolbox_content', childNodes: [
               { tagName: 'div', class: 'frame', innerHTML: 'Frame 1 (only Frame - Dashboard)'},
-              { tagName: 'div', class: 'frame', innerHTML: 'Frame 2 just kidding'}
             ]}
           ]},
           { tagName: 'div', class: 'foot', childNodes: [
-            { tagName: 'span', class: 'content status', innerHTML: 'status' },
-            { tagName: 'a', href: '#', class: 'prev', innerHTML: 'prev' },
-            { tagName: 'a', href: '#', class: 'next', innerHTML: 'next' }
+            { tagName: 'span', class: 'content status' }
           ]},
         ]}
       ]);
 
-      $('div#toolbox')
+      this.element()
         .draggable( { handle: 'div.head' } )
         .resizable( {
           minWidth: 300, minHeight: 400,
@@ -35,37 +32,117 @@ var Toolbox = {
           resize : function(e,ui) {
             Toolbox.setSizes();
           },
-          start: function(e,ui) {
-            console.debug("starting to resize ", e);
-          }
         })
-        .find('div.body').serialScroll({
-          target: 'div.content',
-          step: 1, cycle: false,
-          start: 0,
-          lazy: true, force: true,
-          items: 'div.frame',
-          prev: 'a.prev', next: 'a.next',
-          axis: 'xy'
+        .find('> div.body')
+          .serialScroll({
+            target: 'div.content',
+            step: 1, cycle: false,
+            lazy: true,
+            items: 'div.content > div.frame',
+            prev: 'a.prev', next: 'a.next',
+            axis: 'xy',
+            duration: 500
           })
         .end()
         .show();
+      $('div#toolbox a.back').livequery(function() { 
+        $(this).click(function(ev) { 
+          Toolbox.pop() 
+        })
+      });
     };
     this.setSizes();
-    return $('div#toolbox');
+    return this.element();
   },
   setSizes: function() {
     $('div#toolbox div.body').height(
       $('div#toolbox').height() - $('div#toolbox div.head').height() - $('div#toolbox div.foot').height()
     );
-    $('div#toolbox div.body div.content div.frame').height( $('div#toolbox div.body'));
-    $('div#toolbox div.body').scrollTo('div.frame:last',{axis:'x'});
+    $('div#toolbox > div.body > div.content > div.frame').height( $('div#toolbox > div.body'));
+    // $('div#toolbox > div.body').scrollTo('div.frame:last',{axis:'x'});
   },
+  push: function(content,options) {
+    var options = jQuery.extend({
+      href:       '/dashboard',
+      title:      '[No Title]'
+    }, options);
+    this.scroller().find('> div.content')
+      .appendDom([
+        {tagName: 'div', class: 'frame', href: options.href, innerHTML: content }
+      ]);
+    if (this.last().find('> ul.linkbar > li > a.back').length == 0) {
+      this.last().find('> ul.linkbar').appendDom([this.newBackButton()])
+    }
+    this.next();
+    this.setTitle(options.title);
+  },
+  newBackButton: function(title) {
+    return(
+      { tagName: 'li', childNodes: [
+        { tagName: 'a', class: 'back', href: '#', innerHTML: 'back' }
+      ]}
+    );
+  },
+  pop: function() {
+    this.prev();
+    setTimeout( function() {
+      Toolbox.last().remove();
+    }, 500);
+  },
+  updateFrameByHref: function(href,content,options) {
+    var options = jQuery.extend({
+      title:      '[No Title]'
+    }, options);
+    this.element()
+      .find('> div.body > div.content > div.frame[@href=href]')
+        .html(content);
+    this.setTitle(options.title);
+  },
+  popAndRefreshWith: function(content,options) {
+    var options = jQuery.extend({
+      title:      '[No Title]'
+    }, options);
+    this.scoller().find('> div.content > div.frame:last').prev().html(content);
+    this.pop();
+    this.setTitle(options.title);
+  },
+  updateLastFrame: function(content,options) {
+    var options = jQuery.extend({
+      title:      '[No Title]'
+    }, options);
+    this.last().html(content);
+    this.setTitle(options.title);
+  },
+  setTitle: function(title) {
+    return this.element().find('> div.head span.title').html(title);
+  },
+  setStatus: function(status) {
+    return this.element().find('> div.foot span.status').html(status);
+  },
+  scroller: function() {
+    return $('div#toolbox > div.body');
+  },
+  last: function() {
+    return this.scroller().find('> div.content > div.frame:last');
+  },
+  element: function() {
+    return $('div#toolbox');
+  },
+  next: function() {
+    return this.scroller().trigger('next');
+  },
+  prev: function() {
+    return this.scroller().trigger('prev');
+  },
+  close: function() {
+    this.element().remove();
+  }
+
+
 };
 
 jQuery.fn.useToolbox = function(options) {
   var settings = jQuery.extend({
-
     onStart: function() {
     }
   }, options);
@@ -80,12 +157,10 @@ jQuery.fn.useToolbox = function(options) {
   $(this).click(function(event) {
     Toolbox.findOrCreate();
     event.preventDefault();
-    /*
     $.ajax({
       url: $(this).attr('href'),
       type: 'GET',
       dataType: 'script'
     });
-    */
   });
 };

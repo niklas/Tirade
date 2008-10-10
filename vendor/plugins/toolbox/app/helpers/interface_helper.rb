@@ -99,10 +99,13 @@ module InterfaceHelper
 
   def show(obj,name,opts={}, &block)
     label = opts[:label] || _(name.to_s.humanize)
-    if block_given?
-      concat di_dt_dd(label, capture(&block)), block.binding
-    else
-      di_dt_dd(label, obj.send(name))
+    val = obj.send(name)
+    unless val.blank?
+      if block_given?
+        concat di_dt_dd(label, capture(&block)), block.binding
+      else
+        di_dt_dd(label, val)
+      end
     end
   end
 
