@@ -44,10 +44,16 @@ var Toolbox = {
             duration: 500
           })
         .end()
+        .find(' > div.head > span.buttons')
+          .find('> img.close').click(function() { Toolbox.close() }).end()
+          .find('> img.min').click(function() { Toolbox.minimize() }).end()
+          .find('> img.max').click(function() { Toolbox.maximize() }).end()
+        .end()
         .show();
       $('div#toolbox a.back').livequery(function() { 
         $(this).click(function(ev) { 
           Toolbox.pop() 
+          // TODO download dashboard if not already loaded
         })
       });
     };
