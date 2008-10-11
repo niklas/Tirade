@@ -23,6 +23,7 @@ var Toolbox = {
           ]},
         ]}
       ]);
+      this.sidebarVisible = true;
 
       this.element()
         .draggable( { handle: 'div.head' } )
@@ -163,25 +164,41 @@ var Toolbox = {
       this.unminimize();
     } else {
       this.oldHeight = this.element().height();
-      this.sidebar().animate(
-        { left: ('+='+Toolbox.sidebar().width()) },
-        { complete: function() {
-          Toolbox.element().animate(
-            { height: Toolbox.decorationHeight()-1}, 
-            { complete: function() {
-              Toolbox.body().hide();
-              Toolbox.sidebar().hide();
-            }}
-          )
-        }}
-      );
+      this.sidebarOff(function() {
+        Toolbox.element().animate(
+          { height: Toolbox.decorationHeight()-1}, 
+          { duration: 700, complete: function() {
+            Toolbox.body().hide();
+            Toolbox.sidebar().hide();
+          }}
+        )
+      });
       this.minimized = true;
-      console.debug("minimized window");
     }
   },
-  sidebarOn: function() {
+  sidebarOn: function(after) {
+    if (this.sidebarVisible) 
+      return this.sidebar();
+    this.sidebarVisible = true;
+    return this.sidebar().show().animate(
+      { left: '-='+(Toolbox.sidebar().width()+23)},
+      { duration: 500, complete: after }
+    )
   },
-  sidebarOff: function() {
+  sidebarOff: function(after) {
+    if (!this.sidebarVisible)  // And if it's already off?
+      return this.sidebar();   //  - I just walk away!
+    this.sidebarVisible = false;
+    return this.sidebar().animate(
+      { left: '+='+(Toolbox.sidebar().width()+23)},
+      { duration: 500, complete: after }
+    );
+  },
+  sidebarToggle: function(after) {
+    if (this.sidebarVisible)
+      return this.sidebarOff(after)
+    else
+      return this.sidebarOn(after)
   },
   unminimize: function() {
     if (!this.minimized) {
@@ -191,14 +208,9 @@ var Toolbox = {
       Toolbox.setSizes();
       this.element().animate(
         { height: this.oldHeight || 400}, 
-        { complete: function() {
-          Toolbox.sidebar().show().animate(
-            { left: ('-='+Toolbox.sidebar().width())}
-          )
-          }}
+        { complete: function() { Toolbox.sidebarOn() }}
       );
       this.minimized = false;
-      console.debug("unminimized window");
     }
   },
   maximize: function() {
