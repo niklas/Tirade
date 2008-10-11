@@ -1,4 +1,4 @@
 page.push_or_refresh(
-                   :title => "Toolbox Demo #{@demo}",
+                   :title => "Toolbox Demo #{@demo} (#{Time.now.seconds_since_midnight.to_i})",
                    :partial => "/toolbox/demo#{@demo}"
                    )
