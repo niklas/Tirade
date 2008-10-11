@@ -1,10 +1,4 @@
 <%= render(:partial => '/public/header') %>
-<div class="error">
-  Page not found. How did you get here, hmm?
-</div>
-
-<div class="admin new page">
-  Create a <%= link_to 'new page', new_page_path(:page => {:url => @page_url }), :class => 'new page' %> here.
-</div>
+<%= render(:partial => '/public/page_not_found') %>
 <%= render(:partial => '/public/footer') %>
 

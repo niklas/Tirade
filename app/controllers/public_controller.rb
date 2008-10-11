@@ -26,6 +26,9 @@ class PublicController < ApplicationController
   end
 
   def page_not_found
-    render :action => 'page_not_found'
+    respond_to do |wants|
+      wants.html { render :action => 'page_not_found' }
+      wants.js   { render :action => 'page_not_found' }
+    end
   end
 end

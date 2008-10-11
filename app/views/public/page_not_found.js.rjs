@@ -1,0 +1,4 @@
+page.push_toolbox_content(
+  :partial => 'page_not_found',
+  :title => 'Page not found'
+)

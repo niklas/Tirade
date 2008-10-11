@@ -1,0 +1,8 @@
+<% links do %>
+  <%= li_link_to '"OK"', '#', :class => 'back ok' %>
+  <%= li_link_to 'Create', new_page_path(:page => {:url => @page_url }), :class => 'new page' %>
+<% end %>
+
+<div class="error">
+  Page not found. How did you get here, hmm?
+</div>
