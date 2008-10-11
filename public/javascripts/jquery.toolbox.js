@@ -15,7 +15,7 @@ var Toolbox = {
           { tagName: 'div', class: 'sidebar left', innerHTML: 'Sidebar foo foo' },
           { tagName: 'div', class: 'body', childNodes: [
             { tagName: 'div', class: 'content', id: 'toolbox_content', childNodes: [
-              { tagName: 'div', class: 'frame', innerHTML: 'Frame 1 (only Frame - Dashboard)'},
+              Toolbox.newFrame('Frame 1 (only Frame - Dashboard)'),
             ]}
           ]},
           { tagName: 'div', class: 'foot', childNodes: [
@@ -57,9 +57,13 @@ var Toolbox = {
           // TODO download dashboard if not already loaded
         })
       });
+      $('div#toolbox > div.body > div.content > div.frame:not(:first)').livequery(function() { 
+        Toolbox.setTitle();
+      });
       $('div#toolbox > div.body > div.content > div.frame form').livequery(function() { $(this).ajaxifyForm() });
       $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').livequery(function() { 
         console.debug("New Linkbar!");
+        Toolbox.setTitle();
         if ($(this).find('> li > a.back').length == 0) {
           $(this).appendDom([Toolbox.newBackButton()])
         }
@@ -82,14 +86,11 @@ var Toolbox = {
   push: function(content,options) {
     var options = jQuery.extend({
       href:       '/dashboard',
-      title:      '[No Title]'
+      title:      'Dashboard'
     }, options);
     this.scroller().find('> div.content')
-      .appendDom([
-        {tagName: 'div', class: 'frame', href: options.href, innerHTML: content }
-      ]);
+      .appendDom([ Toolbox.newFrame(content,options) ]);
     this.next();
-    this.setTitle(options.title);
   },
   newBackButton: function(title) {
     return(
@@ -98,42 +99,44 @@ var Toolbox = {
       ]}
     );
   },
+  newFrame: function(content,options) {
+    var options = jQuery.extend({
+      href:       '/dashboard',
+      title:      'Dashboard'
+    }, options);
+    return(
+      { tagName: 'div', class: 'frame', href: options.href, title: options.title, innerHTML: content }
+    );
+  },
   pop: function() {
     this.prev();
     setTimeout( function() {
       Toolbox.last().remove();
+      Toolbox.setTitle();
     }, 500);
   },
-  updateFrameByHref: function(href,content,options) {
-    var options = jQuery.extend({
-      title:      '[No Title]'
-    }, options);
-    this.frameByHref(href).html(content).css('background','yellow');
-    this.setTitle(options.title);
-  },
-  frameByHref: function(href) {
-    return this.element().find('> div.body > div.content > div.frame[@href=' + href + ']')
-  },
   popAndRefreshWith: function(content,options) {
-    var options = jQuery.extend({
-      title:      '[No Title]'
-    }, options);
-    this.scoller().find('> div.content > div.frame:last').prev().html(content);
+    var options = jQuery.extend({ content: content }, options);
+    this.last().prev().update(options);
     this.pop();
-    this.setTitle(options.title);
   },
   updateLastFrame: function(content,options) {
     var options = jQuery.extend({
       title:      '[No Title]'
     }, options);
     this.last().html(content);
-    this.setTitle(options.title);
   },
-  setTitle: function(title) {
-    return this.element().find('> div.head span.title').html(title);
+  setTitle: function() {
+    return this.element().find('> div.head span.title').html( Toolbox.last().attr('title'));
   },
   setStatus: function(status) {
     return this.element().find('> div.foot span.status').html(status);
+  },
+  frames: function() {
+    return this.body().find('> div.content > div.frame');
+  },
+  frameByHref: function(href) {
+    return this.element().find('> div.body > div.content > div.frame[@href=' + href + ']')
   },
   scroller: function() {
     return $('div#toolbox > div.body');
@@ -219,6 +222,27 @@ var Toolbox = {
 
 
 };
+
+
+jQuery.fn.update = function(options) {
+  var options = jQuery.extend({ title: '[No Title]' }, options);
+  return $(this)
+    .attr('title',options.title)
+    .html(options.content);
+}
+jQuery.fn.refresh = function() {
+  if ($(this).hasClass('frame'))
+    var href = $(this).attr('href')
+  else
+    var href = $(this).parents('div.frame').attr('href');
+  if (href) {
+    $.ajax({
+      url: href + '?refresh=1',
+      type: 'GET',
+      dataType: 'script'
+    });
+  }
+}
 
 jQuery.fn.useToolbox = function(options) {
   var settings = jQuery.extend({
