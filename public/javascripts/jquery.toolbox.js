@@ -7,9 +7,9 @@ var Toolbox = {
           { tagName: 'div', class: 'head', childNodes: [
             { tagName: 'span', class: 'content title', innerHTML: 'Toolbox Title is loooooooooooooong' },
             { tagName: 'span', class: 'buttons', childNodes: [
-              { tagName: 'img', class: 'close', src: '/images/window/close.jpg' },
-              { tagName: 'img', class: 'min',   src: '/images/window/min.jpg' },
-              { tagName: 'img', class: 'max',   src: '/images/window/max.jpg' }
+              { tagName: 'img', class: 'close', src: '/images/icons/small/x.gif' },
+              { tagName: 'img', class: 'max',   src: '/images/icons/small/grow.gif' },
+              { tagName: 'img', class: 'min',   src: '/images/icons/small/pause.gif' }
             ]}
           ]},
           { tagName: 'div', class: 'sidebar left', innerHTML: 'Sidebar foo foo' },
@@ -68,11 +68,15 @@ var Toolbox = {
     return this.element();
   },
   setSizes: function() {
-    this.scroller().height(
-      $('div#toolbox').height() - $('div#toolbox > div.head').height() - $('div#toolbox > div.foot').height()
-    );
+    this.scroller().height( this.bodyHeight() );
     $('div#toolbox > div.body > div.content > div.frame').height( $('div#toolbox > div.body'));
     this.scroller().scrollTo('div.frame:last',{axis:'x'});
+  },
+  bodyHeight: function() {
+    return $('div#toolbox').height() - this.decorationHeight()
+  },
+  decorationHeight: function() {
+    return $('div#toolbox > div.head').height() + $('div#toolbox > div.foot').height()
   },
   push: function(content,options) {
     var options = jQuery.extend({
@@ -136,6 +140,12 @@ var Toolbox = {
   last: function() {
     return this.scroller().find('> div.content > div.frame:last');
   },
+  body: function() {
+    return this.element().find('> div.body')
+  },
+  sidebar: function() {
+    return this.element().find('> div.sidebar')
+  },
   element: function() {
     return $('div#toolbox');
   },
@@ -147,6 +157,24 @@ var Toolbox = {
   },
   close: function() {
     this.element().remove();
+  },
+  minimize: function() {
+    if (this.minimized) {
+      this.element().animate({height: this.oldHeight || 400})
+      this.body().show();
+      this.sidebar().show();
+      this.minimized = false;
+    } else {
+      this.oldHeight = this.element().height();
+      this.element().animate({height: this.decorationHeight()-1})
+      this.body().hide();
+      this.sidebar().hide();
+      this.minimized = true;
+    }
+    console.debug("minimizing window");
+  },
+  maximize: function() {
+    console.debug("maximizing window");
   }
 
 
