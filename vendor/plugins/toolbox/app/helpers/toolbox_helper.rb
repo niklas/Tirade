@@ -40,7 +40,7 @@ module ToolboxHelper
 
   def refresh_toolbox_content(content)
     title, content = prepare_content(content)
-    page.toolbox.update_frame_by_href clean_url, content, :title => title
+    page.toolbox.frame_by_href(clean_url).update :content => content, :title => title
     set_toolbox_status
   end
 
@@ -73,7 +73,7 @@ module ToolboxHelper
   private
 
   def clean_url
-    context.request.url.sub(/_=\d+/,'').sub(/\?$/,'')
+    context.request.path # url.sub(/_=\d+/,'').sub(/\?$/,'')
   end
   def prepare_content(content)
     if content.is_a? Hash
