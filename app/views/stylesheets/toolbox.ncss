@@ -26,6 +26,7 @@ div#muster {
   top:100px;
   border-top: 2px solid <%= colors[:border_light] %>; 
   border-left: 2px solid <%= colors[:border_light] %>;
+  background: <%= colors[:base] %>;
   > div {
     .head, .body, .foot {
        left: 0; right: 4px;
@@ -80,6 +81,7 @@ div#muster {
     height: 90%;
     top: 2.3em;
     overflow: hidden;
+    z-index: 2;
     div.content {
       background-color:#FFFFFF;
       font-family:Arial,Helvetica,sans-serif;
@@ -202,7 +204,7 @@ div#muster {
     border-left:1px solid <%= colors[:border_light] %>;
     border-right:3px solid <%= colors[:border_light] %>;
     background-color: #fff;
-    overflow-y:auto;
+    overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
     padding:0 0 0 0px;
     margin: 0 0 0 0px;
     position: absolute;

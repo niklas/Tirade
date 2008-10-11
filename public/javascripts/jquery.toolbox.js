@@ -160,18 +160,46 @@ var Toolbox = {
   },
   minimize: function() {
     if (this.minimized) {
-      this.element().animate({height: this.oldHeight || 400})
-      this.body().show();
-      this.sidebar().show();
-      this.minimized = false;
+      this.unminimize();
     } else {
       this.oldHeight = this.element().height();
-      this.element().animate({height: this.decorationHeight()-1})
-      this.body().hide();
-      this.sidebar().hide();
+      this.sidebar().animate(
+        { left: ('+='+Toolbox.sidebar().width()) },
+        { complete: function() {
+          Toolbox.element().animate(
+            { height: Toolbox.decorationHeight()-1}, 
+            { complete: function() {
+              Toolbox.body().hide();
+              Toolbox.sidebar().hide();
+            }}
+          )
+        }}
+      );
       this.minimized = true;
+      console.debug("minimized window");
     }
-    console.debug("minimizing window");
+  },
+  sidebarOn: function() {
+  },
+  sidebarOff: function() {
+  },
+  unminimize: function() {
+    if (!this.minimized) {
+      this.minimize();
+    } else {
+      Toolbox.body().show();
+      Toolbox.setSizes();
+      this.element().animate(
+        { height: this.oldHeight || 400}, 
+        { complete: function() {
+          Toolbox.sidebar().show().animate(
+            { left: ('-='+Toolbox.sidebar().width())}
+          )
+          }}
+      );
+      this.minimized = false;
+      console.debug("unminimized window");
+    }
   },
   maximize: function() {
     console.debug("maximizing window");
