@@ -64,6 +64,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def redirect_back_or_default(default)
+    respond_to do |wants|
+      wants.html { redirect_to(session[:return_to] || default) }
+      wants.js do
+        render :update do |page|
+          if session[:return_to]
+            page.toolbox.pop_and_refresh_last() 
+            # TODO what else? where did we came from? was there a Toolbox frame involved?
+          else
+            page.toolbox.pop_and_refresh_last()
+          end
+        end
+      end
+    end
+    session[:return_to] = nil
+  end
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'da7c5d7c04e209653d264f43028c248a'
