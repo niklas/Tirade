@@ -95,10 +95,10 @@ module InterfaceHelper
 
   def show(obj,name,opts={}, &block)
     label = opts[:label] || _(name.to_s.humanize)
-    val = obj.send(name) if obj.respond_to?(name)
-    if block_given? || val.blank?
+    if block_given? || !obj.respond_to?(name)
       concat di_dt_dd(label, capture(&block)), block.binding
     else
+      val = obj.send(name) rescue "unknow attr: #{obj.class}##{name}"
       di_dt_dd(label, val)
     end
   end
