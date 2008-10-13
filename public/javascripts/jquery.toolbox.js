@@ -51,8 +51,9 @@ var Toolbox = {
           .find('> img.max').click(function() { Toolbox.maximize() }).end()
         .end()
         .show();
-      $('div#toolbox a.back').livequery(function() { 
-        $(this).click(function(ev) { 
+      $("div#toolbox a.back[@href='#']").livequery(function() { 
+        $(this).click(function(event) { 
+          event.preventDefault();
           $('div.active').removeClass('active');
           Toolbox.popAndRefreshLast() 
         })
@@ -174,6 +175,7 @@ var Toolbox = {
   },
   close: function() {
     this.element().remove();
+    $('div.active').removeClass('active');
   },
   minimize: function() {
     if (this.minimized) {
