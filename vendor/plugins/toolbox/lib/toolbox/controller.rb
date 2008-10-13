@@ -5,7 +5,10 @@ module Tirade
         base.extend(ClassMethods)
         base.helper :interface
         base.helper :toolbox
-        base.class_eval { include(InstanceMethods) }
+        base.class_eval do
+          include(InstanceMethods)
+          rescue_from 'ActionView::TemplateError', :with => :template_error
+        end
       end
       module ClassMethods
         def feeds_toolbox_with model_name
@@ -167,6 +170,17 @@ module Tirade
             "Done"
           end
         )
+      end
+
+      def template_error(exception)
+        respond_to do |wants|
+          wants.html { render :text => exception.inspect.to_s, :status => 500}
+          wants.js do
+            render :update do |page|
+              page.toolbox_error exception
+            end
+          end
+        end
       end
 
     end

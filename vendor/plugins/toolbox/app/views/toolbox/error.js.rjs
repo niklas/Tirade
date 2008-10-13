@@ -1,0 +1,3 @@
+page.toolbox.error render(:partial => '/toolbox/error', :object => @exception), 
+  :title => @exception.class.to_s
+

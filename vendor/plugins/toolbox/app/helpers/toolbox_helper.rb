@@ -50,6 +50,12 @@ module ToolboxHelper
     set_toolbox_status
   end
 
+  def toolbox_error(exception)
+    title, content = prepare_content(:title => exception.class.to_s, :partial => '/toolbox/error', :object => exception)
+    page.toolbox.error content, :title => title
+    set_toolbox_status
+  end
+
   def tabnav_to_s(name)
     partial_name = "widgets/#{name}_tabnav"
     render :partial => partial_name

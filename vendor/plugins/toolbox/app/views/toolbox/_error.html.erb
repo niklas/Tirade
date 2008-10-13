@@ -1,0 +1,10 @@
+<% exception ||= error || @exception %>
+
+<% links do %>
+  <%= li_link_to '"OK"', '#', :class => 'back ok' %>
+<% end %>
+
+<pre>
+  <%=h exception.to_s %>
+</pre>
+

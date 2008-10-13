@@ -15,7 +15,7 @@ var Toolbox = {
           { tagName: 'div', class: 'sidebar left', innerHTML: 'Sidebar foo foo' },
           { tagName: 'div', class: 'body', childNodes: [
             { tagName: 'div', class: 'content', id: 'toolbox_content', childNodes: [
-              Toolbox.newFrame('Frame 1 (only Frame - Dashboard)'),
+              Toolbox.newFrame('Hello!'),
             ]}
           ]},
           { tagName: 'div', class: 'foot', childNodes: [
@@ -68,6 +68,12 @@ var Toolbox = {
           $(this).appendDom([Toolbox.newBackButton()])
         }
       });
+      $.timer(60 * 1000,function() {
+        if (!Toolbox.minimized) {
+          console.debug("Refreshing Dashboard");
+          Toolbox.frameByHref('/dashboard').refresh();
+        }
+      });
     };
     this.setSizes();
     return this.element();
@@ -84,13 +90,17 @@ var Toolbox = {
     return $('div#toolbox > div.head').height() + $('div#toolbox > div.foot').height()
   },
   push: function(content,options) {
-    var options = jQuery.extend({
-      href:       '/dashboard',
-      title:      'Dashboard'
-    }, options);
     this.scroller().find('> div.content')
       .appendDom([ Toolbox.newFrame(content,options) ]);
     this.next();
+  },
+  error: function( content, options ) {
+    var options = jQuery.extend({
+      href:       'error',
+      title:      'Error',
+      class:      'error'
+    }, options);
+    this.push(content, options);
   },
   newBackButton: function(title) {
     return(
@@ -105,7 +115,7 @@ var Toolbox = {
       title:      'Dashboard'
     }, options);
     return(
-      { tagName: 'div', class: 'frame', href: options.href, title: options.title, innerHTML: content }
+      { tagName: 'div', class: 'frame ' + options.class, href: options.href, title: options.title, innerHTML: content }
     );
   },
   pop: function() {
@@ -115,7 +125,11 @@ var Toolbox = {
       Toolbox.setTitle();
     }, 500);
   },
-  popAndRefreshWith: function(content,options) {
+  popAndRefreshLast: function() {
+    this.last().prev().refresh();
+    this.pop();
+  },
+  popAndUpdateWith: function(content,options) {
     var options = jQuery.extend({ content: content }, options);
     this.last().prev().update(options);
     this.pop();
@@ -260,12 +274,14 @@ jQuery.fn.useToolbox = function(options) {
   $(this).click(function(event) {
     Toolbox.findOrCreate();
     event.preventDefault();
+    console.debug("Ajax loading: ", $(this).attr('href'));
     $.ajax({
       url: $(this).attr('href'),
       type: 'GET',
       dataType: 'script'
     });
   });
+  return $(this);
 };
 
 jQuery.fn.ajaxifyForm = function() {
