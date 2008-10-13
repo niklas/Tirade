@@ -1,13 +1,5 @@
+<h2>Dashboard</h2>
 
-<div class="main_content">
-  <ul class="nav">
-    <li><a class="active" href="#">pages</a></li>
-    <li><a href="#">Publish</a></li>
-  </ul>
-
-  <%= render_table_for @contents %>
-  
-  <div class="pagination_bottom">
-    Will Paginate later
-  </div>
+<div id="dashboard">
+  <%= render :partial => '/admin/dashboard' %>
 </div>
