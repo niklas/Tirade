@@ -28,7 +28,7 @@ div#muster {
   border-left: 2px solid <%= colors[:border_light] %>;
   background: <%= colors[:base] %>;
   > div {
-    .head, .body, .foot {
+    .head, .body, .foot, .busy {
        left: 0; right: 4px;
        position: absolute;
      }
@@ -231,7 +231,23 @@ div#muster {
           }
        }
     }
-}
+  }
+  div.busy {
+    height: 90%;
+    top: 2.3em;
+    width: 100%;
+    background: url(/images/transparent.png);
+    z-index: 5;
+    display: none;
+    span.message {
+      position: relative;
+      top: 42%;
+      font-size: 230%;
+      display: block;
+      text-align: center;
+      color: <%= colors[:base] %>;
+    }
+  }
 }
 
 #oldtoolbox  {

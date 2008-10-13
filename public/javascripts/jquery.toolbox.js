@@ -13,6 +13,9 @@ var Toolbox = {
             ]}
           ]},
           { tagName: 'div', class: 'sidebar left', innerHTML: 'Sidebar foo foo' },
+          { tagName: 'div', class: 'busy', childNodes: [
+            { tagName: 'span', class: 'message', innerHTML: 'Loading' }
+          ] },
           { tagName: 'div', class: 'body', childNodes: [
             { tagName: 'div', class: 'content', id: 'toolbox_content', childNodes: [
               Toolbox.newFrame('Hello!'),
@@ -73,13 +76,19 @@ var Toolbox = {
           Toolbox.frameByHref('/dashboard').refresh();
         }
       });
+      Toolbox.busyBox().ajaxStart(function() {
+        $(this).show();
+      }).ajaxComplete(function() {
+        $(this).hide();
+      });
     };
     this.setSizes();
     return this.element();
   },
   setSizes: function() {
     this.scroller().height( this.bodyHeight() );
-    $('div#toolbox > div.body > div.content > div.frame').height( $('div#toolbox > div.body'));
+    this.busyBox().height( this.bodyHeight() );
+    $('div#toolbox > div.body > div.content > div.frame').height( $('div#toolbox > div.body').height() );
     this.scroller().scrollTo('div.frame:last',{axis:'x'});
   },
   bodyHeight: function() {
@@ -163,6 +172,9 @@ var Toolbox = {
   },
   sidebar: function() {
     return this.element().find('> div.sidebar')
+  },
+  busyBox: function() {
+    return this.element().find('> div.busy')
   },
   element: function() {
     return $('div#toolbox');
