@@ -53,8 +53,8 @@ var Toolbox = {
         .show();
       $('div#toolbox a.back').livequery(function() { 
         $(this).click(function(ev) { 
-          Toolbox.pop() 
-          // TODO download dashboard if not already loaded
+          $('div.active').removeClass('active');
+          Toolbox.popAndRefreshLast() 
         })
       });
       $('div#toolbox > div.body > div.content > div.frame:not(:first)').livequery(function() { 
@@ -62,7 +62,6 @@ var Toolbox = {
       });
       $('div#toolbox > div.body > div.content > div.frame form').livequery(function() { $(this).ajaxifyForm() });
       $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').livequery(function() { 
-        console.debug("New Linkbar!");
         Toolbox.setTitle();
         if ($(this).find('> li > a.back').length == 0) {
           $(this).appendDom([Toolbox.newBackButton()])
@@ -70,7 +69,6 @@ var Toolbox = {
       });
       $.timer(60 * 1000,function() {
         if (!Toolbox.minimized) {
-          console.debug("Refreshing Dashboard");
           Toolbox.frameByHref('/dashboard').refresh();
         }
       });
@@ -114,8 +112,9 @@ var Toolbox = {
       href:       '/dashboard',
       title:      'Dashboard'
     }, options);
+    class = options.class ? 'frame ' + options.class : 'frame'
     return(
-      { tagName: 'div', class: 'frame ' + options.class, href: options.href, title: options.title, innerHTML: content }
+      { tagName: 'div', class: class, href: options.href, title: options.title, innerHTML: content }
     );
   },
   pop: function() {
@@ -274,7 +273,6 @@ jQuery.fn.useToolbox = function(options) {
   $(this).click(function(event) {
     Toolbox.findOrCreate();
     event.preventDefault();
-    console.debug("Ajax loading: ", $(this).attr('href'));
     $.ajax({
       url: $(this).attr('href'),
       type: 'GET',

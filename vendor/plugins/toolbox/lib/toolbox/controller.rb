@@ -92,9 +92,9 @@ module Tirade
           wants.html { render :template => action.to_s, :layout => 'admin' }
           wants.js do
             render :update do |page|
-              [  #"before_update_toolbox_for_#{action}",
+              [ "before_update_toolbox_for_#{action}",
                 "update_toolbox_for_#{action}", 
-                #"after_update_toolbox_for_#{action}"
+                "after_update_toolbox_for_#{action}"
               ].each do |meth|
                   begin
                     controller.send(meth,page)

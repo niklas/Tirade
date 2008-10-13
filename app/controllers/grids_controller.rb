@@ -1,97 +1,18 @@
 class GridsController < ApplicationController
   before_filter :login_required
+  before_filter :fetch_associated_rendering, :only => [:edit, :update]
+  feeds_toolbox_with :grid
   
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings]
 
-  def show
-    @grid = Grid.find(params[:id])
-    respond_to do |wants|
-      wants.html
-      wants.js
-    end
-  end
+  # TODO create: assign the new grid to params[:page_id]'s Page
 
   def create_child
     @grid = Grid.find(params[:id])
     @grid.add_child
     respond_to do |wants|
       wants.js { render :action => 'show' }
-    end
-  end
-
-  def new
-    @grid = Grid.new(params[:grid])
-    respond_to do |wants|
-      wants.js { render :template => '/pages/layout/new' }
-    end
-  end
-
-  def create
-    @grid = Grid.new(params[:grid])
-    respond_to do |wants|
-      wants.js do
-        if @grid.save
-          if (@page = Page.find(params[:page_id]))
-            @page.layout = @grid
-            @page.save
-            render :template => '/public/index'
-          else
-            render :template => '/rendering/grid/show'
-          end
-        else
-          render :action => 'new'
-        end
-      end
-    end
-  end
-
-  def edit
-    @grid = Grid.find(params[:id])
-    respond_to do |wants|
-      wants.js do
-        if (rid = params[:rendering_id]) && (@rendering = Rendering.find_by_id(rid))
-          @grid.rendering_id = rid
-          render :template => '/rendering/grid/edit'
-        else
-          render
-        end
-      end
-    end
-  end
-
-  def update
-    @grid = Grid.find(params[:id])
-    respond_to do |wants|
-      wants.js do
-        @rendering = (rid = params[:grid][:rendering_id]) ? Rendering.find_by_id(rid) : nil
-        if @grid.update_attributes(params[:grid])
-          if @rendering
-            render :template => '/rendering/grid/show'
-          else
-            render :action => 'show'
-          end
-        else
-          if @rendering
-            render :template => '/rendering/grid/edit'
-          else
-            render :action => 'edit'
-          end
-        end
-      end
-    end
-  end
-
-  def destroy
-    @grid = Grid.find(params[:id])
-    parent = @grid.parent
-    respond_to do |wants|
-      if @grid.destroy
-        @grid = parent.reload
-        wants.js { render :action => 'show' }
-      else
-        wants.js { render :action => 'edit' }
-      end
     end
   end
 
@@ -110,5 +31,13 @@ class GridsController < ApplicationController
     respond_to do |wants|
       wants.js { render :template => '/rendering/grid/show' }
     end
+  end
+
+  private
+  def fetch_associated_rendering
+    if rid = params[:rendering_id] || params[:grid].andand[:rendering_id]
+      @rendering = Rendering.find_by_id(rid)
+    end
+    true
   end
 end

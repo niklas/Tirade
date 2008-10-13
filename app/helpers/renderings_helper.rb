@@ -3,14 +3,12 @@ module RenderingsHelper
   def update_rendering(rendering)
     dom = page.context.dom_id(rendering)
     page[dom].replace rendering.render
-    page[dom].reset_behavior
   end
 
   def update_grid_for(rendering)
     grid = rendering.grid
     grid_dom = page.context.dom_id(grid)
     page[grid_dom].replace page.context.render_grid_in_page(grid,rendering.page)
-    page[grid_dom].reset_behavior
     page[grid_dom].visual_effect :highlight
   end
 
@@ -26,17 +24,14 @@ module RenderingsHelper
 
   def mark_grid_as_active(grid)
     dom = page.context.dom_id(grid)
-    page[dom].add_class_name 'active'
+    page[dom].add_class 'active'
   end
   def mark_rendering_as_active(rendering)
     dom = page.context.dom_id(rendering)
-    page[dom].add_class_name 'active'
+    page[dom].add_class 'active'
   end
   def unmark_all_active
-    page.select('div.active').each do |elem|
-      elem.remove_class_name 'active'
-      elem.reset_behavior
-    end
+    page.select('div.active').remove_class 'active'
   end
 
   def preview_rendering(rendering)

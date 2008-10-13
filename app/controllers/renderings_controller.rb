@@ -31,7 +31,7 @@ class RenderingsController < ApplicationController
       format.xml  { head :ok }
       format.js do
         render :update do |page|
-          page.close_toolbox
+          page.toolbox.close()
           page.update_grid_for(@rendering)
           page.unmark_all_active
         end
@@ -42,15 +42,14 @@ class RenderingsController < ApplicationController
   def duplicate
     @original_rendering = Rendering.find(params[:id])
     respond_to do |wants|
-        wants.js {
-          if (@rendering = @original_rendering.clone) && @rendering.save
-            render :action => 'create'
-          else
-            render :update do |page|
-              page.alert @rendering.andand.errors.full_messages
-            end
-          end
-        }
+      wants.js do |page|
+        @model = @rendering = @original_rendering.clone
+        if @rendering.save
+          update_toolbox_for_created(page)
+        else
+          update_toolbox_for_failed_create(page)
+        end
+      end
     end
   end
 
