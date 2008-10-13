@@ -63,4 +63,35 @@ describe PublicController do
     end
   end
 
+  describe 'content - heavy urls' do # könnte man auch halbdynamisch (einmal beim start?) in /config/routes.rb generieren...
+    it "should try to find anchester pages" do
+      Page.should_receive(:find_by_url).with('part1/part2/part3/part4/part5').and_return( nil )
+      Page.should_receive(:find_by_url).with('part1/part2/part3/part4').and_return( nil )
+      Page.should_receive(:find_by_url).with('part1/part2/part3').and_return( nil )
+      Page.should_receive(:find_by_url).with('part1/part2').and_return( nil )
+      Page.should_receive(:find_by_url).with('part1').and_return( nil )
+      get :index, :path => %w(part1 part2 part3 part4 part5)
+      assigns[:page].should be_nil
+    end
+
+    it "should find the children-section if asking for it's nonexisting subpages" do
+      Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals/sexual-harassment-panda').and_return(nil)
+      Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals').and_return( a_page_with_attached_content_type)
+      Content.should_recieve(:find_by_url).with('sexual-harassment-panda').and_return( a_fluffy_panda )
+      get :index, :path => %w(portal children-section fluffy-animals sexual-harassment-panda)
+      assigns[:page].should_not be_nil
+      assigns[:dangling_path].should == ["sexual-harassment-panda"]
+      assigns[:content].should be_a?(Content)
+    end
+
+    it "should find the children section, its content for the subpages and ringtone for one of them" do
+      Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals/sexual-harassment-panda').and_return(nil)
+      Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals').and_return( a_page_with_attached_content_type)
+      panda = a_fluffy_panda
+      panda.should_receive(:ringtone).and_return( annoying_panda_ringtone )
+      Content.should_recieve(:find_by_url).with('sexual-harassment-panda').and_return( panda )
+      get :index, :path => %w(portal children-section fluffy-animals sexual-harassment-panda ringtone)
+    end
+  end
+
 end
