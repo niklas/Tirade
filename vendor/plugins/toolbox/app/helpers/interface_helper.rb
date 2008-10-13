@@ -99,19 +99,28 @@ module InterfaceHelper
       concat di_dt_dd(label, capture(&block)), block.binding
     else
       val = obj.send(name) rescue "unknow attr: #{obj.class}##{name}"
-      di_dt_dd(label, val)
+      if val.is_a?(ActiveRecord::Base)
+        val = render(:partial => "/#{val.table_name}/attribute", :object => val)
+      end
+      di_dt_dd(label, val, :class => "#{name}")
     end
   end
 
-  def di_dt_dd(dt,dd)
+  def di_dt_dd(dt,dd, opts={})
+    add_class_to_html_options(opts, toolbox_row_cycle)
     content_tag(:di,
                 content_tag(:dt, dt) +
                 content_tag(:dd, dd),
-                :class => toolbox_row_cycle
+                opts
                )
   end
 
   def toolbox_row_cycle
     cycle('odd', 'even', :name => 'toolbox_rows')
+  end
+
+  def back_link(label='Back',opts={})
+    add_class_to_html_options(opts, 'back')
+    li_link_to label, '#', opts
   end
 end

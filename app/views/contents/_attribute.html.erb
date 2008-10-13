@@ -1,0 +1,8 @@
+<% content ||= attribute || @rendering.andand.content || @content %>
+<% if content %>
+  <%= content.title %>
+  (<%= content.class -%>: <%= content.id -%>)
+<% else %>
+  <%=_ 'none' %>
+<% end %>
+

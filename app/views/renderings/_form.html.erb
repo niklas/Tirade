@@ -1,4 +1,7 @@
 <% rendering ||= form %>
+<% links do %>
+  <%= back_link 'cancel' %>
+<% end %>
 <%= error_messages_for :rendering, :object => rendering %>
 
 
@@ -29,7 +32,4 @@
   </p>
   <% end %>
 
-  <% links do %>
-    <%= f.submit %>
-  <% end %>
 <% end %>

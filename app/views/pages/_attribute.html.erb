@@ -1,0 +1,2 @@
+<% thepage ||= attribute || @rendering.andand.page || @page %>
+<%= link_to thepage.title, thepage %> (URL: '<%= public_content_link(thepage, :label => thepage.url) %>')

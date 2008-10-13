@@ -6,19 +6,18 @@
   <li><%= edit_rendering_link(rendering) %></li>
 <% end %>
 
+
+
 <% accordion do %>
-  <% accordion_item "Page" do %>
-    <% thepage = rendering.page %>
-    <%= link_to thepage.title, thepage %> (URL: <%= public_content_link(thepage, :label => thepage.url) %>)
+
+  <% accordion_item "What" do %>
+    <%= show rendering, :content, :label => 'Content' %>
+    <%= show rendering, :part, :label => 'Part' %>
   <% end %>
-  <% accordion_item "Content" do %>
-    <%= render :partial => '/rendering/content/show_for_rendering', :object => rendering %>
-  <% end %>
-  <% accordion_item "Grid" do %>
-    <%= render :partial => '/rendering/grid/show_for_rendering', :object => rendering %>
-  <% end %>
-  <% accordion_item "Part" do %>
-    <%= render :partial => '/rendering/part/show_for_rendering', :object => rendering %>
+
+  <% accordion_item "Where" do %>
+    <%= show rendering, :page, :label => 'Page' %>
+    <%= show rendering, :grid, :label => 'Grid' %>
   <% end %>
 <% end %>
 
