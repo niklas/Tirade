@@ -2,7 +2,8 @@ ActionController::Routing::Routes.draw do |map|
   map.routes_from_plugin(:stylish_permissions)
   map.routes_from_plugin(:toolbox)
 
-  
+ 
+  # /manage or /api ? 
   map.with_options :path_prefix => '/manage' do |manage|
     manage.admin 'admin/:action/:id', :controller => 'admin'
     manage.resources :renderings,
@@ -16,13 +17,16 @@ ActionController::Routing::Routes.draw do |map|
 
     manage.resources :contents
 
+    # TODO external preview
     manage.resources :pages do |pages|
       pages.resource :layout, :controller => 'pages/layout'
     end
 
+    # TODO external preview
     manage.resources :parts,
       :member => {:preview => :put}
       
+    # TODO external preview
     manage.resources :grids,
       :member => {:create_child => :post, :order_renderings => :post}
       
@@ -38,6 +42,7 @@ ActionController::Routing::Routes.draw do |map|
     manage.resources :videos
 
   end
+  map.dashboard '/dashboard', :controller => 'admin'
   map.resource :session
   
   map.with_options :controller => 'users' do |page|    

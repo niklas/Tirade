@@ -1,0 +1,1 @@
+page.toolbox.frame_by_href('/dashboard').update :title => 'Dashboard', :content => render(:partial => '/admin/dashboard')

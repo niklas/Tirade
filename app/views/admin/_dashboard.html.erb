@@ -1,0 +1,11 @@
+<p>
+  <% if logged_in? %>
+    Welcome <%= current_user.full_name %>
+  <% else %>
+    Welcome Guest!
+  <% end %>
+</p>
+
+<p>
+  It is now <%= Time.now %>.
+</p>
