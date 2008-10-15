@@ -166,6 +166,10 @@ body {
          input[type=text] {
            width: 80%;
          }
+         input.submit.save {
+           float: right;
+           margin: 0.7em;
+         }
          dl {
            margin: 0;
            float: left;
