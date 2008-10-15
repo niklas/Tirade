@@ -20,6 +20,11 @@ $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
   $('a.with_toolbox').livequery(function() { $(this).useToolbox(); });
+  $('a.dashboard').livequery('click', function(event) { 
+    event.preventDefault();
+    Toolbox.findOrCreate();
+    Toolbox.last().refresh();
+  });
 
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not([class=back])').livequery(function() { $(this).useToolbox(); })
   $('body div.grid').livequery(function() {
@@ -36,8 +41,5 @@ $(function() {
         { tagName: 'span', class: 'handle', innerHTML: 'drag' }
         ] }
     ]);
-  });
-  $('div#toolbox > div.body > div.content > div.frame > div.accordion').livequery(function() { 
-    $(this).accordion({ header: 'h3.accordion_toggle', selectedClass: 'selected' });
   });
 });
