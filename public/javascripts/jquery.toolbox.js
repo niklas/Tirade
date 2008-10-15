@@ -92,21 +92,27 @@ var Toolbox = {
       console.debug("clicked to jump to", $(this).html())
     });
     $('div#toolbox > div.body > div.content > div.frame div.accordion').livequery(function() { 
+      active = 0;
+      if (name = Toolbox.activeSectionName) { 
+        active = '[@name=' + name + ']' 
+      };
       $(this).accordion({ 
         header: 'h3.accordion_toggle', 
         selectedClass: 'selected',
         autoHeight: false,
         alwaysOpen: false,
-        active: false
+        active: active
       })
       .bind("accordionchange", function(event, ui) {
-        if (ui.newHeader && (name = ui.newHeader.attr('name'))) {
-          Toolbox.lastSectionName = name;
-          console.debug("Akkordion Section", Toolbox.lastSectionName);
-          Toolbox.accordion().scrollTo(ui.newHeader, 500);
+        if (ui.newHeader) {
+          Toolbox.saveActive(ui.newHeader);
+          //Toolbox.accordion().scrollTo(ui.newHeader, 500);
         }
       });
-      Toolbox.openPreferredSection();
+    });
+    $('div#toolbox > div.body > div.content > div.frame div.accordion h3.selected').livequery(function() { 
+      console.debug('selected', this);
+      Toolbox.accordion().scrollTo($(this), 500);
     });
     $.timer(60 * 1000,function(timer) {
       if (!Toolbox.element()) {
@@ -193,7 +199,6 @@ var Toolbox = {
     this.prev();
     setTimeout( function() {
       Toolbox.last().remove();
-      Toolbox.openPreferredSection();
       Toolbox.history().find('li:not(:first):last').remove();
       Toolbox.setTitle();
     }, 500);
@@ -271,6 +276,17 @@ var Toolbox = {
     if (name = this.lastSectionName ||
       this.last().prev().find('.selected.ui-accordion-header').attr('name')) {
       return this.openSectionByName(name);
+    }
+  },
+  saveActive: function(element) {
+    if (element) {
+      if (name = element.attr('name')) {
+        this.activeSectionName = name;
+      } else {
+        this.activeSectionName = element.find('.selected.ui-accordion-header').attr('name');
+      }
+    } else {
+      this.saveActive( this.last() )
     }
   },
   minimize: function() {
