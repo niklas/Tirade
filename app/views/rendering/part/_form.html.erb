@@ -1,6 +1,6 @@
 <%= warning_tag 'Editing this part may change the appearance of other pages' %>
 <%= error_messages_for :part %>
-<% form_for :part, @part, :url => part_path(@part), :html => {:method => :put, :class => 'update part' }, :builder => NormalFormBuilder do |f| %>
+<% form_for :part, @part, :url => part_path(@part), :html => {:method => :put, :class => 'update part' } do |f| %>
     <%= f.text_field :name %> 
 
     <p>

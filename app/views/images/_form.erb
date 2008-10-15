@@ -1,6 +1,6 @@
 <%= error_messages_for :image %>
 
-<% form_for @image, :builder => NormalFormBuilder, :html => {:multipart => true} do |f|%>
+<% form_for @image, :html => {:multipart => true} do |f|%>
   <div id="upload_images">
     <%= f.file_field :image %>
   </div>

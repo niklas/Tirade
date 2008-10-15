@@ -2,7 +2,7 @@
 
 <%= error_messages_for :page, :object => thepage %>
 
-<% form_for(thepage, :builder => NormalFormBuilder) do |f| %>
+<% form_for(thepage) do |f| %>
   <% accordion do %>
 
     <% accordion_item "General" do %>

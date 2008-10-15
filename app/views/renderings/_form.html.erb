@@ -13,7 +13,7 @@
     <ul id="search_results">
     </ul>
 
-  <% form_for(@rendering, :builder => NormalFormBuilder) do |f| %>
+  <% form_for(@rendering) do |f| %>
   <p>
     <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :label, :include_blank => true  %>
     <%= f.text_field :content_id %>
