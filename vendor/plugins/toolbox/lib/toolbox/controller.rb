@@ -8,6 +8,7 @@ module Tirade
         base.class_eval do
           include(InstanceMethods)
           rescue_from 'ActionView::TemplateError', :with => :template_error
+          before_filter :set_form_builder, :except => [:index,:show,:destroy]
         end
       end
       module ClassMethods
@@ -186,6 +187,14 @@ module Tirade
               page.toolbox_error exception
             end
           end
+        end
+      end
+
+      def set_form_builder
+        if request.xhr?
+          ActionView::Base.default_form_builder = ToolboxFormBuilder
+        else
+          ActionView::Base.default_form_builder = NormalFormBuilder
         end
       end
 
