@@ -152,7 +152,7 @@ body {
              text-decoration:none;
              clear: both;
            }
-           *.accordion_toggle_active {
+           *.selected {
              background: <%= colors[:active] %>;
            }
            *.accordion_content {
