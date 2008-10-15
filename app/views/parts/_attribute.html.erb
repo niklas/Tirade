@@ -1,2 +1,7 @@
 <% part ||= attribute || @rendering.andand.part || @part %>
-<%= part ? part.name : 'none' %>
+<% if part %>
+  <%= show_part_link(part) %>
+  <%= part.name %>
+<% else %>
+  none
+<% end %>

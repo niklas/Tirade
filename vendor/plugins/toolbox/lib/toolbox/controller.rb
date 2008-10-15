@@ -139,10 +139,16 @@ module Tirade
       end
 
       def update_toolbox_for_updated(page)
-        page.update_last_toolbox_frame(
-          :partial => "show", :object => @model,
-          :title => "#{@model.class_name} (#{@model.id})"
-        )
+        if params[:commit].blank? # non-form submit
+          params[model].keys.each do |meth|
+            page.toolbox_update_model_attribute model, meth
+          end
+        else
+          page.update_last_toolbox_frame(
+            :partial => "show", :object => @model,
+            :title => "#{@model.class_name} (#{@model.id})"
+          )
+        end
       end
 
       # TODO destroy from show (must load @models) / update previous list

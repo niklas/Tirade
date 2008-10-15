@@ -8,9 +8,7 @@
   <% show thepage, :title %>
   <% show thepage, :url, :label => 'URL' %>
   <% show thepage, :children, :label => 'Subpages' do %>
-    <ul>
-      <%= render :partial => '/pages/list_item', :collection => thepage.children %>
-    </ul>
+    <%= list_of thepage.children, :class => 'good_list' %>
   <% end %>
 </dl>
 

@@ -1,8 +1,11 @@
+<p>
 <% if logged_in? %>
-   <p>Logged in as <%= current_user.login %>
-   <%= link_to "Log out", logout_path, :class => 'logout' %></p>
+  Logged in as <%= current_user.login %>
+  <%= link_to "Log out", logout_path, :class => 'logout' %>
 <% else %>
-  <p><%= link_to 'Signup', signup_path, :class => 'signup new user' %> | 
-   <%= link_to 'Login', login_path, :class => 'login' %></p>
+  <%= link_to 'Signup', signup_path, :class => 'signup new user' %> | 
+  <%= link_to 'Login', login_path, :class => 'login' %></p>
 <% end %>
+  | <%= link_to 'Toolbox', '#', :class => 'dashboard' %>
+</p>
 

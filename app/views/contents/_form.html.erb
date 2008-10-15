@@ -11,18 +11,23 @@
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
       <%= f.hidden_field :type if content.new_record? %>
+    <% end %>
+
+    <% accordion_item "Hierarchy" do %>
+      <%= f.collection_select :wanted_parent_id, Folder.find(:all), :id, :title, :label => 'Parent Folder'  %>
+    <% end %>
+
+    <% accordion_item "Specific" do %>
       <%= render_form_fields_for(f) %>
     <% end %>
 
-    <% unless content.new_record? || !content.respond_to?(:picturizations) %>
+    <% unless content.new_record? || !content.acts_as?(:pictureable) %>
       <% accordion_item "Pictures" do %>
         <%= f.select_picture %>
       <% end %>
     <% end %>
 
-    <% links do %>
-      <%= f.submit %>
-    <% end %>
+    <%= f.submit %>
 
   <% end %>
 <% end %>

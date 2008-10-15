@@ -5,7 +5,7 @@ class NormalFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def text_area(field, options = {})
-    wrap(field, options, super(field,options))
+    wrap(field, options, super(field,options.reverse_merge(:rows => 2)))
   end
 
   def collection_select(field, collection, value_method, text_method, options = {}, html_options = {})

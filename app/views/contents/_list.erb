@@ -2,6 +2,4 @@
   <li><%= new_content_link %></li>
 <% end %>
 
-<ul class="show content">
-  <%= render :partial => '/contents/list_item', :collection => list %>
-</ul>
+<%= list_of list %>

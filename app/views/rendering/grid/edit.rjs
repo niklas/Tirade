@@ -1,6 +1,0 @@
-page.update_toolbox(
-  :header => "Edit Grid #{@grid.id}",
-  :content => {:partial => '/rendering/grid/form'}
-)
-page.unmark_all_active
-page.mark_as_active(@grid)

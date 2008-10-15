@@ -1,32 +1,27 @@
-<% content = show || @content %>
+<% content ||= show || @content %>
 <% links do %>
-  <li><%= edit_content_link @content %></li>
-  <li><%= index_contents_link :label => 'Back to List' %></li>
+  <li><%= edit_content_link content %></li>
 <% end %>
 
 
 <% accordion do %>
 
+  <% accordion_item "Hierarchy" do %>
+    <%= show content, :parent %>
+    <%= show content, :children %>
+  <% end %>
+
   <% accordion_item "General" do %>
-    <dl class="content">
-      <dt>Title</dt>
-      <dd> <%=h content.title %>
-    </dl>
+    <%= show content, :title %>
   <% end %>
 
   <% accordion_item "Specific" do %>
-    <p>Render Content-type specific template here</p>
+    <%= render_attributes_for content %>
   <% end %>
 
-  <% if content.respond_to?(:picturizations) %>
+  <% if content.acts_as?(:pictureable) %>
     <% accordion_item "Pictures" do %>
-      <% if content.images.empty? %>
-        <p>no Pictures associated</p>
-      <% else %>
-        <div class="index pictures">
-          <%= render :partial => '/images/list_item_thumb', :collection => content.images %>
-        </div>
-      <% end %>
+      <%= show content, :images %>
     <% end %>
   <% end %>
 

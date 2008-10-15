@@ -18,7 +18,7 @@ module InterfaceHelper
     tag2 = opts.delete(:content_tag) || :dl
     add_class_to_html_options(opts, 'accordion_content')
     toggle_class = "accordion_toggle #{title.urlize}"
-    concat content_tag(:h3,title, :class => toggle_class), block.binding
+    concat content_tag(:h3,title, :class => toggle_class, :name => title.urlize), block.binding
     concat content_tag(tag2,capture(&block), opts), block.binding
   end
 
@@ -31,6 +31,11 @@ module InterfaceHelper
     content_for(:linkbar, capture(&block))
   end
 
+  # like #links, but for the bottom
+  def bottom_links(content=nil,opts={}, &block)
+    content_for(:bottom_linkbar, capture(&block))
+  end
+
   def li_link_to(name, options = {}, html_options = nil)
     content_tag(:li,link_to(name,options,html_options))
   end
@@ -41,15 +46,21 @@ module InterfaceHelper
 
   # You need a partial '/resources/list_item' and must write the +li+
   def list_of(things,opts={})
-    kind = things.first.table_name
-    partial = opts[:partial] || 'list_item'
-    partial = "/#{kind}/#{partial}" unless partial =~ %r~^/~
-    add_class_to_html_options(opts, kind)
-    content_tag(
-      :ul,
-      render(:partial => partial, :collection => things),
-      opts
-    )
+    if things.empty?
+      content_tag(:span,'none',opts)
+    else
+      kind = things.first.table_name
+      partial = opts[:partial] || 'attribute'
+      partial = "/#{kind}/#{partial}" unless partial =~ %r~^/~
+      add_class_to_html_options(opts, kind)
+      content_tag(
+        :ul,
+        things.collect do |thing|
+          render(:partial => partial, :object => thing, :layout => '/toolbox/list_item', :locals => {:model => thing})
+        end.join(' '),
+        opts
+      )
+    end
   end
 
   # You need a partial '/resources/table_row' and must write the +tr+
@@ -101,6 +112,8 @@ module InterfaceHelper
       val = obj.send(name) rescue "unknow attr: #{obj.class}##{name}"
       if val.is_a?(ActiveRecord::Base)
         val = render(:partial => "/#{val.table_name}/attribute", :object => val)
+      elsif val.is_a?(Array)
+        val = list_of(val)
       end
       di_dt_dd(label, val, :class => "#{name}")
     end

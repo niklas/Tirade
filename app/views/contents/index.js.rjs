@@ -1,5 +1,0 @@
-page.update_toolbox(
-                   :header => "Contents",
-                   :content => {:partial => '/contents/list', :object => @contents},
-                   :nav => 'contents'
-                   )

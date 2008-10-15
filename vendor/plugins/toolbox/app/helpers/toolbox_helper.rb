@@ -56,13 +56,25 @@ module ToolboxHelper
     set_toolbox_status
   end
 
+  # Update a single attribute with jquery.
+  #
+  # Example:
+  # Giving a Document and :pictures, there 
+  # should be searched for a 'div.frame:last div.document ul.pictures' and replaced by a new version (or new li`s)
+  # 
+  # Document, :title => 'div.document span.title'
+  # Story, :body => 'div.story div.body'
+  def toolbox_update_model_attribute model, meth
+    # TODO something fancy here, mabye reuse the #show calls somehow (they are not called here..)
+  end
+
   def tabnav_to_s(name)
     partial_name = "widgets/#{name}_tabnav"
     render :partial => partial_name
   end
 
   def close_toolbox
-    page.select('#toolbox').each {|tb| tb.remove }
+    page.select('#toolbox').remove
   end
   def set_toolbox_status
     page.toolbox.set_status(
