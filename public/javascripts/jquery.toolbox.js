@@ -110,9 +110,14 @@ var Toolbox = {
         }
       });
     });
-    $('div#toolbox > div.body > div.content > div.frame div.accordion h3.selected').livequery(function() { 
+    $('div#toolbox > div.body > div.content > div.frame:last div.accordion h3.selected').livequery(function() { 
       console.debug('selected', this);
-      Toolbox.accordion().scrollTo($(this), 500);
+      var s = $(this);
+      $.timer(300,function(timer) {
+        timer.stop();
+        Toolbox.accordion().scrollTo(s, 500);
+        $(this).addClass('scrolled');
+      })
     });
     $.timer(60 * 1000,function(timer) {
       if (!Toolbox.element()) {
