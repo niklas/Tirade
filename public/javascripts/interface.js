@@ -34,7 +34,7 @@ $(function() {
       ] }
     ])}
   );
-  $('body div.rendering').livequery(function(i) {
+  $('body.role_admin div.rendering').livequery(function(i) {
     $(this).appendDom([
       { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
         { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
