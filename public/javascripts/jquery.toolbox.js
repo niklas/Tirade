@@ -201,6 +201,7 @@ var Toolbox = {
     );
   },
   pop: function() {
+    $('body').applyRoles();
     this.prev();
     setTimeout( function() {
       Toolbox.last().remove();
