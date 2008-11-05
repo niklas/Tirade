@@ -16,6 +16,20 @@ jQuery.fn.resourceId = function() {
   }
 }
 
+// Apply roles classes from cookie (for body etc.)
+jQuery.fn.applyRoles = function() {
+  var e = $(this);
+  $(e[0].className.split(/ /)).each(function(i,cls) {
+    if (cls.match(/role_\S*/))
+      e.removeClass(cls)
+  });
+  $($.cookie("roles").split(/&/)).each(function(i,role) {
+    e.addClass('role_' + role);
+  });
+  e.addClass('cookie_roles');
+  return(e);
+}
+
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
@@ -42,4 +56,5 @@ $(function() {
         ] }
     ]);
   });
+  $('body').applyRoles();
 });
