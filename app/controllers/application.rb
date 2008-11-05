@@ -81,6 +81,16 @@ class ApplicationController < ActionController::Base
     session[:return_to] = nil
   end
 
+  def set_roles
+    roles = []
+    roles << "guest"
+    if logged_in?
+      roles << current_user.roles_short_names unless current_user.roles.empty?
+      roles << "admin" if current_user.is_admin?
+    end
+    cookies[:roles] = roles
+  end
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'da7c5d7c04e209653d264f43028c248a'

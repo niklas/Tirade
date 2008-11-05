@@ -3,6 +3,7 @@ class AdminController < ApplicationController
 
   def index
     @contents = Content.find :all
+    set_roles
   end
 
   def show

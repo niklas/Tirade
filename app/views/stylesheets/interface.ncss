@@ -1,8 +1,8 @@
-/* -------->>> tools icon links <<<--------------- */
 div.grid, div.rendering, div.page {
-  div.admin {
+  position: relative;
+  > div.admin {
     span, a {
-      display: block;
+      /* display: block; */
       position: absolute;
       top:2px;
       width: 16px;
@@ -26,9 +26,6 @@ div.grid, div.rendering, div.page {
   }
 }
 
-div.rendering {
-  position: relative;
-}
 
 body {
     div.rendering {
@@ -41,6 +38,6 @@ body {
         border: #85c71e 0px dotted;
     }  
     div.hover {
-    border: #c72c1e 1px dotted;
+        border: #c72c1e 1px dotted;
     }
 }
