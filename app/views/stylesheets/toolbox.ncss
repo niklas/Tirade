@@ -8,6 +8,7 @@
     :border_light => '#f7f7f7',
     :border_dark => '#dedede',
     :clickable => '#133B5E',
+    :text => '#222222'
   }
 %>
 
@@ -162,6 +163,10 @@ body {
          textarea {
            width: 97%;
            height: 4em;
+         }
+         input {
+           background-color: <%= colors[:element] %>;
+           color:  <%= colors[:text] %>;
          }
          input[type=text] {
            width: 80%;
