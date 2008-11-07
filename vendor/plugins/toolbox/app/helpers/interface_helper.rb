@@ -44,19 +44,22 @@ module InterfaceHelper
     content_tag(:li,link_to_remote(name,options,html_options))
   end
 
-  # You need a partial '/resources/list_item' and must write the +li+
+  # You need a partial '/resources/list_item' and must NOT write the +li+
   def list_of(things,opts={})
     if things.empty?
       content_tag(:span,'none',opts)
     else
       kind = things.first.table_name
-      partial = opts[:partial] || 'attribute'
+      partial = opts[:partial] || 'list_item'
       partial = "/#{kind}/#{partial}" unless partial =~ %r~^/~
       add_class_to_html_options(opts, kind)
+      add_class_to_html_options(opts, 'list')
       content_tag(
         :ul,
         things.collect do |thing|
-          render(:partial => partial, :object => thing, :layout => '/toolbox/list_item', :locals => {:model => thing})
+          content_tag :li,
+            render(:partial => partial, :object => thing, :locals => {:model => thing}),
+            :class => cycle('odd','even', :name => 'list_items')
         end.join(' '),
         opts
       )
@@ -94,7 +97,7 @@ module InterfaceHelper
     if options.has_key? :class
       options[:class] += " #{name}"
     else
-      options[:class] = name
+      options[:class] = name.to_s
     end
     options
   end
@@ -104,18 +107,27 @@ module InterfaceHelper
     @model || instance_variable_get("@#{@controller.controller_name.singularize}") || raise("no model loaded")
   end
 
+  # We carry the name of the resource in the di@title
   def show(obj,name,opts={}, &block)
-    label = opts[:label] || _(name.to_s.humanize)
+    label = opts.delete(:label) || _(name.to_s.humanize)
+    selectable = opts.delete(:selectable)
+    add_class_to_html_options(opts, 'selectable') if selectable
+    add_class_to_html_options(opts, name.to_s)
+    opts[:title] ||= name.to_s
+
     if block_given? || !obj.respond_to?(name)
-      concat di_dt_dd(label, capture(&block)), block.binding
+      concat di_dt_dd(label, capture(&block), opts), block.binding
     else
       val = obj.send(name) rescue "unknow attr: #{obj.class}##{name}"
       if val.is_a?(ActiveRecord::Base)
+        opts[:href] = url_for(:controller => val.table_name) if selectable
         val = render(:partial => "/#{val.table_name}/attribute", :object => val)
       elsif val.is_a?(Array)
+        opts[:href] = url_for(:controller => val.first.table_name) if selectable
+        add_class_to_html_options(opts, 'list') unless val.blank?
         val = list_of(val)
       end
-      di_dt_dd(label, val, :class => "#{name}")
+      di_dt_dd(label, val, opts)
     end
   end
 

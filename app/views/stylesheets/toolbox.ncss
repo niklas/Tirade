@@ -22,6 +22,9 @@ body {
    *.clickable {
      cursor: pointer;
    }
+   di.selectable dt {
+     cursor: pointer;
+   }
    *.page {
       span.title {
          font-weight: bolder;
@@ -132,6 +135,17 @@ body {
              }
            }
          }
+         ul.list {
+           width: 100%;
+           margin: 0;
+         }
+         a.show {
+           float: right;
+           background: transparent url(/images/icons/show-arrow.gif) no-repeat scroll right;
+           text-indent: -5000px;
+           width: 16px;
+           margin-right: 0.3em; 
+         }
          div.accordion {
            width: 99%;
            height: 90%;
@@ -196,20 +210,19 @@ body {
                clear: left;
                margin: 0.3em;
              }
+             .list dd {
+               width: 100%;
+               margin: 0;
+             }
              dd {
                margin: 0.3em;
                float: right;
                clear: right;
-               a.show {
-                 float: right;
-                 background: transparent url(/images/icons/show-arrow.gif) no-repeat scroll right;
-                 text-indent: -5000px;
-                 width: 16px;
-               }
-               ul {
+               ul.list {
                  margin: 0;
                  float: left;
                  clear: left;
+                 width: 100%;
                  li {
                   width: 100%;
                   float: left;
