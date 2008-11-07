@@ -59,7 +59,7 @@ module InterfaceHelper
         things.collect do |thing|
           content_tag :li,
             render(:partial => partial, :object => thing, :locals => {:model => thing}),
-            :class => cycle('odd','even', :name => 'list_items')
+            :class => "#{kind.singularize} #{toolbox_item_cycle}"
         end.join(' '),
         opts
       )
@@ -123,8 +123,10 @@ module InterfaceHelper
         opts[:href] = url_for(:controller => val.table_name) if selectable
         val = render(:partial => "/#{val.table_name}/attribute", :object => val)
       elsif val.is_a?(Array)
-        opts[:href] = url_for(:controller => val.first.table_name) if selectable
-        add_class_to_html_options(opts, 'list') unless val.blank?
+        unless val.blank?
+          opts[:href] = url_for(:controller => val.first.table_name) if selectable
+          add_class_to_html_options(opts, 'list')
+        end
         val = list_of(val)
       end
       di_dt_dd(label, val, opts)
@@ -142,6 +144,10 @@ module InterfaceHelper
 
   def toolbox_row_cycle
     cycle('odd', 'even', :name => 'toolbox_rows')
+  end
+
+  def toolbox_item_cycle
+    cycle('odd', 'even', :name => 'list_items')
   end
 
   def back_link(label='Back',opts={})
