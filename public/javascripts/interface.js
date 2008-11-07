@@ -13,6 +13,8 @@ jQuery.fn.resourceId = function() {
     (action = $(this).attr('action')) && 
     (action.match(/(\d+)\D*$/))) {
     return(m[1]);
+  } else if ( m = $(this)[0].className.match(/_(\d+)/)) {
+    return(m[1])
   }
 }
 

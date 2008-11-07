@@ -7,16 +7,9 @@ class ImagesController < ApplicationController
   
   def index
     # TODO: Pagination
-    @models = @images = Image.search(params[:term]).find(:all, :order => 'created_at DESC')
+    @models = @images = Image.search(params[:search].andand[:term]).find(:all, :order => 'created_at DESC')
 
-    if params[:for_select]
-      respond_to do |wants|
-        wants.html
-        wants.js { render :action => 'search_results'}
-      end
-    else
-      render_toolbox_action :index
-    end
+    render_toolbox_action :index
   end
 
   # TODO append .js in multipartform

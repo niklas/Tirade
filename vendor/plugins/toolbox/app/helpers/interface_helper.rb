@@ -46,20 +46,21 @@ module InterfaceHelper
 
   # You need a partial '/resources/list_item' and must NOT write the +li+
   def list_of(things,opts={})
-    if things.empty?
+    if !opts.delete(:force_list) && things.empty?
       content_tag(:span,'none',opts)
     else
-      kind = things.first.table_name
+      kind = things.first.table_name rescue 'items'
       partial = opts[:partial] || 'list_item'
       partial = "/#{kind}/#{partial}" unless partial =~ %r~^/~
       add_class_to_html_options(opts, kind)
       add_class_to_html_options(opts, 'list')
+      add_class_to_html_options(opts, 'empty') if things.blank?
       content_tag(
         :ul,
         things.collect do |thing|
           content_tag :li,
             render(:partial => partial, :object => thing, :locals => {:model => thing}),
-            :class => "#{kind.singularize} #{toolbox_item_cycle}"
+            :class => "#{dom_id(thing)} #{kind.singularize} #{toolbox_item_cycle}"
         end.join(' '),
         opts
       )

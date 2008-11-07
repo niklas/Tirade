@@ -108,10 +108,14 @@ module Tirade
         end
       end
       def update_toolbox_for_index(page)
-        page.push_or_refresh( 
-          :partial => "list", :object => @models,
-          :title => self.controller_name.humanize
-        )
+        if params[:search]
+          page.toolbox.last.find('div.search_results').html(page.context.list_of(@models, :force_list => true))
+        else
+          page.push_or_refresh( 
+            :partial => "list", :object => @models,
+            :title => self.controller_name.humanize
+          )
+        end
       end
       def update_toolbox_for_edit(page)
         page.push_toolbox_content(
@@ -145,10 +149,7 @@ module Tirade
             page.toolbox_update_model_attribute model, meth
           end
         else
-          page.update_last_toolbox_frame(
-            :partial => "show", :object => @model,
-            :title => "#{@model.class_name} (#{@model.id})"
-          )
+          page.toolbox.pop_and_refresh_last()
         end
       end
 

@@ -34,6 +34,7 @@ body {
       }
    }
 }
+
 #toolbox {
   display:none;
   height:400px;
@@ -135,17 +136,6 @@ body {
              }
            }
          }
-         ul.list {
-           width: 100%;
-           margin: 0;
-         }
-         a.show {
-           float: right;
-           background: transparent url(/images/icons/show-arrow.gif) no-repeat scroll right;
-           text-indent: -5000px;
-           width: 16px;
-           margin-right: 0.3em; 
-         }
          div.accordion {
            width: 99%;
            height: 90%;
@@ -218,17 +208,6 @@ body {
                margin: 0.3em;
                float: right;
                clear: right;
-               ul.list {
-                 margin: 0;
-                 float: left;
-                 clear: left;
-                 width: 100%;
-                 li {
-                  width: 100%;
-                  float: left;
-                  clear: left;
-                 }
-               }
              }
            }
          }

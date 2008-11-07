@@ -1,15 +1,3 @@
 <% image ||= list_item %>
-<li>
-   <%= show_image_link(image, :label =>image_tag(image.image.url(:thumbnail))) %>
-	
-	<%# In place editor bug %>
-	<% @image = image %>
-   
-   <% if current_user_may_access?('images','update') %>
-     <%= in_place_editor_field :image, :title %>
-   <% else %>
-     <span><%= image.title %></span>
-   <% end %>
-	(<%= destroy_image_link(image, :confirm => 'Are you sure?') %>
-    <%= edit_image_link(image) %>)
-</li>
+<%= image_tag(image.image.url(:thumbnail)) %>
+<%= show_image_link(image) %>

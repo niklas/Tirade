@@ -23,7 +23,7 @@
 
     <% unless content.new_record? || !content.acts_as?(:pictureable) %>
       <% accordion_item "Pictures" do %>
-        <%= f.select_picture %>
+        <%= f.has_many :images, :foreign_key => 'image_ids' %>
       <% end %>
     <% end %>
 

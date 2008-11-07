@@ -47,6 +47,21 @@ module Tirade
       wrap('select picture', {}, inner)
     end
 
+    def has_many(assoc, opts={})
+      unless @object.class.reflections.has_key?(assoc)
+        return "does not know about #{assoc.to_s.humanize}"
+      end
+      reflection = @object.class.reflections[assoc]
+      things = @object.send(assoc)
+      fkey = opts.delete(:foreign_key) || "#{assoc.to_s.singularize}_ids"
+      inner = ''
+      inner << @template.list_of(things, :force_list => true)
+      inner << @template.text_field_tag('search_term', nil, :href => @template.url_for(:controller => assoc))
+      inner << @template.content_tag(:div, "Search for #{assoc.to_s.humanize}", :class => 'search_results')
+      inner << @template.hidden_field_tag("#{@object_name}[#{fkey}][]","empty")
+      wrap(assoc, {}, inner)
+    end
+
     private
     def wrap(field, options, tag_output)
       label = @template.content_tag(
@@ -55,7 +70,7 @@ module Tirade
         {:for => "#{@object_name.to_s}_#{field}"}
       )
       @template.content_tag(
-        :p,
+        :div,
         label + ' ' + tag_output,
         {:class => field.to_s}
       )

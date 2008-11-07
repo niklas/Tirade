@@ -57,20 +57,24 @@ var Toolbox = {
           axis: 'xy',
           duration: 500
         })
-      .end()
+        .end()
+        // Buttons
       .find(' > div.head > span.buttons')
         .find('> img.close').click(function() { Toolbox.close() }).end()
         .find('> img.min').click(function() { Toolbox.minimize() }).end()
         .find('> img.max').click(function() { Toolbox.maximize() }).end()
       .end()
       .show();
+    // Back button
     $("div#toolbox a.back[@href='#']").livequery(function() { 
       $(this).click(function(event) { 
         event.preventDefault();
         $('div.active').removeClass('active');
-        Toolbox.popAndRefreshLast() 
+        Toolbox.pop() 
       })
     });
+
+    // Set Title of last frame
     $('div#toolbox > div.body > div.content > div.frame:not(:first)').livequery(function() { 
       Toolbox.setTitle();
     });
@@ -81,6 +85,8 @@ var Toolbox = {
         $(this).appendDom([Toolbox.newBackButton()])
       }
     });
+
+    // Keep track of frames in history
     $('div#toolbox > div.body > div.content > div.frame').livequery(function() { 
       var frame = $(this);
       Toolbox.history().appendDom([
@@ -91,6 +97,9 @@ var Toolbox = {
       event.preventDefault();
       console.debug("clicked to jump to", $(this).html())
     });
+
+
+    // Accordion, open in last used section
     $('div#toolbox > div.body > div.content > div.frame div.accordion').livequery(function() { 
       active = 0;
       if (name = Toolbox.activeSectionName) { 
@@ -110,6 +119,8 @@ var Toolbox = {
         }
       });
     });
+
+    // Scroll to selected accordion section
     $('div#toolbox > div.body > div.content > div.frame:last div.accordion h3.selected').livequery(function() { 
       console.debug('selected', this);
       var s = $(this);
@@ -119,6 +130,8 @@ var Toolbox = {
         $(this).addClass('scrolled');
       })
     });
+
+    // Auto-Refresh the Dashboard
     $.timer(60 * 1000,function(timer) {
       if (!Toolbox.element()) {
         timer.stop();
@@ -131,6 +144,56 @@ var Toolbox = {
     $('div#toolbox > div.body > div.content > div.frame textarea').livequery(function() {
       $(this).elastic();
     });
+    $('div#toolbox div.frame:last input#search_term').livequery(function() {
+      var url = $(this).attr('href');
+      $(this).attr("autocomplete", "off").typeWatch({
+        wait: 500,
+        captureLength: 2,
+        callback: function(val) {
+          $.ajax({
+            data: { 'search[term]' : encodeURIComponent(val) },
+            dataType:'script', 
+            url: url,
+            complete: function() {
+              Toolbox.last().find('div.search_results ul.list li')
+                .appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ])
+                .find('img.add').click(function(event) {
+                  var item = $(this).parents('li');
+                  item.clone().appendTo(item.parents('div.search_results').siblings('ul.list'));
+                });
+
+            }
+          });
+        }
+      })
+    });
+
+    // List with associated elements
+    $('div#toolbox div.frame:last label + ul.list li').livequery(function() {
+      var item = $(this);
+      item.find('img.association').remove();
+      item.parents('ul.list').removeClass('empty')
+      // clone hidden tag
+        .siblings('input[@type=hidden][@value=empty]').clone().attr('value',item.resourceId()).appendTo(item);
+
+      item.appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ]);
+      item.find('img.remove').click(function(event) {
+        item.remove();
+        Toolbox.last().find('ul.list:not(:has(li))').addClass('empty');
+      });
+    });
+    /*
+    $('div#toolbox div.frame:last div.search_results ul.list li').livequery(function() {
+      var item = $(this);
+      item.find('img.association').remove();
+      item.appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ]);
+      item.find('img.add').click(function(event) {
+        item.clone().appendTo(item.parents('div.search_results').siblings('ul.items'));
+      });
+    }); */
+
+
+
     this.setSizes();
     //$('div#toolbox > div.body > div.content > div.frame dd a.show').livequery(function() { 
     //  $(this).parent()
@@ -149,6 +212,8 @@ var Toolbox = {
     $('div#toolbox > div.body > div.content > div.frame form').expire();
     $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').expire();
     $('div#toolbox > div.sidebar > ul.history > li > a.jump').expire();
+    $('div#toolbox div.frame:last input#search_term').expire();
+    $('div#toolbox div.frame:last div.search_results ul.list li').expire();
   },
   setSizes: function() {
     this.scroller().height( this.bodyHeight() );

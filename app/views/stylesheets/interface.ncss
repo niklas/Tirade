@@ -41,3 +41,57 @@ body {
         border: #c72c1e 1px dotted;
     }
 }
+
+div#toolbox div.frame {
+  text-align: left;
+}
+
+form {
+  div {
+    float: left; 
+  }
+  label {
+    float: left;
+    text-align: left;
+    display: block;
+    font-weight: bold;
+  }
+  input#search_term {
+    float: left;
+    clear: left;
+  }
+  ul.list {
+    border: thin solid pink;
+    .empty {
+      height: 3em;
+    }
+  }
+}
+ul.list {
+  width: 100%;
+  margin: 0;
+  float: left;
+  clear: left;
+  li { 
+    width: 100%;
+    float: left;
+    clear: left;
+    text-align: left;
+    .image {
+      width: auto;
+      clear: none;
+      img {
+        float: left; 
+      }
+    }
+  }
+}
+ul, dl {
+  a.show {
+    float: right;
+    background: transparent url(/images/icons/show-arrow.gif) no-repeat scroll right;
+    text-indent: -5000px;
+    width: 16px;
+    margin-right: 0.3em; 
+  }
+}

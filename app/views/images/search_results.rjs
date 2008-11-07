@@ -1,1 +1,0 @@
-page[:search_results].replace_html :partial => '/images/for_select', :collection => @images
