@@ -50,21 +50,25 @@ module InterfaceHelper
       content_tag(:span,'none',opts)
     else
       kind = things.first.table_name rescue 'items'
-      partial = opts[:partial] || 'list_item'
-      partial = "/#{kind}/#{partial}" unless partial =~ %r~^/~
       add_class_to_html_options(opts, kind)
       add_class_to_html_options(opts, 'list')
       add_class_to_html_options(opts, 'empty') if things.blank?
       content_tag(
         :ul,
         things.collect do |thing|
-          content_tag :li,
-            render(:partial => partial, :object => thing, :locals => {:model => thing}),
-            :class => "#{dom_id(thing)} #{kind.singularize} #{toolbox_item_cycle}"
+          list_item(thing, opts)
         end.join(' '),
         opts
       )
     end
+  end
+
+  def list_item(thing,opts={})
+    partial = opts[:partial] || 'list_item'
+    partial = "/#{thing.table_name}/#{partial}" unless partial =~ %r~^/~
+    content_tag :li,
+      render(:partial => partial, :object => thing, :locals => {:model => thing}),
+      :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
   end
 
   # You need a partial '/resources/table_row' and must write the +tr+
