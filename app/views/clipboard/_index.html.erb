@@ -1,0 +1,6 @@
+<% clipboard ||= index || @clipboard || Clipboard.new(session) %>
+<% clipboard.items_by_type do |klass, items| %>
+  <% items.each do |item| %>
+    <%= list_item item %>
+  <% end %>
+<% end %>

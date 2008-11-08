@@ -41,6 +41,8 @@ ActionController::Routing::Routes.draw do |map|
     # TODO just for completeness
     manage.resources :videos
 
+    manage.resource :clipboard, :controller => 'clipboard'
+
   end
   map.dashboard '/dashboard', :controller => 'admin'
   map.resource :session

@@ -14,7 +14,7 @@ var Toolbox = {
           ]},
           { tagName: 'div', class: 'sidebar left', childNodes: [
             { tagName: 'ul', class: 'history' },
-            { tagName: 'ul', class: 'clipboard' }
+            { tagName: 'ul', class: 'clipboard list' }
           ] },
           { tagName: 'div', class: 'busy', childNodes: [
             { tagName: 'span', class: 'message', innerHTML: 'Loading' }
@@ -182,6 +182,8 @@ var Toolbox = {
         Toolbox.last().find('ul.list:not(:has(li))').addClass('empty');
       });
     });
+
+
     /*
     $('div#toolbox div.frame:last div.search_results ul.list li').livequery(function() {
       var item = $(this);
@@ -312,6 +314,9 @@ var Toolbox = {
   },
   sidebar: function() {
     return this.element().find('> div.sidebar')
+  },
+  clipboard: function() {
+    return this.element().find('> div.sidebar > ul.clipboard')
   },
   history: function() {
     return this.sidebar().find('> ul.history')

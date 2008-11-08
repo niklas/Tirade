@@ -1,3 +1,15 @@
+<%
+  # Margins / Paddings
+  small  = '0.3em'
+  medium = '0.7em'
+  big    = '1.3em'
+  colors = {
+    :hover => '#3198F2',
+    :perimeter => '#dedede',
+  }
+  perimeter = "1px solid #{colors[:perimeter]}" # border around elements
+%>
+
 div.grid, div.rendering, div.page {
   position: relative;
   > div.admin {
@@ -49,6 +61,7 @@ div#toolbox div.frame {
 form {
   div {
     float: left; 
+    width: 100%;
   }
   label {
     float: left;
@@ -56,9 +69,15 @@ form {
     display: block;
     font-weight: bold;
   }
-  input#search_term {
-    float: left;
-    clear: left;
+  input {
+    float: right;
+    [type="text"] {
+      width: 75%;
+    }
+    #search_term {
+      float: left;
+      clear: both;
+    }
   }
   ul.list {
     border: thin solid pink;
@@ -72,26 +91,57 @@ ul.list {
   margin: 0;
   float: left;
   clear: left;
+  .hover {
+    background-color: <%= colors[:hover] %>;
+  }
+  .active-droppable {
+    background-image: url(/images/icons/drop_here.png);
+    background-repeat: no-repeat;
+    background-position: center;
+  }
   li { 
     width: 100%;
     float: left;
     clear: left;
     text-align: left;
+    border-bottom: <%= perimeter %>;
+    border-top: <%= perimeter %>;
     .image {
       width: auto;
       clear: none;
       img {
         float: left; 
       }
+      margin: <%= small %>;
+      border: <%= perimeter %>;
+      padding: <%= small %>;
+    }
+    img.association {
+      margin: 0 <%= small %>;
+      float: right;
+      clear: right;
+      display: none;
+    }
+    :hover img.association {
+      display: block;
     }
   }
 }
-ul, dl {
-  a.show {
-    float: right;
-    background: transparent url(/images/icons/show-arrow.gif) no-repeat scroll right;
-    text-indent: -5000px;
-    width: 16px;
-    margin-right: 0.3em; 
+ul.list, dl {
+  a {
+    .show {
+      float: right;
+      clear: right;
+      text-indent: -5000px;
+      width: 16px;
+      margin: 0 <%= small %>;
+      background: transparent url(/images/icons/show-arrow.png) no-repeat scroll right;
+    }
+  }
+}
+
+li.ui-draggable-dragging {
+  a.show, e.edit, e.index {
+    display: none;
   }
 }

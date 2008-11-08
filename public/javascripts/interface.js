@@ -2,6 +2,8 @@
  * Builds up the interface for tirade, needs jquery and more than one jquery plugin
  */
 
+
+// returns just the number (23 of image_23)
 jQuery.fn.resourceId = function() {
   if (m = $(this).attr('id').match(/(\d+)$/)) {
     return(m[1]);
@@ -14,6 +16,14 @@ jQuery.fn.resourceId = function() {
     (action.match(/(\d+)\D*$/))) {
     return(m[1]);
   } else if ( m = $(this)[0].className.match(/_(\d+)/)) {
+    return(m[1])
+  }
+}
+
+
+// Returns image_23
+jQuery.fn.resourceIdentifier = function() {
+  if ( m = $(this)[0].className.match(/([a-z_]+_\d+)/)) {
     return(m[1])
   }
 }
@@ -42,7 +52,8 @@ $(function() {
     Toolbox.last().refresh();
   });
 
-  $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not([class=back])').livequery(function() { $(this).useToolbox(); })
+  $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not([class=back])').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
   $('body div.grid').livequery(function() {
     $(this).appendDom([
       { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
@@ -57,6 +68,44 @@ $(function() {
         { tagName: 'span', class: 'handle', innerHTML: 'drag' }
         ] }
     ]);
+  });
+  $('div#toolbox ul.list > li').livequery(function() {
+    $(this).draggable({ 
+      helper: 'clone', 
+      zIndex: 50, 
+      appendTo: 'body'
+    });
+  });
+  // Clipboard
+  $('div#toolbox div.sidebar ul.clipboard').livequery(function() {
+    $(this).droppable({
+      accept: 'li',
+      hoverClass: 'hover',
+      activeClass: 'active-droppable',
+      greedy: true,
+      drop: function(e,ui) {
+        $.ajax({
+          url: clipboard_url(),
+          data: {id: $(ui.draggable).resourceIdentifier()},
+          type: 'POST',
+          dataType: 'script'
+        });
+      }
+    });
+  });
+  $('div#toolbox div.sidebar ul.clipboard li').livequery(function() {
+    var item = $(this);
+    item.find('img.association').remove();
+    item.appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ]);
+    item.find('img.remove').click(function(event) { 
+      item.remove(); 
+      $.ajax({
+        url: clipboard_url(),
+        data: {id: item.resourceIdentifier()},
+        type: 'DELETE',
+        dataType: 'script'
+      });
+    });
   });
   $('body').applyRoles();
 });
