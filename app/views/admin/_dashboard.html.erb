@@ -19,7 +19,7 @@
   </ol>
 </p>
 
-<ul>
+<ul class="list">
   <% primary_controller_names.each do |cname| %>
     <li>
       <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
