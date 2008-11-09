@@ -155,17 +155,44 @@ var Toolbox = {
             dataType:'script', 
             url: url,
             complete: function() {
-              Toolbox.last().find('div.search_results ul.list li')
+              Toolbox.last().find('div.search_results.many ul.list li')
                 .appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ])
                 .find('img.add').click(function(event) {
                   var item = $(this).parents('li');
                   item.clone().appendTo(item.parents('div.search_results').siblings('ul.list:first'));
                 });
-
+              Toolbox.last().find('div.search_results.one ul.list li')
+                .appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ])
+                .find('img.add').click(function(event) {
+                  var item = $(this).parents('li');
+                  var target = item.parents('div.search_results').siblings('ul.association:first');
+                  target.html('');
+                  item.clone().appendTo(target);
+                });
             }
           });
         }
       })
+    });
+
+    // list with singel association
+    $('div#toolbox div.frame:last label + ul.association.one li').livequery(function() {
+      var item = $(this);
+      item.find('img.association').remove();
+      item.appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ]);
+      item.find('img.remove').click(function(event) {
+        item.parents('ul.association.one:first')
+          .siblings('input.association_id:first').val('').end()
+          .siblings('input.association_type:first').val('').end()
+          .highlight().end()
+        .remove();
+      });
+      if ( attrs = item.typeAndId() ) {
+        item.parents('ul.association.one:first')
+          .siblings('input.association_id:first').val(attrs.id).end()
+          .siblings('input.association_type:first').val(attrs.type).end()
+          .highlight();
+      }
     });
 
     // List with associated elements

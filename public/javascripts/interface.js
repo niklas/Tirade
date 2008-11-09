@@ -28,6 +28,16 @@ jQuery.fn.resourceIdentifier = function() {
   }
 }
 
+// Returns { type: 'Image', id: 23 }
+jQuery.fn.typeAndId = function() {
+  if (match = $(this)[0].className.match(/(.+)_(\d+)/)) {
+    return({
+      type: $.string(match[1]).gsub(/_/,'-').capitalize().camelize().str,
+      id: match[2]
+    });
+  }
+};
+
 // Apply roles classes from cookie (for body etc.)
 jQuery.fn.applyRoles = function() {
   var e = $(this);

@@ -64,11 +64,15 @@ module InterfaceHelper
   end
 
   def list_item(thing,opts={})
+    content_tag :li, 
+      single_item(thing, opts),
+      :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
+  end
+
+  def single_item(thing, opts={})
     partial = opts[:partial] || 'list_item'
     partial = "/#{thing.table_name}/#{partial}" unless partial =~ %r~^/~
-    content_tag :li,
-      render(:partial => partial, :object => thing, :locals => {:model => thing}),
-      :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
+    render( :partial => partial, :object => thing, :locals => {:model => thing})
   end
 
   # You need a partial '/resources/table_row' and must write the +tr+

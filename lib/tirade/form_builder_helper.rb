@@ -52,13 +52,37 @@ module Tirade
         return "does not know about #{assoc.to_s.humanize}"
       end
       reflection = @object.class.reflections[assoc]
+      return "Wrong association type (#{reflection.macro}), needed has_many" unless reflection.macro == :has_many
       things = @object.send(assoc)
       fkey = opts.delete(:foreign_key) || "#{assoc.to_s.singularize}_ids"
       inner = ''
       inner << @template.list_of(things, :force_list => true)
       inner << @template.text_field_tag('search_term', nil, :href => @template.url_for(:controller => assoc))
-      inner << @template.content_tag(:div, "Search for #{assoc.to_s.humanize}", :class => 'search_results')
+      inner << @template.content_tag(:div, "Search for #{assoc.to_s.humanize}", :class => 'search_results many')
       inner << @template.hidden_field_tag("#{@object_name}[#{fkey}][]","empty")
+      wrap(assoc, {}, inner)
+    end
+
+    def has_one(assoc, opts={})
+      unless @object.class.reflections.has_key?(assoc)
+        return "does not know about #{assoc.to_s.humanize}"
+      end
+      reflection = @object.class.reflections[assoc]
+      return "Wrong association type (#{reflection.macro}), needed belongs_to/has_one" unless [:has_one, :belongs_to].include?(reflection.macro)
+      assocs = assoc.to_s.pluralize
+      thing = @object.send(assoc)
+      inner = ''
+      inner << @template.content_tag(
+        :ul,
+        @template.list_item(thing),
+        :class => 'association one list'
+      )
+      inner << @template.text_field_tag('search_term', nil, :href => @template.url_for(:controller => assocs))
+      inner << @template.content_tag(:div, "Search for #{assocs.humanize}", :class => 'search_results one')
+      inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
+      if reflection.options[:polymorphic]
+        inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", thing.class_name, :class => 'association_type')
+      end
       wrap(assoc, {}, inner)
     end
 

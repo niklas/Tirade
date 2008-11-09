@@ -33,7 +33,7 @@ class Content < ActiveRecord::Base
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id'
 
   def self.browse(params={})
-    search(params[:term]).child_of(params[:parent_id]).paginate(:page => params[:page])
+    search(params[:search].andand[:term]).child_of(params[:parent_id]).paginate(:page => params[:page])
   end
 
   named_scope :child_of, lambda {|p| p.nil? ? {} : {:conditions => {:parent_id => p.is_a?(Content) ? p.id : p}}}

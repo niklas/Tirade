@@ -4,32 +4,28 @@
 <% end %>
 <%= error_messages_for :rendering, :object => rendering %>
 
+<% form_for(@rendering) do |f| %>
+  <% accordion do %>
 
-  	<form>
-  		<label>Search Content</label>
-    	<%= text_field_tag 'search' %>
-		</form>
-		
-    <ul id="search_results">
-    </ul>
+    <% accordion_item "What" do %>
+      <%= f.has_one :content %>
+    <% end %>
 
-  <% form_for(@rendering) do |f| %>
-  <p>
-    <%= f.collection_select :content_type, Rendering.valid_content_types, :to_s, :label, :include_blank => true  %>
-    <%= f.text_field :content_id %>
-  </p>
-  <p>
+    <% accordion_item "Where" do %>
       <% if f.object.has_content? %>
         <%= f.collection_select :part_id, Part.for_content(f.object.content), :id, :fullname, :include_blank => true %>
       <% else %>
       <%= f.collection_select :part_id, Part.find(:all, :order => 'name'), :id, :fullname, :include_blank => true %>
       <% end %>
-  </p>
+    <% end %>
 
-  <% if f.object.part %>
-  <p>
-    <%= f.select_options %>
-  </p>
+    <% if f.object.part %>
+      <% accordion_item "Options" do %>
+        <%= f.select_options %>
+      <% end %>
+    <% end %>
+
+    <%= f.submit %>
+
   <% end %>
-
 <% end %>
