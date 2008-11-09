@@ -31,14 +31,16 @@ jQuery.fn.resourceIdentifier = function() {
 // Apply roles classes from cookie (for body etc.)
 jQuery.fn.applyRoles = function() {
   var e = $(this);
-  $(e[0].className.split(/ /)).each(function(i,cls) {
-    if (cls.match(/role_\S*/))
-      e.removeClass(cls)
-  });
-  $($.cookie("roles").split(/&/)).each(function(i,role) {
-    e.addClass('role_' + role);
-  });
-  e.addClass('cookie_roles');
+  if ($.cookie("roles")) {
+    $(e[0].className.split(/ /)).each(function(i,cls) {
+      if (cls.match(/role_\S*/))
+        e.removeClass(cls)
+    });
+    $($.cookie("roles").split(/&/)).each(function(i,role) {
+      e.addClass('role_' + role);
+    });
+    e.addClass('cookie_roles');
+  }
   return(e);
 }
 
@@ -78,8 +80,14 @@ $(function() {
   });
   // Clipboard
   $('div#toolbox div.sidebar ul.clipboard').livequery(function() {
-    $(this).droppable({
-      accept: 'li',
+    var list = $(this);
+    list.droppable({
+      accept: function(draggable) { 
+        return(
+          draggable.is('li') &&
+          draggable.parent()[0] != list[0]
+        );
+      },
       hoverClass: 'hover',
       activeClass: 'active-droppable',
       greedy: true,

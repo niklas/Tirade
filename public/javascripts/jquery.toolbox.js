@@ -159,7 +159,7 @@ var Toolbox = {
                 .appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ])
                 .find('img.add').click(function(event) {
                   var item = $(this).parents('li');
-                  item.clone().appendTo(item.parents('div.search_results').siblings('ul.list'));
+                  item.clone().appendTo(item.parents('div.search_results').siblings('ul.list:first'));
                 });
 
             }
@@ -169,6 +169,23 @@ var Toolbox = {
     });
 
     // List with associated elements
+    $('div#toolbox div.frame:last label + ul.list').livequery(function() {
+      var list = $(this);
+      list.droppable({
+        accept: function(draggable) { 
+          return(
+            draggable.is('li') &&
+            draggable.parent()[0] != list[0]
+          );
+        },
+        hoverClass: 'hover',
+        activeClass: 'active-droppable',
+        greedy: true,
+        drop: function(e,ui) {
+          $(ui.draggable).clone().appendTo(list);
+        }
+      });
+    });
     $('div#toolbox div.frame:last label + ul.list li').livequery(function() {
       var item = $(this);
       item.find('img.association').remove();
