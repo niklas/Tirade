@@ -144,7 +144,7 @@ var Toolbox = {
     $('div#toolbox > div.body > div.content > div.frame textarea').livequery(function() {
       $(this).elastic();
     });
-    $('div#toolbox div.frame:last input#search_term').livequery(function() {
+    $('div#toolbox div.frame:last input.search_term').livequery(function() {
       var url = $(this).attr('href');
       $(this).attr("autocomplete", "off").typeWatch({
         wait: 500,
@@ -258,7 +258,7 @@ var Toolbox = {
     $('div#toolbox > div.body > div.content > div.frame form').expire();
     $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').expire();
     $('div#toolbox > div.sidebar > ul.history > li > a.jump').expire();
-    $('div#toolbox div.frame:last input#search_term').expire();
+    $('div#toolbox div.frame:last input.search_term').expire();
     $('div#toolbox div.frame:last div.search_results ul.list li').expire();
   },
   setSizes: function() {
