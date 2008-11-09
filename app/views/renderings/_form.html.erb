@@ -11,12 +11,8 @@
       <%= f.has_one :content %>
     <% end %>
 
-    <% accordion_item "Where" do %>
-      <% if f.object.has_content? %>
-        <%= f.collection_select :part_id, Part.for_content(f.object.content), :id, :fullname, :include_blank => true %>
-      <% else %>
-      <%= f.collection_select :part_id, Part.find(:all, :order => 'name'), :id, :fullname, :include_blank => true %>
-      <% end %>
+    <% accordion_item "How" do %>
+      <%= f.has_one :part %>
     <% end %>
 
     <% if f.object.part %>

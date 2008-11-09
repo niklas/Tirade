@@ -11,8 +11,11 @@
 <% accordion do %>
 
   <% accordion_item "What" do %>
-    <%= show rendering, :content, :label => 'Content' %>
-    <%= show rendering, :part, :label => 'Part' %>
+    <%= show rendering, :content %>
+  <% end %>
+
+  <% accordion_item "How" do %>
+    <%= show rendering, :part %>
   <% end %>
 
   <% accordion_item "Where" do %>

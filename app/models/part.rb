@@ -48,6 +48,8 @@ class Part < ActiveRecord::Base
   #has_finder :for_content, lambda {|cont|
   #  {:conditions => ['1=1']}
   #}
+
+  has_fulltext_search :name, :filename
   def self.for_content(cont)
     find(:all, :order => 'name')
   end
@@ -130,7 +132,7 @@ class Part < ActiveRecord::Base
 
   def after_find
     @use_theme = in_theme?
-    sync_attributes
+    #sync_attributes
   end
 
   def options_as_yaml
@@ -148,6 +150,10 @@ class Part < ActiveRecord::Base
 
   def preferred_types
     read_attribute(:preferred_types) || []
+  end
+
+  def preferred_types_names
+    preferred_types.join(', ')
   end
 
   def label
