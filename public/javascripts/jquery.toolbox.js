@@ -228,27 +228,16 @@ var Toolbox = {
     });
 
 
-    /*
-    $('div#toolbox div.frame:last div.search_results ul.list li').livequery(function() {
-      var item = $(this);
-      item.find('img.association').remove();
-      item.appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ]);
-      item.find('img.add').click(function(event) {
-        item.clone().appendTo(item.parents('div.search_results').siblings('ul.items'));
+    // Double click selectable attributes to edit them
+    $('div#toolbox div.frame:last di.selectable').livequery(function() {
+      $(this).dblclick( function() {
+        $(this).parents('div.frame').find('ul.linkbar li a.edit:first').click();
       });
-    }); */
+    });
 
 
 
     this.setSizes();
-    //$('div#toolbox > div.body > div.content > div.frame dd a.show').livequery(function() { 
-    //  $(this).parent()
-    //    .addClass('clickable')
-    //    .click(function(event) {
-    //      event.preventDefault();
-    //      $(this).find('a.show').click();
-    //    })
-    //});
   },
   expireBehaviors: function() {
     $('div#toolbox > div.body > div.content > div.frame').expire();

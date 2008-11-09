@@ -11,11 +11,11 @@
 <% accordion do %>
 
   <% accordion_item "What" do %>
-    <%= show rendering, :content %>
+    <%= show rendering, :content, :selectable => true %>
   <% end %>
 
   <% accordion_item "How" do %>
-    <%= show rendering, :part %>
+    <%= show rendering, :part, :selectable => true %>
   <% end %>
 
   <% accordion_item "Where" do %>
