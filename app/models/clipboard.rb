@@ -1,6 +1,9 @@
 class Clipboard
+  Field = :clipboard_items
+
   def initialize(session)
-    @items = session[:clipboard_items] || []
+    @session = session
+    @items = @session[Field] || []
   end
 
   def items_by_type
@@ -14,14 +17,19 @@ class Clipboard
     if obj = object_for(item)
       @items << join(obj)
       @items.uniq!
+      save
     end
   end
 
   def delete item
     @items.delete item
+    save
   end
   
   private
+  def save
+    @session[Field] = @items
+  end
   def split item
     if item =~ /^([a-z_]+)_(\d+)$/i
       return [$1,$2.to_i]
