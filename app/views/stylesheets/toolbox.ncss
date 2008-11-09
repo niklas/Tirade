@@ -100,12 +100,12 @@ body {
     top: 2.3em;
     overflow: hidden;
     z-index: 2;
-    div.content {
+    > div.content {
       background-color:#FFFFFF;
       font-family:Arial,Helvetica,sans-serif;
       width: 1000%; /* 10 frames maximum (default) */
       height: 100%;
-      div.frame {
+      > div.frame {
          overflow: hidden; /* auto would be better, but flickers on mozilla */
          float: left;
          height: 100%;
@@ -127,7 +127,7 @@ body {
                float: right;
                padding: 0.3em;
                margin: 0.4em;
-               background: <%= colors[:clickable] %>;
+               background-color: <%= colors[:clickable] %>;
                color: <%= colors[:base] %>;
                text-decoration:none;
                .back {
@@ -170,7 +170,7 @@ body {
            background-color: <%= colors[:element] %>;
            color:  <%= colors[:text] %>;
          }
-         input {
+         input,select {
            background-color: <%= colors[:element] %>;
            color:  <%= colors[:text] %>;
          }
