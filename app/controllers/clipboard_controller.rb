@@ -16,7 +16,7 @@ class ClipboardController < ApplicationController
 
   private
   def prepare_clipboard
-    @clipboard = Clipboard.new(session)
+    @clipboard ||= Clipboard.new(session)
   end
 end
 
