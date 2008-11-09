@@ -59,7 +59,7 @@ div#toolbox div.frame {
 }
 
 form {
-  div {
+  div,p {
     float: left; 
     width: 100%;
   }
