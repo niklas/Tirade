@@ -164,6 +164,11 @@ body {
              overflow: hidden;
            }
          }
+         code {
+           width: 100%;
+           float: left;
+           font-size: 80%;
+         }
          textarea {
            width: 97%;
            height: 4em;

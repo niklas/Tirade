@@ -1,0 +1,42 @@
+<% part ||= show || @part %>
+
+<% links do %>
+  <li><%= edit_part_link(part) %> </li>
+<% end %>
+
+<% accordion do %>
+  
+  <% accordion_item 'Preview' do %>
+    <% show part, :preview, :skip_label => true do %>
+      <div class="rendering <%= part.filename -%> <%= part.preferred_types.first.domify %>">
+        <%= part.render %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <% accordion_item 'Basic' do %>
+    <%= show part, :name %>
+    <%= show part, :filename %>
+    <%= show part, :preferred_types_names, :label => 'Preferred Types' %>
+  <% end %>
+  
+  <% accordion_item 'Options' do %>
+    <% show part, :options, :skip_label => true do %>
+      <%=debug part.options.to_hash_with_defaults %>
+    <% end %>
+  <% end %>
+
+  <% accordion_item 'Code' do %>
+    <% show part, :rhtml, :skip_label => true do %>
+      <code class="rhtml"><%=h part.rhtml %></code>
+    <% end %>
+  <% end %>
+
+  <% accordion_item 'Sample' do %>
+    <% show part, :html, :skip_label => true do %>
+      <code class="html"><%=h part.render %></code>
+    <% end %>
+  <% end %>
+
+<% end %>
+

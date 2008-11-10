@@ -54,6 +54,8 @@ jQuery.fn.applyRoles = function() {
   return(e);
 }
 
+ChiliBook.recipeFolder = 'javascripts/syntax/'
+
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
@@ -64,16 +66,12 @@ $(function() {
     Toolbox.last().refresh();
   });
 
+  $('code.html').livequery(function() { $(this).chili() });
+  $('code.rhtml').livequery(function() { $(this).chili() });
+
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not([class=back])').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
-  $('body div.grid').livequery(function() {
-    $(this).appendDom([
-      { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
-        { tagName: 'a', href: edit_grid_url({id: $(this).resourceId()}), class: 'edit grid', innerHTML: 'edit' }
-      ] }
-    ])}
-  );
-  $('body.role_admin div.rendering').livequery(function(i) {
+  $('body.role_admin div.page div.rendering').livequery(function(i) {
     $(this).appendDom([
       { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
         { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
