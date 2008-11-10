@@ -226,11 +226,11 @@ module ActsAsConfigurable
       each_item do |name, item|
         defs[name] = item.default
       end
-      defs
+      defs.with_indifferent_access
     end
 
     def to_hash
-      values
+      values.with_indifferent_access
     end
 
     def to_hash_with_defaults
