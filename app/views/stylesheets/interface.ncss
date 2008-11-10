@@ -1,15 +1,3 @@
-<%
-  # Margins / Paddings
-  small  = '0.3em'
-  medium = '0.7em'
-  big    = '1.3em'
-  colors = {
-    :hover => '#3198F2',
-    :perimeter => '#dedede',
-  }
-  perimeter = "1px solid #{colors[:perimeter]}" # border around elements
-%>
-
 body div {
   .rendering {
     position: relative;
@@ -103,7 +91,7 @@ ul.list {
   float: left;
   clear: left;
   .hover {
-    background-color: <%= colors[:hover] %>;
+    background-color: <%= @colors[:hover] %>;
   }
   .active-droppable {
     background-image: url(/images/icons/drop_here.png);
@@ -115,20 +103,20 @@ ul.list {
     float: left;
     clear: left;
     text-align: left;
-    border-bottom: <%= perimeter %>;
-    border-top: <%= perimeter %>;
+    border-bottom: <%= @perimeter %>;
+    border-top: <%= @perimeter %>;
     .image {
       width: auto;
       clear: none;
       img {
         float: left; 
       }
-      margin: <%= small %>;
-      border: <%= perimeter %>;
-      padding: <%= small %>;
+      margin: <%= @small %>;
+      border: <%= @perimeter %>;
+      padding: <%= @small %>;
     }
     img.association {
-      margin: 0 <%= small %>;
+      margin: 0 <%= @small %>;
       float: right;
       clear: right;
       display: none;
@@ -145,7 +133,7 @@ ul.list, dl {
       clear: right;
       text-indent: -5000px;
       width: 16px;
-      margin: 0 <%= small %>;
+      margin: 0 <%= @small %>;
       background: transparent url(/images/icons/show-arrow.png) no-repeat scroll right;
     }
   }

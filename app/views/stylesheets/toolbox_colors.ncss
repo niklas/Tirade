@@ -1,0 +1,82 @@
+#toolbox {
+  border-top: 2px solid <%= @colors[:toolbox_border] %>; 
+  border-left: 2px solid <%= @colors[:toolbox_border] %>;
+  background-color: <%= @colors[:base] %>;
+  div.ui-resizable-handle {
+    background-color: <%= @colors[:decoration] %> !important;
+  }
+  a:hover {
+    background-color: <%= @colors[:hover] %>;
+  }
+  div.head {
+    background-color: <%= @colors[:decoration] %>;
+    background-image: url(/images/toolbox_title.png);
+    span.title {
+      color: <%= @colors[:base] %>;
+    }
+  }
+  div.body {
+    > div.content {
+      background-color: <%= @colors[:base] %>;
+      > div.frame {
+        ul.linkbar, ul.buttom_linkbar {
+          background: <%= @colors[:element] %>;
+          border-bottom: 1px solid <%= @colors[:base] %>;
+          color: <%= @colors[:text] %>;
+          li {
+            a,button,input.submit {
+              background-color: <%= @colors[:clickable] %>;
+              color: <%= @colors[:base] %>;
+            }
+          }
+        }
+        div.accordion {
+          *.accordion_toggle {
+             color: <%= @colors[:text] %>;
+             background: <%= @colors[:element] %>;
+             border-bottom: 1px solid <%= @colors[:base] %>;
+          }
+          *.selected {
+background <%= @colors[:selected] %>;
+          }
+        }
+        textarea,input,select {
+          background-color: <%= @colors[:element] %>;
+          color:  <%= @colors[:text] %>;
+        }
+        dl { 
+          di {
+            border-bottom: thin solid <%= @colors[:decoration] %>;
+            .odd {
+              background-color: #ffffff;
+            }
+            .even {
+              background-color: #eeeeee;
+            }
+          }
+        }
+      }
+    }
+  }
+  div.foot {
+    background-color: <%= @colors[:decoration] %>;
+  }
+  div.sidebar {
+    border-bottom: 1px solid <%= @colors[:toolbox_border_dark] %>;
+    border-top:    1px solid <%= @colors[:toolbox_border] %>;
+    border-left:   1px solid <%= @colors[:toolbox_border] %>;
+    border-right:  3px solid <%= @colors[:toolbox_border] %>;
+    background-color: <%= @colors[:base] %>;
+    ul.history, ul.clipboard {
+      border-bottom:1px solid <%= @colors[:decoration] %>;
+    }
+  }
+  div.busy {
+    span.message {
+      color: <%= @colors[:base] %>;
+    }
+  }
+  *.warning {
+    color: <%= @colors[:warning] %>;
+  }
+}
