@@ -10,29 +10,40 @@
   perimeter = "1px solid #{colors[:perimeter]}" # border around elements
 %>
 
-div.grid, div.rendering, div.page {
-  position: relative;
+body div {
+  .rendering {
+    position: relative;
+  }
+  :hover > div.admin {
+    display: block;
+  }
+  .grid.hovered { background-color: #eee}
+  .grid .grid.hovered { background-color: #ccc}
+  .grid .grid .grid.hovered { background-color: #aaa}
+  .grid .grid .grid .grid.hovered { background-color: #999}
+  .rendering.hovered { background-color: #bdb}
   > div.admin {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
     span, a {
       /* display: block; */
-      position: absolute;
-      top:2px;
       width: 16px;
       height: 16px;
       text-indent: -5000px;
       outline: 0;
+      margin: 2px;
+      float: right;
     }
     span.handle {
-      right:22px;
       background: url(../images/icons/small/move.gif);
       cursor: move;
     }
     a.edit {
-      right:3px;
       background: url(../images/icons/small/edit.gif);
     }
     a.create.layout {
-      right:3px;
       background: url(../images/icons/small/template.gif);
     }
   }
