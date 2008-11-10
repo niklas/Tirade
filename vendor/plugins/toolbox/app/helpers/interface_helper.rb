@@ -119,6 +119,7 @@ module InterfaceHelper
   # We carry the name of the resource in the di@title
   def show(obj,name,opts={}, &block)
     label = opts.delete(:label) || _(name.to_s.humanize)
+    label = nil if opts.delete(:skip_label)
     selectable = opts.delete(:selectable)
     add_class_to_html_options(opts, 'selectable') if selectable
     add_class_to_html_options(opts, name.to_s)
