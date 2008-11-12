@@ -150,7 +150,7 @@ $(function() {
       });
     });
   });
-  $('form.edit_part').livequery(function() {
+  $('form.edit_part, form.edit_rendering').livequery(function() {
     $(this).preview();
   });
   $('form.edit.content').livequery(function() {

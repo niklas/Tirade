@@ -55,15 +55,13 @@ class RenderingsController < ApplicationController
 
   def preview
     @rendering = Rendering.find(params[:id])
-    @rendering.attributes = params[:rendering] if params[:rendering]
-    @rendering.part.attributes = params[:part] if params[:part]
-    @rendering.grid.attributes = params[:grid] if params[:grid]
-    @rendering.content.attributes = params[:content] if params[:content]
-    if @rendering.has_content? && @rendering.content.respond_to?(:items)
-      @item_id = @rendering.content.items.first.andand.id
-    end
+    @rendering.attributes = params[:rendering]
     respond_to do |wants|
-      wants.js
+      wants.js do
+        render :update do |page|
+          page.update_rendering(@rendering)
+        end
+      end
     end
   end
 end
