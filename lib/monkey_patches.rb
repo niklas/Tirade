@@ -37,6 +37,16 @@ class String
   def domify
     strip.gsub(/[^\w]+/,'_').sub(/_\Z/,'').downcase
   end
+
+  def brighter(n=1)
+    return self if n <= 0
+    brighter(n-1).tr('0123456789abcdef','123456789abcdeff')
+  end
+
+  def darker(n=1)
+    return self if n <= 0
+    darker(n-1).tr('0123456789abcdef','00123456789abcde')
+  end
 end
 
 class Array

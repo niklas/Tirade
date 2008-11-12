@@ -44,14 +44,33 @@ background <%= @colors[:selected] %>;
           background-color: <%= @colors[:element] %>;
           color:  <%= @colors[:text] %>;
         }
+
+        ul {
+          li {
+            .odd { background-color: <%= @colors[:base].brighter(3) %>; }
+            .even { background-color: <%= @colors[:base].darker(3) %>; }
+            li {
+              .odd { background-color: <%= @colors[:base].brighter(2) %>; }
+              .even { background-color: <%= @colors[:base].darker(2) %>; }
+              li {
+                .odd { background-color: <%= @colors[:base].brighter %>; }
+                .even { background-color: <%= @colors[:base].darker %>; }
+              }
+            }
+          }
+        }
         dl { 
           di {
             border-bottom: thin solid <%= @colors[:decoration] %>;
-            .odd {
-              background-color: #ffffff;
-            }
-            .even {
-              background-color: #eeeeee;
+            .odd { background-color: <%= @colors[:base].brighter(3) %>; }
+            .even { background-color: <%= @colors[:base].darker(3) %>; }
+            di {
+              .odd { background-color: <%= @colors[:base].brighter(2) %>; }
+              .even { background-color: <%= @colors[:base].darker(2) %>; }
+              di {
+                .odd { background-color: <%= @colors[:base].brighter %>; }
+                .even { background-color: <%= @colors[:base].darker %>; }
+              }
             }
           }
         }
