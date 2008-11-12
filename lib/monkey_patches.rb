@@ -19,6 +19,13 @@ module ActiveRecord
       def name_for_js
         label.underscore
       end
+
+      def without_modification
+        transaction do
+          yield
+          raise Rollback
+        end
+      end
     end
   end
 end
