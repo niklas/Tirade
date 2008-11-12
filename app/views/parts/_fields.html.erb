@@ -28,16 +28,6 @@
   </div>
   </p>
 
-<p>
-  <b>Preferred Types</b>
-  <ul>
-    <% Part.valid_content_types.each do |typ| %>
-      <li>
-      <%= typ %>: <%= check_box_tag 'part[preferred_types][]', typ.to_s, @part.preferred_types.include?(typ.to_s) %>
-      </li>
-    <% end %>
-  </ul>
-</p>
 
 <p>
   <%= fields.submit "Update" %>

@@ -7,13 +7,14 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :path_prefix => '/manage' do |manage|
     manage.admin 'admin/:action/:id', :controller => 'admin'
     manage.resources :renderings,
-      :member => {:preview => :put, :duplicate => :put} do |renderings|
-      renderings.resource :grid, :controller => 'rendering/grid'
-      renderings.resource :part, :controller => 'rendering/part' do |part|
-        part.resource :theme, :controller => 'rendering/part/theme'
-      end
-      renderings.resource :content, :controller => 'rendering/content'
-    end
+      :member => {:preview => :put, :duplicate => :put}
+    #  do |renderings|
+    #  renderings.resource :grid, :controller => 'rendering/grid'
+    #  renderings.resource :part, :controller => 'rendering/part' do |part|
+    #    part.resource :theme, :controller => 'rendering/part/theme'
+    #  end
+    #  renderings.resource :content, :controller => 'rendering/content'
+    #end
 
     manage.resources :contents
 

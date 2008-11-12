@@ -78,6 +78,9 @@ form {
       clear: both;
     }
   }
+  table.define_options td.name    {  float: left; width: 33%; clear: left; }
+  table.define_options td.type    {  float: left; width: 26%; }
+  table.define_options td.default {  float: left; width: 33%; }
   ul.list {
     border: thin solid pink;
     .empty {

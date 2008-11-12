@@ -38,6 +38,20 @@ jQuery.fn.typeAndId = function() {
   }
 };
 
+// Auto preview
+jQuery.fn.preview = function() {
+  var url = $(this).attr('action') + '/preview';
+  var form = $(this);
+  form.find('input,textarea').change(function() {
+    $.ajax({
+      url: url, 
+      type: 'POST',
+      data: form.formSerialize(),
+      dataType: 'script'
+    });
+  });
+}
+
 // Apply roles classes from cookie (for body etc.)
 jQuery.fn.applyRoles = function() {
   var e = $(this);
@@ -122,6 +136,9 @@ $(function() {
         dataType: 'script'
       });
     });
+  });
+  $('form.edit_part').livequery(function() {
+    $(this).preview();
   });
   $('body').applyRoles();
 });

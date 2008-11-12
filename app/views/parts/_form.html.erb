@@ -1,0 +1,35 @@
+<% part ||= form || @part %>
+<%= error_messages_for :part %>
+
+<% form_for(part) do |f| %>
+
+  <% accordion do %>
+
+    <% accordion_item 'Basic' do %>
+      <%= f.text_field :name %>
+      <%= f.text_field :filename %>
+      <p>
+        <b>Preferred Types</b>
+        <ul>
+          <% Part.valid_content_types.each do |typ| %>
+            <li>
+            <%= typ %>: <%= check_box_tag 'part[preferred_types][]', typ.to_s, @part.preferred_types.include?(typ.to_s) %>
+            </li>
+          <% end %>
+        </ul>
+      </p>
+    <% end %>
+
+    <% accordion_item 'Code' do %>
+      <%= f.text_area :rhtml %>
+    <% end %>
+
+    <% accordion_item 'Options' do %>
+      <%= f.define_options %>
+    <% end %>
+
+    <%= f.submit %>
+
+  <% end %>
+<% end %>
+

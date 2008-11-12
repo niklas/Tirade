@@ -508,6 +508,10 @@ jQuery.fn.useToolbox = function(options) {
 };
 
 jQuery.fn.ajaxifyForm = function() {
+  // Set context_page_id so that rails know on which page we are on
+  $(this).appendDom([
+    {tagName: 'input', type: 'hidden', name: 'context_page_id', value: $('body > div.page').resourceId() }
+  ]);
   if ($(this).attr('enctype') == "multipart/form-data") {
     name_and_id = "iframe_for_" + $(this).attr('id');
     $(this).appendDom([
