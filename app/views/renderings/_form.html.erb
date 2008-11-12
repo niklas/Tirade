@@ -4,7 +4,7 @@
 <% end %>
 <%= error_messages_for :rendering, :object => rendering %>
 
-<% form_for(@rendering) do |f| %>
+<% form_for(:rendering, rendering) do |f| %>
   <% accordion do %>
 
     <% accordion_item "What" do %>
