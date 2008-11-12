@@ -142,7 +142,17 @@ module InterfaceHelper
           add_class_to_html_options(opts, 'list')
         end
         val = list_of(val)
+      elsif val.is_a?(ActsAsConfigurable::OptionsProxy)
+        val = 
+          content_tag(
+            :dl,
+            val.values.collect do |key, value|
+              di_dt_dd(key,value,:class => dom_class(value))
+            end.join,
+            :class => 'hash'
+        )
       end
+      val = debug(val) unless val.is_a?(String)
       di_dt_dd(label, val, opts)
     end
   end
@@ -151,7 +161,7 @@ module InterfaceHelper
     dd_opts = opts.delete(:dd)
     add_class_to_html_options(opts, toolbox_row_cycle)
     content_tag(:di,
-                content_tag(:dt, dt) +
+                content_tag(:dt, h(dt)) +
                 content_tag(:dd, dd, dd_opts),
                 opts
                )

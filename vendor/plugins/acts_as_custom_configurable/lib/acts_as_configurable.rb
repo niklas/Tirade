@@ -110,6 +110,10 @@ module ActsAsConfigurable
       typecast(@default)
     end
 
+    def table_name
+      'options'
+    end
+
     # No conversion is performed for objects.  Simply returns +value+.
     def typecast(value)
       value
@@ -181,6 +185,7 @@ module ActsAsConfigurable
         options[name] = new_val
       end
     end
+
     # define the options through a form
     def define_options
       define = {
@@ -239,6 +244,10 @@ module ActsAsConfigurable
 
     def to_hash
       values.with_indifferent_access
+    end
+
+    def empty?
+      values.empty?
     end
 
     def to_hash_with_defaults
