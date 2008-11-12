@@ -124,13 +124,17 @@ module InterfaceHelper
     add_class_to_html_options(opts, 'selectable') if selectable
     add_class_to_html_options(opts, name.to_s)
     opts[:title] ||= name.to_s
+    opts[:dd] ||= {}
 
     if block_given? || !obj.respond_to?(name)
       concat di_dt_dd(label, capture(&block), opts), block.binding
     else
       val = obj.send(name) rescue "unknow attr: #{obj.class}##{name}"
       if val.is_a?(ActiveRecord::Base)
-        opts[:href] = url_for(:controller => val.table_name) if selectable
+        # url_for does not recognize STI :(
+        opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
+        add_class_to_html_options(opts[:dd], dom_id(val))
+        add_class_to_html_options(opts[:dd], 'record')
         val = render(:partial => "/#{val.table_name}/attribute", :object => val)
       elsif val.is_a?(Array)
         unless val.blank?
@@ -144,10 +148,11 @@ module InterfaceHelper
   end
 
   def di_dt_dd(dt,dd, opts={})
+    dd_opts = opts.delete(:dd)
     add_class_to_html_options(opts, toolbox_row_cycle)
     content_tag(:di,
                 content_tag(:dt, dt) +
-                content_tag(:dd, dd),
+                content_tag(:dd, dd, dd_opts),
                 opts
                )
   end

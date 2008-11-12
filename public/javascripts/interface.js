@@ -100,13 +100,21 @@ $(function() {
       appendTo: 'body'
     });
   });
+  $('div#toolbox dl di dd.record').livequery(function() {
+    $(this).draggable({ 
+      helper: 'clone', 
+      zIndex: 50, 
+      appendTo: 'body',
+      scroll: true
+    });
+  });
   // Clipboard
   $('div#toolbox div.sidebar ul.clipboard').livequery(function() {
     var list = $(this);
     list.droppable({
       accept: function(draggable) { 
         return(
-          draggable.is('li') &&
+          draggable.is('li, dd.record') &&
           draggable.parent()[0] != list[0]
         );
       },
