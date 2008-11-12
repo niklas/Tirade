@@ -109,7 +109,12 @@ module Tirade
       end
       def update_toolbox_for_index(page)
         if params[:search]
-          page.toolbox.last.find('div.search_results').html(page.context.list_of(@models, :force_list => true))
+          target = page.toolbox.last.find("div.search_results.#{self.controller_name}")
+          if @models.empty?
+            target.html("No #{self.controller_name.humanize} found.")
+          else
+            target.html(page.context.list_of(@models, :force_list => true))
+          end
         else
           page.push_or_refresh( 
             :partial => "list", :object => @models,

@@ -45,7 +45,7 @@ module Tirade
       inner = ''
       inner << @template.list_of(things, :force_list => true)
       inner << @template.text_field_tag("#{assoc}_search_term", nil, :href => @template.url_for(:controller => assoc), :class => 'search_term')
-      inner << @template.content_tag(:div, "Search for #{assoc.to_s.humanize}", :class => 'search_results many')
+      inner << @template.content_tag(:div, "Search for #{assoc.to_s.humanize}", :class => "search_results many #{assoc}")
       inner << @template.hidden_field_tag("#{@object_name}[#{fkey}][]","empty")
       wrap(assoc, {}, inner)
     end
@@ -65,7 +65,7 @@ module Tirade
         :class => 'association one list'
       )
       inner << @template.text_field_tag("#{assoc}_search_term", nil, :href => @template.url_for(:controller => assocs), :class => 'search_term')
-      inner << @template.content_tag(:div, "Search for #{assocs.humanize}", :class => 'search_results one')
+      inner << @template.content_tag(:div, "Search for #{assocs.humanize}", :class => "search_results one #{assocs}")
       inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
       if reflection.options[:polymorphic]
         inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", thing.class_name, :class => 'association_type')
