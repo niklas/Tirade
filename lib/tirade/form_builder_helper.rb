@@ -31,20 +31,7 @@ module Tirade
     end
 
     def select_picture
-      unless @object.class.reflections.has_key?(:picturizations)
-        return 'does not know about pictures'
-      end
-      inner = ''
-      inner << "Search + click to add/remove pictures for '#{@object.title}'"
-
-      list_dom = "pictures_list"
-      inner << @template.content_tag(:div,@template.render(:partial => '/images/for_select', :collection => @object.images), {:id => list_dom, :class => 'pictures_list'})
-
-      inner << @template.text_field_tag('search_images')
-      results_dom = "search_results"
-      inner << @template.content_tag(:div,'results', {:id => results_dom, :class => 'pictures_list'})
-      inner << @template.hidden_field_tag("#{@object_name}[image_ids][]","empty")
-      wrap('select picture', {}, inner)
+      has_many :images, :foreign_key => 'image_ids'
     end
 
     def has_many(assoc, opts={})
