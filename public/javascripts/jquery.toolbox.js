@@ -175,7 +175,7 @@ var Toolbox = {
       })
     });
 
-    // list with singel association
+    // list with single association
     $('div#toolbox div.frame:last label + ul.association.one li').livequery(function() {
       var item = $(this);
       item.find('img.association').remove();
