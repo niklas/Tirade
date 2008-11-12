@@ -16,7 +16,8 @@ ActionController::Routing::Routes.draw do |map|
     #  renderings.resource :content, :controller => 'rendering/content'
     #end
 
-    manage.resources :contents
+    manage.resources :contents,
+      :member => {:preview => :put}
 
     # TODO external preview
     manage.resources :pages do |pages|

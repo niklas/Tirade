@@ -25,9 +25,11 @@ class PartsController < ApplicationController
   def preview_renderings_for(part,page)
     part_attributes = params[:part]
     if thepage = Page.find_by_id(params[:context_page_id])
-      thepage.renderings.with_part(part).each do |rend|
-        rend.part.attributes = part_attributes
-        page.select("div.rendering##{dom_id(rend)}").html(rend.render)
+      Part.without_modification do
+        thepage.renderings.with_part(part).each do |rend|
+          rend.part.attributes = part_attributes
+          page.select("div.rendering##{dom_id(rend)}").replace_with(rend.render)
+        end
       end
     end
   end

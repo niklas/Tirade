@@ -48,6 +48,10 @@ class Rendering < ActiveRecord::Base
     {:conditions => ['renderings.part_id = ?', part.id], :order => 'renderings.position'}
   }
 
+  named_scope :with_content, lambda {|content|
+    {:conditions => ['renderings.content_id = ? AND renderings.content_type = ?', content.id, content.class.to_s], :order => 'renderings.position'}
+  }
+
   def content_type=(new_content_type)
     write_attribute(:content_type, new_content_type.to_s) unless new_content_type.blank?
   end

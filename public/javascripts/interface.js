@@ -42,14 +42,19 @@ jQuery.fn.typeAndId = function() {
 jQuery.fn.preview = function() {
   var url = $(this).attr('action') + '/preview';
   var form = $(this);
-  form.find('input,textarea').change(function() {
+  var fetchPreview = function(data) {
     $.ajax({
       url: url, 
       type: 'POST',
-      data: form.formSerialize(),
+      data: data || form.formSerialize(),
       dataType: 'script'
     });
+  };
+  Toolbox.scroller().one('prev', function() {
+    fetchPreview(form.find('input[@name=authenticity_token],input[@name=_method],input[@name=context_page_id]').serialize()); /* reset old state */
   });
+
+  form.formWatch({callback: fetchPreview});
 }
 
 // Apply roles classes from cookie (for body etc.)
@@ -146,6 +151,9 @@ $(function() {
     });
   });
   $('form.edit_part').livequery(function() {
+    $(this).preview();
+  });
+  $('form.edit.content').livequery(function() {
     $(this).preview();
   });
   $('body').applyRoles();
