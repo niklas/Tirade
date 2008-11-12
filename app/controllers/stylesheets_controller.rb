@@ -13,6 +13,7 @@ class StylesheetsController < ApplicationController
 
   def set_vars
     # Margins / Paddings
+    @tiny   = '0.1em'
     @small  = '0.3em'
     @medium = '0.7em'
     @big    = '1.3em'

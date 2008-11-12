@@ -58,9 +58,10 @@ div#toolbox div.frame {
 }
 
 form {
-  div,p {
+  div,p,ul {
     float: left; 
     width: 100%;
+    margin: 0;
   }
   label {
     float: left;
@@ -78,9 +79,29 @@ form {
       clear: both;
     }
   }
-  table.define_options td.name    {  float: left; width: 33%; clear: left; }
-  table.define_options td.type    {  float: left; width: 26%; }
-  table.define_options td.default {  float: left; width: 33%; }
+  ul.define_options {
+    img.add.option {
+      margin: <%= @tiny %>;
+      cursor: pointer;
+      float: right;
+    }
+    li {
+      float: left;
+      clear: left;
+      position: relative;
+      img.remove.option { 
+        margin: <%= @tiny %>;
+        cursor: pointer;
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      *.name    {  float: left; width: 33%; }
+      *.type    {  float: left; width: 26%; }
+      *.default {  float: left; width: 33%; }
+    }
+  }
   ul.list {
     border: thin solid pink;
     .empty {

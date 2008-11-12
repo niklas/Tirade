@@ -13,15 +13,20 @@ module ActsAsConfigurable
     def define_options
       list_dom = "#{@object_name}_defined_options"
       returning "" do |html|
-        new_field = @template.content_tag(:li, define_option_item_fields(StringItem.new('new', :default => 'default')))
-        html << @template.link_to_function("add option") do |page|
-          page[list_dom].insert new_field
-        end
+        html << dummy_option_item_fields
         html << %Q[<ul id="#{list_dom}" class="define_options">]
         @object.options.each do |item|
           html << @template.content_tag(:li, define_option_item_fields(item) )
         end
         html << %q[</ul>]
+      end
+    end
+
+    def dummy_option_item_fields
+      returning '' do |html|
+        html << @template.hidden_field_tag("#{@object_name}[define_options][name][]",'dummy')
+        html << @template.hidden_field_tag("#{@object_name}[define_options][type][]",'string')
+        html << @template.hidden_field_tag("#{@object_name}[define_options][default][]",'dummy')
       end
     end
 

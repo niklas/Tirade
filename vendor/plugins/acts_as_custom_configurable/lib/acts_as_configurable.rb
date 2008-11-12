@@ -202,6 +202,8 @@ module ActsAsConfigurable
       0.upto(defs['name'].length-1) do |i|
         defined[defs['name'][i]] = [ defs['type'][i], defs['default'][i] ]
       end
+      defined.delete(:dummy)
+      defined.delete('dummy')
 
       self.defined_options = defined
     end

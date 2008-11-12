@@ -157,4 +157,23 @@ $(function() {
     $(this).preview();
   });
   $('body').applyRoles();
+
+
+  /* TODO: move to acts_as_custom_configurable */
+  $('form ul.define_options').livequery(function() {
+    var list = $(this);
+    $('<img src="/images/icons/small/plus.gif" class="add option" />').prependTo(list);
+    list.find('img.add').click(function() {
+      list.find('li:last').clone().appendTo(list);
+      return false;
+    });
+  });
+  $('form ul.define_options li').livequery(function() {
+    var item = $(this);
+    $('<img src="/images/icons/small/x.gif" class="remove option" />').prependTo(item);
+    item.find('img.remove').click(function() {
+      item.remove();
+      return false;
+    });
+  });
 });
