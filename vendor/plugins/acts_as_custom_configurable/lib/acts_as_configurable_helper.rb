@@ -4,7 +4,7 @@ module ActsAsConfigurable
       returning "" do |html|
         html << %Q[<ul id="#{@object_name}_options">]
         @object.options.each do |item|
-          html << @template.content_tag(:li, option_item_field(item) )
+          html << @template.content_tag(:li, option_item_field(item), :class => @template.cycle('odd','even', :name => 'options') )
         end
         html << %q[</ul>]
       end
