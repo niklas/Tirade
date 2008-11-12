@@ -3,7 +3,7 @@ module ActsAsConfigurable
     def select_options
       returning "" do |html|
         html << %Q[<ul id="#{@object_name}_options">]
-        @object.options.each_item do |item_name, item|
+        @object.options.each do |item|
           html << @template.content_tag(:li, option_item_field(item) )
         end
         html << %q[</ul>]
@@ -13,28 +13,28 @@ module ActsAsConfigurable
     def define_options
       list_dom = "#{@object_name}_defined_options"
       returning "" do |html|
-        html << %Q[<ul id="#{list_dom}" class="define_options">]
-        @object.options.each_item do |item_name, item|
-          html << @template.content_tag(:li, define_option_item_fields(item) )
-        end
-        html << %q[</ul>]
         new_field = @template.content_tag(:li, define_option_item_fields(StringItem.new('new', :default => 'default')))
         html << @template.link_to_function("add option") do |page|
           page[list_dom].insert new_field
         end
+        html << %Q[<ul id="#{list_dom}" class="define_options">]
+        @object.options.each do |item|
+          html << @template.content_tag(:li, define_option_item_fields(item) )
+        end
+        html << %q[</ul>]
       end
     end
 
     def define_option_item_fields(item)
       returning "" do |html|
-        html << @template.text_field_tag("#{@object_name}[define_options][name][]", item.name)
+        html << @template.text_field_tag("#{@object_name}[define_options][name][]", item.name, :class => "name")
         html << option_type_selector(item)
-        html << @template.text_field_tag("#{@object_name}[define_options][default][]", item.default)
+        html << @template.text_field_tag("#{@object_name}[define_options][default][]", item.default, :class => 'default')
       end
     end
 
     def option_type_selector(item)
-      @template.select_tag("#{@object_name}[define_options][type][]", option_type_option_group(item))
+      @template.select_tag("#{@object_name}[define_options][type][]", option_type_option_group(item), :class => 'type')
     end
 
     def option_type_option_group(item)

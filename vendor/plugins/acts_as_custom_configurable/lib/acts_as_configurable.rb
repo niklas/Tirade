@@ -104,7 +104,11 @@ module ActsAsConfigurable
     def type_to_s
       self.class.to_s.split('::').last.underscore.split('_').first
     end
-    attr_reader :name, :default
+    attr_reader :name
+
+    def default
+      typecast(@default)
+    end
 
     # No conversion is performed for objects.  Simply returns +value+.
     def typecast(value)
@@ -171,7 +175,8 @@ module ActsAsConfigurable
       @options = OptionsProxy.new(self)
     end
     def options=(new_options)
-      options.each_item do |name,item|
+      options.each do |item|
+        name = item.name
         new_val = new_options[name] || new_options[name.to_sym]
         options[name] = new_val
       end
@@ -183,8 +188,8 @@ module ActsAsConfigurable
         'type' => [],
         'default' => []
       }
-      options.each_item do |name, item|
-        define['name'] << name
+      options.each do |item|
+        define['name'] << item.name
         define['type'] << item.type_to_s
         define['default'] << item.default
       end
@@ -204,6 +209,7 @@ module ActsAsConfigurable
 
   class OptionsProxy
     attr_reader :items
+    include Enumerable
     def initialize(record)
       @record = record
       @definitions = record.send(conf[:defined_in])
@@ -223,8 +229,8 @@ module ActsAsConfigurable
 
     def defaults
       defs = {}
-      each_item do |name, item|
-        defs[name] = item.default
+      each do |item|
+        defs[item.name] = item.default
       end
       defs.with_indifferent_access
     end
@@ -241,9 +247,9 @@ module ActsAsConfigurable
       to_hash.to_yaml
     end
 
-    def each_item
+    def each
       @items.sort.each do |name,item|
-        yield name, item
+        yield item
       end
     end
 
