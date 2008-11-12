@@ -131,7 +131,8 @@ var Toolbox = {
       })
     });
 
-    // Auto-Refresh the Dashboard
+    // Init and Auto-Refresh the Dashboard
+    Toolbox.frameByHref('/dashboard').refresh();
     $.timer(60 * 1000,function(timer) {
       if (!Toolbox.element()) {
         timer.stop();
