@@ -47,13 +47,13 @@ background <%= @colors[:selected] %>;
 
         ul {
           li {
-            .odd { background-color: <%= @colors[:base].brighter(3) %>; }
-            .even { background-color: <%= @colors[:base].darker(3) %>; }
+            .odd { background-color: <%= @colors[:base].brighter %>; }
+            .even { background-color: <%= @colors[:base].darker %>; }
             li {
               .odd { background-color: <%= @colors[:base].brighter(2) %>; }
-              .even { background-color: <%= @colors[:base].darker(2) %>; }
+              .even { background-color: <%= @colors[:base].darker %>; }
               li {
-                .odd { background-color: <%= @colors[:base].brighter %>; }
+                .odd { background-color: <%= @colors[:base] %>; }
                 .even { background-color: <%= @colors[:base].darker %>; }
               }
             }
@@ -62,13 +62,13 @@ background <%= @colors[:selected] %>;
         dl { 
           di {
             border-bottom: thin solid <%= @colors[:decoration] %>;
-            .odd { background-color: <%= @colors[:base].brighter(3) %>; }
-            .even { background-color: <%= @colors[:base].darker(3) %>; }
+            .odd { background-color: <%= @colors[:base].brighter %>; }
+            .even { background-color: <%= @colors[:base].darker %>; }
             di {
               .odd { background-color: <%= @colors[:base].brighter(2) %>; }
-              .even { background-color: <%= @colors[:base].darker(2) %>; }
+              .even { background-color: <%= @colors[:base].darker %>; }
               di {
-                .odd { background-color: <%= @colors[:base].brighter %>; }
+                .odd { background-color: <%= @colors[:base] %>; }
                 .even { background-color: <%= @colors[:base].darker %>; }
               }
             }
