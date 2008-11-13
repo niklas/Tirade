@@ -23,12 +23,19 @@ class PartsController < ApplicationController
     end
   end
   def preview_renderings_for(part,page)
-    part_attributes = params[:part]
     if thepage = Page.find_by_id(params[:context_page_id])
       Part.without_modification do
-        thepage.renderings.with_part(part).each do |rend|
-          rend.part.attributes = part_attributes
-          page.select("div.rendering##{dom_id(rend)}").replace_with(rend.render)
+        if part.update_attributes(params[:part])
+          page.select("div.errorExplanation").remove()
+          thepage.renderings.with_part(part).each do |rend|
+            page.select("div.rendering##{dom_id(rend)}").replace_with(rend.render)
+          end
+        else
+          if rend = thepage.renderings.with_part(part).first 
+            page.select("div.rendering##{dom_id(rend)}").html page.context.error_messages_for(:part, :object => part)
+          else
+            flash[:notice] = part.errors.full_messages
+          end
         end
       end
     end
