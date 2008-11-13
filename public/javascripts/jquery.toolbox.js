@@ -66,7 +66,7 @@ var Toolbox = {
       .end()
       .show();
     // Back button
-    $("div#toolbox a.back[@href='#']").livequery(function() { 
+    this.element(" a.back[@href='#']").livequery(function() { 
       $(this).click(function(event) { 
         event.preventDefault();
         $('div.active').removeClass('active');
@@ -75,11 +75,11 @@ var Toolbox = {
     });
 
     // Set Title of last frame
-    $('div#toolbox > div.body > div.content > div.frame:not(:first)').livequery(function() { 
+    this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
     });
-    $('div#toolbox > div.body > div.content > div.frame form').livequery(function() { $(this).ajaxifyForm() });
-    $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').livequery(function() { 
+    this.frames(' form').livequery(function() { $(this).ajaxifyForm() });
+    this.linkBar().livequery(function() { 
       Toolbox.setTitle();
       if ($(this).find('> li > a.back').length == 0) {
         $(this).appendDom([Toolbox.newBackButton()])
@@ -87,20 +87,20 @@ var Toolbox = {
     });
 
     // Keep track of frames in history
-    $('div#toolbox > div.body > div.content > div.frame').livequery(function() { 
+    this.frames().livequery(function() { 
       var frame = $(this);
       Toolbox.history().appendDom([
         Toolbox.newHistoryItem( frame.attr('title'), frame.attr('href') )
       ]);
     });
-    $('div#toolbox > div.sidebar > ul.history > li > a.jump').livequery('click', function(event) {
+    this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
       console.debug("clicked to jump to", $(this).html())
     });
 
 
     // Accordion, open in last used section
-    $('div#toolbox > div.body > div.content > div.frame div.accordion').livequery(function() { 
+    this.accordion().livequery(function() { 
       active = 0;
       if (name = Toolbox.activeSectionName) { 
         active = '[@name=' + name + ']' 
@@ -121,7 +121,7 @@ var Toolbox = {
     });
 
     // Scroll to selected accordion section
-    $('div#toolbox > div.body > div.content > div.frame:last div.accordion h3.selected').livequery(function() { 
+    this.accordion(' h3.selected').livequery(function() { 
       console.debug('selected', this);
       var s = $(this);
       $.timer(300,function(timer) {
@@ -142,10 +142,10 @@ var Toolbox = {
         }
       }
     });
-    $('div#toolbox > div.body > div.content > div.frame textarea').livequery(function() {
+    this.frames(' textarea').livequery(function() {
       $(this).elastic();
     });
-    $('div#toolbox div.frame:last input.search_term').livequery(function() {
+    this.last(' input.search_term').livequery(function() {
       var url = $(this).attr('href');
       $(this).attr("autocomplete", "off").typeWatch({
         wait: 500,
@@ -177,7 +177,7 @@ var Toolbox = {
     });
 
     // list with single association
-    $('div#toolbox div.frame:last label + ul.association.one li').livequery(function() {
+    this.last(' label + ul.association.one li').livequery(function() {
       var item = $(this);
       item.find('img.association').remove();
       item.appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ]);
@@ -197,7 +197,7 @@ var Toolbox = {
     });
 
     // List with associated elements
-    $('div#toolbox div.frame:last label + ul.list').livequery(function() {
+    this.last(' label + ul.list').livequery(function() {
       var list = $(this);
       list.droppable({
         accept: function(draggable) { 
@@ -214,7 +214,7 @@ var Toolbox = {
         }
       });
     });
-    $('div#toolbox div.frame:last label + ul.list li').livequery(function() {
+    this.last(' label + ul.list li').livequery(function() {
       var item = $(this);
       item.find('img.association').remove();
       item.parents('ul.list').removeClass('empty')
@@ -230,7 +230,7 @@ var Toolbox = {
 
 
     // Double click selectable attributes to edit them
-    $('div#toolbox div.frame:last di.selectable').livequery(function() {
+    this.last(' di.selectable').livequery(function() {
       $(this).dblclick( function() {
         $(this).parents('div.frame').find('ul.linkbar li a.edit:first').click();
       });
@@ -241,33 +241,37 @@ var Toolbox = {
     this.setSizes();
   },
   expireBehaviors: function() {
-    $('div#toolbox > div.body > div.content > div.frame').expire();
-    $('div#toolbox > div.body > div.content > div.frame div.accordion').expire();
-    $("div#toolbox a.back[@href='#']").expire();
-    $('div#toolbox > div.body > div.content > div.frame:not(:first)').expire();
-    $('div#toolbox > div.body > div.content > div.frame form').expire();
-    $('div#toolbox > div.body > div.content > div.frame > ul.linkbar').expire();
-    $('div#toolbox > div.sidebar > ul.history > li > a.jump').expire();
-    $('div#toolbox div.frame:last input.search_term').expire();
-    $('div#toolbox div.frame:last div.search_results ul.list li').expire();
+    this.frames().expire();
+    this.accordion().expire();
+    this.element(" a.back[@href='#']").expire();
+    this.frames(':not(:first)').expire();
+    this.frames(' form').expire();
+    this.linkBar().expire();
+    this.history('> li > a.jump').expire();
+    this.last(' input.search_term').expire();
+    this.last(' div.search_results ul.list li').expire();
+    this.last(' di.selectable').expire();
+    this.last(' label + ul.list li').expire();
+    this.last(' label + ul.list').expire();
+    this.last(' label + ul.association.one li').expire();
   },
   setSizes: function() {
     this.scroller().height( this.bodyHeight() );
     this.busyBox().height( this.bodyHeight() );
-    $('div#toolbox > div.body > div.content > div.frame').height( Toolbox.body().height() );
+    this.frames().height( Toolbox.body().height() );
     this.accordion().height(
-      Toolbox.body().height() - Toolbox.last().find('ul.linkbar').height()
+      Toolbox.body().height() - Toolbox.linkBar().height()
     );
     this.scroller().scrollTo('div.frame:last',{axis:'x'});
   },
   bodyHeight: function() {
-    return $('div#toolbox').height() - this.decorationHeight()
+    return this.element().height() - this.decorationHeight()
   },
   decorationHeight: function() {
-    return $('div#toolbox > div.head').height() + $('div#toolbox > div.foot').height()
+    return this.element(' > div.head').height() + this.element(' > div.foot').height()
   },
   push: function(content,options) {
-    this.scroller().find('> div.content')
+    this.content()
       .appendDom([ Toolbox.newFrame(content,options) ]);
     this.next();
   },
@@ -306,7 +310,7 @@ var Toolbox = {
     this.prev();
     setTimeout( function() {
       Toolbox.last().remove();
-      Toolbox.history().find('li:not(:first):last').remove();
+      Toolbox.history(' li:not(:first):last').remove();
       Toolbox.setTitle();
     }, 500);
   },
@@ -326,40 +330,43 @@ var Toolbox = {
     this.last().html(content);
   },
   setTitle: function() {
-    return this.element().find('> div.head span.title').html( Toolbox.last().attr('title'));
+    return this.element('> div.head span.title').html( Toolbox.last().attr('title'));
   },
   setStatus: function(status) {
-    return this.element().find('> div.foot span.status').html(status);
+    return this.element('> div.foot span.status').html(status);
   },
-  frames: function() {
-    return this.body().find('> div.content > div.frame');
+  frames: function(rest) {
+    return this.content('> div.frame'+(rest||''));
   },
-  frameByHref: function(href) {
-    return this.element().find('> div.body > div.content > div.frame[@href=' + href + ']')
+  frameByHref: function(href,rest) {
+    return this.frames('[@href=' + href + ']'+(rest||''))
   },
-  scroller: function() {
-    return $('div#toolbox > div.body');
+  scroller: function(rest) {
+    return this.element('> div.body'+(rest||''));
   },
-  last: function() {
-    return this.scroller().find('> div.content > div.frame:last');
+  content: function(rest) {
+    return this.scroller('> div.content' +(rest||''));
   },
-  body: function() {
-    return this.element().find('> div.body')
+  last: function(rest) {
+    return this.frames(':last' +(rest||''));
   },
-  sidebar: function() {
-    return this.element().find('> div.sidebar')
+  body: function(rest) {
+    return this.element('> div.body'+(rest||''))
   },
-  clipboard: function() {
-    return this.element().find('> div.sidebar > ul.clipboard')
+  sidebar: function(rest) {
+    return this.element('> div.sidebar'+(rest||''))
   },
-  history: function() {
-    return this.sidebar().find('> ul.history')
+  clipboard: function(rest) {
+    return this.sidebar('> ul.clipboard'+(rest||''))
   },
-  busyBox: function() {
-    return this.element().find('> div.busy')
+  history: function(rest) {
+    return this.sidebar('> ul.history'+(rest||''))
   },
-  element: function() {
-    return $('div#toolbox');
+  busyBox: function(rest) {
+    return this.element('> div.busy'+(rest||''))
+  },
+  element: function(rest) {
+    return $('div#toolbox' +(rest||''));
   },
   next: function() {
     this.linkBarOn();
@@ -374,7 +381,7 @@ var Toolbox = {
     $('div.active').removeClass('active');
   },
   accordion: function() {
-    return this.last().find('div.accordion')
+    return this.last(' div.accordion')
   },
   openSectionByName: function(name) {
     console.debug("openSectionByName",name);
@@ -443,7 +450,7 @@ var Toolbox = {
   },
   linkBar: function() {
     // Toolbox.last('ul.linkbar')
-    return(Toolbox.last().find('ul.linkbar'));
+    return(Toolbox.last(' ul.linkbar'));
   },
   linkBarOn: function(after) {
     var h = this.linkBar().height();
