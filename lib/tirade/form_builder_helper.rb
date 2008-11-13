@@ -22,14 +22,6 @@ module Tirade
       wrap(field, options,super(field, options, checked_value, unchecked_value))
     end
 
-    def define_options
-      wrap('Define Options', {}, super)
-    end
-
-    def select_options
-      wrap('Options', {}, super)
-    end
-
     def select_picture
       has_many :images, :foreign_key => 'image_ids'
     end

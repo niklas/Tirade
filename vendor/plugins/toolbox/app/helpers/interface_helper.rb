@@ -104,6 +104,7 @@ module InterfaceHelper
   # tag helpers like content_tag, link_to etc.
   def add_class_to_html_options(options,name)
     if options.has_key? :class
+      return if name =~ /^odd|even$/ && options[:class] =~ /odd|even/
       options[:class] += " #{name}"
     else
       options[:class] = name.to_s
@@ -161,7 +162,7 @@ module InterfaceHelper
     dd_opts = opts.delete(:dd)
     add_class_to_html_options(opts, toolbox_row_cycle)
     content_tag(:di,
-                content_tag(:dt, h(dt)) +
+                (dt.blank? ? '' : content_tag(:dt, dt)) +
                 content_tag(:dd, dd, dd_opts),
                 opts
                )
