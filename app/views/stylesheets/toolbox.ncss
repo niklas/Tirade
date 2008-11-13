@@ -135,9 +135,12 @@ body {
            }
          }
          code {
-           width: 100%;
+           width: 98%;
+           margin: 1%;
            float: left;
            font-size: 80%;
+           overflow: auto;
+           padding: <%= @small %>;
          }
          textarea {
            width: 97%;
