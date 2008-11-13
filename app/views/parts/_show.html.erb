@@ -21,21 +21,17 @@
   <% end %>
   
   <% accordion_item 'Options' do %>
-    <% show part, :options, :skip_label => true do %>
-      <%=debug part.options.to_hash_with_defaults %>
+    <% part.options.to_hash_with_defaults.each do |key,value| %>
+      <%= di_dt_dd(key,value) %>
     <% end %>
   <% end %>
 
-  <% accordion_item 'Code' do %>
-    <% show part, :rhtml, :skip_label => true do %>
+  <% accordion_item 'Code', :content_tag => :div do %>
       <code class="rhtml"><%=h part.rhtml %></code>
-    <% end %>
   <% end %>
 
-  <% accordion_item 'Sample' do %>
-    <% show part, :html, :skip_label => true do %>
+  <% accordion_item 'Example', :content_tag => :div do %>
       <code class="html"><%=h part.render %></code>
-    <% end %>
   <% end %>
 
 <% end %>
