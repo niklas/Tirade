@@ -81,6 +81,7 @@ var Toolbox = {
     this.frames(' form').livequery(function() { $(this).ajaxifyForm() });
     this.linkBar().livequery(function() { 
       Toolbox.setTitle();
+      Toolbox.linkBarOn();
       if ($(this).find('> li > a.back').length == 0) {
         $(this).appendDom([Toolbox.newBackButton()])
       }
@@ -369,7 +370,6 @@ var Toolbox = {
     return $('div#toolbox' +(rest||''));
   },
   next: function() {
-    this.linkBarOn();
     return this.scroller().trigger('next');
   },
   prev: function() {
