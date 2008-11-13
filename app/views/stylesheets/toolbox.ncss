@@ -85,6 +85,9 @@ body {
          float: left;
          height: 100%;
          width: <%= 100.0 / max_frames %>%;
+         ul.linkbar {
+           top: -60px;
+         }
          ul.linkbar, ul.bottom_linkbar {
            display:block;
            font-size:12px;
@@ -92,8 +95,11 @@ body {
            height:30px;
            line-height:30px;
            margin:0pt;
-           padding:0pt 10px;
+           padding:0;
            text-decoration:none;
+           position: absolute;
+           width: 100%;
+           z-index: 2;
            li {
              a,button,input.submit {
                float: right;
