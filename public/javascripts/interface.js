@@ -176,4 +176,32 @@ $(function() {
       return false;
     });
   });
+
+  $('div.grid').sortable("destroy").sortable({
+    connectWith: ['div.grid'],
+    //containment: 'div.page',
+    appendTo: 'div.page',
+    distance: 5,
+    dropOnEmpty: false,
+    placeholder: 'placeholder',
+    forcePlaceHolderSize: true,
+    items: '> div.rendering',
+    handle: 'span.handle',
+    tolerance: 'pointer',
+    scroll: true,
+    cursor: 'move',
+    zIndex: 1,
+    change: function(e,ui) {
+      ui.item.width(ui.element.width());
+    },
+    stop: function(e,ui) {
+      $('div.rendering').width('');
+      grid = ui.item.parent();
+      $.ajax({
+        data: grid.sortable("serialize"),
+        url: order_renderings_grid_url({id: grid.resourceId()}),
+        type: 'POST', dataType: 'script'
+      });
+    }
+  });
 });

@@ -19,17 +19,20 @@ class GridsController < ApplicationController
   def order_renderings
     Rendering.transaction do
       @grid = Grid.find(params[:id])
-      renderings_ids = params[:renderings].reject(&:blank?)
+      renderings_ids = params[:rendering].reject(&:blank?)
       renderings_ids.andand.each_with_index do |r,i|
         rendering = Rendering.find(r)
         rendering.position = i+1
         rendering.grid = @grid
         rendering.save!
       end
-      @rendering = Rendering.find(renderings_ids.first)
-    end
+    end unless params[:rendering].blank?
     respond_to do |wants|
-      wants.js { render :template => '/rendering/grid/show' }
+      wants.js { 
+        render :update do |page|
+          page[@grid].highlight
+        end
+      }
     end
   end
 
