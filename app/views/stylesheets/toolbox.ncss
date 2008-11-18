@@ -88,6 +88,9 @@ body {
          ul.linkbar {
            top: -60px;
          }
+         ul.bottom_linkbar {
+           bottom: 0;
+         }
          ul.linkbar, ul.bottom_linkbar {
            display:block;
            font-size:12px;
