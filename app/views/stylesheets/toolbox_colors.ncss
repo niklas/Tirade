@@ -19,7 +19,7 @@
     > div.content {
       background-color: <%= @colors[:base] %>;
       > div.frame {
-        ul.linkbar, ul.buttom_linkbar {
+        ul.linkbar, ul.bottom_linkbar {
           background: <%= @colors[:element] %>;
           border-bottom: 1px solid <%= @colors[:base] %>;
           color: <%= @colors[:text] %>;
