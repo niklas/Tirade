@@ -2,16 +2,18 @@ class PublicController < ApplicationController
   skip_before_filter :check_permissions
 
   def index
-    @path = params[:path]
-    if @path.andand.last =~ /^(\d+)$/
-      # FIXME this item_id gets not recognized in parts, using PublicHelper#dangling_id for now
-      @item_id = $1.to_i
-      @path = @path[0...-1]
-    end
-    unless (@page_url = @path.andand.collect(&:downcase).andand.join('/') || '').blank?
-      @page = Page.find_by_url(@page_url)
+    if @full_path = params[:path]
+      @page_path = @full_path.dup
+      @trailing_path = []
+      while @page.nil? && !@page_path.empty?
+        unless @page = Page.find_by_path(@page_path)
+          @trailing_path.unshift @page_path.pop
+        end
+      end
     else
-      @page = Page.root
+      @page ||= Page.root
+      @trailing_path = []
+      @page_path = []
     end
     store_location
     unless @page

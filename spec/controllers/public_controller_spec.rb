@@ -34,31 +34,31 @@ describe PublicController do
     it "should accept ''" do
       Page.should_receive(:root).and_return( pages(:main) )
       get :index
-      assigns[:page_url].should == ''
       assigns[:page].should_not be_nil
     end
     it "should accept '/foo/bar'" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
+      Page.should_receive(:find_by_url).with('foo').and_return( nil )
       get :index, :path => ['foo','bar']
-      assigns[:page_url].should == 'foo/bar'
       assigns[:page].should be_nil
     end
     it "should accept '/foo/bar' with extra param" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
+      Page.should_receive(:find_by_url).with('foo').and_return( nil )
       get :index, :path => ['foo','bar'], :q => 'some param'
-      assigns[:page_url].should == 'foo/bar'
       assigns[:page].should be_nil
     end
     it "should accept '/foo/bar' with extra params" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
+      Page.should_receive(:find_by_url).with('foo').and_return( nil )
       get :index, :path => ['foo','bar'], :q => 'some param', :x => 'you know', :y => 'do we need this?'
-      assigns[:page_url].should == 'foo/bar'
       assigns[:page].should be_nil
     end
     it "should accept '/portal/children-section'" do
       Page.should_receive(:find_by_url).with('portal/children-section').and_return( pages(:children_section) )
       get :index, :path => ['portal','children-section']
-      assigns[:page_url].should == 'portal/children-section'
+      assigns[:page_path].should == %w(portal children-section)
+      assigns[:trailing_path].should be_empty
       assigns[:page].should == pages(:children_section)
     end
   end
@@ -72,19 +72,21 @@ describe PublicController do
       Page.should_receive(:find_by_url).with('part1').and_return( nil )
       get :index, :path => %w(part1 part2 part3 part4 part5)
       assigns[:page].should be_nil
+      assigns[:page_path].should be_empty
+      assigns[:trailing_path].should == %w(part1 part2 part3 part4 part5)
     end
 
     it "should find the children-section if asking for it's nonexisting subpages" do
       Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals/sexual-harassment-panda').and_return(nil)
-      Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals').and_return( a_page_with_attached_content_type)
-      Content.should_recieve(:find_by_url).with('sexual-harassment-panda').and_return( a_fluffy_panda )
+      Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals').and_return( pages(:fluffy_animals) )
       get :index, :path => %w(portal children-section fluffy-animals sexual-harassment-panda)
       assigns[:page].should_not be_nil
-      assigns[:dangling_path].should == ["sexual-harassment-panda"]
-      assigns[:content].should be_a?(Content)
+      assigns[:page_path].should == %w(portal children-section fluffy-animals)
+      assigns[:trailing_path].should == %w(sexual-harassment-panda)
     end
 
     it "should find the children section, its content for the subpages and ringtone for one of them" do
+      pending("Sub-Content selection happens in Parts")
       Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals/sexual-harassment-panda').and_return(nil)
       Page.should_receive(:find_by_url).with('portal/children-section/fluffy-animals').and_return( a_page_with_attached_content_type)
       panda = a_fluffy_panda
