@@ -85,6 +85,10 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def self.find_by_path(path=[])
+    find_by_url path.collect(&:urlize).join('/')
+  end
+
   def title_unless_root
     parent_id ? title : nil
   end
