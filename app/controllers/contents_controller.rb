@@ -22,10 +22,10 @@ class ContentsController < ApplicationController
 
     if @content.save
       flash[:notice] = "Content #{@content.id} was successfully created."
-      redirect_toolbox_to :action => 'show', :id => @content
+      render_toolbox_action :created
     else
       flash[:notice] = "Could not create Content."
-      render_toolbox_action :new
+      render_toolbox_action :failed_create
     end
   end
 
