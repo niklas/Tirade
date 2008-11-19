@@ -64,7 +64,7 @@ describe PublicController do
   end
 
   describe 'content - heavy urls' do # könnte man auch halbdynamisch (einmal beim start?) in /config/routes.rb generieren...
-    it "should try to find anchester pages" do
+    it "should try to find ancestor pages" do
       Page.should_receive(:find_by_url).with('part1/part2/part3/part4/part5').and_return( nil )
       Page.should_receive(:find_by_url).with('part1/part2/part3/part4').and_return( nil )
       Page.should_receive(:find_by_url).with('part1/part2/part3').and_return( nil )
