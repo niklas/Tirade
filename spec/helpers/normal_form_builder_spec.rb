@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe NormalFormBuilder do
+describe 'NormalFormBuilder' do
   before(:each) do
     @builder = NormalFormBuilder
   end
@@ -9,9 +9,11 @@ describe NormalFormBuilder do
   end
 end
 
-describe NormalFormBuilder, 'in a form' do
+describe 'NormalFormBuilder', 'in a form' do
   before(:each) do
+    ActionView::Base.send :include, InterfaceHelper # FIXME shouldn't Desert have done this already?
     @view = ActionView::Base.new
+    @view.stub!(:url_for).and_return('/foo')
     @view.stub!(:protect_against_forgery?).and_return(false)
   end
 
@@ -25,8 +27,8 @@ describe NormalFormBuilder, 'in a form' do
     it "should render something" do
       @html.should_not be_empty
     end
-    it "should have a paragraph and the text input with a label" do
-      @html.should have_tag('p') do
+    it "should have a DIV and the text input with a label" do
+      @html.should have_tag('div.title') do
         with_tag('label', "The slanky Title")
         with_tag('input#content_title[name=?]', "content[title]")
       end
@@ -40,8 +42,8 @@ describe NormalFormBuilder, 'in a form' do
           _erbout << f.text_area(:body, :label => 'The skinny Body')
       end
     end
-    it "should have a paragraph and the textarea with a label" do
-      @html.should have_tag('p') do
+    it "should have a DIV and the textarea with a label" do
+      @html.should have_tag('div') do
         with_tag('label', "The skinny Body")
         with_tag('textarea#content_body[name=?]', "content[body]")
       end
@@ -56,8 +58,8 @@ describe NormalFormBuilder, 'in a form' do
           _erbout << f.select(:state, select_options, { :label => 'Select the type' })
       end
     end
-    it "should have a paragraph and the select field with options and a label" do
-      @html.should have_tag('p') do
+    it "should have a DIV and the select field with options and a label" do
+      @html.should have_tag('div') do
         with_tag('label', "Select the type")
         with_tag('select#content_state[name=?]', "content[state]") do
           with_tag('option[value=?]', 1, 'foo')
@@ -76,8 +78,8 @@ describe NormalFormBuilder, 'in a form' do
           _erbout << f.collection_select(:state, select_options, :last, :first, { :label => 'Select the type' })
       end
     end
-    it "should have a paragraph and the select field with options and a label" do
-      @html.should have_tag('p') do
+    it "should have a DIV and the select field with options and a label" do
+      @html.should have_tag('div') do
         with_tag('label', "Select the type")
         with_tag('select#content_state[name=?]', "content[state]") do
           with_tag('option[value=?]', 1, 'foo')
@@ -97,8 +99,8 @@ describe NormalFormBuilder, 'in a form' do
     it "should render something" do
       @html.should_not be_empty
     end
-    it "should have a paragraph and the text input with a label" do
-      @html.should have_tag('p') do
+    it "should have a DIV and the text input with a label" do
+      @html.should have_tag('div') do
         with_tag('label', 'A Checkbox for a String??')
         with_tag('input#content_title[name=?]', "content[title]")
       end
