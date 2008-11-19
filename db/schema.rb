@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080731152328) do
+ActiveRecord::Schema.define(:version => 20080814130605) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -17,20 +17,20 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
     t.text     "body"
     t.string   "type"
     t.string   "state"
-    t.integer  "owner_id",     :limit => 11
+    t.integer  "owner_id"
     t.datetime "published_at"
-    t.integer  "position",     :limit => 11
-    t.integer  "parent_id",    :limit => 11
-    t.integer  "lft",          :limit => 11
-    t.integer  "rgt",          :limit => 11
+    t.integer  "position"
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "grids", :force => true do |t|
-    t.integer  "parent_id",  :limit => 11
-    t.integer  "lft",        :limit => 11
-    t.integer  "rgt",        :limit => 11
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
     t.string   "yui"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -39,37 +39,65 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
 
   create_table "groups", :force => true do |t|
     t.string   "name"
-    t.integer  "group_id",   :limit => 11
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "groups_roles", :id => false, :force => true do |t|
-    t.integer "group_id", :limit => 11
-    t.integer "role_id",  :limit => 11
+    t.integer "group_id"
+    t.integer "role_id"
   end
 
   create_table "groups_users", :id => false, :force => true do |t|
-    t.integer "group_id", :limit => 11
-    t.integer "user_id",  :limit => 11
+    t.integer "group_id"
+    t.integer "user_id"
   end
 
   create_table "images", :force => true do |t|
     t.string   "image_file_name"
     t.string   "image_content_type"
-    t.integer  "image_file_size",    :limit => 11
+    t.integer  "image_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
   end
 
+  create_table "machinetaggings", :force => true do |t|
+    t.integer  "machinetag_id"
+    t.integer  "machinetaggable_id"
+    t.string   "machinetaggable_type", :limit => 32
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "machinetaggings", ["machinetag_id", "machinetaggable_type"], :name => "index_mtaggings_on_mtag_id_and_mtaggable_type"
+  add_index "machinetaggings", ["machinetaggable_id", "machinetaggable_type"], :name => "index_mtaggings_on_mtaggable_id_and_mtaggable_type"
+  add_index "machinetaggings", ["machinetag_id", "machinetaggable_type", "user_id"], :name => "index_mtaggings_on_user_id_and_mtag_id_and_mtaggable_type"
+  add_index "machinetaggings", ["machinetaggable_id", "machinetaggable_type", "user_id"], :name => "index_mtaggings_on_user_id_and_mtaggable_id_and_mtaggable_type"
+
+  create_table "machinetags", :force => true do |t|
+    t.string   "namespace",             :limit => 128
+    t.string   "key",                   :limit => 128
+    t.string   "value",                 :limit => 1024
+    t.integer  "machinetaggings_count",                 :default => 0, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "machinetags", ["key"], :name => "index_mtags_on_key"
+  add_index "machinetags", ["machinetaggings_count"], :name => "index_mtags_on_mtaggings_count"
+  add_index "machinetags", ["namespace"], :name => "index_mtags_on_namespace"
+  add_index "machinetags", ["value"], :name => "index_mtags_on_value"
+
   create_table "pages", :force => true do |t|
     t.string   "title"
     t.string   "url"
-    t.integer  "parent_id",  :limit => 11
-    t.integer  "lft",        :limit => 11
-    t.integer  "rgt",        :limit => 11
-    t.integer  "layout_id",  :limit => 11
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.integer  "layout_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "yui",        :limit => 10
@@ -80,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
     t.string   "filename"
     t.text     "options"
     t.text     "preferred_types"
-    t.integer  "subpart_id",      :limit => 11
+    t.integer  "subpart_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "defined_options"
@@ -95,30 +123,30 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
   end
 
   create_table "permissions_roles", :id => false, :force => true do |t|
-    t.integer "role_id",       :limit => 11
-    t.integer "permission_id", :limit => 11
+    t.integer "role_id"
+    t.integer "permission_id"
   end
 
   create_table "picturizations", :force => true do |t|
-    t.integer  "image_id",         :limit => 11
-    t.integer  "pictureable_id",   :limit => 11
+    t.integer  "image_id"
+    t.integer  "pictureable_id"
     t.string   "pictureable_type"
-    t.integer  "position",         :limit => 11
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "plugin_schema_info", :id => false, :force => true do |t|
     t.string  "plugin_name"
-    t.integer "version",     :limit => 11
+    t.integer "version"
   end
 
   create_table "renderings", :force => true do |t|
-    t.integer  "page_id",      :limit => 11
-    t.integer  "content_id",   :limit => 11
-    t.integer  "part_id",      :limit => 11
-    t.integer  "grid_id",      :limit => 11
-    t.integer  "position",     :limit => 11
+    t.integer  "page_id"
+    t.integer  "content_id"
+    t.integer  "part_id"
+    t.integer  "grid_id"
+    t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "content_type"
@@ -141,8 +169,8 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
   end
 
   create_table "user_roles", :id => false, :force => true do |t|
-    t.integer  "user_id",    :limit => 11
-    t.integer  "role_id",    :limit => 11
+    t.integer  "user_id"
+    t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -166,7 +194,7 @@ ActiveRecord::Schema.define(:version => 20080731152328) do
 
   create_table "videos", :force => true do |t|
     t.string   "title"
-    t.integer  "artist_id",   :limit => 11
+    t.integer  "artist_id"
     t.string   "artist_name"
     t.string   "image_url"
     t.datetime "created_at"
