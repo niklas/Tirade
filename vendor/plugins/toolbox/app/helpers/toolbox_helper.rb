@@ -88,6 +88,16 @@ module ToolboxHelper
     )
   end
 
+  # returns the active model you set in your controller (@article)
+  def model
+    (@model ||= instance_variable_get("@#{controller.controller_name.singularize}")) || 
+      raise("no #{controller.controller_name.singularize} loaded")
+  end
+  # returns the active list of models you set in your controller (@articles)
+  def models
+    (@models ||= instance_variable_get("@#{controller.controller_name}")) || raise("no #{controller.controller_name} loaded")
+  end
+
   private
 
   def clean_url

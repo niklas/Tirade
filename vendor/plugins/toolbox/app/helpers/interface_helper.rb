@@ -46,6 +46,7 @@ module InterfaceHelper
 
   # You need a partial '/resources/list_item' and must NOT write the +li+
   def list_of(things,opts={})
+    raise ArgumentError, 'got nil list of things' if things.nil?
     if !opts.delete(:force_list) && things.empty?
       content_tag(:span,'none',opts)
     else
@@ -114,7 +115,7 @@ module InterfaceHelper
 
   # helps to genric find the current_model in @model or @#{ressource}
   def current_model
-    @model || instance_variable_get("@#{@controller.controller_name.singularize}") || raise("no model loaded")
+    model
   end
 
   # We carry the name of the resource in the di@title
