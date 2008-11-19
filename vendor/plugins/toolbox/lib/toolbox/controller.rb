@@ -49,7 +49,7 @@ module Tirade
                 render_toolbox_action :created
               else
                 flash[:notice] = "Creating #{model_class_name} failed."
-                render_toolbox_action :fail_created
+                render_toolbox_action :failed_create
               end
             end
             define_method :update do
@@ -89,8 +89,14 @@ module Tirade
       end
       def render_toolbox_action action
         respond_to do |wants|
-          # TODO should we really hard code the layout here?
-          wants.html { render :template => action.to_s, :layout => 'admin' }
+          wants.html do
+            begin
+              self.send("after_#{action}")
+            rescue NoMethodError
+              # TODO should we really hard code the layout here?
+              render :template => action.to_s, :layout => 'admin'
+            end
+          end
           wants.js do
             render :update do |page|
               [ "before_update_toolbox_for_#{action}",
@@ -105,6 +111,7 @@ module Tirade
               controller.update_toolbox_status(page)
             end
           end
+          wants.xml { render :text => (@model||@models).to_xml}
         end
       end
       def update_toolbox_for_index(page)
@@ -183,6 +190,32 @@ module Tirade
             "Done"
           end
         )
+      end
+
+      # standard actions (html format)
+      def after_created
+        logger.debug(" ##### after created called for #{@model.inspect}")
+        redirect_to :action => 'show', :id => @model
+      end
+
+      def after_failed_create
+        render :action => 'new'
+      end
+
+      def after_updated
+        redirect_to @model
+      end
+      
+      def after_failed_update
+        render :action => 'edit'
+      end
+
+      def after_destroyed
+        redirect_to :controller => @model.table_name, :action => 'index'
+      end
+
+      def after_failed_destroy
+        render :action => 'show'
       end
 
       def template_error(exception)
