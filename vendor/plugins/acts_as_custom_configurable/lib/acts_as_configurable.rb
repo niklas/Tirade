@@ -225,7 +225,7 @@ module ActsAsConfigurable
         @definitions.each do |field_name, defi|
           c.send(defi.first,field_name, :default => defi[1])
         end unless @definitions.blank?
-      end.items.inject({}) {|h,i| h[i.name] = i; h}.with_indifferent_access
+      end.items.inject({}) {|h,i| h[i.name] = i; h}.stringify_keys
     end
 
     def values
@@ -239,11 +239,11 @@ module ActsAsConfigurable
       each do |item|
         defs[item.name] = item.default
       end
-      defs.with_indifferent_access
+      defs.stringify_keys
     end
 
     def to_hash
-      values.with_indifferent_access
+      values.stringify_keys
     end
 
     def empty?
