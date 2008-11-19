@@ -59,7 +59,7 @@ class Page < ActiveRecord::Base
   end
 
   def before_validation
-    self.url = generated_url if self.url.blank? and !self.root?
+    self.url = generated_url
     self.yui ||= 'doc'
   end
 
@@ -85,8 +85,27 @@ class Page < ActiveRecord::Base
     end
   end
 
+  attr_accessor :trailing_path
   def self.find_by_path(path=[])
-    find_by_url path.collect(&:urlize).join('/')
+    page = nil
+    path = path.dup
+    trailing_path = []
+    while page.nil? && !path.empty?
+      url = path.collect(&:urlize).join('/')
+      unless page = find_by_url(url)
+        trailing_path.unshift path.pop.urlize
+      end
+    end
+    page.trailing_path = trailing_path if page
+    return page
+  end
+
+  def path
+    self_and_ancestors.reject(&:root?).collect(&:slug)
+  end
+
+  def slug
+    title.urlize
   end
 
   def title_unless_root
