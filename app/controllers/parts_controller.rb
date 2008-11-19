@@ -4,7 +4,7 @@ class PartsController < ApplicationController
   protect_from_forgery :except => [:preview]
 
   def index
-    @models = @parts = Part.search(params[:search].andand[:term]).find(:all, :order => 'name ASC')
+    @models = @parts = Part.search(params[:search].andand[:term]).paginate(:page => params[:page], :per_page => 30)
     render_toolbox_action :index
   end
 
