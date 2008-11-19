@@ -5,8 +5,8 @@
 <% end %>
 
 <dl class="index page">
-  <% show thepage, :title %>
-  <% show thepage, :url, :label => 'URL' %>
+  <%= show thepage, :title %>
+  <%= show thepage, :url, :label => 'URL' %>
   <% show thepage, :children, :label => 'Subpages' do %>
     <%= list_of thepage.children, :class => 'good_list' %>
   <% end %>
