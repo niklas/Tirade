@@ -19,7 +19,7 @@ describe ContentsController do
 
     it "should render index template" do
       do_get
-      response.should render_template('/model/index')
+      response.should render_template('index')
     end
   
     it "should find all contents" do
@@ -80,7 +80,7 @@ describe ContentsController do
   
     it "should render show template" do
       do_get
-      response.should render_template('/model/show')
+      response.should render_template('show')
     end
   
     it "should find the content requested" do
@@ -157,7 +157,7 @@ describe ContentsController do
   
     it "should render new template" do
       do_get
-      response.should render_template('/model/new')
+      response.should render_template('new')
     end
   
     it "should create an new Document (default type)" do
@@ -194,7 +194,7 @@ describe ContentsController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('/model/edit')
+      response.should render_template('edit')
     end
   
     it "should find the content requested" do
@@ -244,7 +244,7 @@ describe ContentsController do
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('/model/new')
+        response.should render_template('new')
       end
       
     end
@@ -295,7 +295,7 @@ describe ContentsController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('/model/edit')
+        response.should render_template('edit')
       end
 
     end
@@ -304,7 +304,7 @@ describe ContentsController do
   describe "handling DELETE /contents/1" do
 
     before(:each) do
-      @content = mock_model(Content, :destroy => true)
+      @content = mock_model(Content, :destroy => true, :table_name => 'contents')
       Content.stub!(:find).and_return(@content)
     end
   

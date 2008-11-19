@@ -5,26 +5,31 @@ describe "/pages/index.html.erb" do
   fixtures(:all)
   
   before(:each) do
-    page_98 = mock_model(Page)
-    page_98.should_receive(:title).and_return("Title1")
-    page_98.should_receive(:url).twice.and_return("url1")
-    page_98.should_receive(:final_layout).and_return(grids(:layout50_50))
-    page_98.should_receive(:updated_at).and_return(Time.now.yesterday)
-    page_99 = mock_model(Page)
-    page_99.should_receive(:title).and_return("Title2")
-    page_99.should_receive(:url).twice.and_return("url2")
-    page_99.should_receive(:final_layout).and_return(grids(:layout50_50))
-    page_99.should_receive(:updated_at).and_return(Time.now.yesterday.yesterday)
+    main_page = mock_model Page,
+      :title => 'Main',
+      :url => 'main',
+      :table_name => 'pages'
+    sub_page = mock_model Page,
+      :title => 'Sub',
+      :url => 'main/sub',
+      :table_name => 'pages'
 
-    assigns[:pages] = [page_98, page_99]
+    assigns[:pages] = [main_page, sub_page]
+  end
+
+  it "should use a template" do
+    template.should_not be_nil
+  end
+
+  it "should use a template with a controller" do
+    template.controller.should_not be_nil
   end
 
   it "should render list of pages" do
-    render "/pages/index.html.erb"
-    response.should have_tag("tr>td", "Title1", 2)
-    response.should have_tag("tr>td", "Title2", 2)
-    response.should have_tag("tr>td", "url1", 2)
-    response.should have_tag("tr>td", "url2", 2)
+    template.controller.should_receive(:controller_name).twice.and_return("pages")
+    render "index.html.erb"
+    response.should be_success
+    response.body.should_not be_empty
   end
 end
 

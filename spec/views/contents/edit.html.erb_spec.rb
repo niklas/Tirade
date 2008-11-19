@@ -13,6 +13,8 @@ describe "/contents/edit.html.erb" do
     @content.stub!(:images).and_return([])
     @content.stub!(:class_name).and_return('Content')
     @content.stub!(:table_name).and_return('contents')
+    @content.stub!(:wanted_parent_id).and_return(nil)
+    @content.stub!(:acts_as?).and_return(false)
     # FIXME why does InterfaceHelper#current_model not recognize @content
     assigns[:model] = @content
     assigns[:content] = @content

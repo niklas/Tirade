@@ -57,3 +57,12 @@ hammers:
   layout: layout33_33_33
   lft: 206
   rgt: 210
+
+fluffy_animals:
+  id: 1312
+  title: Fluffy Animals
+  url: 'portal/children-section/fluffy-animals'
+  parent_id: 131
+  layout: layout33_33_33
+  lft: 211
+  rgt: 216

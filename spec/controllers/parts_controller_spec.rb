@@ -23,42 +23,13 @@ describe PartsController do
     end
   
     it "should find all parts" do
-      Part.should_receive(:find).with(:all).and_return([@part])
+      Part.should_receive(:search).and_return([@part])
       do_get
     end
   
     it "should assign the found parts for the view" do
       do_get
       assigns[:parts].should == [@part]
-    end
-  end
-
-  describe "handling GET /parts.xml" do
-
-    before(:each) do
-      @part = mock_model(Part, :to_xml => "XML")
-      Part.stub!(:find).and_return(@part)
-    end
-  
-    def do_get
-      @request.env["HTTP_ACCEPT"] = "application/xml"
-      get :index
-    end
-  
-    it "should be successful" do
-      do_get
-      response.should be_success
-    end
-
-    it "should find all parts" do
-      Part.should_receive(:find).with(:all).and_return([@part])
-      do_get
-    end
-  
-    it "should render the found parts as xml" do
-      @part.should_receive(:to_xml).and_return("XML")
-      do_get
-      response.body.should == "XML"
     end
   end
 
@@ -287,7 +258,7 @@ describe PartsController do
   describe "handling DELETE /parts/1" do
 
     before(:each) do
-      @part = mock_model(Part, :destroy => true)
+      @part = mock_model(Part, :destroy => true, :table_name => 'parts')
       Part.stub!(:find).and_return(@part)
     end
   
@@ -305,9 +276,9 @@ describe PartsController do
       do_delete
     end
   
-    it "should redirect to the parts list" do
-      do_delete
-      response.should redirect_to(parts_url)
-    end
+    #it "should redirect to the parts list" do
+    #  do_delete
+    #  response.should redirect_to(parts_url)
+    #end
   end
 end

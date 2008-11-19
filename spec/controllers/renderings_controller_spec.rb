@@ -19,7 +19,7 @@ describe RenderingsController do
 
     it "should render index template" do
       do_get
-      response.should render_template('/model/index')
+      response.should render_template('index')
     end
   
   end
@@ -42,7 +42,7 @@ describe RenderingsController do
   
     it "should render show template" do
       do_get
-      response.should render_template('/model/show')
+      response.should render_template('show')
     end
   
     it "should find the rendering requested" do
@@ -74,7 +74,7 @@ describe RenderingsController do
   
     it "should render new template" do
       do_get
-      response.should render_template('/model/new')
+      response.should render_template('new')
     end
   
     it "should create an new rendering" do
@@ -111,7 +111,7 @@ describe RenderingsController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('/model/edit')
+      response.should render_template('edit')
     end
   
     it "should find the rendering requested" do
@@ -160,7 +160,7 @@ describe RenderingsController do
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('/model/new')
+        response.should render_template('new')
       end
       
     end
@@ -211,7 +211,7 @@ describe RenderingsController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('/model/edit')
+        response.should render_template('edit')
       end
 
     end

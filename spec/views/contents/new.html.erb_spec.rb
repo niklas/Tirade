@@ -25,7 +25,7 @@ describe "/contents/new.html.erb" do
         without_tag("input#content_lft[name=?]", "content[lft]")
         without_tag("input#content_rgt[name=?]", "content[rgt]")
         without_tag("textarea#content_body", "content[body]")
-        with_tag('p.title') do
+        with_tag('div.title') do
           with_tag('label', 'Title')
           with_tag("input#content_title[name=?]", "content[title]")
         end
@@ -33,7 +33,7 @@ describe "/contents/new.html.erb" do
         #  with_tag('label', 'Description')
         #  with_tag("textarea#content_description[name=?]", "content[description]")
         #end
-        with_tag('p.body') do
+        with_tag('div.body') do
           with_tag('label', 'Body')
           with_tag("textarea#content_body[name=?]", "content[body]")
         end
@@ -41,7 +41,7 @@ describe "/contents/new.html.erb" do
         #  with_tag('label', 'Type')
         #  with_tag("select#content_type[name=?]", "content[type]")
         #end
-         with_tag('p.wanted_parent_id') do
+         with_tag('div.wanted_parent_id') do
           with_tag('label', 'Parent NewsFolder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end
@@ -70,23 +70,23 @@ describe "/contents/new.html.erb" do
         without_tag("input#content_position[name=?]", "content[position]")
         without_tag("input#content_lft[name=?]", "content[lft]")
         without_tag("input#content_rgt[name=?]", "content[rgt]")
-        with_tag('p.title') do
+        with_tag('div.title') do
           with_tag('label', 'Title')
           with_tag("input#content_title[name=?]", "content[title]")
         end
-        with_tag('p.description') do
+        with_tag('div.description') do
           with_tag('label', 'Description')
           with_tag("textarea#content_description[name=?]", "content[description]")
         end
-        with_tag('p.body') do
+        with_tag('div.body') do
           with_tag('label', 'Body')
           with_tag("textarea#content_body[name=?]", "content[body]")
         end
-        #with_tag('p.type') do
+        #with_tag('div.type') do
         #  with_tag('label', 'Type')
         #  with_tag("select#content_type[name=?]", "content[type]")
         #end
-         with_tag('p.wanted_parent_id') do
+         with_tag('div.wanted_parent_id') do
           with_tag('label', 'Parent Folder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end
@@ -116,7 +116,7 @@ describe "/contents/new.html.erb" do
         without_tag("input#content_position[name=?]", "content[position]")
         without_tag("input#content_lft[name=?]", "content[lft]")
         without_tag("input#content_rgt[name=?]", "content[rgt]")
-        with_tag('p.title') do
+        with_tag('div.title') do
           with_tag('label', 'Title')
           with_tag("input#content_title[name=?]", "content[title]")
         end
@@ -146,15 +146,15 @@ describe "/contents/new.html.erb" do
         without_tag("input#content_position[name=?]", "content[position]")
         without_tag("input#content_lft[name=?]", "content[lft]")
         without_tag("input#content_rgt[name=?]", "content[rgt]")
-        with_tag('p.title') do
+        with_tag('div.title') do
           with_tag('label', 'Title')
           with_tag("input#content_title[name=?]", "content[title]")
         end
-        with_tag('p.description') do
+        with_tag('div.description') do
           with_tag('label', 'Description')
           with_tag("textarea#content_description[name=?]", "content[description]")
         end
-        with_tag('p.body') do
+        with_tag('div.body') do
           with_tag('label', 'Body')
           with_tag("textarea#content_body[name=?]", "content[body]")
         end
@@ -162,7 +162,7 @@ describe "/contents/new.html.erb" do
         #  with_tag('label', 'Type')
         #  with_tag("select#content_type[name=?]", "content[type]")
         #end
-         with_tag('p.wanted_parent_id') do
+         with_tag('div.wanted_parent_id') do
           with_tag('label', 'Parent Folder')
           with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
         end

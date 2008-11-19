@@ -19,7 +19,7 @@ describe PagesController do
 
     it "should render index template" do
       do_get
-      response.should render_template('/model/index')
+      response.should render_template('index')
     end
   
     it "should find all pages" do
@@ -81,7 +81,7 @@ describe PagesController do
   
     it "should render show template" do
       do_get
-      response.should render_template('/model/show')
+      response.should render_template('show')
     end
   
     it "should find the page requested" do
@@ -143,7 +143,7 @@ describe PagesController do
   
     it "should render new template" do
       do_get
-      response.should render_template('/model/new')
+      response.should render_template('new')
     end
   
     it "should create an new page" do
@@ -180,7 +180,7 @@ describe PagesController do
   
     it "should render edit template" do
       do_get
-      response.should render_template('/model/edit')
+      response.should render_template('edit')
     end
   
     it "should find the page requested" do
@@ -229,7 +229,7 @@ describe PagesController do
   
       it "should re-render 'new'" do
         do_post
-        response.should render_template('/model/new')
+        response.should render_template('new')
       end
       
     end
@@ -280,7 +280,7 @@ describe PagesController do
 
       it "should re-render 'edit'" do
         do_put
-        response.should render_template('/model/edit')
+        response.should render_template('edit')
       end
 
     end
@@ -289,7 +289,7 @@ describe PagesController do
   describe "handling DELETE /pages/1" do
 
     before(:each) do
-      @page = mock_model(Page, :destroy => true)
+      @page = mock_model(Page, :destroy => true, :table_name => 'pages')
       Page.stub!(:find).and_return(@page)
     end
   
