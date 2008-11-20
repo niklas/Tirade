@@ -124,33 +124,33 @@ module Tirade
           end
         else
           page.push_or_refresh( 
-            :partial => "list", :object => @models,
+            :partial => "/list", :object => @models,
             :title => self.controller_name.humanize
           )
         end
       end
       def update_toolbox_for_edit(page)
         page.push_toolbox_content(
-          :partial => "form", :object => @model,
+          :partial => "/form", :object => @model,
           :title => "Edit #{@model.class_name} (#{@model.id})"
         )
       end
       def update_toolbox_for_new(page)
         page.push_toolbox_content(
-          :partial => "form", :object => @model,
+          :partial => "/form", :object => @model,
           :title => "New #{@model.class_name}"
         )
       end
       def update_toolbox_for_show(page)
         page.push_or_refresh(
-          :partial => "show", :object => @model,
+          :partial => "/show", :object => @model,
           :title => "#{@model.class_name} (#{@model.id})"
         )
       end
 
       def update_toolbox_for_created(page)
         page.update_last_toolbox_frame(
-          :partial => "show", :object => @model,
+          :partial => "/show", :object => @model,
           :title => "#{@model.class_name} (#{@model.id})"
         )
       end
@@ -171,13 +171,13 @@ module Tirade
       end
 
       def update_toolbox_for_failed_create(page)
-        page.update_last_toolbox_frame(:partial => "form", :object => @model)
+        page.update_last_toolbox_frame(:partial => "/form", :object => @model)
       end
       def update_toolbox_for_failed_update(page)
-        page.update_last_toolbox_frame(:partial => "form", :object => @model)
+        page.update_last_toolbox_frame(:partial => "/form", :object => @model)
       end
       def update_toolbox_for_failed_destroy(page)
-        page.update_last_toolbox_frame(:partial => "show", :object => @model)
+        page.update_last_toolbox_frame(:partial => "/show", :object => @model)
       end
 
       def update_toolbox_status(page)

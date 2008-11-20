@@ -106,7 +106,7 @@ module ToolboxHelper
   def prepare_content(content)
     if content.is_a? Hash
       if part = content[:partial] && part.is_a?(String)
-        content[:partial] = "/#{@model.table_name}/#{part}"
+        #content[:partial] = "/#{@model.table_name}/#{part}"
         content[:object] ||= @model || @models
       end
       content[:layout] ||= '/layouts/toolbox'

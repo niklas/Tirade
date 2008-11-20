@@ -20,6 +20,9 @@ module Tirade
         @finder.append_view_path(
           "#{RAILS_ROOT}/vendor/plugins/toolbox/app/views/model"
         )
+        @finder.prepend_view_path(
+          "#{RAILS_ROOT}/app/views/#{controller.controller_name}"
+        )
       end
     end
   end
