@@ -1,5 +1,3 @@
 <% thepage ||= list_item %>
-<li>
-  <%= thepage.title %>
-  <%= show_page_link(thepage) %>
-</li>
+<%= show_page_link(thepage) %>
+<%= thepage.title %>
