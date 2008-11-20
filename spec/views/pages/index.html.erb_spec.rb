@@ -26,7 +26,7 @@ describe "/pages/index.html.erb" do
   end
 
   it "should render list of pages" do
-    template.controller.should_receive(:controller_name).twice.and_return("pages")
+    template.controller.stub!(:controller_name).and_return("pages")
     render "index.html.erb"
     response.should be_success
     response.body.should_not be_empty
