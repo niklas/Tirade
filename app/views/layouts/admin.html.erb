@@ -4,14 +4,15 @@
 <head>
   <title>Tirade without title (admin layout)</title>
   <%= render :partial => '/layouts/head' %>
+  <%= stylesheet_link_tag 'admin' %>
   <%= yield :head %>
 </head>
 <body id="<%= controller_name -%>">
-  <div class="center header">
-    <div id="utilities">
-      <%= render :partial => '/shared/loginout' %>
-    </div>
-    
+  <div id="head">
+    <%= render :partial => '/shared/loginout' %>
+  </div>
+
+  <div id="sidebar">
     <h1>tirade</h1>
     <ul>
       <li><a href="#">Dashbord</a></li>
@@ -23,25 +24,18 @@
       <input type="text" name="search" value="" id="search">
       <input type="submit" value="Search">
     </form>
-  </div>
-
-  <%= flash_messages %>
-  <div class="center content">
-    <h2><%= yield :section %></h2>
-
     <%= render :partial => '/layouts/admin_navigation' %>
+  </div>
+    
 
-    <div class="main_content">
-      <ul class="nav">
-        <li><%= index_pages_link(:label => 'Pages') %></li>
-        <li><%= index_contents_link(:label => 'Contents') %></li>
-      </ul>
+  <div id="content">
+    <h2><%= yield :section %></h2>
+    <%= flash_messages %>
 
-      <%= yield %>
-    </div>
+    <%= yield %>
   </div>
 
   <div id="footer">
-    <h5></h5>
+    <h5>Foot. End. Tirade is over.</h5>
   </div>  
 </body>
