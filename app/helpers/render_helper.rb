@@ -55,15 +55,19 @@ module RenderHelper
             content_tag(:div,
               link_to_remote('create rendering', 
                 {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),
-                 :loading  => "new Tirade.Toolbox('Toolbox', {'cornerRadius': 4})"},
-                 :class => 'create rendering create_rendering',
-                 :method => :post) +
-                 ' ' +
+                 :loading  => "Toolbox.findOrCreate()",
+                 :method => :post
+                },
+                 :class => 'create rendering create_rendering'
+              ) +
+              ' ' +
               content_tag('span', 'or drag one here'),
             :class => 'rendering fake')
           ]
         else
           renderings.collect do |rendering|
+            # FIXME HACK rendering must know about trailing path, this is in da page
+            rendering.page = thepage
             rendering.render 
           end
         end

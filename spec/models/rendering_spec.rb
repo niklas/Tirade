@@ -60,8 +60,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
   it "should be the last item in the left column" do
     @page.renderings.for_grid(@grid).last.should == @rendering
   end
-  it "should set the content_type correctly"
-  #do
+  #it "should set the content_type correctly" do
   #  @rendering.content_type.should == 'Document'
   #end
   it "should find the content" do
@@ -240,4 +239,41 @@ describe "The Renderings loaded by fixtures" do
     end
   end
 
+end
+
+describe "A Rendering", "with an assigned Content" do
+  it "should find fixed content (polymorphic)"
+  it "should be able to render a Part for single Content"
+  it "should give the (remaining) :trailing_path_of_page into the part ?"
+  it "should have assignment: :fixed"
+end
+
+describe "A Rendering", "with an assignment by_title_from_trailing_url " do
+  fixtures :all
+  before(:each) do
+    @page = pages(:portal)
+    @rendering = Rendering.new(
+      :page => @page,
+      :grid => @page.grids.first,
+      :content_type => 'Content',
+      :assignment => 'by_title_from_trailing_url',
+      :part => parts(:simple_preview)
+    )
+    @rendering.stub!(:trailing_path_of_page).and_return(['Goodbye'])
+  end
+  it "should find Content#by_path(trailing_path_of_page)" do
+    @rendering.content.should_not be_nil
+  end
+  it "should be able to render a Part for single Content"
+  it "should give the (remaining) :trailing_path_of_page into the part ?"
+  it "should have assignment: :by_url"
+end
+
+
+describe "A professional Rendering", "with a collection Part" do
+  it "should be able to render a Part for collection of Contents"
+  it "should find Content#all (paginated)"
+  it "should find Content#last(n)"
+
+  it "should have assignments: :all, :last"
 end

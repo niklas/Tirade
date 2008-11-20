@@ -9,6 +9,7 @@
 
     <% accordion_item "What" do %>
       <%= f.has_one :content %>
+      <%= f.select :assignment, Rendering::Assignments %>
     <% end %>
 
     <% accordion_item "How" do %>

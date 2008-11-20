@@ -408,3 +408,10 @@ describe "The simple preview Part" do
   end
 
 end
+
+
+describe "A Part with content_numerus/_quantum" do
+  it "can render no Content"
+  it "can render a single Content"
+  it "can render a collection of Contents"
+end

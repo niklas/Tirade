@@ -26,15 +26,33 @@ class Rendering < ActiveRecord::Base
     ([Content,Image,Video,YoutubeVideoCollection] + Content.valid_types).uniq
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
 
+
   belongs_to :page
   belongs_to :grid
-  belongs_to :content, :polymorphic => true
   belongs_to :part
+
+  Assignments = %w(fixed by_title_from_trailing_url).freeze unless defined?(Assignments)
+  validates_inclusion_of :assignment, :in => Assignments
+  belongs_to :content, :polymorphic => true
+  def trailing_path_of_page
+    page.andand.trailing_path || []
+  end
+  def content_with_dynamic_assignments
+    case assignment
+    when 'by_title_from_trailing_url'
+      if content_type && content_slug = trailing_path_of_page.first.andand.sluggify
+        content_type.constantize.find_by_slug(content_slug)
+      end
+    else
+      content_without_dynamic_assignments
+    end
+  end
+  alias_method_chain :content, :dynamic_assignments
 
   acts_as_list :scope => :grid_id
 
@@ -59,7 +77,9 @@ class Rendering < ActiveRecord::Base
     write_attribute(:content_id, new_content_id.to_i) unless new_content_id.to_i == 0
   end
   def has_content?
-    !content_type.blank? && content_id.to_i != 0
+    !content.nil?
+  rescue
+    false
   end
 
   def validate
@@ -85,11 +105,8 @@ class Rendering < ActiveRecord::Base
     options.merge(part.andand.options || {})
   end
 
-  def content_type=(new_content_type)
-    write_attribute(:content_type, new_content_type.classify)
-  end
-
   def render
     render_to_string(:inline => '<%= render_rendering(rendering) %>', :locals => {:rendering => self})
   end
+
 end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080814130605) do
+ActiveRecord::Schema.define(:version => 20081120155111) do
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20080814130605) do
     t.integer  "rgt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug",         :default => ""
   end
 
   create_table "grids", :force => true do |t|
@@ -151,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20080814130605) do
     t.datetime "updated_at"
     t.string   "content_type"
     t.text     "options"
+    t.string   "assignment",   :limit => 32, :default => "fixed"
   end
 
   create_table "roles", :force => true do |t|

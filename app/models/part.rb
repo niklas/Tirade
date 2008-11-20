@@ -216,6 +216,7 @@ class Part < ActiveRecord::Base
   end
 
   def render_with_content(content, assigns={})
+    return '' if content.nil?
     render_to_string(:inline => self.rhtml, :locals => options_with_object(content).merge(assigns))
   end
 

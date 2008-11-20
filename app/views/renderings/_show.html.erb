@@ -1,4 +1,4 @@
-<% rendering = show %>
+<% rendering ||= show %>
 
 <% links do %>
   <%= li_link_to_remote 'clone', :url => duplicate_rendering_path(rendering), :method => :put, :html => {:class => 'create rendering'} %>
@@ -11,7 +11,9 @@
 <% accordion do %>
 
   <% accordion_item "What" do %>
-    <%= show rendering, :content, :selectable => true %>
+    <% show rendering, :content, :selectable => true do %>
+      <%= show_content_of_rendering(rendering) %>
+    <% end %>
   <% end %>
 
   <% accordion_item "How" do %>
