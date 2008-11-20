@@ -42,24 +42,29 @@ class RenderingsController < ApplicationController
   def duplicate
     @original_rendering = Rendering.find(params[:id])
     respond_to do |wants|
-      wants.js do |page|
-        @model = @rendering = @original_rendering.clone
-        if @rendering.save
-          update_toolbox_for_created(page)
-        else
-          update_toolbox_for_failed_create(page)
+      wants.js do 
+        render :update do |page|
+          @model = @rendering = @original_rendering.clone
+          if @rendering.save
+            update_toolbox_for_created(page)
+          else
+            update_toolbox_for_failed_create(page)
+          end
         end
       end
     end
   end
 
   def preview
-    @rendering = Rendering.find(params[:id])
-    @rendering.attributes = params[:rendering]
-    respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page.update_rendering(@rendering)
+    if @rendering = Rendering.find(params[:id])
+      Rendering.without_modification do
+        @rendering.attributes = params[:rendering]
+        respond_to do |wants|
+          wants.js do
+            render :update do |page|
+              page.update_rendering(@rendering)
+            end
+          end
         end
       end
     end
