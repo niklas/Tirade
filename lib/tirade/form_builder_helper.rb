@@ -59,9 +59,16 @@ module Tirade
       )
       inner << @template.text_field_tag("#{assoc}_search_term", nil, :href => @template.url_for(:controller => assocs), :class => 'search_term')
       inner << @template.content_tag(:div, "Search for #{assocs.humanize}", :class => "search_results one #{assocs}")
-      inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
-      if reflection.options[:polymorphic]
-        inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", thing.class_name, :class => 'association_type')
+      if thing
+        inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
+        if reflection.options[:polymorphic]
+          inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", thing.class_name, :class => 'association_type')
+        end
+      else
+        inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", nil, :class => 'association_id')
+        if reflection.options[:polymorphic]
+          inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", nil, :class => 'association_type')
+        end
       end
       wrap(assoc, {}, inner)
     end
