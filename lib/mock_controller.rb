@@ -59,6 +59,10 @@ class MockController
     'http://example.com/random/url'
   end
 
+  def controller_name
+    'mock'
+  end
+
   private
   def ac
     @ac ||= ApplicationController.new
