@@ -41,6 +41,8 @@ class Content < ActiveRecord::Base
   acts_as_pictureable
   acts_as! :pictureable
 
+  has_slug :prepend_id => false
+
   def self.sample
     new(
       :title => "Example Content Record",
