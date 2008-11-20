@@ -65,6 +65,7 @@ module InterfaceHelper
   end
 
   def list_item(thing,opts={})
+    return '' if thing.nil?
     content_tag :li, 
       single_item(thing, opts),
       :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
@@ -137,7 +138,7 @@ module InterfaceHelper
         opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
         add_class_to_html_options(opts[:dd], dom_id(val))
         add_class_to_html_options(opts[:dd], 'record')
-        val = render(:partial => "/#{val.table_name}/attribute", :object => val)
+        val = render_as_attribute(val)
       elsif val.is_a?(Array)
         unless val.blank?
           opts[:href] = url_for(:controller => val.first.table_name) if selectable
@@ -157,6 +158,11 @@ module InterfaceHelper
       val = debug(val) unless val.is_a?(String)
       di_dt_dd(label, val, opts)
     end
+  end
+
+  def render_as_attribute(record)
+    return 'none' if record.nil?
+    render(:partial => "/#{record.table_name}/attribute", :object => record)
   end
 
   def di_dt_dd(dt,dd, opts={})
