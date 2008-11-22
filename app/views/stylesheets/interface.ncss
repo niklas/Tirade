@@ -164,6 +164,7 @@ ul.list {
     width: 100%;
     float: left;
     clear: left;
+    position: relative;
     text-align: left;
     border-bottom: <%= @perimeter %>;
     border-top: <%= @perimeter %>;
@@ -195,8 +196,12 @@ ul.list, dl {
       clear: right;
       text-indent: -5000px;
       width: 16px;
-      margin: 0 <%= @small %>;
+      margin-top: -7px;
       background: transparent url(/images/icons/show-arrow.png) no-repeat scroll right;
+      position: absolute;
+      top: 50%;
+      right: <%= @small %>;
+      z-index: 3;
     }
   }
 }

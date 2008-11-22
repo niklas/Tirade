@@ -172,7 +172,8 @@ body {
                margin: 0;
              }
              dd {
-               margin: 0.3em;
+               margin: <%= @small %> 20px <%= @small %> <%= @small %> ;
+               position: relative;
                float: right;
                clear: right;
              }
