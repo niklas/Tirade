@@ -172,10 +172,13 @@ body {
                margin: 0;
              }
              dd {
-               margin: <%= @small %> 20px <%= @small %> <%= @small %> ;
-               position: relative;
+               margin: <%= @small %>;
                float: right;
                clear: right;
+               .record {
+                 margin: <%= @small %> 20px <%= @small %> <%= @small %>;
+                 position: relative;
+               }
              }
            }
          }
