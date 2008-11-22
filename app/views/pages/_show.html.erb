@@ -15,14 +15,7 @@
   <% end %>
 
   <% accordion_item "Layout", :content_tag => :dl do %>
-    <% show thepage, :layout do %>
-      <% unless thepage.final_layout.nil? %>
-        <%=h thepage.final_layout.andand.label %>
-      <% else %>
-        none!
-        <%= edit_page_link thepage, :label => "select one", :parameters => {:anchor => 'layout'} %>
-      <% end %>
-    <% end %>
+    <%= show thepage, :final_layout, :label => 'Layout' %>
     <% show thepage, :yui, :label => 'Width' do %>
       <%=h thepage.yui_name %>
     <% end %>

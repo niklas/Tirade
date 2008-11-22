@@ -62,8 +62,32 @@ body {
     }
 }
 
-div#toolbox div.frame {
-  text-align: left;
+div#toolbox {
+  div.frame {
+    text-align: left;
+  }
+  li > div.grid.preview, dd > div.grid.preview {
+    width: 8em;
+    height: 5em;
+    border: <%= @small %> solid <%= @colors[:base] %>;
+  }
+  div.grid.preview {
+    height: 100%;
+    background-color: #eee;
+    *.grid { background-color: #ccc}
+    *.grid .grid { background-color: #aaa}
+    *.grid .grid .grid { background-color: #999}
+    span.label {
+      text-align: center;
+      display: block;
+      position: absolute;
+      top: 50%;
+      margin-top: -0.7em;
+      width: 100%;
+      color: <%= @colors[:text] %>;
+      font-weight: bold;
+    }
+  }
 }
 
 form {
@@ -77,6 +101,9 @@ form {
     text-align: left;
     display: block;
     font-weight: bold;
+  }
+  select {
+    float: right;
   }
   input {
     float: right;
@@ -174,6 +201,9 @@ ul.list, dl {
 
 li.ui-draggable-dragging {
   a.show, e.edit, e.index {
+    display: none;
+  }
+  img.association {
     display: none;
   }
 }

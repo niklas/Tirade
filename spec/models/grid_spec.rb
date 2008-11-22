@@ -40,8 +40,14 @@ describe Grid do
         @grid.children.length.should == 2
       end
       it "should have a proper name (for da humanz)" do
-        @grid.name.should == '1/2 - 1/2'
+        @grid.name.should == '50% - 50%'
       end
+
+      it "should give its children proper names" do
+        @grid.children[0].name.should == '50%'
+        @grid.children[1].name.should == '50%'
+      end
+
 
       describe ', switching that to "33-66"' do
         before(:each) do
@@ -57,7 +63,11 @@ describe Grid do
           @grid.ideal_children_count.should == 2
         end
         it "should have a proper name (for da humanz)" do
-          @grid.name.should == '1/3 - 2/3'
+          @grid.name.should == '33% - 66%'
+        end
+        it "should give its children proper names" do
+          @grid.children[0].name.should == '33%'
+          @grid.children[1].name.should == '66%'
         end
       end
       describe ', setting the grid_to "33-33-33"' do
@@ -76,7 +86,12 @@ describe Grid do
           @grid.children.length.should == 3
         end
         it "should have a proper name (for da humanz)" do
-          @grid.name.should == '1/3 - 1/3 - 1/3'
+          @grid.name.should == '33% - 33% - 33%'
+        end
+        it "should give its children proper names" do
+          @grid.children[0].name.should == '33%'
+          @grid.children[1].name.should == '33%'
+          @grid.children[2].name.should == '33%'
         end
         describe ', switching that to "33-66"' do
           before(:each) do
@@ -92,7 +107,11 @@ describe Grid do
             @grid.children.length.should == 3
           end
           it "should have a proper name (for da humanz)" do
-            @grid.name.should == '1/3 - 2/3'
+            @grid.name.should == '33% - 66%'
+          end
+          it "should give its children proper names" do
+            @grid.children[0].name.should == '33%'
+            @grid.children[1].name.should == '66%'
           end
         end
       end
@@ -114,7 +133,12 @@ describe Grid do
         @grid.children.length.should == 3
       end
       it "should have a proper name (for da humanz)" do
-        @grid.name.should == '1/3 - 1/3 - 1/3'
+        @grid.name.should == '33% - 33% - 33%'
+      end
+      it "should give its children proper names" do
+        @grid.children[0].name.should == '33%'
+        @grid.children[1].name.should == '33%'
+        @grid.children[2].name.should == '33%'
       end
       describe ', switching that to "33-66"' do
         before(:each) do
@@ -130,7 +154,11 @@ describe Grid do
           @grid.children.length.should == 3
         end
         it "should have a proper name (for da humanz)" do
-          @grid.name.should == '1/3 - 2/3'
+          @grid.name.should == '33% - 66%'
+        end
+        it "should give its children proper names" do
+          @grid.children[0].name.should == '33%'
+          @grid.children[1].name.should == '66%'
         end
       end
     end
@@ -149,7 +177,7 @@ describe Grid do
       grids(:layout_50_50_2).should_not be_is_first_child
     end
     it "should have a proper name (for da humanz)" do
-      grids(:layout50_50).name.should == '1/2 - 1/2'
+      grids(:layout50_50).name.should == '50% - 50%'
     end
 
     describe ", rendering the left column" do
@@ -250,6 +278,6 @@ describe "Creating a 3/4 - 1/4 grid" do
     @grid.children.length.should == 2
   end
   it "should have a proper name (for da humanz)" do
-    @grid.name.should == '3/4 - 1/4'
+    @grid.name.should == '75% - 25%'
   end
 end

@@ -25,12 +25,12 @@ module RenderHelper
 
   # Renders the given grid and all its containing grids
   # warning: recursive
-  def render_grid(grid,opts = {})
+  def render_grid(grid,opts = {}, &block)
     if grid.children.empty?
-      inner = h(grid.inspect.to_s)
+      inner = block_given? ? yield(grid) : h(grid.inspect.to_s)
     else
       inner = grid.visible_children.collect do |child| 
-        render_grid(child,opts)
+        render_grid(child,opts,&block)
       end.join(' ')
     end
     render_grid_filled_with(grid,inner,opts)
@@ -38,11 +38,12 @@ module RenderHelper
 
   # Renderings just the grid container
   def render_grid_filled_with(grid,inner,opts={})
-    content_tag(
-      :div, 
-      inner, 
-      {:class => grid.yuies, :id => dom_id(grid)}
-    )
+    opts = opts.dup
+    grid.yuies.each do |yui_class|
+      add_class_to_html_options(opts, yui_class)
+    end
+    opts[:id] = dom_id(grid) unless opts[:id].nil?
+    content_tag( :div, inner, opts)
   end
 
   def render_grid_in_page(thegrid,thepage, opts = {})
@@ -98,21 +99,15 @@ module RenderHelper
   end
 
   def remove_page
-    page.select(Page::Types.keys.collect {|t| "div##{t}"}.join(', ')).each do |p|
-      p.remove
-    end
+    page.select(Page::Types.keys.collect {|t| "div##{t}"}.join(', ')).remove
   end
 
   def clear
     remove_page
-    page.select("body > .header, body > .footer, body > .admin, body > .error").each do |p|
-      p.remove
-    end
+    page.select("body > .header, body > .footer, body > .admin, body > .error").remove
   end
 
   def insert_page(thepage)
-    page.select('body').each do |b|
-      b.insert :top => render(:inline => "<%= render_page(thepage) %>" , :locals => {:thepage => thepage})
-    end
+    page.select('body').prepend render(:inline => "<%= render_page(thepage) %>" , :locals => {:thepage => thepage})
   end
 end

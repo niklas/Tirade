@@ -19,12 +19,12 @@ class Grid < ActiveRecord::Base
   acts_as_nested_set 
   acts_as_renderer
   Types = {
-    'yui-g'  =>   '1/2 - 1/2',
-    'yui-gb' =>	'1/3 - 1/3 - 1/3',
-    'yui-gc' =>	'2/3 - 1/3',
-    'yui-gd' =>	'1/3 - 2/3',
-    'yui-ge' =>	'3/4 - 1/4',
-    'yui-gf' =>	'1/4 - 3/4',
+    'yui-g'  =>   '50% - 50%',
+    'yui-gb' =>	'33% - 33% - 33%',
+    'yui-gc' =>	'66% - 33%',
+    'yui-gd' =>	'33% - 66%',
+    'yui-ge' =>	'75% - 25%',
+    'yui-gf' =>	'25% - 75%',
     'yui-u'  =>   'single'
   }
   IdealChildrenCount = {
@@ -95,7 +95,11 @@ class Grid < ActiveRecord::Base
   end
 
   def name
-    Types[yui] || '[unknown]'
+    if 'yui-u' == yui
+      parent.name.split(/[\s-]+/)[self_and_siblings.index(self)]
+    else
+      Types[yui] || '[unknown]'
+    end
   end
 
   def label
