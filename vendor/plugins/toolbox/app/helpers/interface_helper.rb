@@ -107,7 +107,7 @@ module InterfaceHelper
   def add_class_to_html_options(options,name)
     if options.has_key? :class
       return if name =~ /^odd|even$/ && options[:class] =~ /odd|even/
-      options[:class] += " #{name}"
+      options[:class] += " #{name}" unless options[:class] =~ /\b#{name}\b/
     else
       options[:class] = name.to_s
     end
