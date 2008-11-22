@@ -164,6 +164,9 @@ describe "The main Page with all fixtures" do
   it "should have some grids" do
     @page.should have_at_least(3).grids
   end
+  it "should have some renderings" do
+    @page.should have_at_least(3).renderings
+  end
 
   describe ", rendering it" do
     before(:each) do
@@ -200,6 +203,28 @@ describe "The main Page with all fixtures" do
       @html.should have_tag('div#doc') do
         with_tag('div#footer')
       end
+    end
+  end
+
+  describe "switching the layout to a new one" do
+    before(:each) do
+      @layout = Grid.create!( :yui => 'yui-ge' )
+      @page.update_attribute(:layout, @layout )
+      @page = Page.find(@page.id)
+    end
+    it "should have the new layout set" do
+      @page.layout.should == @layout
+    end
+    it "should have the standard grids" do
+      @page.should have(3).grids
+    end
+    it "should not have any renderings anymore" do
+      pending("all renderings are found, not just the visible")
+      @page.should have(:no).visible_renderings
+    end
+    it "should not have any parts anymore" do
+      pending("all parts are found, not just the visible")
+      @page.should have(:no).parts
     end
   end
 end
