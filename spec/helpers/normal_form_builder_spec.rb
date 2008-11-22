@@ -11,6 +11,7 @@ end
 
 describe 'NormalFormBuilder', 'in a form' do
   before(:each) do
+    ActionView::Base.send :include, ApplicationHelper
     ActionView::Base.send :include, InterfaceHelper # FIXME shouldn't Desert have done this already?
     @view = ActionView::Base.new
     @view.stub!(:url_for).and_return('/foo')

@@ -1,5 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+RenderHelper.module_eval do
+  include ApplicationHelper
+end
+
 describe RenderHelper, ' a single Grid' do
   before(:each) do
     @grid = Grid.new_by_yui('yui-g')
