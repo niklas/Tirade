@@ -85,7 +85,9 @@ div#toolbox {
       margin-top: -0.7em;
       width: 100%;
       color: <%= @colors[:text] %>;
-      font-weight: bold;
+      .active {
+        font-weight: bold;
+      }
     }
   }
 }

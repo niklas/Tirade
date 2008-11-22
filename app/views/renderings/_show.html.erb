@@ -23,7 +23,8 @@
 
   <% accordion_item "Where" do %>
     <%= show rendering, :page, :label => 'Page' %>
-    <%= show rendering, :grid, :label => 'Grid' %>
+    <% @grid = rendering.grid %>
+    <%= show rendering.page, :final_layout, :label => 'Grid' %>
   <% end %>
 <% end %>
 
