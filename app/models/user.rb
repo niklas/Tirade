@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 20081120155111
 #
 # Table name: users
 #
@@ -17,6 +17,7 @@
 #  state                     :string(255)     default("passive")
 #  created_at                :datetime        
 #  updated_at                :datetime        
+#  is_admin                  :boolean         
 #
 
 require 'digest/sha1'

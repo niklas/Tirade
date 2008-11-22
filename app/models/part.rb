@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 20081120155111
 #
 # Table name: parts
 #
@@ -11,6 +11,7 @@
 #  subpart_id      :integer         
 #  created_at      :datetime        
 #  updated_at      :datetime        
+#  defined_options :text            
 #
 
 # A Part is a representation of a rails partial

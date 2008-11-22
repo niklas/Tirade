@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 17
+# Schema version: 20081120155111
 #
 # Table name: contents
 #
@@ -17,6 +17,7 @@
 #  rgt          :integer         
 #  created_at   :datetime        
 #  updated_at   :datetime        
+#  slug         :string(255)     default("")
 #
 
 # A Document is a simple Text, nothing special for now

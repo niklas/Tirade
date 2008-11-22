@@ -1,3 +1,18 @@
+# == Schema Information
+# Schema version: 20081120155111
+#
+# Table name: videos
+#
+#  id          :integer         primary key
+#  title       :string(255)     
+#  artist_id   :integer         
+#  artist_name :string(255)     
+#  image_url   :string(255)     
+#  created_at  :datetime        
+#  updated_at  :datetime        
+#  url         :string(255)     
+#
+
 class YoutubeVideo < Video
   def self.new_from_xml(rss)
     @document = XmlSimple.xml_in(rss,{ 'Cache' => 'mem_share', 'ForceArray' => false})
