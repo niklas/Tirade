@@ -42,6 +42,9 @@ class Content < ActiveRecord::Base
   acts_as! :pictureable
 
   has_slug :prepend_id => false
+  def to_param
+    self.id
+  end
 
   def self.sample
     new(
