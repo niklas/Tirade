@@ -11,9 +11,16 @@
 <% accordion do %>
 
   <% accordion_item "What" do %>
-    <% show rendering, :content, :selectable => true do %>
-      <%= show_content_of_rendering(rendering) %>
-    <% end %>
+    <%=
+      case rendering.assignment 
+      when 'by_title_from_trailing_url'
+        show rendering, :content do
+          "by title from trailing URL"
+        end
+      else
+        show rendering, :content
+      end 
+    %>
   <% end %>
 
   <% accordion_item "How" do %>

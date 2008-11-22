@@ -43,13 +43,4 @@ module RenderingsHelper
     end
     page[dom].visual_effect :highlight
   end
-
-  def show_content_of_rendering(rendering)
-    case rendering.assignment
-    when 'by_title_from_trailing_url'
-      "by title from trailing URL"
-    else
-      render_as_attribute rendering.content
-    end
-  end
 end
