@@ -3,13 +3,7 @@ class Part < ActiveRecord::Base
   after_destroy :delete_code
 
   def needs_to_write_code?
-    if File.exists?(theme_path)
-      updated_at < File.mtime(theme_path)
-    elsif File.exists?(stock_path)
-      updated_at < File.mtime(stock_path)
-    else
-      true # no file there. write or DIE
-    end
+    !@liquid.blank?
   end
 
   private
