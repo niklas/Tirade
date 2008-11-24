@@ -9,7 +9,7 @@
   <% accordion_item 'Preview' do %>
     <% show part, :preview, :skip_label => true do %>
       <div class="rendering <%= part.filename -%> <%= part.preferred_types.first.domify %>">
-        <%= part.render %>
+        <%= part.render_with_fake_content %>
       </div>
     <% end %>
   <% end %>
@@ -27,11 +27,11 @@
   <% end %>
 
   <% accordion_item 'Code', :content_tag => :div do %>
-      <code class="rhtml"><%=h part.rhtml %></code>
+      <code class="liquid"><%=h part.liquid %></code>
   <% end %>
 
   <% accordion_item 'Example', :content_tag => :div do %>
-      <code class="html"><%=h part.render %></code>
+      <code class="html"><%=h part.render_with_fake_content %></code>
   <% end %>
 
 <% end %>
