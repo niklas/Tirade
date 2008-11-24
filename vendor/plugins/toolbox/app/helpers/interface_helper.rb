@@ -120,7 +120,7 @@ module InterfaceHelper
     if block_given? || !obj.respond_to?(name)
       concat di_dt_dd(label, capture(&block), opts), block.binding
     else
-      val = obj.send(name) rescue "unknow attr: #{obj.class}##{name}"
+      val = obj.send(name) rescue content_tag(:span, "unknow attr: #{obj.class}##{name}", :class => 'warning')
       if val.is_a?(ActiveRecord::Base)
         # url_for does not recognize STI :(
         opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
