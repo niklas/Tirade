@@ -1,19 +1,17 @@
 class GridsController < ApplicationController
   before_filter :login_required
-  before_filter :fetch_associated_rendering, :only => [:edit, :update]
+  #before_filter :fetch_associated_rendering, :only => [:edit, :update]
   feeds_toolbox_with :grid
   
   # FIXME (must be done in ressourcefull_views plugin)
-  protect_from_forgery :except => [:destroy,:order_renderings]
+  protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
 
   # TODO create: assign the new grid to params[:page_id]'s Page
 
   def create_child
     @grid = Grid.find(params[:id])
     @grid.add_child
-    respond_to do |wants|
-      wants.js { render :action => 'show' }
-    end
+    refresh
   end
 
   def order_renderings
@@ -27,13 +25,17 @@ class GridsController < ApplicationController
         rendering.save!
       end
     end unless params[:rendering].blank?
-    respond_to do |wants|
-      wants.js { 
-        render :update do |page|
-          page[@grid].highlight
-        end
-      }
-    end
+    refresh
+  end
+
+  def order_children
+    Grid.transaction do
+      @grid = Grid.find(params[:id])
+      params[:grid].reject(&:blank?).andand.reverse.each_with_index do |gid,i|
+        Grid.find(gid).move_to_child_of @grid
+      end
+    end unless params[:grid].blank?
+    refresh
   end
 
   private
@@ -42,5 +44,19 @@ class GridsController < ApplicationController
       @rendering = Rendering.find_by_id(rid)
     end
     true
+  end
+
+  def refresh(grid=@grid)
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          gridom = dom_id(grid)
+          if thepage = Page.find_by_id(params[:context_page_id])
+            page[gridom].replace_with render_grid_in_page(grid, thepage)
+          end
+          page[gridom].highlight
+        end
+      end
+    end
   end
 end

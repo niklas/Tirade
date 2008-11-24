@@ -75,6 +75,10 @@ jQuery.fn.applyRoles = function() {
 
 ChiliBook.recipeFolder = 'javascripts/syntax/'
 
+function pageContextForRequest() {
+  return "&context_page_id=" + $('body > div.page').resourceId()
+}
+
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
@@ -88,9 +92,9 @@ $(function() {
   $('code.html').livequery(function() { $(this).chili() });
   $('code.rhtml').livequery(function() { $(this).chili() });
 
-  $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not([class=back])').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
-  $('body.role_admin div.page div.rendering').livequery(function(i) {
+  $('body.role_admin div.page div.rendering:not(.fake)').livequery(function(i) {
     $(this).appendDom([
       { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
         { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
@@ -177,7 +181,7 @@ $(function() {
     });
   });
 
-  $('div.grid').sortable("destroy").sortable({
+  $('div.grid:not(:has(> div.grid))').sortable("destroy").sortable({
     connectWith: ['div.grid'],
     //containment: 'div.page',
     appendTo: 'div.page',
@@ -203,5 +207,34 @@ $(function() {
         type: 'POST', dataType: 'script'
       });
     }
+  });
+  $('div.grid:not(.horizontal):has(> div.grid)').livequery(function() {
+    $(this).find('> div.grid').append('<div class="admin"><span class="handle" /></div>').end()
+    .sortable("destroy").sortable({
+      handle: 'span.handle',
+      axis: 'y',
+      distance: 10,
+      placeholder: 'placeholder',
+      forcePlaceHolderSize: true,
+      items: '> div.grid',
+      tolerance: 'pointer',
+      cursor: 'move',
+      stop: function(e,ui) {
+        grid = ui.item.parent();
+        console.debug("Sorted Grids: ", grid.resourceId(), grid.sortable("serialize"));
+        $.ajax({
+          data: grid.sortable("serialize") + pageContextForRequest(),
+          url: order_children_grid_url({id: grid.resourceId()}),
+          type: 'POST', dataType: 'script'
+        });
+      }
+    })
+  });
+  // mark hovered divs as hovered. we can get them later by $('div.hovered').last() for positioniing the toolbox
+  $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
+    $(this).hover(
+      function() { $(this).parents('div.grid, div.rendering').addClass('hovered') }, 
+      function() { $(this).parents('div.grid, div.rendering').removeClass('hovered') }
+    );
   });
 });

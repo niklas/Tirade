@@ -212,10 +212,13 @@ body {
     z-index: 1;
     ul.history, ul.clipboard {
       display: block;
-      height: 50%;
       width: 100%;
       float: left;
+      padding: 2% 0px;
+      margin: 0;
     }
+    ul.history { height: 25% }
+    ul.clipboard { height: 69% }
     ul {
        padding: 0px;
        margin: 2px 0;

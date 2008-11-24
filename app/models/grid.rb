@@ -72,7 +72,7 @@ class Grid < ActiveRecord::Base
   end
 
   def visible_children
-    children.first(ideal_children_count)
+    ideal_children_count > 0 ? children.first(ideal_children_count) : children
   end
 
   def ideal_children_count
@@ -85,6 +85,7 @@ class Grid < ActiveRecord::Base
     classes = []
     classes << 'yui-u'
     classes << yui
+    classes << 'horizontal' if yui =~ /yui-g.?/
     classes << 'first' if self.is_first_child?
     classes << 'grid'
     classes.uniq.join(' ')
@@ -96,7 +97,11 @@ class Grid < ActiveRecord::Base
 
   def name
     if 'yui-u' == yui
-      parent.name.split(/[\s-]+/)[self_and_siblings.index(self)]
+      if self.root?
+        "root"
+      else
+        parent.name.split(/[\s-]+/)[self_and_siblings.index(self)]
+      end
     else
       Types[yui] || '[unknown]'
     end

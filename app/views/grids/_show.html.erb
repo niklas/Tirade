@@ -1,0 +1,20 @@
+<% grid ||= show %>
+<% links do %>
+  <li><%= edit_grid_link grid %></li>
+  <li><%= link_to_remote 'add child', :url => create_child_grid_url(grid), :method => :post %> </li>
+<% end %>
+<% accordion do %>
+  <% accordion_item 'Layout' do %>
+    <div class="grid_layout">
+      <%= show_grid grid %>
+    </div>
+  <% end %>
+  <% accordion_item 'Hierarchy' do %>
+    <%= show grid, :parent %>
+    <%= show grid, :children %>
+  <% end %>
+  <% accordion_item 'General' do %>
+    <%= show grid, :yui %>
+    <%= show grid, :label %>
+  <% end %>
+<% end %>

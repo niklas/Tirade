@@ -239,6 +239,20 @@ var Toolbox = {
 
 
 
+    // Copy the Submit button to bottomLinkBar
+    this.last(' xxxxxxxxxxxxform').livequery(function() {
+      if ($(this).find('input.submit').length > 0) {
+        Toolbox.createBottomLinkBar().appendDom([
+          { tagName: 'li', class: 'submit' }
+        ]);
+        Toolbox.last(' form input.submit:first').appendTo(
+          Toolbox.createBottomLinkBar().find('li.submit')
+        );
+      }
+    });
+
+
+
     this.setSizes();
   },
   expireBehaviors: function() {
@@ -477,6 +491,15 @@ var Toolbox = {
   },
   maximize: function() {
     console.debug("maximizing window");
+  },
+
+  createBottomLinkBar: function() {
+    if (this.last('>ul.bottom_linkbar').length == 0) {
+      this.last().appendDom([
+        {tagName: 'ul', class: 'bottom_linkbar' }
+      ]);
+    };
+    return this.last('>ul.bottom_linkbar');
   }
 
 
@@ -508,14 +531,6 @@ jQuery.fn.useToolbox = function(options) {
     onStart: function() {
     }
   }, options);
-  $(this).hover(
-    // mark hovered divs as hovered. we can get them later by $('div.hovered').last() for positioniing the toolbox
-    function() {
-      $(this).parents('div.grid, div.rendering').addClass('hovered');
-    }, function() {
-      $(this).parents('div.grid, div.rendering').removeClass('hovered');
-    }
-  );
   $(this).click(function(event) {
     event.preventDefault();
     Toolbox.findOrCreate();

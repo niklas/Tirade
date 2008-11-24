@@ -42,7 +42,8 @@ module RenderHelper
     grid.yuies.each do |yui_class|
       add_class_to_html_options(opts, yui_class)
     end
-    opts[:id] = dom_id(grid) unless opts[:id].nil?
+    add_class_to_html_options(opts, dom_id(grid))
+    opts[:id] = dom_id(grid) # unless opts[:id].nil?
     content_tag( :div, inner, opts)
   end
 
@@ -54,6 +55,7 @@ module RenderHelper
         if renderings.empty? && current_user.andand.is_admin?
           [
             content_tag(:div,
+              content_tag(:span, "Grid #{thegrid.id}: #{thegrid.label}  ") + 
               link_to_remote('create rendering', 
                 {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),
                  :loading  => "Toolbox.findOrCreate()",
