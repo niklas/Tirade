@@ -10,7 +10,9 @@ class Part < ActiveRecord::Base
   end
 
   def render(assigns={})
-    raise ArgumentError, "empty #liquid template, please create one under #{filename_with_extention}" if liquid.blank?
+    if liquid.blank?
+      return %Q[<div class="warning"> could not find liquid template '#{filename_with_extention}'</div>] 
+    end
     self.template = Liquid::Template.parse(liquid)
     self.html = self.template.render(assigns)
   end
