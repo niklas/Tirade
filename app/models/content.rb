@@ -27,6 +27,7 @@ class Content < ActiveRecord::Base
   # TODO how to handle the #type correctly .. and when?
   attr_protected :type, :state, :owner_id, :owner, :published_at, :created_at, :updated_at
 
+  liquid_methods :title, :description, :body, :slug
   validates_presence_of :title
 
 
@@ -43,6 +44,7 @@ class Content < ActiveRecord::Base
   acts_as! :pictureable
 
   has_slug :prepend_id => false
+
   def to_param
     self.id
   end
