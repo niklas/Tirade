@@ -33,6 +33,7 @@ class StylesheetsController < ApplicationController
       :element      => '#bbbbbb',
       :border_dark  => '#dedede',
       :clickable    => '#133B5E',
+      :error        => '#df5f6e',
     }
     @perimeter = "1px solid #{@colors[:perimeter]}" # border around elements
   end
