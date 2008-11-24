@@ -18,15 +18,17 @@
 #
 # It has a partial file attached to it and will be rendered in a Grid, using a Content.
 # It can take options to modify its apperance, which are passed as :locals (this should be overridable from Rendering)
+
 class Part < ActiveRecord::Base
-  concerned_with :syncing, :rendering, :content, :rhtml
+  concerned_with :syncing, :content, :code, :liquid, :configuration
   validates_presence_of :name
   validates_uniqueness_of :name
   belongs_to :subpart, :class_name => 'Part', :foreign_key => 'subpart_id'
   acts_as_custom_configurable
   serialize :preferred_types, Array
 
-  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :rhtml, :use_theme, :define_options, :defined_options
+  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :liquid, :use_theme, :define_options, :defined_options
+  liquid_methods :name, :filename, :liquid
 
   PartsDir = 'stock'
   BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
@@ -85,7 +87,7 @@ class Part < ActiveRecord::Base
 
   # Does a counterpart of this file exists in the given theme, defaults to the current theme of the +active_controller+
   def in_theme?(theme_name=nil)
-    File.exists? fullpath_for_theme(theme_name)
+    File.exists? theme_path(theme_name)
   end
 
   def current_theme
@@ -106,12 +108,10 @@ class Part < ActiveRecord::Base
     end
   end
 
-  def make_unthemable!(theme_name=nil)
-    theme_name ||= current_theme
-    if in_theme?(theme_name)
-      File.delete fullpath_for_theme(theme_name)
+  def remove_theme!(theme_name=nil)
+    if theme_name ||= current_theme && in_theme?(theme_name)
+      File.delete theme_path(theme_name)
     end
-    self.use_theme = false
   end
 
   def name_by_filename

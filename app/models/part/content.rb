@@ -18,5 +18,10 @@ class Part < ActiveRecord::Base
     self.preferred_types = ['Document'] if preferred_types.empty?
   end
   before_validation :set_default_preferred_types
+
+  def fake_content
+    (preferred_types.andand.first || "Document").constantize.sample
+  end
+
 end
 

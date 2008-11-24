@@ -204,6 +204,9 @@ ul.list, dl {
       z-index: 3;
     }
   }
+  dd.record a.show {
+    right: -21px;
+  }
 }
 
 li.ui-draggable-dragging {

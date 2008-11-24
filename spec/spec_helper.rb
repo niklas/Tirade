@@ -42,3 +42,9 @@ Spec::Runner.configure do |config|
   # config.mock_with :flexmock
   # config.mock_with :rr
 end
+
+def simple_preview
+  sp = parts(:simple_preview)
+  #sp.stub!(:liquid).and_return(%Q[<h2>{{ simple_preview.title }}</h2>\n<p>{{ simple_preview.body }}</p>])
+  return sp
+end

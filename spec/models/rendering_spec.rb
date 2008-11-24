@@ -53,7 +53,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
         :page => @page,
         :grid => @grid,
         :content => @goodbye,
-        :part => parts(:simple_preview)
+        :part => simple_preview
       )
     end.should change(Rendering,:count).by(1)
   end
@@ -94,7 +94,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
         :page => @page,
         :grid => @grid,
         :content => @love_letter,
-        :part => parts(:simple_preview)
+        :part => simple_preview
       )
     end.should change(Rendering,:count).by(1)
   end
@@ -137,7 +137,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
         :page => @page,
         :grid => @grid,
         :content => @content,
-        :part => parts(:simple_preview)
+        :part =>simple_preview
       )
     end.should change(Rendering,:count).by(1)
   end
@@ -157,13 +157,12 @@ describe Rendering, ' appended to the left column of the main page, containing a
 
   describe ", rendering to html" do
     before(:each) do
-      @rendering.content.stub!(:body).and_return('Image has no body yet')
       @html = @rendering.render
     end
     it "should render proper html" do
       @html.should have_tag('div.rendering.simple_preview.image') do
         with_tag('h2','Irish Landscape')
-        with_tag('p',/Image has no body yet/)
+        with_tag('p','')
       end
     end
   end
@@ -257,7 +256,7 @@ describe "A Rendering", "with an assignment by_title_from_trailing_url " do
       :grid => @page.grids.first,
       :content_type => 'Content',
       :assignment => 'by_title_from_trailing_url',
-      :part => parts(:simple_preview)
+      :part => simple_preview
     )
     @rendering.stub!(:trailing_path_of_page).and_return(['Goodbye'])
   end
