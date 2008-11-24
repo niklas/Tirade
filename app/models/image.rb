@@ -56,6 +56,10 @@ class Image < ActiveRecord::Base
     tempfile.stream_to(scaled_path) unless File.exists?(scaled_path)
     image.url(scaled_name)
   end
+
+  def self.sample
+    new :title => 'Sample Image'
+  end
   
   private
   def generate_title
