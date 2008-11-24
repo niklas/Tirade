@@ -1,8 +1,23 @@
 module RenderingsHelper
 
-  def update_rendering(rendering)
+  def update_rendering(rendering, opts={})
     dom = page.context.dom_id(rendering)
-    page[dom].replace rendering.render
+    page[dom].replace opts[:with] || rendering.render
+  end
+
+  def update_renderings(renderings)
+    renderings.each do |rendering|
+      update_rendering(rendering)
+    end
+  end
+
+  def select_rendering(rendering)
+    did = page.context.dom_id(rendering)
+    page.select("div.rendering.#{did}, div##{did}")
+  end
+
+  def remove_rendering(rendering)
+    select_rendering(rendering).remove
   end
 
   def update_grid_for(rendering)
