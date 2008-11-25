@@ -46,8 +46,7 @@ jQuery.fn.preview = function() {
     $.ajax({
       url: url, 
       type: 'POST',
-      data: data || form.formSerialize(),
-      dataType: 'script'
+      data: data || form.formSerialize()
     });
   };
   Toolbox.scroller().one('prev', function() {
@@ -74,6 +73,10 @@ jQuery.fn.applyRoles = function() {
 }
 
 ChiliBook.recipeFolder = 'javascripts/syntax/'
+
+$.ajaxSetup({
+  dataType: 'script'
+});
 
 function pageContextForRequest() {
   return "&context_page_id=" + $('body > div.page').resourceId()
@@ -134,8 +137,7 @@ $(function() {
         $.ajax({
           url: clipboard_url(),
           data: {id: $(ui.draggable).resourceIdentifier()},
-          type: 'POST',
-          dataType: 'script'
+          type: 'POST'
         });
       }
     });
@@ -149,8 +151,7 @@ $(function() {
       $.ajax({
         url: clipboard_url(),
         data: {id: item.resourceIdentifier()},
-        type: 'DELETE',
-        dataType: 'script'
+        type: 'DELETE'
       });
     });
   });
@@ -206,7 +207,7 @@ $(function() {
         $.ajax({
           data: grid.sortable("serialize"),
           url: order_renderings_grid_url({id: grid.resourceId()}),
-          type: 'POST', dataType: 'script'
+          type: 'POST'
         });
       }
     })
@@ -221,8 +222,7 @@ $(function() {
         $.ajax({
           url: rendering_url({id: ui.draggable.resourceId()}),
           data: "rendering[grid_id]=" + ui.element.resourceId() + pageContextForRequest(),
-          type: 'PUT',
-          dataType: 'script'
+          type: 'PUT'
         });
       }
     });
@@ -230,11 +230,11 @@ $(function() {
 
 
   /* empty grid */
-  $('div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
+  $('div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
     $(this).html('<div class="rendering fake">empty - drop something here</div>')
   });
 
-  $('div.grid:not(.horizontal):has(> div.grid)').livequery(function() {
+  $('div.page div.grid:not(.horizontal):has(> div.grid)').livequery(function() {
     $(this).find('> div.grid').append('<div class="admin"><span class="handle" /></div>').end()
     .sortable("destroy").sortable({
       handle: 'span.handle',
@@ -251,7 +251,7 @@ $(function() {
         $.ajax({
           data: grid.sortable("serialize") + pageContextForRequest(),
           url: order_children_grid_url({id: grid.resourceId()}),
-          type: 'POST', dataType: 'script'
+          type: 'POST'
         });
       }
     })
@@ -265,5 +265,16 @@ $(function() {
       }, 
       function() { $('.hover').removeClass('hover'); }
     );
+  });
+
+  /* click grid mockups to browse */
+  $('di.layout > dd > div.grid.preview').livequery(function() {
+    $(this).click(function(e) {
+      if ( id = $(e.target).resourceId() ) {
+        $.get(grid_url({id: id}));
+      } else if ( id = $(e.target).parent().resourceId() ) {
+        $.get(grid_url({id: id}));
+      }
+    });
   });
 });
