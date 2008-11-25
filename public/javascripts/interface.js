@@ -234,7 +234,8 @@ $(function() {
     $(this).html('<div class="rendering fake">empty - drop something here</div>')
   });
 
-  $('div.page div.grid:not(.horizontal):has(> div.grid)').livequery(function() {
+  /* lets sort all vertical aligned grids, if there is more than one child */
+  $('div.page div.grid:not(.horizontal):has(> div.grid + div.grid)').livequery(function() {
     $(this).find('> div.grid').append('<div class="admin"><span class="handle" /></div>').end()
     .sortable("destroy").sortable({
       handle: 'span.handle',
