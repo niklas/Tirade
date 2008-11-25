@@ -157,7 +157,7 @@ module Tirade
 
       def update_toolbox_for_updated(page)
         if params[:commit].blank? # non-form submit
-          params[model].keys.each do |meth|
+          params[@model].keys.each do |meth|
             page.toolbox_update_model_attribute model, meth
           end
         else
