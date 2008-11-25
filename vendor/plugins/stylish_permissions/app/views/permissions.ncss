@@ -1,5 +1,5 @@
 a, form, div, span {
-   .create, .update, .destroy, .show, .edit, .new {
+   .create, .update, .destroy, .show, .edit, .new, .handle {
       display: none;
    }
 }
