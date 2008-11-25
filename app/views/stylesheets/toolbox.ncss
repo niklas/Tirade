@@ -172,7 +172,7 @@ body {
                margin: 0;
              }
              dd {
-               margin: <%= @small %>;
+               margin: <%= @medium %>;
                float: right;
                clear: right;
                .record {

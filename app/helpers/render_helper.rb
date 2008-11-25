@@ -42,6 +42,9 @@ module RenderHelper
     grid.yuies.each do |yui_class|
       add_class_to_html_options(opts, yui_class)
     end
+    if opts.delete(:active) == grid
+      add_class_to_html_options(opts, 'active')
+    end
     add_class_to_html_options(opts, dom_id(grid))
     opts[:id] = dom_id(grid) # unless opts[:id].nil?
     content_tag( :div, inner, opts)

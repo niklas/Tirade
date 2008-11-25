@@ -75,7 +75,7 @@ div#toolbox {
     color: <%= @colors[:warning] %>;
   }
   li > div.grid.preview, dd > div.grid.preview {
-    width: 8em;
+    width: 18em;
     height: auto;
     min-height: 2em;
     border: <%= @small %> solid <%= @colors[:base] %>;
@@ -87,6 +87,11 @@ div#toolbox {
     *.grid { height: 5em; background-color: #ccc}
     *.grid .grid { height: 4em; background-color: #aaa}
     *.grid .grid .grid { height: 3em; background-color: #999}
+
+    outline: 1px solid <%= @colors[:base] %>;
+    margin: 4px -2px;
+    :hover { outline-color: <%= @colors[:hover] %>; }
+
     span.label {
       text-align: center;
       display: block;
@@ -95,7 +100,10 @@ div#toolbox {
       margin-top: -0.7em;
       width: 100%;
       color: <%= @colors[:text] %>;
-      .active {
+    }
+    .active {
+      outline-color: <%= @colors[:text] %>;
+      > span.label {
         font-weight: bold;
       }
     }
@@ -116,11 +124,22 @@ form {
   }
   select {
     float: right;
+    background-color: <%= @colors[:input] %>;
+    border-color: <%= @colors[:input_border] %>;
+    border-style: none solid;
+    border-width: 1px;
+    option {
+      background-color: inherit;
+    }
   }
   input {
     float: right;
     [type="text"] {
       width: 75%;
+      background-color: <%= @colors[:input] %>;
+      border-color: <%= @colors[:input_border] %>;
+      border-style: none none solid none;
+      border-width: 1px;
     }
     #search_term {
       float: left;
@@ -215,6 +234,7 @@ ul.list, dl {
 }
 
 li.ui-draggable-dragging {
+  background-color: <%= @colors[:base] %>;
   a.show, e.edit, e.index {
     display: none;
   }
@@ -229,3 +249,4 @@ li.ui-draggable-dragging {
   background-position: center;
   min-height: 3em;
 }
+

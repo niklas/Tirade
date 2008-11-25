@@ -5,9 +5,9 @@
 <% end %>
 <% accordion do %>
   <% accordion_item 'Layout' do %>
-    <div class="grid_layout">
-      <%= show_grid grid %>
-    </div>
+    <% show grid, :layout do %>
+      <%= show_grid grid.root, :active => grid %>
+    <% end %>
   <% end %>
   <% accordion_item 'Hierarchy' do %>
     <%= show grid, :parent %>

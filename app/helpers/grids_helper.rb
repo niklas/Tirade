@@ -10,9 +10,9 @@ module GridsHelper
   end
 
   def show_grid(grid, opts={})
-    active = opts[:active] || @grid
-    render_grid(grid, :class => 'preview') do |g|
-      content_tag(:span, g.label, :class => "label #{'active' if g==active }")
+    add_class_to_html_options(opts, 'preview')
+    render_grid(grid, opts) do |g|
+      content_tag(:span, g.label, :class => "label")
     end
   end
 end
