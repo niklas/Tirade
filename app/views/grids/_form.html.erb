@@ -10,7 +10,6 @@
     <% accordion_item "General" do %>
       <%= f.select :yui, Grid::Types.invert %>
       <%= f.text_field :title %>
-      <%= f.hidden_field :rendering_id %>
     <% end %>
 
     <% unless (grids_renderings = Rendering.for_grid(grid)).empty? %>

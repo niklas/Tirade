@@ -14,6 +14,11 @@ describe Grid do
     @grid.should be_valid
   end
 
+  it "should notice the change on #yui" do
+    @grid.yui = 'yui-u'
+    @grid.should be_yui_changed
+  end
+
   describe 'after save' do
     before(:each) do
       @grid.yui = Grid::Types.keys.first
@@ -26,7 +31,8 @@ describe Grid do
 
     describe ', setting the grid_to "50-50"' do
       before(:each) do
-        @grid.update_attribute :yui, 'yui-g'
+        @grid.yui = 'yui-g'
+        @grid.save!
       end
       it "should change its gridclass to '50-50'" do
         @grid.yui.should == 'yui-g'
@@ -41,6 +47,14 @@ describe Grid do
       end
       it "should have a proper name (for da humanz)" do
         @grid.name.should == '50% - 50%'
+      end
+
+      it "should still be known to its children" do
+        @grid.children.each do |child|
+          child.parent.should == @grid
+          child.parent.yui.should == @grid.yui
+          child.parent.name.should == @grid.name
+        end
       end
 
       it "should give its children proper names" do
@@ -265,7 +279,7 @@ end
 
 describe "Creating a 3/4 - 1/4 grid" do
   before(:each) do
-    @grid = Grid.new_by_yui('yui-ge')
+    @grid = Grid.new(:yui => 'yui-ge')
     @grid.save!
   end
   it "should still be 3/4 - 1/4" do
@@ -280,4 +294,64 @@ describe "Creating a 3/4 - 1/4 grid" do
   it "should have a proper name (for da humanz)" do
     @grid.name.should == '75% - 25%'
   end
+end
+
+
+describe "The 50-50 Grid" do
+  fixtures :all
+  before(:each) do
+    @grid = grids(:layout50_50)
+    @old_pages = @grid.pages.to_a
+  end
+  it "should be valid" do
+    @grid.should be_valid
+  end
+
+  it "should be root" do
+    @grid.should be_root
+  end
+
+  it "should be used in a Page" do
+    @grid.should have_at_least(1).page
+    @old_pages.should_not be_empty
+  end
+
+  describe "wrapped into a simple yui-u.", "This Wrap" do
+    before(:each) do
+      @wrap = Grid.create(:yui => 'yui-u', :child_id => @grid.id)
+      @wrap.reload
+      @grid.reload
+    end
+
+    it "should be valid" do
+      @wrap.should be_valid
+    end
+
+    it "should be a root node" do
+      @wrap.should be_root
+    end
+
+    it "should have the old grid as direct and only child" do
+      @wrap.should have(1).child
+      @grid.parent.should == @wrap
+    end
+
+    it "'s new child should not be a root node" do
+      @grid.should_not be_root
+    end
+
+    it "should be used in a Page" do
+      @wrap.should have_at_least(1).page
+    end
+
+    it "should be used in the same Pages as the former 50-50 Grid" do
+      @old_pages.each do |page|
+        page.reload.layout.should == @wrap
+      end
+      @old_pages.should_not be_empty
+      @wrap.pages.should == @old_pages
+    end
+
+  end
+
 end

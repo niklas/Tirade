@@ -38,12 +38,7 @@ class Grid < ActiveRecord::Base
   }
   validates_inclusion_of :yui, :in => Types
 
-  # save the rendering context
-  attr_accessor :rendering_id
-
-  def before_destroy
-    children.each(&:destroy)
-  end
+  has_many :pages, :foreign_key => 'layout_id'
 
   def after_destroy
     parent.andand.save
@@ -53,21 +48,22 @@ class Grid < ActiveRecord::Base
     new(:yui => grid_class)
   end
 
-  def after_save
-    auto_create_missing_children
-  end
+  after_save :wrap_children
+  after_save :auto_create_missing_children
 
-  def yui=(new_class)
-    write_attribute(:yui,new_class)
-    auto_create_missing_children unless new_record?
+  def yui=(new_yui)
+    yui_will_change!
+    write_attribute('yui', new_yui)
+    unless new_record? || !changes.empty?
+      auto_create_missing_children
+    end
+    yui
   end
 
   def add_child(child_grid=nil)
-    self.save! if new_record?
-    child_grid ||= self.class.new_by_yui('yui-u')
+    child_grid ||= self.class.new(:yui => 'yui-u')
     child_grid.save!
     child_grid.move_to_child_of self
-    self.save!
     child_grid
   end
 
@@ -96,14 +92,14 @@ class Grid < ActiveRecord::Base
   end
 
   def name
-    if 'yui-u' == yui
-      if self.root?
+    if 'yui-u' == self.yui
+      if root?
         "root"
       else
         parent.name.split(/[\s-]+/)[self_and_siblings.index(self)] || '100%'
       end
     else
-      Types[yui] || '[unknown]'
+      Types[self.yui] || '[unknown]'
     end
   end
 
@@ -121,14 +117,26 @@ class Grid < ActiveRecord::Base
     render_to_string(:inline => '<%= render_grid_in_page(grid,page) %>', :locals => {:grid => self, :page => thepage})
   end
 
-  def leafs
-    descendants.select {|n| n.children.empty? }
-  end
-
+  attr_writer :child_id
   protected
   def auto_create_missing_children
     while children.length < ideal_children_count
       add_child
     end
+    true
+  end
+
+  def wrap_children
+    if root? && !@child_id.nil? && (thechild = Grid.find_by_id(@child_id)) 
+      @child_id = nil
+      Grid.transaction do
+        thechild.pages.each do |page|
+          page.layout = self
+          page.save!
+        end
+        thechild.move_to_child_of self
+      end
+    end
+    true
   end
 end

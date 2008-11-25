@@ -50,10 +50,7 @@ class ApplicationController < ActionController::Base
   def violate_mvc
     [Grid, Rendering, Part].each { |k| k.active_controller = self }
   end
-  def fetch_rendering
-    @rendering = Rendering.find(params[:rendering_id])
-  end
-
+  
   def require_http_auth
     if `hostname` =~ /soykaf|lanpartei/i 
       if auth =  APP_CONFIG['http_auth']

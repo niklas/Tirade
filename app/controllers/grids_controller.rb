@@ -39,13 +39,6 @@ class GridsController < ApplicationController
   end
 
   private
-  def fetch_associated_rendering
-    if rid = params[:rendering_id] || params[:grid].andand[:rendering_id]
-      @rendering = Rendering.find_by_id(rid)
-    end
-    true
-  end
-
   def refresh(grid=@grid)
     respond_to do |wants|
       wants.js do

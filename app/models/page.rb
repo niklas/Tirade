@@ -60,7 +60,7 @@ class Page < ActiveRecord::Base
 
   def before_validation
     self.url = generated_url
-    self.yui ||= 'doc'
+    self[:yui] ||= 'doc'
   end
 
   def after_move
@@ -68,7 +68,7 @@ class Page < ActiveRecord::Base
   end
 
   def after_initialize
-    self.yui ||= 'doc'
+    self[:yui] ||= 'doc'
   end
 
   def final_layout

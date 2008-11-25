@@ -17,7 +17,7 @@ end
 
 describe RenderHelper, ' a 50/50 Grid with both children' do
   before(:each) do
-    @grid = Grid.new_by_yui('yui-g')
+    @grid = Grid.create(:yui => 'yui-g')
 
     @left_grid = @grid.add_child
     @right_grid = @grid.add_child
