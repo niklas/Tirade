@@ -30,6 +30,8 @@ class StylesheetsController < ApplicationController
       :selected     => '#bdbdbd',
       :text         => '#222222',
 
+      :input        => '#ffffff',
+      :input_border => '#bbbbbb',
       :element      => '#bbbbbb',
       :border_dark  => '#dedede',
       :clickable    => '#133B5E',
