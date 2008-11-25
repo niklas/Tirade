@@ -1,0 +1,6 @@
+<% rendering ||= list_item %>
+<%= show_rendering_link rendering %>
+<%= rendering.label %>
+<% if rendering.grid.nil? %>
+  <span class="warning">orphan</span>
+<% end %>

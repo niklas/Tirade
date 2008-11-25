@@ -1,7 +1,18 @@
 module GridsHelper
-  def show_grid(grid)
+  def select_grid(grid)
+    did = page.context.dom_id(grid)
+    page.select("div.grid.#{did}, div##{did}")
+  end
+
+  def update_grid_in_page(grid, thepage)
+    page.select_grid(grid).
+      replace_with(page.context.render_grid_in_page(grid,thepage))
+  end
+
+  def show_grid(grid, opts={})
+    active = opts[:active] || @grid
     render_grid(grid, :class => 'preview') do |g|
-      content_tag(:span, g.label, :class => "label #{'active' if g==@grid }")
+      content_tag(:span, g.label, :class => "label #{'active' if g==active }")
     end
   end
 end

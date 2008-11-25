@@ -17,6 +17,21 @@ describe Rendering do
     it "should be valid" do
       @rendering.should be_valid
     end
+
+    describe ", setting another grid_id" do
+      before do
+        @rendering.grid_id = 42
+      end
+      it "should accept the new value" do
+        @rendering.grid_id.should == 42
+      end
+      it "should remember that second change" do
+        @rendering.should be_grid_changed
+      end
+      it "should remember the old value" do
+        @rendering.old_grid_id.should == 5
+      end
+    end
   end
 
   it "should belong to a page" do

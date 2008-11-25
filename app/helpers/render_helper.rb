@@ -53,20 +53,7 @@ module RenderHelper
       if thegrid.visible_children.empty?
         renderings = thepage.renderings.for_grid(thegrid)
         if renderings.empty? && current_user.andand.is_admin?
-          [
-            content_tag(:div,
-              content_tag(:span, "Grid #{thegrid.id}: #{thegrid.label}  ") + 
-              link_to_remote('create rendering', 
-                {:url => renderings_url(:rendering => {:grid_id => thegrid.id, :page_id => thepage.id}),
-                 :loading  => "Toolbox.findOrCreate()",
-                 :method => :post
-                },
-                 :class => 'create rendering create_rendering'
-              ) +
-              ' ' +
-              content_tag('span', 'or drag one here'),
-            :class => 'rendering fake')
-          ]
+          [ content_tag(:div, "empty Grid #{thegrid.id}: #{thegrid.label}  ")]
         else
           renderings.collect do |rendering|
             # FIXME HACK rendering must know about trailing path, this is in da page

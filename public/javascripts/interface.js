@@ -181,33 +181,59 @@ $(function() {
     });
   });
 
-  $('div.grid:not(:has(> div.grid))').sortable("destroy").sortable({
-    connectWith: ['div.grid'],
-    //containment: 'div.page',
-    appendTo: 'div.page',
-    distance: 5,
-    dropOnEmpty: false,
-    placeholder: 'placeholder',
-    forcePlaceHolderSize: true,
-    items: '> div.rendering',
-    handle: 'span.handle',
-    tolerance: 'pointer',
-    scroll: true,
-    cursor: 'move',
-    zIndex: 1,
-    change: function(e,ui) {
-      ui.item.width(ui.element.width());
-    },
-    stop: function(e,ui) {
-      $('div.rendering').width('');
-      grid = ui.item.parent();
-      $.ajax({
-        data: grid.sortable("serialize"),
-        url: order_renderings_grid_url({id: grid.resourceId()}),
-        type: 'POST', dataType: 'script'
-      });
-    }
+  $('div.grid:not(:has(> div.grid))').livequery(function() {
+    $(this).sortable("destroy").sortable({
+      connectWith: ['div.grid:not(:has(> div.grid))'],
+      //containment: 'div.page',
+      appendTo: 'div.page',
+      distance: 5,
+      dropOnEmpty: true,
+      placeholder: 'placeholder',
+      forcePlaceHolderSize: true,
+      items: '> div.rendering',
+      handle: 'span.handle',
+      tolerance: 'pointer',
+      scroll: true,
+      cursor: 'move',
+      zIndex: 1,
+      change: function(e,ui) {
+        ui.item.width(ui.element.width());
+      },
+      stop: function(e,ui) {
+        $('div.rendering').width('');
+        grid = ui.item.parent();
+        grid.find(' > div.rendering.fake').hide();
+        $.ajax({
+          data: grid.sortable("serialize"),
+          url: order_renderings_grid_url({id: grid.resourceId()}),
+          type: 'POST', dataType: 'script'
+        });
+      }
+    })
+    .find(' > div.rendering.fake').show().end()
+    .droppable({
+      accept: 'li.rendering',
+      hoverClass: 'hover',
+      activeClass: 'active-droppable',
+      greedy: true,
+      drop: function(e,ui) {
+        ui.element.find(' > div.rendering.fake').hide();
+        $.ajax({
+          url: rendering_url({id: ui.draggable.resourceId()}),
+          data: "rendering[grid_id]=" + ui.element.resourceId() + pageContextForRequest(),
+          type: 'PUT',
+          dataType: 'script'
+        });
+      }
+    });
   });
+
+
+  /* empty grid */
+  $('div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
+    $(this).html('<div class="rendering fake">empty - drop something here</div>')
+  });
+
   $('div.grid:not(.horizontal):has(> div.grid)').livequery(function() {
     $(this).find('> div.grid').append('<div class="admin"><span class="handle" /></div>').end()
     .sortable("destroy").sortable({
@@ -233,8 +259,11 @@ $(function() {
   // mark hovered divs as hovered. we can get them later by $('div.hovered').last() for positioniing the toolbox
   $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
     $(this).hover(
-      function() { $(this).parents('div.grid, div.rendering').addClass('hovered') }, 
-      function() { $(this).parents('div.grid, div.rendering').removeClass('hovered') }
+      function() { 
+        $('.hover').removeClass('hover'); 
+        $(this).parents('div.grid, div.rendering').addClass('hover') 
+      }, 
+      function() { $('.hover').removeClass('hover'); }
     );
   });
 });

@@ -50,11 +50,11 @@ class GridsController < ApplicationController
     respond_to do |wants|
       wants.js do
         render :update do |page|
-          gridom = dom_id(grid)
+          dom = page.select_grid(grid)
           if thepage = Page.find_by_id(params[:context_page_id])
-            page[gridom].replace_with render_grid_in_page(grid, thepage)
+            dom.replace_with render_grid_in_page(grid, thepage)
           end
-          page[gridom].highlight
+          dom.highlight
         end
       end
     end

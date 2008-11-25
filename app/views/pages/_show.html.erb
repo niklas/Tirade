@@ -22,13 +22,7 @@
   <% end %>
 
   <% accordion_item "Renderings", :content_tag => :dl do %>
-    <% show thepage, :renderings do %>
-      <ul>
-        <% thepage.renderings.each do |rendering| %>
-          <li> <%= link_to rendering.label, rendering_path(rendering) %> </li>
-        <% end %>
-      </ul>
-    <% end %>
+    <%= show thepage, :renderings %>
   <% end %>
 
 <% end %>

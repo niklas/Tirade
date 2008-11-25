@@ -17,11 +17,11 @@ body div {
   :hover > div.admin {
     display: block;
   }
-  .grid.hovered { background-color: #eee}
-  .grid .grid.hovered { background-color: #ccc}
-  .grid .grid .grid.hovered { background-color: #aaa}
-  .grid .grid .grid .grid.hovered { background-color: #999}
-  .rendering.hovered { background-color: #bdb}
+  .grid.hover { background-color: #eee}
+  .grid .grid.hover { background-color: #ccc}
+  .grid .grid .grid.hover { background-color: #aaa}
+  .grid .grid .grid .grid.hover { background-color: #999}
+  .rendering.hover { background-color: #bdb}
   .grid > div.admin {
     left: 0;
     top: 3em;
@@ -39,7 +39,7 @@ body div {
       text-indent: -5000px;
       outline: 0;
       margin: 2px;
-      float: right;
+      float: left;
     }
     span.handle {
       background: url(../images/icons/small/move.gif);
@@ -65,9 +65,6 @@ body {
     div.grid.active {
         border: #85c71e 0px dotted;
     }  
-    div.hover {
-        border: #c72c1e 1px dotted;
-    }
 }
 
 div#toolbox {
@@ -168,11 +165,6 @@ ul.list {
   .hover {
     background-color: <%= @colors[:hover] %>;
   }
-  .active-droppable {
-    background-image: url(/images/icons/drop_here.png);
-    background-repeat: no-repeat;
-    background-position: center;
-  }
   li { 
     width: 100%;
     float: left;
@@ -229,4 +221,11 @@ li.ui-draggable-dragging {
   img.association {
     display: none;
   }
+}
+
+*.active-droppable {
+  background-image: url(/images/icons/drop_here.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 3em;
 }

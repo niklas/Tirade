@@ -11,6 +11,11 @@ class RenderingsController < ApplicationController
   def after_update_toolbox_for_updated(page)
     page.unmark_all_active
     page.update_rendering(@rendering)
+    if @rendering.grid_changed?
+      page.remove_rendering(@rendering)
+      page.update_grid_in_page(@rendering.grid, @rendering.page) 
+      page.update_grid_in_page(@rendering.old_grid, @rendering.page) 
+    end
     page.mark_as_active(@rendering)
   end
 
@@ -20,7 +25,7 @@ class RenderingsController < ApplicationController
       page.update_rendering(brother)
     end if params[:part]
     page.unmark_all_active
-    page.mark_as_active(@rendering)
+    #page.mark_as_active(@rendering)
   end
 
   def destroy

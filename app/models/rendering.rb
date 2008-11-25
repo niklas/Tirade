@@ -35,8 +35,17 @@ class Rendering < ActiveRecord::Base
 
 
   belongs_to :page
-  belongs_to :grid
   belongs_to :part
+
+  belongs_to :grid
+  def grid_id=(new_grid_id)
+    @old_grid_id = grid_id
+    self[:grid_id] = new_grid_id
+  end
+  def grid_changed?
+    old_grid_id && (old_grid_id != grid_id)
+  end
+  attr_reader :old_grid_id
 
   Assignments = %w(fixed by_title_from_trailing_url).freeze unless defined?(Assignments)
   validates_inclusion_of :assignment, :in => Assignments, :allow_nil => true

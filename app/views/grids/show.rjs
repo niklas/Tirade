@@ -1,1 +1,0 @@
-page[dom_id(@grid)].replace_with render_grid(@grid)

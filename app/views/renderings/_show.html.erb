@@ -30,8 +30,10 @@
 
   <% accordion_item "Where" do %>
     <%= show rendering, :page, :label => 'Page' %>
-    <% @grid = rendering.grid %>
-    <%= show rendering.page, :final_layout, :label => 'Grid' %>
+    <% show rendering, :grid do %>
+      <%= rendering.grid_id %>
+      <%= show_grid rendering.page.final_layout, :active => rendering.grid %>
+    <% end %>
   <% end %>
 <% end %>
 

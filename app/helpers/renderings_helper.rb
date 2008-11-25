@@ -1,8 +1,7 @@
 module RenderingsHelper
 
   def update_rendering(rendering, opts={})
-    dom = page.context.dom_id(rendering)
-    page[dom].replace opts[:with] || rendering.render
+    page.select_rendering(rendering).replace_with opts[:with] || rendering.render
   end
 
   def update_renderings(renderings)
@@ -21,10 +20,8 @@ module RenderingsHelper
   end
 
   def update_grid_for(rendering)
-    grid = rendering.grid
-    grid_dom = page.context.dom_id(grid)
-    page[grid_dom].replace page.context.render_grid_in_page(grid,rendering.page)
-    page[grid_dom].visual_effect :highlight
+    page.update_grid_in_page(rendering.grid, rendering.page).
+      highlight unless rendering.grid.nil?
   end
 
   def mark_as_active(thingy)
@@ -38,24 +35,21 @@ module RenderingsHelper
   end
 
   def mark_grid_as_active(grid)
-    dom = page.context.dom_id(grid)
-    page[dom].add_class 'active'
+    page.select_grid(grid).add_class 'active'
   end
   def mark_rendering_as_active(rendering)
-    dom = page.context.dom_id(rendering)
-    page[dom].add_class 'active'
+    page.select_rendering(rendering).add_class 'active'
   end
   def unmark_all_active
     page.select('div.active').remove_class 'active'
   end
 
   def preview_rendering(rendering)
-    dom = context.dom_id(rendering)
+    dom = page.select_rendering(rendering)
     if rendering.part.valid?
-      page[dom].replace rendering.render
+      dom.replace_with rendering.render
     else
-      page[dom].replace_html context.error_messages_for(:part, :object => rendering.part)
-    end
-    page[dom].visual_effect :highlight
+      dom.html context.error_messages_for(:part, :object => rendering.part)
+    end.highlight
   end
 end
