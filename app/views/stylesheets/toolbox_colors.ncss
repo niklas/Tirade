@@ -40,10 +40,6 @@
 background <%= @colors[:selected] %>;
           }
         }
-        textarea,input,select {
-          background-color: <%= @colors[:element] %>;
-          color:  <%= @colors[:text] %>;
-        }
 
         ul {
           li {

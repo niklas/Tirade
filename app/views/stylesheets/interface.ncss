@@ -125,12 +125,20 @@ form {
   select {
     float: right;
     background-color: <%= @colors[:input] %>;
+    color:  <%= @colors[:text] %>;
     border-color: <%= @colors[:input_border] %>;
     border-style: none solid;
     border-width: 1px;
     option {
       background-color: inherit;
     }
+  }
+  textarea {
+    background-color: <%= @colors[:input] %>;
+    color:  <%= @colors[:text] %>;
+    border-color: <%= @colors[:input_border] %>;
+    border-style: solid none;
+    border-width: 1px;
   }
   input {
     float: right;

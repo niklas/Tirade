@@ -31,7 +31,7 @@ class StylesheetsController < ApplicationController
       :text         => '#222222',
 
       :input        => '#ffffff',
-      :input_border => '#bbbbbb',
+      :input_border => '#777777',
       :element      => '#bbbbbb',
       :border_dark  => '#dedede',
       :clickable    => '#133B5E',
