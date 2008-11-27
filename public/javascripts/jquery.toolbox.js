@@ -275,7 +275,32 @@ var Toolbox = {
       });
     });
 
+    // Part assignment form
+    this.last(' form.edit_rendering').livequery(function() {
+      var form = $(this);
+      renderingAssignmentFormUpdate = function (e) {
+        switch (form.find('select#rendering_assignment').val()) {
+          case 'fixed':
+            form.find('di.association.one.content .live_search').hide();
+            form.find('di.association.one.content').show().find('input.association_id, input.association_type').enable();
+            form.find('di.content_type').hide().find('select').disable();
+          break;
+          case 'by_title_from_trailing_url':
+            form.find('di.association.one.content').hide().find('input.association_id, input.association_type').disable();
+            form.find('di.association.one.content .live_search').hide();
+            form.find('di.content_type').show().find('select').enable();
+          break;
+        }
+      }
+      renderingAssignmentFormUpdate();
+      form.find('select#rendering_assignment').change( renderingAssignmentFormUpdate );
+    });
 
+
+    this.last(' a.toggle_live_search').livequery('click', function(e) {
+      e.preventDefault();
+      $(this).siblings('.live_search').toggle();
+    });
 
     // Copy the Submit button to bottomLinkBar
     this.last(' xxxxxxxxxxxxform').livequery(function() {
