@@ -96,7 +96,6 @@ var Toolbox = {
     });
     this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
-      console.debug("clicked to jump to", $(this).html())
     });
 
 
@@ -123,7 +122,6 @@ var Toolbox = {
 
     // Scroll to selected accordion section
     this.accordion(' h3.selected').livequery(function() { 
-      console.debug('selected', this);
       var s = $(this);
       $.timer(300,function(timer) {
         timer.stop();
@@ -185,7 +183,6 @@ var Toolbox = {
         tolerance: 'touch',
         drop: function(e,ui) {
           var item = $(ui.draggable);
-          console.debug("dropped", item[0]);
           list.find('li').remove();
           item.clone().appendTo(list);
         }
@@ -437,7 +434,6 @@ var Toolbox = {
     return this.last(' div.accordion')
   },
   openSectionByName: function(name) {
-    console.debug("openSectionByName",name);
     selector = '[@name='+name+']:not(.selected)';
     if (this.accordion().find(selector).length!=0) {
       return this.accordion().accordion('activate', selector);
