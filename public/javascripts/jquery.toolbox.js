@@ -2,34 +2,8 @@
 var Toolbox = {
   findOrCreate: function() {
     if ( this.element().length == 0 ) {
-      $('body').appendDom([
-        { tagName: 'div', id: 'toolbox', childNodes: [
-          { tagName: 'div', class: 'head', childNodes: [
-            { tagName: 'span', class: 'content title', innerHTML: 'Toolbox Title is loooooooooooooong' },
-            { tagName: 'span', class: 'buttons', childNodes: [
-              { tagName: 'img', class: 'close', src: '/images/icons/small/x.gif' },
-              { tagName: 'img', class: 'max',   src: '/images/icons/small/grow.gif' },
-              { tagName: 'img', class: 'min',   src: '/images/icons/small/pause.gif' }
-            ]}
-          ]},
-          { tagName: 'div', class: 'sidebar left', childNodes: [
-            { tagName: 'ul', class: 'history' },
-            { tagName: 'ul', class: 'clipboard list' }
-          ] },
-          { tagName: 'div', class: 'busy', childNodes: [
-            { tagName: 'span', class: 'message', innerHTML: 'Loading' }
-          ] },
-          { tagName: 'div', class: 'body', childNodes: [
-            { tagName: 'div', class: 'content', id: 'toolbox_content', childNodes: [
-              Toolbox.newFrame('Hello!'),
-            ]}
-          ]},
-          { tagName: 'div', class: 'foot', childNodes: [
-            { tagName: 'span', class: 'content status' },
-            { tagName: 'img', class: 'resize ui-resizable-se ui-resizable-handle', src: '/images/icons/resize.gif' }
-          ]},
-        ]}
-      ]);
+      $('body').appendDom(Toolbox.Templates.toolbox);
+      this.content().appendDom(Toolbox.Templates.frame("preparing Toolbox.."));
       this.sidebarVisible = true;
       this.expireBehaviors();
       this.applyBehaviors();
@@ -83,16 +57,16 @@ var Toolbox = {
       Toolbox.setTitle();
       Toolbox.linkBarOn();
       if ($(this).find('> li > a.back').length == 0) {
-        $(this).appendDom([Toolbox.newBackButton()])
+        $(this).appendDom(Toolbox.Templates.backButton)
       }
     });
 
     // Keep track of frames in history
     this.frames().livequery(function() { 
       var frame = $(this);
-      Toolbox.history().appendDom([
-        Toolbox.newHistoryItem( frame.attr('title'), frame.attr('href') )
-      ]);
+      Toolbox.history().appendDom(
+        Toolbox.Templates.historyItem( frame.attr('title'), frame.attr('href') )
+      );
     });
     this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
@@ -194,7 +168,7 @@ var Toolbox = {
       var item = $(this);
       item
         .find('img.association').remove().end()
-        .appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ])
+        .appendDom(Toolbox.Templates.removeButton)
         .find('img.remove').click(function(event) {
           item.parents('ul.list')
             .siblings('input.association_id:first').val('').end()
@@ -302,19 +276,19 @@ var Toolbox = {
       $(this).siblings('.live_search').toggle();
     });
 
-    // Copy the Submit button to bottomLinkBar
-    this.last(' xxxxxxxxxxxxform').livequery(function() {
-      if ($(this).find('input.submit').length > 0) {
-        Toolbox.createBottomLinkBar().appendDom([
-          { tagName: 'li', class: 'submit' }
-        ]);
-        Toolbox.last(' form input.submit:first').appendTo(
-          Toolbox.createBottomLinkBar().find('li.submit')
-        );
-      }
+    // redirect the Submit button from bottomLinkBar
+    this.last(' form:has(input.submit)').livequery(function() {
+      Toolbox.createBottomLinkBar().appendDom(
+        Toolbox.Templates.submitButton
+      );
+      var orgbutton = $(this).find('input.submit').hide();
+      Toolbox.last('>ul.bottom_linkbar li.submit a.submit').click(function(e) {
+        e.preventDefault();
+        form = Toolbox.last(' form');
+        form[0].clk = orgbutton[0];
+        form.submit();
+      });
     });
-
-
 
     this.setSizes();
   },
@@ -332,6 +306,8 @@ var Toolbox = {
     this.last(' label + ul.list li').expire();
     this.last(' label + ul.list').expire();
     this.last(' label + ul.association.one li').expire();
+    this.last('>ul.bottom_linkbar li.submit a.submit').expire();
+
   },
   setSizes: function() {
     /* this.scroller().height( this.bodyHeight() );
@@ -348,7 +324,7 @@ var Toolbox = {
   },
   push: function(content,options) {
     this.content()
-      .appendDom([ Toolbox.newFrame(content,options) ]);
+      .appendDom(Toolbox.Templates.frame(content,options));
     this.next();
   },
   error: function( content, options ) {
@@ -358,28 +334,6 @@ var Toolbox = {
       class:      'error'
     }, options);
     this.push(content, options);
-  },
-  newBackButton: function(title) {
-    return(
-      { tagName: 'li', childNodes: [
-        { tagName: 'a', class: 'back', href: '#', innerHTML: 'back' }
-      ]}
-    );
-  },
-  newHistoryItem: function(title, href) {
-    return(
-      { tagName: 'li', href: href, class: 'jump', innerHTML: title }
-    );
-  },
-  newFrame: function(content,options) {
-    var options = jQuery.extend({
-      href:       '/dashboard',
-      title:      'Dashboard'
-    }, options);
-    class = options.class ? 'frame ' + options.class : 'frame'
-    return(
-      { tagName: 'div', class: class, href: options.href, title: options.title, innerHTML: content }
-    );
   },
   pop: function() {
     $('body').applyRoles();
@@ -555,9 +509,7 @@ var Toolbox = {
 
   createBottomLinkBar: function() {
     if (this.last('>ul.bottom_linkbar').length == 0) {
-      this.last().appendDom([
-        {tagName: 'ul', class: 'bottom_linkbar' }
-      ]);
+      this.last().appendDom(Toolbox.Templates.bottomLinkBar);
     };
     return this.last('>ul.bottom_linkbar');
   },
@@ -577,6 +529,60 @@ Toolbox.Templates = {
     ],
   removeButton: [
     { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' }
+  ],
+  backButton: [
+    { tagName: 'li', childNodes: [
+      { tagName: 'a', class: 'back', href: '#', innerHTML: 'back' }
+    ]}
+  ],
+  historyItem: function(title, href) {
+    return([
+      { tagName: 'li', href: href, class: 'jump', innerHTML: title }
+    ]);
+  },
+  frame: function(content,options) {
+    var options = jQuery.extend({
+      href:       '/dashboard',
+      title:      'Dashboard'
+    }, options);
+    class = options.class ? 'frame ' + options.class : 'frame'
+    return([
+      { tagName: 'div', class: class, href: options.href, title: options.title, innerHTML: content }
+    ]);
+  },
+  bottomLinkBar: [
+    {tagName: 'ul', class: 'bottom_linkbar' }
+  ],
+  submitButton: [
+    { tagName: 'li', class: 'submit', childNodes: [
+      { tagName: 'a', class: 'submit', href: '#' }
+    ] }
+  ],
+  toolbox: [
+    { tagName: 'div', id: 'toolbox', childNodes: [
+      { tagName: 'div', class: 'head', childNodes: [
+        { tagName: 'span', class: 'content title', innerHTML: 'Toolbox Title is loooooooooooooong' },
+        { tagName: 'span', class: 'buttons', childNodes: [
+          { tagName: 'img', class: 'close', src: '/images/icons/small/x.gif' },
+          { tagName: 'img', class: 'max',   src: '/images/icons/small/grow.gif' },
+          { tagName: 'img', class: 'min',   src: '/images/icons/small/pause.gif' }
+        ]}
+      ]},
+      { tagName: 'div', class: 'sidebar left', childNodes: [
+        { tagName: 'ul', class: 'history' },
+        { tagName: 'ul', class: 'clipboard list' }
+      ] },
+      { tagName: 'div', class: 'busy', childNodes: [
+        { tagName: 'span', class: 'message', innerHTML: 'Loading' }
+      ] },
+      { tagName: 'div', class: 'body', childNodes: [
+        { tagName: 'div', class: 'content', id: 'toolbox_content' }
+      ]},
+      { tagName: 'div', class: 'foot', childNodes: [
+        { tagName: 'span', class: 'content status' },
+        { tagName: 'img', class: 'resize ui-resizable-se ui-resizable-handle', src: '/images/icons/resize.gif' }
+      ]},
+    ]}
   ]
 }
 
@@ -638,6 +644,13 @@ jQuery.fn.ajaxifyForm = function() {
     return $(this);
   } else {
     // Standard Form
-    return $(this).ajaxForm({dataType: 'script'});
+    return $(this).ajaxForm({
+      beforeSubmit: function() {
+        Toolbox.busyBox().fadeIn('fast')
+      },
+      complete: function() {
+        Toolbox.busyBox().fadeOut('fast')
+      }
+    });
   }
 };

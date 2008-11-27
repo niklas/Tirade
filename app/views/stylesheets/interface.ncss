@@ -52,6 +52,15 @@ body div {
       background: url(../images/icons/small/template.gif);
     }
   }
+  li.submit a.submit {
+    background: transparent url(../images/icons/small/diskette.gif) !important;
+    padding: 0 !important; /* override Toolbox */
+    width: 16px;
+    height: 16px;
+    text-indent: -5000px;
+    outline: 0;
+    margin: 2px;
+  }
 }
 
 
