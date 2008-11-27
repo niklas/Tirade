@@ -126,6 +126,7 @@ module InterfaceHelper
         opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
         add_class_to_html_options(opts[:dd], dom_id(val))
         add_class_to_html_options(opts[:dd], 'record')
+        add_class_to_html_options(opts, 'record')
         val = render_as_attribute(val)
       elsif val.is_a?(Array)
         unless val.blank?
@@ -174,5 +175,19 @@ module InterfaceHelper
   def back_link(label='Back',opts={})
     add_class_to_html_options(opts, 'back')
     li_link_to label, '#', opts
+  end
+
+
+  def live_search_for(resource, opts={})
+    singular = resource.to_s
+    plural = singular.pluralize
+    add_class_to_html_options opts, 'live_search'
+    link_to("search", '#', :class => 'toggle_live_search') +
+    content_tag(
+      :div,
+        text_field_tag("#{resource}_search_term", nil, :href => url_for(:controller => plural), :class => 'search_term') +
+        content_tag(:div, "Search for #{plural.humanize}", :class => "search_results #{plural}"),
+      opts 
+    )
   end
 end

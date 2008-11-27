@@ -8,8 +8,32 @@
   <% accordion do %>
 
     <% accordion_item "What" do %>
-      <%= f.has_one :content %>
       <%= f.select :assignment, Rendering::Assignments %>
+      <%= f.select :content_type, rendering.part.andand.preferred_types %>
+      <%= f.has_one :content %>
+    <% end %>
+
+    <% javascript_tag do %>
+      function renderingAssignmentFormUpdate(e) {
+        switch (Toolbox.last(' select#rendering_assignment').val()) {
+          case 'fixed':
+            Toolbox.last(' di.association.one.content .live_search').hide();
+            Toolbox.last(' di.association.one.content').show().find('input.association_id, input.association_type').enable();
+            Toolbox.last(' di.content_type').hide().find('select').disable();
+          break;
+          case 'by_title_from_trailing_url':
+            Toolbox.last(' di.association.one.content').hide().find('input.association_id, input.association_type').disable();
+            Toolbox.last(' di.association.one.content .live_search').hide();
+            Toolbox.last(' di.content_type').show().find('select').enable();
+          break;
+        }
+      }
+      renderingAssignmentFormUpdate();
+      Toolbox.last(' a.toggle_live_search').click(function(e) {
+        e.preventDefault();
+        $(this).siblings('.live_search').toggle();
+      });
+      Toolbox.last(' select#rendering_assignment').change( renderingAssignmentFormUpdate );
     <% end %>
 
     <% accordion_item "How" do %>

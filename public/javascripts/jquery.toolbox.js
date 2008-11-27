@@ -146,7 +146,7 @@ var Toolbox = {
     this.frames(' textarea').livequery(function() {
       $(this).elastic();
     });
-    this.last(' input.search_term').livequery(function() {
+    this.last(' div.live_search input.search_term').livequery(function() {
       var url = $(this).attr('href');
       $(this).attr("autocomplete", "off").typeWatch({
         wait: 500,
@@ -154,51 +154,61 @@ var Toolbox = {
         callback: function(val) {
           $.ajax({
             data: { 'search[term]' : encodeURIComponent(val) },
-            dataType:'script', 
             url: url,
-            complete: function() {
-              Toolbox.last().find('div.search_results.many ul.list li')
-                .appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ])
-                .find('img.add').click(function(event) {
-                  var item = $(this).parents('li');
-                  item.clone().appendTo(item.parents('div.search_results').siblings('ul.list:first'));
-                });
-              Toolbox.last().find('div.search_results.one ul.list li')
-                .appendDom([ { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } ])
-                .find('img.add').click(function(event) {
-                  var item = $(this).parents('li');
-                  var target = item.parents('div.search_results').siblings('ul.association:first');
-                  target.html('');
-                  item.clone().appendTo(target);
-                });
-            }
           });
         }
       })
     });
 
     // list with single association
-    this.last(' label + ul.association.one li').livequery(function() {
-      var item = $(this);
-      item.find('img.association').remove();
-      item.appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ]);
-      item.find('img.remove').click(function(event) {
-        item.parents('ul.association.one:first')
-          .siblings('input.association_id:first').val('').end()
-          .siblings('input.association_type:first').val('').end()
-          .highlight().end()
-        .remove();
+    this.last(' di.association.one dd > ul.list').livequery(function() {
+      var list = $(this);
+      list.droppable({
+        accept: function(draggable) { 
+          return(
+            draggable.is('li') &&
+            draggable.parent()[0] != list[0] &&
+            draggable.typeAndId()
+          );
+        },
+        hoverClass: 'hover',
+        activeClass: 'active-droppable',
+        greedy: true,
+        drop: function(e,ui) {
+          var item = $(ui.draggable);
+          list.find('li').remove();
+          item.clone().appendTo(list);
+        }
       });
+    });
+
+    // and the items in a single association
+    this.last(' di.association.one dd > ul.list li').livequery(function() {
+      var item = $(this);
+      item
+        .find('img.association').remove().end()
+        .appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ])
+        .find('img.remove').click(function(event) {
+          item.parents('ul.list')
+            .siblings('input.association_id:first').val('').end()
+            .siblings('input.association_type:first').val('').end()
+            .highlight()
+          .end()
+          item.remove();
+        });
       if ( attrs = item.typeAndId() ) {
-        item.parents('ul.association.one:first')
+        item.parents('ul.list')
+          .removeClass('empty')
           .siblings('input.association_id:first').val(attrs.id).end()
           .siblings('input.association_type:first').val(attrs.type).end()
           .highlight();
+      } else {
+        item.remove();
       }
     });
 
-    // List with associated elements
-    this.last(' label + ul.list').livequery(function() {
+    // editable List with associated elements
+    this.last(' di.association.many dd > ul.list').livequery(function() {
       var list = $(this);
       list.droppable({
         accept: function(draggable) { 
@@ -215,18 +225,38 @@ var Toolbox = {
         }
       });
     });
-    this.last(' label + ul.list li').livequery(function() {
+    this.last(' di.association.many dd > ul.list li').livequery(function() {
       var item = $(this);
       item.find('img.association').remove();
       item.parents('ul.list').removeClass('empty')
       // clone hidden tag
         .siblings('input[@type=hidden][@value=empty]').clone().attr('value',item.resourceId()).appendTo(item);
 
-      item.appendDom([ { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' } ]);
+      item.appendDom(Toolbox.Templates.removeButton);
       item.find('img.remove').click(function(event) {
         item.remove();
         Toolbox.last().find('ul.list:not(:has(li))').addClass('empty');
       });
+    });
+
+    // mark empty association lists
+    this.last(' di.association dd > ul.list:not(:has(li))').livequery(function() {
+      $(this).addClass('empty');
+    });
+
+    // search results items
+    this.last(' di.association dd div.live_search div.search_results ul.list li').livequery(function() {
+      item = $(this);
+      association_list = item.parents('div.live_search').siblings('ul.list.ui-droppable:first');
+      item 
+        .find('img.association').remove().end()
+        .appendDom(Toolbox.Templates.addButton)
+        .find('img.add').click(function(event) {
+          if (association_list.parents('di.association:first').is('.one')) {
+            association_list.find('li').remove();
+          }
+          item.clone().appendTo(association_list);
+        })
     });
 
 
@@ -508,6 +538,15 @@ var Toolbox = {
 
 };
 
+
+Toolbox.Templates = {
+  addButton: [ 
+    { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } 
+    ],
+  removeButton: [
+    { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' }
+  ]
+}
 
 jQuery.fn.update = function(options) {
   var options = jQuery.extend({ title: '[No Title]' }, options);

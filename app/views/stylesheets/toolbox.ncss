@@ -152,6 +152,14 @@ body {
            float: right;
            margin: 0.7em;
          }
+         div.live_search {
+           margin: <%= @small %>;
+           padding: <%= @medium %>;
+            ul {
+              width: 80%;
+              margin: <%= @medium %>;
+            }
+         }
          dl {
            margin: 0;
            float: left;
@@ -174,10 +182,6 @@ body {
                margin: <%= @medium %>;
                float: right;
                clear: right;
-               .record {
-                 margin: <%= @small %> 20px <%= @small %> <%= @small %>;
-                 position: relative;
-               }
              }
            }
          }

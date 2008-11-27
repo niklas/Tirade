@@ -52,13 +52,8 @@ module Tirade
       assocs = assoc.to_s.pluralize
       thing = @object.send(assoc)
       inner = ''
-      inner << @template.content_tag(
-        :ul,
-        @template.list_item(thing),
-        :class => 'association one list'
-      )
-      inner << @template.text_field_tag("#{assoc}_search_term", nil, :href => @template.url_for(:controller => assocs), :class => 'search_term')
-      inner << @template.content_tag(:div, "Search for #{assocs.humanize}", :class => "search_results one #{assocs}")
+      inner << @template.list_of([thing])
+      inner << @template.live_search_for(assoc)
       if thing
         inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
         if reflection.options[:polymorphic]
@@ -70,7 +65,7 @@ module Tirade
           inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", nil, :class => 'association_type')
         end
       end
-      wrap(assoc, {}, inner)
+      wrap(assoc, {:class => 'one association'}, inner)
     end
 
     private

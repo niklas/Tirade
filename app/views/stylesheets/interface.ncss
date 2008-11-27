@@ -178,9 +178,10 @@ form {
     }
   }
   ul.list {
-    border: thin solid pink;
     .empty {
-      height: 3em;
+      min-height: 3em;
+      min-width; 6em;
+      background-color: <%= @colors[:base] %>;
     }
   }
 }
@@ -196,6 +197,7 @@ ul.list {
     width: 100%;
     float: left;
     clear: left;
+    min-height: 19px;
     position: relative;
     text-align: left;
     border-bottom: <%= @perimeter %>;
@@ -210,22 +212,68 @@ ul.list {
       border: <%= @perimeter %>;
       padding: <%= @small %>;
     }
-    img.association {
-      margin: 0 <%= @small %>;
-      float: right;
-      clear: right;
-      display: none;
+  }
+}
+
+/* 
+ * If we show a record, place the show icon on the right
+ * */
+di.record {
+  dd { 
+    position: relative;
+    padding-right: 25px !important;
+  }
+  a.show {
+    right: 0.3em;
+  }
+}
+
+/* If we edit an association , place the add/remove icons on the left */
+di.association {
+  dd {
+    width: 100%;
+    margin: 0 !important;
+    position: relative;
+  }
+  ul.list {
+    background-color: <%= @colors[:base] %>;
+    li {
+      padding-left: 25px !important;
+      padding-right: 25px !important;
+      float: none;
+      width: auto;
+      position: relative;
+      img.association {
+        position: absolute;
+        left: 0.3em;
+        top: 0;
+        display: none;
+      }
+      :hover img.association {
+        display: block;
+      }
+      a.show {
+        right: 0.3em;
+      }
     }
-    :hover img.association {
-      display: block;
-    }
+  }
+}
+
+div.live_search {
+  position: relative;
+  clear: both;
+  input.search_term {
+    position: absolute;
+  }
+  div.search_results {
+    clear: both;
+    float: none;
+    padding: 3em <%= @medium %> <%= @medium %> <%= @medium %>;
   }
 }
 ul.list, dl {
   a {
     .show {
-      float: right;
-      clear: right;
       text-indent: -5000px;
       width: 16px;
       margin-top: -7px;
@@ -235,9 +283,15 @@ ul.list, dl {
       right: <%= @small %>;
       z-index: 3;
     }
-  }
-  dd.record a.show {
-    right: -21px;
+    .toggle_live_search {
+      float: left;
+      text-indent: -5000px;
+width: 16px; height: 16px;
+      background: transparent url(/images/icons/small/search.gif) no-repeat scroll right;
+      position: absolute;
+      top: -1.7em;
+      right: 0;
+    }
   }
 }
 

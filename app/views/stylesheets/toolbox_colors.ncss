@@ -41,6 +41,14 @@ background <%= @colors[:selected] %>;
           }
         }
 
+        div.live_search {
+          background: <%= @colors[:element] %>;
+          color: <%= @colors[:text] %>;
+          ul {
+            background: <%= @colors[:base] %>;
+          }
+        }
+
         ul {
           li {
             .odd { background-color: <%= @colors[:base].brighter %>; }
