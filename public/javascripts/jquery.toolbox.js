@@ -25,7 +25,8 @@ var Toolbox = {
             ]}
           ]},
           { tagName: 'div', class: 'foot', childNodes: [
-            { tagName: 'span', class: 'content status' }
+            { tagName: 'span', class: 'content status' },
+            { tagName: 'img', class: 'resize ui-resizable-se ui-resizable-handle', src: '/images/icons/resize.gif' }
           ]},
         ]}
       ]);
@@ -42,10 +43,9 @@ var Toolbox = {
       .draggable( { handle: 'div.head' } )
       .resizable( {
         minWidth: 300, minHeight: 400,
-        handles: 'e,se,s',
-        resize : function(e,ui) {
-          Toolbox.setSizes();
-        },
+        handles: 'se',
+        alsoResize: 'div.body, div.busy',
+        resize: Toolbox.callback.resizing,
       })
       .find('> div.body')
         .serialScroll({
@@ -271,13 +271,11 @@ var Toolbox = {
     this.last(' label + ul.association.one li').expire();
   },
   setSizes: function() {
-    this.scroller().height( this.bodyHeight() );
+    /* this.scroller().height( this.bodyHeight() );
     this.busyBox().height( this.bodyHeight() );
-    this.frames().height( Toolbox.body().height() );
     this.accordion().height(
       Toolbox.body().height() - Toolbox.linkBar().height()
-    );
-    this.scroller().scrollTo('div.frame:last',{axis:'x'});
+      ); */
   },
   bodyHeight: function() {
     return this.element().height() - this.decorationHeight()
@@ -468,12 +466,12 @@ var Toolbox = {
   },
   linkBarOn: function(after) {
     var h = this.linkBar().height();
-    this.last().animate({paddingTop: h}, {duration: 500, complete: function() { Toolbox.setSizes() }})
+    this.last().animate({paddingTop: h, height: '-' + h}, {duration: 500 })
       .find('ul.linkbar') .animate({top:'0px'}, { duration: 300 });
   },
   linkBarOff: function(after) {
     var h = this.linkBar().height();
-    this.last() .animate({paddingTop: '0'}, { duration: 500, complete: function() { Toolbox.setSizes() } })
+    this.last() .animate({paddingTop: '0', height: '+' + h}, { duration: 500 })
       .find('ul.linkbar').animate({top: -(2*h)}, {duration: 300 });
   },
   unminimize: function() {
@@ -500,8 +498,13 @@ var Toolbox = {
       ]);
     };
     return this.last('>ul.bottom_linkbar');
-  }
+  },
 
+  callback: {
+    resizing: function(e,ui) {
+      Toolbox.body()[0].scrollLeft = Toolbox.last()[0].offsetLeft;
+    }
+  }
 
 };
 

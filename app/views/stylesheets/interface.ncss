@@ -82,11 +82,11 @@ div#toolbox {
     float: left;
   }
   div.grid.preview {
-    height: 6em;
+    min-height: 6em;
     background-color: #eee;
-    *.grid { height: 5em; background-color: #ccc}
-    *.grid .grid { height: 4em; background-color: #aaa}
-    *.grid .grid .grid { height: 3em; background-color: #999}
+    *.grid { min-height: 5em; background-color: #ccc}
+    *.grid .grid { min-height: 4em; background-color: #aaa}
+    *.grid .grid .grid { min-height: 3em; background-color: #999}
 
     outline: 1px solid <%= @colors[:base] %>;
     margin: 4px -2px;
