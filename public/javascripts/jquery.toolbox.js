@@ -147,16 +147,24 @@ var Toolbox = {
       $(this).elastic();
     });
     this.last(' div.live_search input.search_term').livequery(function() {
-      var url = $(this).attr('href');
+      var field = $(this);
       $(this).attr("autocomplete", "off").typeWatch({
         wait: 500,
         captureLength: 2,
         callback: function(val) {
           $.ajax({
             data: { 'search[term]' : encodeURIComponent(val) },
-            url: url,
+            url: field.attr('href')
           });
         }
+      })
+    });
+    this.last(' div.live_search.polymorphic select.polymorph_search_url').livequery(function() { 
+      var field = $(this);
+      $(this).change(function() {
+        $(this).siblings('input.search_term:first')
+          .attr('href',field.val())
+          .val('');
       })
     });
 
@@ -174,8 +182,10 @@ var Toolbox = {
         hoverClass: 'hover',
         activeClass: 'active-droppable',
         greedy: true,
+        tolerance: 'touch',
         drop: function(e,ui) {
           var item = $(ui.draggable);
+          console.debug("dropped", item[0]);
           list.find('li').remove();
           item.clone().appendTo(list);
         }
@@ -220,6 +230,7 @@ var Toolbox = {
         hoverClass: 'hover',
         activeClass: 'active-droppable',
         greedy: true,
+        tolerance: 'touch',
         drop: function(e,ui) {
           $(ui.draggable).clone().appendTo(list);
         }

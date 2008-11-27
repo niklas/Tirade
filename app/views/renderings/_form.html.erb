@@ -10,7 +10,7 @@
     <% accordion_item "What" do %>
       <%= f.select :assignment, Rendering::Assignments %>
       <%= f.select :content_type, rendering.part.andand.preferred_types %>
-      <%= f.has_one :content %>
+      <%= f.has_one :content, :types => rendering.part.andand.preferred_types %>
     <% end %>
 
     <% javascript_tag do %>

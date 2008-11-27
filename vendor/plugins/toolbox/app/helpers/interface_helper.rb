@@ -179,15 +179,26 @@ module InterfaceHelper
 
 
   def live_search_for(resource, opts={})
-    singular = resource.to_s
-    plural = singular.pluralize
+    inner = ''
     add_class_to_html_options opts, 'live_search'
+    if resource.is_a? Array
+      urls_for_select = resource.collect {|r| [r.humanize, url_for(:controller => r.classify.constantize.table_name)]}
+
+      inner << select_tag("polymorph_search_url", options_for_select(urls_for_select), :class => 'polymorph_search_url')
+      inner << text_field_tag("polymorph_search_term", nil, :href => urls_for_select.first.last, :class => 'search_term')
+
+      resources_css = resource.collect {|r| r.classify.constantize.table_name}.uniq.join(' ')
+      inner << content_tag(:div, "Search for #{resource.collect(&:pluralize).to_sentence}", :class => "search_results #{resources_css}")
+
+      add_class_to_html_options opts, 'polymorphic'
+    else
+      singular = resource.to_s
+      plural = singular.pluralize
+      inner << text_field_tag("#{resource}_search_term", nil, :href => url_for(:controller => plural), :class => 'search_term')
+      inner << content_tag(:div, "Search for #{plural.humanize}", :class => "search_results #{plural}")
+    end
+
     link_to("search", '#', :class => 'toggle_live_search') +
-    content_tag(
-      :div,
-        text_field_tag("#{resource}_search_term", nil, :href => url_for(:controller => plural), :class => 'search_term') +
-        content_tag(:div, "Search for #{plural.humanize}", :class => "search_results #{plural}"),
-      opts 
-    )
+    content_tag(:div, inner, opts )
   end
 end

@@ -182,6 +182,7 @@ form {
       min-height: 3em;
       min-width; 6em;
       background-color: <%= @colors[:base] %>;
+      border: 1px solid <%= @colors[:element] %>;
     }
   }
 }
@@ -235,13 +236,16 @@ di.association {
     margin: 0 !important;
     position: relative;
   }
+  .one ul.list.hover > li {
+    display: none;
+  }
   ul.list {
     background-color: <%= @colors[:base] %>;
+    margin: <%= @medium %>;
+    width: 80%;
     li {
       padding-left: 25px !important;
       padding-right: 25px !important;
-      float: none;
-      width: auto;
       position: relative;
       img.association {
         position: absolute;
@@ -263,12 +267,25 @@ div.live_search {
   position: relative;
   clear: both;
   input.search_term {
-    position: absolute;
+    float: left;
+    margin: <%= @medium %>;
+    width: 90%;
+  }
+  .polymorphic input.search_term {
+    width: 60%;
+  }
+  select.polymorph_search_url {
+    float: left;
+    margin: <%= @medium %>;
+    width: 25%;
   }
   div.search_results {
     clear: both;
-    float: none;
-    padding: 3em <%= @medium %> <%= @medium %> <%= @medium %>;
+    padding: <%= @medium %>;
+    ul {
+      width: 80%;
+      margin: <%= @medium %>;
+    }
   }
 }
 ul.list, dl {

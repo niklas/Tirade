@@ -53,7 +53,7 @@ module Tirade
       thing = @object.send(assoc)
       inner = ''
       inner << @template.list_of([thing])
-      inner << @template.live_search_for(assoc)
+      inner << @template.live_search_for(opts.delete(:types) || assoc)
       if thing
         inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
         if reflection.options[:polymorphic]
