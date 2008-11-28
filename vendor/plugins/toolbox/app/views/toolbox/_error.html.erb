@@ -4,7 +4,32 @@
   <%= li_link_to '"OK"', '#', :class => 'back ok' %>
 <% end %>
 
-<pre>
-  <%=h exception.to_s %>
-</pre>
+<% accordion do %>
+
+  <% accordion_item "Message", :content_tag => :div do %>
+    Showing <i><%=h exception.file_name %></i> where line <b>#<%=h exception.line_number %></b> raised:
+    <pre><code><%=h exception.message %></code></pre>
+  <% end %>
+
+  <% accordion_item "Source", :content_tag => :div do %>
+    Extracted source (around line <b>#<%=h exception.line_number %></b>):
+    <pre><code class="rhtml"><%=h exception.source_extract %></code></pre>
+  <% end %>
+
+  <%
+    e = exception.original_exception || exception 
+    traces = [
+      ["Application Trace", e.application_backtrace],
+      ["Framework Trace", e.framework_backtrace],
+      ["Full Trace", e.clean_backtrace]
+    ]
+  %>
+  <% traces.each do |name,trace| %>
+    <% accordion_item name, :content_tag => :div do %>
+      <pre><code><%= trace.join "\n" %></code> </pre>
+    <% end %>
+  <% end %>
+
+<% end %>
+
 

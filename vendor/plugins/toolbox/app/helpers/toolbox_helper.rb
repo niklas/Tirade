@@ -51,7 +51,12 @@ module ToolboxHelper
   end
 
   def toolbox_error(exception)
-    title, content = prepare_content(:title => exception.class.to_s, :partial => '/toolbox/error', :object => exception)
+    title = <<-EOTITLE
+      #{h exception.original_exception.class.to_s} in
+      #{h page.context.request.parameters["controller"].capitalize if page.context.request.parameters["controller"]}
+      ##{h page.context.request.parameters["action"]}
+    EOTITLE
+    title, content = prepare_content(:title => title, :partial => '/toolbox/error', :object => exception)
     page.toolbox.error content, :title => title
     set_toolbox_status
   end
