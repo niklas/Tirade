@@ -13,6 +13,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 require 'desert'
 require 'acting'
 require 'xml'
+require 'tirade'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.

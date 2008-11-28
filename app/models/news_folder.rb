@@ -23,6 +23,7 @@
 class NewsFolder < Content
   validates_uniqueness_of :title, :message => 'There is already a Newsfolder with this title'
   has_many :items, :foreign_key => 'parent_id', :class_name => 'NewsItem'
+  acts_as_content :liquid => [:title, :description, :slug]
 
   def self.sample
     s = new(

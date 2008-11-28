@@ -24,7 +24,7 @@ class Image < ActiveRecord::Base
                     :url => "#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
   
   has_fulltext_search :title
-  liquid_methods :title, :image_file_name
+  acts_as_content :liquid => [:title, :image_file_name]
   
   # validates_presence_of :image_file_name
   validates_attachment_presence :image

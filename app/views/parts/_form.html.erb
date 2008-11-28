@@ -8,16 +8,10 @@
     <% accordion_item 'Basic' do %>
       <%= f.text_field :name %>
       <%= f.text_field :filename %>
-      <p>
-        <b>Preferred Types</b>
-        <ul>
-          <% Part.valid_content_types.each do |typ| %>
-            <li>
-            <%= typ %>: <%= check_box_tag 'part[preferred_types][]', typ.to_s, @part.preferred_types.include?(typ.to_s) %>
-            </li>
-          <% end %>
-        </ul>
-      </p>
+    <% end %>
+
+    <% accordion_item 'Preferred Types' do %>
+      <%= f.multiple_checkbox :preferred_types, Part.valid_content_types %>
     <% end %>
 
     <% accordion_item 'Code' do %>

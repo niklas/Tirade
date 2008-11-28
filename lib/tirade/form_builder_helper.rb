@@ -68,6 +68,19 @@ module Tirade
       wrap(assoc, {:class => 'one association'}, inner)
     end
 
+    def multiple_checkbox(field,values,opts={})
+      name = "#{@object_name}[#{field}][]"
+      inner = ''
+      collection = @object.send field
+      values.each do |value|
+        inner << @template.di_dt_dd(
+          label(value.to_s),
+          @template.check_box_tag(name, value.to_s, collection.include?(value.to_s))
+        )
+      end
+      inner
+    end
+
     private
     def wrap(field, options, tag_output)
       label = @template.content_tag(

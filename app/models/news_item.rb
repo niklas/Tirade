@@ -23,6 +23,8 @@
 class NewsItem < Content
   belongs_to :newsfolder, :foreign_key => 'parent_id', :class_name => 'NewsFolder'
 
+  acts_as_content :liquid => [:title, :description, :body, :slug]
+
   named_scope :last, lambda { |num|
     {:order => 'published_at DESC, updated_at DESC', :limit => num}
   }

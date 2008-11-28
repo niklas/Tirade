@@ -21,6 +21,7 @@
 #
 
 class Folder < Content
+  acts_as_content :liquid => [:title, :description, :slug]
   def self.root
     find_by_parent_id nil
   end

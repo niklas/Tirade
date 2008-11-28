@@ -11,7 +11,7 @@ class Part < ActiveRecord::Base
 
   # FIXME dynamicx, reusable!
   def self.valid_content_types
-    Rendering.valid_content_types
+    Tirade::ActiveRecord::Content.classes
   end
 
   def set_default_preferred_types
