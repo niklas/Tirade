@@ -482,12 +482,12 @@ var Toolbox = {
   },
   linkBarOn: function(after) {
     var h = this.linkBar().height();
-    this.last().animate({paddingTop: h, height: '-' + h}, {duration: 500 })
+    this.last().animate({paddingTop: h, height: '-=' + h}, {duration: 500 })
       .find('ul.linkbar') .animate({top:'0px'}, { duration: 300 });
   },
   linkBarOff: function(after) {
     var h = this.linkBar().height();
-    this.last() .animate({paddingTop: '0', height: '+' + h}, { duration: 500 })
+    this.last() .animate({paddingTop: '0', height: '+=' + h}, { duration: 500 })
       .find('ul.linkbar').animate({top: -(2*h)}, {duration: 300 });
   },
   unminimize: function() {
