@@ -151,7 +151,7 @@ form {
   }
   input {
     float: right;
-    [type="text"] {
+    [type="text"],[type="password"] {
       width: 75%;
       background-color: <%= @colors[:input] %>;
       border-color: <%= @colors[:input_border] %>;
