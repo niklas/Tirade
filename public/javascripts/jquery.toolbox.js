@@ -290,6 +290,13 @@ var Toolbox = {
       });
     });
 
+
+    // Ajax callbacks
+    this.element()
+      .ajaxStop(function() {
+        Toolbox.busyBox(':visible').fadeOut('fast');
+      });
+
     this.setSizes();
   },
   expireBehaviors: function() {
@@ -364,6 +371,9 @@ var Toolbox = {
   },
   setStatus: function(status) {
     return this.element('> div.foot span.status').html(status);
+  },
+  setBusyText: function(text) {
+    return this.busyBox('> span.message').html(text);
   },
   frames: function(rest) {
     return this.content('> div.frame'+(rest||''));
@@ -573,7 +583,8 @@ Toolbox.Templates = {
         { tagName: 'ul', class: 'clipboard list' }
       ] },
       { tagName: 'div', class: 'busy', childNodes: [
-        { tagName: 'span', class: 'message', innerHTML: 'Loading' }
+        { tagName: 'span', class: 'message', innerHTML: 'Loading' },
+        { tagName: 'img', class: 'status', src: '/images/toolbox/pentagon.gif' }
       ] },
       { tagName: 'div', class: 'body', childNodes: [
         { tagName: 'div', class: 'content', id: 'toolbox_content' }
@@ -600,8 +611,7 @@ jQuery.fn.refresh = function() {
   if (href) {
     $.ajax({
       url: href + '?refresh=1',
-      type: 'GET',
-      dataType: 'script'
+      type: 'GET'
     });
   }
 }
@@ -614,12 +624,11 @@ jQuery.fn.useToolbox = function(options) {
   $(this).click(function(event) {
     event.preventDefault();
     Toolbox.findOrCreate();
+    Toolbox.setBusyText('Loading');
     Toolbox.busyBox().fadeIn('fast');
     $.ajax({
       url: $(this).attr('href'),
-      type: 'GET',
-      dataType: 'script',
-      complete: function() { Toolbox.busyBox().fadeOut('fast') }
+      type: 'GET'
     });
   });
   return $(this);
@@ -646,10 +655,8 @@ jQuery.fn.ajaxifyForm = function() {
     // Standard Form
     return $(this).ajaxForm({
       beforeSubmit: function() {
-        Toolbox.busyBox().fadeIn('fast')
-      },
-      complete: function() {
-        Toolbox.busyBox().fadeOut('fast')
+        Toolbox.setBusyText("submitting " + Toolbox.last().attr('title'))
+        Toolbox.busyBox().fadeIn('fast');
       }
     });
   }
