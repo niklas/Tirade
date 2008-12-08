@@ -58,9 +58,8 @@ class Part < ActiveRecord::Base
   end
 
   def delete_yml
-    File.rm yml_stock_path
-    File.rm yml_theme_path
-  rescue
+    File.delete(yml_stock_path) if File.exists?(yml_stock_path)
+    File.delete(yml_theme_path) if File.exists?(yml_theme_path)
     true
   end
 
