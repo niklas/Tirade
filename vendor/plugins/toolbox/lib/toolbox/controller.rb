@@ -167,7 +167,7 @@ module Tirade
 
       # TODO destroy from show (must load @models) / update previous list
       def update_toolbox_for_destroyed(page)
-        page.toolbox.pop()
+        page.toolbox.pop_and_refresh_last()
       end
 
       def update_toolbox_for_failed_create(page)

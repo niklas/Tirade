@@ -3,40 +3,7 @@
  */
 
 
-// returns just the number (23 of image_23)
-jQuery.fn.resourceId = function() {
-  if (m = $(this).attr('id').match(/(\d+)$/)) {
-    return(m[1]);
-  } else if (
-    (first_href = $(this).children('a:first[@href!=#]').attr('href')) &&
-    (m = first_href.match(/(\d+)$/))) {
-    return(m[1]);
-  } else if (
-    (action = $(this).attr('action')) && 
-    (action.match(/(\d+)\D*$/))) {
-    return(m[1]);
-  } else if ( m = $(this)[0].className.match(/_(\d+)/)) {
-    return(m[1])
-  }
-}
 
-
-// Returns image_23
-jQuery.fn.resourceIdentifier = function() {
-  if ( m = $(this)[0].className.match(/([a-z_]+_\d+)/)) {
-    return(m[1])
-  }
-}
-
-// Returns { type: 'Image', id: 23 }
-jQuery.fn.typeAndId = function() {
-  if (match = $(this)[0].className.match(/(.+)_(\d+)/)) {
-    return({
-      type: $.string(match[1]).gsub(/_/,'-').capitalize().camelize().str,
-      id: match[2]
-    });
-  }
-};
 
 // Auto preview
 jQuery.fn.preview = function() {
