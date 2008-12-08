@@ -628,7 +628,6 @@ jQuery.fn.useToolbox = function(options) {
   var options = $.extend(defaults, options);
   return $(this).resourcefulLink({
     start: function(event) {
-      console.debug("useToolbox callback called by callee caller");
       Toolbox.findOrCreate();
       Toolbox.setBusyText('Loading');
       Toolbox.busyBox().fadeIn('fast');
