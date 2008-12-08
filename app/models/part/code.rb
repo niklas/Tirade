@@ -23,9 +23,7 @@ class Part < ActiveRecord::Base
   end
 
   def delete_code
-    File.rm path
-  rescue
-    true
+    File.delete path if File.exists?(path)
   end
 end
 
