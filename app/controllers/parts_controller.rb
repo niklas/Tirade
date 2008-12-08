@@ -1,7 +1,6 @@
 class PartsController < ApplicationController
   feeds_toolbox_with :part
   layout 'admin'
-  protect_from_forgery :except => [:preview]
 
   def index
     @models = @parts = Part.search(params[:search].andand[:term]).paginate(:page => params[:page], :per_page => 30)
