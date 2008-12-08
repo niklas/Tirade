@@ -1,19 +1,22 @@
 (function($){
   // returns just the number (23 of image_23)
   $.fn.resourceId = function() {
-    if (m = $(this).attr('id').match(/(\d+)$/)) {
-      return(m[1]);
-    } else if (
-      (first_href = $(this).children('a:first[@href!=#]').attr('href')) &&
-      (m = first_href.match(/(\d+)$/))) {
-      return(m[1]);
-    } else if (
-      (action = $(this).attr('action')) && 
-      (action.match(/(\d+)\D*$/))) {
-      return(m[1]);
-    } else if ( m = $(this)[0].className.match(/_(\d+)/)) {
-      return(m[1])
-    }
+    return this.each(function(i, element) {
+      var obj = $(this);
+      if ( (id = obj.attr('id')) && (m = id.match(/(\d+)$/))) {
+        return(m[1]);
+      } else if (
+        (first_href = obj.children('a:first[@href!=#]').attr('href')) &&
+        (m = first_href.match(/(\d+)$/))) {
+        return(m[1]);
+      } else if (
+        (action = obj.attr('action')) && 
+        (action.match(/(\d+)\D*$/))) {
+        return(m[1]);
+      } else if ( m = (this)[0].className.match(/_(\d+)/)) {
+        return(m[1])
+      }
+    })
   };
 
   // Returns image_23
@@ -73,14 +76,14 @@
     if (!options.url) options.url = resource.attr('href');
 
 
-    if (options.url.match(/([^\/])+s\/\d+$/)) { // ends with id
+    if (m = options.url.match(/([^\/]+)s\/\d+$/)) { // ends with id
       options.class += ' ' + m[1];
       var actions = [
         { name: 'Edit', class: 'edit' },
         { name: 'Delete', class: 'destroy' }
       ];
     }
-    else if (options.url.match(/([^\/])+s$/)) { // end with plural
+    else if (m = options.url.match(/([^\/]+)s$/)) { // end with plural
       options.class += ' ' + m[1];
       var actions = [
         { name: 'Create', class: 'new' }
