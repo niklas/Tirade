@@ -18,8 +18,8 @@ var Toolbox = {
       .resizable( {
         minWidth: 300, minHeight: 400,
         handles: 'se',
-        alsoResize: 'div.body, div.busy',
-        resize: Toolbox.callback.resizing,
+        alsoResize: 'div.body, div.busy, .frame:last',
+        stop: Toolbox.callback.resized,
       })
       .find('> div.body')
         .serialScroll({
@@ -53,6 +53,7 @@ var Toolbox = {
       Toolbox.setTitle();
     });
     this.frames(' form').livequery(function() { $(this).ajaxifyForm() });
+
     this.linkBar().livequery(function() { 
       Toolbox.setTitle();
       Toolbox.linkBarOn();
@@ -64,9 +65,11 @@ var Toolbox = {
     // Keep track of frames in history
     this.frames().livequery(function() { 
       var frame = $(this);
+      var href = frame.attr('href');
       Toolbox.history().appendDom(
-        Toolbox.Templates.historyItem( frame.attr('title'), frame.attr('href') )
+        Toolbox.Templates.historyItem( frame.attr('title'), href )
       );
+      Toolbox.linkBar().addRESTLinks(frame) ;
     });
     this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
@@ -525,7 +528,9 @@ var Toolbox = {
   },
 
   callback: {
-    resizing: function(e,ui) {
+    resized: function(e,ui) {
+      Toolbox.frames().height(Toolbox.last().height());
+      Toolbox.frames().width(Toolbox.last().width());
       Toolbox.body()[0].scrollLeft = Toolbox.last()[0].offsetLeft;
     }
   }
@@ -617,21 +622,19 @@ jQuery.fn.refresh = function() {
 }
 
 jQuery.fn.useToolbox = function(options) {
-  var settings = jQuery.extend({
-    onStart: function() {
+  var defaults = {
+    start: function() {}
+  };
+  var options = $.extend(defaults, options);
+  return $(this).resourcefulLink({
+    start: function(event) {
+      console.debug("useToolbox callback called by callee caller");
+      Toolbox.findOrCreate();
+      Toolbox.setBusyText('Loading');
+      Toolbox.busyBox().fadeIn('fast');
+      options.start(event);
     }
-  }, options);
-  $(this).click(function(event) {
-    event.preventDefault();
-    Toolbox.findOrCreate();
-    Toolbox.setBusyText('Loading');
-    Toolbox.busyBox().fadeIn('fast');
-    $.ajax({
-      url: $(this).attr('href'),
-      type: 'GET'
-    });
   });
-  return $(this);
 };
 
 jQuery.fn.ajaxifyForm = function() {
