@@ -57,4 +57,11 @@ class Part < ActiveRecord::Base
     end
   end
 
+  def delete_yml
+    File.rm yml_stock_path
+    File.rm yml_theme_path
+  rescue
+    true
+  end
+
 end

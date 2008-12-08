@@ -21,5 +21,11 @@ class Part < ActiveRecord::Base
       file.puts code.gsub(/\r/,'')
     end
   end
+
+  def delete_code
+    File.rm path
+  rescue
+    true
+  end
 end
 
