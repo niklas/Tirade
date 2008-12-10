@@ -65,12 +65,65 @@ $(function() {
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
   $('body.role_admin div.page div.rendering:not(.fake)').livequery(function(i) {
-    $(this).appendDom([
-      { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
-        { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
-        { tagName: 'span', class: 'handle', innerHTML: 'drag' }
-        ] }
-    ]);
+    $(this)
+      .appendDom([
+        { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
+          { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
+          { tagName: 'span', class: 'handle', innerHTML: 'drag' }
+          ] }
+      ])
+      .droppable({
+        accept: 'li.part, li.content',
+        hoverClass: 'hover',
+        activeClass: 'active-droppable',
+        greedy: true,
+        drop: function(e,ui) {
+          ui.element.addClass('processing');
+          var droppee = ui.draggable.typeAndId();
+          data = '';
+          switch(droppee.type) {
+            case 'Part': 
+              data += 'rendering[part_id]=' + droppee.id;
+              break;
+            default:
+              data += 'rendering[content_id]=' + droppee.id;
+              data += '&rendering[content_type]=' + droppee.type;
+          }
+          data += pageContextForRequest();
+          $.ajax({
+            url: rendering_url({id: ui.element.resourceId()}),
+            data: data, type: 'PUT'
+          });
+        }
+      });
+  });
+  $('body.role_admin div.page div.grid div.rendering.fake').livequery(function(i) {
+    $(this)
+      .droppable({
+        accept: 'li.part, li.content',
+        hoverClass: 'hover',
+        activeClass: 'active-droppable',
+        greedy: true,
+        drop: function(e,ui) {
+          ui.element.addClass('processing');
+          var droppee = ui.draggable.typeAndId();
+          data = 'rendering[grid_id]=' + ui.element.parent().resourceId();
+          data += '&rendering[page_id]=' + ui.element.parents('div.page').resourceId();
+          switch(droppee.type) {
+            case 'Part': 
+              data += '&rendering[part_id]=' + droppee.id;
+              break;
+            default:
+              data += '&rendering[content_id]=' + droppee.id;
+              data += '&rendering[content_type]=' + droppee.type;
+          }
+          data += pageContextForRequest();
+          $.ajax({
+            url: renderings_url(),
+            data: data, type: 'POST'
+          });
+        }
+      });
   });
   $('div#toolbox ul.list > li').livequery(function() {
     $(this).draggable({ 
