@@ -52,7 +52,6 @@ var Toolbox = {
     this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
     });
-    this.frames(' form').livequery(function() { $(this).ajaxifyForm() });
 
     this.linkBar().livequery(function() { 
       Toolbox.setTitle();
@@ -70,6 +69,7 @@ var Toolbox = {
         Toolbox.Templates.historyItem( frame.attr('title'), href )
       );
       Toolbox.linkBar().addRESTLinks(frame) ;
+      $(this).find('form').ajaxifyForm();
     });
     this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
