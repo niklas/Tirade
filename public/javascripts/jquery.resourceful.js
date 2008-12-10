@@ -1,22 +1,20 @@
 (function($){
   // returns just the number (23 of image_23)
   $.fn.resourceId = function() {
-    return this.each(function(i, element) {
-      var obj = $(this);
-      if ( (id = obj.attr('id')) && (m = id.match(/(\d+)$/))) {
-        return(m[1]);
-      } else if (
-        (first_href = obj.children('a:first[@href!=#]').attr('href')) &&
-        (m = first_href.match(/(\d+)$/))) {
-        return(m[1]);
-      } else if (
-        (action = obj.attr('action')) && 
-        (action.match(/(\d+)\D*$/))) {
-        return(m[1]);
-      } else if ( m = (this)[0].className.match(/_(\d+)/)) {
-        return(m[1])
-      }
-    })
+    var obj = $(this);
+    if ( (id = obj.attr('id')) && (m = id.match(/(\d+)$/))) {
+      return(m[1]);
+    } else if (
+      (first_href = obj.children('a:first[@href!=#]').attr('href')) &&
+      (m = first_href.match(/(\d+)$/))) {
+      return(m[1]);
+    } else if (
+      (action = obj.attr('action')) && 
+      (action.match(/(\d+)\D*$/))) {
+      return(m[1]);
+    } else if ( m = obj[0].className.match(/_(\d+)/)) {
+      return(m[1])
+    }
   };
 
   // Returns image_23
