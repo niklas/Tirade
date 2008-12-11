@@ -77,7 +77,7 @@
     if (m = options.url.match(/([^\/]+)s\/\d+$/)) { // ends with id
       options.class += ' ' + m[1];
       var actions = [
-        { name: 'Edit', class: 'edit' },
+        { name: 'Edit', class: 'edit', url: options.url + '/edit' },
         { name: 'Delete', class: 'destroy' }
       ];
     }
@@ -89,14 +89,13 @@
     }
     else return this;
 
-    options.url += '?authenticity_token='+options.authToken;
-
     return this.each(function() {
       obj = $(this);
       $.each(actions, function(i,action) {
         if ( !obj.find('a').hasClass(action.class) ) {
+          url = (action.url || options.url) + '?authenticity_token='+options.authToken;
           obj.appendDom([{
-            tagName: options.wrap, childNodes: [{ tagName: 'a', href: options.url, class: action.class, innerHTML: action.name }]
+            tagName: options.wrap, childNodes: [{ tagName: 'a', href: url, class: action.class, innerHTML: action.name }]
           }]);
         }
       });
