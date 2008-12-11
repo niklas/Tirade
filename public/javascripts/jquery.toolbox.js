@@ -297,7 +297,7 @@ var Toolbox = {
     // Ajax callbacks
     this.element()
       .ajaxStop(function() {
-        Toolbox.busyBox(':visible').fadeOut('fast');
+        Toolbox.element().unBusy()
       });
 
     this.setSizes();
@@ -377,6 +377,12 @@ var Toolbox = {
   },
   setBusyText: function(text) {
     return this.busyBox('> span.message').html(text);
+  },
+  beBusy: function(message) {
+    return this.element().beBusy(message);
+  },
+  unBusy: function() {
+    return this.element().unBusy();
   },
   frames: function(rest) {
     return this.content('> div.frame'+(rest||''));
@@ -587,10 +593,6 @@ Toolbox.Templates = {
         { tagName: 'ul', class: 'history' },
         { tagName: 'ul', class: 'clipboard list' }
       ] },
-      { tagName: 'div', class: 'busy', childNodes: [
-        { tagName: 'span', class: 'message', innerHTML: 'Loading' },
-        { tagName: 'img', class: 'status', src: '/images/toolbox/pentagon.gif' }
-      ] },
       { tagName: 'div', class: 'body', childNodes: [
         { tagName: 'div', class: 'content', id: 'toolbox_content' }
       ]},
@@ -629,8 +631,7 @@ jQuery.fn.useToolbox = function(options) {
   return $(this).resourcefulLink({
     start: function(event) {
       Toolbox.findOrCreate();
-      Toolbox.setBusyText('Loading');
-      Toolbox.busyBox().fadeIn('fast');
+      Toolbox.beBusy('Loading');
       options.start(event);
     }
   });
@@ -657,8 +658,7 @@ jQuery.fn.ajaxifyForm = function() {
     // Standard Form
     return $(this).ajaxForm({
       beforeSubmit: function() {
-        Toolbox.setBusyText("submitting " + Toolbox.last().attr('title'))
-        Toolbox.busyBox().fadeIn('fast');
+        Toolbox.beBusy("submitting " + Toolbox.last().attr('title'))
       }
     });
   }

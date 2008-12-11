@@ -232,24 +232,9 @@ body {
     }
   }
   div.busy {
-    top: 2.3em;
-    bottom: 1.7em;
     background: url(/images/transparent.png);
     z-index: 5;
-    display: none;
     text-align: center;
-    span.message {
-      position: relative;
-      top: 8%;
-      font-size: 230%;
-      line-height: 100%;
-      display: block;
-      text-align: center;
-    }
-    img.status {
-      position: relative;
-      top: 8%;
-      display: none;
-    }
+    left: auto; right: 0;
   }
 }
