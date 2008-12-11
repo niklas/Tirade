@@ -32,9 +32,9 @@ class Image < ActiveRecord::Base
   before_create :generate_title
   
   def url
-    image.url if image
+    image.andand.url
   end
-  
+
   def multiple_images=(images)
     @multiple_images ||= []
     images.each do |attributes|
@@ -44,6 +44,10 @@ class Image < ActiveRecord::Base
 
   def multiple_images
     @multiple_images ||= []
+  end
+
+  def scale_to(geom='50x50')
+    Paperclip::Thumbnail::new(image, geom)
   end
 
   def custom_thumbnail_url(geom)
@@ -59,6 +63,16 @@ class Image < ActiveRecord::Base
 
   def self.sample
     new :title => 'Sample Image'
+  end
+
+  class LiquidDropClass
+    def url
+      @url || @object.url
+    end
+    def url=(new_url)
+      @url = new_url
+    end
+  
   end
   
   private

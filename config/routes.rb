@@ -61,6 +61,9 @@ ActionController::Routing::Routes.draw do |map|
     page.logout '/logout', :action => 'destroy'
   end
 
+  map.custom_image 'upload/images/:id/custom/:geometry/:filename', :controller => 'images', :action => 'custom', 
+    :requirements => { :geometry => /([x0-9]+)/i, :filename => /[^\/]*/ }, :conditions => {:method => :get}
+
   map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
   map.javascripts 'javascripts/:action.:format', :controller => 'javascripts'
   map.root :controller => "public"
