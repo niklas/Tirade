@@ -73,6 +73,9 @@ jQuery.fn.beBusy = function(message) {
     
     return e.fadeIn(230);
 }
+jQuery.fn.unBusy = function() {
+  return $('div.busy', this).fadeOut(230).remove();
+}
 
 
 ChiliBook.recipeFolder = 'javascripts/syntax/'
