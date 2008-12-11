@@ -48,6 +48,10 @@ class String
     strip.gsub(/[^\w]+/,'_').sub(/_\Z/,'').downcase
   end
 
+  def h
+    gsub('<', '&lt;')
+  end
+
   def brighter(n=1)
     return self if n <= 0
     brighter(n-1).tr('0123456789abcdef','123456789abcdeff')
