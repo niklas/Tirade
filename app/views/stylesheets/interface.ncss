@@ -173,6 +173,7 @@ form {
       float: left;
       clear: left;
       position: relative;
+      .dummy { display: none }
       img.remove.option { 
         margin: <%= @tiny %>;
         cursor: pointer;
@@ -336,5 +337,33 @@ li.ui-draggable-dragging {
   background-repeat: no-repeat;
   background-position: center;
   min-height: 3em;
+  .processing {
+    background-color: #548764;
+  }
+}
+
+div.busy {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  margin: 0;
+  paddding: 0;
+  display: none;
+  background: url(/images/transparent.png);
+  span.message {
+    position: absolute;
+    top: 23%;
+    background: transparent;
+    left:0; right: 0;
+    text-align: center;
+    font-size: 230%;
+    line-height: 100%;
+    color: <%= @colors[:base] %>;
+  }
+  img.status {
+    position: absolute;
+    top: 100%;
+    height: 50%;
+  }
 }
 

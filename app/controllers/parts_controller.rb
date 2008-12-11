@@ -26,8 +26,7 @@ class PartsController < ApplicationController
                 page.update_renderings rends
               else
                 if first_rend = thepage.renderings.with_part(@part).first
-                  page.update_rendering first_rend, 
-                    :with => page.context.error_messages_for(:part, :object => @part)
+                  page.select_rendering(first_rend).html page.context.error_messages_for(:part, :object => @part)
                 else
                   flash[:error] = part.errors.full_messages
                 end

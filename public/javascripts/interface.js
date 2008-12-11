@@ -39,6 +39,42 @@ jQuery.fn.applyRoles = function() {
   return(e);
 }
 
+
+jQuery.fn.beBusy = function(message) {
+  var e = $(this);
+  e.appendDom([
+    { tagName: 'div', class: 'busy', childNodes: [
+      { tagName: 'span', class: 'message', innerHTML: 'Loading' },
+      { tagName: 'img', class: 'status', src: '/images/toolbox/pentagon.gif' }
+    ] },
+  ]);
+
+  minih = (e.height() > e.width() ? e.width() : e.height()) * 0.7;
+  if (e.height() > e.width()) { /* "Bert" */
+    $('img.status', e)
+      .animate({
+        top: (e.height() - minih) * 0.6, 
+        left: (e.width() - minih) * 0.5, 
+        height: minih,
+        opacity: 1
+      },800);
+  } else { /* "Ernie" */
+    $('img.status', e)
+      .animate({
+        top: (e.height() - minih) * 0.5, 
+        left: e.width() - (minih * 1.1), 
+        height: minih,
+        opacity: 1
+      },800);
+  }
+  
+  if (message)
+    $('span.message', e).text(message);
+    
+    return e.fadeIn(230);
+}
+
+
 ChiliBook.recipeFolder = 'javascripts/syntax/'
 
 $.ajaxSetup({
@@ -73,14 +109,14 @@ $(function() {
           ] }
       ])
       .droppable({
-        accept: 'li.part, li.content',
+        accept: 'li,dd',
         hoverClass: 'hover',
         activeClass: 'active-droppable',
         greedy: true,
         drop: function(e,ui) {
-          ui.element.addClass('processing');
           var droppee = ui.draggable.typeAndId();
           data = '';
+          ui.element.beBusy("applying " + droppee.type);
           switch(droppee.type) {
             case 'Part': 
               data += 'rendering[part_id]=' + droppee.id;
@@ -100,13 +136,13 @@ $(function() {
   $('body.role_admin div.page div.grid div.rendering.fake').livequery(function(i) {
     $(this)
       .droppable({
-        accept: 'li.part, li.content',
+        accept: 'li,dd',
         hoverClass: 'hover',
         activeClass: 'active-droppable',
         greedy: true,
         drop: function(e,ui) {
-          ui.element.addClass('processing');
           var droppee = ui.draggable.typeAndId();
+          ui.element.beBusy("applying " + droppee.type);
           data = 'rendering[grid_id]=' + ui.element.parent().resourceId();
           data += '&rendering[page_id]=' + ui.element.parents('div.page').resourceId();
           switch(droppee.type) {
@@ -189,11 +225,11 @@ $(function() {
     var list = $(this);
     $('<img src="/images/icons/small/plus.gif" class="add option" />').prependTo(list);
     list.find('img.add').click(function() {
-      list.find('li:last').clone().appendTo(list);
+      list.find('li:last').clone().removeClass('dummy').appendTo(list);
       return false;
     });
   });
-  $('form ul.define_options li').livequery(function() {
+  $('form ul.define_options li:not(.dummy)').livequery(function() {
     var item = $(this);
     $('<img src="/images/icons/small/x.gif" class="remove option" />').prependTo(item);
     item.find('img.remove').click(function() {

@@ -7,8 +7,6 @@ module Tirade
         base.helper :toolbox
         base.class_eval do
           include(InstanceMethods)
-          rescue_from 'ActionView::TemplateError', :with => :template_error
-          before_filter :set_form_builder, :except => [:index,:show,:destroy]
         end
       end
       module ClassMethods
@@ -18,6 +16,8 @@ module Tirade
           model_class_name = model_name.classify
           model_class = model_class_name.constantize
           class_eval do
+            rescue_from 'ActionView::TemplateError', :with => :template_error
+            before_filter :set_form_builder, :except => [:index,:show,:destroy]
             before_filter "fetch_#{model_name}", :only => [:show, :edit, :update, :destroy]
             define_method "fetch_#{model_name}" do
               instance_variable_set "@#{model_name}", model_class.find(params[:id])
@@ -152,7 +152,7 @@ module Tirade
         if params[:commit].blank? # non-form submit (i.e. drop)
           params[@model].keys.each do |meth|
             page.toolbox_update_model_attribute model, meth
-          end
+          end if params[@model]
         else
           page.update_last_toolbox_frame(   # replace the form with /show
             :partial => "/show", :object => @model,
@@ -165,7 +165,7 @@ module Tirade
         if params[:commit].blank? # non-form submit (i.e. drop)
           params[@model].keys.each do |meth|
             page.toolbox_update_model_attribute model, meth
-          end
+          end if params[@model]
         else
           page.toolbox.pop_and_refresh_last()
         end

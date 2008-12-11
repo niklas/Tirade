@@ -164,7 +164,7 @@ body {
                font-weight:bold;
                float: left;
                clear: left;
-               margin: 0.3em;
+               margin: <%= @medium %>;
              }
              .list dd {
                width: 100%;
@@ -172,6 +172,9 @@ body {
              }
              dd {
                margin: <%= @medium %>;
+               dt,dd {
+                 margin: <%= @small %>;
+               }
                float: right;
                clear: right;
              }
@@ -246,6 +249,7 @@ body {
     img.status {
       position: relative;
       top: 8%;
+      display: none;
     }
   }
 }

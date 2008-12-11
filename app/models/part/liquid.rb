@@ -76,11 +76,11 @@ class Part < ActiveRecord::Base
       begin
         part.render_with_fake_content
       rescue Liquid::SyntaxError => e
-        part.errors.add(:liquid, e.message)
+        part.errors.add(:liquid, '<pre>' + e.message.h + '</pre>')
       end
       if t = part.template
         t.errors.each do |e|
-          part.errors.add(:liquid, e)
+          part.errors.add(:liquid, '<pre>' + e.clean_message.h + e.clean_backtrace.first.h + '</pre>')
         end
       end
     else
@@ -96,7 +96,7 @@ class Part < ActiveRecord::Base
       begin
         parser.parse
       rescue Exception => e
-        part.errors.add(:html, '<pre>' + msgs.collect{|c| c.gsub('<', '&lt;') }.join + '</pre>')
+        part.errors.add(:html, '<pre>' + msgs.collect{|c| c.h }.join + '</pre>')
       end
     else
       #part.errors.add(:html, "no HTML found")
