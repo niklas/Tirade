@@ -394,6 +394,26 @@ var Toolbox = {
   unBusy: function() {
     return this.element().unBusy();
   },
+  beExclusiveDroppable: function() {
+    if ( !this.exclusiveDroppable ) {
+      this.otherDroppables().droppable("disable").removeClass('hover');
+      this.unGhost();
+      this.exclusiveDroppable = true;
+    }
+  },
+  unExclusiveDroppable: function() {
+    if ( this.exclusiveDroppable ) {
+      this.otherDroppables().droppable("enable");
+      this.beGhost();
+      this.exclusiveDroppable = false;
+    }
+  },
+  beGhost: function() {
+    this.element().animate({opacity: 0.42, duration: 1000});
+  },
+  unGhost: function() {
+    this.element().animate({opacity: 1, duration: 1000});
+  },
   frames: function(rest) {
     return this.content('> div.frame'+(rest||''));
   },

@@ -183,16 +183,13 @@ $(function() {
       cursorAt: {top: 0, left: 0},
       drag: function(e,ui) {
         if (Toolbox.surrounds(ui.absolutePosition)) {
-          if ( !Toolbox.exclusive ) {
-            Toolbox.otherDroppables().droppable("disable").removeClass('hover');
-            Toolbox.exclusive = true;
-          }
+          Toolbox.beExclusiveDroppable();
         } else {
-          if ( Toolbox.exclusive ) {
-            Toolbox.otherDroppables().droppable("enable");
-            Toolbox.exclusive = false;
-          }
+          Toolbox.unExclusiveDroppable();
         };
+      },
+      stop: function(e,ui) {
+        Toolbox.unGhost();
       }
     });
   });
