@@ -39,6 +39,15 @@ jQuery.fn.applyRoles = function() {
   return(e);
 }
 
+jQuery.fn.surrounds = function(position) {
+  me = $(this);
+  meoff = me.offset();
+  return(
+      meoff.top < position.top && meoff.left < position.left &&
+      meoff.top + me.height() > position.top &&
+      meoff.left + me.width() > position.left
+  );
+}
 
 jQuery.fn.beBusy = function(message) {
   var e = $(this);
@@ -115,7 +124,7 @@ $(function() {
         accept: 'li,dd',
         hoverClass: 'hover',
         activeClass: 'active-droppable',
-        greedy: true,
+        tolerance: 'pointer',
         drop: function(e,ui) {
           var droppee = ui.draggable.typeAndId();
           data = '';
@@ -142,7 +151,7 @@ $(function() {
         accept: 'li,dd',
         hoverClass: 'hover',
         activeClass: 'active-droppable',
-        greedy: true,
+        tolerance: 'pointer',
         drop: function(e,ui) {
           var droppee = ui.draggable.typeAndId();
           ui.element.beBusy("applying " + droppee.type);
@@ -164,22 +173,29 @@ $(function() {
         }
       });
   });
-  $('div#toolbox ul.list > li').livequery(function() {
+  $('div#toolbox ul.list > li,div#toolbox dl di dd.record').livequery(function() {
     $(this).draggable({ 
       helper: 'clone', 
-      zIndex: 50, 
-      appendTo: 'body'
-    });
-  });
-  $('div#toolbox dl di dd.record').livequery(function() {
-    $(this).draggable({ 
-      helper: 'clone', 
-      zIndex: 50, 
+      zIndex: 500, 
       appendTo: 'body',
-      scroll: true
+      scroll: true,
+      cursor: 'crosshair',
+      cursorAt: {top: 0, left: 0},
+      drag: function(e,ui) {
+        if (Toolbox.surrounds(ui.absolutePosition)) {
+          if ( !Toolbox.exclusive ) {
+            Toolbox.otherDroppables().droppable("disable").removeClass('hover');
+            Toolbox.exclusive = true;
+          }
+        } else {
+          if ( Toolbox.exclusive ) {
+            Toolbox.otherDroppables().droppable("enable");
+            Toolbox.exclusive = false;
+          }
+        };
+      }
     });
   });
-  // Clipboard
   $('div#toolbox div.sidebar ul.clipboard').livequery(function() {
     var list = $(this);
     list.droppable({
@@ -192,6 +208,7 @@ $(function() {
       hoverClass: 'hover',
       activeClass: 'active-droppable',
       greedy: true,
+      tolerance: 'touch',
       drop: function(e,ui) {
         $.ajax({
           url: clipboard_url(),
@@ -276,6 +293,7 @@ $(function() {
       hoverClass: 'hover',
       activeClass: 'active-droppable',
       greedy: true,
+      tolerance: 'pointer',
       drop: function(e,ui) {
         ui.element.find(' > div.rendering.fake').hide();
         $.ajax({
@@ -320,10 +338,10 @@ $(function() {
   $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
     $(this).hover(
       function() { 
-        $('.hover').removeClass('hover'); 
+        $('div.page .hover').removeClass('hover'); 
         $(this).parents('div.grid, div.rendering').addClass('hover') 
       }, 
-      function() { $('.hover').removeClass('hover'); }
+      function() { $('div.page .hover').removeClass('hover'); }
     );
   });
 
@@ -337,4 +355,5 @@ $(function() {
       }
     });
   });
+
 });

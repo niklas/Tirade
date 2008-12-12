@@ -48,6 +48,7 @@ var Toolbox = {
       })
     });
 
+
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
@@ -345,6 +346,13 @@ var Toolbox = {
     }, options);
     this.push(content, options);
   },
+  // 
+  surrounds: function(position) {
+    return(
+      Toolbox.element().surrounds(position) ||
+      Toolbox.sidebar().surrounds(position)
+    );
+  },
   pop: function() {
     $('body').applyRoles();
     this.prev();
@@ -427,6 +435,9 @@ var Toolbox = {
     this.expireBehaviors();
     this.element().remove();
     $('div.active').removeClass('active');
+  },
+  otherDroppables: function() {
+    return this.element().siblings().find('.ui-droppable')
   },
   accordion: function() {
     return this.last(' div.accordion')

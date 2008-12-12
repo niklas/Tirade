@@ -201,9 +201,6 @@ ul.list {
   margin: 0;
   float: left;
   clear: left;
-  .hover {
-    background-color: <%= @colors[:hover] %>;
-  }
   li { 
     width: 100%;
     float: left;
@@ -333,12 +330,13 @@ li.ui-draggable-dragging {
 }
 
 *.active-droppable {
-  background-image: url(/images/icons/drop_here.png);
-  background-repeat: no-repeat;
-  background-position: center;
+  border: thin dashed #997700 !important;
   min-height: 3em;
-  .processing {
-    background-color: #548764;
+  .hover {
+    background: <% @colors[:hover] %> url(/images/icons/drop_here.png) no-repeat center !important;
+  }
+  .ui-droppable-disabled {
+    border: thin solid transparent !important;
   }
 }
 
