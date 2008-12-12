@@ -1,2 +1,0 @@
-module Rendering::ContentHelper
-end

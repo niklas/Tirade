@@ -1,6 +1,0 @@
-page[dom_id(@rendering)].visual_effect :highlight
-page.update_toolbox(
-  :header => "Edit #{@content.title}",
-  :content => {:partial => '/rendering/content/form'}
-)
-
