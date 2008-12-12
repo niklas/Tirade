@@ -217,6 +217,7 @@ ul.list {
       span.title {
         float: left;
         padding: <%= @medium %>;
+      }
     }
   }
 }
