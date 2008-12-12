@@ -1,6 +1,5 @@
-page.update_toolbox(
-                   :header => "Select Content Type",
-                   :content => {:partial => '/contents/select_type'},
-                   :nav => 'contents'
+page.push_toolbox_content(
+                   :title => "Select Content Type",
+                   :partial => '/contents/select_type'
                    )
 
