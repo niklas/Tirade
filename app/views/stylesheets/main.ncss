@@ -141,37 +141,6 @@ body {
         font-weight: bold;
     }
     
-    form {
-        margin-top:5px;
-        input, textarea, select {
-            width:150px;
-            padding: 2px;
-            border: #AAAAAA 1px solid;
-            background-color: #efefef;
-        } 
-        input.checkbox, label.checkbox {
-           width:auto;
-        }
-        label.checkbox {
-            display:inline
-        }
-        
-        select {
-            
-        }
-        input.submit {
-            width: auto;
-            border: #c72c1e 1px solid;
-        }
-        
-        label {
-            display:block;
-            font-weight:bold;
-        }
-        p {
-            margin:0;
-        }
-    }
     ul {
       margin-left: 2.3em;
     }

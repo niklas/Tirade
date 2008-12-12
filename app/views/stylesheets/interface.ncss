@@ -211,16 +211,18 @@ ul.list {
     border-bottom: <%= @perimeter %>;
     border-top: <%= @perimeter %>;
     .image {
-      width: auto;
-      clear: none;
       img {
         float: left; 
       }
-      margin: <%= @small %>;
-      border: <%= @perimeter %>;
-      padding: <%= @small %>;
+      span.title {
+        float: left;
+        padding: <%= @medium %>;
     }
   }
+}
+
+span.title {
+  font-weight: bold;
 }
 
 /* 
