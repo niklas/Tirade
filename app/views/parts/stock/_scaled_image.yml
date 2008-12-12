@@ -1,0 +1,10 @@
+--- 
+:defined_options: 
+  show_title: 
+  - boolean
+  - "true"
+  geometry: 
+  - string
+  - 50x50
+:preferred_types: 
+- Image

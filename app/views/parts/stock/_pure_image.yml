@@ -1,0 +1,7 @@
+--- 
+:defined_options: 
+  show_title: 
+  - boolean
+  - "true"
+:preferred_types: 
+- Image

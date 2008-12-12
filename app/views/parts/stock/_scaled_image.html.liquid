@@ -1,0 +1,4 @@
+{% if show_title %}
+<h2>{{ scaled_image.title }}</h2>
+{% endif %}
+{{ scaled_image  | scale: geometry |to_image }}
