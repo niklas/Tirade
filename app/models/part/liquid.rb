@@ -31,8 +31,11 @@ class Part < ActiveRecord::Base
     })
   end
 
-  def extention
+  def self.extention
     '.html.liquid'
+  end
+  def extention
+    self.class.extention
   end
   # The Liquid markup saved in the #active_liquid_path
   def liquid(reload=false)
