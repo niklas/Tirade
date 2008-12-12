@@ -1,8 +1,4 @@
 <% grid = form || @grid %>
-<% links do %>
-  <li><%= destroy_grid_form(grid, :confirm => _('Really delete?')) %></li>
-  <li><%= link_to_remote 'add child', :url => create_child_grid_path(grid), :method => :post %></li>
-<% end %>
 <%= warning_tag 'Editing this grid may change the appearance of other pages. Decreasing its number of columns will hide the affected renderings - you can get them back.' unless grid.new_record? %>
 <%= error_messages_for :grid %>
 <% update_grid_form(grid) do |f| %>

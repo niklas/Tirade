@@ -16,7 +16,18 @@ class Pages::LayoutController < ApplicationController
       @page.layout = @grid
       @page.save!
     end
-    continue_editing
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page.push_or_refresh(
+            :title => "Page '#{@page.title}'",
+            :partial => '/pages/show', :object => @page
+          )
+          page.remove_page
+          page.insert_page(@page)
+        end
+      end
+    end
   end
 
   def update

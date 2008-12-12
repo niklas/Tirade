@@ -86,7 +86,14 @@ module RenderHelper
 
   def page_without_layout_warning(thepage)
     content_tag(:div,
-                'Page has no Layout ' + link_to("create layout", new_page_layout_path(thepage), :class => 'create layout with_toolbox'),
+                'Page has no Layout, ' + 
+                if Grid.roots.empty?
+                  link_to("create one", page_layout_path(thepage), :class => 'create grid layout with_toolbox')
+                else
+                  link_to("create new", page_layout_path(thepage), :class => 'create grid layout with_toolbox') +
+                  " or " +
+                  edit_page_link(thepage, :label => 'select one')
+                end,
                :class => 'warning')
   end
 

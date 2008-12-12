@@ -47,14 +47,16 @@
         event.preventDefault();
         options.start(event);
         meth = 'GET';
-        if (obj.hasClass('create')) meth = 'POST';
+        data = '';
+        if (obj.hasClass('create'))
+          meth = 'POST';
         if (obj.hasClass('destroy')) {
           meth = 'DELETE';
           if (!confirm("Really delete?")) return false;
-        }
+        };
         $.ajax({
           url: obj.attr('href'),
-          type: meth
+          type: meth, data: data
         });
       });
     });
