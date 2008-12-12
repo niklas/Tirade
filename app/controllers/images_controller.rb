@@ -14,38 +14,20 @@ class ImagesController < ApplicationController
 
   # TODO append .js in multipartform
   def create
-    @image = Image.new(params[:image])
+    @model = @image = Image.new(params[:image])
 
     
     if @image.save
       @models = @images = [@image] + @image.multiple_images
-      the_action = @images.length > 1 ? :index : :show
-      if params[:iframe_remote]
-        # successful, from iframe => show created image(s)
-        responds_to_parent do
-          render_toolbox_action the_action
-        end
-      else
-        # successful, normal cases
-        respond_to do |wants|
-          wants.html
-          wants.js { render_toolbox_action the_action }
-        end
+      @model = @image = @images.first
+      responds_to_parent do
+        render_toolbox_action :created
       end
     else
-      if params[:iframe_remote]
-        # unsuccessful from iframe
-        responds_to_parent do
-          render_toolbox_action :new
-        end
-      else
-        # unsuccessful, normal case
-        respond_to do |wants|
-          wants.html
-          wants.js { render_toolbox_action :new }
-        end
-     end
-   end
+      responds_to_parent do
+        render_toolbox_action :failed_create
+      end
+    end
   end
 
   def custom
