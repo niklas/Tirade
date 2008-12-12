@@ -378,9 +378,10 @@ var Toolbox = {
       title:      '[No Title]'
     }, options);
     this.last().html(content);
+    setTitle(options.title);
   },
-  setTitle: function() {
-    return this.element('> div.head span.title').html( Toolbox.last().attr('title'));
+  setTitle: function(title) {
+    return this.element('> div.head span.title').html( title || Toolbox.last().attr('title'));
   },
   setStatus: function(status) {
     return this.element('> div.foot span.status').html(status);
