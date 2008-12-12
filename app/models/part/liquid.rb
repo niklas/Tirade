@@ -13,8 +13,12 @@ class Part < ActiveRecord::Base
     if liquid.blank?
       return %Q[<div class="warning"> could not find liquid template '#{filename_with_extention}'</div>] 
     end
-    self.template = Liquid::Template.parse(liquid)
-    self.html = self.template.render(assigns)
+    begin
+      self.template = Liquid::Template.parse(liquid)
+      self.html = self.template.render(assigns)
+    rescue Exception => e # FIXME does not work yet, we want to escape the error
+      self.html << e.h
+    end
   end
 
   def render_with_fake_content(assigns={})
