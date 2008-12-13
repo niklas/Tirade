@@ -21,5 +21,3 @@ config.action_view.cache_template_loading            = true
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
-# FIXME: Change the site url to the actual production site url
-SITE_URL = 'http://localhost:3000'

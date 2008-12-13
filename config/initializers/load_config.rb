@@ -3,3 +3,5 @@ begin
 rescue
   puts "could not find config/application.yml - some features/setting may be missing."
 end
+
+SITE_URL = APP_CONFIG[:url] || 'http://localhost:3000'
