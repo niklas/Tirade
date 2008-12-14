@@ -7,7 +7,6 @@ var Toolbox = {
       this.sidebarVisible = true;
       this.expireBehaviors();
       this.applyBehaviors();
-
     };
     this.setSizes();
     return this.element();
@@ -72,7 +71,16 @@ var Toolbox = {
       Toolbox.linkBar().addRESTLinks(frame) ;
       $(this).find('form')
         .each( function() { this.action += '.js'; })
-        .ajaxForm({dataType: 'script'});
+        .ajaxForm({
+          dataType: 'script',
+          beforeSubmit: function() {
+            Toolbox.beBusy("submitting " + Toolbox.last().attr('title'))
+          }
+        })
+        .appendDom([
+          {tagName: 'input', type: 'hidden', name: 'context_page_id', value: $('body > div.page').resourceId() }
+        ]);
+;
     });
     this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
@@ -675,29 +683,3 @@ jQuery.fn.useToolbox = function(options) {
   });
 };
 
-jQuery.fn.ajaxifyForm = function() {
-  // Set context_page_id so that rails know on which page we are on
-  $(this).appendDom([
-    {tagName: 'input', type: 'hidden', name: 'context_page_id', value: $('body > div.page').resourceId() }
-  ]);
-  if ($(this).attr('enctype') == "multipart/form-data") {
-    name_and_id = "iframe_for_" + $(this).attr('id');
-    $(this).appendDom([
-      {tagName: 'iframe', name: name_and_id, id: name_and_id, 
-       src: 'about:blank', style: "width:1px;height:1px;border:0px" }
-    ]);
-    action = $(this).attr('action');
-    if (action.match(/\?/))
-      $(this).attr('action', action + '&iframe_remote=1&format=js');
-    else
-      $(this).attr('action', action + '?iframe_remote=1&format=js');
-    return $(this);
-  } else {
-    // Standard Form
-    return $(this).ajaxForm({
-      beforeSubmit: function() {
-        Toolbox.beBusy("submitting " + Toolbox.last().attr('title'))
-      }
-    });
-  }
-};
