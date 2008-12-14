@@ -100,4 +100,24 @@ module Sass
   end
 end
 
+# Let's sort children in acts_as_nested_set and derivates (grids)
+module CollectiveIdea::Acts::NestedSet::InstanceMethods
+  def move_to_parent_location(parent, location)
+    parent = nil if parent == 0
+    parent = parent === self.class ? parent : self.class.find(parent) if parent
+    children = parent ? parent.children : self.class.roots
+   
+    if children.length > 0
+      ord = location.to_i
+      if ord > children.length
+        self.move_to(children.last, :right)
+      elsif children[ord] != self
+        self.move_to(children[ord], :left)
+      end
+    elsif parent
+      self.move_to(parent, :child)
+    end
+  end
+end
+
 ThemeController.send :include, Sass::ThemeSupport

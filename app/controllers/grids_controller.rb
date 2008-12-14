@@ -40,8 +40,8 @@ class GridsController < ApplicationController
   def order_children
     Grid.transaction do
       @grid = Grid.find(params[:id])
-      params[:grid].reject(&:blank?).andand.reverse.each_with_index do |gid,i|
-        Grid.find(gid).move_to_child_of @grid
+      params[:grid].reject(&:blank?).andand.each_with_index do |gid,i|
+        Grid.find(gid).move_to_parent_location @grid, i
       end
     end unless params[:grid].blank?
     refresh
