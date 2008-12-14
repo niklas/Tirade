@@ -59,6 +59,9 @@ body div {
     a.create.layout {
       background: url(../images/icons/small/template.gif);
     }
+    a.create.prepare.rendering {
+      background: url(../images/icons/small/plus.gif);
+    }
   }
   li.submit a.submit {
     background: transparent url(../images/icons/small/diskette.gif) !important;

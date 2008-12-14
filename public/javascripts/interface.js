@@ -110,6 +110,8 @@ $(function() {
   $('code.html').livequery(function() { $(this).chili() });
   $('code.rhtml').livequery(function() { $(this).chili() });
 
+  var fake_rendering = '<div class="rendering fake"><span class="message">empty - drop something here</span></div>';
+
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
   $('body.role_admin div.page div.rendering:not(.fake)').livequery(function(i) {
@@ -117,9 +119,14 @@ $(function() {
       .appendDom([
         { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
           { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
+          { tagName: 'a', href: '#', class: 'prepare create rendering without_toolbox', innerHTML: 'clone' },
           { tagName: 'span', class: 'handle', innerHTML: 'drag' }
           ] }
       ])
+      .find('div.admin a.prepare.rendering').click( function(e) {
+        e.preventDefault();
+        $(this).parent().parent().before(fake_rendering);
+      }).end()
       .droppable({
         accept: 'li,dd',
         hoverClass: 'hover',
@@ -305,7 +312,7 @@ $(function() {
 
   /* empty grid */
   $('div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
-    $(this).html('<div class="rendering fake">empty - drop something here</div>')
+    $(this).html(fake_rendering)
   });
 
   /* lets sort all vertical aligned grids, if there is more than one child */
@@ -343,14 +350,29 @@ $(function() {
   });
 
   /* click grid mockups to browse */
-  $('di.layout > dd > div.grid.preview').livequery(function() {
-    $(this).click(function(e) {
+  $('dd > div.grid.preview').livequery(function() {
+    $(this)
+    .click(function(e) {
       if ( id = $(e.target).resourceId() ) {
+        Toolbox.beBusy("Loading Grid");
         $.get(grid_url({id: id}));
       } else if ( id = $(e.target).parent().resourceId() ) {
+        Toolbox.beBusy("Loading Grid");
         $.get(grid_url({id: id}));
       }
-    });
+    })
+  });
+  $('dd div.grid.preview').livequery(function() {
+    $(this).hover(
+      function() {
+        if ( id = $(this).resourceId() ) {
+          $('div.page div.grid.grid_' + id).addClass('hover');
+        }
+      }, 
+      function() {
+        $('div.page div.grid').removeClass('hover');
+      }
+    );
   });
 
 });
