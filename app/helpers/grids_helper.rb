@@ -1,7 +1,7 @@
 module GridsHelper
   def select_grid(grid)
     did = page.context.dom_id(grid)
-    page.select("div.grid.#{did}, div##{did}")
+    page.select("div.page div.grid.#{did}, div.page div##{did}")
   end
 
   def update_grid_in_page(grid, thepage)
