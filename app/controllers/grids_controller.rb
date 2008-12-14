@@ -10,8 +10,14 @@ class GridsController < ApplicationController
 
   def create_child
     @grid = Grid.find(params[:id])
-    @grid.add_child
-    refresh
+    @child = @grid.add_child
+    respond_to do |wants|
+      wants.js do
+        render :update do |page|
+          page.select_grid(@grid).append(@child.render).highlight
+        end
+      end
+    end
   end
 
   def order_renderings
