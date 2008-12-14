@@ -4,13 +4,11 @@ module RenderHelper
     render_rendering_filled_with(
       rendering,
       if rendering.part.nil?
-        content_tag(:div, 'no part assigned', {:class => 'warning'})
+        content_tag(:div, 'no part assigned, drop one here', {:class => 'warning'})
+      elsif !rendering.has_content?
+        content_tag(:div, 'no content assigned, drop one here', {:class => 'warning'})
       else
-        if rendering.has_content?
-          rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
-        else
-          rendering.part.render(rendering.options.to_hash)
-        end
+        rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
       end
     )
   end
