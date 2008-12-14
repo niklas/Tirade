@@ -674,12 +674,16 @@ jQuery.fn.useToolbox = function(options) {
     start: function() {}
   };
   var options = $.extend(defaults, options);
-  return $(this).resourcefulLink({
-    start: function(event) {
-      Toolbox.findOrCreate();
-      Toolbox.beBusy('Loading');
-      options.start(event);
-    }
-  });
+  if ( !$(this).hasClass("without_toolbox") ) {
+    return $(this).resourcefulLink({
+      start: function(event) {
+        Toolbox.findOrCreate();
+        Toolbox.beBusy('Loading');
+        options.start(event);
+      }
+    })
+  } else {
+    return $(this);
+  }
 };
 
