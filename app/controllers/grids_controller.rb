@@ -6,8 +6,11 @@ class GridsController < ApplicationController
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
 
-  # TODO create: assign the new grid to params[:page_id]'s Page
+  def after_update_toolbox_for_destroyed(page)
+    page.select_grid(@grid).remove
+  end
 
+  # TODO create: assign the new grid to params[:page_id]'s Page
   def create_child
     @grid = Grid.find(params[:id])
     @child = @grid.add_child
