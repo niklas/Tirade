@@ -12,12 +12,20 @@ body div {
     position: relative;
     .fake {
       height: 7em;
+      background: url(../images/pentagon-tile.jpg) repeat;
+      span.message {
+        font-size: 130%;
+        padding: <%= @medium %>;
+        background-color: <%= @colors[:base] %>;
+        position: relative;
+        top: 23%; left: 42%;
+      }
     }
   }
   :hover > div.admin {
     display: block;
   }
-  .grid.hover { background-color: #eee}
+  .grid.hover { background-color: #eee; outline: thick solid <%= @colors[:hover] %>}
   .grid .grid.hover { background-color: #ccc}
   .grid .grid .grid.hover { background-color: #aaa}
   .grid .grid .grid .grid.hover { background-color: #999}
