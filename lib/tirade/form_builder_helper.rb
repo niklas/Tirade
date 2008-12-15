@@ -16,6 +16,22 @@ module Tirade
       wrap(field,options, super(field, choices, options, html_options))
     end
 
+    def datetime_select(field, options = {}, html_options = {})
+      @template.content_tag(
+        :span,
+        wrap(field,options, super(field, options, html_options)),
+        :class => 'datetime'
+      )
+    end
+
+    def date_select(field, options = {}, html_options = {})
+      @template.content_tag(
+        :span,
+        wrap(field,options, super(field, options, html_options)),
+        :class => 'date'
+      )
+    end
+
     def check_box(field, options = {}, checked_value = "1", unchecked_value = "0")
       options[:class] ||= ''
       options[:class] += ' checkbox'

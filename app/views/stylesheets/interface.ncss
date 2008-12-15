@@ -153,6 +153,9 @@ form {
       background-color: inherit;
     }
   }
+  span.date select, span.datetime select {
+    float: none;
+  }
   textarea {
     background-color: <%= @colors[:input] %>;
     color:  <%= @colors[:text] %>;
