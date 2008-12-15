@@ -1,0 +1,14 @@
+<%
+  e ||= traces
+  all_traces = [
+    ["Application Trace", e.application_backtrace],
+    ["Framework Trace", e.framework_backtrace],
+    ["Full Trace", e.clean_backtrace]
+  ]
+%>
+<% all_traces.each do |name,trace| %>
+  <% accordion_item name, :content_tag => :div do %>
+    <pre><code><%= trace.join "\n" %></code> </pre>
+  <% end %>
+<% end %>
+

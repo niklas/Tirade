@@ -1,0 +1,15 @@
+<% exception ||= template_error || @exception %>
+
+<% links do %>
+  <%= li_link_to '"OK"', '#', :class => 'back ok' %>
+<% end %>
+
+<% accordion do %>
+
+  <% accordion_item "Message", :content_tag => :div do %>
+    <%=h exception.message %>
+  <% end %>
+
+<% end %>
+
+

@@ -1,0 +1,17 @@
+<% exception ||= missing_template || @exception %>
+
+<% links do %>
+  <%= li_link_to '"OK"', '#', :class => 'back ok' %>
+<% end %>
+
+<% accordion do %>
+
+  <% accordion_item "Message", :content_tag => :div do %>
+    <%=h(exception.message).gsub(/:/, '<br />') %>
+  <% end %>
+
+  <%= render :partial => '/toolbox/traces', :object => exception  %>
+
+<% end %>
+
+

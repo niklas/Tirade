@@ -51,12 +51,18 @@ module ToolboxHelper
   end
 
   def toolbox_error(exception)
-    title = <<-EOTITLE
-      #{h exception.original_exception.class.to_s} in
-      #{h page.context.request.parameters["controller"].capitalize if page.context.request.parameters["controller"]}
-      ##{h page.context.request.parameters["action"]}
-    EOTITLE
-    title, content = prepare_content(:title => title, :partial => '/toolbox/error', :object => exception)
+    title = case exception
+            when ActionView::TemplateError
+              <<-EOTITLE 
+                #{h exception.original_exception.class.name} in
+                #{h page.context.request.parameters["controller"].capitalize if page.context.request.parameters["controller"]}
+                ##{h page.context.request.parameters["action"]}
+              EOTITLE
+            else
+              exception.class.name
+            end
+    partial = ApplicationController.rescue_templates[exception.class.name]
+    title, content = prepare_content(:title => title, :partial => "/toolbox/#{partial}", :object => exception)
     page.toolbox.error content, :title => title
     set_toolbox_status
   end
@@ -109,15 +115,26 @@ module ToolboxHelper
     context.request.path # url.sub(/_=\d+/,'').sub(/\?$/,'')
   end
   def prepare_content(content)
-    if content.is_a? Hash
-      if part = content[:partial] && part.is_a?(String)
-        #content[:partial] = "/#{@model.table_name}/#{part}"
+    returning [] do |ary|
+      if content.is_a? Hash
+        content[:layout] ||= '/layouts/toolbox'
         content[:object] ||= @model || @models
+        ary << content.delete(:title) || content[:object].andand.title || 'Foo Title'
+        begin
+          result = render(content)
+          ary << result
+        rescue ActionView::MissingTemplate => e  # try to add the table name to the partial path
+          if content[:partial] && content[:object] && content[:partial] !~ %r~./~ 
+            content[:partial] = "/#{content[:object].table_name}/#{content[:partial]}"
+            retry
+          else
+            raise e
+          end
+        end
+      else
+        ary << "#{context.controller.action_name} #{context.controller.controller_name}"
+        ary << content
       end
-      content[:layout] ||= '/layouts/toolbox'
-      [content.delete(:title), render(content)]
-    else
-      ["#{context.controller.action_name} #{context.controller.controller_name}", content]
     end
   end
 

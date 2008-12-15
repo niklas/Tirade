@@ -16,7 +16,8 @@ module Tirade
           model_class_name = model_name.classify
           model_class = model_class_name.constantize
           class_eval do
-            rescue_from 'ActionView::TemplateError', :with => :template_error
+            rescue_from 'ActionView::TemplateError', :with => :rescue_error
+            rescue_from 'ActionView::MissingTemplate', :with => :rescue_error
             before_filter :set_form_builder, :except => [:index,:show,:destroy]
             before_filter "fetch_#{model_name}", :only => [:show, :edit, :update, :destroy]
             define_method "fetch_#{model_name}" do
@@ -224,7 +225,7 @@ module Tirade
         render :action => 'show'
       end
 
-      def template_error(exception)
+      def rescue_error(exception)
         respond_to do |wants|
           wants.html { render :text => exception.inspect.to_s, :status => 500}
           wants.js do
