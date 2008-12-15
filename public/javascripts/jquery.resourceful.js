@@ -86,7 +86,7 @@
     else if (m = options.url.match(/([^\/]+)s$/)) { // end with plural
       options.class += ' ' + m[1];
       var actions = [
-        { name: 'Create', class: 'new' }
+        { name: 'Create', class: 'new', url: options.url + '/new' }
       ];
     }
     else return this;
