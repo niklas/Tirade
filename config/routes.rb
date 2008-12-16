@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+
+  Dir.glob(File.join(RAILS_ROOT,'vendor','plugins','tirade_*')) do |path|
+    name = path.sub(%r~^.*/~,'')
+    map.routes_from_plugin(name.to_sym)
+  end
+
   map.routes_from_plugin(:stylish_permissions)
   map.routes_from_plugin(:toolbox)
 
