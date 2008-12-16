@@ -150,7 +150,7 @@ module Tirade
       end
 
       def update_toolbox_for_created(page)
-        if params[:commit].blank? # non-form submit (i.e. drop)
+        if non_form_submit?
           params[@model].keys.each do |meth|
             page.toolbox_update_model_attribute model, meth
           end if params[@model]
@@ -163,7 +163,7 @@ module Tirade
       end
 
       def update_toolbox_for_updated(page)
-        if params[:commit].blank? # non-form submit (i.e. drop)
+        if non_form_submit?
           params[@model].keys.each do |meth|
             page.toolbox_update_model_attribute model, meth
           end if params[@model]
@@ -178,10 +178,18 @@ module Tirade
       end
 
       def update_toolbox_for_failed_create(page)
-        page.update_last_toolbox_frame(:partial => "/form", :object => @model)
+        if non_form_submit?
+          page.push_toolbox_content(:partial => "/form", :object => @model)
+        else
+          page.update_last_toolbox_frame(:partial => "/form", :object => @model)
+        end
       end
       def update_toolbox_for_failed_update(page)
-        page.update_last_toolbox_frame(:partial => "/form", :object => @model)
+        if non_form_submit?
+          page.push_toolbox_content(:partial => "/form", :object => @model)
+        else
+          page.update_last_toolbox_frame(:partial => "/form", :object => @model)
+        end
       end
       def update_toolbox_for_failed_destroy(page)
         page.update_last_toolbox_frame(:partial => "/show", :object => @model)
@@ -242,6 +250,10 @@ module Tirade
         else
           ActionView::Base.default_form_builder = NormalFormBuilder
         end
+      end
+
+      def non_form_submit?
+        params[:submit].blank?
       end
 
     end
