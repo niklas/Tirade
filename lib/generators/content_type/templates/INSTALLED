@@ -1,0 +1,5 @@
+Created Content Type for Tirade: <%= class_name %>
+
+please do the following to get started:
+  1) run script/runner 'ActiveRecord::Migration.migrate_plugin :tirade_<%= table_name %>, 1'
+  2) restart your app / web server

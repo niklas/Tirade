@@ -1,0 +1,7 @@
+Generates a new Content Type for use in Tirade, with working Model, Controller and everything.
+
+  script/generate content_type Human name:string bio:text skeletons_in_closet_count:integer
+
+  Restart your application. Now the new Content Type should be accessible from the Toolbox.
+
+

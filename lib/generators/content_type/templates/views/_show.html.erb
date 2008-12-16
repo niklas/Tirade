@@ -1,0 +1,12 @@
+<%% <%= file_name %> ||= show || @<%= file_name %> %>
+
+<%% accordion do %>
+
+  <%% accordion_item "General" do %>
+  <% attributes.each_with_index do |attribute, attribute_index| -%>
+    <%%= show <%= file_name %>, :<%= attribute.name %> %>
+  <% end -%>
+  <%% end %>
+
+<%% end %>
+

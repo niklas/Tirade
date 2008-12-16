@@ -1,0 +1,17 @@
+<%% <%= file_name %> ||= form %>
+<%%= error_messages_for :<%= file_name %>, :object => <%= file_name %> %>
+
+<%% form_for <%= file_name %> do |f| %>
+
+  <%% accordion do %>
+
+    <%% accordion_item 'General' do %>
+    <% attributes.each_with_index do |attribute, attribute_index| -%>
+      <%%= f.text_field :<%= attribute.name %> %>
+    <% end -%>
+    <%% end %>
+
+  <%% end %>
+
+  <%%= f.submit %>
+<%% end %>
