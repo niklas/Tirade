@@ -46,7 +46,7 @@ class Part < ActiveRecord::Base
   end
 
   def needs_to_load_yml_from?(yp)
-    File.exists?(yp) and File.mtime(yp) > (updated_at || Time.now.tomorrow)
+    File.exists?(yp) and ( new_record? || File.mtime(yp) > (updated_at) )
   end
 
   def load_yml_if_needed!
