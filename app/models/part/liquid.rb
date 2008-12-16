@@ -99,11 +99,11 @@ class Part < ActiveRecord::Base
       parser = XML::Parser.new
       parser.string = "<div>#{html}</div>"
       msgs = []
-      XML::Parser.register_error_handler lambda { |msg| msgs << msg }
+      XML::Parser.set_handler lambda { |msg| msgs << msg }
       begin
         parser.parse
       rescue Exception => e
-        part.errors.add(:html, '<pre>' + msgs.collect{|c| c.h }.join + '</pre>')
+        part.errors.add(:html, '<pre>' + msgs.collect{|c| c.message.h }.join + '</pre>')
       end
     else
       #part.errors.add(:html, "no HTML found")
