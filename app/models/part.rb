@@ -48,6 +48,7 @@ class Part < ActiveRecord::Base
   end
 
   def before_validation_on_create
+    load_yml_if_needed!
     self.name ||= name_by_filename
   end
 
