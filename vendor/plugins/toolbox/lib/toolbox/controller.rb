@@ -253,7 +253,7 @@ module Tirade
       end
 
       def non_form_submit?
-        params[:submit].blank?
+        params[:commit].blank?
       end
 
     end
