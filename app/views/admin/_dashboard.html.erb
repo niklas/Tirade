@@ -6,23 +6,36 @@
   <% end %>
 </p>
 
-<p>
-  It is now <%= Time.now %>.
-</p>
 
-<p>
-  Easy steps to your own Website:
-  <ol>
-    <li>
-      Start creating <%= show_content_link(Folder.root, :label => 'Content') %>
-    </li>
-  </ol>
-</p>
+<% accordion do %>
 
-<ul class="list">
-  <% primary_controller_names.each do |cname| %>
-    <li>
-      <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
-    </li>
+  <% accordion_item "Contents" do %>
+    <ul class="list">
+      <% Tirade::ActiveRecord::Content.classes.each do |klass| %>
+        <li>
+          <%= link_to klass.name.pluralize, {:controller => klass.table_name}, :class => "index #{klass.table_name}" %>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
-</ul>
+
+  <% accordion_item "CMS" do %>
+    <ul class="list">
+      <% %w(pages grids parts renderings).each do |cname| %>
+        <li>
+          <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% accordion_item "Admin" do %>
+    <ul class="list">
+      <% %w(users roles groups permissions).each do |cname| %>
+        <li>
+          <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
