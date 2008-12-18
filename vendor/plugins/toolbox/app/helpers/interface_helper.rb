@@ -154,7 +154,17 @@ module InterfaceHelper
 
   def render_as_attribute(record)
     return 'none' if record.nil?
-    render(:partial => "/#{record.table_name}/attribute", :object => record)
+    partial = 'attribute'
+    begin
+      render(:partial => "/#{record.table_name}/#{partial}", :object => record)
+    rescue ActionView::MissingTemplate => e
+      if partial == 'attribute'
+        partial = 'list_item'
+        retry
+      else
+        return 'no partial found'
+      end
+    end
   end
 
   def di_dt_dd(dt,dd, opts={})
