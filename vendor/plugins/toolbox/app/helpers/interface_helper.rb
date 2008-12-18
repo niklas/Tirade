@@ -121,20 +121,21 @@ module InterfaceHelper
       concat di_dt_dd(label, capture(&block), opts), block.binding
     else
       val = obj.send(name) rescue content_tag(:span, "unknow attr: #{obj.class}##{name}", :class => 'warning')
-      if val.is_a?(ActiveRecord::Base)
+      case val
+      when ActiveRecord::Base
         # url_for does not recognize STI :(
         opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
         add_class_to_html_options(opts[:dd], dom_id(val))
         add_class_to_html_options(opts[:dd], 'record')
         add_class_to_html_options(opts, 'record')
         val = render_as_attribute(val)
-      elsif val.is_a?(Array)
+      when Array
         unless val.blank?
           opts[:href] = url_for(:controller => val.first.table_name) if selectable
           add_class_to_html_options(opts, 'list')
         end
         val = list_of(val)
-      elsif val.is_a?(ActsAsConfigurable::OptionsProxy)
+      when ActsAsConfigurable::OptionsProxy
         val = 
           content_tag(
             :dl,
@@ -143,6 +144,8 @@ module InterfaceHelper
             end.join,
             :class => 'hash'
         )
+      when Time, Date
+        val = val.to_s(:db)
       end
       val = debug(val) unless val.is_a?(String)
       di_dt_dd(label, val, opts)
