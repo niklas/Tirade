@@ -311,7 +311,7 @@ $(function() {
 
 
   /* empty grid */
-  $('div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
+  $('body.role_admin div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
     $(this).html(fake_rendering)
   });
 
