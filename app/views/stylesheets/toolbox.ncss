@@ -20,7 +20,7 @@ body {
   height:400px;
   width:300px;
   left:300px;
-  position:absolute;
+  position:fixed;
   top:100px;
   > div {
     .head, .body, .foot, .busy {
@@ -117,7 +117,6 @@ body {
          }
          div.accordion {
            width: 100%;
-           position: absolute;
            overflow-x: hidden;
            overflow-y: auto;
            *.accordion_toggle {
