@@ -20,20 +20,20 @@
 # It can take options to modify its apperance, which are passed as :locals (this should be overridable from Rendering)
 
 class Part < ActiveRecord::Base
-  concerned_with :syncing, :content, :code, :liquid, :configuration
+  concerned_with :syncing, :content, :code, :liquid, :theme, :configuration
   validates_presence_of :name
   validates_uniqueness_of :name
   belongs_to :subpart, :class_name => 'Part', :foreign_key => 'subpart_id'
   acts_as_custom_configurable
   serialize :preferred_types, Array
 
-  attr_accessible :name, :filename, :options, :options_as_yaml, :preferred_types, :liquid, :use_theme, :define_options, :defined_options
-  liquid_methods :name, :filename, :liquid
+  attr_accessible :name, :options, :options_as_yaml, :preferred_types, :liquid, :use_theme, :define_options, :defined_options
+  liquid_methods :name, :liquid
 
-  PartsDir = 'stock'
-  BasePath = File.join(RAILS_ROOT,'app','views','parts',PartsDir)
+  PartsDir = File.join('parts','stock')
+  BasePath = File.join(RAILS_ROOT,'app','views',PartsDir)
   BaseGlob = File.join(BasePath, '*.html.liquid')
-  ThemesGlob = File.join(RAILS_ROOT, 'themes', '*', 'views', 'parts', PartsDir, '*.html.liquid')
+  ThemesGlob = File.join(RAILS_ROOT, 'themes', '*', 'views', PartsDir, '*.html.liquid')
 
   SaveLevel = 1
 
@@ -49,12 +49,6 @@ class Part < ActiveRecord::Base
 
   def before_validation_on_create
     load_yml_if_needed!
-    self.name ||= name_by_filename
-  end
-
-  def after_find
-    @use_theme = in_theme?
-    #sync_attributes
   end
 
   def after_initialize
@@ -75,48 +69,23 @@ class Part < ActiveRecord::Base
     name
   end
 
-  # Theme stuff
-  def use_theme=(useit)
-    @use_theme = ![false, "false", "f", 0, "0", nil, ""].include?(useit)
-  end
-  def use_theme
-    @use_theme
-  end
-  def use_theme?
-    use_theme
-  end
-
-  # Does a counterpart of this file exists in the given theme, defaults to the current theme of the +active_controller+
-  def in_theme?(theme_name=nil)
-    File.exists? theme_path(theme_name)
-  end
-
-  def current_theme
-    active_controller.andand.current_theme
-  end
-
   def fullname
     in_theme? ? "#{name} (#{current_theme})" : name
   end
 
-  def make_themable!(theme_name=nil)
-    theme_name ||= current_theme
-    self.use_theme = true
-    if in_theme?(theme_name)
-      return true
-    else
-      save_rhtml_in_theme!
-    end
+  def filename
+    self[:filename] ||= filename_by_name
   end
 
-  def remove_theme!(theme_name=nil)
-    if theme_name ||= current_theme && in_theme?(theme_name)
-      File.delete theme_path(theme_name)
-    end
+  def name=(new_name)
+    self[:name] = new_name
+    self[:filename] = filename_by_name
+    new_name
   end
 
-  def name_by_filename
-    filename.andand.titleize
+  private
+  def filename_by_name
+    name.andand.domify
   end
 
 end

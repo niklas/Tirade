@@ -41,7 +41,7 @@ class Part < ActiveRecord::Base
   #alias_method :existing_fullpath, :active_liquid_path
 
   def partial_name
-    File.join(PartsDir,filename)
+    File.join(PartsDir,filename || '')
   end
 
   def filename_with_extention

@@ -14,7 +14,7 @@ module ActiveRecord
         end
 
         def active_controller
-          @@active_controller ||= MockController.new 
+          @@active_controller
         end
         def acts_as_renderer
           class_eval <<-EOV, __FILE__, __LINE__
@@ -26,15 +26,15 @@ module ActiveRecord
               if output = render_string(template, assigns)
                 File.open(destination, 'w') do |file|
               	  file.write output
-            	  end
+               end
               end
             end
 
             # Renders a template to a string with the included variable assignments
             def self.render_string(render_template, assigns, contr)
               controller = contr 
-              path = controller.view_paths rescue controller.view_root
-              template = ActionView::Base.new(path, assigns, controller)
+              template = ActionView::Base.new([], assigns, controller)
+              template.finder.view_paths = controller.view_paths
               template.template_format = :html
               template.extend controller.master_helper_module
               template.render(render_template)
@@ -66,7 +66,7 @@ module ActiveRecord
         end
 
         def active_controller
-          self.class.active_controller || MockController.new 
+          self.class.active_controller
         end
       end
     end

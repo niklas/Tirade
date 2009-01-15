@@ -7,7 +7,7 @@ class Part < ActiveRecord::Base
   private
   # returns the path to a yml file where the rhtml exists
   def active_yml_path
-    active_path.sub(extention,'.yml')
+    (active_path || theme_path).sub(extention,'.yml')
   end
 
   def yml_stock_path

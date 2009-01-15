@@ -12,9 +12,6 @@ class Part < ActiveRecord::Base
   end
 
   def render(assigns={})
-    if liquid.blank?
-      raise TemplateNotFound, %Q[could not find liquid template '#{filename_with_extention}'] 
-    end
     begin
       self.template = Liquid::Template.parse(liquid)
       self.html = self.template.render(assigns)
@@ -42,9 +39,11 @@ class Part < ActiveRecord::Base
   # The Liquid markup saved in the #active_liquid_path
   def liquid(reload=false)
     @liquid = nil if reload
-    @liquid ||= File.read(active_liquid_path)
-  rescue Exception => e
-    ''
+    @liquid ||= if liquid_loadable?
+                  File.read(active_liquid_path)
+                else
+                  false
+                end
   end
 
   # Sets the new Liquid markup code. Will be written to the theme path after_save
@@ -58,9 +57,17 @@ class Part < ActiveRecord::Base
   # The path to the file containing liquid markup. 
   # If it exists in the current theme, this path is preferred
   def active_liquid_path
-    active_controller.template.finder.pick_template "parts/stock/#{filename}", extention
+    template_finder.pick_template(partial_name, extention)
   end
   alias_method :active_path, :active_liquid_path
+
+  def template_finder
+    active_controller.instance_variable_get('@template').finder
+  end
+
+  def liquid_loadable?
+    active_liquid_path
+  end
 
   # The full path to the liquid code in the Stock view dir
   def liquid_stock_path
@@ -71,30 +78,30 @@ class Part < ActiveRecord::Base
   # The full path to the liquid code in the current theme
   def liquid_theme_path(theme=nil)
     theme ||= current_theme
-    File.join(RAILS_ROOT,'themes',theme,'views', 'parts', PartsDir, filename_with_extention)
+    File.join(RAILS_ROOT,'themes',theme,'views', PartsDir, filename_with_extention)
   end
   alias_method :theme_path, :liquid_theme_path
 
-
-  validates_each :liquid do |part, attr, liquid|
-    unless liquid.blank?
-      begin
-        part.render_with_fake_content
-      rescue TemplateError => e
-        part.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
-      rescue TemplateNotFound => e
-        part.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
-      end
-      if t = part.template
-        t.errors.each do |e|
-          part.errors.add(:liquid, '<pre>' + e.clean_message.h + e.clean_backtrace.first.h + '</pre>')
+  validate :must_be_renderable, :unless => Proc.new { |part| part.filename.blank? }
+  def must_be_renderable
+    begin
+      if @liquid || liquid_loadable?
+        self.render_with_fake_content
+        if t = self.template
+          t.errors.each do |e|
+            self.errors.add(:liquid, '<pre>' + e.clean_message.h + e.clean_backtrace.first.h + '</pre>')
+          end
         end
+      else
+        # TODO warning when :liquid is not loadable?
+        #self.errors.add(:liquid, "No Liquid markup code found")
       end
-    else
-      #part.errors.add(:liquid, "No Liquid markup code found")
+    rescue TemplateError => e
+      self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
+    rescue TemplateNotFound => e
+      self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
     end
-  end
-  validates_each :html do |part, attr, html|
+
     unless html.blank?
       parser = XML::Parser.new
       parser.string = "<div>#{html}</div>"
@@ -103,10 +110,11 @@ class Part < ActiveRecord::Base
       begin
         parser.parse
       rescue Exception => e
-        part.errors.add(:html, '<pre>' + msgs.collect{|c| c.h }.join + '</pre>')
+        self.errors.add(:html, '<pre>' + msgs.collect{|c| c.h }.join + '</pre>')
       end
     else
-      #part.errors.add(:html, "no HTML found")
+      # TODO warning when :html is blank?
+      #self.errors.add(:html, "no HTML found")
     end
   end
 
