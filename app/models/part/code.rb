@@ -23,8 +23,9 @@ class Part < ActiveRecord::Base
   end
 
   def delete_code
-    File.delete theme_path if File.exists?(theme_path)
-    File.delete stock_path if File.exists?(stock_path)
+    while path = active_path
+      File.delete path
+    end
   end
 end
 

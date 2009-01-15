@@ -8,8 +8,10 @@ module PagesHelper
     )
   end
 
+  # FIXME what is that doing here?
   # just renders the rendering
   def rendering_contents(rendering)
+    raise "depricated?"
     render(
       :partial => rendering.part.absolute_partial_name, 
       :object  => rendering.content, 

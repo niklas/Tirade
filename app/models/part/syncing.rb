@@ -40,19 +40,16 @@ class Part < ActiveRecord::Base
   # TODO: Where is #existing_fullpath needed?
   #alias_method :existing_fullpath, :active_liquid_path
 
-  def absolute_partial_name
-    '/' + File.join('parts',PartsDir,filename) + extention
-  end
   def partial_name
     File.join(PartsDir,filename)
   end
 
   def filename_with_extention
-    real_filename.ends_with?(extention) ? real_filename : (real_filename + extention)
+    real_filename.andand.ends_with?(".#{extention}") ? real_filename : [real_filename, extention].join('.')
   end
 
   def real_filename
-    '_' + filename
+    filename
   end
 
   def real_filename=(real)

@@ -81,7 +81,8 @@ body {
       width: <%= max_frames * 100 %>%; /* yes, very wide */
       height: 100%;
       > div.frame {
-         overflow: hidden; /* auto would be better, but flickers on mozilla */
+         overflow-x: hidden; /* auto would be better, but flickers on mozilla */
+         overflow-y: auto;
          float: left;
          height: 100%;
          width: <%= 100.0 / max_frames %>%;

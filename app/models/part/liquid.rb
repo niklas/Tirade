@@ -1,4 +1,6 @@
 class Part < ActiveRecord::Base
+  class TemplateNotFound < Exception; end
+  class TemplateError < Exception; end
   acts_as_renderer
 
   attr_accessor :html
@@ -11,13 +13,13 @@ class Part < ActiveRecord::Base
 
   def render(assigns={})
     if liquid.blank?
-      return %Q[<div class="warning"> could not find liquid template '#{filename_with_extention}'</div>] 
+      raise TemplateNotFound, %Q[could not find liquid template '#{filename_with_extention}'] 
     end
     begin
       self.template = Liquid::Template.parse(liquid)
       self.html = self.template.render(assigns)
-    rescue Exception => e # FIXME does not work yet, we want to escape the error
-      self.html << e.h
+    rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
+      raise TemplateError, %Q[could not compile liquid template '#{filename_with_extention}': #{e.message.h}] 
     end
   end
 
@@ -32,7 +34,7 @@ class Part < ActiveRecord::Base
   end
 
   def self.extention
-    '.html.liquid'
+    'html.liquid'
   end
   def extention
     self.class.extention
@@ -56,11 +58,7 @@ class Part < ActiveRecord::Base
   # The path to the file containing liquid markup. 
   # If it exists in the current theme, this path is preferred
   def active_liquid_path
-    if in_theme?
-      liquid_theme_path
-    else
-      liquid_stock_path
-    end
+    active_controller.template.finder.pick_template "parts/stock/#{filename}", extention
   end
   alias_method :active_path, :active_liquid_path
 
@@ -82,8 +80,10 @@ class Part < ActiveRecord::Base
     unless liquid.blank?
       begin
         part.render_with_fake_content
-      rescue Liquid::SyntaxError => e
-        part.errors.add(:liquid, '<pre>' + e.message.h + '</pre>')
+      rescue TemplateError => e
+        part.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
+      rescue TemplateNotFound => e
+        part.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
       end
       if t = part.template
         t.errors.each do |e|

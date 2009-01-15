@@ -22,17 +22,20 @@ describe Part do
     it "should have theme support enabled" do
       @part.should_not be_use_theme
     end
+    it "should keep correct filename" do
+      @part.filename.should == 'general_preview'
+    end
+    it "should know its extention" do
+      @part.extention.should == 'html.liquid'
+    end
     it "should have correct filename with extention" do
-      @part.filename_with_extention.should == '_general_preview.html.liquid'
+      @part.filename_with_extention.should == 'general_preview.html.liquid'
     end
     it "should have correct partial_name" do
       @part.partial_name.should == 'stock/general_preview'
     end
-    it "should have correct absolute_partial_name" do
-      @part.absolute_partial_name.should == '/parts/stock/general_preview.html.liquid'
-    end
     it "should have correct existing fullpath" do
-      @part.active_path.should match(%r~app/views/parts/stock/_general_preview.html.liquid~)
+      @part.active_path.should match(%r~/parts/stock/general_preview.html.liquid~)
     end
     it "should not write its liquid to a file (because it is blank)" do
       #File.stub!(:open).with(any_args()).and_return(true)
@@ -283,19 +286,19 @@ describe "The simple preview Part" do
   end
 
   it "should be located in the correct directory" do
-    @part.active_path.should =~ %r~app/views/parts/stock/_simple_preview.html.liquid$~
+    @part.active_path.should =~ %r~/parts/stock/simple_preview.html.liquid$~
   end
 
   it "should know about its path for a given a theme" do
-    @part.theme_path('cool_theme').should =~ %r~themes/cool_theme/views/parts/stock/_simple_preview.html.liquid$~
+    @part.theme_path('cool_theme').should =~ %r~themes/cool_theme/views/parts/stock/simple_preview.html.liquid$~
   end
 
   it "should know it is in the theme if the part file exists there" do
-    File.stub!(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.liquid$~).and_return(true)
+    File.stub!(:exists?).with(%r~themes/cool_theme/views/parts/stock/simple_preview.html.liquid$~).and_return(true)
     @part.should be_in_theme('cool_theme')
   end
   it "should know it is not in the theme if the part file does not exist there" do
-    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/_simple_preview.html.liquid$~).and_return(false)
+    File.should_receive(:exists?).with(%r~themes/cool_theme/views/parts/stock/simple_preview.html.liquid$~).and_return(false)
     @part.should_not be_in_theme('cool_theme')
   end
 
