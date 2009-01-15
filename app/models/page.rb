@@ -58,7 +58,7 @@ class Page < ActiveRecord::Base
     errors.add(:title,'is not allowed here') if parent.andand.parent_id.nil? && BlacklistesTitles.include?(title.urlize)
   end
 
-  def before_validate
+  def before_validation
     self.url = generated_url
     self[:yui] ||= 'doc'
   end
