@@ -77,6 +77,16 @@ class MockTemplate
   def first_render
     "example.rhtml"
   end
+
+  def finder
+    @finder ||= MockTemplateFinder.new
+  end
+end
+
+class MockTemplateFinder
+  def pick_template(filename, ext)
+    "mock/template/#{filename}.#{ext}"
+  end
 end
 
 class MockRequest < OpenStruct
