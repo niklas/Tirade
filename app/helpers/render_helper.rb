@@ -72,14 +72,15 @@ module RenderHelper
   end
 
   def render_page(thepage)
-    layout = thepage.final_layout
-    content_tag(
-      :div,
-      render(:partial => '/public/header', :object => thepage) + 
-      (layout.andand.render_in_page(thepage) || page_without_layout_warning(thepage)) +
-      render(:partial => '/public/footer', :object => thepage),
-      {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
-    )
+    if layout = thepage.final_layout
+      content_tag(
+        :div,
+        layout.render_in_page(thepage),
+        {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
+      )
+    else
+      page_without_layout_warning(thepage)
+    end
   end
 
   def page_without_layout_warning(thepage)
