@@ -8,7 +8,7 @@ class Part < ActiveRecord::Base
 
   private
   def save_code_if_needed!
-    save_code! if needs_to_write_code?
+    save_code! if !self.class.without_modification? && needs_to_write_code?
   end
   def save_code!
     return if code.blank?
