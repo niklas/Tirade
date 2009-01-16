@@ -12,7 +12,7 @@
       (action = obj.attr('action')) && 
       (action.match(/(\d+)\D*$/))) {
       return(m[1]);
-    } else if ( m = obj[0].className.match(/_(\d+)/)) {
+    } else if ( obj[0] && (m = obj[0].className.match(/_(\d+)/))) {
       return(m[1])
     }
   };
