@@ -6,6 +6,11 @@ class GridsController < ApplicationController
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
 
+  def index
+    @models = @grids = Grid.find(:all, :conditions => {:parent_id => nil})
+    render_toolbox_action :index
+  end
+
   def after_update_toolbox_for_destroyed(page)
     page.select_grid(@grid).remove
   end
