@@ -34,6 +34,7 @@ class Part < ActiveRecord::Base
   BasePath = File.join(RAILS_ROOT,'app','views',PartsDir)
   BaseGlob = File.join(BasePath, '*.html.liquid')
   ThemesGlob = File.join(RAILS_ROOT, 'themes', '*', 'views', PartsDir, '*.html.liquid')
+  PluginsGlob = File.join(RAILS_ROOT, 'vendor', 'plugins', '*', 'app', 'views', PartsDir, '*.html.liquid')
 
   SaveLevel = 1
 

@@ -10,11 +10,13 @@ class Part < ActiveRecord::Base
   validates_exclusion_of :filename, :in => BlacklistesFileNames
   def self.sync_from_filesystem
     created = []
-    [BaseGlob, ThemesGlob].each do |pattern|
-      Dir.glob(pattern).each do |filename|
-        filename_without_extention = File.basename(filename).sub(extention,'').sub(/^_/,'')
-        unless find_by_filename(filename_without_extention)
-          created << create!(:filename => filename_without_extention)
+    Part.transaction do
+      [BaseGlob, ThemesGlob, PluginsGlob].each do |pattern|
+        Dir.glob(pattern).each do |filename|
+          filename_without_extention = File.basename(filename).sub(".#{extention}",'').sub(/^_/,'')
+          unless find_by_filename(filename_without_extention)
+            created << create!(:filename => filename_without_extention, :name => filename_without_extention.titleize)
+          end
         end
       end
     end
