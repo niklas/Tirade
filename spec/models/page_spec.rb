@@ -106,6 +106,9 @@ describe "The Pages in the fixtures" do
       it "should have the about page as parent" do
         @page.parent.should == pages(:about)
       end
+      it "should generate the proper url" do
+        @page.generated_url.should == 'meta/about/yourself'
+      end
       it "should have the proper url" do
         @page.url.should == 'meta/about/yourself'
       end
@@ -170,7 +173,6 @@ describe "The main Page with all fixtures" do
 
   describe ", rendering it" do
     before(:each) do
-      @page.active_controller = MockController.new
       @html = @page.render
     end
     it "should not be empty" do
@@ -192,16 +194,6 @@ describe "The main Page with all fixtures" do
             end
           end
         end
-      end
-    end
-    it "should have a header" do
-      @html.should have_tag('div#doc') do
-        with_tag('div#header')
-      end
-    end
-    it "should have a footer" do
-      @html.should have_tag('div#doc') do
-        with_tag('div#footer')
       end
     end
   end
