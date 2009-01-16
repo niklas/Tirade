@@ -42,7 +42,7 @@ class Part < ActiveRecord::Base
     @liquid ||= if liquid_loadable?
                   File.read(active_liquid_path)
                 else
-                  false
+                  '' # verschwindibus!
                 end
   end
 
