@@ -20,9 +20,11 @@
     <%= show part, :preferred_types_names, :label => 'Preferred Types' %>
   <% end %>
   
-  <% accordion_item 'Options' do %>
-    <% part.options.to_hash_with_defaults.each do |key,value| %>
-      <%= di_dt_dd(key,value) %>
+  <% unless part.defined_options.blank? %>
+    <% accordion_item 'Options' do %>
+      <% part.options.to_hash_with_defaults.each do |key,value| %>
+        <%= di_dt_dd(key,value) %>
+      <% end %>
     <% end %>
   <% end %>
 
