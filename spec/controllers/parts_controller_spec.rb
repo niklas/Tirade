@@ -6,6 +6,7 @@ describe PartsController do
     before(:each) do
       @part = mock_model(Part)
       Part.stub!(:find).and_return([@part])
+      Part.stub!(:sync!).and_return(true)
     end
   
     def do_get

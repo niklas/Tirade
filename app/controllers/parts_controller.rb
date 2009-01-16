@@ -3,6 +3,7 @@ class PartsController < ApplicationController
   layout 'admin'
 
   def index
+    Part.sync!
     @models = @parts = Part.search(params[:search].andand[:term]).paginate(:page => params[:page], :per_page => 30)
     render_toolbox_action :index
   end
