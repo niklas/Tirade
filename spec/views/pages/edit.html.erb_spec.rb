@@ -2,15 +2,17 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/pages/edit.html.erb" do
   include PagesHelper
+  fixtures :all
   
   before do
     @page = mock_model Page,
-      :title => 'Main',
-      :url => 'main',
+      :title => 'Sub',
+      :url => 'main/sub',
       :wanted_parent_id => 1,
       :table_name => 'pages',
       :class_name => 'Page',
       :root? => false,
+      :parent => pages(:main),
       :layout_id => 23,
       :yui => 'doc'
 
