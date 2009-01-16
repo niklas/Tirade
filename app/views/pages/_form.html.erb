@@ -20,7 +20,6 @@
         :include_blank => (f.object.root? ? false : "from parent Page (#{f.object.parent.final_layout.andand.label})"), 
         :label => 'Layout'
       }  %>
-      <%= link_to("create new layout", page_layout_path(f.object), :class => 'create grid layout') %>
       <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
     <% end %>
 
