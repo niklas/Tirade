@@ -16,7 +16,6 @@ var Toolbox = {
       .draggable( { handle: 'div.head' } )
       .resizable( {
         minWidth: 300, minHeight: 400,
-        handles: 'se',
         alsoResize: 'div.body, div.busy, .frame:last',
         stop: Toolbox.callback.resized,
       })
