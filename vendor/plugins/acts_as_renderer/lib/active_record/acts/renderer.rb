@@ -1,5 +1,4 @@
 #require_dependency 'controllers/application'
-require 'mock_controller'
 module ActiveRecord
   module Acts #:nodoc:
     module Renderer #:nodoc:

@@ -5,8 +5,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'spec'
 require 'spec/rails'
 include AuthenticatedTestHelper
-require 'mock_controller'
-
 require File.dirname(__FILE__) + '/toolbox_spec_helper'
 include ToolboxSpecHelper
 
