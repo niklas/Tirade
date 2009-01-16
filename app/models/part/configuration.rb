@@ -4,10 +4,9 @@ class Part < ActiveRecord::Base
   after_destroy :delete_yml
 
 
-  private
   # returns the path to a yml file where the rhtml exists
   def active_yml_path
-    (active_path || theme_path).sub(extention,'.yml')
+    (active_path || theme_path).sub(extention,'yml')
   end
 
   def yml_stock_path
@@ -17,6 +16,8 @@ class Part < ActiveRecord::Base
   def yml_theme_path
     theme_path.sub(extention, '.yml')
   end
+
+  private
 
   def write_attributes_to_yml_file(yaml_path)
     File.open(yaml_path, 'w') do |f|
