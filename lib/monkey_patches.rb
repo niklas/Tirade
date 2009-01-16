@@ -21,10 +21,16 @@ module ActiveRecord
       end
 
       def without_modification
+        @@without_modification = true
         transaction do
           yield
           raise Rollback
         end
+        @@without_modification = false
+      end
+
+      def without_modification?
+        @@without_modification ||= false
       end
 
       # FIXME without_timestamps does not work
