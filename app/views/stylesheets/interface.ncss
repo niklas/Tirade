@@ -168,6 +168,7 @@ form {
     [type="text"],[type="password"] {
       width: 75%;
       background-color: <%= @colors[:input] %>;
+      color:  <%= @colors[:text] %>;
       border-color: <%= @colors[:input_border] %>;
       border-style: none none solid none;
       border-width: 1px;
