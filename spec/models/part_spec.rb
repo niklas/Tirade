@@ -337,7 +337,7 @@ describe "The simple preview Part" do
 
   it "should write its liquid code to its theme path on updating" do
     File.should_receive(:open).with(@part.theme_path,'w').and_return(true)
-    File.should_receive(:open).with(@part.active_yml_path,'w').and_return(true)
+    File.should_receive(:open).with(@part.active_configuration_path,'w').and_return(true)
     @part.update_attributes(
       :liquid => 'a little bit to simple'
     )

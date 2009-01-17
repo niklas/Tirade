@@ -20,6 +20,7 @@
 # It can take options to modify its apperance, which are passed as :locals (this should be overridable from Rendering)
 
 class Part < ActiveRecord::Base
+  acts_as_renderer
   concerned_with :syncing, :content, :code, :liquid, :theme, :configuration
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -48,22 +49,16 @@ class Part < ActiveRecord::Base
     find(:all, :order => 'name')
   end
 
-  def before_validation_on_create
-    load_yml_if_needed!
-  end
+  after_save :save_configuration_if_needed!
+  after_save :save_code_if_needed!
+  after_destroy :delete_configuration
+  after_destroy :delete_code
+
 
   def after_initialize
     self.options ||= {}
   rescue ActiveRecord::SerializationTypeMismatch
     self.options = {}
-  end
-
-  def options_as_yaml
-    self.options.to_yaml
-  end
-
-  def options_as_yaml=(new_yaml_options)
-    self.options = object_from_yaml(new_yaml_options)
   end
 
   def label
@@ -82,6 +77,14 @@ class Part < ActiveRecord::Base
     self[:name] = new_name
     self[:filename] = filename_by_name
     new_name
+  end
+
+  def partial_name
+    File.join(PartsDir,filename || '')
+  end
+
+  def filename_with_extention
+    filename.andand.ends_with?(".#{extention}") ? filename : [filename, extention].join('.')
   end
 
   private

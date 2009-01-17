@@ -1,7 +1,4 @@
 class Part < ActiveRecord::Base
-  after_save :save_code_if_needed!
-  after_destroy :delete_code
-
   def needs_to_write_code?
     !@liquid.blank?
   end

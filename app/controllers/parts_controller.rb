@@ -29,7 +29,7 @@ class PartsController < ApplicationController
                 if first_rend = thepage.renderings.with_part(@part).first
                   page.select_rendering(first_rend).html page.context.error_messages_for(:part, :object => @part)
                 else
-                  flash[:error] = part.errors.full_messages
+                  flash[:error] = @part.errors.full_messages
                 end
               end
             end

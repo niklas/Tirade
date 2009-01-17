@@ -11,16 +11,29 @@ class Part < ActiveRecord::Base
   def self.sync_from_filesystem
     created = []
     Part.transaction do
-      [BaseGlob, ThemesGlob, PluginsGlob].each do |pattern|
-        Dir.glob(pattern).each do |filename|
-          filename_without_extention = File.basename(filename).sub(".#{extention}",'').sub(/^_/,'')
-          unless find_by_filename(filename_without_extention)
-            created << create!(:filename => filename_without_extention, :name => filename_without_extention.titleize)
+      [PluginsGlob, ThemesGlob, BaseGlob].each do |pattern|
+        Dir.glob(pattern).each do |path|
+          part = create_from_path(path)
+          if part.valid?
+            created << part
+          else
+            logger.info("Part: could not create #{part.filename}: #{part.errors.full_messages.to_sentence}")
           end
         end
       end
     end
     created
+  end
+
+  def self.create_from_path(path)
+    part = Part.new
+    filename_without_extention = File.basename(path).sub(/\.#{extention}$/,'').sub(/^_/,'') 
+    part.filename  = filename_without_extention
+    part.name = filename_without_extention.titleize
+    unless part.load_configuration_from(path).blank?
+      part.save
+    end
+    part
   end
 
   def self.sync!
@@ -30,11 +43,6 @@ class Part < ActiveRecord::Base
     sync_from_filesystem
   end
 
-  # Saves the needed attributes to a .yml file or reads them in from there
-  def sync_configuration!
-    load_yml_if_needed!
-    save_yml_if_needed!
-  end
 
   # TODO: Where is #fullpath needed?
   #alias_method :fullpath, :active_liquid_path
@@ -42,20 +50,5 @@ class Part < ActiveRecord::Base
   # TODO: Where is #existing_fullpath needed?
   #alias_method :existing_fullpath, :active_liquid_path
 
-  def partial_name
-    File.join(PartsDir,filename || '')
-  end
-
-  def filename_with_extention
-    real_filename.andand.ends_with?(".#{extention}") ? real_filename : [real_filename, extention].join('.')
-  end
-
-  def real_filename
-    filename
-  end
-
-  def real_filename=(real)
-    self.filename = real.gsub(/^_*/,'')
-  end
 
 end

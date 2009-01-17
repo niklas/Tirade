@@ -1,7 +1,6 @@
 class Part < ActiveRecord::Base
   class TemplateNotFound < Exception; end
   class TemplateError < Exception; end
-  acts_as_renderer
 
   attr_accessor :html
   attr_accessor :template
