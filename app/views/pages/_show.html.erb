@@ -15,10 +15,10 @@
   <% end %>
 
   <% accordion_item "Layout", :content_tag => :dl do %>
-    <%= show thepage, :final_layout, :label => 'Layout' %>
     <% show thepage, :yui, :label => 'Width' do %>
       <%=h thepage.yui_name %>
     <% end %>
+    <%= show thepage, :final_layout, :label => 'Layout' %>
   <% end %>
 
   <% accordion_item "Renderings", :content_tag => :dl do %>
