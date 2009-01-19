@@ -108,7 +108,7 @@ $(function() {
   });
 
   $('code.html').livequery(function() { $(this).chili() });
-  $('code.rhtml').livequery(function() { $(this).chili() });
+  $('code.liquid').livequery(function() { $(this).chili() });
 
 
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
