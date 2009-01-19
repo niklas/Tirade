@@ -21,11 +21,7 @@ class Rendering < ActiveRecord::Base
 
   # For now, all associatable Conten Types should at least have a 'title' column
   def self.valid_content_types
-    #ActiveRecord::Base.send(:subclasses).select do |k| 
-    #  k.table_exists? &&
-    #    k.columns.collect(&:name).include?('title') rescue false
-    #end
-    ([Content,Image,Video,YoutubeVideoCollection] + Content.valid_types).uniq
+    Tirade::ActiveRecord::Content.classes
   end
 
   attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment
