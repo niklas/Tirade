@@ -64,6 +64,7 @@ background <%= @colors[:selected] %>;
           li {
             .odd { background-color: <%= @colors[:base].brighter %>; }
             .even { background-color: <%= @colors[:base].darker %>; }
+            :hover { background-color: <%= @colors[:hover] %>; }
             li {
               .odd { background-color: <%= @colors[:base].brighter(2) %>; }
               .even { background-color: <%= @colors[:base].darker %>; }
@@ -79,6 +80,7 @@ background <%= @colors[:selected] %>;
             border-bottom: thin solid <%= @colors[:decoration] %>;
             .odd { background-color: <%= @colors[:base].brighter %>; }
             .even { background-color: <%= @colors[:base].darker %>; }
+            :hover { background-color: <%= @colors[:hover] %>; }
             di {
               .odd { background-color: <%= @colors[:base].brighter(2) %>; }
               .even { background-color: <%= @colors[:base].darker %>; }
