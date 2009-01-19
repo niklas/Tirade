@@ -215,4 +215,15 @@ module InterfaceHelper
     link_to("search", '#', :class => 'toggle_live_search') +
     content_tag(:div, inner, opts )
   end
+
+  def actings_for(record)
+    returning '' do |html|
+      record.acting_roles.each do |role|
+        view_path = record.class.acting_view_path(role)
+        if File.exists?(view_path)
+          html << @template.render(:file => view_path, :locals => {:object => record, :record => record})
+        end
+      end
+    end
+  end
 end
