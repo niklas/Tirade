@@ -84,6 +84,17 @@ module Tirade
       wrap(assoc, {:class => 'one association'}, inner)
     end
 
+    def actings
+      returning '' do |html|
+        @object.acting_roles.each do |role|
+          view_path = @object.class.acting_fields_view_path(role)
+          if File.exists?(view_path)
+            html << @template.render(:file => view_path, :locals => {:fields => self})
+          end
+        end
+      end
+    end
+
     def multiple_checkbox(field,values,opts={})
       name = "#{@object_name}[#{field}][]"
       inner = ''

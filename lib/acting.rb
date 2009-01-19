@@ -24,6 +24,9 @@ module Acting
       acting_roles << role.to_sym
       acting_roles.uniq!
     end
+    def acting_fields_view_path(role)
+      %Q[#{RAILS_ROOT}/vendor/plugins/acts_as_#{role}/views/_fields.html.erb]
+    end
   end
 end
 
