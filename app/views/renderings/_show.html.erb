@@ -30,7 +30,7 @@
     <%= show rendering, :page, :label => 'Page' %>
     <% show rendering, :layout do %>
       <%= show_grid rendering.page.final_layout, :active => rendering.grid %>
-    <% end %>
+    <% end if rendering.page %>
   <% end %>
 <% end %>
 
