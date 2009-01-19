@@ -157,7 +157,7 @@ $(function() {
       appendTo: 'body',
       scroll: true,
       cursor: 'crosshair',
-      cursorAt: {top: 0, left: 0},
+      cursorAt: {top: -1, left: -1},
       drag: function(e,ui) {
         if (Toolbox.surrounds(ui.absolutePosition)) {
           Toolbox.beExclusiveDroppable();

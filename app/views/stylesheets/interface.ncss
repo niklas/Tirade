@@ -236,6 +236,7 @@ ul.list {
     min-height: 19px;
     position: relative;
     text-align: left;
+    padding: 0.3em 0;
     border-bottom: <%= @perimeter %>;
     border-top: <%= @perimeter %>;
     .image {
@@ -365,8 +366,12 @@ width: 16px; height: 16px;
   }
 }
 
+li.ui-draggable {
+  cursor: move;
+}
 li.ui-draggable-dragging {
   background-color: <%= @colors[:base] %>;
+  padding: <%= @big %>;
   a.show, e.edit, e.index {
     display: none;
   }
