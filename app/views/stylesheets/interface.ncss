@@ -369,17 +369,6 @@ li.ui-draggable-dragging {
   }
 }
 
-*.active-droppable {
-  border: thin dashed #997700 !important;
-  min-height: 3em;
-  .hover {
-    background: <% @colors[:hover] %> url(/images/icons/drop_here.png) no-repeat center !important;
-  }
-  .ui-droppable-disabled {
-    border: thin solid transparent !important;
-  }
-}
-
 div.busy {
   position: absolute;
   top: 0; left: 0;
