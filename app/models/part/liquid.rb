@@ -109,7 +109,7 @@ class Part < ActiveRecord::Base
       begin
         parser.parse
       rescue Exception => e
-        self.errors.add(:html, '<pre>' + msgs.collect{|c| c.h }.join + '</pre>')
+        self.errors.add(:html, '<pre>' + msgs.collect{|c| c.message.h }.join + '</pre>')
       end
     else
       # TODO warning when :html is blank?
