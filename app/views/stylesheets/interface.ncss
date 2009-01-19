@@ -360,7 +360,7 @@ width: 16px; height: 16px;
     cursor: pointer;
   }
   li:hover, di:hover {
-    a.show, img.association {
+    > a.show, > img.association {
       display: block !important;
     }
   }
