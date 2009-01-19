@@ -331,12 +331,13 @@ ul.list, dl {
     .show {
       text-indent: -5000px;
       width: 16px;
-      margin-top: -7px;
+      margin-top: -6px;
       background: transparent url(/images/icons/show-arrow.png) no-repeat scroll right;
       position: absolute;
       top: 50%;
       right: <%= @small %>;
       z-index: 3;
+      display: none !important;
     }
     .toggle_live_search {
       float: left;
@@ -346,6 +347,20 @@ width: 16px; height: 16px;
       position: absolute;
       top: -1.7em;
       right: 0;
+    }
+  }
+  img.association {
+    position: absolute;
+    top: 50%;
+    margin-right: 16px;
+    margin-top: -8px;
+    right: <%= @medium %>;
+    display: none;
+    cursor: pointer;
+  }
+  li:hover, di:hover {
+    a.show, img.association {
+      display: block !important;
     }
   }
 }

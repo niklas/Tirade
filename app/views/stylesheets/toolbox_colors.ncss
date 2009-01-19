@@ -5,7 +5,7 @@
   div.ui-resizable-handle {
     background-color: <%= @colors[:decoration] %> !important;
   }
-  a:hover {
+  a:hover, img.association:hover {
     background-color: <%= @colors[:hover] %>;
   }
   div.head {

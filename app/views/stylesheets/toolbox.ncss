@@ -225,7 +225,6 @@ body {
           padding: 0;
           a {
              text-decoration: none;
-             padding:2px 2px 2px 10px;
              display: block;
           }
        }
