@@ -1,10 +1,16 @@
 module ImageFilter
   def scale(image,geom='50x50')
-    image.url = image.url.gsub(/original/, %Q~custom/#{geom}~)
+    if image
+      image.url = image.url.gsub(/original/, %Q~custom/#{geom}~)
+    end
     image
   end
 
   def to_image(image)
-    %Q[<img src="#{image.url}" alt="#{image.title}" title="#{image.title}" />]
+    if image
+      %Q[<img src="#{image.url}" alt="#{image.title}" title="#{image.title}" />]
+    else
+      %Q[]
+    end
   end
 end
