@@ -658,9 +658,11 @@ Toolbox.Templates = {
 
 jQuery.fn.update = function(options) {
   var options = jQuery.extend({ title: '[No Title]' }, options);
-  return $(this)
+  $(this)
     .attr('title',options.title)
     .html(options.content);
+  Toolbox.setTitle();
+  return $(this);
 }
 jQuery.fn.refresh = function() {
   if ($(this).hasClass('frame'))
