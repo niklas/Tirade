@@ -95,6 +95,7 @@ background <%= @colors[:selected] %>;
     }
   }
   div.foot {
+    color: <%= @colors[:base] %>;
     background-color: <%= @colors[:decoration] %>;
   }
   div.sidebar {
