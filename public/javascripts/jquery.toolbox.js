@@ -404,23 +404,30 @@ var Toolbox = {
   },
   beExclusiveDroppable: function() {
     if ( !this.exclusiveDroppable ) {
-      this.otherDroppables().droppable("disable").removeClass('hover');
-      this.unGhost();
+      this.otherDroppables()
+        .droppable("disable")
+        .removeClass('hover')
+        .removeClass('drop-invite');
       this.exclusiveDroppable = true;
     }
   },
   unExclusiveDroppable: function() {
     if ( this.exclusiveDroppable ) {
       this.otherDroppables().droppable("enable");
-      this.beGhost();
       this.exclusiveDroppable = false;
     }
   },
   beGhost: function() {
-    this.element().animate({opacity: 0.42, duration: 1000});
+    if ( !this.ghosted ) {
+      this.element().animate({opacity: 0.42, duration: 1000});
+      this.ghosted = true;
+    }
   },
   unGhost: function() {
-    this.element().animate({opacity: 1, duration: 1000});
+    if ( this.ghosted ) {
+      this.element().animate({opacity: 1, duration: 1000});
+      this.ghosted = false;
+    }
   },
   frames: function(rest) {
     return this.content('> div.frame'+(rest||''));

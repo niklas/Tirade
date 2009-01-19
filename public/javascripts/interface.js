@@ -161,11 +161,14 @@ $(function() {
       drag: function(e,ui) {
         if (Toolbox.surrounds(ui.absolutePosition)) {
           Toolbox.beExclusiveDroppable();
+          Toolbox.unGhost();
         } else {
           Toolbox.unExclusiveDroppable();
+          Toolbox.beGhost();
         };
       },
       stop: function(e,ui) {
+        Toolbox.unExclusiveDroppable();
         Toolbox.unGhost();
       }
     });
