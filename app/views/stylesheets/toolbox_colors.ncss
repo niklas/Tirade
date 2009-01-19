@@ -28,6 +28,17 @@
               background-color: <%= @colors[:clickable] %>;
               color: <%= @colors[:base] %>;
             }
+            a.submit {
+               background: <%= @colors[:clickable] %> 
+                           url(../images/icons/small/checkmark.gif) 
+                           no-repeat 0.4em 0.4em
+                           !important;
+               padding: 0.4em !important;
+               text-indent: 16px;
+               outline: 0;
+               margin: 0.4em;
+               font-weight: bold;
+            }
           }
         }
         div.accordion {

@@ -290,17 +290,19 @@ var Toolbox = {
     });
 
     // redirect the Submit button from bottomLinkBar
-    this.last(' form:has(input.submit)').livequery(function() {
-      Toolbox.createBottomLinkBar().appendDom(
+    this.last(' form:has(input.submit:visible)').livequery(function() {
+      Toolbox.bottomLinkBar().appendDom(
         Toolbox.Templates.submitButton
       );
       var orgbutton = $(this).find('input.submit').hide();
-      Toolbox.last('>ul.bottom_linkbar li.submit a.submit').click(function(e) {
-        e.preventDefault();
-        form = Toolbox.last(' form');
-        form[0].clk = orgbutton[0];
-        form.submit();
-      });
+      Toolbox.bottomLinkBar('> li.submit > a.submit')
+        .text( orgbutton.attr('value') )
+        .click(function(e) {
+          e.preventDefault();
+          form = Toolbox.last(' form');
+          form[0].clk = orgbutton[0];
+          form.submit();
+        });
     });
 
 
@@ -578,11 +580,11 @@ var Toolbox = {
     console.debug("maximizing window");
   },
 
-  createBottomLinkBar: function() {
+  bottomLinkBar: function(rest) {
     if (this.last('>ul.bottom_linkbar').length == 0) {
       this.last().appendDom(Toolbox.Templates.bottomLinkBar);
     };
-    return this.last('>ul.bottom_linkbar');
+    return this.last('>ul.bottom_linkbar' + (rest||''));
   },
 
   callback: {
