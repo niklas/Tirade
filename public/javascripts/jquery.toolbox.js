@@ -53,7 +53,6 @@ var Toolbox = {
     });
 
     this.linkBar().livequery(function() { 
-      Toolbox.setTitle();
       Toolbox.linkBarOn();
       if ($(this).find('> li > a.back').length == 0) {
         $(this).appendDom(Toolbox.Templates.backButton)
@@ -320,7 +319,6 @@ var Toolbox = {
     this.element(" a.back[@href='#']").expire();
     this.frames(':not(:first)').expire();
     this.frames(' form').expire();
-    this.linkBar().expire();
     this.history('> li > a.jump').expire();
     this.last(' input.search_term').expire();
     this.last(' div.search_results ul.list li').expire();
@@ -552,14 +550,14 @@ var Toolbox = {
   linkBarOn: function(after) {
     if (this.linkBar().css('top') != '0px') {
       var h = this.linkBar().height();
-      this.last().animate({paddingTop: h, height: '-=' + h}, {duration: 500 })
+      this.last().animate({paddingTop: h, height: this.bodyHeight() - h}, {duration: 500 })
         .find('ul.linkbar') .animate({top:'0px'}, { duration: 300 });
     }
   },
   linkBarOff: function(after) {
     if (this.linkBar().css('top') == '0px') {
       var h = this.linkBar().height();
-      this.last() .animate({paddingTop: '0', height: '+=' + h}, { duration: 500 })
+      this.last() .animate({paddingTop: '0', height: this.bodyHeight() }, { duration: 500 })
         .find('ul.linkbar').animate({top: -(2*h)}, {duration: 300 });
     }
   },
@@ -645,7 +643,7 @@ Toolbox.Templates = {
       ]},
       { tagName: 'div', class: 'sidebar left', childNodes: [
         { tagName: 'ul', class: 'history' },
-        { tagName: 'ul', class: 'clipboard list' }
+        { tagName: 'ul', class: 'clipboard list records' }
       ] },
       { tagName: 'div', class: 'body', childNodes: [
         { tagName: 'div', class: 'content', id: 'toolbox_content' }

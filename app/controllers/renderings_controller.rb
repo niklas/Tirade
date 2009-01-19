@@ -28,20 +28,9 @@ class RenderingsController < ApplicationController
     #page.mark_as_active(@rendering)
   end
 
-  def destroy
-    @rendering.destroy
-
-    respond_to do |format|
-      format.html { redirect_to( @rendering.page.nil? ? '/' : public_content_url(:path => @rendering.page.path)) }
-      format.xml  { head :ok }
-      format.js do
-        render :update do |page|
-          page.toolbox.close()
-          page.update_grid_for(@rendering)
-          page.unmark_all_active
-        end
-      end
-    end
+  def after_update_toolbox_for_destroyed(page)
+    page.update_grid_for(@rendering)
+    page.unmark_all_active
   end
 
   def duplicate

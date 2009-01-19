@@ -150,7 +150,7 @@ $(function() {
         }
       });
   });
-  $('div#toolbox ul.list > li,div#toolbox dl di dd.record').livequery(function() {
+  $('div#toolbox ul.list.records > li,div#toolbox dl di dd.record').livequery(function() {
     $(this).draggable({ 
       helper: 'clone', 
       zIndex: 500, 

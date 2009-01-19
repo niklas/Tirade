@@ -52,6 +52,7 @@ module InterfaceHelper
     else
       kind = things.first.table_name rescue 'items'
       add_class_to_html_options(opts, kind)
+      add_class_to_html_options(opts, 'records')
       add_class_to_html_options(opts, 'list')
       add_class_to_html_options(opts, 'empty') if things.blank?
       content_tag(
