@@ -30,4 +30,10 @@ module AdminHelper
   def section(text)
     content_for(:section) { text }
   end
+
+  def svn_revision
+    File.read File.join(RAILS_ROOT, 'REVISION')
+  rescue
+    'unknown'
+  end
 end
