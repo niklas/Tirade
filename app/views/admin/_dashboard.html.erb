@@ -39,18 +39,6 @@
     </ul>
   <% end %>
 
-  <% accordion_item "View Paths" do %>
-    <p>
-    <%= self.finder.pick_template 'parts/stock/_artist_teaser', 'html.liquid' %>
-    </p>
-    <hr />
-    <ul class="list">
-      <% self.finder.view_paths.each do |path| %>
-        <li><%= path %> </li>
-      <% end %>
-    </ul>
-  <% end %>
-
   <% accordion_item "Info" do %>
     <%= di_dt_dd 'SVN Revision', svn_revision %>
   <% end %>
