@@ -47,7 +47,7 @@ class Rendering < ActiveRecord::Base
   end
   attr_reader :old_grid_id
 
-  Assignments = %w(fixed by_title_from_trailing_url).freeze unless defined?(Assignments)
+  Assignments = %w(none fixed by_title_from_trailing_url).freeze unless defined?(Assignments)
   validates_inclusion_of :assignment, :in => Assignments, :allow_nil => true
   belongs_to :content, :polymorphic => true
   def trailing_path_of_page
@@ -55,6 +55,8 @@ class Rendering < ActiveRecord::Base
   end
   def content_with_dynamic_assignments
     case assignment
+    when 'none'
+      false
     when 'by_title_from_trailing_url'
       if content_type && content_slug = trailing_path_of_page.first.andand.sluggify
         content_type.constantize.find_by_slug(content_slug)
