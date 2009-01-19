@@ -15,7 +15,7 @@ class Part < ActiveRecord::Base
   def save_code_to!(path)
     FileUtils.mkdir_p(File.dirname(path))
     File.open(path,'w') do |file|
-      file.puts code.gsub(/\r/,'')
+      file.puts code
     end
   end
 
