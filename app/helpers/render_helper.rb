@@ -1,23 +1,23 @@
 # The RenderHelper should contain all the helpers to render Pages, Grids, Randerings and Parts
 module RenderHelper
-  def render_rendering(rendering)
-    render_rendering_filled_with(
-      rendering,
-      if rendering.part.nil?
-        content_tag(:div, 'no part assigned, drop one here', {:class => 'warning'})
-      elsif !rendering.has_content?
-        content_tag(:div, 'no content assigned, drop one here', {:class => 'warning'})
-      else
-        rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
-      end
-    )
+  def warning(message)
+    content_tag(:div, message, :class => 'warning')
   end
-
-  def render_rendering_filled_with(rendering,inner,opts={})
+  def render_rendering(rendering)
+    clss = "rendering #{rendering.part.andand.filename}"
     content_tag(
       :div,
-      inner,
-      {:id => dom_id(rendering), :class => "rendering #{rendering.part.andand.filename} #{rendering.content.class.to_s.underscore if rendering.has_content?}"}
+      if rendering.part.nil?
+        clss += ' without_part'
+        warning('No Part assigned, drop one here.')
+      elsif !rendering.has_content?
+        clss += ' without_content'
+        warning("No #{rendering.part.preferred_types.to_sentence(:connector => 'or')} assigned, drop one here.")
+      else
+        clss += " #{rendering.content.class.to_s.underscore}"
+        rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
+      end,
+      :id => dom_id(rendering), :class => clss
     )
   end
 
@@ -53,14 +53,14 @@ module RenderHelper
       thegrid,
       if thegrid.visible_children.empty?
         renderings = thepage.renderings.for_grid(thegrid)
-        if renderings.empty? && current_user.andand.is_admin?
-          [ content_tag(:div, "empty Grid #{thegrid.id}: #{thegrid.label}  ")]
-        else
+        unless renderings.empty?
           renderings.collect do |rendering|
             # FIXME HACK rendering must know about trailing path, this is in da page
             rendering.page = thepage
             rendering.render 
           end
+        else
+          []
         end
       else
         thegrid.visible_children.collect do |child|

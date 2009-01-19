@@ -110,49 +110,19 @@ $(function() {
   $('code.html').livequery(function() { $(this).chili() });
   $('code.rhtml').livequery(function() { $(this).chili() });
 
-  var fake_rendering = '<div class="rendering fake"><span class="message">empty - drop something here</span></div>';
 
   $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
-  $('body.role_admin div.page div.rendering:not(.fake)').livequery(function(i) {
+  $('body.role_admin div.page div.rendering').livequery(function(i) {
     $(this)
       .appendDom([
         { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
           { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
-          { tagName: 'a', href: '#', class: 'prepare create rendering without_toolbox', innerHTML: 'clone' },
           { tagName: 'span', class: 'handle', innerHTML: 'drag' }
           ] }
-      ])
-      .find('div.admin a.prepare.rendering').click( function(e) {
-        e.preventDefault();
-        $(this).parent().parent().before(fake_rendering);
-      }).end()
-      .droppable({
-        accept: 'li,dd',
-        hoverClass: 'hover',
-        activeClass: 'active-droppable',
-        tolerance: 'pointer',
-        drop: function(e,ui) {
-          var droppee = ui.draggable.typeAndId();
-          data = '';
-          ui.element.beBusy("applying " + droppee.type);
-          switch(droppee.type) {
-            case 'Part': 
-              data += 'rendering[part_id]=' + droppee.id;
-              break;
-            default:
-              data += 'rendering[content_id]=' + droppee.id;
-              data += '&rendering[content_type]=' + droppee.type;
-          }
-          data += pageContextForRequest();
-          $.ajax({
-            url: rendering_url({id: ui.element.resourceId()}),
-            data: data, type: 'PUT'
-          });
-        }
-      });
+      ]);
   });
-  $('body.role_admin div.page div.grid div.rendering.fake').livequery(function(i) {
+  $('body.role_admin.disabled div.page div.grid div.rendering.fake').livequery(function(i) {
     $(this)
       .droppable({
         accept: 'li,dd',
@@ -262,8 +232,9 @@ $(function() {
     });
   });
 
+  // Grid leafs
   $('div.grid:not(:has(> div.grid))').livequery(function() {
-    $(this).sortable("destroy").sortable({
+    $(this).sortable({
       connectWith: ['div.grid:not(:has(> div.grid))'],
       //containment: 'div.page',
       appendTo: 'div.page',
@@ -283,7 +254,6 @@ $(function() {
       stop: function(e,ui) {
         $('div.rendering').width('');
         grid = ui.item.parent();
-        grid.find(' > div.rendering.fake').hide();
         $.ajax({
           data: grid.sortable("serialize"),
           url: order_renderings_grid_url({id: grid.resourceId()}),
@@ -291,20 +261,40 @@ $(function() {
         });
       }
     })
-    .find(' > div.rendering.fake').show().end()
     .droppable({
-      accept: 'li.rendering',
-      hoverClass: 'hover',
+      accept: 'li',
       activeClass: 'active-droppable',
+      hoverClass: 'invite-rendering',
       greedy: true,
       tolerance: 'pointer',
       drop: function(e,ui) {
-        ui.element.find(' > div.rendering.fake').hide();
-        $.ajax({
-          url: rendering_url({id: ui.draggable.resourceId()}),
-          data: "rendering[grid_id]=" + ui.element.resourceId() + pageContextForRequest(),
-          type: 'PUT'
-        });
+        var droppee = ui.draggable.typeAndId();
+        context = "rendering[grid_id]=" + ui.element.resourceId();
+        context += "&rendering[page_id]=" + $('body > div.page').resourceId();
+        switch(droppee.type) {
+          case 'Rendering': /* drop renderings (hints) from toolbox, updates its #grid */
+            $.ajax({
+              url: rendering_url({id: droppee.id}),
+              data: context + "rendering[grid_id]=" + ui.element.resourceId(),
+              type: 'PUT'
+            });
+            break;
+          case 'Part': /* Part from Toolbox creates Rendering without a Content */
+            $.ajax({
+              url: renderings_url(),
+              data: context + '&rendering[part_id]=' + droppee.id,
+              type: 'POST'
+            });
+            break;
+          default: /* dropping anything else will create a Rendering with this assigned as content */
+            $.ajax({
+              url: renderings_url(),
+              data: context + 
+                    '&rendering[content_id]=' + droppee.id +
+                    '&rendering[content_type]=' + droppee.type,
+              type: 'POST'
+            });
+        }
       }
     });
   });
@@ -312,10 +302,10 @@ $(function() {
 
   /* empty grid */
   $('body.role_admin div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
-    $(this).html(fake_rendering)
+    $(this).addClass('empty').html('<div class="warning">Empty Grid. Please drop here a Rendering, Part or any Content.</div>');
   });
 
-  /* lets sort all vertical aligned grids, if there is more than one child */
+  /* lets sort all vertical aligned Grids, if there is more than one child */
   $('div.page div.grid:not(.horizontal):has(> div.grid + div.grid)').livequery(function() {
     $(this).find('> div.grid').append('<div class="admin"><span class="handle" /></div>').end()
     .sortable("destroy").sortable({
@@ -329,7 +319,6 @@ $(function() {
       cursor: 'move',
       stop: function(e,ui) {
         grid = ui.item.parent();
-        console.debug("Sorted Grids: ", grid.resourceId(), grid.sortable("serialize"));
         $.ajax({
           data: grid.sortable("serialize") + pageContextForRequest(),
           url: order_children_grid_url({id: grid.resourceId()}),
@@ -342,10 +331,11 @@ $(function() {
   $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
     $(this).hover(
       function() { 
-        $('div.page .hover').removeClass('hover'); 
         $(this).parents('div.grid, div.rendering').addClass('hover') 
       }, 
-      function() { $('div.page .hover').removeClass('hover'); }
+      function() { 
+        $('div.page .hover').removeClass('hover'); 
+      }
     );
   });
 

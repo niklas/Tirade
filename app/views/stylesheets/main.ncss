@@ -135,12 +135,6 @@ body {
 	       font-weight:bold;
 	   }
 	}
-    div.warning {
-        margin-top: 10px;
-        color: #c72c1e;
-        font-weight: bold;
-    }
-    
     ul {
       margin-left: 2.3em;
     }
