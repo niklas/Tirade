@@ -27,7 +27,7 @@ class Part < ActiveRecord::Base
 
   # Saves the needed attributes to a .yml file or reads them in from there
   def sync_configuration!
-    load_configuration_if_needed!
+    load_configuration_if_needed! and save
     save_configuration_if_needed!
   end
 
@@ -68,14 +68,12 @@ class Part < ActiveRecord::Base
   end
 
   def needs_to_load_configuration_from?(yp)
-    File.exists?(yp) and ( new_record? || File.mtime(yp) > (updated_at) )
+    File.exists?(yp) && ( new_record? || File.mtime(yp) > (updated_at) )
   end
 
   def load_configuration_if_needed!
-    if in_theme? && needs_to_load_configuration_from?(theme_configuration_path)
-      load_configuration_from theme_configuration_path
-    elsif needs_to_load_configuration_from?(stock_configuration_path)
-      load_configuration_from stock_configuration_path
+    if needs_to_load_configuration_from?(active_configuration_path)
+      load_configuration_from active_configuration_path
     end
   end
 
