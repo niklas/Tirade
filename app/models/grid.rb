@@ -96,7 +96,11 @@ class Grid < ActiveRecord::Base
       if root?
         "root"
       else
-        parent.name.split(/[\s-]+/)[self_and_siblings.index(self)] || '100%'
+        if parent.root?
+          '100%'
+        else
+          parent.name.split(/[\s-]+/)[self_and_siblings.index(self)] || '100%'
+        end
       end
     else
       Types[self.yui] || '[unknown]'
