@@ -9,7 +9,10 @@ module RenderHelper
       :div,
       if rendering.part.nil?
         clss += ' without_part'
-        warning('No Part assigned, drop one here.')
+        warning(
+          'No Part assigned, drop one ' +
+          (rendering.has_content? ? "for #{rendering.content_type.pluralize} here." : 'here.')
+        )
       elsif !rendering.has_content?
         clss += ' without_content'
         warning("No #{rendering.part.preferred_types.to_sentence(:connector => 'or')} assigned, drop one here.")
