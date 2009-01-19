@@ -129,7 +129,7 @@ module InterfaceHelper
         add_class_to_html_options(opts[:dd], 'record')
         add_class_to_html_options(opts, 'record')
         val = render_as_attribute(val)
-      when Array
+      when Array, ActiveRecord::NamedScope::Scope
         unless val.blank?
           opts[:href] = url_for(:controller => val.first.table_name) if selectable
           add_class_to_html_options(opts, 'list')
