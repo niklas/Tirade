@@ -264,7 +264,7 @@ $(function() {
     .droppable({
       accept: 'li',
       activeClass: 'active-droppable',
-      hoverClass: 'invite-rendering',
+      hoverClass: 'drop-invite',
       greedy: true,
       tolerance: 'pointer',
       drop: function(e,ui) {
@@ -275,7 +275,7 @@ $(function() {
           case 'Rendering': /* drop renderings (hints) from toolbox, updates its #grid */
             $.ajax({
               url: rendering_url({id: droppee.id}),
-              data: context + "rendering[grid_id]=" + ui.element.resourceId(),
+              data: context,
               type: 'PUT'
             });
             break;
@@ -299,6 +299,41 @@ $(function() {
     });
   });
 
+  $('div.rendering.without_part').livequery(function() {
+    $(this).droppable({
+      accept: 'li.part',
+      activeClass: 'active-droppable',
+      hoverClass: 'drop-invite',
+      greedy: true,
+      tolerance: 'pointer',
+      drop: function(e,ui) {
+        var droppee = ui.draggable.typeAndId();
+        $.ajax({
+          url: rendering_url({id: ui.element.resourceId()}),
+          data: 'rendering[part_id]=' + droppee.id,
+          type: 'PUT'
+        });
+      }
+    });
+  });
+  $('div.rendering.without_content').livequery(function() {
+    $(this).droppable({
+      accept: 'li:not(.part)',
+      activeClass: 'active-droppable',
+      hoverClass: 'drop-invite',
+      greedy: true,
+      tolerance: 'pointer',
+      drop: function(e,ui) {
+        var droppee = ui.draggable.typeAndId();
+        $.ajax({
+          url: rendering_url({id: ui.element.resourceId()}),
+          data: 'rendering[content_id]=' + droppee.id +
+                '&rendering[content_type]=' + droppee.type,
+          type: 'PUT'
+        });
+      }
+    });
+  });
 
   /* empty grid */
   $('body.role_admin div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {

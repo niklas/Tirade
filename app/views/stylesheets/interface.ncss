@@ -4,7 +4,7 @@ body div {
     padding: 2em 15%;
     color: black;
     font-weight: bold;
-    background: url(../images/pentagon-tile.jpg) repeat;
+    background: transparent;
     font-size: 130%;
     line-height: 110%;
   }
@@ -19,9 +19,9 @@ body div {
       height: 8em;
       background: url(../images/pentagon-tile.jpg) repeat;
     }
-    .active-droppable.invite-rendering {
+    .active-droppable.drop-invite {
       padding-bottom: 8em;
-      background: url(../images/pentagon-tile.jpg) repeat;
+      background: url(../images/pentagon-tile-active.jpg) repeat;
     }
   }
   .rendering {
@@ -36,6 +36,12 @@ body div {
         position: relative;
         top: 23%; left: 42%;
       }
+    }
+    .without_part, .without_content {
+      background: url(../images/pentagon-tile.jpg) repeat;
+       .active-droppable.drop-invite {
+         background: url(../images/pentagon-tile-active.jpg) repeat;
+       }
     }
   }
   :hover > div.admin {
