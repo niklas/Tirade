@@ -20,7 +20,7 @@ class StylesheetsController < ApplicationController
     @colors = {
       :base         => '#f0f0f0',
 
-      :hover        => '#3198F2',
+      :hover        => '#90CAFC',
       :perimeter    => '#dedede',
 
       :toolbox_border => '#cdcdcd',
