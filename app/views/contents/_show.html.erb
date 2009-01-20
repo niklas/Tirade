@@ -19,11 +19,7 @@
     <%= render_attributes_for content %>
   <% end %>
 
-  <% if content.acts_as?(:pictureable) %>
-    <% accordion_item "Pictures" do %>
-      <%= show content, :images %>
-    <% end %>
-  <% end %>
+  <%= actings_for content %>
 
 <% end %>
 
