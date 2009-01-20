@@ -5,6 +5,10 @@ module Tirade
     end
 
     def text_area(field, options = {})
+      if @object.markup?(field)
+        options[:class] ||= ''
+        options[:class] += ' markitup textile'
+      end
       wrap(field, options, super(field,options.reverse_merge(:rows => 2)))
     end
 

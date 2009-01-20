@@ -127,8 +127,12 @@ var Toolbox = {
         }
       }
     });
-    this.frames(' textarea').livequery(function() {
-      $(this).elastic();
+    this.frames(' textarea.markitup.textile').livequery(function() {
+      $(this).markItUp(myTextileSettings);
+    });
+    this.frames(' textarea:not(.markitup)').livequery(function() {
+      if ( !$(this).data('hasElastic') )
+        $(this).elastic().data('hasElastic', true);
     });
     this.last(' div.live_search input.search_term').livequery(function() {
       var field = $(this);

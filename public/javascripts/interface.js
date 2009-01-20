@@ -111,8 +111,9 @@ $(function() {
   $('code.liquid').livequery(function() { $(this).chili() });
 
 
-  $('div#toolbox > div.body > div.content > div.frame a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
-  $('div#toolbox > div.sidebar a[href!=#]').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.show').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame > ul.linkbar a[href!=#]:not(.back)').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.sidebar a.show').livequery(function() { $(this).useToolbox(); });
   $('body.role_admin div.page div.rendering').livequery(function(i) {
     $(this)
       .appendDom([
