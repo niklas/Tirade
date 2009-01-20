@@ -312,6 +312,9 @@ describe "The simple preview Part" do
     @part.should be_liquid_loadable
   end
   it "should be located in the correct directory" do
+    @stock_paths = ["#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"] 
+    @part.stub!(:stock_paths).and_return(@stock_paths)
+    File.should_receive(:file?).with(@stock_paths.first).and_return(true)
     @part.active_path.should =~ %r~spec/fixtures/views/parts/stock/simple_preview.html.liquid$~
   end
   it "should know about its path for the contex ttheme" do
