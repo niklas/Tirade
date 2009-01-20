@@ -52,11 +52,10 @@ module Tirade
       fkey = opts.delete(:foreign_key) || "#{assoc.to_s.singularize}_ids"
       inner = ''
       inner << @template.list_of(things, :force_list => true)
-      href   = @template.url_for(:controller => assoc)
-      inner << @template.text_field_tag("#{assoc}_search_term", nil, :href => href, :class => 'search_term')
-      inner << @template.content_tag(:div, "Search for #{assoc.to_s.humanize}", :class => "search_results many #{assoc}")
-      inner << @template.hidden_field_tag("#{@object_name}[#{fkey}][]","empty")
-      wrap(assoc, {}, inner)
+      inner << @template.live_search_for(assoc.to_s.singularize)
+
+      inner << @template.hidden_field_tag("#{@object_name}[#{fkey}][]","empty", :class => 'association_id')
+      wrap(assoc, {:class => 'many association'}, inner)
     end
 
     def has_one(assoc, opts={})
@@ -68,7 +67,7 @@ module Tirade
       assocs = assoc.to_s.pluralize
       thing = @object.send(assoc)
       inner = ''
-      inner << @template.list_of([thing])
+      inner << @template.list_of([thing], :force_list => true)
       inner << @template.live_search_for(opts.delete(:types) || assoc)
       if thing
         inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
