@@ -130,7 +130,7 @@ module InterfaceHelper
         add_class_to_html_options(opts[:dd], 'record')
         add_class_to_html_options(opts, 'record')
         val = render_as_attribute(val)
-      when Array, ActiveRecord::NamedScope::Scope
+      when Array, ActiveRecord::NamedScope::Scope, ActiveRecord::Associations::AssociationProxy
         unless val.blank?
           opts[:href] = url_for(:controller => val.first.table_name) if selectable
           add_class_to_html_options(opts, 'list')
@@ -148,7 +148,7 @@ module InterfaceHelper
       when Time, Date
         val = val.to_s(:db)
       end
-      val = debug(val) unless val.is_a?(String)
+      val = "(#{val.class})\n#{debug(val)}" unless val.is_a?(String)
       di_dt_dd(label, val, opts)
     end
   end

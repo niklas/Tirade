@@ -280,21 +280,11 @@ di.association {
   }
   ul.list {
     background-color: <%= @colors[:base] %>;
-    margin: <%= @medium %>;
-    width: 80%;
+    margin: 5%;
+    padding: 2.5%;
+    width: 85%;
     li {
-      padding-left: 25px !important;
-      padding-right: 25px !important;
       position: relative;
-      img.association {
-        position: absolute;
-        left: 0.3em;
-        top: 0;
-        display: none;
-      }
-      :hover img.association {
-        display: block;
-      }
       a.show {
         right: 0.3em;
       }
@@ -305,25 +295,29 @@ di.association {
 div.live_search {
   position: relative;
   clear: both;
+  width: 90%;
+  margin: 5%;
   input.search_term {
     float: left;
-    margin: <%= @medium %>;
-    width: 90%;
+    margin: 3% 3%;
+    width: 94%;
   }
   .polymorphic input.search_term {
     width: 60%;
   }
   select.polymorph_search_url {
     float: left;
-    margin: <%= @medium %>;
-    width: 25%;
+    width: 28%;
+    margin: 3% 3%;
   }
   div.search_results {
     clear: both;
-    padding: <%= @medium %>;
+    width: 94%;
+    margin: 3%;
     ul {
-      width: 80%;
-      margin: <%= @medium %>;
+      width: 94%;
+      margin: 0;
+      padding 3%;
     }
   }
 }
@@ -352,11 +346,11 @@ width: 16px; height: 16px;
   }
   img.association {
     position: absolute;
+    display: none;
     top: 50%;
     margin-right: 16px;
     margin-top: -8px;
     right: <%= @medium %>;
-    display: none;
     cursor: pointer;
   }
   li:hover, di:hover > *  {
