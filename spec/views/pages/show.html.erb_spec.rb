@@ -4,16 +4,19 @@ describe "/pages/show.html.erb" do
   include PagesHelper
   
   before(:each) do
-    @page = mock_model(Page)
-    @page.stub!(:title).and_return("MyString")
-    @page.stub!(:url).and_return("MyString")
-    @page.stub!(:parent_id).and_return("1")
-    @page.stub!(:parent).and_return(nil)
-    @page.stub!(:final_layout).and_return(nil)
-    @page.stub!(:yui_name).and_return('111%')
-    @page.stub!(:root?).and_return(true)
-    @page.stub!(:children).and_return([])
-    @page.stub!(:renderings).and_return([])
+    @page = mock_model(
+      Page,
+      :title => "MyString",
+      :url => "MyString",
+      :parent_id => "1",
+      :parent => nil,
+      :final_layout => nil,
+      :yui_name => '111%',
+      :root? => true,
+      :children => [],
+      :renderings => [],
+      :markup? => false
+    )
 
     assigns[:page] = @page
   end
