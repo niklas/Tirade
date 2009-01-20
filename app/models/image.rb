@@ -23,7 +23,7 @@ class Image < ActiveRecord::Base
                     :path => ":rails_root/public#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension",
                     :url => "#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
   
-  has_fulltext_search :title
+  has_fulltext_search :title, :image_file_name
   acts_as_content :liquid => [:title, :image_file_name]
   
   # validates_presence_of :image_file_name
