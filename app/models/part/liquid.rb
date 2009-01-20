@@ -39,29 +39,47 @@ class Part < ActiveRecord::Base
   def liquid(reload=false)
     @liquid = nil if reload
     @liquid ||= if liquid_loadable?
-                  File.read(active_liquid_path)
+                  load_liquid_from active_liquid_path
                 else
-                  '' # verschwindibus!
+                  '<div class="warning">no liquid code found</div>' # verschwindibus!
                 end
   end
 
   # Sets the new Liquid markup code. Will be written to the theme path after_save
   def liquid=(new_liquid)
+    self.updated_at = Time.now if liquid != new_liquid
     @liquid = new_liquid
   end
   alias_method :code, :liquid
   alias_method :code=, :liquid=
 
+  def load_liquid_from(path)
+    raise "load from plugin" if path =~ %r~plugins~
+    File.read(path)
+  end
 
   # The path to the file containing liquid markup. 
   # If it exists in the current theme, this path is preferred
   def active_liquid_path
-    template_finder.pick_template(partial_name, extention)
+    stock_paths.find do |path|
+      File.file? path
+    end
   end
   alias_method :active_path, :active_liquid_path
 
-  def template_finder
-    active_controller.instance_variable_get('@template').finder
+  # Avaiable drectories, both existing and nonexisting
+  def stock_dirs
+    [
+      BasePath,
+      File.join(RAILS_ROOT, 'themes', current_theme, 'views', PartsDir),
+      Tirade::Plugins.all_paths.map {|path| File.join(path,'app','views', PartsDir)}
+    ].flatten
+  end
+
+  def stock_paths
+    stock_dirs.map do |dir|
+      File.join(dir,filename_with_extention)
+    end
   end
 
   def liquid_loadable?

@@ -17,7 +17,9 @@ class Part < ActiveRecord::Base
   end
 
   def current_theme
-    active_controller.andand.current_theme
+    active_controller.andand.current_theme || Settings.public_theme
+  rescue
+    Settings.public_theme
   end
 
   def make_themable!(theme_name=nil)

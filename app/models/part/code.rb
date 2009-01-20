@@ -1,6 +1,8 @@
 class Part < ActiveRecord::Base
   def needs_to_write_code?
-    !@liquid.blank?
+    tp = theme_path
+    !@liquid.blank? && 
+      (!File.exists?(tp) || File.mtime(tp) < (updated_at || Time.now) )
   end
 
   private

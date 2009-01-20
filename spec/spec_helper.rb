@@ -54,19 +54,9 @@ def simple_preview
 end
 
 def mock_controller
-  finder = mock(ActionView::TemplateFinder)
-  def finder.pick_template(ppath,ext)
-    path = File.join(RAILS_ROOT, 'spec', 'fixtures', 'views', "#{ppath}.#{ext}")
-    File.exists?(path) ? path : false
-  end
-  view = mock(ActionView::Base)
-  view.stub!(:finder).and_return(finder)
-
   controller = mock(PublicController)
   controller.stub!(:current_theme).and_return('cool')
   controller.stub!(:view_paths).and_return([ File.join(RAILS_ROOT,'spec','fixtures','views') ])
   controller.stub!(:master_helper_module).and_return(PublicController.new.master_helper_module)
-  # there is no such thing as PublicController#template
-  controller.instance_variable_set('@template', view)
   controller
 end
