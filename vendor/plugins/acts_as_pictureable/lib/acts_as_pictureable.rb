@@ -20,6 +20,12 @@ module AlexPodaras
           end
           include InstanceMethods
           alias_method_chain :image_ids=, :robustness
+          if self.accessible_attributes
+            self.accessible_attributes << 'image_ids'
+          end
+          if self.protected_attributes
+            protected_attributes.delete 'image_ids'
+          end
         end
       end
 
