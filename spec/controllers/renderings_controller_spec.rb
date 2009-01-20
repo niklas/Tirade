@@ -220,7 +220,7 @@ describe RenderingsController do
   describe "handling DELETE /renderings/1" do
 
     before(:each) do
-      @rendering = mock_model(Rendering, :destroy => true, :page => nil)
+      @rendering = mock_model(Rendering, :destroy => true, :page => nil, :table_name => 'renderings')
       Rendering.stub!(:find).and_return(@rendering)
     end
   
@@ -238,9 +238,9 @@ describe RenderingsController do
       do_delete
     end
   
-    it "should redirect to the page of the destroyed rendering or '/'" do
+    it "should redirect to the list of renderings" do
       do_delete
-      response.should redirect_to('/')
+      response.should redirect_to('/manage/renderings')
     end
   end
 end
