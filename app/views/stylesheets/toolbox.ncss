@@ -147,6 +147,7 @@ body {
          textarea {
            width: 97%;
            height: 4em;
+           font-size: 100%; /* HACK for elastic */
          }
          input.submit.save {
            float: right;
