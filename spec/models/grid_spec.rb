@@ -29,6 +29,10 @@ describe Grid do
       @grid.rgt.should_not be_nil
     end
 
+    it "should be root" do
+      @grid.should be_root
+    end
+
     describe ', setting the grid_to "50-50"' do
       before(:each) do
         @grid.yui = 'yui-g'
