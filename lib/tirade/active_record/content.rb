@@ -4,6 +4,9 @@ module Tirade
       include ActsAs
 
       def self.included(base)
+        base.class_inheritable_reader :marked_up_fields
+        base.class_inheritable_writer :marked_up_fields
+        base.marked_up_fields = []
         base.class_eval do
           extend ClassMethods
           include InstanceMethods
@@ -17,9 +20,17 @@ module Tirade
             liquid_methods *liquids
           end
         end
+        def markup(*fields)
+          self.marked_up_fields << fields
+          self.marked_up_fields.flatten!
+          self.marked_up_fields.uniq!
+        end
       end
 
       module InstanceMethods
+        def markup?(field)
+          self.class.marked_up_fields.include?(field.to_sym)
+        end
       end
     end
   end

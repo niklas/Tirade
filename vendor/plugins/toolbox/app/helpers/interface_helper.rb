@@ -1,4 +1,6 @@
 module InterfaceHelper
+  include TextFilter # for markup
+
   # Opens up a Wrapper for an +accordion+ with 1 or more +acction_item+s. Use it as a block
   # with <% %> tags around it (no '=')
   #   <% accorion do %>
@@ -147,6 +149,9 @@ module InterfaceHelper
         )
       when Time, Date
         val = val.to_s(:db)
+      end
+      if val.is_a?(String) and obj.markup?(name)
+        val = markup(val)
       end
       val = "(#{val.class})\n#{debug(val)}" unless val.is_a?(String)
       di_dt_dd(label, val, opts)

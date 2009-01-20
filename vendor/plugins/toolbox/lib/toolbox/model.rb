@@ -2,8 +2,9 @@ module Tirade
   module Toolbox
     module Model
       def self.included(base)
-        #base.extend(ClassMethods)
-        base.class_eval { include InstanceMethods  }
+        base.class_eval do
+          include InstanceMethods
+        end
       end
 
       module InstanceMethods
