@@ -20,3 +20,13 @@ describe Content do
     end
   end
 end
+
+describe 'The Love letter' do
+  fixtures :contents
+  before(:each) do
+    @love_letter = contents(:love_letter)
+  end
+  it "should be a Document" do
+    @love_letter.should be_an_instance_of(Document)
+  end
+end

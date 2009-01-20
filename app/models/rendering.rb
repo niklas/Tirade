@@ -80,7 +80,7 @@ class Rendering < ActiveRecord::Base
   }
 
   def content_type=(new_content_type)
-    write_attribute(:content_type, new_content_type.to_s) unless new_content_type.blank?
+    write_attribute(:content_type, new_content_type.to_s) unless new_content_type.to_s.blank?
   end
   def content_id=(new_content_id)
     write_attribute(:content_id, new_content_id.to_i) unless new_content_id.to_i == 0
@@ -93,8 +93,8 @@ class Rendering < ActiveRecord::Base
 
   def validate
     if self.content_id
-      unless self.class.valid_content_types.collect(&:to_s).include?(self.content_type)
-        errors.add(:content_type, "Invalid Content Type: #{self.content_type}") 
+      unless self.class.valid_content_types.find {|ct| ct <= self.content_type.constantize}
+        errors.add(:content_type, "Invalid Content Type: #{self.content_type} (allowed: #{self.class.valid_content_types.to_sentence})") 
       end
     end
   end

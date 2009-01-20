@@ -20,3 +20,9 @@ simple_preview:
   - NewsFolder
   - NewsItem
 
+image_preview:
+  name: Image Preview
+  filename: image_preview
+  :preferred_types: 
+  - Image
+

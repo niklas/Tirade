@@ -348,6 +348,20 @@ describe "The simple preview Part" do
 end
 
 
+describe "The Image Preview form the fixtures" do
+  fixtures :parts
+  before(:each) do
+    @image_preview = parts(:image_preview)
+  end
+  it "should be valid" do
+    @image_preview.should be_valid
+  end
+  it "should prefer Images" do
+    @image_preview.preferred_types.should == ['Image']
+  end
+end
+
+
 #describe "A Part with content_numerus/_quantum" do
 #  it "can render no Content"
 #  it "can render a single Content"
