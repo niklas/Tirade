@@ -54,7 +54,6 @@ class Part < ActiveRecord::Base
   alias_method :code=, :liquid=
 
   def load_liquid_from(path)
-    raise "load from plugin" if path =~ %r~plugins~
     File.read(path)
   end
 
