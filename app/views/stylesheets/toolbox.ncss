@@ -168,10 +168,10 @@ body {
                margin: <%= @medium %>;
              }
              .list dd {
-               width: 100%;
                margin: 0;
              }
              dd {
+               width: 80%;
                margin: <%= @medium %>;
                dt,dd {
                  margin: <%= @small %>;
