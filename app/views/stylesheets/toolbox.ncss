@@ -140,14 +140,18 @@ body {
            width: 98%;
            margin: 1%;
            float: left;
-           font-size: 80%;
            overflow: auto;
            padding: <%= @small %>;
+           line-height: 1.23em;
+           letter-spacing: 0.23em;
          }
          textarea {
            width: 97%;
            height: 4em;
            font-size: 100%; /* HACK for elastic */
+           #part_liquid {
+             font-familiy: monospace;
+           }
          }
          input.submit.save {
            float: right;

@@ -185,6 +185,7 @@ form {
       border-color: <%= @colors[:input_border] %>;
       border-style: none none solid none;
       border-width: 1px;
+      padding: <%= @small %> <%= @small %> 0;
     }
     #search_term {
       float: left;
