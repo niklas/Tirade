@@ -9,7 +9,7 @@ module AlexPodaras
       module ClassMethods
         def acts_as_pictureable(options = {})
           has_many :picturizations, :as => :pictureable, :dependent => :destroy
-          has_many :images, :as => :pictureable, :dependent => :destroy, :through => :picturizations, :order => 'position'
+          has_many :images, :as => :pictureable, :dependent => :nullify, :through => :picturizations, :order => 'position'
           acts_as! :pictureable
           if defined?(Image) && Image < ActiveRecord::Base
             unless Image.reflections.has_key?(:picturizations)
