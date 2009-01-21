@@ -69,10 +69,28 @@ class Part < ActiveRecord::Base
   # Avaiable drectories, both existing and nonexisting
   def stock_dirs
     [
-      BasePath,
       File.join(RAILS_ROOT, 'themes', current_theme, 'views', PartsDir),
-      Tirade::Plugins.all_paths.map {|path| File.join(path,'app','views', PartsDir)}
+      Tirade::Plugins.all_paths.map {|path| File.join(path,'app','views', PartsDir)},
+      BasePath
     ].flatten
+  end
+
+  def alternatives
+    existing_stock_paths.map do |path|
+      if path =~ %r~themes/(\w+)/views~
+        {:place => 'theme', :name => $1}
+      elsif path =~ %r~vendor/plugins/(\w+)/app/views~
+        {:place => 'plugin', :name => $1}
+      elsif path =~ %r~app/views~
+        {:place => 'stock', :name => 'default'}
+      end
+    end
+  end
+
+  def existing_stock_paths
+    stock_paths.select do |path|
+      File.file? path
+    end
   end
 
   def stock_paths

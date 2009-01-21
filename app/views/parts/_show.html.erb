@@ -36,5 +36,17 @@
       <code class="html"><%=h part.render_with_fake_content %></code>
   <% end %>
 
+  <% accordion_item 'Alternatives' do %>
+    <ul>
+      <% part.alternatives.each do |alt| %>
+        <li>
+          <b><%= alt[:place] %></b>
+          <%= alt[:name] %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
 <% end %>
 
