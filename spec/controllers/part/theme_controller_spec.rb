@@ -1,8 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
-Part::ThemeController # rspec vs. namespaced controllers
-describe Part::ThemeController do
-  controller_name 'part/theme'
 
+describe Part::ThemeController do
   describe "route generation" do
     it "should map { :action => 'show', :id => 'cool', :part_id => 23} to /manage/parts/23/theme/cool" do
       route_for(:controller => 'part/theme', :action => 'show', :id => 'cool', :part_id => 23).should == 
@@ -29,15 +27,15 @@ describe Part::ThemeController do
     end
   end
 
-  describe "handling GET /manage/parts/23/theme/cool" do
+  describe "handling GET /manage/parts/23/theme/cool with AJAX" do
     before(:each) do
-      @part = mock_model(Part)
+      @part = mock_model(Part, :class_name => 'Part', :table_name => 'parts' )
       @part.stub!(:current_theme=).and_return(true)
       Part.stub!(:find).and_return(@part)
     end
 
     def do_get
-      get :show, :part_id => 23, :id => 'cool'
+      get :show, :part_id => 23, :id => 'cool', :format => 'js'
     end
 
     it "should be successful" do
