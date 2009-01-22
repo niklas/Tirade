@@ -4,7 +4,7 @@ module Tirade
     # with acts_as_something
     module ActsAs 
       # All ActiveRecord addons
-      FEATURES = [ :content ]
+      FEATURES = [ :content, :associations ]
 
       class << self
         def included(base) #:nodoc:
