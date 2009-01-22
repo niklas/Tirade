@@ -325,11 +325,11 @@ describe "The simple preview Part" do
   end
 
   it "should know it is in the theme if the part file exists there" do
-    File.stub!(:exists?).with(%r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~).and_return(true)
+    File.stub!(:file?).with(%r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~).and_return(true)
     @part.should be_in_theme('freezing_cool')
   end
   it "should know it is not in the theme if the part file does not exist there" do
-    File.should_receive(:exists?).with(%r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~).and_return(false)
+    File.should_receive(:file?).with(%r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~).and_return(false)
     @part.should_not be_in_theme('freezing_cool')
   end
 
@@ -383,6 +383,21 @@ describe "Alternative Part in Theme 'cool'" do
     File.should_receive(:file?).with(@stock_paths.first).at_least(1).and_return(true) # cool theme exists
     @part.should_receive(:load_liquid_from).with(%r~themes/cool~).and_return("themed liquid code")
     @part.liquid.should == 'themed liquid code'
+  end
+
+  it "should remove liquid code and configuration of the given theme" do
+    theme_path = @stock_paths.first
+    configuration_path = theme_path.sub(/html.liquid$/,'yml')
+    File.should_receive(:file?).with(theme_path).at_least(1).and_return(true) # cool theme exists
+    File.should_receive(:delete).with(theme_path).once.and_return(true)
+
+    File.should_receive(:file?).with(configuration_path).at_least(1).and_return(true) # cool theme exists (config)
+    File.should_receive(:delete).with(configuration_path).once.and_return(true)
+
+    @part.should_not_receive(:destroy)
+    @part.should_not_receive(:destroy!)
+
+    @part.remove_theme! @theme
   end
 end
 

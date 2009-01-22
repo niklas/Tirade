@@ -14,7 +14,7 @@ class Part < ActiveRecord::Base
 
   # Does a counterpart of this file exists in the given theme, defaults to the current theme of the +active_controller+
   def in_theme?(theme_name=nil)
-    File.exists? theme_path(theme_name)
+    File.file? theme_path(theme_name)
   end
 
   def current_theme
@@ -33,9 +33,10 @@ class Part < ActiveRecord::Base
     end
   end
 
-  def remove_theme!(theme_name=nil)
-    if theme_name ||= current_theme && in_theme?(theme_name)
-      File.delete theme_path(theme_name)
+  def remove_theme!(theme=nil)
+    if theme ||= current_theme
+      File.delete theme_path(theme) if File.file?(theme_path(theme))
+      File.delete theme_configuration_path(theme) if File.file?(theme_configuration_path(theme))
     end
   end
 

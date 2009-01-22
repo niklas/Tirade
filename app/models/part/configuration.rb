@@ -16,8 +16,8 @@ class Part < ActiveRecord::Base
     configuration_path stock_path
   end
 
-  def theme_configuration_path
-    configuration_path theme_path
+  def theme_configuration_path(theme=nil)
+    configuration_path theme_path(theme)
   end
 
   # returns the path for the configuration next to the given path

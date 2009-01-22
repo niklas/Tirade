@@ -67,4 +67,48 @@ describe Part::ThemeController do
 
   end
 
+  describe "handling DELETE /manage/parts/23/theme/cool with ajax" do
+    before(:each) do
+      @part = mock_model(Part, :table_name => 'parts')
+      @part.stub!(:current_theme=).and_return(true)
+      @part.stub!(:remove_theme!).and_return(true)
+      Part.stub!(:find).and_return(@part)
+    end
+
+    def do_delete
+      get :destroy, :part_id => 23, :id => 'cool', :format => 'js'
+    end
+
+    it "should be successful" do
+      do_delete
+      response.should be_success
+    end
+
+    it "should find the requested part" do
+      Part.should_receive(:find).with("23").and_return(@part)
+      do_delete
+    end
+
+    it "should assign the found part for the view" do
+      do_delete
+      assigns[:part].should equal(@part)
+    end
+
+    it "should assign the theme for the view" do
+      do_delete
+      assigns[:theme].should == 'cool'
+    end
+
+    it "should delete the alternative liquid code and configuration" do
+      @part.should_receive(:remove_theme!).with("cool").and_return(true)
+      do_delete
+    end
+
+    it "should not destroy the Part itself" do
+      @part.should_not_receive(:destroy)
+      do_delete
+    end
+
+  end
+
 end

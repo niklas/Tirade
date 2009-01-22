@@ -8,16 +8,20 @@ class Part::ThemeController < ApplicationController
     render_toolbox_action :show
   end
 
-  def delete
-    @part.current_theme = @theme
+  def destroy
+    if @part.remove_theme! @theme
+      render_toolbox_action :destroyed
+    else
+      render_toolbox_action :failed_destroy
+    end
   end
 
   private
   def fetch_part
-    @part = Part.find(params[:part_id])
+    @model = @part = Part.find(params[:part_id])
   end
 
   def fetch_theme
-    @theme= params[:id].to_s
+    @theme = params[:id].to_s
   end
 end

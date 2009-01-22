@@ -1,9 +1,5 @@
 <% part ||= show || @part %>
 
-<% links do %>
-  <li><%= edit_part_link(part) %> </li>
-<% end %>
-
 <% accordion do %>
   
   <% accordion_item 'Preview' do %>
@@ -37,11 +33,16 @@
   <% end %>
 
   <% accordion_item 'Alternatives' do %>
-    <ul>
+    <ul class="list">
       <% part.alternatives.each do |alt| %>
         <li>
+          <% if alt[:place] == 'theme' %>
+            Theme <%= alt[:name] %>
+            <%= show_part_theme_link(part, alt[:name]) %>
+          <% else %>
           <b><%= alt[:place] %></b>
           <%= alt[:name] %>
+          <% end %>
         </li>
       <% end %>
     </ul>
