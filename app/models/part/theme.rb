@@ -1,5 +1,6 @@
 class Part < ActiveRecord::Base
 
+  attr_writer :current_theme
   # Theme stuff
   def use_theme=(useit)
     @use_theme = ![false, "false", "f", 0, "0", nil, ""].include?(useit)
@@ -17,7 +18,7 @@ class Part < ActiveRecord::Base
   end
 
   def current_theme
-    active_controller.andand.current_theme || Settings.public_theme
+    @current_theme || active_controller.andand.current_theme || Settings.public_theme
   rescue
     Settings.public_theme
   end

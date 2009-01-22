@@ -361,6 +361,31 @@ describe "The Image Preview form the fixtures" do
   end
 end
 
+describe "Alternative Part in Theme 'cool'" do
+  fixtures :parts
+  before(:each) do
+    @theme = 'cool'
+    @part = parts(:simple_preview)
+    @part.current_theme = @theme
+
+    @stock_paths = [
+      "#{RAILS_ROOT}/themes/cool/views/parts/stock/simple_preview.html.liquid",
+      "#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"
+    ] 
+    @part.stub!(:stock_paths).and_return(@stock_paths)
+  end
+
+  it "should know it is in the theme" do
+    @part.current_theme.should == @theme
+  end
+
+  it "should load its liquid code from theme path if it exists" do
+    File.should_receive(:file?).with(@stock_paths.first).at_least(1).and_return(true) # cool theme exists
+    @part.should_receive(:load_liquid_from).with(%r~themes/cool~).and_return("themed liquid code")
+    @part.liquid.should == 'themed liquid code'
+  end
+end
+
 
 #describe "A Part with content_numerus/_quantum" do
 #  it "can render no Content"
