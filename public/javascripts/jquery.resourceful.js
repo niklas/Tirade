@@ -42,23 +42,25 @@
     var options = $.extend(defaults, options);
 
     return this.each(function(i, element) {
-      var obj = $(element);
-      obj.click(function(event) {
-        event.preventDefault();
-        options.start(event);
-        meth = 'GET';
-        data = '';
-        if (obj.hasClass('create'))
-          meth = 'POST';
-        if (obj.hasClass('destroy')) {
-          meth = 'DELETE';
-          if (!confirm("Really delete?")) return false;
-        };
-        $.ajax({
-          url: obj.attr('href'),
-          type: meth, data: data
-        });
-      });
+      if (!element.onclick) {
+        var obj = $(element);
+        obj.click(function(event) {
+          event.preventDefault();
+          options.start(event);
+          meth = 'GET';
+          data = '';
+          if (obj.hasClass('create'))
+            meth = 'POST';
+          if (obj.hasClass('destroy')) {
+            meth = 'DELETE';
+            if (!confirm("Really delete?")) return false;
+          };
+          $.ajax({
+            url: obj.attr('href'),
+            type: meth, data: data
+          });
+        })
+      }
     });
   };
 
@@ -76,7 +78,7 @@
     if (!options.url) options.url = resource.attr('href');
 
 
-    if (m = options.url.match(/([^\/]+)s\/\d+$/)) { // ends with id
+    if (m = options.url.match(/([^\/]+)s\/\d+/)) { // has id after plural
       options.class += ' ' + m[1];
       var actions = [
         { name: 'Edit', class: 'edit', url: options.url + '/edit' },
