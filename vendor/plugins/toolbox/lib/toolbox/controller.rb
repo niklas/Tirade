@@ -10,7 +10,7 @@ module Tirade
         end
       end
       module ClassMethods
-        def feeds_toolbox_with model_name
+        def feeds_toolbox_with model_name, opts = {}
           model_name = model_name.to_s
           model_plural = model_name.pluralize
           model_class_name = model_name.classify
