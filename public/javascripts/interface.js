@@ -111,10 +111,12 @@ $(function() {
   $('code.liquid').livequery(function() { $(this).chili() });
 
 
+  /* Resourceful Links in Toolbox */
   $('div#toolbox > div.body > div.content > div.frame a.show').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.index').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.new').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a.show').livequery(function() { $(this).useToolbox(); });
   $('body.role_admin div.page div.rendering').livequery(function(i) {
     $(this)
