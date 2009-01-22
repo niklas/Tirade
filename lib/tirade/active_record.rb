@@ -9,7 +9,7 @@ module Tirade
         require 'tirade/active_record/acts_as'
         ActsAs::FEATURES.each do |feature|
           require "tirade/active_record/#{ feature }"
-          ::ActiveRecord::Base.send :include, "Tirade::ActiveRecord::#{ feature.to_s.classify }".constantize
+          ::ActiveRecord::Base.send :include, "Tirade::ActiveRecord::#{ feature.to_s.camelize }".constantize
         end
       end
     end
