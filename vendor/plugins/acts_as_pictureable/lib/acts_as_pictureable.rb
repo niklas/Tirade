@@ -10,6 +10,8 @@ module AlexPodaras
         def acts_as_pictureable(options = {})
           has_many :picturizations, :as => :pictureable, :dependent => :destroy
           has_many :images, :as => :pictureable, :dependent => :nullify, :through => :picturizations, :order => 'position'
+          robustify_has_many :images
+          robustify_has_many :picturizations
           acts_as! :pictureable
           if defined?(Image) && Image < ActiveRecord::Base
             unless Image.reflections.has_key?(:picturizations)
@@ -19,7 +21,6 @@ module AlexPodaras
             # TODO what to do without an Image class. Cry?
           end
           include InstanceMethods
-          alias_method_chain :image_ids=, :robustness
           if self.accessible_attributes
             self.accessible_attributes << 'image_ids'
           end
@@ -30,14 +31,6 @@ module AlexPodaras
       end
 
       module InstanceMethods
-        def image_ids_with_robustness=(new_ids_from_params)
-          new_ids = new_ids_from_params.collect(&:to_i).compact.select(&:nonzero?).uniq
-          if new_ids != image_ids
-            transaction do
-              self.image_ids_without_robustness = new_ids
-            end
-          end
-        end
         def image
           images.first
         end
