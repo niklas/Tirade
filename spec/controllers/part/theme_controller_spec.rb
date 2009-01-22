@@ -4,11 +4,11 @@ describe Part::ThemeController do
   controller_name 'part/theme'
 
   describe "route generation" do
-    it "should map { :action => 'show', :id => 'cool', :part_id => 23} to /manage/parts/23/theme" do
+    it "should map { :action => 'show', :id => 'cool', :part_id => 23} to /manage/parts/23/theme/cool" do
       route_for(:controller => 'part/theme', :action => 'show', :id => 'cool', :part_id => 23).should == 
         "/manage/parts/23/theme/cool"
     end
-    it "should map { :action => 'destroy', :id => 'cool', :part_id => 23} to /manage/parts/23/theme" do
+    it "should map { :action => 'destroy', :id => 'cool', :part_id => 23} to /manage/parts/23/theme/cool" do
       route_for(:controller => 'part/theme', :action => 'destroy', :id => 'cool', :part_id => 23).should == 
         "/manage/parts/23/theme/cool"
     end
