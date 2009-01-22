@@ -36,12 +36,16 @@
     <ul class="list">
       <% part.alternatives.each do |alt| %>
         <li>
-          <% if alt[:place] == 'theme' %>
-            Theme <%= alt[:name] %>
-            <%= show_part_theme_link(part, alt[:name]) %>
-          <% else %>
-          <b><%= alt[:place] %></b>
-          <%= alt[:name] %>
+          <% case alt[:place] 
+             when 'theme' %>
+              In theme "<%= alt[:name] %>"
+              <%= show_part_theme_link(part, alt[:name]) %>
+          <% when 'plugin' %>
+              In plugin "<%= alt[:name] %>"
+              <%= show_part_plugin_link(part, alt[:name]) %>
+          <% when 'buildin' %>
+              Build in
+              <%= show_part_link(part) %>
           <% end %>
         </li>
       <% end %>

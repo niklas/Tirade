@@ -60,8 +60,12 @@ class Part < ActiveRecord::Base
   # The path to the file containing liquid markup. 
   # If it exists in the current theme, this path is preferred
   def active_liquid_path
-    stock_paths.find do |path|
-      File.file? path
+    if !current_plugin.blank? && File.file?( plugin_path(current_plugin) )
+      plugin_path(current_plugin)
+    else
+      stock_paths.find do |path|
+        File.file? path
+      end
     end
   end
   alias_method :active_path, :active_liquid_path
@@ -82,7 +86,7 @@ class Part < ActiveRecord::Base
       elsif path =~ %r~vendor/plugins/(\w+)/app/views~
         {:place => 'plugin', :name => $1}
       elsif path =~ %r~app/views~
-        {:place => 'stock', :name => 'default'}
+        {:place => 'buildin', :name => 'default'}
       end
     end
   end

@@ -21,7 +21,7 @@
 
 class Part < ActiveRecord::Base
   acts_as_renderer
-  concerned_with :syncing, :content, :code, :liquid, :theme, :configuration
+  concerned_with :syncing, :content, :code, :liquid, :theme, :configuration, :plugin
   validates_presence_of :name
   validates_uniqueness_of :name
   belongs_to :subpart, :class_name => 'Part', :foreign_key => 'subpart_id'
@@ -67,6 +67,18 @@ class Part < ActiveRecord::Base
 
   def fullname
     in_theme? ? "#{name} (#{current_theme})" : name
+  end
+
+  def title
+    if !active_plugin.blank?
+      "#{name} in '#{active_plugin}' plugin"
+    elsif !active_theme.blank?
+      "#{name} in '#{active_theme}' theme"
+    elsif in_theme?
+      "#{name} in '#{current_theme}' theme"
+    else
+      name
+    end
   end
 
   def filename

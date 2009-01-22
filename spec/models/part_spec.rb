@@ -401,6 +401,52 @@ describe "Alternative Part in Theme 'cool'" do
   end
 end
 
+describe "Alternative Part in Plugin 'extra'" do
+  fixtures :parts
+  before(:each) do
+    @plugin = 'extra'
+    @part = parts(:simple_preview)
+    @part.current_plugin = @plugin
+    @plugin_path_re = %r~plugins/#{@plugin}/app/views~
+
+    @stock_paths = [
+      "#{RAILS_ROOT}/vendor/plugins/extra/app/views/parts/stock/simple_preview.html.liquid",
+      "#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"
+    ] 
+    @part.stub!(:stock_paths).and_return(@stock_paths)
+  end
+
+  it "should know it is in the plugin" do
+    @part.current_plugin.should == @plugin
+  end
+
+  it "should have the active_path in the plugin" do
+    File.should_receive(:file?).with(@plugin_path_re).at_least(1).and_return(true) # extra plugin exists
+    @part.active_path.should =~ @plugin_path_re
+  end
+
+  it "should load its liquid code from plugin path if it exists" do
+    File.should_receive(:file?).with(@plugin_path_re).at_least(1).and_return(true) # extra plugin exists
+    @part.should_receive(:load_liquid_from).with(@plugin_path_re).and_return("plugin liquid code")
+    @part.liquid.should == 'plugin liquid code'
+  end
+
+  it "should remove liquid code and configuration of the given plugin" do
+    plugin_path = @stock_paths.first
+    configuration_path = plugin_path.sub(/html.liquid$/,'yml')
+    File.should_receive(:file?).with(plugin_path).at_least(1).and_return(true) # extra plugin exists
+    File.should_receive(:delete).with(plugin_path).once.and_return(true)
+
+    File.should_receive(:file?).with(configuration_path).at_least(1).and_return(true) # extra plugin exists (config)
+    File.should_receive(:delete).with(configuration_path).once.and_return(true)
+
+    @part.should_not_receive(:destroy)
+    @part.should_not_receive(:destroy!)
+
+    @part.remove_plugin! @plugin
+  end
+end
+
 
 #describe "A Part with content_numerus/_quantum" do
 #  it "can render no Content"
