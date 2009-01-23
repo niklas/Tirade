@@ -37,6 +37,8 @@ class Part < ActiveRecord::Base
   ThemesGlob = File.join(RAILS_ROOT, 'themes', '*', 'views', PartsDir, '*.html.liquid')
   PluginsGlob = File.join(RAILS_ROOT, 'vendor', 'plugins', '*', 'app', 'views', PartsDir, '*.html.liquid')
 
+  Default = 'simple_preview'
+
   SaveLevel = 1
 
   # FIXME why doesn't has_finder work here?
