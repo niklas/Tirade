@@ -143,7 +143,7 @@ body {
            overflow: auto;
            padding: <%= @small %>;
            line-height: 1.23em;
-           letter-spacing: 0.23em;
+           letter-spacing: 0.07em;
          }
          textarea {
            width: 97%;
