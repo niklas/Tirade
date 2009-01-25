@@ -68,7 +68,7 @@ module InterfaceHelper
   end
 
   def list_item(thing,opts={})
-    return '' if thing.nil?
+    return '' unless thing
     content_tag :li, 
       single_item(thing, opts),
       :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
@@ -132,6 +132,15 @@ module InterfaceHelper
         add_class_to_html_options(opts[:dd], 'record')
         add_class_to_html_options(opts, 'record')
         val = render_as_attribute(val)
+      when Hash, HashWithIndifferentAccess
+        val = 
+          content_tag(
+            :dl,
+            val.collect do |key, value|
+              di_dt_dd(key, (value.blank? ? 'blank' : value))
+            end.join,
+            :class => 'hash'
+        )
       when Array, ActiveRecord::NamedScope::Scope, ActiveRecord::Associations::AssociationProxy
         unless val.blank?
           opts[:href] = url_for(:controller => val.first.table_name) if selectable
