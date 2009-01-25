@@ -19,6 +19,13 @@ module Tirade
           if liquids = opts.delete(:liquid)
             liquid_methods *liquids
           end
+          named_scope :order_by, lambda { |o|
+            if o
+              {:order => o}
+            else
+              {}
+            end
+          }
         end
         def markup(*fields)
           self.marked_up_fields << fields

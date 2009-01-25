@@ -26,7 +26,16 @@ module Tirade
               instance_variable_set '@model_name', model_name
             end
             define_method :index do
-              instance_variable_set "@#{model_plural}", model_class.find(:all) 
+              instance_variable_set "@#{model_plural}", 
+                if model_class.acts_as?(:content)
+                  model_class.
+                    search(params[:search].andand[:term] || params[:term]).
+                    order_by(params[:search].andand[:order] || params[:order] || 'id DESC').
+                    paginate(:page => params[:page])
+                else
+                  model_class.
+                    paginate(:page => params[:page])
+                end
               instance_variable_set '@models', instance_variable_get("@#{model_plural}")
               render_toolbox_action :index
             end
