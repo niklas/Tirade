@@ -13,10 +13,5 @@ class ClipboardController < ApplicationController
     @clipboard.delete params[:id]
     render :action => 'index'
   end
-
-  private
-  def prepare_clipboard
-    @clipboard ||= Clipboard.new(session)
-  end
 end
 

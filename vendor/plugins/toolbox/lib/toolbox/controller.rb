@@ -8,6 +8,8 @@ module Tirade
         base.class_eval do
           include(InstanceMethods)
         end
+        base.before_filter :prepare_clipboard
+        base.after_filter :add_created_model_to_clipboard, :only => [:create]
       end
       module ClassMethods
         def feeds_toolbox_with model_name, opts = {}

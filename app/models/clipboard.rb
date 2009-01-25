@@ -14,7 +14,7 @@ class Clipboard
   end
 
   def << item
-    if obj = object_for(item)
+    if obj = (item.is_a?(ActiveRecord::Base) ? item : object_for(item))
       @items << join(obj)
       @items.uniq!
       save
