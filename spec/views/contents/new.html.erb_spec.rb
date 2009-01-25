@@ -7,6 +7,8 @@ describe "/contents/new.html.erb" do
     before(:each) do
       @content = mock_model(NewsItem)
       @content.stub!(:new_record?).and_return(true)
+      @content.stub!(:markup?).with(:description).and_return(true)
+      @content.stub!(:markup?).with(:any).and_return(true)
       @content.stub!(:title).and_return("New News")
       @content.stub!(:description).and_return("nothing")
       @content.stub!(:body).and_return("great news everyone!")
@@ -17,7 +19,7 @@ describe "/contents/new.html.erb" do
 
     it "should render new form" do
       render "/contents/new.html.erb"
-      
+
       response.should have_tag("form[action=?][method=post]", contents_path) do
         without_tag('p.default.warning')
         without_tag("input#content_state[name=?]", "content[state]")
