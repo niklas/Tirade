@@ -21,11 +21,7 @@
       <%= render_form_fields_for(f) %>
     <% end %>
 
-    <% unless content.new_record? || !content.acts_as?(:pictureable) %>
-      <% accordion_item "Pictures" do %>
-        <%= f.has_many :images, :foreign_key => 'image_ids' %>
-      <% end %>
-    <% end %>
+    <%= f.actings %>
 
     <%= f.submit %>
 
