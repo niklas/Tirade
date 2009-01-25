@@ -22,28 +22,28 @@ module Tirade
             liquid_methods *liquids
           end
           named_scope :order, lambda { |o|
-            if o
+            if o.to_i != 0
               {:order => o}
             else
               {}
             end
           }
           named_scope :limit, lambda { |l|
-            if l
+            if l.to_i != 0
               {:limit => l}
             else
               {}
             end
           }
           named_scope :skip, lambda { |s|
-            if s
+            if s.to_i != 0
               {:offset => s}
             else
               {}
             end
           }
           named_scope :recent, lambda { |num|
-            if num
+            if num.to_i != 0
               {:order => 'updated_at DESC', :limit => num}
             else
               {}
