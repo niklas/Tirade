@@ -70,6 +70,7 @@ module Tirade
       return "Wrong association type (#{reflection.macro}), needed belongs_to/has_one" unless [:has_one, :belongs_to].include?(reflection.macro)
       assocs = assoc.to_s.pluralize
       thing = @object.send(assoc)
+      thing = thing.first if thing.is_a?(Array) # HACK for dynamic content of Rendering
       inner = ''
       inner << @template.list_of([thing], :force_list => true)
       inner << @template.live_search_for(opts.delete(:types) || assoc)
