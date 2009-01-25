@@ -86,7 +86,7 @@ class Rendering < ActiveRecord::Base
     write_attribute(:content_id, new_content_id.to_i) unless new_content_id.to_i == 0
   end
   def has_content?
-    !content.nil?
+    !content.nil? && !content.false?
   rescue
     false
   end
@@ -101,7 +101,7 @@ class Rendering < ActiveRecord::Base
 
   def label
     [
-      part.andand.label|| '[brand new]',
+      part.andand.label || '[brand new]',
       (has_content? ? content.title : nil)
     ].compact.join(' with ')
   end

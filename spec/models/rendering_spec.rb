@@ -72,6 +72,9 @@ describe Rendering, ' appended to the left column of the main page, containing a
       )
     end.should change(Rendering,:count).by(1)
   end
+  it "should have a speaking label" do
+    @rendering.label.should == 'Simple Preview with Goodbye'
+  end
   it "should be the last item in the left column" do
     @page.renderings.for_grid(@grid).last.should == @rendering
   end
