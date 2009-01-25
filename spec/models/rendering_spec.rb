@@ -72,6 +72,9 @@ describe Rendering, ' appended to the left column of the main page, containing a
       )
     end.should change(Rendering,:count).by(1)
   end
+  it "should have a Content" do
+    @rendering.should be_has_content
+  end
   it "should have a speaking label" do
     @rendering.label.should == 'Simple Preview with Goodbye'
   end

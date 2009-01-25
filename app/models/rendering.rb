@@ -86,7 +86,7 @@ class Rendering < ActiveRecord::Base
     write_attribute(:content_id, new_content_id.to_i) unless new_content_id.to_i == 0
   end
   def has_content?
-    !content.nil? && !content.false?
+    !content.nil? && (!content == false)
   rescue
     false
   end
