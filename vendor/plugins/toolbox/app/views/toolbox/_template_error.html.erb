@@ -10,6 +10,8 @@
     <%=h exception.message %>
   <% end %>
 
+  <%= render :partial => '/toolbox/traces', :object => exception  %>
+
 <% end %>
 
 
