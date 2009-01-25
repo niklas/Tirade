@@ -191,17 +191,23 @@ var Toolbox = {
     this.last(' form.edit_rendering').livequery(function() {
       var form = $(this);
       renderingAssignmentFormUpdate = function (e) {
+        form.find('h3.what + dl')
+          .find('> di:not(.assignment)').hide()
+            .find(':input').disable();
+        form.find('di.association.one.content .live_search').hide();
         switch (form.find('select#rendering_assignment').val()) {
+          case 'none':
+            break;
           case 'fixed':
-            form.find('di.association.one.content .live_search').hide();
             form.find('di.association.one.content').show().find('input.association_id, input.association_type').enable();
-            form.find('di.content_type').hide().find('select').disable();
-          break;
+            break;
           case 'by_title_from_trailing_url':
-            form.find('di.association.one.content').hide().find('input.association_id, input.association_type').disable();
-            form.find('di.association.one.content .live_search').hide();
             form.find('di.content_type').show().find('select').enable();
-          break;
+            break;
+          case 'scope':
+            form.find('di.content_type').show().find('select').enable();
+            form.find('di.scope').show().find(':input').enable();
+            break;
         }
       }
       renderingAssignmentFormUpdate();

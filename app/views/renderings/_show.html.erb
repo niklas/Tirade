@@ -9,6 +9,8 @@
 <% accordion do %>
 
   <% accordion_item "What" do %>
+    <%= show rendering, :assignment %>
+    <%= show rendering, :scope if rendering.assignment == 'scope' %>
     <%=
       case rendering.assignment 
       when 'by_title_from_trailing_url'

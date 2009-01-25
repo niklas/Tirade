@@ -10,6 +10,11 @@
     <% accordion_item "What" do %>
       <%= f.select :assignment, Rendering::Assignments %>
       <%= f.has_one :content, :types => rendering.part.andand.preferred_types %>
+
+      <%= f.collection_select :content_type, (rendering.part.andand.preferred_types || Rendering.valid_content_types), :to_s, :to_s %>
+      <% Tirade::ActiveRecord::Content::Scopes.each do |scope| %>
+        <%= f.wrap(scope,{:class => 'scope'}, text_field_tag("rendering[scope][#{scope}]", rendering.scope[scope]) ) %>
+      <% end %>
     <% end %>
 
     <% accordion_item "How" do %>
