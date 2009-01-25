@@ -3,6 +3,8 @@ module Tirade
     module Content
       include ActsAs
 
+      Scopes = %w(order limit skip recent).freeze unless defined?(Scopes)
+
       def self.included(base)
         base.class_inheritable_reader :marked_up_fields
         base.class_inheritable_writer :marked_up_fields
@@ -19,9 +21,30 @@ module Tirade
           if liquids = opts.delete(:liquid)
             liquid_methods *liquids
           end
-          named_scope :order_by, lambda { |o|
+          named_scope :order, lambda { |o|
             if o
               {:order => o}
+            else
+              {}
+            end
+          }
+          named_scope :limit, lambda { |l|
+            if l
+              {:limit => l}
+            else
+              {}
+            end
+          }
+          named_scope :skip, lambda { |s|
+            if s
+              {:offset => s}
+            else
+              {}
+            end
+          }
+          named_scope :recent, lambda { |num|
+            if num
+              {:order => 'updated_at DESC', :limit => num}
             else
               {}
             end

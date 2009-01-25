@@ -9,7 +9,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081120155111) do
+ActiveRecord::Schema.define(:version => 20090125144039) do
+
+  create_table "artists", :force => true do |t|
+    t.string   "title"
+    t.string   "home_page_url"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "concerts", :force => true do |t|
+    t.string   "title"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.string   "location"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "contents", :force => true do |t|
     t.string   "title"
@@ -26,6 +44,14 @@ ActiveRecord::Schema.define(:version => 20081120155111) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug",         :default => ""
+  end
+
+  create_table "gigs", :force => true do |t|
+    t.integer  "position"
+    t.integer  "artist_id"
+    t.integer  "concert_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "grids", :force => true do |t|
@@ -153,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20081120155111) do
     t.string   "content_type"
     t.text     "options"
     t.string   "assignment",   :limit => 32, :default => "fixed"
+    t.text     "scope"
   end
 
   create_table "roles", :force => true do |t|

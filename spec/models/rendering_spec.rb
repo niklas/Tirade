@@ -277,19 +277,68 @@ describe "A Rendering", "with an assignment by_title_from_trailing_url " do
     )
     @rendering.stub!(:trailing_path_of_page).and_return(['Goodbye'])
   end
-  it "should find Content#by_path(trailing_path_of_page)" do
+  it "should find Content#find_by_slug(trailing_path_of_page.urlize)" do
+    Content.should_receive(:find_by_slug).with('goodbye').and_return( contents(:love_letter) )
     @rendering.content.should_not be_nil
   end
   it "should be able to render a Part for single Content"
   it "should give the (remaining) :trailing_path_of_page into the part ?"
-  it "should have assignment: :by_url"
+end
+
+describe "A Rendering", "with a scoped assignment for Document" do
+  fixtures :all
+  before(:each) do
+    @page = pages(:main)
+    @scope = {
+      :order => 'title',
+      :skip => 3,
+      :limit => 5
+    }
+    @rendering = Rendering.new(
+      :page => @page,
+      :grid => @page.grids.first,
+      :content_type => 'Document',
+      :assignment => 'scope',
+      :scope => @scope,
+      :part => simple_preview
+    )
+  end
+  it "should be valid" do
+    @rendering.should be_valid
+  end
+  it "should accept the scope hash" do
+    @rendering.scope.should == @scope
+  end
+  it "should find the Documents with the specified scope" do
+    contents = @rendering.content
+    contents.should_not be_empty
+    contents.should == Document.find(:all, :order => 'title', :offset => 3, :limit => 5)
+  end
 end
 
 
-describe "A professional Rendering", "with a collection Part" do
-  it "should be able to render a Part for collection of Contents"
-  it "should find Content#all (paginated)"
-  it "should find Content#last(n)"
-
-  it "should have assignments: :all, :last"
+describe "A Rendering", "with a scoped assignment for Document, but empty scope hash" do
+  fixtures :all
+  before(:each) do
+    @page = pages(:main)
+    @rendering = Rendering.new(
+      :page => @page,
+      :grid => @page.grids.first,
+      :content_type => 'Document',
+      :assignment => 'scope',
+      :scope => {},
+      :part => simple_preview
+    )
+  end
+  it "should be valid" do
+    @rendering.should be_valid
+  end
+  it "should accept the empty scope hash" do
+    @rendering.scope.should == {}
+  end
+  it "should find all Documents" do
+    contents = @rendering.content
+    contents.should_not be_empty
+    contents.should == Document.all
+  end
 end

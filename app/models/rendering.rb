@@ -18,13 +18,14 @@
 
 class Rendering < ActiveRecord::Base
   acts_as_renderer
+  serialize :scope
 
   # For now, all associatable Conten Types should at least have a 'title' column
   def self.valid_content_types
     Tirade::ActiveRecord::Content.classes
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
@@ -43,7 +44,8 @@ class Rendering < ActiveRecord::Base
   end
   attr_reader :old_grid_id
 
-  Assignments = %w(none fixed by_title_from_trailing_url).freeze unless defined?(Assignments)
+  Assignments = %w(none fixed by_title_from_trailing_url scope).freeze unless defined?(Assignments)
+
   validates_inclusion_of :assignment, :in => Assignments, :allow_nil => true
   belongs_to :content, :polymorphic => true
   def trailing_path_of_page
@@ -57,11 +59,27 @@ class Rendering < ActiveRecord::Base
       if content_type && content_slug = trailing_path_of_page.first.andand.sluggify
         content_type.constantize.find_by_slug(content_slug)
       end
+    when 'scope'
+      if content_type
+        find_content_by_scope(scope)
+      end
     else
       content_without_dynamic_assignments
     end
   end
   alias_method_chain :content, :dynamic_assignments
+
+  def find_content_by_scope(thescope=self.scope)
+    klass = content_type.constantize
+    # HACK if no scope is specified, we must not return the klass
+    Tirade::ActiveRecord::Content::Scopes.map(&:to_sym).inject(klass.scoped({:conditions => '1=1'})) do |records,valid_scope|
+      if thescope.has_key?(valid_scope)
+        records.send!(valid_scope,thescope[valid_scope])
+      else
+        records
+      end
+    end.to_a
+  end
 
   acts_as_list :scope => :grid_id
 

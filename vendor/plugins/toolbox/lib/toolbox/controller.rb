@@ -30,7 +30,7 @@ module Tirade
                 if model_class.acts_as?(:content)
                   model_class.
                     search(params[:search].andand[:term] || params[:term]).
-                    order_by(params[:search].andand[:order] || params[:order] || 'id DESC').
+                    order(params[:search].andand[:order] || params[:order] || 'id DESC').
                     paginate(:page => params[:page])
                 else
                   model_class.
