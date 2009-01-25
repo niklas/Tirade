@@ -156,86 +156,8 @@ var Toolbox = {
       })
     });
 
-    // list with single association
-    this.last(' di.association.one dd > ul.list').livequery(function() {
-      var list = $(this);
-      list.droppable({
-        accept: function(draggable) { 
-          return(
-            draggable.is('li') &&
-            draggable.parent()[0] != list[0] &&
-            draggable.typeAndId()
-          );
-        },
-        hoverClass: 'hover',
-        activeClass: 'active-droppable',
-        greedy: true,
-        tolerance: 'touch',
-        drop: function(e,ui) {
-          var item = $(ui.draggable);
-          list.find('li').remove();
-          item.clone().appendTo(list);
-        }
-      });
-    });
-
-    // and the items in a single association
-    this.last(' di.association.one dd > ul.list li').livequery(function() {
-      var item = $(this);
-      item
-        .find('img.association').remove().end()
-        .appendDom(Toolbox.Templates.removeButton)
-        .find('img.remove').click(function(event) {
-          item.parents('ul.list')
-            .siblings('input.association_id:first').val('').end()
-            .siblings('input.association_type:first').val('').end()
-            .highlight()
-          .end()
-          item.remove();
-        });
-      if ( attrs = item.typeAndId() ) {
-        item.parents('ul.list')
-          .removeClass('empty')
-          .siblings('input.association_id:first').val(attrs.id).end()
-          .siblings('input.association_type:first').val(attrs.type).end()
-          .highlight();
-      } else {
-        item.remove();
-      }
-    });
-
-    // editable List with associated elements
-    this.last(' di.association.many dd > ul.list').livequery(function() {
-      var list = $(this);
-      list.droppable({
-        accept: function(draggable) { 
-          return(
-            draggable.is('li') &&
-            draggable.parent()[0] != list[0]
-          );
-        },
-        hoverClass: 'hover',
-        activeClass: 'active-droppable',
-        greedy: true,
-        tolerance: 'touch',
-        drop: function(e,ui) {
-          $(ui.draggable).clone().appendTo(list);
-        }
-      });
-    });
-    this.last(' di.association.many dd > ul.list li').livequery(function() {
-      var item = $(this);
-      item.find('img.association').remove();
-      item.parents('ul.list').removeClass('empty')
-      // clone hidden tag
-        .siblings('input[@type=hidden][@value=empty]').clone().attr('value',item.resourceId()).appendTo(item);
-
-      item.appendDom(Toolbox.Templates.removeButton);
-      item.find('img.remove').click(function(event) {
-        item.remove();
-        Toolbox.last().find('ul.list:not(:has(li))').addClass('empty');
-      });
-    });
+    this.last(' di.association.one dd > ul.list:first').livequery(function() { $(this).hasOneEditor() });
+    this.last(' di.association.many dd > ul.list:first').livequery(function() { $(this).hasManyEditor() });
 
     // mark empty association lists
     this.last(' di.association dd > ul.list:not(:has(li))').livequery(function() {
