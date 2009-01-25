@@ -18,7 +18,10 @@
 
 class Rendering < ActiveRecord::Base
   acts_as_renderer
-  serialize :scope
+  serialize :scope, HashWithIndifferentAccess
+  def scope
+    self[:scope] ||= HashWithIndifferentAccess.new
+  end
 
   # For now, all associatable Conten Types should at least have a 'title' column
   def self.valid_content_types
