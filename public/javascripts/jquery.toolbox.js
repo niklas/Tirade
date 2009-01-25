@@ -57,6 +57,7 @@ var Toolbox = {
       if ($(this).find('> li > a.back').length == 0) {
         $(this).appendDom(Toolbox.Templates.backButton)
       }
+      $(this).addRESTLinks($(this).parents('div.frame')) ;
     });
 
     // Keep track of frames in history
@@ -66,7 +67,6 @@ var Toolbox = {
       Toolbox.history().appendDom(
         Toolbox.Templates.historyItem( frame.attr('title'), href )
       );
-      Toolbox.linkBar().addRESTLinks(frame) ;
       $(this).find('form')
         .each( function() { this.action += '.js'; })
         .ajaxForm({
@@ -627,3 +627,13 @@ jQuery.fn.useToolbox = function(options) {
   }
 };
 
+jQuery.fn.frameInToolbox = function(options) {
+  var defaults = {
+  };
+  var options = $.extend(defaults, options);
+};
+jQuery.fn.formInFrameInToolbox = function(options) {
+  var defaults = {
+  };
+  var options = $.extend(defaults, options);
+};
