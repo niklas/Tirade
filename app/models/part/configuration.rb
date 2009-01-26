@@ -71,9 +71,7 @@ class Part < ActiveRecord::Base
   def needs_to_write_configuration?
     acp = active_configuration_path
     if File.file?(acp)
-      loaded_config = load_configuration_from(acp)
-      logger.debug("Part #{filename} active #{configuration.inspect} <-> #{loaded_config.inspect} saved")
-      !configuration.blank? && configuration != loaded_config
+      !configuration.blank? && configuration != load_configuration_from(acp)
     else
       true
     end
