@@ -26,6 +26,7 @@ body div {
   }
   .rendering {
     position: relative;
+    clear: both;
     .fake {
       height: 8em;
       background: url(../images/pentagon-tile.jpg) repeat;
