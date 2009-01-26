@@ -1,19 +1,20 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/contents/new.html.erb" do
+  ActionView::Base.default_form_builder = NormalFormBuilder
   include ContentsHelper
   
   describe "for a NewsItem" do
     before(:each) do
       @content = mock_model(NewsItem)
       @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).with(:description).and_return(true)
-      @content.stub!(:markup?).with(:any).and_return(false)
+      @content.stub!(:markup?).and_return(false)
       @content.stub!(:title).and_return("New News")
       @content.stub!(:description).and_return("nothing")
       @content.stub!(:body).and_return("great news everyone!")
       @content.stub!(:type).and_return("NewsItem")
       @content.stub!(:wanted_parent_id).and_return(3)
+      @content.stub!(:acting_roles).and_return([])
       assigns[:content] = @content
     end
 
@@ -46,13 +47,13 @@ describe "/contents/new.html.erb" do
     before(:each) do
       @content = mock_model(Document)
       @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).with(:description).and_return(true)
-      @content.stub!(:markup?).with(:any).and_return(false)
+      @content.stub!(:markup?).and_return(false)
       @content.stub!(:title).and_return("New Document")
       @content.stub!(:description).and_return("Document Description")
       @content.stub!(:body).and_return("Document Body")
       @content.stub!(:type).and_return("Document")
       @content.stub!(:wanted_parent_id).and_return(3)
+      @content.stub!(:acting_roles).and_return([])
       assigns[:content] = @content
     end
 
@@ -82,10 +83,11 @@ describe "/contents/new.html.erb" do
       class ZweiHimmelHundeAufDemWegZurHoelle < Content; end
       @content = mock_model(ZweiHimmelHundeAufDemWegZurHoelle)
       @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).with(:any).and_return(false)
+      @content.stub!(:markup?).and_return(false)
       @content.stub!(:title).and_return("Hölle hölle hölle")
       @content.stub!(:type).and_return("ZweiHimmelHundeAufDemWegZurHoelle")
       @content.stub!(:wanted_parent_id).and_return(88-66+23)
+      @content.stub!(:acting_roles).and_return([])
       assigns[:content] = @content
     end
 
@@ -110,12 +112,13 @@ describe "/contents/new.html.erb" do
       class ZweiEinhalbHimmelHundeAufDemWegZurHoelle < Document; end
       @content = mock_model(ZweiEinhalbHimmelHundeAufDemWegZurHoelle)
       @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).with(:any).and_return(false)
+      @content.stub!(:markup?).and_return(false)
       @content.stub!(:title).and_return("Hölle hölle hölle")
       @content.stub!(:type).and_return("ZweiEinhalbHimmelHundeAufDemWegZurHoelle")
       @content.stub!(:description).and_return("Bud Spencer")
       @content.stub!(:body).and_return("Italo Zingarelli")
       @content.stub!(:wanted_parent_id).and_return(88-66+42)
+      @content.stub!(:acting_roles).and_return([])
       assigns[:content] = @content
     end
 
