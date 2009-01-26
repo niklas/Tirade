@@ -22,7 +22,7 @@ module Tirade
             liquid_methods *liquids
           end
           named_scope :order, lambda { |o|
-            if o.to_i != 0
+            if !o.blank?
               {:order => o}
             else
               {}
