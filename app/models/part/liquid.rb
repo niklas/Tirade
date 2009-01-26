@@ -63,7 +63,7 @@ class Part < ActiveRecord::Base
     if !current_plugin.blank? && File.file?( plugin_path(current_plugin) )
       plugin_path(current_plugin)
     else
-      stock_paths.find do |path|
+      liquid_paths.find do |path|
         File.file? path
       end
     end
@@ -80,7 +80,7 @@ class Part < ActiveRecord::Base
   end
 
   def alternatives
-    existing_stock_paths.map do |path|
+    existing_liquid_paths.map do |path|
       if path =~ %r~themes/(\w+)/views~
         {:place => 'theme', :name => $1}
       elsif path =~ %r~vendor/plugins/(\w+)/app/views~
@@ -91,13 +91,13 @@ class Part < ActiveRecord::Base
     end
   end
 
-  def existing_stock_paths
-    stock_paths.select do |path|
+  def existing_liquid_paths
+    liquid_paths.select do |path|
       File.file? path
     end
   end
 
-  def stock_paths
+  def liquid_paths
     stock_dirs.map do |dir|
       File.join(dir,filename_with_extention)
     end

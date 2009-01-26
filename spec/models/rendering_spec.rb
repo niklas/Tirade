@@ -293,7 +293,7 @@ describe "A Rendering", "with a scoped assignment for Document" do
       :order => 'title',
       :skip => 3,
       :limit => 5
-    }
+    }.with_indifferent_access
     @rendering = Rendering.new(
       :page => @page,
       :grid => @page.grids.first,
@@ -326,7 +326,7 @@ describe "A Rendering", "with a scoped assignment for Document, but empty scope 
       :grid => @page.grids.first,
       :content_type => 'Document',
       :assignment => 'scope',
-      :scope => {},
+      :scope => {}.with_indifferent_access,
       :part => simple_preview
     )
   end

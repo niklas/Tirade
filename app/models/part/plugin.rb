@@ -12,7 +12,7 @@ class Part < ActiveRecord::Base
   end
 
   def plugin_configuration_path(plugin)
-    configuration_path plugin_path(plugin)
+    configuration_path_of plugin_path(plugin)
   end
 end
 

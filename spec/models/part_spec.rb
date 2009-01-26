@@ -311,10 +311,13 @@ describe "The simple preview Part" do
   it "should be able to load its liquid code" do
     @part.should be_liquid_loadable
   end
+  it "should have a configuration" do
+    @part.configuration.should_not be_blank
+  end
   it "should be located in the correct directory" do
-    @stock_paths = ["#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"] 
-    @part.stub!(:stock_paths).and_return(@stock_paths)
-    File.should_receive(:file?).with(@stock_paths.first).and_return(true)
+    @liquid_paths = ["#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"] 
+    @part.stub!(:liquid_paths).and_return(@liquid_paths)
+    File.should_receive(:file?).with(@liquid_paths.first).and_return(true)
     @part.active_path.should =~ %r~spec/fixtures/views/parts/stock/simple_preview.html.liquid$~
   end
   it "should know about its path for the contex ttheme" do
@@ -339,8 +342,8 @@ describe "The simple preview Part" do
  # end
 
   it "should write its liquid code to its theme path on updating" do
-    File.should_receive(:open).with(@part.theme_path,'w').and_return(true)
-    File.should_receive(:open).with(@part.active_configuration_path,'w').and_return(true)
+    @part.should_receive(:save_code_to!).with(@part.theme_path).and_return(true)
+    @part.stub!(:write_configuration_to).and_return(true)
     @part.update_attributes(
       :liquid => 'a little bit to simple'
     )
@@ -368,11 +371,11 @@ describe "Alternative Part in Theme 'cool'" do
     @part = parts(:simple_preview)
     @part.current_theme = @theme
 
-    @stock_paths = [
+    @liquid_paths = [
       "#{RAILS_ROOT}/themes/cool/views/parts/stock/simple_preview.html.liquid",
       "#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"
     ] 
-    @part.stub!(:stock_paths).and_return(@stock_paths)
+    @part.stub!(:liquid_paths).and_return(@liquid_paths)
   end
 
   it "should know it is in the theme" do
@@ -380,13 +383,13 @@ describe "Alternative Part in Theme 'cool'" do
   end
 
   it "should load its liquid code from theme path if it exists" do
-    File.should_receive(:file?).with(@stock_paths.first).at_least(1).and_return(true) # cool theme exists
+    File.should_receive(:file?).with(@liquid_paths.first).at_least(1).and_return(true) # cool theme exists
     @part.should_receive(:load_liquid_from).with(%r~themes/cool~).and_return("themed liquid code")
     @part.liquid.should == 'themed liquid code'
   end
 
   it "should remove liquid code and configuration of the given theme" do
-    theme_path = @stock_paths.first
+    theme_path = @liquid_paths.first
     configuration_path = theme_path.sub(/html.liquid$/,'yml')
     File.should_receive(:file?).with(theme_path).at_least(1).and_return(true) # cool theme exists
     File.should_receive(:delete).with(theme_path).once.and_return(true)
@@ -409,11 +412,11 @@ describe "Alternative Part in Plugin 'extra'" do
     @part.current_plugin = @plugin
     @plugin_path_re = %r~plugins/#{@plugin}/app/views~
 
-    @stock_paths = [
+    @liquid_paths = [
       "#{RAILS_ROOT}/vendor/plugins/extra/app/views/parts/stock/simple_preview.html.liquid",
       "#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"
     ] 
-    @part.stub!(:stock_paths).and_return(@stock_paths)
+    @part.stub!(:liquid_paths).and_return(@liquid_paths)
   end
 
   it "should know it is in the plugin" do
@@ -432,7 +435,7 @@ describe "Alternative Part in Plugin 'extra'" do
   end
 
   it "should remove liquid code and configuration of the given plugin" do
-    plugin_path = @stock_paths.first
+    plugin_path = @liquid_paths.first
     configuration_path = plugin_path.sub(/html.liquid$/,'yml')
     File.should_receive(:file?).with(plugin_path).at_least(1).and_return(true) # extra plugin exists
     File.should_receive(:delete).with(plugin_path).once.and_return(true)

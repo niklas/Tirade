@@ -1,8 +1,13 @@
 class Part < ActiveRecord::Base
   def needs_to_write_code?
-    tp = theme_path
-    !@liquid.blank? && 
+    return false if @liquid.blank?
+    ap = active_path
+    if !ap.blank? && File.file?(ap) # our code differs from that in active_path
+      @liquid != load_liquid_from(ap)
+    else
+      tp = theme_path
       (!File.exists?(tp) || File.mtime(tp) < (updated_at || Time.now) )
+    end
   end
 
   private
