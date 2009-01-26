@@ -8,8 +8,6 @@ module Tirade
         base.class_eval do
           include(InstanceMethods)
         end
-        base.before_filter :prepare_clipboard
-        base.after_filter :add_created_model_to_clipboard, :only => [:create]
       end
       module ClassMethods
         def feeds_toolbox_with model_name, opts = {}
@@ -18,6 +16,8 @@ module Tirade
           model_class_name = model_name.classify
           model_class = model_class_name.constantize
           class_eval do
+            before_filter :prepare_clipboard
+            after_filter :add_created_model_to_clipboard, :only => [:create]
             rescue_from 'ActionView::TemplateError', :with => :rescue_error
             rescue_from 'ActionView::MissingTemplate', :with => :rescue_error
             before_filter :set_form_builder, :except => [:index,:show,:destroy]
