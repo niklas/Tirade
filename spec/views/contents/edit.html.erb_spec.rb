@@ -1,12 +1,15 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/contents/edit.html.erb" do
+  ActionView::Base.default_form_builder = NormalFormBuilder
   include ContentsHelper
   
   before do
     @content = mock_model(Content)
     @content.stub!(:title).and_return("MyString")
     @content.stub!(:description).and_return("MyText")
+    @content.stub!(:markup?).and_return(false)
+    @content.stub!(:acting_roles).and_return([])
     @content.stub!(:body).and_return("MyText")
     @content.stub!(:published_at).and_return(Time.now)
     @content.stub!(:new_record?).and_return(false)

@@ -2,10 +2,12 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/parts/edit.html.erb" do
   include PartsHelper
+  ActionView::Base.default_form_builder = NormalFormBuilder
   
   before do
     @part = mock_model(Part)
     @part.stub!(:name).and_return("MyString")
+    @part.stub!(:markup?).and_return(false)
     @part.stub!(:filename).and_return("MyString")
     @part.stub!(:options_as_yaml).and_return("MyText")
     @part.stub!(:preferred_types).and_return(['Foo', 'Bar'])

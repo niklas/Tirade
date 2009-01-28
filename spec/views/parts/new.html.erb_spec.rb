@@ -1,11 +1,13 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/parts/new.html.erb" do
+  ActionView::Base.default_form_builder = NormalFormBuilder
   include PartsHelper
   
   before(:each) do
     @part = mock_model(Part)
     @part.stub!(:new_record?).and_return(true)
+    @part.stub!(:markup?).and_return(false)
     @part.stub!(:name).and_return("MyString")
     @part.stub!(:filename).and_return("MyString")
     @part.stub!(:options_as_yaml).and_return("MyText")
