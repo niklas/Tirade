@@ -54,7 +54,7 @@ module InterfaceHelper
     else
       kind = things.first.table_name rescue 'items'
       add_class_to_html_options(opts, kind)
-      add_class_to_html_options(opts, 'records')
+      add_class_to_html_options(opts, 'records') if things.first.andand.is_a?(ActiveRecord::Base)
       add_class_to_html_options(opts, 'list')
       add_class_to_html_options(opts, 'empty') if things.blank?
       content_tag(
@@ -69,9 +69,15 @@ module InterfaceHelper
 
   def list_item(thing,opts={})
     return '' unless thing
-    content_tag :li, 
-      single_item(thing, opts),
-      :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
+    if thing.is_a?(ActiveRecord::Base)
+      content_tag :li, 
+        single_item(thing, opts),
+        :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}"
+    else
+      content_tag :li, 
+        show_value(thing, opts),
+        :class => "#{thing.class.to_s.domify} #{toolbox_item_cycle}"
+    end
   end
 
   def single_item(thing, opts={})
@@ -114,8 +120,6 @@ module InterfaceHelper
   def show(obj,name,opts={}, &block)
     label = opts.delete(:label) || _(name.to_s.humanize)
     label = nil if opts.delete(:skip_label)
-    selectable = opts.delete(:selectable)
-    add_class_to_html_options(opts, 'selectable') if selectable
     add_class_to_html_options(opts, name.to_s)
     opts[:title] ||= name.to_s
     opts[:dd] ||= {}
@@ -123,47 +127,66 @@ module InterfaceHelper
     if block_given? || !obj.respond_to?(name)
       concat di_dt_dd(label, capture(&block), opts), block.binding
     else
-      val = obj.send(name) rescue content_tag(:span, "unknow attr: #{obj.class}##{name}", :class => 'warning')
-      case val
-      when ActiveRecord::Base
-        # url_for does not recognize STI :(
-        opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
-        add_class_to_html_options(opts[:dd], dom_id(val))
-        add_class_to_html_options(opts[:dd], 'record')
-        add_class_to_html_options(opts, 'record')
-        val = render_as_attribute(val)
-      when Hash, HashWithIndifferentAccess
-        val = 
-          content_tag(
-            :dl,
-            val.collect do |key, value|
-              di_dt_dd(key, (value.blank? ? 'blank' : value))
-            end.join,
-            :class => 'hash'
-        )
-      when Array, ActiveRecord::NamedScope::Scope, ActiveRecord::Associations::AssociationProxy
-        unless val.blank?
-          opts[:href] = url_for(:controller => val.first.table_name) if selectable
-          add_class_to_html_options(opts, 'list')
-        end
-        val = list_of(val)
-      when ActsAsConfigurable::OptionsProxy
-        val = 
-          content_tag(
-            :dl,
-            val.values.collect do |key, value|
-              di_dt_dd(key,value,:class => dom_class(value))
-            end.join,
-            :class => 'hash'
-        )
-      when Time, Date
-        val = val.to_s(:db)
+
+      begin
+        val = obj.send(name) 
+      rescue NoMethodError
+        return content_tag(:span, "unknow attr: #{obj.class}##{name}", :class => 'warning')
       end
+
+      begin
+        val = show_value(val,opts)
+      rescue Exception => e
+        return content_tag(:span, "cannot show #{obj.class}##{name}: #{h e.message}", :class => 'warning')
+      end
+
       if val.is_a?(String) and obj.markup?(name)
         val = markup(val)
       end
       val = "(#{val.class})\n#{debug(val)}" unless val.is_a?(String)
       di_dt_dd(label, val, opts)
+    end
+  end
+
+  def show_value(val, opts={})
+    selectable = opts.delete(:selectable)
+    add_class_to_html_options(opts, 'selectable') if selectable
+    case val
+    when ActiveRecord::Base
+      # url_for does not recognize STI :(
+      opts[:href] = url_for(:controller => val.table_name, :id => val.id, :action => 'show') if selectable
+      add_class_to_html_options(opts[:dd], dom_id(val))
+      add_class_to_html_options(opts[:dd], 'record')
+      add_class_to_html_options(opts, 'record')
+      render_as_attribute(val)
+    when Hash, HashWithIndifferentAccess
+      content_tag(
+        :dl,
+        val.collect do |key, value|
+          di_dt_dd(key, (value.blank? ? 'blank' : value))
+        end.join,
+        :class => 'hash'
+      )
+    when Array, ActiveRecord::NamedScope::Scope, ActiveRecord::Associations::AssociationProxy
+      unless val.blank?
+        opts[:href] = url_for(:controller => val.first.table_name) if selectable
+        add_class_to_html_options(opts, 'list')
+      end
+      list_of(val)
+    when ActsAsConfigurable::OptionsProxy
+      content_tag(
+        :dl,
+        val.values.collect do |key, value|
+          di_dt_dd(key,value,:class => dom_class(value))
+        end.join,
+        :class => 'hash'
+      )
+    when Time, Date
+      val.to_s(:db)
+    when String
+      val
+    else
+      debug(val)
     end
   end
 
