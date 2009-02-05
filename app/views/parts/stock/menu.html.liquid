@@ -1,0 +1,8 @@
+<ul>
+  <li>{{ page.root | render: 'link_to_page' }}</li>
+{% for child in page.root.public_children %}
+  <li>{{ child | render: 'link_to_page' }}</li>
+{% endfor %}
+</ul>
+
+
