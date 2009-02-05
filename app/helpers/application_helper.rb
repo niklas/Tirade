@@ -58,6 +58,7 @@ module ApplicationHelper
   # Makes sure that the given class is in the options which are used for
   # tag helpers like content_tag, link_to etc.
   def add_class_to_html_options(options,name)
+    return {} if options.nil?
     if options.has_key? :class
       return if name =~ /^odd|even$/ && options[:class] =~ /odd|even/
       options[:class] += " #{name}" unless options[:class] =~ /\b#{name}\b/
