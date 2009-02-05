@@ -22,6 +22,9 @@ class Page < ActiveRecord::Base
   attr_protected :created_at, :updated_at
 
   acts_as_renderer
+  acts_as_content :liquid => [
+    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root
+  ]
 
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
   has_many :renderings
@@ -106,6 +109,10 @@ class Page < ActiveRecord::Base
 
   def slug
     title.urlize
+  end
+
+  def public_children
+    self.children.to_a
   end
 
   def title_unless_root
