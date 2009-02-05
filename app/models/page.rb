@@ -154,4 +154,13 @@ class Page < ActiveRecord::Base
   def set_freshness_before_save
     @fresh = true if layout_id_changed? or yui_changed?
   end
+
+
+  def self.sample
+    new(
+      :title => 'Sample Page',
+      :url => 'this/page/does/not/exist',
+      :yui => 'doc'
+    )
+  end
 end
