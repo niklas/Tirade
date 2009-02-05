@@ -14,8 +14,12 @@ module RenderHelper
           (rendering.has_content? ? "for #{rendering.content_type.pluralize} here." : 'here.')
         )
       elsif !rendering.has_content?
-        clss += ' without_content'
-        warning("No #{rendering.part.preferred_types.to_sentence(:connector => 'or')} assigned, drop one here.")
+        if rendering.part.preferred_types.blank?
+          rendering.part.render(rendering.options.to_hash)
+        else
+          clss += ' without_content'
+          warning("No #{rendering.part.preferred_types.to_sentence(:connector => 'or')} assigned, drop one here.")
+        end
       else
         clss += " #{rendering.content.class.to_s.underscore}"
         rendering.part.render_with_content(rendering.content,rendering.options.to_hash)

@@ -10,7 +10,7 @@
     <% end %>
 
     <% accordion_item 'Preferred Types' do %>
-      <%= f.multiple_checkbox :preferred_types, Part.valid_content_types %>
+      <%= f.multiple_checkbox :preferred_types, Part.valid_content_types, :none => 'none' %>
     <% end %>
 
     <% accordion_item 'Code' do %>

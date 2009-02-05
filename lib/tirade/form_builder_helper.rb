@@ -101,15 +101,22 @@ module Tirade
 
     def multiple_checkbox(field,values,opts={})
       name = "#{@object_name}[#{field}][]"
-      inner = ''
       collection = @object.send field
-      values.each do |value|
-        inner << @template.di_dt_dd(
-          label(value.to_s),
-          @template.check_box_tag(name, value.to_s, collection.include?(value.to_s))
-        )
-      end
+      returning '' do |inner|
+        values.each do |value|
+          inner << @template.di_dt_dd(
+            label(value.to_s),
+            @template.check_box_tag(name, value.to_s, collection.include?(value.to_s))
+          )
+        end
+        if none = opts.delete(:none)
+          inner << @template.di_dt_dd(
+            label('(None)'),
+            @template.check_box_tag(name, none, collection.empty?)
+          )
+        end
       inner
+      end
     end
 
     private

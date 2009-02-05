@@ -1,7 +1,7 @@
 class Part < ActiveRecord::Base
-  validates_length_of :preferred_types, :minimum => 1, :message => 'are not enough. Please select at least one.'
+  #validates_length_of :preferred_types, :minimum => 1, :message => 'are not enough. Please select at least one.'
   def preferred_types
-    read_attribute(:preferred_types) || []
+    (read_attribute(:preferred_types) || []) - ['none']
   end
 
   def preferred_types_names
@@ -15,7 +15,7 @@ class Part < ActiveRecord::Base
   end
 
   def set_default_preferred_types
-    self.preferred_types = ['Document'] if preferred_types.empty?
+    self.preferred_types = ['none'] if preferred_types.empty?
   end
   before_validation :set_default_preferred_types
 
