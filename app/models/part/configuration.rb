@@ -10,7 +10,7 @@ class Part < ActiveRecord::Base
   end
 
   def configuration=(new_configuration)
-    self.attributes = new_configuration.slice(*ConfigurationFields)
+    self.attributes = new_configuration.stringify_keys.slice(*ConfigurationFields)
   end
 
   def configuration
