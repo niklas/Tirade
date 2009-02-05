@@ -15,14 +15,14 @@ module RenderHelper
         )
       elsif !rendering.has_content?
         if rendering.part.preferred_types.blank?
-          rendering.part.render(rendering.options.to_hash)
+          rendering.part.render(rendering.final_options, rendering.context_in_registers)
         else
           clss += ' without_content'
           warning("No #{rendering.part.preferred_types.to_sentence(:connector => 'or')} assigned, drop one here.")
         end
       else
         clss += " #{rendering.content.class.to_s.underscore}"
-        rendering.part.render_with_content(rendering.content,rendering.options.to_hash)
+        rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
       end,
       :id => dom_id(rendering), :class => clss
     )

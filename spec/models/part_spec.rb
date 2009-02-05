@@ -451,6 +451,53 @@ describe "Alternative Part in Plugin 'extra'" do
 end
 
 
+describe "A Part which renders the simple_preview by filter" do
+  fixtures :pages
+  before(:each) do
+    @wrapper = Part.new(
+      :name => 'Wrapper',
+      :filename => 'wrapper',
+      :liquid => %q~<p>{{ wrapper | render: 'simple_preview'  }}</p>~,
+      :preferred_types => ["Document"],
+      :options => {}
+    )
+  end
+  #it "should have no errors" do
+  #  @wrapper.valid?
+  #  @wrapper.errors.should == []
+  #end
+  it "should be valid" do
+    @wrapper.should be_valid
+  end
+  it "should include the object in its options" do
+    @wrapper.options_with_object(2342).should have_key(:wrapper)
+  end
+  describe ", rendering a Document" do
+    before(:each) do
+      @document = Document.new(
+        :title => "My Title",
+        :body => "A not so long Paragraph"
+      )
+      @context = {
+        :registers => {
+          'rendering_context' => {
+            'page' => pages(:main)
+          },
+          'global' => 666
+        }
+      }
+      @html = @wrapper.render_with_content(@document,{},@context)
+    end
+    it "should generate HTML" do
+      @html.should_not be_blank
+    end
+    it "should contain the title" do
+      @html.should =~ /My Title/
+    end
+  end
+end
+
+
 #describe "A Part with content_numerus/_quantum" do
 #  it "can render no Content"
 #  it "can render a single Content"

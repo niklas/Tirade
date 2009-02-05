@@ -5,15 +5,16 @@ class Part < ActiveRecord::Base
   attr_accessor :html
   attr_accessor :template
 
-  def render_with_content(content, assigns={})
+  def render_with_content(content, assigns={}, context=nil)
     return '' if content.nil?
-    render(options_with_object(content).merge(assigns).stringify_keys)
+    render(options_with_object(content).merge(assigns || {}),context)
   end
 
-  def render(assigns={})
+  def render(assigns={},context=nil)
+    #return %Q~rwc: <pre>#{assigns.to_yaml}</pre>~
     begin
       self.template = Liquid::Template.parse(liquid)
-      self.html = self.template.render(assigns)
+      self.html = self.template.render(assigns.stringify_keys, context)
     rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
       raise TemplateError, %Q[could not compile liquid template '#{filename_with_extention}': #{e.message.h}] 
     end
@@ -137,7 +138,7 @@ class Part < ActiveRecord::Base
     rescue TemplateError => e
       self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
     rescue TemplateNotFound => e
-      self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
+      self.errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
     end
 
     unless html.blank?

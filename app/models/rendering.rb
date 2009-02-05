@@ -132,11 +132,25 @@ class Rendering < ActiveRecord::Base
   end
 
   def final_options
-    options.merge(part.andand.options || {})
+    options.to_hash.
+      merge(context).
+      merge(part.andand.options || {})
   end
 
   def render
     render_to_string(:inline => '<%= render_rendering(rendering) %>', :locals => {:rendering => self})
+  end
+
+  def context_in_registers(assigns={})
+    {
+      :registers => { 'rendering_context' => context(assigns) }
+    }
+  end
+
+  def context(assings={})
+    {
+      'page' => page
+    }
   end
 
 end
