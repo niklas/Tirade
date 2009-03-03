@@ -121,6 +121,13 @@ class Grid < ActiveRecord::Base
     render_to_string(:inline => '<%= render_grid_in_page(grid,page) %>', :locals => {:grid => self, :page => thepage})
   end
 
+  def explode!
+  end
+
+  def wrap!(new_yui='yui-u')
+    self.class.create(:yui => new_yui, :child_id => self.id)
+  end
+
   attr_writer :child_id
   protected
   def auto_create_missing_children

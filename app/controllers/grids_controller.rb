@@ -28,6 +28,10 @@ class GridsController < ApplicationController
     end
   end
 
+  # Remove this Grid an all its siblings, placing their children into its parent
+  def explode
+  end
+
   def order_renderings
     Rendering.transaction do
       @grid = Grid.find(params[:id])

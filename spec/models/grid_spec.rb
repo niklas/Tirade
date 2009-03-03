@@ -322,7 +322,7 @@ describe "The 50-50 Grid" do
 
   describe "wrapped into a simple yui-u.", "This Wrap" do
     before(:each) do
-      @wrap = Grid.create(:yui => 'yui-u', :child_id => @grid.id)
+      @wrap = @grid.wrap!
       @wrap.reload
       @grid.reload
     end
@@ -333,6 +333,10 @@ describe "The 50-50 Grid" do
 
     it "should be a root node" do
       @wrap.should be_root
+    end
+
+    it "should be a yui-u" do
+      @wrap.yui.should == 'yui-u'
     end
 
     it "should have the old grid as direct and only child" do
