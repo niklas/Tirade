@@ -122,6 +122,18 @@ class Grid < ActiveRecord::Base
   end
 
   def explode!
+    transaction do 
+      we = self.self_and_siblings
+      common_children = we.collect(&:children).flatten
+      #common_renderings = self.self_and_siblings.collect(&:renderings).compact
+      par = self.parent or raise("cannot explode root")
+      par.update_attributes! :yui => 'yui-u'
+      common_children.each do |child|
+        child.move_to_child_of par.id
+      end
+      we.each(&:destroy)
+    end
+
   end
 
   def wrap!(new_yui='yui-u')

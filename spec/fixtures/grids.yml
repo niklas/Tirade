@@ -2,6 +2,7 @@
 
 layout50_50:
   id: 5050
+  title: "50 / 50"
   parent_id: NULL
   yui: yui-g
   lft: 1
@@ -9,12 +10,14 @@ layout50_50:
 
 layout_50_50_1:
   parent_id: 5050
+  title: "50 / 50 left"
   yui: yui-u
   lft: 2
   rgt: 10
 
 layout_50_50_2:
   parent_id: 5050
+  title: "50 / 50 right"
   yui: yui-u
   lft: 12
   rgt: 20

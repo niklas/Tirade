@@ -363,3 +363,20 @@ describe "The 50-50 Grid" do
   end
 
 end
+
+describe "Exploding the left side of a 50-50 Grid" do
+  fixtures :all
+  before(:each) do
+    @grid = grids(:layout_50_50_2)
+    @exploding = lambda { @grid.explode! }
+  end
+
+  it "should destroy itself and its siblings" do
+    sib_count = @grid.self_and_siblings.count
+    @exploding.should change(Grid, :count).by(-sib_count)
+  end
+
+  it "should not destroy any Renderings" do
+    @exploding.should_not change(Rendering, :count)
+  end
+end
