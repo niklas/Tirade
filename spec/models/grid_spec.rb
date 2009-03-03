@@ -379,4 +379,17 @@ describe "Exploding the left side of a 50-50 Grid" do
   it "should not destroy any Renderings" do
     @exploding.should_not change(Rendering, :count)
   end
+
+  it "should change its parent to yui-u" do
+    @exploding.call
+    grids(:layout50_50).yui.should == 'yui-u'
+  end
+
+  it "should move its renderings to its parent" do
+    @grid.renderings.should include(renderings(:main12))
+    @exploding.should change( grids(:layout50_50), :renderings_count).by(2)
+    pr = grids(:layout50_50).renderings
+    pr.should include(renderings(:main11))
+    pr.should include(renderings(:main12))
+  end
 end

@@ -39,9 +39,16 @@ class Grid < ActiveRecord::Base
   validates_inclusion_of :yui, :in => Types
 
   has_many :pages, :foreign_key => 'layout_id'
+  has_many :renderings
+  def renderings_count
+    renderings.count
+  end
 
   def after_destroy
-    parent.andand.save
+    if parent
+      parent.save
+      renderings.update_all("grid_id = #{parent.id}")
+    end
   end
 
   def self.new_by_yui(grid_class)
