@@ -67,7 +67,11 @@ var Toolbox = {
       Toolbox.history().appendDom(
         Toolbox.Templates.historyItem( frame.attr('title'), href )
       );
-      $(this).find('form')
+    });
+
+    // Ajaxify forms
+    this.frames(' form').livequery(function() {
+      $(this)
         .each( function() { this.action += '.js'; })
         .ajaxForm({
           dataType: 'script',
@@ -78,8 +82,8 @@ var Toolbox = {
         .appendDom([
           {tagName: 'input', type: 'hidden', name: 'context_page_id', value: $('body > div.page').resourceId() }
         ]);
-;
     });
+
     this.history('> li > a.jump').livequery('click', function(event) {
       event.preventDefault();
     });
