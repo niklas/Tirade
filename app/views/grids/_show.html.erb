@@ -4,6 +4,10 @@
   <% if grid.root? %>
     <li><%= link_to_remote 'wrap', :url => grids_url(:grid => {:yui => 'yui-u', :child_id => grid}), :method => :post, :confirm => 'This will wrap this grid into another and will assign it as new layout to all relevant pages. Use this if you want to add a new row under THIS grid.' %></li>
   <% end %>
+  <% if grid.leaf? %>
+    <li><%= link_to_remote 'explode', :url => explode_grid_url(grid), :method => :delete, :confirm => 'This will destroy this grid and its siblings, placing all renderings of all relevant pages in their parent. Use this to remove columns this grid is one of.' %>
+    </li>
+  <% end %>
   <li><%= link_to_remote 'add child', :url => create_child_grid_url(grid), :method => :post %> </li>
 <% end %>
 <% accordion do %>

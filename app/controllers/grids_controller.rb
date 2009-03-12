@@ -29,7 +29,15 @@ class GridsController < ApplicationController
   end
 
   # Remove this Grid an all its siblings, placing their children into its parent
+  # TODO refresh the parent on the current page
   def explode
+    @grid = Grid.find(params[:id])
+    if @grid.leaf?
+      @grid.explode!
+      flash[:notice] = "please reload page"
+    else
+      flash[:error] = "Could not explode, Grid is no leaf (has Grids below it)"
+    end
   end
 
   def order_renderings

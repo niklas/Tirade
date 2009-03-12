@@ -34,7 +34,7 @@ ActionController::Routing::Routes.draw do |map|
       
     # TODO external preview
     manage.resources :grids,
-      :member => {:create_child => :post, :order_renderings => :post, :order_children => :post}
+      :member => {:create_child => :post, :order_renderings => :post, :order_children => :post, :explode => :delete}
       
     manage.resources :users, 
       :member => {:suspend   => :put,
