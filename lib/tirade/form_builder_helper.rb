@@ -73,7 +73,7 @@ module Tirade
       thing = thing.first if thing.is_a?(Array) # HACK for dynamic content of Rendering
       inner = ''
       inner << @template.list_of([thing], :force_list => true)
-      inner << @template.live_search_for(opts.delete(:types) || assoc)
+      inner << @template.live_search_for_reflection(reflection, opts) unless opts[:search] == false
       if thing
         inner << @template.hidden_field_tag("#{@object_name}[#{assoc}_id]", thing.id, :class => 'association_id')
         if reflection.options[:polymorphic]

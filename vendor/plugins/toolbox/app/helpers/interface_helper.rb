@@ -245,12 +245,21 @@ module InterfaceHelper
     else
       singular = resource.to_s
       plural = singular.pluralize
-      inner << text_field_tag("#{resource}_search_term", nil, :href => url_for(:controller => plural), :class => 'search_term')
+      inner << text_field_tag("#{resource}_search_term", nil, :href => opts[:href] || url_for(:controller => plural), :class => 'search_term')
       inner << content_tag(:div, "Search for #{plural.humanize}", :class => "search_results #{plural}")
     end
 
     link_to("search", '#', :class => 'toggle_live_search') +
     content_tag(:div, inner, opts )
+  end
+
+  def live_search_for_reflection(reflection, opts = {})
+    live_search_for(
+      reflection.name, 
+      opts.merge(
+        :href => url_for(:controller => reflection.class_name.tableize)
+      )
+    )
   end
 
   def actings_for(record)
