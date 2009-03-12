@@ -38,7 +38,7 @@ var Toolbox = {
       .end()
       .show();
     // Back button
-    this.element(" a.back[@href='#']").livequery(function() { 
+    this.element(" a.back[href='#']").livequery(function() { 
       $(this).click(function(event) { 
         event.preventDefault();
         $('div.active').removeClass('active');
@@ -93,7 +93,7 @@ var Toolbox = {
     this.accordion().livequery(function() { 
       active = 0;
       if (name = Toolbox.activeSectionName) { 
-        active = '[@name=' + name + ']' 
+        active = '[name=' + name + ']' 
       };
       $(this).accordion({ 
         header: 'h3.accordion_toggle', 
@@ -252,7 +252,7 @@ var Toolbox = {
   expireBehaviors: function() {
     this.frames().expire();
     this.accordion().expire();
-    this.element(" a.back[@href='#']").expire();
+    this.element(" a.back[href='#']").expire();
     this.frames(':not(:first)').expire();
     this.frames(' form').expire();
     this.history('> li > a.jump').expire();
@@ -369,7 +369,7 @@ var Toolbox = {
     return this.content('> div.frame'+(rest||''));
   },
   frameByHref: function(href,rest) {
-    return this.frames('[@href=' + href + ']'+(rest||''))
+    return this.frames('[href=' + href + ']'+(rest||''))
   },
   scroller: function(rest) {
     return this.element('> div.body'+(rest||''));
@@ -416,7 +416,7 @@ var Toolbox = {
     return this.last(' div.accordion')
   },
   openSectionByName: function(name) {
-    selector = '[@name='+name+']:not(.selected)';
+    selector = '[name='+name+']:not(.selected)';
     if (this.accordion().find(selector).length!=0) {
       return this.accordion().accordion('activate', selector);
     }

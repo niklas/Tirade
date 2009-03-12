@@ -94,7 +94,7 @@
       var id = item.resourceId();
       item.parent()
           .removeClass('empty')
-          .siblings('input[@type=hidden][@value=empty]')
+          .siblings('input[type=hidden][value=empty]')
             .clone().attr('value',id).appendTo(item);
 
       item

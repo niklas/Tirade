@@ -17,7 +17,7 @@ jQuery.fn.preview = function() {
     });
   };
   Toolbox.scroller().one('prev', function() {
-    fetchPreview(form.find('input[@name=authenticity_token],input[@name=_method],input[@name=context_page_id]').serialize()); /* reset old state */
+    fetchPreview(form.find('input[name=authenticity_token],input[name=_method],input[name=context_page_id]').serialize()); /* reset old state */
   });
 
   form.formWatch({callback: fetchPreview});

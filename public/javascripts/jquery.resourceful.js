@@ -5,7 +5,7 @@
     if ( (id = obj.attr('id')) && (m = id.match(/(\d+)$/))) {
       return(m[1]);
     } else if (
-      (first_href = obj.children('a:first[@href!=#]').attr('href')) &&
+      (first_href = obj.children('a:first[href!=#]').attr('href')) &&
       (m = first_href.match(/(\d+)$/))) {
       return(m[1]);
     } else if (
