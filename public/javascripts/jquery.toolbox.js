@@ -160,8 +160,8 @@ var Toolbox = {
       })
     });
 
-    this.last(' di.association.one dd > ul.list:first').livequery(function() { $(this).hasOneEditor() });
-    this.last(' di.association.many dd > ul.list:first').livequery(function() { $(this).hasManyEditor() });
+    this.last(' di.association.one dd > ul.list').livequery(function() { $(this).hasOneEditor() });
+    this.last(' di.association.many dd > ul.list').livequery(function() { $(this).hasManyEditor() });
 
     // mark empty association lists
     this.last(' di.association dd > ul.list:not(:has(li))').livequery(function() {
