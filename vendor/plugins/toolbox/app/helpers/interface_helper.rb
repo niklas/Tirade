@@ -185,6 +185,10 @@ module InterfaceHelper
       val.to_s(:db)
     when String
       val
+    when Fixnum
+      val.to_s
+    when Float
+      val.to_s
     else
       debug(val)
     end
