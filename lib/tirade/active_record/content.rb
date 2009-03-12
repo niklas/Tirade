@@ -18,6 +18,7 @@ module Tirade
       module ClassMethods
         def acts_as_content(opts={})
           Tirade::ActiveRecord::Content.register_class(self)
+          acts_as! :content
           if liquids = opts.delete(:liquid)
             liquid_methods *liquids
           end
