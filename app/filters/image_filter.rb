@@ -13,4 +13,6 @@ module ImageFilter
       %Q[]
     end
   end
+
+  alias_method :image, :to_image
 end
