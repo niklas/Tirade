@@ -25,6 +25,7 @@ class Page < ActiveRecord::Base
   acts_as_content :liquid => [
     :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root
   ]
+  has_fulltext_search :title, :url
 
   belongs_to :layout, :class_name => 'Grid', :foreign_key => 'layout_id'
   has_many :renderings
@@ -62,7 +63,7 @@ class Page < ActiveRecord::Base
   end
 
   def before_validation
-    self.url = generated_url
+    self.url = generated_url if url.blank?
     self[:yui] ||= 'doc'
   end
 
