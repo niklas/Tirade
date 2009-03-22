@@ -12,4 +12,9 @@ module ContentFilter
       %Q~<div class="warning">Part '#{partial_name}' not found.</div>~
     end
   end
+
+  def title_link(content, base_url=nil)
+    base_url ||= content.table_name
+    %Q~<a href="/#{base_url}/#{content.slug}">#{content.title}</a>~
+  end
 end
