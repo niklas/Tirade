@@ -387,7 +387,7 @@ describe "Exploding the left side of a 50-50 Grid" do
 
   it "should move its renderings to its parent" do
     @grid.renderings.should include(renderings(:main12))
-    @exploding.should change( grids(:layout50_50), :renderings_count).by(2)
+    @exploding.should change( grids(:layout50_50), :renderings_count).by_at_least(2)
     pr = grids(:layout50_50).renderings
     pr.should include(renderings(:main11))
     pr.should include(renderings(:main12))
