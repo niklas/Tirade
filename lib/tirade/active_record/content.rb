@@ -19,7 +19,10 @@ module Tirade
         def acts_as_content(opts={})
           Tirade::ActiveRecord::Content.register_class(self)
           acts_as! :content
-          if liquids = opts.delete(:liquid)
+          if table_exists? && column_names.include?('slug')
+            has_slug :prepend_id => false
+          end
+          if liquids = opts.delete(:liquid) + [:slug, :table_name]
             liquid_methods *liquids
           end
           named_scope :order, lambda { |o|
