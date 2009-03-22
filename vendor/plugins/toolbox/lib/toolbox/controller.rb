@@ -53,8 +53,8 @@ module Tirade
               render_toolbox_action :new
             end
             define_method :create do
-              instance_variable_set '@model', model_class.new(params[model_name])
-              model = instance_variable_get "@model"
+              model = model_class.new(params[model_name])
+              instance_variable_set '@model', model
               instance_variable_set "@#{model_name}", model
               if model.save
                 flash[:notice] = "#{model_class_name} #{model.id} created."
