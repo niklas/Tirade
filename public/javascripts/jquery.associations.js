@@ -5,7 +5,7 @@
     var options = $.extend(defaults, options);
 
     return this.each(function() {
-      list = $(this);
+      var list = $(this);
       list.droppable({
         accept: function(draggable) { 
           return(
