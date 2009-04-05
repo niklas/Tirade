@@ -23,7 +23,12 @@ module Tirade
             before_filter :set_form_builder, :except => [:index,:show,:destroy]
             before_filter "fetch_#{model_name}", :only => [:show, :edit, :update, :destroy]
             define_method "fetch_#{model_name}" do
-              instance_variable_set "@#{model_name}", model_class.find(params[:id])
+              if model_class.acts_as?(:slugged)
+                instance_variable_set "@#{model_name}", 
+                  model_class.find_by_slug(params[:id]) || model_class.find(params[:id])
+              else
+                instance_variable_set "@#{model_name}", model_class.find(params[:id])
+              end
               instance_variable_set '@model', instance_variable_get("@#{model_name}")
               instance_variable_set '@model_name', model_name
             end

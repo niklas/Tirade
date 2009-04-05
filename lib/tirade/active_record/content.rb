@@ -20,6 +20,7 @@ module Tirade
           Tirade::ActiveRecord::Content.register_class(self)
           acts_as! :content
           if table_exists? && column_names.include?('slug')
+            acts_as! :slugged
             has_slug :prepend_id => false
           end
           if liquids = opts.delete(:liquid) + [:slug, :table_name]
