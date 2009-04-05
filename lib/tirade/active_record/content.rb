@@ -3,7 +3,7 @@ module Tirade
     module Content
       include ActsAs
 
-      Scopes = %w(order limit skip recent).freeze unless defined?(Scopes)
+      Scopes = %w(order limit skip recent with_later_than_now).freeze unless defined?(Scopes)
 
       def self.included(base)
         base.class_inheritable_reader :marked_up_fields
@@ -29,6 +29,13 @@ module Tirade
           named_scope :order, lambda { |o|
             if !o.blank?
               {:order => o}
+            else
+              {}
+            end
+          }
+          named_scope :with_later_than_now, lambda { |f|
+            if !f.blank?
+              {:conditions => "#{sanitize_sql(f)} > NOW()"}
             else
               {}
             end

@@ -64,7 +64,8 @@ class Rendering < ActiveRecord::Base
       end
     when 'scope'
       if content_type
-        find_content_by_scope(scope)
+        c = find_content_by_scope(scope)
+        c.length == 1 ? c.first : c
       end
     else
       content_without_dynamic_assignments
