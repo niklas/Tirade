@@ -6,6 +6,7 @@
     <% accordion_item "General" do %>
       <%= f.select :yui, Grid::Types.invert %>
       <%= f.text_field :title %>
+      <%= f.check_box :inherit_renderings %>
     <% end %>
 
     <% unless (grids_renderings = Rendering.for_grid(grid)).empty? %>
@@ -18,7 +19,7 @@
                  <li>
                  <%= rendering.part.andand.name %> 
                  <% unless rendering.content.nil? %>
-                   with <b><%= rendering.content.title %></b>
+                   with <b><%= rendering.content_title %></b>
                  <% end %>
                  </li>
                <% end %>

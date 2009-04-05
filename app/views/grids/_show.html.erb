@@ -17,6 +17,7 @@
     <% end %>
   <% end %>
   <% accordion_item 'Hierarchy' do %>
+    <%= show grid, :inherit_renderings %>
     <%= show grid, :parent %>
     <%= show grid, :children %>
   <% end %>

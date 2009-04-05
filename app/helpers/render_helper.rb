@@ -59,7 +59,7 @@ module RenderHelper
     render_grid_filled_with(
       thegrid,
       if thegrid.visible_children.empty?
-        renderings = thepage.renderings.for_grid(thegrid)
+        renderings = thepage.renderings_for_grid(thegrid)
         unless renderings.empty?
           renderings.collect do |rendering|
             # FIXME HACK rendering must know about trailing path, this is in da page

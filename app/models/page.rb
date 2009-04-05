@@ -89,6 +89,16 @@ class Page < ActiveRecord::Base
     end
   end
 
+  # Find all the renderings to show on this grid on this page
+  # Grids may inherit renderings from parent page
+  def renderings_for_grid(grid)
+    if self.root? || !grid.inherit_renderings?
+      self.renderings.for_grid(grid)
+    else
+      self.parent.renderings_for_grid(grid)
+    end
+  end
+
   attr_accessor :trailing_path
   def self.find_by_path(path=[])
     page = nil
