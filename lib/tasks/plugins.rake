@@ -14,9 +14,19 @@ namespace :tirade do
     task :push => :environment do
       Tirade::Plugins.all_paths.each do |plugin_path|
         plugin_name = File.basename plugin_path
-        puts " == #{plugin_name} =="
+        puts "Pushing #{plugin_name}"
         puts "    #{plugin_path}"
         system %Q~cd #{plugin_path} && git push~
+      end
+    end
+
+    desc "pulls updates for all tirade plugins"
+    task :pull => :environment do
+      Tirade::Plugins.all_paths.each do |plugin_path|
+        plugin_name = File.basename plugin_path
+        puts "Pulling #{plugin_name}"
+        puts "    #{plugin_path}"
+        system %Q~cd #{plugin_path} && git pull~
       end
     end
 
