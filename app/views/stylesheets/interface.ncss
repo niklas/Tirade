@@ -11,9 +11,9 @@ body div {
   .grid {
     position: relative;
     div.placeholder {
-      width: 100%;
       height: 8em;
-      background: url(../images/pentagon-tile.jpg) repeat;
+      background: url(../images/pentagon-tile-active.jpg) repeat;
+      border: 1em solid <%= @colors[:hover] %>;
     }
     .empty {
       height: 8em;

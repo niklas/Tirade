@@ -252,7 +252,7 @@ $(function() {
       forcePlaceHolderSize: true,
       items: '> div.rendering',
       handle: 'span.handle',
-      tolerance: 'pointer',
+      tolerance: 'intersect',
       scroll: true,
       cursor: 'move',
       zIndex: 1,
