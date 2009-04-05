@@ -112,6 +112,12 @@ class Rendering < ActiveRecord::Base
     false
   end
 
+  def content_title
+    if has_content?
+      content.is_a?(Array) ? content.map(&:title).join(', ') : content.title
+    end
+  end
+
   def validate
     if self.content_id
       unless self.class.valid_content_types.find {|ct| ct <= self.content_type.constantize}
@@ -123,7 +129,7 @@ class Rendering < ActiveRecord::Base
   def label
     [
       part.andand.label || '[brand new]',
-      (has_content? ? content.title : nil)
+      content_title
     ].compact.join(' with ')
   end
 
