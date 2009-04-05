@@ -73,9 +73,9 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "public"
 
 
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  # Do not install defaulit routes. we define all we need above
+  #map.connect ':controller/:action/:id'
+  #map.connect ':controller/:action/:id.:format'
 
   map.public_content '*path', :controller => 'public', :action => 'index'
 end
