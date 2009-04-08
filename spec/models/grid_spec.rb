@@ -393,3 +393,47 @@ describe "Exploding the left side of a 50-50 Grid" do
     pr.should include(renderings(:main12))
   end
 end
+
+describe Grid, "structure of DDM Page" do
+  fixtures :pages, :grids, :renderings, :parts
+
+  before(:each) do
+    @page = pages(:ddm)
+  end
+  
+  def render_page
+    @html = @page.render
+  end
+
+  it "should have the proper YAML tags" do
+    pending "implement YAML Grids"
+    @html.should have_tag 'div.page#main' do#           o Page
+      with_tag 'div.subcolumns' do         #            \  Grid 1 (75-25) Main vs Sidebar
+        with_tag 'div.c751' do             #              |
+          with_tag 'div.subcolumns' do     #         \    |  Grid 2 (75- / 38-62) - Main (Menu vs Content)
+            with_tag 'div.c381' do # menu  #          |   |   
+              with_tag 'div.subcl' do      #        \ |   |    Grid 4 (38- / R) Menu
+                with_tag 'div.rendering.menu' do#\  | |   |  
+                  with_tag 'ul'            #      | | |   |  
+                end                        #     /  | |   |                       
+                with_tag 'div.rendering.logo' do#\  | |   |   
+                  with_tag 'img'           #      | | |   |  
+                end                        #     /  / |   |                       
+              end                          #          |   |                   
+            end                            #          |   |                   
+          end                              #          /   |                   
+          with_tag 'div.c62r' do # content #              |                 
+            with_tag 'div.subcr' do        #              |  \              
+              with_tag 'div.rendering'     #              |  |  Grid 5 (-62 | R) Content
+            end                            #              |  /              
+          end                              #              |                 
+        end                                #              |
+        with_tag 'div.c25r' do # sidebar   #              |                 
+          with_tag 'div.subcr' do          #              |  \  
+            with_tag 'div.rendering.simple_preview'#   O  |  |  Grid 3 (-25 / R) Sidebar
+          end                              #              |  /  
+        end                                #              |
+      end                                  #              /
+    end                                
+  end
+end

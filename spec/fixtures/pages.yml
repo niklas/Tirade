@@ -66,3 +66,11 @@ fluffy_animals:
   layout: layout33_33_33
   lft: 211
   rgt: 216
+
+ddm:
+  id: 1337
+  title: DDM
+  parent_id: 42000
+  url: 'ddm'
+  layout: main_vs_sidebar
+  

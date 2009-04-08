@@ -25,3 +25,32 @@ layout_50_50_2:
 layout33_33_33:
   parent_id: NULL
   yui: yui-gc
+
+
+# DDM Grids from YAML ( L for layout :)
+#main_vs_sidebar:
+#  id: 1
+#  title: Main vs Sidebar
+#  parent_id: NULL
+#
+#menu_vs_content:
+#  id: 2
+#  title: Main (Menu vs Content)
+#  parent_id: 1
+#
+#menu:
+#  id: 4
+#  title: Menu
+#  parent_id: 2
+#
+#content:
+#  id: 5
+#  title: Content
+#  parent_id: 2
+#
+#sidebar:
+#  id: 3
+#  title: Sidebar
+#  parent_id: 1
+
+
