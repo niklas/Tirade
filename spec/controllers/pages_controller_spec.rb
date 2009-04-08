@@ -1,6 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PagesController do
+  before(:each) do
+    login_as :quentin
+  end
   describe "handling GET /pages" do
 
     before(:each) do

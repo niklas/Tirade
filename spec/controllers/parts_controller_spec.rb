@@ -1,6 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PartsController do
+  before(:each) do
+    login_as :quentin
+  end
   describe "handling GET /parts" do
 
     before(:each) do

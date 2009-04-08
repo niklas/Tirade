@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   theme :current_theme
   before_filter :require_http_auth
   before_filter :violate_mvc
+  before_filter :login_required
   
   # ==================
   # = Authentication =

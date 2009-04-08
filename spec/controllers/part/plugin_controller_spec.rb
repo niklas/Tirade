@@ -1,6 +1,9 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Part::PluginController do
+  before :each do
+    login_as :quentin
+  end
 
   describe "route generation" do
     it "should map { :action => 'show', :id => 'extra', :part_id => 23} to /manage/parts/23/plugin/extra" do
