@@ -33,6 +33,8 @@ class Rendering < ActiveRecord::Base
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
 
+  # TODO
+  # validate_scope_fields, should be present in content_class
 
   belongs_to :page
   belongs_to :part
@@ -62,10 +64,11 @@ class Rendering < ActiveRecord::Base
       if content_type && content_slug = trailing_path_of_page.first.andand.sluggify
         content_type.constantize.find_by_slug(content_slug)
       end
+    # TODO: singular/plural flag for Part
     when 'scope'
       if content_type
         c = find_content_by_scope(scope)
-        c.length == 1 ? c.first : c
+        #c.length == 1 ? c.first : c
       end
     else
       content_without_dynamic_assignments
