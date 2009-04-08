@@ -54,7 +54,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
   
   map.with_options :controller => 'users' do |page|    
-    page.activate '/activate/:activation_code', :action => 'activate'
+    page.activate '/activate/:activation_code', :action => 'activate', :activation_code => nil
     page.signup '/signup', :action => 'new'
     page.forgot_password '/forgot_password', :action => 'forgot_password'
     page.reset_password '/reset_password/:id', :action => 'reset_password'
@@ -68,8 +68,8 @@ ActionController::Routing::Routes.draw do |map|
   map.custom_image 'upload/images/:id/custom/:geometry/:filename', :controller => 'images', :action => 'custom', 
     :requirements => { :geometry => /([x0-9]+)/i, :filename => /[^\/]*/ }, :conditions => {:method => :get}
 
-  map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets'
-  map.javascripts 'javascripts/:action.:format', :controller => 'javascripts'
+  map.stylesheets 'stylesheets/:action.:format', :controller => 'stylesheets', :format => 'css'
+  map.javascripts 'javascripts/:action.:format', :controller => 'javascripts', :format => 'js'
   map.root :controller => "public"
 
 
