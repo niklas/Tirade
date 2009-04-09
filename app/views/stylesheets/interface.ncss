@@ -24,6 +24,22 @@ body div {
       background: url(../images/pentagon-tile-active.jpg) repeat;
     }
   }
+  ul.tree {
+    margin-left: 2.3em;
+    li.grid {
+      position: relative;
+      font-weight: normal;
+      .active {
+        font-weight: bold;
+      }
+      span.label {
+        display: block;
+      }
+      a.show {
+        top: 7px;
+      }
+    }
+  }
   .rendering {
     position: relative;
     clear: both;

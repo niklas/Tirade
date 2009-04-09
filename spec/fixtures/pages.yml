@@ -72,5 +72,5 @@ ddm:
   title: DDM
   parent_id: 42000
   url: 'ddm'
-  layout: main_vs_sidebar
+  layout_id: 1
   

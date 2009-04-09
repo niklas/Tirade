@@ -32,29 +32,32 @@ module RenderHelper
   # warning: recursive
   def render_grid(grid,opts = {}, &block)
     if grid.children.empty?
-      inner = block_given? ? yield(grid) : h(grid.inspect.to_s)
+      inner = block_given? ? yield(grid) : grid.label
     else
-      inner = grid.visible_children.collect do |child| 
-        render_grid(child,opts,&block)
+      inner = grid.visible_children_with_css.collect do |child, css| 
+        render_grid(child, opts.merge(:wrapper => css), &block)
       end.join(' ')
     end
     render_grid_filled_with(grid,inner,opts)
   end
 
-  # Renderings just the grid container
-  def render_grid_filled_with(grid,inner,opts={})
+  # Renderings just the grid container, inner_html must be given
+  # Inner can be wrapped in a div, just give :wrapper => 'css_class'
+  def render_grid_filled_with(grid, inner_html, opts={})
     opts = opts.dup
-    grid.yuies.each do |yui_class|
-      add_class_to_html_options(opts, yui_class)
-    end
-    if opts.delete(:active) == grid
-      add_class_to_html_options(opts, 'active')
-    end
+    grid.own_css.each { |css| add_class_to_html_options(opts, css) }
+    add_class_to_html_options(opts, 'grid')
+    add_class_to_html_options(opts, 'active') if opts[:active] == grid
     add_class_to_html_options(opts, dom_id(grid))
     opts[:id] = dom_id(grid) # unless opts[:id].nil?
-    content_tag( :div, inner, opts)
+    if wrapper = opts.delete(:wrapper)
+      div_wrap( content_tag(:div, inner_html, opts), wrapper)
+    else
+      content_tag(:div, inner_html, opts)
+    end
   end
 
+  # Renders a Grid with all Renderings visible on given page
   def render_grid_in_page(thegrid,thepage, opts = {})
     render_grid_filled_with(
       thegrid,
@@ -70,14 +73,20 @@ module RenderHelper
           []
         end
       else
-        thegrid.visible_children.collect do |child|
-          render_grid_in_page(child,thepage)
+        thegrid.visible_children_with_css.collect do |child, css|
+          render_grid_in_page( child, thepage, opts.merge(:wrapper => css) )
         end
-      end.join(' '),
+      end.join("\n"),
       opts
     )
   end
 
+  def div_wrap(inner, css, opts={})
+    add_class_to_html_options(opts, css)
+    content_tag( :div, inner, opts)
+  end
+
+  # Renders the hole Page with Grids and their Renderings
   def render_page(thepage)
     if layout = thepage.final_layout
       content_tag(

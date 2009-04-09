@@ -4,6 +4,7 @@ layout50_50:
   id: 5050
   title: "50 / 50"
   parent_id: NULL
+  division: '50-50'
   yui: yui-g
   lft: 1
   rgt: 1000
@@ -11,6 +12,7 @@ layout50_50:
 layout_50_50_1:
   parent_id: 5050
   title: "50 / 50 left"
+  division: 'leaf'
   yui: yui-u
   lft: 2
   rgt: 10
@@ -18,39 +20,56 @@ layout_50_50_1:
 layout_50_50_2:
   parent_id: 5050
   title: "50 / 50 right"
+  division: 'leaf'
   yui: yui-u
   lft: 12
   rgt: 20
 
 layout33_33_33:
   parent_id: NULL
+  division: 'leaf'
   yui: yui-gc
 
 
 # DDM Grids from YAML ( L for layout :)
-#main_vs_sidebar:
-#  id: 1
-#  title: Main vs Sidebar
-#  parent_id: NULL
-#
-#menu_vs_content:
-#  id: 2
-#  title: Main (Menu vs Content)
-#  parent_id: 1
-#
-#menu:
-#  id: 4
-#  title: Menu
-#  parent_id: 2
-#
-#content:
-#  id: 5
-#  title: Content
-#  parent_id: 2
-#
-#sidebar:
-#  id: 3
-#  title: Sidebar
-#  parent_id: 1
+main_vs_sidebar:
+  id: 1
+  title: Main vs Sidebar
+  division: '75-25'
+  parent_id: NULL
+  lft: 1000
+  rgt: 2000
+
+menu_vs_content:
+  id: 2
+  title: Main (Menu vs Content)
+  division: '38-62'
+  parent_id: 1
+  lft: 1010
+  rgt: 1220
+
+menu:
+  id: 4
+  title: Menu
+  division: 'leaf'
+  parent_id: 2
+  lft: 1101
+  rgt: 1110
+
+content:
+  id: 5
+  title: Content
+  division: 'leaf'
+  parent_id: 2
+  lft: 1201
+  rgt: 1211
+
+sidebar:
+  id: 3
+  title: Sidebar
+  division: 'leaf'
+  parent_id: 1
+  lft: 1501
+  rgt: 1999
 
 

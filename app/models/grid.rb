@@ -18,25 +18,41 @@ class Grid < ActiveRecord::Base
 
   acts_as_nested_set 
   acts_as_renderer
-  Types = {
-    'yui-g'  =>   '50% - 50%',
-    'yui-gb' =>	'33% - 33% - 33%',
-    'yui-gc' =>	'66% - 33%',
-    'yui-gd' =>	'33% - 66%',
-    'yui-ge' =>	'75% - 25%',
-    'yui-gf' =>	'25% - 75%',
-    'yui-u'  =>   'single'
+  NameByDivision = {
+    '50-50'    =>   '50% - 50%',
+    '33-33-33' =>	'33% - 33% - 33%',
+    '33-66'    =>	'66% - 33%',
+    '66-33'    =>	'33% - 66%',
+    '75-25'    =>	'75% - 25%',
+    '25-75'    =>	'25% - 75%',
+    '62-38'    => '62% - 38%',
+    '38-62'    => '38% - 62%',
+    'leaf'     =>   'content'
   }
   IdealChildrenCount = {
-    'yui-g'  =>   2,
-    'yui-gb' =>	3,
-    'yui-gc' =>	2,
-    'yui-gd' =>	2,
-    'yui-ge' =>	2,
-    'yui-gf' =>	2,
-    'yui-u'  =>   0
+    '50-50'   =>  2,
+    '33-33-33'=>	3,
+    '75-25'   =>	2,
+    '25-75'   =>	2,
+    '33-66'   =>	2,
+    '66-33'   =>	2,
+    '38-62'   =>	2,
+    '62-38'   =>	2,
+    'leaf'    =>  0
   }
-  validates_inclusion_of :yui, :in => Types
+  Divisions = {
+    '50-50' => %w(c50l c50r),
+    '75-25' => %w(c75l c25r),
+    '25-75' => %w(c25l c75r),
+    '33-33-33' => %w(c33l c33X c33r),
+    '33-66'   =>	%w(c33l c66r),
+    '66-33'   =>	%w(c66l c33r),
+    '38-62'   =>	%w(c38l c62r),
+    '62-38'   =>	%w(c62l c38r),
+    'leaf' => [] 
+  }
+  #validates_inclusion_of :yui, :in => Types
+  validates_inclusion_of :division, :in => Divisions.keys
 
   has_many :pages, :foreign_key => 'layout_id'
   has_many :renderings
@@ -51,24 +67,20 @@ class Grid < ActiveRecord::Base
     end
   end
 
-  def self.new_by_yui(grid_class)
-    new(:yui => grid_class)
-  end
-
   after_save :wrap_children
   after_save :auto_create_missing_children
 
-  def yui=(new_yui)
-    yui_will_change!
-    write_attribute('yui', new_yui)
+  def division=(new_division)
+    division_will_change!
+    write_attribute('division', new_division)
     unless new_record? || !changes.empty?
       auto_create_missing_children
     end
-    yui
+    division
   end
 
   def add_child(child_grid=nil)
-    child_grid ||= self.class.new(:yui => 'yui-u')
+    child_grid ||= self.class.new(:division => 'leaf')
     child_grid.save!
     child_grid.move_to_child_of self
     child_grid
@@ -79,12 +91,13 @@ class Grid < ActiveRecord::Base
   end
 
   def ideal_children_count
-    IdealChildrenCount[self.yui] || 2
+    IdealChildrenCount[division] || 2
   end
 
   # A wrapper to return the proper YUI class depending on +self+'s position
   # in the hierarchy
   def yuies
+    return 'warning please-switch-to-yaml'
     classes = []
     classes << 'yui-u'
     classes << yui
@@ -99,19 +112,45 @@ class Grid < ActiveRecord::Base
   end
 
   def name
-    if 'yui-u' == self.yui
+    if 'leaf' == self.division
       if root?
         "root"
       else
         if parent.name == 'root'
           '100%'
         else
-          parent.name.split(/[\s-]+/)[self_and_siblings.index(self)] || '100%'
+          parent.name.split(/[\s-]+/)[position] || 'Leaf'
         end
       end
     else
-      Types[self.yui] || '[unknown]'
+      NameByDivision[division] || '[unknown]'
     end
+  end
+
+  def position
+    self_and_siblings.index(self)
+  end
+
+  def own_css
+    case division
+    when 'leaf'
+      return 'root' unless position
+      if self_and_siblings.count <= 2
+        position == 0 ? 'subcl' : 'subcr'
+      else
+        %w[subcl subc subcr][position]
+      end
+    else
+      %w(subcolumns)
+    end
+  end
+
+  def children_css
+    Divisions[division] || raise("illegal division: #{division}")
+  end
+
+  def visible_children_with_css(&block)
+    visible_children.zip(children_css).each(&block)
   end
 
   def label

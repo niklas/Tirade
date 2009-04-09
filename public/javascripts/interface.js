@@ -395,7 +395,7 @@ $(function() {
       }
     })
   });
-  $('dd div.grid.preview').livequery(function() {
+  $('dd div.grid.preview, ul.grids.tree li.grid').livequery(function() {
     $(this).hover(
       function() {
         if ( id = $(this).resourceId() ) {
