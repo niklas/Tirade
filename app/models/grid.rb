@@ -21,8 +21,8 @@ class Grid < ActiveRecord::Base
   NameByDivision = {
     '50-50'    =>   '50% - 50%',
     '33-33-33' =>	'33% - 33% - 33%',
-    '33-66'    =>	'66% - 33%',
-    '66-33'    =>	'33% - 66%',
+    '33-66'    =>	'33% - 66%',
+    '66-33'    =>	'66% - 33%',
     '75-25'    =>	'75% - 25%',
     '25-75'    =>	'25% - 75%',
     '62-38'    => '62% - 38%',
@@ -51,8 +51,8 @@ class Grid < ActiveRecord::Base
     '62-38'   =>	%w(c62l c38r),
     'leaf' => [] 
   }
-  #validates_inclusion_of :yui, :in => Types
-  validates_inclusion_of :division, :in => Divisions.keys
+  validates_presence_of :division
+  validates_inclusion_of :division, :in => Divisions.keys, :allow_nil => true
 
   has_many :pages, :foreign_key => 'layout_id'
   has_many :renderings
