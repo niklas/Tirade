@@ -25,7 +25,7 @@ body div {
     }
   }
   ul.tree {
-    margin-left: 2.3em;
+    margin-left: 0;
     li.grid {
       position: relative;
       font-weight: normal;
@@ -39,6 +39,9 @@ body div {
         top: 7px;
       }
     }
+  }
+  div.tree ul.tree {
+    margin: 0;
   }
   .rendering {
     position: relative;
@@ -245,16 +248,12 @@ form {
 ul.list {
   width: 100%;
   margin: 0;
-  float: left;
-  clear: left;
   li { 
-    width: 100%;
-    float: left;
-    clear: left;
     min-height: 19px;
     position: relative;
     text-align: left;
     padding: 0.3em 0;
+    display: block;
     border-bottom: <%= @perimeter %>;
     border-top: <%= @perimeter %>;
     .image {

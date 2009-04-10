@@ -94,19 +94,6 @@ class Grid < ActiveRecord::Base
     IdealChildrenCount[division] || 2
   end
 
-  # A wrapper to return the proper YUI class depending on +self+'s position
-  # in the hierarchy
-  def yuies
-    return 'warning please-switch-to-yaml'
-    classes = []
-    classes << 'yui-u'
-    classes << yui
-    classes << 'horizontal' if yui =~ /yui-g.?/
-    classes << 'first' if self.is_first_child?
-    classes << 'grid'
-    classes.uniq.join(' ')
-  end
-
   def is_first_child?
     self == self.parent.andand.visible_children.andand.first || false
   end
