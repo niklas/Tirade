@@ -54,7 +54,7 @@ class Content < ActiveRecord::Base
     new(
       :title => "Example Content Record",
       :description => "A brief but solid description",
-      :body => "A looooong and beautiful body four your Example Content"
+      :body => "A looooong and *beautiful* body for your Example Content"
     )
   end
 
