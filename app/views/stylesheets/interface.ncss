@@ -1,3 +1,30 @@
+/* Drag & Drop */
+*.active-droppable, *.active-sortable {
+  background: url(../images/pentagon-tile.jpg) repeat;
+}
+
+*.ui-sortable.empty, *.ui-droppable.empty, *.placeholder {
+  background: url(../images/pentagon-tile.jpg) repeat;
+  min-height: 3em;
+  min-width; 6em;
+}
+
+*.drop-hover {
+  background: url(../images/pentagon-tile-active.jpg) repeat;
+}
+*.ui-draggable {
+  cursor: move;
+}
+*.ui-draggable-dragging {
+  background-color: <%= @colors[:base] %>;
+  border: thick solid <%= @colors[:hover] %>;
+  padding: <%= @small %> <%= @big %>;
+  list-style: none;
+  margin: 0;
+  a.show, e.edit, e.index { display: none; }
+  img.association { display: none; }
+}
+
 body div {
   background: inherit;
   .warning {
@@ -9,30 +36,6 @@ body div {
     line-height: 110%;
   }
 
-  /* Drag & Drop */
-  *.active-droppable, *.active-sortable {
-    background: url(../images/pentagon-tile.jpg) repeat;
-  }
-
-  *.ui-sortable.empty, *.ui-droppable.empty, *.placeholder {
-    background: url(../images/pentagon-tile.jpg) repeat;
-    min-height: 3em;
-    min-width; 6em;
-  }
-
-  *.drop-hover {
-    background: url(../images/pentagon-tile-active.jpg) repeat;
-  }
-  *.ui-draggable {
-    cursor: move;
-  }
-  *.ui-draggable-dragging {
-    background-color: <%= @colors[:base] %>;
-    padding: <%= @big %>;
-    list-style: none;
-    a.show, e.edit, e.index { display: none; }
-    img.association { display: none; }
-  }
 
 
   .grid {
@@ -102,21 +105,22 @@ body div {
   }
   > div.admin {
     display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
+    height: 20px;
+    margin-bottom: 5px;
+    background: url(../images/ui/list_item_bg.png);
     span, a {
-      /* display: block; */
+      display: block;
       width: 16px;
       height: 16px;
       text-indent: -5000px;
       outline: 0;
       margin: 2px;
-      float: left;
+      float: right;
     }
     span.handle {
       background: url(../images/icons/small/move.gif);
       cursor: move;
+      display: none;
     }
     a.edit {
       background: url(../images/icons/small/edit.gif);

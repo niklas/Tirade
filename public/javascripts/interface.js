@@ -118,45 +118,7 @@ $(function() {
   $('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a.show').livequery(function() { $(this).useToolbox(); });
-  $('body.role_admin div.page div.rendering').livequery(function(i) {
-    $(this)
-      .appendDom([
-        { tagName: 'div', class: 'admin', id: 'admin_' + $(this).attr('id'), childNodes: [
-          { tagName: 'a', href: rendering_url({id: $(this).resourceId()}), class: 'edit rendering', innerHTML: 'edit' },
-          { tagName: 'span', class: 'handle', innerHTML: 'drag' }
-          ] }
-      ]);
-  });
   $('div#toolbox > div.body > div.content ul.tree.tree_root').livequery(function() { $(this).editLayout(); });
-
-  $('body.role_admin.disabled div.page div.grid div.rendering.fake').livequery(function(i) {
-    $(this)
-      .droppable({
-        accept: 'li,dd',
-        activeClass: 'active-droppable',
-        hoverClass: 'drop-hover',
-        tolerance: 'pointer',
-        drop: function(e,ui) {
-          var droppee = ui.draggable.typeAndId();
-          ui.element.beBusy("applying " + droppee.type);
-          data = 'rendering[grid_id]=' + ui.element.parent().resourceId();
-          data += '&rendering[page_id]=' + ui.element.parents('div.page').resourceId();
-          switch(droppee.type) {
-            case 'Part': 
-              data += '&rendering[part_id]=' + droppee.id;
-              break;
-            default:
-              data += '&rendering[content_id]=' + droppee.id;
-              data += '&rendering[content_type]=' + droppee.type;
-          }
-          data += pageContextForRequest();
-          $.ajax({
-            url: renderings_url(),
-            data: data, type: 'POST'
-          });
-        }
-      });
-  });
 
   /* 
    * Toolbox Drag+Drop

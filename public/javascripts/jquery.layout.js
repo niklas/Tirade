@@ -3,173 +3,198 @@
  *
  * */
 
-jQuery.fn.editLayout = function() {
-  var tree = $(this);
+$(function() {
+  jQuery.fn.editLayout = function() {
+    var tree = $(this);
 
-  // Mirror hovered Grids
-  $('*.grid', this).livequery(function() {
-    $(this).hover(
-      function() {
-        if ( id = $(this).resourceId() ) {
-          $('div.page div.grid.grid_' + id).addClass('hover');
+    // Mirror hovered Grids
+    $('*.grid', this).livequery(function() {
+      $(this).hover(
+        function() {
+          if ( id = $(this).resourceId() ) {
+            $('div.page div.grid.grid_' + id).addClass('hover');
+          }
+        }, 
+        function() {
+          $('div.page div.grid').removeClass('hover');
         }
-      }, 
-      function() {
-        $('div.page div.grid').removeClass('hover');
-      }
-    );
-  });
+      );
+    });
 
-  // Mirror hovered Renderings
-  $('*.rendering', this).livequery(function() {
-    $(this).hover(
-      function() {
-        if ( id = $(this).resourceId() ) {
-          $('div.page div.rendering#rendering_' + id).addClass('hover');
+    // Mirror hovered Renderings
+    $('*.rendering', this).livequery(function() {
+      $(this).hover(
+        function() {
+          if ( id = $(this).resourceId() ) {
+            $('div.page div.rendering#rendering_' + id).addClass('hover');
+          }
+        }, 
+        function() {
+          $('div.page div.rendering').removeClass('hover');
         }
-      }, 
-      function() {
-        $('div.page div.rendering').removeClass('hover');
-      }
-    );
-  });
+      );
+    });
 
-  // Grid with Renderings
-  function order_renderings_for_grid(event, ui) {
-    var list = ui.element;
-    var grid = list.parents('.grid:first');
-    console.debug("Saving Order of Renderings for", grid[0], 'list:' + list[0]);
-    console.debug(list.sortable("serialize", {attribute: 'rel'}));
-    if (grid.find('.' + ui.item.resourceIdentifier()).length) {
+    // Grid with Renderings
+    function order_renderings_for_grid(event, ui) {
+      var list = ui.element;
+      var grid = list.parents('.grid:first');
+      console.debug("Saving Order of Renderings for", grid[0], 'list:' + list[0]);
+      console.debug(list.sortable("serialize", {attribute: 'rel'}));
+      if (grid.find('.' + ui.item.resourceIdentifier()).length) {
+        $.ajax({
+          data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
+          url: order_renderings_grid_url({id: grid.resourceId()}),
+          type: 'POST'
+        });
+      }
+      event.preventDefault();event.stopPropagation();
+    };
+    function order_children_for_grid(event, ui) {
+      var list = ui.element;
+      var grid = list.parents('.grid:first');
+      console.debug("Sorting Order of children for", grid[0], 'list:' + $(list)[0]);
+      console.debug(list.sortable("serialize", {attribute: 'rel'}));
       $.ajax({
         data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
-        url: order_renderings_grid_url({id: grid.resourceId()}),
+        url: order_children_grid_url({id: grid.resourceId()}),
         type: 'POST'
       });
-    }
-    event.preventDefault();event.stopPropagation();
-  };
-  function order_children_for_grid(event, ui) {
-    var list = ui.element;
-    var grid = list.parents('.grid:first');
-    console.debug("Sorting Order of children for", grid[0], 'list:' + $(list)[0]);
-    console.debug(list.sortable("serialize", {attribute: 'rel'}));
-    $.ajax({
-      data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
-      url: order_children_grid_url({id: grid.resourceId()}),
-      type: 'POST'
+      event.preventDefault();event.stopPropagation();
+    };
+    $('*.grid > *.tree:has(> *.rendering)', this).livequery(function() {
+      $(this).sortable({
+        items: '> *.rendering',
+        connectWith: ['*.grid > :not(:has(> *.grid))', '*.grid > *.empty'],
+        tolerance: 'intersect',
+        containment: tree,
+        placeholder: 'placeholder',
+        forcePlaceHolderSize: true,
+        update: function(e,ui) {
+          if (!ui.sender) order_renderings_for_grid(e,ui);
+        },
+        receive: function(e,ui) {
+          if (ui.sender) order_renderings_for_grid(e,ui);
+        },
+        remove: function(e,ui) {
+          $('*.' + ui.item.resourceIdentifier(), $('div.page')).remove();
+        },
+        activate: function(e, ui) { ui.element.addClass('active-sortable'); },
+        deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
+      })/*.droppable({
+        accept: 'li.rendering',
+        tolerance: 'pointer',
+        activeClass: 'active-droppable',
+        hoverClass: 'drop-hover',
+        greedy: true,
+        drop: order_renderings_for_grid
+        })*/;
     });
-    event.preventDefault();event.stopPropagation();
+      // Sort Children of Grid
+    $('*.grid > *.tree:has(> *.grid)', this).livequery(function() {
+      $(this).sortable({
+        items: '> *.grid',
+        connectWith: ['*.grid > :not(:has(> *.rendering))', '*.grid > *.empty'],
+        tolerance: 'pointer',
+        containment: tree,
+        placeholder: 'placeholder',
+        forcePlaceHolderSize: true,
+        update: function(e,ui) {
+          console.debug("Sorted grids on", ui.element);
+          order_children_for_grid(e,ui);
+        },
+        activate: function(e, ui) {
+          ui.element.addClass('active-sortable');
+        },
+        deactivate: function(e, ui) {
+          ui.element.removeClass('active-sortable');
+        }
+      })/*.droppable({
+        accept: 'li.grid',
+        tolerance: 'pointer',
+        activeClass: 'active-droppable',
+        hoverClass: 'drop-hover',
+        greedy: true,
+        drop: order_children_for_grid
+        })*/;
+    });
+
+    // Move Renderings/Grids to empty Grid
+    $('li.grid:not(:has(> ul))', this).livequery(function() {
+      $('<ul class="empty tree" />').appendTo($(this));
+    })
+
+    $('*.grid > *.empty', this).livequery(function() {
+      $(this).
+      sortable({
+        items: '> .rendering, > .grid',
+        connectWith: ['*.grid > *'],
+        tolerance: 'pointer',
+        containment: tree,
+        placeholder: 'placeholder',
+        forcePlaceHolderSize: true,
+        update: function(event, ui) {
+          var droppee = ui.item.typeAndId();
+          console.debug("detected sorting Drop of", droppee.type, "on empty");
+          switch(droppee.type) {
+            case 'Rendering':
+              order_renderings_for_grid(event, ui);
+              break;
+            case 'Grid':
+              order_children_for_grid(event,ui);
+              break;
+            default:
+              console.debug("Do not know how to handle", droppee.type);
+          }
+          event.preventDefault();event.stopPropagation();
+        }
+        })/*.
+      droppable({
+        accept: 'li.grid, li.rendering',
+        tolerance: 'pointer',
+        activeClass: 'active-droppable',
+        hoverClass: 'drop-hover',
+        greedy: true,
+        drop: function(e, ui) {
+          var droppee = ui.draggable.typeAndId();
+          console.debug("dropped", droppee.type, "on empty");
+          switch(droppee.type) {
+            case 'Rendering':
+              order_renderings_for_grid(e, ui);
+              break;
+            case 'Grid':
+              order_children_for_grid(e,ui);
+              break;
+            default:
+              console.debug("Do not know how to handle", droppee.type);
+          }
+        }
+        })*/;
+    });
   };
-  $('*.grid > *.tree:has(> *.rendering)', this).livequery(function() {
-    $(this).sortable({
-      items: '> *.rendering',
-      connectWith: ['*.grid > :not(:has(> *.grid))', '*.grid > *.empty'],
-      tolerance: 'intersect',
-      containment: tree,
-      placeholder: 'placeholder',
-      forcePlaceHolderSize: true,
-      update: function(e,ui) {
-        if (!ui.sender) order_renderings_for_grid(e,ui);
-      },
-      receive: function(e,ui) {
-        if (ui.sender) order_renderings_for_grid(e,ui);
-      },
-      remove: function(e,ui) {
-        $('*.' + ui.item.resourceIdentifier(), $('div.page')).remove();
-      },
-      activate: function(e, ui) { ui.element.addClass('active-sortable'); },
-      deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
-    })/*.droppable({
-      accept: 'li.rendering',
-      tolerance: 'pointer',
-      activeClass: 'active-droppable',
-      hoverClass: 'drop-hover',
-      greedy: true,
-      drop: order_renderings_for_grid
-      })*/;
-  });
-    // Sort Children of Grid
-  $('*.grid > *.tree:has(> *.grid)', this).livequery(function() {
-    $(this).sortable({
-      items: '> *.grid',
-      connectWith: ['*.grid > :not(:has(> *.rendering))', '*.grid > *.empty'],
-      tolerance: 'pointer',
-      containment: tree,
-      placeholder: 'placeholder',
-      forcePlaceHolderSize: true,
-      update: function(e,ui) {
-        console.debug("Sorted grids on", ui.element);
-        order_children_for_grid(e,ui);
-      },
-      activate: function(e, ui) {
-        ui.element.addClass('active-sortable');
-      },
-      deactivate: function(e, ui) {
-        ui.element.removeClass('active-sortable');
-      }
-    })/*.droppable({
-      accept: 'li.grid',
-      tolerance: 'pointer',
-      activeClass: 'active-droppable',
-      hoverClass: 'drop-hover',
-      greedy: true,
-      drop: order_children_for_grid
-      })*/;
+
+
+  // Admin Bars on Renderings
+  $('body.role_admin div.page div.rendering').livequery(function(i) {
+    $(this).prepend(
+      $('<div />').addClass('admin').attr('id', 'admin_' + $(this).attr('id'))
+        .append( $('<a>edit</a>').addClass('edit rendering').attr('href', rendering_url({id: $(this).resourceId()})) )
+        .append( $('<span>drag</span>').addClass('handle'))
+    )
   });
 
-  // Move Renderings/Grids to empty Grid
-  $('li.grid:not(:has(> ul))', this).livequery(function() {
-    $('<ul class="empty tree" />').appendTo($(this));
-  })
-
-  $('*.grid > *.empty', this).livequery(function() {
-    $(this).
-    sortable({
-      items: '> .rendering, > .grid',
-      connectWith: ['*.grid > *'],
-      tolerance: 'pointer',
-      containment: tree,
-      placeholder: 'placeholder',
-      forcePlaceHolderSize: true,
-      update: function(event, ui) {
-        var droppee = ui.item.typeAndId();
-        console.debug("detected sorting Drop of", droppee.type, "on empty");
-        switch(droppee.type) {
-          case 'Rendering':
-            order_renderings_for_grid(event, ui);
-            break;
-          case 'Grid':
-            order_children_for_grid(event,ui);
-            break;
-          default:
-            console.debug("Do not know how to handle", droppee.type);
-        }
-        event.preventDefault();event.stopPropagation();
-      }
-      })/*.
-    droppable({
-      accept: 'li.grid, li.rendering',
-      tolerance: 'pointer',
-      activeClass: 'active-droppable',
-      hoverClass: 'drop-hover',
-      greedy: true,
-      drop: function(e, ui) {
-        var droppee = ui.draggable.typeAndId();
-        console.debug("dropped", droppee.type, "on empty");
-        switch(droppee.type) {
-          case 'Rendering':
-            order_renderings_for_grid(e, ui);
-            break;
-          case 'Grid':
-            order_children_for_grid(e,ui);
-            break;
-          default:
-            console.debug("Do not know how to handle", droppee.type);
-        }
-      }
-      })*/;
-  });
+  $.fn.toggleEditPage = function() {
+    $(this).toggle( 
+      function() {
+        console.debug('editing page');
+        $('body div.page div.rendering').find(' > div.admin, > div.admin span.handle').show();
+      },
+      function() {
+        console.debug('stopped editing page');
+        $('body div.page div.rendering').find(' > div.admin, > div.admin span.handle').hide().css('display','');
+      } 
+    );
+  };
 
   $.fn.oldDragAndDrop = function() {
     // Grid leafs
@@ -298,4 +323,4 @@ jQuery.fn.editLayout = function() {
       })
     });
   }
-};
+});

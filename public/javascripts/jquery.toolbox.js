@@ -47,6 +47,8 @@ var Toolbox = {
     });
 
 
+    this.sidebar(' ul.actions a.toggle.edit.grid').toggleEditPage();
+
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
@@ -579,7 +581,10 @@ Toolbox.Templates = {
       ]},
       { tagName: 'div', class: 'sidebar left', childNodes: [
         { tagName: 'ul', class: 'history' },
-        { tagName: 'ul', class: 'clipboard list records' }
+        { tagName: 'ul', class: 'clipboard list records' },
+        { tagName: 'ul', class: 'actions', childNodes: [
+          { tagName: 'li', childNodes: [  { tagName: 'a', class: 'toggle edit grid', childNodes: [ { tagName: 'img', src: '/images/icons/small/bulb.gif' }]}  ] }
+        ] }
       ] },
       { tagName: 'div', class: 'body', childNodes: [
         { tagName: 'div', class: 'content', id: 'toolbox_content' }

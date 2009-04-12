@@ -205,7 +205,7 @@ body {
   }
   div.sidebar {
     overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
-    padding: 0.4em;;
+    padding: 0;
     margin: 0 0 0 0px;
     position: absolute;
     left: -233px;
@@ -215,13 +215,22 @@ body {
     z-index: 1;
     ul.history, ul.clipboard {
       display: block;
-      width: 100%;
-      float: left;
-      padding: 2% 0px;
+      padding: 0px;
       margin: 0;
     }
-    ul.history { height: 25% }
-    ul.clipboard { height: 69% }
+    ul.history { 
+      min-height: 25%;
+    }
+    ul.clipboard { 
+      min-height: 50%;
+      position: absolute;
+      bottom: 25px;
+    }
+    ul.actions {
+      position: absolute;
+      bottom: 0;
+      padding: 2px 0;
+    }
     ul {
        padding: 0px;
        margin: 2px 0;
