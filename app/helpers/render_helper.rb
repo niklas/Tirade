@@ -24,7 +24,7 @@ module RenderHelper
         clss += " #{rendering.content.class.to_s.underscore}"
         rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
       end,
-      :id => dom_id(rendering), :class => clss
+      :id => dom_id(rendering), :class => clss, :rel => dom_id(rendering)
     )
   end
 
@@ -45,11 +45,12 @@ module RenderHelper
   # Inner can be wrapped in a div, just give :wrapper => 'css_class'
   def render_grid_filled_with(grid, inner_html, opts={})
     opts = opts.dup
-    grid.own_css.each { |css| add_class_to_html_options(opts, css) }
+    add_class_to_html_options(opts, grid.own_css)
     add_class_to_html_options(opts, 'grid')
     add_class_to_html_options(opts, 'active') if opts[:active] == grid
     add_class_to_html_options(opts, dom_id(grid))
     opts[:id] = dom_id(grid) # unless opts[:id].nil?
+    opts[:rel] = dom_id(grid)
     if wrapper = opts.delete(:wrapper)
       div_wrap( content_tag(:div, inner_html, opts), wrapper)
     else

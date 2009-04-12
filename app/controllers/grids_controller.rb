@@ -56,12 +56,21 @@ class GridsController < ApplicationController
   end
 
   def order_children
-    Grid.transaction do
-      params[:grid].reject(&:blank?).andand.each_with_index do |gid,i|
-        Grid.find(gid).move_to_parent_location @grid, i
+    unless params[:grid].blank?
+      Grid.transaction do
+        grids_ids = params[:grid].reject(&:blank?)
+        @old_grids = []
+        Grid.find(grids_ids).map(&:parent).uniq
+        grids_ids.andand.each_with_index do |gid,i|
+          child = Grid.find(gid)
+          @old_grids << child.parent
+          child.move_to_parent_location @grid, i
+        end
       end
-    end unless params[:grid].blank?
-    refresh
+      refresh @old_grids + [@grid]
+    else
+      refresh
+    end
   end
 
   private

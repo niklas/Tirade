@@ -118,7 +118,13 @@ $(function() {
   $('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.sidebar a.show').livequery(function() { $(this).useToolbox(); });
-  $('div#toolbox > div.body > div.content ul.tree.tree_root').livequery(function() { $(this).editLayout(); });
+  $('div#toolbox > div.body > div.content ul.tree.tree_root').livequery(function() { 
+    $('div.node:not(:has(span.handle)):not(.page)', this).livequery( function() {
+      $(this).append( $('<span>drag</span>').addClass('handle'))
+    });
+    $(this).mirrorsLayout(); 
+    $(this).editLayout(); 
+  });
 
   /* 
    * Toolbox Drag+Drop

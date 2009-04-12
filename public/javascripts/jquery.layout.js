@@ -4,10 +4,7 @@
  * */
 
 $(function() {
-  jQuery.fn.editLayout = function() {
-    var tree = $(this);
-
-    // Mirror hovered Grids
+  jQuery.fn.mirrorsLayout = function() {
     $('*.grid', this).livequery(function() {
       $(this).hover(
         function() {
@@ -34,6 +31,12 @@ $(function() {
         }
       );
     });
+  };
+
+  jQuery.fn.editLayout = function() {
+    var tree = $(this);
+
+    // Mirror hovered Grids
 
     // Grid with Renderings
     function order_renderings_for_grid(event, ui) {
@@ -51,25 +54,30 @@ $(function() {
       event.preventDefault();event.stopPropagation();
     };
     function order_children_for_grid(event, ui) {
-      var list = ui.element;
+      var list = ui.placeholder.parent();
       var grid = list.parents('.grid:first');
       console.debug("Sorting Order of children for", grid[0], 'list:' + $(list)[0]);
       console.debug(list.sortable("serialize", {attribute: 'rel'}));
-      $.ajax({
-        data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
-        url: order_children_grid_url({id: grid.resourceId()}),
-        type: 'POST'
-      });
+      if (grid.find('.' + ui.item.resourceIdentifier()).length) {
+        $.ajax({
+          data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
+          url: order_children_grid_url({id: grid.resourceId()}),
+          type: 'POST'
+        });
+      }
       event.preventDefault();event.stopPropagation();
     };
-    $('*.grid > *.tree:has(> *.rendering)', this).livequery(function() {
+    $('*.grid > *:has(> li.rendering, > div.rendering)', this).livequery(function() {
       $(this).sortable({
         items: '> *.rendering',
         connectWith: ['*.grid > :not(:has(> *.grid))', '*.grid > *.empty'],
-        tolerance: 'intersect',
+        tolerance: 'pointer',
         containment: tree,
+        handle: 'span.handle',
         placeholder: 'placeholder',
         forcePlaceHolderSize: true,
+        cursorAt: { top: 2, left: 2 },
+        opacity: 0.5,
         update: function(e,ui) {
           if (!ui.sender) order_renderings_for_grid(e,ui);
         },
@@ -91,24 +99,28 @@ $(function() {
         })*/;
     });
       // Sort Children of Grid
-    $('*.grid > *.tree:has(> *.grid)', this).livequery(function() {
+    $('*.grid > *:has(> li.grid, > div.grid)', this).livequery(function() {
       $(this).sortable({
         items: '> *.grid',
         connectWith: ['*.grid > :not(:has(> *.rendering))', '*.grid > *.empty'],
         tolerance: 'pointer',
         containment: tree,
+        handle: 'span.handle',
         placeholder: 'placeholder',
         forcePlaceHolderSize: true,
+        cursorAt: { top: 2, left: 2 },
+        opacity: 0.5,
         update: function(e,ui) {
-          console.debug("Sorted grids on", ui.element);
-          order_children_for_grid(e,ui);
+          if (!ui.sender) order_children_for_grid(e,ui);
         },
-        activate: function(e, ui) {
-          ui.element.addClass('active-sortable');
+        receive: function(e,ui) {
+          if (ui.sender) order_children_for_grid(e,ui);
         },
-        deactivate: function(e, ui) {
-          ui.element.removeClass('active-sortable');
-        }
+        remove: function(e, ui) {
+          console.debug("Removed element from", this)
+        },
+        activate: function(e, ui) { ui.element.addClass('active-sortable'); },
+        deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
       })/*.droppable({
         accept: 'li.grid',
         tolerance: 'pointer',
@@ -188,9 +200,11 @@ $(function() {
       function() {
         console.debug('editing page');
         $('body div.page div.rendering').find(' > div.admin, > div.admin span.handle').show();
+        $('body div.page').editLayout();
       },
       function() {
         console.debug('stopped editing page');
+        $('body div.page *').sortable('destroy').droppable('destroy');
         $('body div.page div.rendering').find(' > div.admin, > div.admin span.handle').hide().css('display','');
       } 
     );
