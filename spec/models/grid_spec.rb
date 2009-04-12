@@ -211,7 +211,7 @@ describe Grid do
       it do
         @html.should have_tag('div.grid.subcl') do
           with_tag('div.rendering.simple_preview.document') do
-            with_tag('h2', 'Welcome')
+            without_tag('h2', 'Welcome')
             with_tag('p', /If you read this, you earned a big hug!/)
           end
         end
@@ -261,7 +261,6 @@ describe Grid do
         @html.should have_tag('div.grid.subcolumns') do
           with_tag('div.c50l div.grid.subcl') do
             with_tag('div.rendering.simple_preview.document') do
-              with_tag('h2', 'Welcome')
               with_tag('p', /If you read this, you earned a big hug!/)
             end
           end

@@ -14,7 +14,8 @@ describe "/pages/edit.html.erb" do
       :root? => false,
       :parent => pages(:main),
       :layout_id => 23,
-      :yui => 'doc'
+      :width => '500px',
+      :alignment => 'center'
 
     assigns[:page] = @page
     template.controller.stub!(:controller_name).and_return("pages")
@@ -31,7 +32,8 @@ describe "/pages/edit.html.erb" do
     #    with_tag('label', 'Layout')
        with_tag('select#page_layout_id[name=?]', "page[layout_id]")
     #    with_tag('label', 'Width')
-       with_tag('select#page_yui[name=?]', "page[yui]")
+       with_tag('select#page_alignment[name=?]', "page[alignment]")
+       with_tag('input#page_width')
     end
   end
 end

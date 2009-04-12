@@ -10,18 +10,22 @@ describe "/pages/show.html.erb" do
       :url => "MyString",
       :parent_id => "1",
       :parent => nil,
+      :layout => nil,
       :final_layout => nil,
       :yui_name => '111%',
       :root? => true,
       :children => [],
       :renderings => [],
-      :markup? => false
+      :markup? => false,
+      :width => 'auto',
+      :alignment => 'center',
+      :table_name => 'pages'
     )
 
     assigns[:page] = @page
   end
 
-  it "should render attributes in <p>" do
+  it "should render attributes" do
     render "/pages/show.html.erb"
     response.should have_text(/MyString/)
     response.should have_text(/MyString/)
@@ -29,6 +33,5 @@ describe "/pages/show.html.erb" do
     response.should have_text(/1/)
   end
 
-  it "should render a page hierarchy with itself highlighted"
 end
 

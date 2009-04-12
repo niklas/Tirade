@@ -41,7 +41,7 @@ class Page < ActiveRecord::Base
 
   validates_format_of :width, :with => /\A\d+(px|em|ex|%)|auto\Z/, :allow_nil => true
   Alignments = %w(left center right)
-  validates_inclusion_of :alignment, :in => Alignments
+  validates_inclusion_of :alignment, :in => Alignments, :allow_nil => true
 
   BlacklistesTitles = %w(manage themes)
 

@@ -13,6 +13,7 @@ describe Rendering do
     before(:each) do
       @rendering.grid_id = 5
       @rendering.page_id = 23
+      @rendering.save
     end
     it "should be valid" do
       @rendering.should be_valid
@@ -97,7 +98,6 @@ describe Rendering, ' appended to the left column of the main page, containing a
     end
     it "should render proper html" do
       @html.should have_tag('div.rendering.simple_preview.document') do
-        with_tag('h2','Goodbye')
         with_tag('p',/If you read this, the page has come to an end/)
       end
     end
@@ -147,7 +147,6 @@ describe Rendering, ' appended to the left column of the main page, containing a
     end
     it "should render proper html" do
       @html.should have_tag('div.rendering.simple_preview.document') do
-        with_tag('h2','Love Letter')
         with_tag('p',/Hello Bla/)
       end
     end

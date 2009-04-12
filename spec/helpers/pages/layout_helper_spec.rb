@@ -5,7 +5,8 @@ describe Pages::LayoutHelper do
 
   describe 'render_tree from Page' do
     before(:each) do
-      helper.stub!(:show_value).and_return('Data')
+      helper.stub!(:render).with(:partial => 'grids/list_item').and_return('Data')
+      helper.stub!(:single_item).and_return('SINGLE')
       @html = nil
     end
     def html

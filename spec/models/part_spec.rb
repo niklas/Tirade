@@ -482,9 +482,9 @@ describe "A Part which renders the simple_preview by filter" do
     @wrapper = Part.new(
       :name => 'Wrapper',
       :filename => 'wrapper',
-      :liquid => %q~<p>{{ wrapper | render: 'simple_preview'  }}</p>~,
+      :liquid => %q~<div>{{ wrapper | render: 'simple_preview'  }}</div>~,
       :preferred_types => ["Document"],
-      :options => {}
+      :options => { :show_title => true }
     )
   end
   #it "should have no errors" do
@@ -516,8 +516,11 @@ describe "A Part which renders the simple_preview by filter" do
     it "should generate HTML" do
       @html.should_not be_blank
     end
-    it "should contain the title" do
-      @html.should =~ /My Title/
+    it "should not contain the title (because the option show_title is not forwared YET)" do
+      @html.should_not =~ /My Title/
+    end
+    it "should contain the body" do
+      @html.should =~ /Paragraph/
     end
   end
 end

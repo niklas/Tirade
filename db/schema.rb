@@ -25,15 +25,10 @@ ActiveRecord::Schema.define(:version => 20090412210854) do
     t.string   "title"
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.string   "location"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "headliner_id"
-    t.datetime "doors_open_at"
-    t.float    "advance_sale_price"
-    t.float    "box_office_price"
-    t.integer  "location_id"
-    t.string   "slug"
   end
 
   create_table "contents", :force => true do |t|
@@ -187,6 +182,11 @@ ActiveRecord::Schema.define(:version => 20090412210854) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "plugin_schema_info", :id => false, :force => true do |t|
+    t.string  "plugin_name"
+    t.integer "version"
   end
 
   create_table "plugin_schema_migrations", :id => false, :force => true do |t|
