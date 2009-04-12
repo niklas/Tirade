@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   # When access is denied redirect to the login page.
   def access_denied
     respond_to do |format|
+      format.js do
+        flash[:error] = "You must be logged in to access this feature."
+        render :template => 'sessions/new'
+      end
       format.html do
         store_location
         flash[:error] = "You must be logged in to access this feature."
