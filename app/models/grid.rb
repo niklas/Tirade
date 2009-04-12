@@ -106,7 +106,7 @@ class Grid < ActiveRecord::Base
         if parent.name == 'root'
           '100%'
         else
-          parent.name.split(/[\s-]+/)[position] || 'Leaf'
+          parent.name.split(/[\s-]+/).andand[position] || 'Leaf'
         end
       end
     else
