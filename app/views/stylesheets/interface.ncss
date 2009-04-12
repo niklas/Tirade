@@ -3,8 +3,13 @@
   background: url(../images/pentagon-tile.jpg) repeat;
 }
 
-*.ui-sortable.empty, *.ui-droppable.empty, *.placeholder {
+*.ui-sortable.empty, *.ui-droppable.empty  {
   background: url(../images/pentagon-tile.jpg) repeat;
+  min-height: 3em;
+  min-width; 6em;
+}
+*.placeholder {
+  background: url(../images/pentagon-tile-active.jpg) repeat;
   min-height: 3em;
   min-width; 6em;
 }
@@ -13,7 +18,19 @@
   background: url(../images/pentagon-tile-active.jpg) repeat;
 }
 *.ui-draggable {
-  cursor: move;
+  span.handle {
+    position: absolute;
+    right: 32px;
+    top: 50%;
+    background: url(../images/icons/small/move.gif) no-repeat;
+    cursor: move;
+    display: block;
+    width: 16px;
+    height: 16px;
+    text-indent: -5000px;
+    outline: 0;
+    margin: -8px 2px 2px 2px;
+  }
 }
 *.ui-draggable-dragging {
   background-color: <%= @colors[:base] %>;
@@ -24,6 +41,7 @@
   a.show, e.edit, e.index { display: none; }
   img.association { display: none; }
 }
+
 
 body div {
   background: inherit;
@@ -53,8 +71,8 @@ body div {
       padding: 0 0 3em 0;
       margin: 0;
     }
-    border-bottom: 1px solid #CCCCCC;
-    border-left: 1px solid #CCCCCC;
+    border-bottom: 1px solid #999999;
+    border-left: 1px solid #999999;
     list-style: none;
     li {
       margin: 0;
@@ -118,8 +136,6 @@ body div {
       float: right;
     }
     span.handle {
-      background: url(../images/icons/small/move.gif);
-      cursor: move;
       display: none;
     }
     a.edit {
