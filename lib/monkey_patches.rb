@@ -115,7 +115,7 @@ module CollectiveIdea::Acts::NestedSet::InstanceMethods
    
     if children.length > 0
       ord = location.to_i
-      if ord > children.length
+      if ord >= children.length
         self.move_to(children.last, :right)
       elsif children[ord] != self
         self.move_to(children[ord], :left)
