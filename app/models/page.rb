@@ -134,6 +134,10 @@ class Page < ActiveRecord::Base
     "#{title} (#{url})"
   end
 
+  def label
+    title_with_url
+  end
+
   @@rebuilding = false
   def self.rebuild_with_status!
     @@rebuilding = true

@@ -26,10 +26,10 @@ describe Rendering do
         @rendering.grid_id.should == 42
       end
       it "should remember that second change" do
-        @rendering.should be_grid_changed
+        @rendering.should be_grid_id_changed
       end
       it "should remember the old value" do
-        @rendering.old_grid_id.should == 5
+        @rendering.grid_id_was.should == 5
       end
     end
   end

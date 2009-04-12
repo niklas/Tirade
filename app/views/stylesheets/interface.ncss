@@ -8,25 +8,58 @@ body div {
     font-size: 130%;
     line-height: 110%;
   }
+
+  /* Drag & Drop */
+  *.active-droppable, *.active-sortable {
+    background: url(../images/pentagon-tile.jpg) repeat;
+  }
+
+  *.ui-sortable.empty, *.ui-droppable.empty, *.placeholder {
+    background: url(../images/pentagon-tile.jpg) repeat;
+    min-height: 3em;
+    min-width; 6em;
+  }
+
+  *.drop-hover {
+    background: url(../images/pentagon-tile-active.jpg) repeat;
+  }
+  *.ui-draggable {
+    cursor: move;
+  }
+  *.ui-draggable-dragging {
+    background-color: <%= @colors[:base] %>;
+    padding: <%= @big %>;
+    list-style: none;
+    a.show, e.edit, e.index { display: none; }
+    img.association { display: none; }
+  }
+
+
   .grid {
     position: relative;
-    div.placeholder {
-      height: 8em;
-      background: url(../images/pentagon-tile-active.jpg) repeat;
-      border: 1em solid <%= @colors[:hover] %>;
-    }
     .empty {
+      div.admin {
+        display: block;
+      }
       height: 8em;
-      background: url(../images/pentagon-tile.jpg) repeat;
-    }
-    .active-droppable.drop-invite {
-      padding-bottom: 8em;
-      background: url(../images/pentagon-tile-active.jpg) repeat;
     }
   }
+
   ul.tree {
-    margin-left: 0;
-    li.grid {
+    .tree_root {
+      padding: 0 0 3em 0;
+      margin: 0;
+    }
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+    list-style: none;
+    li {
+      margin: 0;
+      div.node {
+         background-image: url(../images/ui/list_item_bg.png);
+         padding: 0.8em;
+         position: relative;
+      } 
       position: relative;
       font-weight: normal;
       .active {
@@ -34,9 +67,6 @@ body div {
       }
       span.label {
         display: block;
-      }
-      a.show {
-        top: 7px;
       }
     }
   }
@@ -48,7 +78,6 @@ body div {
     clear: both;
     .fake {
       height: 8em;
-      background: url(../images/pentagon-tile.jpg) repeat;
       span.message {
         font-size: 130%;
         padding: <%= @medium %>;
@@ -57,21 +86,15 @@ body div {
         top: 23%; left: 42%;
       }
     }
-    .without_part, .without_content {
-      background: url(../images/pentagon-tile.jpg) repeat;
-       .active-droppable.drop-invite {
-         background: url(../images/pentagon-tile-active.jpg) repeat;
-       }
-    }
   }
   :hover > div.admin {
     display: block;
   }
-  .grid.hover { background-color: #eee; outline: thick solid <%= @colors[:hover] %>}
-  .grid .grid.hover { background-color: #ccc}
-  .grid .grid .grid.hover { background-color: #aaa}
-  .grid .grid .grid .grid.hover { background-color: #999}
-  .rendering.hover { background-color: #bdb}
+  .grid.hover                   { background: #aaa;                   outline: thick solid #aaa}
+  .grid .grid.hover             { background: #bbb;                   outline: thick solid #bbb}
+  .grid .grid .grid.hover       { background: #ccc;                   outline: thick solid #ccc}
+  .grid .grid .grid .grid.hover { background: #ddd;                   outline: thick solid #ddd}
+  .rendering.hover              { background: <%= @colors[:hover] %>; outline: thick solid <%= @colors[:hover] %>}
   .grid > div.admin {
     left: 0;
     top: 3em;
@@ -236,14 +259,6 @@ form {
       *.default {  float: left; width: 33%; }
     }
   }
-  ul.list {
-    .empty {
-      min-height: 3em;
-      min-width; 6em;
-      background-color: <%= @colors[:base] %>;
-      border: 1px solid <%= @colors[:element] %>;
-    }
-  }
 }
 ul.list {
   width: 100%;
@@ -254,8 +269,8 @@ ul.list {
     text-align: left;
     padding: 0.3em 0;
     display: block;
-    border-bottom: <%= @perimeter %>;
-    border-top: <%= @perimeter %>;
+    background-image: url(../images/ui/list_item_bg.png);
+    margin: 0;
     .image {
       img {
         float: left; 
@@ -338,7 +353,9 @@ div.live_search {
     }
   }
 }
-ul.list, dl {
+
+/* here was div.node */
+ul.list, dl, ul.tree {
   a {
     .show {
       text-indent: -5000px;
@@ -370,26 +387,13 @@ width: 16px; height: 16px;
     right: <%= @medium %>;
     cursor: pointer;
   }
-  li:hover, di:hover > *  {
+  li:hover, di:hover > *, li:hover > div.node  {
     > a.show, > img.association {
       display: block !important;
     }
   }
 }
 
-li.ui-draggable {
-  cursor: move;
-}
-li.ui-draggable-dragging {
-  background-color: <%= @colors[:base] %>;
-  padding: <%= @big %>;
-  a.show, e.edit, e.index {
-    display: none;
-  }
-  img.association {
-    display: none;
-  }
-}
 
 div.busy {
   position: absolute;

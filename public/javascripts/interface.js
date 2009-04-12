@@ -127,12 +127,14 @@ $(function() {
           ] }
       ]);
   });
+  $('div#toolbox > div.body > div.content ul.tree.tree_root').livequery(function() { $(this).editLayout(); });
+
   $('body.role_admin.disabled div.page div.grid div.rendering.fake').livequery(function(i) {
     $(this)
       .droppable({
         accept: 'li,dd',
-        hoverClass: 'hover',
         activeClass: 'active-droppable',
+        hoverClass: 'drop-hover',
         tolerance: 'pointer',
         drop: function(e,ui) {
           var droppee = ui.draggable.typeAndId();
@@ -155,6 +157,10 @@ $(function() {
         }
       });
   });
+
+  /* 
+   * Toolbox Drag+Drop
+   */
   $('div#toolbox ul.list.records > li,div#toolbox dl di dd.record').livequery(function() {
     $(this).draggable({ 
       helper: 'clone', 
@@ -178,6 +184,10 @@ $(function() {
       }
     });
   });
+
+  /*
+   * Clipboard
+   */
   $('div#toolbox div.sidebar ul.clipboard').livequery(function() {
     var list = $(this);
     list.droppable({
@@ -213,12 +223,8 @@ $(function() {
       });
     });
   });
-  $('form.edit_part, form.edit_rendering').livequery(function() {
-    $(this).preview();
-  });
-  $('form.edit.content').livequery(function() {
-    $(this).preview();
-  });
+  $('form.edit_part, form.edit_rendering').livequery(function() { $(this).preview(); });
+  $('form.edit.content').livequery(function() { $(this).preview(); });
   $('body').applyRoles();
 
 
@@ -240,136 +246,12 @@ $(function() {
     });
   });
 
-  // Grid leafs
-  $('div.grid:not(:has(> div.grid))').livequery(function() {
-    $(this).sortable({
-      connectWith: ['div.grid:not(:has(> div.grid))'],
-      //containment: 'div.page',
-      appendTo: 'div.page',
-      distance: 5,
-      dropOnEmpty: true,
-      placeholder: 'placeholder',
-      forcePlaceHolderSize: true,
-      items: '> div.rendering',
-      handle: 'span.handle',
-      tolerance: 'intersect',
-      scroll: true,
-      cursor: 'move',
-      zIndex: 1,
-      change: function(e,ui) {
-        ui.item.width(ui.element.width());
-      },
-      stop: function(e,ui) {
-        $('div.rendering').width('');
-        grid = ui.item.parent();
-        $.ajax({
-          data: grid.sortable("serialize"),
-          url: order_renderings_grid_url({id: grid.resourceId()}),
-          type: 'POST'
-        });
-      }
-    })
-    .droppable({
-      accept: 'li',
-      activeClass: 'active-droppable',
-      hoverClass: 'drop-invite',
-      greedy: true,
-      tolerance: 'pointer',
-      drop: function(e,ui) {
-        var droppee = ui.draggable.typeAndId();
-        context = "rendering[grid_id]=" + ui.element.resourceId();
-        context += "&rendering[page_id]=" + $('body > div.page').resourceId();
-        switch(droppee.type) {
-          case 'Rendering': /* drop renderings (hints) from toolbox, updates its #grid */
-            $.ajax({
-              url: rendering_url({id: droppee.id}),
-              data: context,
-              type: 'PUT'
-            });
-            break;
-          case 'Part': /* Part from Toolbox creates Rendering without a Content */
-            $.ajax({
-              url: renderings_url(),
-              data: context + '&rendering[part_id]=' + droppee.id,
-              type: 'POST'
-            });
-            break;
-          default: /* dropping anything else will create a Rendering with this assigned as content */
-            $.ajax({
-              url: renderings_url(),
-              data: context + 
-                    '&rendering[content_id]=' + droppee.id +
-                    '&rendering[content_type]=' + droppee.type,
-              type: 'POST'
-            });
-        }
-      }
-    });
-  });
-
-  $('div.rendering.without_part').livequery(function() {
-    $(this).droppable({
-      accept: 'li.part',
-      activeClass: 'active-droppable',
-      hoverClass: 'drop-invite',
-      greedy: true,
-      tolerance: 'pointer',
-      drop: function(e,ui) {
-        var droppee = ui.draggable.typeAndId();
-        $.ajax({
-          url: rendering_url({id: ui.element.resourceId()}),
-          data: 'rendering[part_id]=' + droppee.id,
-          type: 'PUT'
-        });
-      }
-    });
-  });
-  $('div.rendering.without_content').livequery(function() {
-    $(this).droppable({
-      accept: 'li:not(.part)',
-      activeClass: 'active-droppable',
-      hoverClass: 'drop-invite',
-      greedy: true,
-      tolerance: 'pointer',
-      drop: function(e,ui) {
-        var droppee = ui.draggable.typeAndId();
-        $.ajax({
-          url: rendering_url({id: ui.element.resourceId()}),
-          data: 'rendering[content_id]=' + droppee.id +
-                '&rendering[content_type]=' + droppee.type,
-          type: 'PUT'
-        });
-      }
-    });
-  });
 
   /* empty grid */
-  $('body.role_admin div.page div.grid:not(:has(> div.grid, > div.rendering))').livequery(function() {
+  $('body.role_admin div.page div.grid:not(:has(div.grid, div.rendering))').livequery(function() {
     $(this).addClass('empty').html('<div class="warning">Empty Grid. Please drop here a Rendering, Part or any Content.</div>');
   });
 
-  /* lets sort all vertical aligned Grids, if there is more than one child */
-  $('div.page div.grid:not(.horizontal):has(> div.grid + div.grid)').livequery(function() {
-    $(this).find('> div.grid').append('<div class="admin"><span class="handle" /></div>').end()
-    .sortable("destroy").sortable({
-      handle: 'span.handle',
-      axis: 'y',
-      distance: 10,
-      placeholder: 'placeholder',
-      forcePlaceHolderSize: true,
-      items: '> div.grid',
-      tolerance: 'pointer',
-      cursor: 'move',
-      stop: function(e,ui) {
-        grid = ui.item.parent();
-        $.ajax({
-          data: grid.sortable("serialize") + pageContextForRequest(),
-          url: order_children_grid_url({id: grid.resourceId()}),
-          type: 'POST'
-        });
-      }
-    })
-  });
   // mark hovered divs as hovered. we can get them later by $('div.hovered').last() for positioniing the toolbox
   $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
     $(this).hover(
@@ -382,30 +264,5 @@ $(function() {
     );
   });
 
-  /* click grid mockups to browse */
-  $('dd > div.grid.preview').livequery(function() {
-    $(this)
-    .click(function(e) {
-      if ( id = $(e.target).resourceId() ) {
-        Toolbox.beBusy("Loading Grid");
-        $.get(grid_url({id: id}));
-      } else if ( id = $(e.target).parent().resourceId() ) {
-        Toolbox.beBusy("Loading Grid");
-        $.get(grid_url({id: id}));
-      }
-    })
-  });
-  $('dd div.grid.preview, ul.grids.tree li.grid').livequery(function() {
-    $(this).hover(
-      function() {
-        if ( id = $(this).resourceId() ) {
-          $('div.page div.grid.grid_' + id).addClass('hover');
-        }
-      }, 
-      function() {
-        $('div.page div.grid').removeClass('hover');
-      }
-    );
-  });
 
 });

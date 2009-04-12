@@ -60,7 +60,7 @@ background <%= @colors[:selected] %>;
           }
         }
 
-        ul {
+        ul.records {
           li {
             .odd { background-color: <%= @colors[:base].brighter %>; }
             .even { background-color: <%= @colors[:base].darker %>; }

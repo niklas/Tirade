@@ -205,7 +205,7 @@ body {
   }
   div.sidebar {
     overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
-    padding:0 0 0 0px;
+    padding: 0.4em;;
     margin: 0 0 0 0px;
     position: absolute;
     left: -233px;

@@ -4,6 +4,8 @@
   <li><%= edit_page_link(thepage) %> </li>
 <% end %>
 
+<%= render_tree thepage %>
+
 <% accordion do %>
 
   <% accordion_item 'General', :content_tag => :dl do %>

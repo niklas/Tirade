@@ -40,14 +40,26 @@ class Rendering < ActiveRecord::Base
   belongs_to :part
 
   belongs_to :grid
-  def grid_id=(new_grid_id)
-    @old_grid_id = grid_id
-    self[:grid_id] = new_grid_id
+
+  named_scope :for_page, lambda {|page|
+    if page
+      {:conditions => {:page_id => page.id}}
+    else
+      {}
+    end
+  }
+  attr_accessor :modifications
+  before_save do |rendering|
+    rendering.modifications = rendering.changes.dup
   end
-  def grid_changed?
-    old_grid_id && (old_grid_id != grid_id)
+
+  def grid_modified?
+    modifications.has_key?('grid') || modifications.has_key?('grid_id')
   end
-  attr_reader :old_grid_id
+
+  def old_grid
+    modifications && ( modifications['grid'].andand.last || (gid = modifications['grid_id'].andand.last && Grid.find_by_id(gid)) )
+  end
 
   Assignments = %w(none fixed by_title_from_trailing_url scope).freeze unless defined?(Assignments)
 

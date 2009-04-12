@@ -11,7 +11,7 @@ class RenderingsController < ApplicationController
   def after_update_toolbox_for_updated(page)
     page.unmark_all_active
     page.update_rendering(@rendering)
-    if @rendering.grid_changed?
+    if @rendering.grid_changed? || @rendering.grid_id_changed?
       page.remove_rendering(@rendering)
       page.update_grid_in_page(@rendering.grid, @rendering.page) 
       page.update_grid_in_page(@rendering.old_grid, @rendering.page) 

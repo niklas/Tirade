@@ -2,6 +2,8 @@ class GridsController < ApplicationController
   before_filter :login_required
   #before_filter :fetch_associated_rendering, :only => [:edit, :update]
   feeds_toolbox_with :grid
+  before_filter :fetch_grid, :except => [:index, :new]
+  before_filter :fetch_context_page
   
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
@@ -17,7 +19,6 @@ class GridsController < ApplicationController
 
   # TODO create: assign the new grid to params[:page_id]'s Page
   def create_child
-    @grid = Grid.find(params[:id])
     @child = @grid.add_child
     respond_to do |wants|
       wants.js do
@@ -31,7 +32,6 @@ class GridsController < ApplicationController
   # Remove this Grid an all its siblings, placing their children into its parent
   # TODO refresh the parent on the current page
   def explode
-    @grid = Grid.find(params[:id])
     if @grid.leaf?
       @grid.explode!
       flash[:notice] = "please reload page"
@@ -41,22 +41,22 @@ class GridsController < ApplicationController
   end
 
   def order_renderings
-    Rendering.transaction do
-      @grid = Grid.find(params[:id])
-      renderings_ids = params[:rendering].reject(&:blank?)
-      renderings_ids.andand.each_with_index do |r,i|
-        rendering = Rendering.find(r)
-        rendering.position = i+1
-        rendering.grid = @grid
-        rendering.save!
+    unless params[:rendering].blank?
+      Rendering.transaction do
+        renderings_ids = params[:rendering].reject(&:blank?)
+        @old_grids = Grid.find(Rendering.find(renderings_ids).map(&:grid_id).uniq)
+        renderings_ids.andand.each_with_index do |id,index|
+          Rendering.update_all(%Q~position = #{index+1},grid_id=#{@grid.id}~, ['id = ?', id])
+        end
       end
-    end unless params[:rendering].blank?
-    refresh
+      refresh @old_grids + [@grid]
+    else
+      refresh
+    end
   end
 
   def order_children
     Grid.transaction do
-      @grid = Grid.find(params[:id])
       params[:grid].reject(&:blank?).andand.each_with_index do |gid,i|
         Grid.find(gid).move_to_parent_location @grid, i
       end
@@ -65,17 +65,27 @@ class GridsController < ApplicationController
   end
 
   private
-  def refresh(grid=@grid)
+  def refresh(grids=[@grid])
     respond_to do |wants|
       wants.js do
         render :update do |page|
-          dom = page.select_grid(grid)
-          if thepage = Page.find_by_id(params[:context_page_id])
-            dom.replace_with render_grid_in_page(grid, thepage)
+          grids.uniq.each do |grid|
+            if @context_page
+              page.select_grid(grid).replace_with(render_grid_in_page(grid, @context_page))
+              page.select("div#toolbox > div.body > div.content ul.tree.tree_root li.grid.#{page.context.dom_id grid}").
+                replace_with(render_tree_node(grid, :page => @context_page)).highlight()
+            end
           end
-          dom.highlight
         end
       end
     end
+  end
+  def fetch_grid
+    @grid = Grid.find(params[:id])
+  end
+
+  def fetch_context_page
+    @context_page = Page.find_by_id(params[:context_page_id])
+    true
   end
 end
