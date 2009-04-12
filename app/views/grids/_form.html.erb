@@ -4,7 +4,7 @@
 <% form_for(grid) do |f| %>
   <% accordion do %>
     <% accordion_item "General" do %>
-      <%= f.select :yui, Grid::Types.invert %>
+      <%= f.select :division, Grid::Divisions.keys %>
       <%= f.text_field :title %>
       <%= f.check_box :inherit_renderings %>
     <% end %>

@@ -90,7 +90,7 @@ class GridsController < ApplicationController
     end
   end
   def fetch_grid
-    @grid = Grid.find(params[:id])
+    @model = @grid = Grid.find(params[:id])
   end
 
   def fetch_context_page

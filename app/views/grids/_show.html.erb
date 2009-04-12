@@ -18,14 +18,11 @@
   <% end %>
   <% accordion_item 'Hierarchy' do %>
     <%= show grid, :inherit_renderings %>
-    <% show grid, :family do %>
-      <%= grid_tree grid %>
-    <% end %>
     <%= show grid, :parent %>
-    <%= show grid, :children %>
+    <%= render_tree grid %>
   <% end %>
   <% accordion_item 'General' do %>
-    <%= show grid, :yui %>
+    <%= show grid, :division %>
     <%= show grid, :label %>
   <% end %>
 <% end %>

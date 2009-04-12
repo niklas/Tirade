@@ -130,7 +130,7 @@ module InterfaceHelper
     opts[:title] ||= name.to_s
     opts[:dd] ||= {}
 
-    if block_given? || !obj.respond_to?(name)
+    if block_given?
       concat di_dt_dd(label, capture(&block), opts), block.binding
     else
 
