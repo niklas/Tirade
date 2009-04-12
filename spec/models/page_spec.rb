@@ -181,18 +181,19 @@ describe "The main Page with all fixtures" do
     it "should mark the first of renderings and grids"
 
     it "should have the complete page structure" do
-      @html.should have_tag('div.page') do
-        with_tag('div.subcolumns') do
-          with_tag('div.c50l div.grid.subcl') do
-            with_tag('div.rendering.simple_preview.document') do
-              with_tag('h2', 'Welcome')
-              with_tag('p', /big hug/)
+      @html.should have_tag('div.page_margins') do
+        with_tag('div.page') do
+          with_tag('div.subcolumns') do
+            with_tag('div.c50l div.grid.subcl') do
+              with_tag('div.rendering.simple_preview.document') do
+                with_tag('p', /big hug/)
+              end
             end
-          end
-          with_tag('div.c50r div.grid.subcr') do
-            with_tag('div.rendering.simple_preview.document') do
-              with_tag('h2','Introduction')
-              with_tag('p',/Tirade is a CMS/)
+            with_tag('div.c50r div.grid.subcr') do
+              with_tag('div.rendering.simple_preview.document') do
+                with_tag('h2','Introduction')
+                with_tag('p',/Tirade is a CMS/)
+              end
             end
           end
         end

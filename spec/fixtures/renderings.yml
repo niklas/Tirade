@@ -25,6 +25,8 @@ main12:
   assignment: fixed
   part: simple_preview
   position: 2
+  options:
+    show_title: true
 
 about:
   id: 12101

@@ -4,8 +4,6 @@
   <li><%= edit_page_link(thepage) %> </li>
 <% end %>
 
-<%= render_tree thepage %>
-
 <% accordion do %>
 
   <% accordion_item 'General', :content_tag => :dl do %>
@@ -17,10 +15,9 @@
   <% end %>
 
   <% accordion_item "Layout", :content_tag => :dl do %>
-    <% show thepage, :yui, :label => 'Width' do %>
-      <%=h thepage.yui_name %>
-    <% end %>
-    <%= show thepage, :final_layout, :label => 'Layout' %>
+    <%= show thepage, :width %>
+    <%= show thepage, :alignment %>
+    <%= render_tree thepage %>
   <% end %>
 
   <% accordion_item "Renderings", :content_tag => :dl do %>

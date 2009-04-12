@@ -193,6 +193,7 @@ $(function() {
   });
   $('form.edit_part, form.edit_rendering').livequery(function() { $(this).preview(); });
   $('form.edit.content').livequery(function() { $(this).preview(); });
+  $('form.edit_page').livequery(function() { $(this).preview(); });
   $('body').applyRoles();
 
 

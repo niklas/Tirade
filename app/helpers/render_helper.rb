@@ -90,10 +90,13 @@ module RenderHelper
   # Renders the hole Page with Grids and their Renderings
   def render_page(thepage)
     if layout = thepage.final_layout
-      content_tag(
-        :div,
-        layout.render_in_page(thepage),
-        {:id => thepage.yui, :class => "page #{dom_id(thepage)}"}
+      div_wrap(
+        content_tag(
+          :div,
+          layout.render_in_page(thepage),
+          {:class => "page #{dom_id(thepage)}"}
+        ),
+        'page_margins', :style => thepage.style
       )
     else
       page_without_layout_warning(thepage)
@@ -107,7 +110,7 @@ module RenderHelper
   end
 
   def remove_page
-    page.select(Page::Types.keys.collect {|t| "div##{t}"}.join(', ')).remove
+    page.select('body > div.page_margins').remove
   end
 
   def clear

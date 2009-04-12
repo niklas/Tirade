@@ -2,7 +2,6 @@ main:
   id: 42000
   title: Public_Root
   url: ""
-  yui: doc
   parent_id: NULL
   layout_id: 5050
   lft: 1

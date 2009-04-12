@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
       :member => {:preview => :put}
 
     # TODO external preview
-    manage.resources :pages do |pages|
+    manage.resources :pages, :member => {:preview => :put} do |pages|
       pages.resource :layout, :controller => 'pages/layout'
     end
 

@@ -36,22 +36,13 @@ class Page < ActiveRecord::Base
   has_many :grids, :through => :renderings
 
   validates_presence_of :title
-  validates_presence_of :yui
   validates_uniqueness_of :title, :scope => :parent_id
   validates_uniqueness_of :url, :allow_nil => true
 
-  # TODO yui form parent
+  validates_format_of :width, :with => /\A\d+(px|em|ex|%)|auto\Z/, :allow_nil => true
+  Alignments = %w(left center right)
+  validates_inclusion_of :alignment, :in => Alignments
 
-  Types = {
-    'doc'  =>   '750px',
-    'doc2'  =>   '950px',
-    'doc3'  =>   '100%',
-    'doc4'  =>   '974px',
-    'custom-doc'  =>   'Custom'
-  }
-  def yui_name
-    Types[yui] || 'custom'
-  end
   BlacklistesTitles = %w(manage themes)
 
   named_scope :all_except, lambda {|me|
@@ -64,15 +55,10 @@ class Page < ActiveRecord::Base
 
   def before_validation
     self.url = generated_url if url.blank?
-    self[:yui] ||= 'doc'
   end
 
   def after_move
     self.url = generated_url 
-  end
-
-  def after_initialize
-    self[:yui] ||= 'doc'
   end
 
   def final_layout
@@ -155,6 +141,18 @@ class Page < ActiveRecord::Base
     render_to_string(:inline => '<%= render_page(page)  %>', :locals => { :page => self })
   end
 
+  def style
+    returning '' do |css|
+      css << %Q~width: #{width.blank? ? 'auto' : width};~
+      case alignment
+      when 'center'
+        css << %q~margin: 0 auto~
+      when 'right'
+        css << %q~margin: 0 0 0 auto~
+      end
+    end
+  end
+
   attr_accessor :fresh
   def fresh?
     @fresh
@@ -167,15 +165,14 @@ class Page < ActiveRecord::Base
   end
 
   def set_freshness_before_save
-    @fresh = true if layout_id_changed? or yui_changed?
+    @fresh = true if layout_id_changed?
   end
 
 
   def self.sample
     new(
       :title => 'Sample Page',
-      :url => 'this/page/does/not/exist',
-      :yui => 'doc'
+      :url => 'this/page/does/not/exist'
     )
   end
 end

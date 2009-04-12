@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090405184410) do
+ActiveRecord::Schema.define(:version => 20090412210854) do
 
   create_table "artists", :force => true do |t|
     t.string   "title"
@@ -65,11 +65,11 @@ ActiveRecord::Schema.define(:version => 20090405184410) do
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.string   "yui"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
     t.boolean  "inherit_renderings", :default => false
+    t.string   "division"
   end
 
   create_table "groups", :force => true do |t|
@@ -152,7 +152,8 @@ ActiveRecord::Schema.define(:version => 20090405184410) do
     t.integer  "layout_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "yui",        :limit => 10
+    t.string   "width",      :limit => 16
+    t.string   "alignment",  :limit => 8
   end
 
   create_table "parts", :force => true do |t|
@@ -186,11 +187,6 @@ ActiveRecord::Schema.define(:version => 20090405184410) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "plugin_schema_info", :id => false, :force => true do |t|
-    t.string  "plugin_name"
-    t.integer "version"
   end
 
   create_table "plugin_schema_migrations", :id => false, :force => true do |t|

@@ -16,11 +16,12 @@
 
 
     <% accordion_item "Layout" do %>
+      <%= f.text_field :width, :label => 'Width' %>
+      <%= f.select :alignment, Page::Alignments, :label => 'Alignment' %>
       <%= f.collection_select :layout_id, Grid.roots, :id, :label, {
         :include_blank => (f.object.root? ? false : "from parent Page (#{f.object.parent.final_layout.andand.label})"), 
         :label => 'Layout'
       }  %>
-      <%= f.select :yui, Page::Types.invert, :label => 'Width' %>
     <% end %>
 
     <%= f.submit %>
