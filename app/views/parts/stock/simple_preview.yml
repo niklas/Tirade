@@ -1,13 +1,9 @@
 --- 
 :preferred_types: 
-- Folder
 - Document
 - NewsItem
 - NewsFolder
 :defined_options: 
-  motd: 
-  - string
-  - nothing to say
-  number_of_the_day: 
-  - integer
-  - "42"
+  show_title: 
+  - boolean
+  - "true"

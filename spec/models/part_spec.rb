@@ -273,6 +273,31 @@ describe "A Part with basic Liquid that accepts and uses a Document" do
   end
 end
 
+describe "A Part with Liquid which uses options" do
+  before(:each) do
+    @part = Part.new(
+      :name => 'One Option',
+      :filename => 'one_option',
+      :liquid => %Q[{% if show_one %}YES{% endif %}],
+      :preferred_types => ["Document"],
+      :defined_options => { 'show_one' => [:boolean, true]}
+    )
+    @document = Document.new( :title => "My Title", :body => "A not so long Paragraph")
+  end
+  it "should be valid" do
+    @part.should be_valid
+  end
+  it "should have code" do
+    @part.code.should_not be_blank
+  end
+  it "should forward the document to the template with the same name" do
+    @part.options_with_object(@document).should have_key(:one_option)
+  end
+  it "should interpet the given options" do
+    @part.render_with_content(@document).should == %Q[YES]
+  end
+end
+
 describe "A Part with Liquid that accepts and uses a Document with filters" do
   before(:each) do
     @part = Part.new(

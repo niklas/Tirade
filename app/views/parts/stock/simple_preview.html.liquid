@@ -1,3 +1,6 @@
+{% if show_title %}
 <h2>{{ simple_preview.title }}</h2>
-<p>{{ simple_preview.body | textilize }}</p>
+{% endif %}
+<p>{{ simple_preview.body | markup }}</p>
+
 
