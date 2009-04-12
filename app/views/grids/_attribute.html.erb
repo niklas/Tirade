@@ -1,3 +1,5 @@
 <% grid ||= attribute || @rendering.andand.grid || @grid %>
 <%= show_grid_link grid %>
-<%=h grid.label %>
+<span class="title">
+  <%=h grid.label %>
+</span>

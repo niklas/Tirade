@@ -144,6 +144,15 @@ class Grid < ActiveRecord::Base
     [title,name].compact.join(' - ')
   end
 
+  def icon_name
+    case division
+    when 'leaf'
+      'grid-single'
+    else
+      'grid'
+    end
+  end
+
   # Renders just the grid (without any contents)
   def render
     render_to_string(:inline => '<%= render_grid(grid) %>', :locals => {:grid => self})

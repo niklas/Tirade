@@ -14,7 +14,7 @@ module Pages::LayoutHelper
 
     active = opts[:active] == squirrel ? 'active' : ''
     content_tag(:li,
-      content_tag(:div, dom_id(squirrel) + show_value(squirrel), :class => 'node')+
+      content_tag(:div, single_item(squirrel), :class => 'node')+
       (children.blank? ? '' : content_tag(:ul, children, :class => 'tree')),
       :class => "#{dom_class squirrel} #{dom_id squirrel} #{active}", :rel => dom_id(squirrel)
     )

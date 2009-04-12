@@ -83,7 +83,13 @@ module InterfaceHelper
   def single_item(thing, opts={})
     partial = opts[:partial] || 'list_item'
     partial = "/#{thing.table_name}/#{partial}" unless partial =~ %r~^/~
+    icon_for(thing) + 
     render( :partial => partial, :object => thing, :locals => {:model => thing})
+  end
+
+  def icon_for(thing)
+    name = thing.respond_to?(:icon_name) ? thing.icon_name : thing.table_name.singularize
+    image_tag("icons/types/#{name}.png", :class => 'icon')
   end
 
   # You need a partial '/resources/table_row' and must write the +tr+

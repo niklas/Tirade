@@ -387,6 +387,10 @@ width: 16px; height: 16px;
     right: <%= @medium %>;
     cursor: pointer;
   }
+  img.icon {
+    margin: 0 6px 0 0;
+    float: left;
+  }
   li:hover, di:hover > *, li:hover > div.node  {
     > a.show, > img.association {
       display: block !important;
