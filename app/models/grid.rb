@@ -137,8 +137,8 @@ class Grid < ActiveRecord::Base
     Divisions[division] || raise("illegal division: #{division}")
   end
 
-  def visible_children_with_css(&block)
-    visible_children.zip(children_css).each(&block)
+  def visible_children_with_css
+    visible_children.zip(children_css)
   end
 
   def label
