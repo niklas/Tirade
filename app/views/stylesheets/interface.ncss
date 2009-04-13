@@ -151,18 +151,6 @@ body div {
 }
 
 
-body {
-    div.rendering {
-        border: #FFFFFF 1px dotted;
-    }
-    div.rendering.active {
-        border: #c72c1e 1px dotted;
-    }
-    div.grid.active {
-        border: #85c71e 0px dotted;
-    }  
-}
-
 div#toolbox {
   div.frame {
     text-align: left;
