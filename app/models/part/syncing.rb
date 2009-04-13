@@ -30,7 +30,7 @@ class Part < ActiveRecord::Base
     filename_without_extention = File.basename(path).sub(/\.#{extention}$/,'').sub(/^_/,'') 
     part.filename  = filename_without_extention
     part.name = filename_without_extention.titleize
-    unless part.load_configuration_from(path).blank?
+    unless (part.configuration = part.load_configuration_from(path)).blank?
       part.save
     end
     part
