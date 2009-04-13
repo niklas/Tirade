@@ -1,0 +1,51 @@
+HasFulltextSearch
+=================
+
+Adds search method to ActiveRecord::Base.
+
+The query language supports the operators (), not, and, or
+Precedence in that order. '-' is an alias for not.
+If no operator is present, 'and' is assumed.
+
+Lastly, anything within double quotes is treated as a single search term.
+
+
+Example
+=======
+
+For example,
+ ruby rails => records where both ruby and rails appear
+ "ruby on rails" => records where "ruby on rails" appears
+ ruby or rails => records where ruby or rails (or both) appears
+ ruby or chunky bacon => records where ruby appears or both chunky and bacon appear
+ not dead or alive => records where alive appears or dead is absent
+ -(ruby or rails) => records where neither ruby nor rails appears
+ (ruby or rails) -"ruby on rails" => records where ruby or rails appears but not the phrase "ruby on rails"
+
+Differences to the TextSearch library
+=====================================
+
+* always case insensitive search (plays better with the indices)
+* uses has_finder, so you can nest your searches and paginate them
+* use it this way
+    has_fulltext_search :title, :body                                        # => Class.search(query)
+    has_fulltext_search :all                                                 # => Class.search(query)
+
+* if you want to search on foreign tables, you can create a finder and use it like so:
+    class Post
+      has_finder :include_everything, {:include => {:comments => [:user] } }
+      has_fulltext_search :title, :body, 'comments.body', 'user.name'
+    end
+    Post.include_everything.search("great feature")
+
+
+
+TODO
+====
+* you can define multiple searches:
+    has_fulltext_search :public, :fields => [:title, :body]                  # => Class.public_search(query)
+    has_fulltext_search :secret, :fields => [:secret_title, :secret_title]   # => Class.secret_search(query)
+
+Copyright (c) 2008 Niklas Hofer, released under the MIT license
+Copyright (c) Query feature by Nate McNamara (nate@mcnamara.net)
+Copyright (c) Original TextSearch library by Duane Johnson.
