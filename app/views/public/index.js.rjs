@@ -1,7 +1,2 @@
-page.update_toolbox(
-  :header => "Page '#{@page.title}'",
-  :content => {:partial => '/pages/show', :object => @page }
-)
-
-page.remove_page
+page.clear
 page.insert_page(@page)

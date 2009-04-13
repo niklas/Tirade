@@ -3,6 +3,10 @@
  *
  * */
 
+function context_page_id() {
+  return $('body div.page').resourceId();
+}
+
 function order_renderings_for_grid(event, ui) {
   var list = ui.element;
   if (list.is('.grid')) {
@@ -35,6 +39,24 @@ function order_children_for_grid(event, ui) {
   }
   event.preventDefault();event.stopPropagation();
 };
+
+function create_new_rendering_for_grid(grid) {
+  context = "rendering[grid_id]=" + grid.resourceId();
+  context += "&rendering[page_id]=" + context_page_id()
+  $.ajax({ data: context, url: renderings_url(), type: 'POST' });
+};
+
+function update_content_of_rendering(content,rendering) {
+  var what = content.typeAndId();
+  data = 'rendering[content_id]=' + what.id;
+  data += '&rendering[content_type]=' + what.type;
+  $.ajax({ url: rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
+}
+
+function update_part_of_rendering(part, rendering) {
+  data = 'rendering[part_id]=' + part.resourceId();
+  $.ajax({ url: rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
+}
 
 $(function() {
   jQuery.fn.mirrorsLayout = function() {
@@ -181,17 +203,35 @@ $(function() {
 
   // Admin Bars on Renderings
   $('body.role_admin div.page div.rendering').livequery(function(i) {
-    $(this).prepend(
-      $('<div />').addClass('admin').attr('id', 'admin_' + $(this).attr('id'))
+    var rendering = $(this);
+    rendering.prepend(
+      $('<div />').addClass('admin').attr('id', 'admin_' + rendering.resourceIdentifier())
         .append( $('<a>edit</a>').addClass('edit rendering').attr('href', rendering_url({id: $(this).resourceId()})) )
         .append( $('<span>drag</span>').addClass('handle'))
+    )
+  });
+
+  // Admin Bars on Grids
+  $('body.role_admin div.page div.grid').livequery(function(i) {
+    var grid = $(this);
+    div = $('<div />').addClass('admin').attr('id', 'admin_' + grid.resourceIdentifier());
+    if (grid.is('.leaf')) {
+      div.append( $('<a>add rendering</a>')
+           .addClass('create rendering without_toolbox')
+           .click( function(e) { create_new_rendering_for_grid(grid); e.preventDefault(); e.stopPropagation(); return false; } )
+      )
+    }
+    grid.prepend(
+        div.append( $('<span>drag</span>').addClass('handle'))
     )
   });
 
   $.fn.toggleEditPage = function() {
     $(this).toggle( 
       function() {
-        $('body div.page div.rendering').find(' > div.admin').show();
+        $('body div.page div.rendering, body div.page div.grid').livequery( function() {
+          $(this).find(' > div.admin').show();
+        });
         $('body div.page div.grid.leaf').livequery(function() {
           $(this).sortable({
             connectWith: ['body div.page div.grid.leaf'],
@@ -218,10 +258,36 @@ $(function() {
             deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
           })
         });
+        $('body div.page div.rendering.without_content').livequery(function() {
+          $(this).droppable({
+            accept: 'li:not(.part)',
+            activeClass: 'active-droppable',
+            hoverClass: 'drop-hover',
+            greedy: true,
+            tolerance: 'pointer',
+            drop: function(e,ui) { update_content_of_rendering(ui.draggable, ui.element); }
+          });
+        });
+        $('body div.page div.rendering.without_part').livequery(function() {
+          $(this).droppable({
+            accept: 'li.part',
+            activeClass: 'active-droppable',
+            hoverClass: 'drop-hover',
+            greedy: true,
+            tolerance: 'pointer',
+            drop: function(e,ui) { update_part_of_rendering(ui.draggable, ui.element) }
+          });
+        });
+
       },
       function() {
+        $('body div.page div.grid.leaf').expire();
+        $('body div.page div.rendering.without_part').expire();
+        $('body div.page div.rendering.without_content').expire();
         $('body div.page *').sortable('destroy').droppable('destroy');
-        $('body div.page div.rendering').find(' > div.admin').hide().css('display','');
+        $('body div.page div.rendering, body div.page div.grid').expire();
+        $('body div.page div.rendering > div.admin').hide().css('display','');
+        $('body div.page div.grid > div.admin').hide().css('display','');
       } 
     );
   };
@@ -265,41 +331,6 @@ $(function() {
             }
           });
 
-    $('div.rendering.without_part').livequery(function() {
-      $(this).droppable({
-        accept: 'li.part',
-        activeClass: 'active-droppable',
-        hoverClass: 'drop-invite',
-        greedy: true,
-        tolerance: 'pointer',
-        drop: function(e,ui) {
-          var droppee = ui.draggable.typeAndId();
-          $.ajax({
-            url: rendering_url({id: ui.element.resourceId()}),
-            data: 'rendering[part_id]=' + droppee.id,
-            type: 'PUT'
-          });
-        }
-      });
-    });
-    $('div.rendering.without_content').livequery(function() {
-      $(this).droppable({
-        accept: 'li:not(.part)',
-        activeClass: 'active-droppable',
-        hoverClass: 'drop-invite',
-        greedy: true,
-        tolerance: 'pointer',
-        drop: function(e,ui) {
-          var droppee = ui.draggable.typeAndId();
-          $.ajax({
-            url: rendering_url({id: ui.element.resourceId()}),
-            data: 'rendering[content_id]=' + droppee.id +
-                  '&rendering[content_type]=' + droppee.type,
-            type: 'PUT'
-          });
-        }
-      });
-    });
 
     /* lets sort all vertical aligned Grids, if there is more than one child */
     $('div.page div.grid:not(.horizontal):has(> div.grid + div.grid)').livequery(function() {

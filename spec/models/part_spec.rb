@@ -373,6 +373,17 @@ describe "The simple preview Part" do
       :liquid => 'a little bit to simple'
     )
   end
+
+  it "should be found by type (string)" do
+    lambda {
+      Part.for_content('Document').should include(@part)
+    }.should_not raise_error
+  end
+  it "should be found by type (AR)" do
+    lambda {
+      Part.for_content( contents(:introduction) ).should include(@part)
+    }.should_not raise_error
+  end
 end
 
 

@@ -20,8 +20,7 @@ module RenderingsHelper
   end
 
   def update_grid_for(rendering)
-    page.update_grid_in_page(rendering.grid, rendering.page).
-      highlight unless rendering.grid.nil?
+    page.update_grid_in_page(rendering.grid, rendering.page) unless rendering.grid.nil?
   end
 
   def mark_as_active(thingy)

@@ -1,0 +1,11 @@
+<% rendering ||= without_content %>
+<div class="warning">
+  This Rendering has no Content assigned. Please drop
+  <% unless rendering.part.nil? %>
+    a <%= rendering.part.preferred_types.to_sentence(:connector => 'or') %>
+  <% else %>
+    one
+  <% end %>
+  here.
+</div>
+

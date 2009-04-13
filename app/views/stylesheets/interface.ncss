@@ -47,12 +47,13 @@
 body div {
   background: inherit;
   .warning {
-    padding: 2em 15%;
-    color: black;
+    padding: 0.5em;
+    margin: 1em;
+    color: <%= @colors[:warning] %>;
     font-weight: bold;
     background: transparent;
-    font-size: 130%;
-    line-height: 110%;
+    font-size: 100%;
+    line-height: 100%;
   }
 
 
@@ -114,7 +115,7 @@ body div {
       }
     }
   }
-  :hover > div.admin {
+  .rendering:hover > div.admin {
     display: block;
   }
   .grid.hover                   { background: #aaa;                   outline: thick solid #aaa}
@@ -123,16 +124,12 @@ body div {
   .grid .grid .grid .grid.hover { background: #ddd;                   outline: thick solid #ddd}
   .rendering.hover              { background: <%= @colors[:hover] %>; outline: thick solid <%= @colors[:hover] %>}
   .grid > div.admin {
-    left: 0;
-    top: 3em;
-    right: auto;
   }
   > div.admin {
     display: none;
     position: relative;
     height: 20px;
     margin-bottom: 5px;
-    background: url(../images/ui/accordion_head_bg.png);
     span, a {
       display: block;
       width: 16px;
@@ -148,16 +145,9 @@ body div {
     :hover span.handle {
       display: block;
     }
-    a.edit {
-      background: url(../images/icons/small/edit.gif);
-    }
-    a.create.layout {
-      background: url(../images/icons/small/template.gif);
-    }
-    a.create.prepare.rendering {
-      background: url(../images/icons/small/plus.gif);
-    }
   }
+  .grid      > div.admin { background: url(../images/ui/accordion_head_bg.png); }
+  .rendering > div.admin { background: url(../images/ui/list_item_bg.png); }
 }
 
 
@@ -176,9 +166,6 @@ body {
 div#toolbox {
   div.frame {
     text-align: left;
-  }
-  .warning {
-    color: <%= @colors[:warning] %>;
   }
   li > div.grid.preview, dd > div.grid.preview {
     width: 18em;
@@ -385,24 +372,51 @@ div.live_search {
   }
 }
 
+a {
+  .create, .edit, .update, .delete, .show, .refresh_page {
+    text-indent: -5000px;
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    top: 50%;
+    z-index: 3;
+    background: transparent url(/images/icons/small/vegetable.gif) no-repeat scroll right;
+    cursor: pointer;
+  }
+  .create {
+    background-image: url(/images/icons/small/plus.gif);
+  }
+  .show {
+    margin-top: -5px;
+    height: 10px;
+    background-image: url(/images/icons/show-arrow.png);
+  }
+  .edit {
+    background-image: url(../images/icons/small/edit.gif);
+  }
+  .create.layout {
+    background-image: url(../images/icons/small/template.gif);
+  }
+  .create.prepare.rendering {
+    background-image: url(../images/icons/small/plus.gif);
+  }
+  .refresh_page {
+    background-image: url(../images/icons/small/refresh.gif);
+  }
+}
+
 /* here was div.node */
 ul.list, dl, ul.tree {
   a {
+    position: absolute;
     .show {
-      text-indent: -5000px;
-      width: 16px;
-      margin-top: -6px;
-      background: transparent url(/images/icons/show-arrow.png) no-repeat scroll right;
-      position: absolute;
-      top: 50%;
       right: <%= @small %>;
-      z-index: 3;
       display: none !important;
     }
     .toggle_live_search {
       float: left;
       text-indent: -5000px;
-width: 16px; height: 16px;
+      width: 16px; height: 16px;
       background: transparent url(/images/icons/small/search.gif) no-repeat scroll right;
       position: absolute;
       top: -1.7em;

@@ -4,22 +4,23 @@ module RenderHelper
     content_tag(:div, message, :class => 'warning')
   end
   def render_rendering(rendering)
-    clss = "rendering #{rendering.part.andand.filename}"
+    clss = "rendering #{rendering.part.andand.filename} #{dom_id rendering}"
     content_tag(
       :div,
-      if rendering.part.nil?
-        clss += ' without_part'
-        warning(
-          'No Part assigned, drop one ' +
-          (rendering.has_content? ? "for #{rendering.content_type.pluralize} here." : 'here.')
-        )
-      elsif !rendering.has_content?
-        if rendering.part.preferred_types.blank?
+      # No Content
+      if !rendering.has_content?      
+        # but thats ok, can show without content (plain html)
+        if rendering.part && rendering.part.preferred_types.blank?
           rendering.part.render(rendering.final_options, rendering.context_in_registers)
         else
           clss += ' without_content'
-          warning("No #{rendering.part.preferred_types.to_sentence(:connector => 'or')} assigned, drop one here.")
+          render(:partial => 'renderings/without_content', :object => rendering)
         end
+      # Content, but no Part
+      elsif rendering.part.nil?
+        clss += ' without_part'
+        render(:partial => 'renderings/without_part', :object => rendering)
+      # has Part and Content
       else
         clss += " #{rendering.content.class.to_s.underscore}"
         rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)

@@ -47,9 +47,10 @@ class Part < ActiveRecord::Base
   #}
 
   has_fulltext_search :name, :filename
-  def self.for_content(cont)
-    find(:all, :order => 'name')
-  end
+  named_scope :for_content, lambda {|content|
+    t = content.is_a?(String) ? content : content.class_name
+    {:conditions => ['preferred_types LIKE ?', "%#{t}%"]}
+  }
 
   after_save :save_configuration_if_needed!
   after_save :save_code_if_needed!

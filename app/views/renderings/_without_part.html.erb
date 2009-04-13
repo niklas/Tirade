@@ -1,0 +1,16 @@
+<% rendering ||= without_part %>
+<div class="warning">
+  This Rendering has no Part (HTML). Please drop one
+  <% if rendering.has_content? %>
+    for '<%=h rendering.content.title %>' (<%= rendering.content_type.pluralize %>) here, for example
+    <ul class="parts">
+      <% Part.for_content(rendering.content).each do |part| %>
+        <li>
+        <%= part.label %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    here.
+  <% end %>
+</div>
