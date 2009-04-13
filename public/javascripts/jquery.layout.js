@@ -191,17 +191,16 @@ $(function() {
   $.fn.toggleEditPage = function() {
     $(this).toggle( 
       function() {
-        console.debug('editing page');
         $('body div.page div.rendering').find(' > div.admin').show();
-        $('body div.page div.grid:has(> div.rendering)').livequery(function() {
+        $('body div.page div.grid.leaf').livequery(function() {
           $(this).sortable({
-            connectWith: ['div.grid:has(> div.rendering)'],
+            connectWith: ['body div.page div.grid.leaf'],
             //containment: 'div.page',
             appendTo: 'div.page',
             distance: 5,
             dropOnEmpty: true,
             placeholder: 'placeholder',
-            forcePlaceHolderSize: true,
+            opacity: 0.5,
             items: '> div.rendering',
             handle: 'span.handle',
             tolerance: 'pointer',
@@ -214,12 +213,13 @@ $(function() {
             update: function(e,ui) {
               $('div.rendering').width('');
               order_renderings_for_grid(e,ui);
-            }
+            },
+            activate: function(e, ui) { ui.element.addClass('active-sortable'); },
+            deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
           })
         });
       },
       function() {
-        console.debug('stopped editing page');
         $('body div.page *').sortable('destroy').droppable('destroy');
         $('body div.page div.rendering').find(' > div.admin').hide().css('display','');
       } 

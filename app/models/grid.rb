@@ -121,11 +121,12 @@ class Grid < ActiveRecord::Base
   def own_css
     case division
     when 'leaf'
-      return 'root' unless position
-      if self_and_siblings.count <= 2
-        position == 0 ? 'subcl' : 'subcr'
+      if !position
+        %w(root leaf)
+      elsif self_and_siblings.count <= 2
+        [position == 0 ? 'subcl' : 'subcr', 'leaf']
       else
-        %w[subcl subc subcr][position]
+        [%w[subcl subc subcr][position], 'leaf']
       end
     else
       %w(subcolumns)
