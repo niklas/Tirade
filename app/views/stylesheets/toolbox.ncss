@@ -231,6 +231,9 @@ body {
       position: absolute;
       bottom: 0;
       padding: 2px 0;
+      li {
+        float: left;
+      }
     }
     ul {
        padding: 0px;
