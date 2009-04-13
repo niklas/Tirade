@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/grids/show" do
   before(:each) do
-    assigns[:grid] = Grid.new
+    assigns[:grid] = Grid.new(:title => 'menu')
     render 'grids/show'
   end
   

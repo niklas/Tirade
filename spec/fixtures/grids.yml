@@ -23,6 +23,7 @@ layout_50_50_2:
   rgt: 20
 
 layout33_33_33:
+  title: Dreiteilung
   parent_id: NULL
   division: 'leaf'
 
