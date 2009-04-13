@@ -16,7 +16,6 @@ var Toolbox = {
       .draggable( { handle: 'div.head' } )
       .resizable( {
         minWidth: 300, minHeight: 400,
-        alsoResize: 'div.body, div.busy, .frame:last',
         stop: Toolbox.callback.resized,
       })
       .find('> div.body')
@@ -34,7 +33,7 @@ var Toolbox = {
       .find(' > div.head > span.buttons')
         .find('> img.close').click(function() { Toolbox.close() }).end()
         .find('> img.min').click(function() { Toolbox.minimize() }).end()
-        .find('> img.max').click(function() { Toolbox.maximize() }).end()
+        .find('> img.max').toggle(Toolbox.maximize, Toolbox.unmaximize).end()
       .end()
       .show();
     // Back button
@@ -515,8 +514,27 @@ var Toolbox = {
       this.minimized = false;
     }
   },
+  storeSizeAndPosition: function() {
+    this.element()
+      .data('height',   this.element().height())
+      .data('width',    this.element().width())
+      .data('position', this.element().position())
+  },
   maximize: function() {
-    console.debug("maximizing window");
+    Toolbox.storeSizeAndPosition();
+    Toolbox.element().animate(
+      {height: '100%', width: '75%', top: 0, left: '25%'},
+      'slow', 'linear', Toolbox.callback.resized
+    );
+  },
+  unmaximize: function() {
+    var position = Toolbox.element().data('position');
+    Toolbox.element().animate({
+      height: Toolbox.element().data('height'), 
+      width:  Toolbox.element().data('width'), 
+      top: position.top, 
+      left: position.left
+    },'fast', 'linear', Toolbox.callback.resized);
   },
 
   bottomLinkBar: function(rest) {
@@ -528,8 +546,8 @@ var Toolbox = {
 
   callback: {
     resized: function(e,ui) {
-      Toolbox.frames().height(Toolbox.last().height());
-      Toolbox.frames().width(Toolbox.last().width());
+      Toolbox.frames().height(Toolbox.body().height());
+      Toolbox.frames().width(Toolbox.body().width());
       Toolbox.body()[0].scrollLeft = Toolbox.last()[0].offsetLeft;
     }
   }
