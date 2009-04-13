@@ -160,6 +160,7 @@ body {
          dl {
            margin: 0;
            float: left;
+           clear: both;
            width: 100%;
            di {
              width: 100%;

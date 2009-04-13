@@ -1,6 +1,7 @@
 /* Drag & Drop */
 *.active-droppable, *.active-sortable {
   background: url(../images/pentagon-tile.jpg) repeat;
+  min-height: 1em;
 }
 
 *.ui-sortable.empty, *.ui-droppable.empty  {
@@ -17,7 +18,7 @@
 *.drop-hover {
   background: url(../images/pentagon-tile-active.jpg) repeat;
 }
-*.ui-draggable {
+*.ui-draggable, *.ui-sortable {
   span.handle {
     position: absolute;
     right: 32px;
@@ -68,8 +69,10 @@ body div {
 
   ul.tree {
     .tree_root {
+      clear: both;
       padding: 0 0 3em 0;
       margin: 0;
+      background-color: white;
     }
     border-bottom: 1px solid #999999;
     border-left: 1px solid #999999;
@@ -123,9 +126,10 @@ body div {
   }
   > div.admin {
     display: none;
+    position: relative;
     height: 20px;
     margin-bottom: 5px;
-    background: url(../images/ui/list_item_bg.png);
+    background: url(../images/ui/accordion_head_bg.png);
     span, a {
       display: block;
       width: 16px;
@@ -137,6 +141,9 @@ body div {
     }
     span.handle {
       display: none;
+    }
+    :hover span.handle {
+      display: block;
     }
     a.edit {
       background: url(../images/icons/small/edit.gif);
@@ -283,6 +290,7 @@ form {
 ul.list {
   width: 100%;
   margin: 0;
+  clear: both;
   li { 
     min-height: 19px;
     position: relative;
@@ -439,9 +447,9 @@ div.busy {
   }
   img.status {
     position: absolute;
-    top: 100%;
-    height: 50%;
-    display: none;
+    top: 50%;
+    left: 50%;
+    margin: -85px 0 0 -125px;
   }
 }
 

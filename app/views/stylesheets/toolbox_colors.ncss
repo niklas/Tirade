@@ -44,11 +44,11 @@
         div.accordion {
           *.accordion_toggle {
              color: <%= @colors[:text] %>;
-             background: <%= @colors[:element] %>;
+             background: <%= @colors[:element] %> url(../images/ui/accordion_head_bg.png);
              border-bottom: 1px solid <%= @colors[:base] %>;
           }
           *.selected {
-background <%= @colors[:selected] %>;
+             background: <%= @colors[:selected] %> url(../images/ui/accordion_head_bg_selected.png);
           }
         }
 
