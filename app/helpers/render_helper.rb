@@ -50,6 +50,7 @@ module RenderHelper
     add_class_to_html_options(opts, 'grid')
     add_class_to_html_options(opts, 'active') if opts[:active] == grid
     add_class_to_html_options(opts, dom_id(grid))
+    add_class_to_html_options(opts, grid.title.domify)
     opts[:id] = dom_id(grid) # unless opts[:id].nil?
     opts[:rel] = dom_id(grid)
     if wrapper = opts.delete(:wrapper)
