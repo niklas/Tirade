@@ -74,11 +74,11 @@ body div {
       margin: 0;
       background-color: white;
     }
-    border-bottom: 1px solid #999999;
-    border-left: 1px solid #999999;
     list-style: none;
     li {
-      margin: 0;
+      border-left: 1px solid #cccccc;
+      border-bottom: 1px solid transparent;
+      margin: 0 0 1em 0;
       div.node {
          background-image: url(../images/ui/list_item_bg.png);
          padding: 0.8em;
@@ -92,6 +92,9 @@ body div {
       span.label {
         display: block;
       }
+    }
+    li:hover {
+      border-bottom: 1px solid #999999;
     }
   }
   div.tree ul.tree {
