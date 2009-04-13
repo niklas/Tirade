@@ -48,6 +48,9 @@ var Toolbox = {
 
 
     this.sidebar(' ul.actions a.toggle.edit.grid').toggleEditPage();
+    this.sidebar(' ul.actions a.refresh_page').click(function(e) {
+      console.debug("Should refresh page");
+    });
 
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
@@ -583,7 +586,8 @@ Toolbox.Templates = {
         { tagName: 'ul', class: 'history' },
         { tagName: 'ul', class: 'clipboard list records' },
         { tagName: 'ul', class: 'actions', childNodes: [
-          { tagName: 'li', childNodes: [  { tagName: 'a', class: 'toggle edit grid', childNodes: [ { tagName: 'img', src: '/images/icons/small/bulb.gif' }]}  ] }
+          { tagName: 'li', childNodes: [  { tagName: 'a', class: 'toggle edit grid', childNodes: [ { tagName: 'img', src: '/images/icons/small/bulb.gif' }]}  ] },
+          { tagName: 'li', childNodes: [  { tagName: 'a', class: 'refresh_page', childNodes: [ { tagName: 'img', src: '/images/icons/small/refresh.gif' }]}  ] }
         ] }
       ] },
       { tagName: 'div', class: 'body', childNodes: [
