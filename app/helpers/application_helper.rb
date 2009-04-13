@@ -59,11 +59,15 @@ module ApplicationHelper
   # tag helpers like content_tag, link_to etc.
   def add_class_to_html_options(options,name)
     return {} if options.nil?
-    if options.has_key? :class
-      return if name =~ /^odd|even$/ && options[:class] =~ /odd|even/
-      options[:class] += " #{name}" unless options[:class] =~ /\b#{name}\b/
+    if name.is_a?(Array)
+      name.flatten.each { |n| add_class_to_html_options(options,n)}
     else
-      options[:class] = name.to_s
+      if options.has_key? :class
+        return if name =~ /^odd|even$/ && options[:class] =~ /odd|even/
+        options[:class] += " #{name}" unless options[:class] =~ /\b#{name}\b/
+      else
+        options[:class] = name.to_s
+      end
     end
     options
   end
