@@ -2,8 +2,9 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <title>Tirade without title (public layout)</title>
+  <title><%= title %></title>
     <%= render :partial => '/layouts/head' %>
+    <%= theme_stylesheet_link_tag current_theme %>
     <%= yield :head %>
 </head>
 <body>
