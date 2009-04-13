@@ -3,32 +3,53 @@
  *
  * */
 
+function order_renderings_for_grid(event, ui) {
+  var list = ui.element;
+  if (list.is('.grid')) {
+    var grid = list;
+  } else {
+    var grid = list.parents('.grid:first');
+  }
+  console.debug("Saving Order of Renderings for", grid[0], 'list:' + list[0]);
+  console.debug(list.sortable("serialize", {attribute: 'rel'}));
+  if (list.find(ui.item).length) { // only if the dropped item is in our list know, we have only to track sorting and adding here
+    $.ajax({
+      data: list.sortable("serialize", {attribute: 'rel'}),
+      url: order_renderings_grid_url({id: grid.resourceId()}),
+      type: 'POST'
+    });
+  }
+  event.preventDefault();event.stopPropagation();
+};
+function order_children_for_grid(event, ui) {
+  var list = ui.placeholder.parent();
+  var grid = list.parents('.grid:first');
+  console.debug("Sorting Order of children for", grid[0], 'list:' + $(list)[0]);
+  console.debug(list.sortable("serialize", {attribute: 'rel'}));
+  if (grid.find('.' + ui.item.resourceIdentifier()).length) {
+    $.ajax({
+      data: list.sortable("serialize", {attribute: 'rel'}),
+      url: order_children_grid_url({id: grid.resourceId()}),
+      type: 'POST'
+    });
+  }
+  event.preventDefault();event.stopPropagation();
+};
+
 $(function() {
   jQuery.fn.mirrorsLayout = function() {
     $('*.grid', this).livequery(function() {
       $(this).hover(
-        function() {
-          if ( id = $(this).resourceId() ) {
-            $('div.page div.grid.grid_' + id).addClass('hover');
-          }
-        }, 
-        function() {
-          $('div.page div.grid').removeClass('hover');
-        }
+        function() { if ( id = $(this).resourceId() ) $('div.page div.grid.grid_' + id).addClass('hover'); }, 
+        function() { $('div.page div.grid').removeClass('hover'); }
       );
     });
 
     // Mirror hovered Renderings
     $('*.rendering', this).livequery(function() {
       $(this).hover(
-        function() {
-          if ( id = $(this).resourceId() ) {
-            $('div.page div.rendering#rendering_' + id).addClass('hover');
-          }
-        }, 
-        function() {
-          $('div.page div.rendering').removeClass('hover');
-        }
+        function() { if ( id = $(this).resourceId() ) $('div.page div.rendering#rendering_' + id).addClass('hover'); }, 
+        function() { $('div.page div.rendering').removeClass('hover'); }
       );
     });
   };
@@ -39,34 +60,6 @@ $(function() {
     // Mirror hovered Grids
 
     // Grid with Renderings
-    function order_renderings_for_grid(event, ui) {
-      var list = ui.element;
-      var grid = list.parents('.grid:first');
-      console.debug("Saving Order of Renderings for", grid[0], 'list:' + list[0]);
-      console.debug(list.sortable("serialize", {attribute: 'rel'}));
-      if (grid.find('.' + ui.item.resourceIdentifier()).length) {
-        $.ajax({
-          data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
-          url: order_renderings_grid_url({id: grid.resourceId()}),
-          type: 'POST'
-        });
-      }
-      event.preventDefault();event.stopPropagation();
-    };
-    function order_children_for_grid(event, ui) {
-      var list = ui.placeholder.parent();
-      var grid = list.parents('.grid:first');
-      console.debug("Sorting Order of children for", grid[0], 'list:' + $(list)[0]);
-      console.debug(list.sortable("serialize", {attribute: 'rel'}));
-      if (grid.find('.' + ui.item.resourceIdentifier()).length) {
-        $.ajax({
-          data: list.sortable("serialize", {attribute: 'rel'}) + pageContextForRequest(),
-          url: order_children_grid_url({id: grid.resourceId()}),
-          type: 'POST'
-        });
-      }
-      event.preventDefault();event.stopPropagation();
-    };
     $('*.grid > *:has(> li.rendering, > div.rendering)', this).livequery(function() {
       $(this).sortable({
         items: '> *.rendering',
@@ -199,84 +192,78 @@ $(function() {
     $(this).toggle( 
       function() {
         console.debug('editing page');
-        $('body div.page div.rendering').find(' > div.admin, > div.admin span.handle').show();
-        $('body div.page').editLayout();
+        $('body div.page div.rendering').find(' > div.admin').show();
+        $('body div.page div.grid:has(> div.rendering)').livequery(function() {
+          $(this).sortable({
+            connectWith: ['div.grid:has(> div.rendering)'],
+            //containment: 'div.page',
+            appendTo: 'div.page',
+            distance: 5,
+            dropOnEmpty: true,
+            placeholder: 'placeholder',
+            forcePlaceHolderSize: true,
+            items: '> div.rendering',
+            handle: 'span.handle',
+            tolerance: 'pointer',
+            scroll: true,
+            cursor: 'move',
+            zIndex: 1,
+            change: function(e,ui) {
+              ui.item.width(ui.element.width());
+            },
+            update: function(e,ui) {
+              $('div.rendering').width('');
+              order_renderings_for_grid(e,ui);
+            }
+          })
+        });
       },
       function() {
         console.debug('stopped editing page');
         $('body div.page *').sortable('destroy').droppable('destroy');
-        $('body div.page div.rendering').find(' > div.admin, > div.admin span.handle').hide().css('display','');
+        $('body div.page div.rendering').find(' > div.admin').hide().css('display','');
       } 
     );
   };
 
   $.fn.oldDragAndDrop = function() {
     // Grid leafs
-    $('div.grid:not(:has(> div.grid))').livequery(function() {
-      $(this).sortable({
-        connectWith: ['div.grid:not(:has(> div.grid))'],
-        //containment: 'div.page',
-        appendTo: 'div.page',
-        distance: 5,
-        dropOnEmpty: true,
-        placeholder: 'placeholder',
-        forcePlaceHolderSize: true,
-        items: '> div.rendering',
-        handle: 'span.handle',
-        tolerance: 'intersect',
-        scroll: true,
-        cursor: 'move',
-        zIndex: 1,
-        change: function(e,ui) {
-          ui.item.width(ui.element.width());
-        },
-        stop: function(e,ui) {
-          $('div.rendering').width('');
-          var grid = ui.element.parents('.grid:first');
-          $.ajax({
-            data: grid.sortable("serialize"),
-            url: order_renderings_grid_url({id: grid.resourceId()}),
-            type: 'POST'
+          $(this).droppable({
+            accept: 'li',
+            activeClass: 'active-droppable',
+            hoverClass: 'drop-hover',
+            greedy: true,
+            tolerance: 'pointer',
+            drop: function(e,ui) {
+              var droppee = ui.draggable.typeAndId();
+              context = "rendering[grid_id]=" + ui.element.resourceId();
+              context += "&rendering[page_id]=" + $('body > div.page').resourceId();
+              switch(droppee.type) {
+                case 'Rendering': /* drop renderings (hints) from toolbox, updates its #grid */
+                  $.ajax({
+                    url: rendering_url({id: droppee.id}),
+                    data: context,
+                    type: 'PUT'
+                  });
+                  break;
+                case 'Part': /* Part from Toolbox creates Rendering without a Content */
+                  $.ajax({
+                    url: renderings_url(),
+                    data: context + '&rendering[part_id]=' + droppee.id,
+                    type: 'POST'
+                  });
+                  break;
+                default: /* dropping anything else will create a Rendering with this assigned as content */
+                  $.ajax({
+                    url: renderings_url(),
+                    data: context + 
+                          '&rendering[content_id]=' + droppee.id +
+                          '&rendering[content_type]=' + droppee.type,
+                    type: 'POST'
+                  });
+              }
+            }
           });
-        }
-      })
-      .droppable({
-        accept: 'li',
-        activeClass: 'active-droppable',
-        hoverClass: 'drop-hover',
-        greedy: true,
-        tolerance: 'pointer',
-        drop: function(e,ui) {
-          var droppee = ui.draggable.typeAndId();
-          context = "rendering[grid_id]=" + ui.element.resourceId();
-          context += "&rendering[page_id]=" + $('body > div.page').resourceId();
-          switch(droppee.type) {
-            case 'Rendering': /* drop renderings (hints) from toolbox, updates its #grid */
-              $.ajax({
-                url: rendering_url({id: droppee.id}),
-                data: context,
-                type: 'PUT'
-              });
-              break;
-            case 'Part': /* Part from Toolbox creates Rendering without a Content */
-              $.ajax({
-                url: renderings_url(),
-                data: context + '&rendering[part_id]=' + droppee.id,
-                type: 'POST'
-              });
-              break;
-            default: /* dropping anything else will create a Rendering with this assigned as content */
-              $.ajax({
-                url: renderings_url(),
-                data: context + 
-                      '&rendering[content_id]=' + droppee.id +
-                      '&rendering[content_type]=' + droppee.type,
-                type: 'POST'
-              });
-          }
-        }
-      });
-    });
 
     $('div.rendering.without_part').livequery(function() {
       $(this).droppable({
@@ -329,7 +316,7 @@ $(function() {
         stop: function(e,ui) {
           grid = ui.item.parent();
           $.ajax({
-            data: grid.sortable("serialize") + pageContextForRequest(),
+            data: grid.sortable("serialize"),
             url: order_children_grid_url({id: grid.resourceId()}),
             type: 'POST'
           });

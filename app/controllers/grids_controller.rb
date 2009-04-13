@@ -3,7 +3,6 @@ class GridsController < ApplicationController
   #before_filter :fetch_associated_rendering, :only => [:edit, :update]
   feeds_toolbox_with :grid
   before_filter :fetch_grid, :except => [:index, :new]
-  before_filter :fetch_context_page
   
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
@@ -82,7 +81,7 @@ class GridsController < ApplicationController
             if @context_page
               page.select_grid(grid).replace_with(render_grid_in_page(grid, @context_page))
               page.select("div#toolbox > div.body > div.content ul.tree.tree_root li.grid.#{page.context.dom_id grid}").
-                replace_with(render_tree_node(grid, :page => @context_page)).highlight()
+                replace_with(render_tree_node(grid, :page => @context_page))
             end
           end
         end
@@ -93,8 +92,4 @@ class GridsController < ApplicationController
     @model = @grid = Grid.find(params[:id])
   end
 
-  def fetch_context_page
-    @context_page = Page.find_by_id(params[:context_page_id])
-    true
-  end
 end

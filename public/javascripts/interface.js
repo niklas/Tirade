@@ -58,25 +58,6 @@ jQuery.fn.beBusy = function(message) {
     ] },
   ]);
 
-  minih = (e.height() > e.width() ? e.width() : e.height()) * 0.7;
-  if (e.height() > e.width()) { /* "Bert" */
-    $('img.status', e)
-      .animate({
-        top: (e.height() - minih) * 0.6, 
-        left: (e.width() - minih) * 0.5, 
-        height: minih,
-        opacity: 1
-      },800);
-  } else { /* "Ernie" */
-    $('img.status', e)
-      .animate({
-        top: (e.height() - minih) * 0.5, 
-        left: e.width() - (minih * 1.1), 
-        height: minih,
-        opacity: 1
-      },800);
-  }
-  
   if (message)
     $('span.message', e).text(message);
     
@@ -90,12 +71,11 @@ jQuery.fn.unBusy = function() {
 ChiliBook.recipeFolder = 'javascripts/syntax/'
 
 $.ajaxSetup({
-  dataType: 'script'
+  dataType: 'script',
+  beforeSend: function(request) {
+    request.setRequestHeader("Tirade-Page", $('div.page').resourceId() )
+  }
 });
-
-function pageContextForRequest() {
-  return "&context_page_id=" + $('body > div.page').resourceId()
-}
 
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });

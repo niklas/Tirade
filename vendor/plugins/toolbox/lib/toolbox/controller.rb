@@ -17,6 +17,7 @@ module Tirade
           model_class = model_class_name.constantize
           class_eval do
             before_filter :prepare_clipboard
+            before_filter :set_context_page
             after_filter :add_created_model_to_clipboard, :only => [:create]
             rescue_from 'ActionView::TemplateError', :with => :rescue_error
             rescue_from 'ActionView::MissingTemplate', :with => :rescue_error
@@ -270,6 +271,18 @@ module Tirade
 
       def non_form_submit?
         params[:commit].blank?
+      end
+
+      def set_context_page
+        context_page
+        true
+      end
+
+      def context_page
+        return @context_page if @context_page
+        if page_id = (request.headers['Tirade-Page'] || params[:context_page_id].andand.to_i)
+          @context_page = Page.find_by_id(page_id)
+        end
       end
 
     end
