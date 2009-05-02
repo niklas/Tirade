@@ -45,7 +45,6 @@
 
 
 body div {
-  background: inherit;
   .warning {
     padding: 0.5em;
     margin: 1em;

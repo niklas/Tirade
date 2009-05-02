@@ -13,7 +13,12 @@ var Toolbox = {
   },
   applyBehaviors: function() {
     this.element()
-      .draggable( { handle: 'div.head' } )
+      .draggable({ 
+        handle: 'div.head',
+        opacity: 0.8,
+        start: function() { Toolbox.body().css('overflow-x', 'auto')},
+        stop:  function() { Toolbox.body().css('overflow-x', 'hidden')}
+      } )
       .resizable( {
         minWidth: 300, minHeight: 400,
         stop: Toolbox.callback.resized,
@@ -25,7 +30,9 @@ var Toolbox = {
           lazy: true,
           items: 'div.content > div.frame',
           prev: 'a.prev', next: 'a.next',
-          axis: 'xy',
+          onBefore: function() { Toolbox.body().css('overflow-x', 'auto'); return true  },
+          onAfter:  function() { Toolbox.body().css('overflow-x', 'hidden'); return true},
+          axis: 'x',
           duration: 500
         })
         .end()
