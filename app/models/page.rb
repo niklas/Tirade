@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20081120155111
+# Schema version: 20090412210854
 #
 # Table name: pages
 #
@@ -12,7 +12,8 @@
 #  layout_id  :integer         
 #  created_at :datetime        
 #  updated_at :datetime        
-#  yui        :string(10)      
+#  width      :string(16)      
+#  alignment  :string(8)       
 #
 
 class Page < ActiveRecord::Base

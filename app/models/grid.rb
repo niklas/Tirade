@@ -1,16 +1,17 @@
 # == Schema Information
-# Schema version: 20081120155111
+# Schema version: 20090412210854
 #
 # Table name: grids
 #
-#  id         :integer         not null, primary key
-#  parent_id  :integer         
-#  lft        :integer         
-#  rgt        :integer         
-#  yui        :string(255)     
-#  created_at :datetime        
-#  updated_at :datetime        
-#  title      :string(255)     
+#  id                 :integer         not null, primary key
+#  parent_id          :integer         
+#  lft                :integer         
+#  rgt                :integer         
+#  created_at         :datetime        
+#  updated_at         :datetime        
+#  title              :string(255)     
+#  inherit_renderings :boolean         
+#  division           :string(255)     
 #
 
 class Grid < ActiveRecord::Base

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20081120155111
+# Schema version: 20090412210854
 #
 # Table name: renderings
 #
@@ -14,6 +14,7 @@
 #  content_type :string(255)     
 #  options      :text            
 #  assignment   :string(32)      default("fixed")
+#  scope        :text            
 #
 
 class Rendering < ActiveRecord::Base
