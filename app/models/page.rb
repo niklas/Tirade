@@ -154,6 +154,14 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def width
+    if self[:width].blank? && parent
+      parent.width
+    else
+      self[:width]
+    end
+  end
+
   attr_accessor :fresh
   def fresh?
     @fresh
