@@ -169,7 +169,7 @@ var Toolbox = {
       })
     });
 
-    this.last(' ul.list').livequery(function() { $(this).dblclick(function(e) {
+    this.last(' ul.list').livequery(function() { $(this).unbind('dblclick').dblclick(function(e) {
       $(e.target).find('a:first').click()
     })});
 
