@@ -58,18 +58,18 @@ class Image < ActiveRecord::Base
   end
 
   def scale_to(geom='50x50')
-    Paperclip::Thumbnail::new(image, geom)
+    Paperclip::Thumbnail::new(image, :geometry => geom)
   end
 
   def custom_thumbnail_url(geom)
-    thumb = Paperclip::Thumbnail::new(image, geom)
+    thumb = Paperclip::Thumbnail::new(image, :geometry => geom)
     tempfile = thumb.make
     geom = thumb.target_geometry.to_s
     scaled_name = 'custom' + geom 
-    scaled_path = image.path(scaled_name)
+    scaled_path = image.path(scaled_name).gsub(/custom/, 'custom/')
     FileUtils.mkdir_p(File.dirname(scaled_path))
     tempfile.stream_to(scaled_path) unless File.exists?(scaled_path)
-    image.url(scaled_name)
+    image.url( CGI.escape(scaled_name) ).gsub(/custom/, 'custom/')
   end
 
   def self.sample

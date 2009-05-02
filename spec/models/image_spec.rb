@@ -2,13 +2,14 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Image do
   before(:each) do
-    @image = Image.new
+    @photo = ActionController::TestUploadedFile.new( File.join(RAILS_ROOT,'public','images', 'pentagon-tile.jpg'), 'image/jpg' )
+    @image = Image.new(:image => @photo)
   end
 
-  it "should be valid" do
+  it "should not be valid (need image)" do
     @image.should be_valid
   end
-  
+
   it "should be intergrated with paperclip" do
     @image.should respond_to(:image)
   end
@@ -32,7 +33,7 @@ describe "The Landscape Image" do
   describe "creating a custom thumbnail" do
     before(:each) do
       @geom = '200x100'
-      @custom_dir = RAILS_ROOT+'/spec/fixtures/images/55/custom200x100'
+      @custom_dir = RAILS_ROOT+'/spec/fixtures/images/55/custom/200x100'
       @custom_path = @custom_dir + '/irish_landscape.jpg'
       @custom_style = "custom200x100"
 
@@ -43,22 +44,22 @@ describe "The Landscape Image" do
       io_mock.stub!(:rewind).and_return(true)
 
       File.should_receive(:new).with(@custom_path,'wb+').and_return(io_mock)
-      @image.image.should_receive(:exists?).with(@custom_style).and_return(true)
+      #@image.image.should_receive(:exists?).with(@custom_style).and_return(true)
 
       @custom_url = @image.custom_thumbnail_url(@geom)
     end
 
     it "should have an url with the given geom in it" do
-      @custom_url.should =~ %r~/images/55/custom200x100/irish_landscape.jpg$~
+      @custom_url.should =~ %r~/images/55/custom/200x100/irish_landscape.jpg$~
     end
   end
 
   describe "creating a custom thumbnail with cropping" do
     before(:each) do
       @geom = '200x100#'
-      @custom_dir = RAILS_ROOT+'/spec/fixtures/images/55/custom200x100#'
+      @custom_dir = RAILS_ROOT+'/spec/fixtures/images/55/custom/200x100#'
       @custom_path = @custom_dir + '/irish_landscape.jpg'
-      @custom_style = "custom200x100#"
+      @custom_style = "custom/200x100#"
 
       FileUtils.should_receive(:mkdir_p).with(@custom_dir).and_return(true)
 
@@ -67,13 +68,13 @@ describe "The Landscape Image" do
       io_mock.stub!(:rewind).and_return(true)
 
       File.should_receive(:new).with(@custom_path,'wb+').and_return(io_mock)
-      @image.image.should_receive(:exists?).with(@custom_style).and_return(true)
+      #@image.image.should_receive(:exists?).with(@custom_style).and_return(true)
 
       @custom_url = @image.custom_thumbnail_url(@geom)
     end
 
     it "should have an url with the given geom in it" do
-      @custom_url.should =~ %r~/images/55/custom200x100%23/irish_landscape.jpg$~
+      @custom_url.should =~ %r~/images/55/custom/200x100%23/irish_landscape.jpg$~
     end
   end
 end
