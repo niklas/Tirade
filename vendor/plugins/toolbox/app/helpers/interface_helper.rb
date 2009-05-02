@@ -89,7 +89,8 @@ module InterfaceHelper
 
   def icon_for(thing)
     name = thing.respond_to?(:icon_name) ? thing.icon_name : thing.table_name.singularize
-    image_tag("icons/types/#{name}.png", :class => 'icon')
+    path = thing.respond_to?(:icon_path) ? thing.icon_path : %Q~icons/types/#{name}.png~
+    image_tag(path, :class => 'icon')
   end
 
   # You need a partial '/resources/table_row' and must write the +tr+

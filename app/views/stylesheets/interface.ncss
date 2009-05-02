@@ -270,9 +270,10 @@ ul.list {
   clear: both;
   li { 
     min-height: 19px;
+    line-height: 19px;
     position: relative;
     text-align: left;
-    padding: 0.3em 0;
+    padding: 0.3em;
     display: block;
     background-image: url(../images/ui/list_item_bg.png);
     margin: 0;
@@ -360,7 +361,7 @@ div.live_search {
 }
 
 a {
-  .create, .edit, .update, .delete, .show, .refresh_page {
+  .create, .edit, .update, .delete, .show, .refresh_page, .index {
     text-indent: -5000px;
     width: 16px;
     height: 16px;
@@ -373,7 +374,7 @@ a {
   .create {
     background-image: url(/images/icons/small/plus.gif);
   }
-  .show {
+  .show, .index {
     margin-top: -5px;
     height: 10px;
     background-image: url(/images/icons/show-arrow.png);
@@ -396,7 +397,7 @@ a {
 ul.list, dl, ul.tree {
   a {
     position: absolute;
-    .show {
+    .show, .index {
       right: <%= @small %>;
       display: none !important;
     }
@@ -424,7 +425,7 @@ ul.list, dl, ul.tree {
     float: left;
   }
   li:hover, di:hover > *, li:hover > div.node  {
-    > a.show, > img.association {
+    > a.show, > a.index, > img.association {
       display: block !important;
     }
   }

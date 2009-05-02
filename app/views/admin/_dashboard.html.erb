@@ -13,6 +13,7 @@
     <ul class="list">
       <% Tirade::ActiveRecord::Content.classes.each do |klass| %>
         <li>
+          <%= klass.name.pluralize %>
           <%= link_to klass.name.pluralize, {:controller => klass.table_name}, :class => "index #{klass.table_name}" %>
         </li>
       <% end %>
@@ -23,6 +24,7 @@
     <ul class="list">
       <% %w(pages grids parts renderings).each do |cname| %>
         <li>
+          <%= cname.humanize %>
           <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
         </li>
       <% end %>
@@ -33,6 +35,7 @@
     <ul class="list">
       <% %w(users roles groups permissions).each do |cname| %>
         <li>
+          <%= cname.humanize %>
           <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
         </li>
       <% end %>

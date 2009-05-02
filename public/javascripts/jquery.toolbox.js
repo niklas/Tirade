@@ -169,6 +169,10 @@ var Toolbox = {
       })
     });
 
+    this.last(' ul.list').livequery(function() { $(this).dblclick(function(e) {
+      $(e.target).find('a:first').click()
+    })});
+
     this.last(' di.association.one dd > ul.list').livequery(function() { $(this).hasOneEditor() });
     this.last(' di.association.many dd > ul.list').livequery(function() { $(this).hasManyEditor() });
 

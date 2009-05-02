@@ -19,17 +19,28 @@ CONFIG[:upload_images_path] = '/upload/'
 
 class Image < ActiveRecord::Base
   has_attached_file :image,
-                    :styles => {:thumbnail => CONFIG[:thumbnail_size]},
+                    :styles => {
+                      :thumbnail => CONFIG[:thumbnail_size],
+                      :icon => '80x16'
+                    },
                     :path => ":rails_root/public#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension",
                     :url => "#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
   
   has_fulltext_search :title, :image_file_name
   acts_as_content :liquid => [:title, :image_file_name]
+
+  def self.attachment_names
+    [:image]
+  end
   
   # validates_presence_of :image_file_name
   validates_attachment_presence :image
   
   before_create :generate_title
+
+  def icon_path
+    image.url(:icon)
+  end
   
   def url
     image.andand.url
