@@ -38,8 +38,8 @@ describe Grid do
         @grid.division = '50-50'
         @grid.save!
       end
-      it "should change its gridclass to 'subcolumns'" do
-        @grid.own_css.should include('subcolumns')
+      it "should change its gridclass to 'subcols'" do
+        @grid.own_css.should include('subcols')
       end
 
       it "should change its ideal number of children to 2" do
@@ -71,8 +71,8 @@ describe Grid do
         before(:each) do
           @grid.update_attribute :division, '33-66'
         end
-        it "should change its gridclass to 'subcolumns'" do
-          @grid.own_css.should include('subcolumns')
+        it "should change its gridclass to 'subcols'" do
+          @grid.own_css.should include('subcols')
         end
         it "should not change its ideal number of children" do
           @grid.ideal_children_count.should == 2
@@ -92,8 +92,8 @@ describe Grid do
         before(:each) do
           @grid.update_attribute :division, '33-33-33'
         end
-        it "should change its gridclass to 'subcolumns'" do
-          @grid.own_css.should include('subcolumns')
+        it "should change its gridclass to 'subcols'" do
+          @grid.own_css.should include('subcols')
         end
 
         it "should change its ideal number of children to 3" do
@@ -115,8 +115,8 @@ describe Grid do
           before(:each) do
             @grid.update_attribute :division, '33-66'
           end
-          it "should change its gridclass to 'subcolumns'" do
-            @grid.own_css.should include('subcolumns')
+          it "should change its gridclass to 'subcols'" do
+            @grid.own_css.should include('subcols')
           end
           it "should change its ideal number of children to 2" do
             @grid.ideal_children_count.should == 2
@@ -139,8 +139,8 @@ describe Grid do
       before(:each) do
         @grid.update_attribute :division, '33-33-33'
       end
-      it "should change its gridclass to 'subcolumns'" do
-        @grid.own_css.should include('subcolumns')
+      it "should change its gridclass to 'subcols'" do
+        @grid.own_css.should include('subcols')
       end
 
       it "should change its ideal number of children to 3" do
@@ -195,7 +195,7 @@ describe Grid do
       grids(:layout50_50).name.should == '50% - 50%'
     end
 
-    describe ", rendering the left column" do
+    describe ", rendering the left col" do
       before(:each) do
         @html = grids(:layout_50_50_1).render
       end
@@ -204,7 +204,7 @@ describe Grid do
       end
     end
 
-    describe ", rendering the left column in the main page" do
+    describe ", rendering the left col in the main page" do
       before(:each) do
         @html = grids(:layout_50_50_1).render_in_page(pages(:main))
       end
@@ -218,7 +218,7 @@ describe Grid do
       end
     end
 
-    describe ", rendering the right column" do
+    describe ", rendering the right col" do
       before(:each) do
         @html = grids(:layout_50_50_2).render
       end
@@ -227,7 +227,7 @@ describe Grid do
       end
     end
 
-    describe ", rendering the right column in the main page" do
+    describe ", rendering the right col in the main page" do
       before(:each) do
         @html = grids(:layout_50_50_2).render_in_page(pages(:main))
       end
@@ -241,30 +241,30 @@ describe Grid do
       end
     end
 
-    describe ", rendering both the columns in the 50/50 layout" do
+    describe ", rendering both the cols in the 50/50 layout" do
       before(:each) do
         @html = grids(:layout50_50).render
       end
       it "render it" do
-        @html.should have_tag('div.grid.subcolumns') do
-          with_tag('div.c50l div.grid.subcl')
-          with_tag('div.c50l + div.c50r div.grid.subcr')
+        @html.should have_tag('div.grid.subcols') do
+          with_tag('div.col.c50l div.grid.subcl')
+          with_tag('div.col.c50l + div.col.c50r div.grid.subcr')
         end
       end
     end
 
-    describe ", rendering both the columns in the 50/50 layout for the main page" do
+    describe ", rendering both the cols in the 50/50 layout for the main page" do
       before(:each) do
         @html = grids(:layout50_50).render_in_page(pages(:main))
       end
       it "should render it" do
-        @html.should have_tag('div.grid.subcolumns') do
-          with_tag('div.c50l div.grid.subcl') do
+        @html.should have_tag('div.grid.subcols') do
+          with_tag('div.col.c50l div.grid.subcl') do
             with_tag('div.rendering.simple_preview.document') do
               with_tag('p', /If you read this, you earned a big hug!/)
             end
           end
-          with_tag('div.c50l + div.c50r div.grid.subcr') do
+          with_tag('div.col.c50l + div.col.c50r div.grid.subcr') do
             with_tag('div.rendering.simple_preview.document') do
               with_tag('h2', 'Introduction')
               with_tag('p', /Tirade is a CMS/)
@@ -411,11 +411,11 @@ describe Grid, "structure of DDM Page" do
   end
 
   it "should provide correct CSS classes" do
-    grids(:main_vs_sidebar).own_css.should include('subcolumns')
+    grids(:main_vs_sidebar).own_css.should include('subcols')
     grids(:main_vs_sidebar).children_css.should include('c75l')
     grids(:main_vs_sidebar).children_css.should include('c25r')
 
-    grids(:menu_vs_content).own_css.should include('subcolumns')
+    grids(:menu_vs_content).own_css.should include('subcols')
     grids(:menu_vs_content).children_css.should include('c38l')
     grids(:menu_vs_content).children_css.should include('c62r')
 
@@ -431,10 +431,10 @@ describe Grid, "structure of DDM Page" do
 
   it "should have the proper YAML tags" do
     html.should have_tag 'div.page.page_1337' do#           o Page
-      with_tag 'div.subcolumns' do         #            \  Grid 1 (75-25) Main vs Sidebar
-        with_tag 'div.c75l' do             #              |
-          with_tag 'div.subcolumns' do     #         \    |  Grid 2 (75- / 38-62) - Main (Menu vs Content)
-            with_tag 'div.c38l' do # menu  #          |   |   
+      with_tag 'div.subcols' do         #            \  Grid 1 (75-25) Main vs Sidebar
+        with_tag 'div.col.c75l' do             #          |
+          with_tag 'div.subcols' do     #         \    |  Grid 2 (75- / 38-62) - Main (Menu vs Content)
+            with_tag 'div.col.c38l' do # menu  #      |   |   
               with_tag 'div.subcl' do      #        \ |   |    Grid 4 (38- / R) Menu
                 #with_tag 'div.rendering.menu' do#\  | |   |  
                 #  with_tag 'ul'            #      | | |   |  
@@ -445,13 +445,13 @@ describe Grid, "structure of DDM Page" do
               end                          #          |   |                   
             end                            #          |   |                   
           end                              #          /   |                   
-          with_tag 'div.c62r' do # content #              |                 
+          with_tag 'div.col.c62r' do # content #          |                 
             with_tag 'div.subcr' do        #              |  \              
               #with_tag 'div.rendering'     #              |  |  Grid 5 (-62 | R) Content
             end                            #              |  /              
           end                              #              |                 
         end                                #              |
-        with_tag 'div.c25r' do # sidebar   #              |                 
+        with_tag 'div.col.c25r' do # sidebar   #          |                 
           with_tag 'div.subcr' do          #              |  \  
             #with_tag 'div.rendering.simple_preview'#   O  |  |  Grid 3 (-25 / R) Sidebar
           end                              #              |  /  

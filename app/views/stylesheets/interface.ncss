@@ -117,36 +117,63 @@ body div {
   .rendering:hover > div.admin {
     display: block;
   }
-  .grid.hover                   { background: #aaa;                   outline: thick solid #aaa}
-  .grid .grid.hover             { background: #bbb;                   outline: thick solid #bbb}
-  .grid .grid .grid.hover       { background: #ccc;                   outline: thick solid #ccc}
-  .grid .grid .grid .grid.hover { background: #ddd;                   outline: thick solid #ddd}
-  .rendering.hover              { background: <%= @colors[:hover] %>; outline: thick solid <%= @colors[:hover] %>}
-  .grid > div.admin {
-  }
+  .grid.hover                   { background: #aaa;}
+  .grid .grid.hover             { background: #bbb;}
+  .grid .grid .grid.hover       { background: #ccc;}
+  .grid .grid .grid .grid.hover { background: #ddd;}
+  .rendering.hover              { background: <%= @colors[:hover] %>;}
+
   > div.admin {
     display: none;
-    position: relative;
-    height: 20px;
-    margin-bottom: 5px;
-    span, a {
-      display: block;
-      width: 16px;
-      height: 16px;
-      text-indent: -5000px;
-      outline: 0;
+    a {
       margin: 2px;
-      float: right;
+      float: left;
     }
     span.handle {
-      display: none;
-    }
-    :hover span.handle {
-      display: block;
+      position: static;
+      margin: 2px;
+      float: left;
     }
   }
-  .grid      > div.admin { background: url(../images/ui/accordion_head_bg.png); }
-  .rendering > div.admin { background: url(../images/ui/list_item_bg.png); }
+  .grid  > div.admin { 
+    background: url(../images/admin_corner_horizontal_br.png) no-repeat scroll 100% 0;
+    position: absolute;
+    top: 0; left: 10%;
+    width: auto;
+    height: 20px;
+    padding: 3px 20px 15px 7px;
+    z-index: 1;
+  }
+  .page {
+
+    *.grid.subcolumns > div.col > .grid > div.admin,
+    *.grid.subcolumns > div.col + div.col + div.col > .grid > div.admin {
+      left: auto; right: 0;
+      background: url(../images/admin_corner_horizontal_bl.png) no-repeat scroll 0 0;
+      padding: 3px 7px 15px 20px;
+    }
+    > .grid > div.admin,
+    *.grid.subcolumns > div.admin,
+    *.grid.subcolumns > div.col + div.col > .grid > div.admin { 
+      left: 0;  right: auto;
+      background: url(../images/admin_corner_horizontal_br.png) no-repeat scroll 100% 0;
+      padding: 3px 20px 15px 7px;
+    }
+  }
+
+
+  .rendering > div.admin { 
+    background: url(../images/admin_corner_vertical.png) no-repeat scroll 0 100%;
+    position: absolute;
+    top: 0; right: 0;
+    width: 20px;
+    height: auto;
+    padding: 7px 3px 20px 15px;
+    z-index: 2;
+  }
+  .grid.subcl.leaf > div.rendering > div.admin {
+    top: 26px;
+  }
 }
 
 

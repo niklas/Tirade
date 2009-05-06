@@ -54,7 +54,7 @@ module RenderHelper
     opts[:id] = dom_id(grid) # unless opts[:id].nil?
     opts[:rel] = dom_id(grid)
     if wrapper = opts.delete(:wrapper)
-      div_wrap( content_tag(:div, inner_html, opts), wrapper)
+      div_wrap( content_tag(:div, inner_html, opts), "#{wrapper} col")
     else
       content_tag(:div, inner_html, opts)
     end

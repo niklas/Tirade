@@ -10,6 +10,7 @@ div.rendering.without_content {
 
 body.role_admin {
    a,span { display: inline; }
+   div.admin a { display: block; }
    form,div { display: block; }
    div.rendering.without_content {
      display: block;
@@ -22,6 +23,7 @@ body.role_admin {
    <% role.permissions.group_by(&:app_controller).each do |res, perms| %>
       <% perms.each do |perm| %>
          a.<%= res %>.<%= perm.app_method %> { display: inline; }
+         div.admin a.<%= res %>.<%= perm.app_method %> { display: block; }
          form.<%= res %>.<%= perm.app_method %> { display: block; }
          div.<%= res %>.<%= perm.app_method %> { display: block; }
          span.<%= res %>.<%= perm.app_method %> { display: inline; }

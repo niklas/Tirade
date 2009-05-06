@@ -212,7 +212,7 @@ $(function() {
   });
 
   // Admin Bars on Grids
-  $('body.role_admin div.page div.grid').livequery(function(i) {
+  $('body.role_admin div.page div.grid div.grid').livequery(function(i) {
     var grid = $(this);
     div = $('<div />').addClass('admin').attr('id', 'admin_' + grid.resourceIdentifier());
     if (grid.is('.leaf')) {

@@ -145,7 +145,7 @@ $(function() {
           draggable.parent()[0] != list[0]
         );
       },
-      hoverClass: 'hover',
+      hoverClass: 'drop-hover',
       activeClass: 'active-droppable',
       greedy: true,
       tolerance: 'touch',
@@ -205,7 +205,7 @@ $(function() {
   $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
     $(this).hover(
       function() { 
-        $(this).parents('div.grid, div.rendering').addClass('hover') 
+        $(this).parent().addClass('hover') 
       }, 
       function() { 
         $('div.page .hover').removeClass('hover'); 
