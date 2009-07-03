@@ -15,9 +15,6 @@ ActionController::Routing::Routes.draw do |map|
     manage.resources :renderings,
       :member => {:preview => :put, :duplicate => :put}
 
-    manage.resources :contents,
-      :member => {:preview => :put}
-
     # TODO external preview
     manage.resources :pages, :member => {:preview => :put} do |pages|
       pages.resource :layout, :controller => 'pages/layout'
@@ -43,11 +40,15 @@ ActionController::Routing::Routes.draw do |map|
 
     manage.resources :images,
       :member => {:set_image_title => :post}
-      
-    # TODO just for completeness
-    manage.resources :videos
 
     manage.resource :clipboard, :controller => 'clipboard'
+
+
+    manage.resources :contents,
+      :member => {:preview => :put}
+    Tirade::ActiveRecord::Content.classes.each do |klass|
+      manage.resources klass.controller_name, :member => {:preview => :put}
+    end
 
   end
   map.dashboard '/dashboard', :controller => 'admin'

@@ -62,6 +62,11 @@ module Tirade
             end
           }
         end
+
+        def controller_name
+          name.underscore.pluralize
+        end
+
         def markup(*fields)
           self.marked_up_fields << fields
           self.marked_up_fields.flatten!

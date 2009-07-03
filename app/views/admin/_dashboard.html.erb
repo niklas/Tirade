@@ -14,7 +14,7 @@
       <% Tirade::ActiveRecord::Content.classes.each do |klass| %>
         <li>
           <%= klass.name.pluralize %>
-          <%= link_to klass.name.pluralize, {:controller => klass.table_name}, :class => "index #{klass.table_name}" %>
+          <%= link_to klass.name.pluralize, {:controller => klass.controller_name}, :class => "index #{klass.table_name}" %>
         </li>
       <% end %>
     </ul>
