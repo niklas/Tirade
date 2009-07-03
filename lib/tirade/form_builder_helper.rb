@@ -53,7 +53,7 @@ module Tirade
       reflection = @object.class.reflections[assoc]
       return "Wrong association type (#{reflection.macro}), needed has_many" unless reflection.macro == :has_many
       things = @object.send(assoc)
-      fkey = opts.delete(:foreign_key) || "#{assoc.to_s.singularize}_ids"
+      fkey = opts.delete(:foreign_key) || "#{assoc.name.singularize}_ids"
       inner = ''
       inner << @template.list_of(things, :force_list => true)
       inner << @template.live_search_for(assoc.to_s.singularize)
