@@ -35,6 +35,7 @@ Rails::Initializer.run do |config|
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
    #config.plugins = [ :all, :acts_as_renderer ]
+  config.gem 'desert', :version => '>=0.5.0'
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( 
