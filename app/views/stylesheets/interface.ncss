@@ -121,7 +121,7 @@ body div {
   .grid .grid.hover             { background: #bbb;}
   .grid .grid .grid.hover       { background: #ccc;}
   .grid .grid .grid .grid.hover { background: #ddd;}
-  .rendering.hover              { background: <%= @colors[:hover] %>;}
+  .rendering.hover              { background: url(../images/pentagon-tile.jpg) repeat <%= @colors[:hover] %>;}
 
   > div.admin {
     display: none;
