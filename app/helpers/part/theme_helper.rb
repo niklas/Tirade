@@ -1,2 +1,0 @@
-module Part::ThemeHelper
-end
