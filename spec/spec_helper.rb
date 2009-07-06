@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'spec'
 require 'spec/rails'
+require File.expand_path(File.dirname(__FILE__) + "/factories")
 include AuthenticatedTestHelper
 require File.dirname(__FILE__) + '/toolbox_spec_helper'
 include ToolboxSpecHelper
