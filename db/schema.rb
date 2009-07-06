@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090412210854) do
+ActiveRecord::Schema.define(:version => 20090706151920) do
 
   create_table "artists", :force => true do |t|
     t.string   "title"
@@ -204,8 +204,8 @@ ActiveRecord::Schema.define(:version => 20090412210854) do
     t.datetime "updated_at"
     t.string   "content_type"
     t.text     "options"
-    t.string   "assignment",   :limit => 32, :default => "fixed"
-    t.text     "scope"
+    t.string   "assignment",       :limit => 32, :default => "fixed"
+    t.text     "scope_definition"
   end
 
   create_table "roles", :force => true do |t|

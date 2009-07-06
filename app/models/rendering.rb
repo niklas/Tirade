@@ -18,9 +18,12 @@
 #
 
 class Rendering < ActiveRecord::Base
+  # TODO enable Memoizable
+  # extend ActiveSupport::Memoizable
+
   acts_as_renderer
-  serialize :scope, HashWithIndifferentAccess
-  def scope
+  serialize :scope_definition, HashWithIndifferentAccess
+  def scope_definition
     self[:scope] ||= HashWithIndifferentAccess.new
   end
 
@@ -29,7 +32,7 @@ class Rendering < ActiveRecord::Base
     Tirade::ActiveRecord::Content.classes
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
@@ -79,26 +82,30 @@ class Rendering < ActiveRecord::Base
       end
     # TODO: singular/plural flag for Part
     when 'scope'
-      if content_type
-        c = find_content_by_scope(scope)
-        #c.length == 1 ? c.first : c
-      end
+      content_by_scope
     else
       content_without_dynamic_assignments
     end
   end
   alias_method_chain :content, :dynamic_assignments
 
-  def find_content_by_scope(thescope=self.scope)
-    klass = content_type.constantize
-    # HACK if no scope is specified, we must not return the klass
-    Tirade::ActiveRecord::Content::Scopes.map(&:to_sym).inject(klass.scoped({:conditions => '1=1'})) do |records,valid_scope|
-      if thescope.has_key?(valid_scope)
-        records.send!(valid_scope,thescope[valid_scope])
-      else
-        records
-      end
-    end.to_a
+  # returns a SearchLogic::Search
+  def scope
+    if content_type
+      @scope ||= content_type.constantize.search(scope_definition)
+    else
+      raise "no content_type set"
+    end
+  end
+  # TODO memoize
+  #memoize :scope
+
+  def scope=(new_scope)
+    raise "must set new scope: #{new_scope.inspect}"
+  end
+
+  def content_by_scope(thescope=self.scope)
+    scope.all
   end
 
   acts_as_list :scope => :grid_id

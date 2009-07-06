@@ -1,4 +1,5 @@
 class NormalFormBuilder < ActionView::Helpers::FormBuilder
+  include Tirade::UnwrappedFormBuilderFields
   include Tirade::FormBuilderHelper
 
 

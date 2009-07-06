@@ -19,7 +19,7 @@ module HasFulltextSearch
           extend HasFulltextSearch::LikeSearch::Parsing
           extend HasFulltextSearch::LikeSearch::SingletonMethods
           scoping_method = self.respond_to?(:named_scope) ? :named_scope : :has_finder
-          send scoping_method, :search, lambda {|query|
+          send scoping_method, :fulltext_search, lambda {|query|
             #query = args.shift
             if query.blank?
               {}

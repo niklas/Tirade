@@ -1,4 +1,5 @@
 class ToolboxFormBuilder < ActionView::Helpers::FormBuilder
+  include Tirade::UnwrappedFormBuilderFields
   include Tirade::FormBuilderHelper
   def submit(label="Submit", opts={})
     if @object.new_record?

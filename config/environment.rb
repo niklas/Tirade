@@ -36,6 +36,7 @@ Rails::Initializer.run do |config|
   # :all can be used as a placeholder for all plugins not explicitly named
    #config.plugins = [ :all, :acts_as_renderer ]
   config.gem 'desert', :version => '>=0.5.0'
+  config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( 

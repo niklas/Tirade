@@ -1,5 +1,7 @@
 module Tirade
   module FormBuilderHelper
+    include ScopeFormBuilderMethods
+
     def text_field(field, options = {})
       wrap(field, options, super(field,options))
     end

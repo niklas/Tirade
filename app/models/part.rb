@@ -64,6 +64,10 @@ class Part < ActiveRecord::Base
     self.options = {}
   end
 
+  def preferred_types_classes
+    preferred_types.map(&:constantize)
+  end
+
   def label
     name
   end
