@@ -4,7 +4,7 @@ describe ImagesController do
 
   describe "Route generation" do
     it "should generate custom urls" do
-      route_for({:controller => 'images', :action => 'custom', :geometry => '42x23', :filename => 'image_filename.jpg', :id => 5 }).should ==
+      route_for({:controller => 'images', :action => 'custom', :geometry => '42x23', :filename => 'image_filename.jpg', :id => '5' }).should ==
         '/upload/images/5/custom/42x23/image_filename.jpg'
     end
   end
