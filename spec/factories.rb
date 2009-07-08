@@ -1,3 +1,8 @@
+Factory.define :content do |f|
+  f.sequence(:title) { |i| "Content ##{i}"}
+  f.body "A lot of Text"
+end
+
 Factory.define :page do |f|
   f.sequence(:title) { |i| "Page ##{i}"}
   f.sequence(:url) { |i| "/page/auto/#{i}"}
