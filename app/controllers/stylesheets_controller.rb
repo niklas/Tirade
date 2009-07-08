@@ -5,7 +5,6 @@ class StylesheetsController < ApplicationController
   skip_before_filter :check_permissions
   skip_before_filter :login_required
   after_filter { |controller| controller.cache_page }
-  session :off
   layout nil
 
   private
