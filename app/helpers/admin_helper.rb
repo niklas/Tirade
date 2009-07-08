@@ -14,7 +14,7 @@ module AdminHelper
       head +
       content_tag(:ul,capture(&block)) ,
       :class => 'panel'
-    ), block.binding
+    )
   end
 
   def panel_item(cont,html_opts={})
