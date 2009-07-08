@@ -12,20 +12,13 @@ describe RenderingsController do
     end
   
     it "should map { :controller => 'renderings', :action => 'show', :id => 1 } to /manage/renderings/1" do
-      route_for(:controller => "renderings", :action => "show", :id => 1).should == "/manage/renderings/1"
+      route_for(:controller => "renderings", :action => "show", :id => '1').should == "/manage/renderings/1"
     end
   
     it "should map { :controller => 'renderings', :action => 'edit', :id => 1 } to /manage/renderings/1/edit" do
-      route_for(:controller => "renderings", :action => "edit", :id => 1).should == "/manage/renderings/1/edit"
+      route_for(:controller => "renderings", :action => "edit", :id => '1').should == "/manage/renderings/1/edit"
     end
   
-    it "should map { :controller => 'renderings', :action => 'update', :id => 1} to /manage/renderings/1" do
-      route_for(:controller => "renderings", :action => "update", :id => 1).should == "/manage/renderings/1"
-    end
-  
-    it "should map { :controller => 'renderings', :action => 'destroy', :id => 1} to /manage/renderings/1" do
-      route_for(:controller => "renderings", :action => "destroy", :id => 1).should == "/manage/renderings/1"
-    end
   end
 
   describe "route recognition" do

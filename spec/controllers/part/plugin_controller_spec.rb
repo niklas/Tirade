@@ -7,11 +7,7 @@ describe Part::PluginController do
 
   describe "route generation" do
     it "should map { :action => 'show', :id => 'extra', :part_id => 23} to /manage/parts/23/plugin/extra" do
-      route_for(:controller => 'part/plugin', :action => 'show', :id => 'extra', :part_id => 23).should == 
-        "/manage/parts/23/plugin/extra"
-    end
-    it "should map { :action => 'destroy', :id => 'extra', :part_id => 23} to /manage/parts/23/plugin/extra" do
-      route_for(:controller => 'part/plugin', :action => 'destroy', :id => 'extra', :part_id => 23).should == 
+      route_for(:controller => 'part/plugin', :action => 'show', :id => 'extra', :part_id => '23').should == 
         "/manage/parts/23/plugin/extra"
     end
   end
@@ -23,10 +19,10 @@ describe Part::PluginController do
         :part_id => "23", :id => 'extra'
       }
     end
-    it "should generate params { :action => 'show', :id => 'extra', :part_id => 23} from DELETE /manage/parts/23/plugin/extra" do
-      params_from(:delete, '/manage/parts/23/plugin/extra').should == {
+    it "should generate params { :action => 'show', :id => 'extra', :part_id => 23} from DELETE /manage/parts/23/plugin/42" do
+      params_from(:delete, '/manage/parts/23/plugin/42').should == {
         :controller => 'part/plugin', :action => 'destroy',
-        :part_id => "23", :id => 'extra'
+        :part_id => "23", :id => '42'
       }
     end
   end

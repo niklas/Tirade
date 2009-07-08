@@ -12,20 +12,13 @@ describe PartsController do
     end
   
     it "should map { :controller => 'parts', :action => 'show', :id => 1 } to /manage/parts/1" do
-      route_for(:controller => "parts", :action => "show", :id => 1).should == "/manage/parts/1"
+      route_for(:controller => "parts", :action => "show", :id => '1').should == "/manage/parts/1"
     end
   
     it "should map { :controller => 'parts', :action => 'edit', :id => 1 } to /manage/parts/1/edit" do
-      route_for(:controller => "parts", :action => "edit", :id => 1).should == "/manage/parts/1/edit"
+      route_for(:controller => "parts", :action => "edit", :id => '1').should == "/manage/parts/1/edit"
     end
   
-    it "should map { :controller => 'parts', :action => 'update', :id => 1} to /manage/parts/1" do
-      route_for(:controller => "parts", :action => "update", :id => 1).should == "/manage/parts/1"
-    end
-  
-    it "should map { :controller => 'parts', :action => 'destroy', :id => 1} to /manage/parts/1" do
-      route_for(:controller => "parts", :action => "destroy", :id => 1).should == "/manage/parts/1"
-    end
   end
 
   describe "route recognition" do

@@ -16,9 +16,6 @@ describe PublicController do
   end
 
   describe 'route recognition' do
-    it "should recognize ''" do
-      params_from(:get, '').should == {:controller => 'public', :action => 'index'}
-    end
     it "should recognize '/'" do
       params_from(:get, '/').should == {:controller => 'public', :action => 'index'}
     end

@@ -6,11 +6,7 @@ describe Part::ThemeController do
   end
   describe "route generation" do
     it "should map { :action => 'show', :id => 'cool', :part_id => 23} to /manage/parts/23/theme/cool" do
-      route_for(:controller => 'part/theme', :action => 'show', :id => 'cool', :part_id => 23).should == 
-        "/manage/parts/23/theme/cool"
-    end
-    it "should map { :action => 'destroy', :id => 'cool', :part_id => 23} to /manage/parts/23/theme/cool" do
-      route_for(:controller => 'part/theme', :action => 'destroy', :id => 'cool', :part_id => 23).should == 
+      route_for(:controller => 'part/theme', :action => 'show', :id => 'cool', :part_id => '23').should == 
         "/manage/parts/23/theme/cool"
     end
   end
@@ -19,12 +15,6 @@ describe Part::ThemeController do
     it "should generate params { :action => 'show', :id => 'cool', :part_id => 23} from GET /manage/parts/23/theme/cool" do
       params_from(:get, '/manage/parts/23/theme/cool').should == {
         :controller => 'part/theme', :action => 'show',
-        :part_id => "23", :id => 'cool'
-      }
-    end
-    it "should generate params { :action => 'show', :id => 'cool', :part_id => 23} from DELETE /manage/parts/23/theme/cool" do
-      params_from(:delete, '/manage/parts/23/theme/cool').should == {
-        :controller => 'part/theme', :action => 'destroy',
         :part_id => "23", :id => 'cool'
       }
     end
