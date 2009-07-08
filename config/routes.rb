@@ -22,8 +22,8 @@ ActionController::Routing::Routes.draw do |map|
 
     # TODO external preview
     manage.resources :parts, :member => {:preview => :put} do |parts|
-      parts.resources :theme, :controller => 'part/theme', :only => [:show, :delete]
-      parts.resources :plugin, :controller => 'part/plugin', :only => [:show, :delete]
+      parts.resources :theme, :controller => 'part/theme', :only => [:show, :destroy]
+      parts.resources :plugin, :controller => 'part/plugin', :only => [:show, :destroy]
     end
 
     #manage.part_theme 'part/:id/theme/:theme', :controller => 'part/theme', :action => 'show'
