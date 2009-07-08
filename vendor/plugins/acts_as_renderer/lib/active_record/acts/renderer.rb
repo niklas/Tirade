@@ -18,7 +18,6 @@ module ActiveRecord
         def acts_as_renderer
           class_eval <<-EOV, __FILE__, __LINE__
             include ActiveRecord::Acts::Renderer::InstanceMethods
-            require_dependency 'controllers/application'
           
             # Renders a template to a file with the included variable assignments
             def self.render_file(template, destination, assigns)
@@ -33,7 +32,7 @@ module ActiveRecord
             def self.render_string(render_template, assigns, contr)
               controller = contr 
               template = ActionView::Base.new([], assigns, controller)
-              template.finder.view_paths = controller.view_paths
+              template.view_paths = controller.view_paths
               template.template_format = :html
               template.extend controller.master_helper_module
               template.render(render_template)

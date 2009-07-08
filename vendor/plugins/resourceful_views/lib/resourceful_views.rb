@@ -1,6 +1,7 @@
 class ResourcefulViews
   
   cattr_accessor :form_helpers_suffix, :link_helpers_suffix
+  cattr_accessor :helpers
   
   def initialize # :nodoc:    
     @module ||= Module.new
@@ -27,8 +28,10 @@ class ResourcefulViews
     build_edit_helper(resource)
     build_destroy_helper(resource)
     build_list_helpers(resource)
+    build_table_helpers(resource)
     build_create_helper(resource)
     build_update_helper(resource)
+    memorize_helpers(resource)
     install_helpers
   end
   
@@ -40,7 +43,17 @@ class ResourcefulViews
     build_destroy_helper(resource)
     build_create_helper(resource)
     build_update_helper(resource)
+    memorize_helpers(resource)
     install_helpers
+  end
+  
+  def self.deprecation_warning(msg) # :nodoc:
+    RAILS_DEFAULT_LOGGER.warn('ResourcefulViews deprecation warning: ' + msg)
+  end
+  
+  def memorize_helpers(resource) # :nodoc:
+    @@helpers ||= {}
+    @@helpers["#{resource.name_prefix}#{resource.plural} at #{resource.path}"] = @module.instance_methods
   end
   
   
@@ -71,7 +84,8 @@ class ResourcefulViews
         label = opts.delete(:label) || 'Index'
         custom_classes = opts.delete(:class) || ''
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.plural}', 'index', *custom_classes.split)
-        args << opts.delete(:parameters) if opts[:parameters]
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        args << opts.delete(:sending) if opts[:sending]
         link_to(label, #{resource.name_prefix}#{resource.plural}_path(*args), opts)
       end
     end_eval
@@ -92,7 +106,7 @@ class ResourcefulViews
   #     <button type="submit">Search</button>
   #   </form>
   #
-  #   <%= search_tables(:label => 'Find', :parameters => {:order => 'material'}) %>
+  #   <%= search_tables(:label => 'Find', :sending => {:order => 'material'}) %>
   # 
   #   renders:
   # 
@@ -102,7 +116,7 @@ class ResourcefulViews
   #     <button type="submit">Find</button>
   #   </form>
   #
-  #   <% search_table_legs(table, :parameters => {:order => 'price'}) do %>
+  #   <% search_table_legs(table, :sending => {:order => 'price'}) do %>
   #     <%= select_tag 'filter', '<option>wood</option><option>metal</option>', :id => false %>
   #     <%= submit_button 'Search' %>
   #   <% end %>
@@ -124,7 +138,8 @@ class ResourcefulViews
         opts = args.extract_options!
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.plural}', 'search', *(opts.delete(:class) || '').split)
         opts[:method] = :get
-        parameters = opts.delete(:parameters) || {}
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        parameters = opts.delete(:sending) || {}
         if block_given?
           concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts), block.binding)
             parameters.collect{ |key, value|
@@ -167,15 +182,16 @@ class ResourcefulViews
   # 
   #   <a href="/tables/1" class="show table show_table">Linoleum</a>
   #
-  def build_show_helper(resource)
+  def build_show_helper(resource) 
     helper_name = "show_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
     return if already_defined?(helper_name)
     @module.module_eval <<-end_eval
       def #{helper_name}(*args)
         opts = args.extract_options!
-        label = opts.delete(:label) || 'Show'
+        label = opts.delete(:label) || #{resource.kind_of?(ActionController::Resources::SingletonResource) ? "'Show'" : 'args.last.to_s'}
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'show', *(opts.delete(:class) || '').split)
-        args << opts.delete(:parameters) if opts[:parameters]
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        args << opts.delete(:sending) if opts[:sending]
         link_to(label, #{resource.name_prefix}#{resource.singular}_path(*args), opts)
       end
     end_eval
@@ -187,17 +203,30 @@ class ResourcefulViews
   # 
   # === Examples
   # 
-  #   <% new_table %>
+  #   <%= new_table %>
   #
   #   renders:
   # 
   #   <a href="/tables/new" class="new table new_table">New</a>
   #
-  #   <% new_table_top(@table, :label => 'Add a top', :id => 'add_button') %>
+  #   <%= new_table_top(@table, :label => 'Add a top', :id => 'add_button') %>
   # 
   #   renders:
   # 
   #   <a href="/tables/1/top/new" id="add_button" class="new top new_top">Add a top</a>
+  #
+  #   <%- new_table :with => {:name => 'Ingo'} do |f| %>
+  #     <%= f.text_area :description %>
+  #     <%= submit_button 'Save' %>
+  #   <%- end %>
+  #
+  #   renders:
+  #
+  #   <form action="/tables/new" method="get" class="new table new_table">
+  #     <input type="hidden" name="table[name]" value="Ingo" />
+  #     <textarea name="table[description]" value="" />
+  #     <button type="submit">Save</button>
+  #   </form>
   #
   def build_new_helper(resource)
     helper_name = "new_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
@@ -206,8 +235,11 @@ class ResourcefulViews
       def #{helper_name}(*args, &block)
         opts = args.extract_options!
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'new', *(opts.delete(:class) || '').split)
-        parameters = opts.delete(:parameters) || {}
-        parameters.merge!(opts.delete(:attributes).inject({}){|attributes, (key, value)| attributes['#{resource.singular}[' + key.to_s + ']'] = value; attributes}) if opts[:attributes]
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        parameters = opts.delete(:sending) || {}
+        opts[:with] = opts.delete(:attributes) and ResourcefulViews.deprecation_warning('Please use :with instead of :attributes') if opts[:attributes]
+        resource_attributes = opts.delete(:with) || {}
+        parameters.merge!(resource_attributes.inject({}){|attributes, (key, value)| attributes['#{resource.singular}[' + key.to_s + ']'] = value; attributes}) if resource_attributes
         if block_given?
           opts[:method] = :get
           args_for_fields_for = ['#{resource.singular}']
@@ -250,7 +282,8 @@ class ResourcefulViews
         opts = args.extract_options!
         label = opts.delete(:label) || 'Edit'
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'edit', *(opts.delete(:class) || '').split)
-        args << opts.delete(:parameters) if opts[:parameters]
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        args << opts.delete(:sending) if opts[:sending]
         link_to(label, edit_#{resource.name_prefix}#{resource.singular}_path(*args), opts)
       end
     end_eval
@@ -292,28 +325,19 @@ class ResourcefulViews
         opts_for_button[:title] = opts.delete(:title) if opts[:title]
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'destroy', *(opts.delete(:class) || '').split)
         opts[:method] = :post
-        opts[:action] = #{resource.name_prefix}#{resource.singular}_path(*args) 
+        opts[:action] = #{resource.name_prefix}#{resource.singular}_path(*args)
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        parameters = opts.delete(:sending) || {} 
         content_tag('form', opts) do
           hidden_field_tag(:_method, :delete, :id => nil) +
+          parameters.collect{|key, value| 
+            hidden_field_tag(key, value, :id => nil)
+          }.join +
           token_tag.to_s +
           content_tag(:button, label, opts_for_button)
         end
       end
     end_eval
-    if @@link_helpers_suffix
-      helper_name = "destroy_#{resource.name_prefix}#{resource.singular}#{@@link_helpers_suffix}"
-      return if already_defined?(helper_name)
-      @module.module_eval <<-end_eval
-        def #{helper_name}(*args)
-          opts = args.extract_options!
-          label = opts.delete(:label) || 'Delete'
-          opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'destroy', *(opts.delete(:class) || '').split)
-          opts[:method] = :delete
-          path = #{resource.name_prefix}#{resource.singular}_path(*args) 
-          link_to(label,path,opts)
-        end
-      end_eval
-    end
   end
   
 
@@ -332,48 +356,73 @@ class ResourcefulViews
   #     ...
   #   </ul>
   # 
-  #   <% the_table_list do %>
+  #   <% table_list :ordered => true do %>
   #     ...
   #   <% end %>
   # 
   #   renders:
   # 
-  #   <ul id="table_list">
+  #   <ol class="table_list">
   #     ...
-  #   </ul>
+  #   </ol>
   # 
   def build_list_helpers(resource)
     @module.module_eval <<-end_eval
       def #{resource.singular}_list(opts={}, &block)
         content = capture(&block)
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)
-        concat(content_tag(:ul, content, opts), block.binding)
+        concat(content_tag((opts[:ordered] ? :ol : :ul), content, opts), block.binding)
       end
-      def the_#{resource.singular}_list(opts={}, &block)
+      def #{resource.singular}_item(*args, &block)
+        opts = args.extract_options!
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', *(opts.delete(:class) || '').split)
+        opts[:id] = '#{resource.singular}_' + args.first.id.to_s unless args.empty?
         content = capture(&block)
-        opts[:id] = '#{resource.singular}_list'
-        concat(content_tag(:ul, content, opts), block.binding)
+        concat(content_tag(:li, content, opts), block.binding)
       end
-      def ordered_#{resource.singular}_list(opts={}, &block)
+    end_eval
+  end
+   
+  
+  
+  # Build the table helpers
+  #
+  # === Examples
+  #
+  #   <% user_table do %>
+  #     ...
+  #   <%- end -%>
+  # 
+  #   renders:
+  # 
+  #   <table class="user_table">
+  #     ...
+  #   </table>
+  # 
+  def build_table_helpers(resource)
+    @module.module_eval <<-end_eval
+      def #{resource.singular}_table(opts={}, &block)
         content = capture(&block)
-        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)
-        concat(content_tag(:ol, content, opts), block.binding)
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_table', *(opts.delete(:class) || '').split)
+        concat(content_tag(:table, content, opts), block.binding)
       end
-      def the_ordered_#{resource.singular}_list(opts={}, &block)
+      def #{resource.singular}_row(*args, &block)
+        opts = args.extract_options!
+        opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', *(opts.delete(:class) || '').split)
+        opts[:id] = '#{resource.singular}_' + args.first.id.to_s unless args.empty?
         content = capture(&block)
-        opts[:id] = '#{resource.singular}_list'
-        concat(content_tag(:ol, content, opts), block.binding)
+        concat(content_tag(:tr, content, opts), block.binding)
       end
     end_eval
   end
   
-
+  
 
   # Build the 'create_[resource]' helper
   #
   # === Examples without block
   #
-  #   <% create_table_top(@table, :attributes => {:material => 'Mahogany'}) %>
+  #   <% create_table_top(@table, :with => {:material => 'Mahogany'}) %>
   #
   #   renders:
   #
@@ -411,8 +460,10 @@ class ResourcefulViews
     @module.module_eval <<-end_eval
       def #{helper_name}(*args, &block)
         opts = args.extract_options!
-        resource_attributes = opts.delete(:attributes) || {}
-        parameters = opts.delete(:parameters) || {}
+        opts[:with] = opts.delete(:attributes) and ResourcefulViews.deprecation_warning('Please use :with instead of :attributes') if opts[:attributes]
+        resource_attributes = opts.delete(:with) || {}
+        opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
+        parameters = opts.delete(:sending) || {}
         if block_given?
           args_for_fields_for = ['#{resource.singular}']
           args_for_fields_for.push(args.pop) if args.length > #{number_of_expected_args}
@@ -450,26 +501,26 @@ class ResourcefulViews
   #
   # === Examples without block
   #
-  #   <% update_table(@table, :title => 'My new title') %>
+  #   <% update_table(@table, :with => {:name => 'Ingo'}) %>
   #
   #   renders:
   #
   #   <form action="/tables/1" class="table update update_table" method="post">
   #     <input type="hidden" name="_method" value="put" />
-  #     <input type="hidden" name="table[title]" value="My new title" />
+  #     <input type="hidden" name="table[name]" value="Ingo" />
   #     <button type="submit">Save</button>
   #   </form>
   #
   # === Examples with block
   #
   #   <% update_table(@table) do |form| %>
-  #     <%= form.text_field :title %>
+  #     <%= form.text_field :name %>
   #     <%= submit_button 'Save' %>
   #   <% end %>
   #
   #   <form action="/tables/1" class="table update update_table" method="post">
   #     <input type="hidden" name="_method" value="put" />
-  #     <input type="text" name="table[title]" value="My title" />
+  #     <input type="text" name="table[name]" value="Ingo" />
   #     <button type="submit">Save</button>
   #   </form>
   #
@@ -494,7 +545,8 @@ class ResourcefulViews
         else
           opts = args.extract_options!
           label = opts.delete(:label) || 'Save'
-          resource_attributes = opts.delete(:attributes) || {}
+          opts[:with] = opts.delete(:attributes) and ResourcefulViews.deprecation_warning('Please use :with instead of :attributes') if opts[:attributes]
+          resource_attributes = opts.delete(:with) || {}
           opts_for_button = opts.delete(:button) || {}
           opts_for_button.merge!(:type => 'submit')
           opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'update', *(opts.delete(:class) || '').split)
@@ -516,7 +568,10 @@ class ResourcefulViews
     
    # include the module (loaded with helper methods) into ActionView::Base
   def install_helpers # :nodoc:
-    ActionView::Base.send! :include, @module
+    mod = @module
+    ActionView::Base.class_eval do
+      include mod
+    end
   end
   
   protected

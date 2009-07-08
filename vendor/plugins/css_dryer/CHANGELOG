@@ -2,8 +2,26 @@
 
 Below is a complete list of changes for each revision of CssDryer.
 
-== HEAD
+== 0.4.2
 
+* Rails 2.3.2 and Ruby 1.9 support (thanks David Balatero).
+
+== 0.4.1
+
+* Rack support.
+* Updated test nested stylesheet to render a partial and call a helper.
+
+== 0.4.0
+
+* Refactored file layout so tests run again.
+
+== 0.3.1
+
+* Merged Mina Guib's refactoring of the template handling code.  Partials now work again.  Thanks Mina!
+
+== 0.3.0
+
+* Rails 2.2 compatibility (thanks to Josh Peek for help).
 * The self_clear helper accepts a :clear option.
 
 == 0.2.8

@@ -16,13 +16,6 @@ module StylesheetsHelper
     wrap '* + html', &block
   end
 
-  # <% ie do %>
-  #   css for ie here
-  # <% end %>
-  def ie(&block)
-    ie6(&block) + ie7(&block)
-  end
-
   # Self-clearing.  For example:
   #
   # <%= self_clear 'div#foo', 'img.bar', 'p ul' %>
@@ -63,8 +56,8 @@ module StylesheetsHelper
   # css_dryer will then de-nest the result when it
   # post-processes the result of the ERB evaluation.
   def wrap(with, &block)
-    concat "#{with} {", block.binding
+    @output_buffer << "#{with} {"
     yield
-    concat "}\n", block.binding
+    @output_buffer << '}'
   end
 end

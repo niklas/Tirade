@@ -43,25 +43,42 @@ describe 'new_resource with plural resource' do
     markup.should have_tag('a[title=Click to create new]')
   end
   
-  it "should support :parameters option" do
+  it "should allow specifying additional parameters to be sent via the :sending option" do
+    @view.should_receive(:new_table_path).with(:my_param => 'my_value').and_return('/tables/new?my_param=my_value')
+    markup = @view.new_table(:sending => {:my_param => 'my_value'})
+    markup.should have_tag('a[href=/tables/new?my_param=my_value]')
+  end
+  
+  it "should allow specifying additional parameters to be sent via the :parameters option" do
     @view.should_receive(:new_table_path).with(:my_param => 'my_value').and_return('/tables/new?my_param=my_value')
     markup = @view.new_table(:parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables/new?my_param=my_value]')
   end
   
-  it "should support :attributes option" do
+  it "should allow passing in of resource attributes via :with" do
+    @view.should_receive(:new_table_path).with('table[my_attribute]' => 'my_value').and_return('/tables/new?table[my_attribute]=my_value')
+    markup = @view.new_table(:with => {:my_attribute => 'my_value'})
+    markup.should have_tag("a[href='/tables/new?table[my_attribute]=my_value']")
+  end
+  
+  it "should allow passing in of resource attributes via :attributes (deprecated)" do
     @view.should_receive(:new_table_path).with('table[my_attribute]' => 'my_value').and_return('/tables/new?table[my_attribute]=my_value')
     markup = @view.new_table(:attributes => {:my_attribute => 'my_value'})
     markup.should have_tag("a[href='/tables/new?table[my_attribute]=my_value']")
   end
   
-  it "should support :parameters and :attributes options together (exposes bug)" do  
+  it "should issue a deprecation warning if passing in resource attributes via :attributes" do
+    ResourcefulViews.should_receive(:deprecation_warning)
+    markup = @view.new_table(:attributes => {:my_attribute => 'my_value'})
+  end
+  
+  it "should support :parameters and :with options together (exposes bug)" do  
     @view.should_receive(:new_table_path).with('table[my_attribute]' => 'my_value', :my_param => 'my_value').and_return('/tables/new?table[my_attribute]=my_value&my_param=my_value')
-    markup = @view.new_table(:attributes => {:my_attribute => 'my_value'}, :parameters => {:my_param => 'my_value'})
-    # markup.should have_tag("a[href='/tables/new?table[my_attribute]=my_value&my_param=my_value]']")
+    markup = @view.new_table(:with => {:my_attribute => 'my_value'}, :parameters => {:my_param => 'my_value'})
   end
 
 end
+
 
 describe 'new_resource with plural resource and block' do
   
@@ -98,9 +115,9 @@ describe 'new_resource with plural resource and block' do
     _erbout.should have_tag('form[method=get][action=/tables/new]')
   end     
   
-  it "should support :parameters option" do
+  it "should allow specifying additional parameters to be sent via the :sending option" do
     _erbout = ''
-    @view.new_table(:parameters => {:my_param => 'my_value'}) do
+    @view.new_table :sending => {:my_param => 'my_value'} do
        _erbout << 'some-content'
     end
     _erbout.should have_tag('form.new_table') do
@@ -108,13 +125,49 @@ describe 'new_resource with plural resource and block' do
     end
   end
   
-  it "should support :attributes option" do
+  it "should allow specifying additional parameters to be sent via the :parameters option (legacy)" do
+    _erbout = ''
+    @view.new_table :parameters => {:my_param => 'my_value'} do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form.new_table') do
+       with_tag('input[type=hidden][name=my_param][value=my_value]')
+    end
+  end
+  
+  it "should issue a deprecation warning when specifying additional parameters the :parameters option" do
+    ResourcefulViews.should_receive(:deprecation_warning)
+    _erbout = ''
+    @view.new_table :parameters => {:my_param => 'my_value'} do
+       # something
+    end
+  end
+  
+  it "should support :with option" do
+    _erbout = ''
+    @view.new_table(:with => {:material => 'wood'}) do
+       _erbout << 'some-content'
+    end
+    _erbout.should have_tag('form.new_table') do
+       with_tag("input[type=hidden][name='table[material]'][value=wood]")
+    end
+  end
+  
+  it "should support :attributes option (deprecated)" do
     _erbout = ''
     @view.new_table(:attributes => {:material => 'wood'}) do
        _erbout << 'some-content'
     end
     _erbout.should have_tag('form.new_table') do
        with_tag("input[type=hidden][name='table[material]'][value=wood]")
+    end
+  end
+  
+  it "should issue a deprecation warning when passing in attributes via :attributes" do
+    _erbout = ''
+    ResourcefulViews.should_receive(:deprecation_warning)
+    @view.new_table(:attributes => {:material => 'wood'}) do
+       # something
     end
   end
   
@@ -235,8 +288,7 @@ describe 'new_resource for singular nested resource' do
     markup = @view.new_table_top(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/tables/1/top/new?my_param=my_value]')
   end
-  
-  
+    
 end
 
 

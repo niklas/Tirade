@@ -10,7 +10,7 @@ describe 'show_resource with plural resource' do
     end
     @view = ActionView::Base.new
     @view.stub!(:table_path).and_return('/tables/1')
-    @table = mock('table', :to_param => 1)
+    @table = mock('table', :to_param => 1, :to_s => 'Dining Table')
   end
   
   it "should create a link with resourceful classes" do
@@ -29,9 +29,17 @@ describe 'show_resource with plural resource' do
     markup.should have_tag('a[href=/tables/1]')
   end
   
-  it "should have the label 'Show' by default" do
+  it "should pass :anchor option on to the named route helper" do
+    pending
+    @view.should_receive(:table_path).with(@table, :anchor => 'special').and_return('/tables/1#special')
+    markup = @view.show_table(@table, :anchor => 'special')
+    markup.should have_tag('a[href=/tables/1#special]')
+  end
+  
+  it "should use the return value of the model's 'to_s' method as a label by default" do
+    @table.should_receive(:to_s).and_return('Walnut-top dining table')
     markup = @view.show_table(@table)
-    markup.should have_tag('a', 'Show')
+    markup.should have_tag('a', 'Walnut-top dining table')
   end
   
   it "should allow passing in a custom label" do
@@ -39,10 +47,21 @@ describe 'show_resource with plural resource' do
     markup.should have_tag('a', 'Details')
   end
   
-  it "should pass additional options on to the named route helper" do
+  it "should allow specifying additional parameters to be sent via the :sending option" do
+    @view.should_receive(:table_path).with(@table, :my_param => 'my_value').and_return('/table/1?my_param=my_value')
+    markup = @view.show_table(@table, :sending => {:my_param => 'my_value'})
+    markup.should have_tag('a[href=/table/1?my_param=my_value]')
+  end 
+  
+  it "should allow specifying additional parameters to be sent via the :parameters option (legacy)" do
     @view.should_receive(:table_path).with(@table, :my_param => 'my_value').and_return('/table/1?my_param=my_value')
     markup = @view.show_table(@table, :parameters => {:my_param => 'my_value'})
     markup.should have_tag('a[href=/table/1?my_param=my_value]')
+  end
+  
+  it "should issue a deprecation warning when specifying parameters via :parameters" do
+    ResourcefulViews.should_receive(:deprecation_warning)
+    @view.show_table(@table, :parameters => {:my_param => 'my_value'})
   end
   
   it "should allow for setting the title attribute of the link via the :title option" do
@@ -65,7 +84,7 @@ describe 'show_resource with plural nested resource' do
     @view = ActionView::Base.new
     @view.stub!(:table_leg_path).and_return('/tables/1/legs/1')
     @table = mock('table')
-    @leg = mock('leg')
+    @leg = mock('leg', :to_s => 'Metal leg')
   end
   
   it "should create a link with resourceful classes" do
@@ -84,9 +103,10 @@ describe 'show_resource with plural nested resource' do
     markup.should have_tag('a[href=/tables/1/legs/1]')
   end
   
-  it "should have the label 'Show' by default" do
+  it "should use the return value of the model's 'to_s' method as a label by default" do
+    @leg.should_receive(:to_s).and_return('Brushed-metal leg')
     markup = @view.show_table_leg(@table, @leg)
-    markup.should have_tag('a', 'Show')
+    markup.should have_tag('a', 'Brushed-metal leg')
   end
   
   it "should allow passing in a custom label" do
@@ -140,7 +160,9 @@ describe 'show_resource for singular nested resource' do
     markup.should have_tag('a[href=/table/1/top]')
   end
   
-  it "should have the label 'Show' by default" do
+  # We can not easily derive a default here from the parameters provided
+  # Without going through the AR association about which RV probably should hot make any assumptions
+  it "should use 'Show' as a label by default" do
     markup = @view.show_table_top(@table)
     markup.should have_tag('a', 'Show')
   end
