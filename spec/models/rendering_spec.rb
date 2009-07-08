@@ -298,15 +298,18 @@ describe "A Rendering", "with a scoped assignment for Document" do
       :grid => @page.grids.first,
       :content_type => 'Document',
       :assignment => 'scope',
-      :scope => @scope,
+      :scope_definition => @scope,
       :part => simple_preview
     )
   end
   it "should be valid" do
     @rendering.should be_valid
   end
-  it "should accept the scope hash" do
-    @rendering.scope.should == @scope
+  it "should accept the scope definition" do
+    @rendering.scope_definition.should == @scope
+  end
+  it "should use the scope definition in the searchlogic conditions" do
+    @rendering.scope.conditions.with_indifferent_access.should == @scope
   end
   it "should find the Documents with the specified scope" do
     contents = @rendering.content
@@ -325,7 +328,7 @@ describe "A Rendering", "with a scoped assignment for Document, but empty scope 
       :grid => @page.grids.first,
       :content_type => 'Document',
       :assignment => 'scope',
-      :scope => {}.with_indifferent_access,
+      :scope_definition => {}.with_indifferent_access,
       :part => simple_preview
     )
   end
@@ -333,7 +336,7 @@ describe "A Rendering", "with a scoped assignment for Document, but empty scope 
     @rendering.should be_valid
   end
   it "should accept the empty scope hash" do
-    @rendering.scope.should == {}
+    @rendering.scope_definition.should == {}
   end
   it "should find all Documents" do
     contents = @rendering.content
