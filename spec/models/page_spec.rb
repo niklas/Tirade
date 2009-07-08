@@ -142,7 +142,7 @@ describe "The Pages in the fixtures" do
 end
 
 
-describe "The main Page with all fixtures" do
+describe "The main Page with all fixtures", :type => :helper do
   fixtures :all
   before(:each) do
     Page.rebuild!

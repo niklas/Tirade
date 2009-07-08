@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Grid do
+describe Grid, :type => :helper do
   before(:each) do
     @grid = Grid.new
   end
@@ -399,7 +399,7 @@ describe 'A', Grid, 's Associations' do
   end
 end
 
-describe Grid, "structure of DDM Page" do
+describe Grid, "structure of DDM Page", :type => :helper do
   fixtures :pages, :grids, :renderings, :parts
 
   before(:each) do

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Rendering do
+describe Rendering, :type => :helper do
   before(:each) do
     @rendering = Rendering.new
   end
@@ -58,7 +58,7 @@ describe Rendering do
   end
 end
 
-describe Rendering, ' appended to the left column of the main page, containing a standard Content' do
+describe Rendering, ' appended to the left column of the main page, containing a standard Content', :type => :helper do
   fixtures :all
   before(:each) do
     @page = pages(:main)
@@ -104,7 +104,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
   end
 end
 
-describe Rendering, ' appended to the left column of the main page, containing a Document' do
+describe Rendering, ' appended to the left column of the main page, containing a Document', :type => :helper do
   fixtures :all
   before(:each) do
     @page = pages(:main)
@@ -153,7 +153,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
   end
 end
 
-describe Rendering, ' appended to the left column of the main page, containing an Image' do
+describe Rendering, ' appended to the left column of the main page, containing an Image', :type => :helper do
   fixtures :all
   before(:each) do
     @page = pages(:main)
