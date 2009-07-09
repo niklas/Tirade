@@ -19,7 +19,7 @@ function order_renderings_for_grid(event, ui) {
   if (list.find(ui.item).length) { // only if the dropped item is in our list know, we have only to track sorting and adding here
     $.ajax({
       data: list.sortable("serialize", {attribute: 'rel'}),
-      url: order_renderings_grid_url({id: grid.resourceId()}),
+      url: Routing.order_renderings_grid_url({id: grid.resourceId()}),
       type: 'POST'
     });
   }
@@ -33,7 +33,7 @@ function order_children_for_grid(event, ui) {
   if (grid.find('.' + ui.item.resourceIdentifier()).length) {
     $.ajax({
       data: list.sortable("serialize", {attribute: 'rel'}),
-      url: order_children_grid_url({id: grid.resourceId()}),
+      url: Routing.order_children_grid_url({id: grid.resourceId()}),
       type: 'POST'
     });
   }
@@ -43,19 +43,19 @@ function order_children_for_grid(event, ui) {
 function create_new_rendering_for_grid(grid) {
   context = "rendering[grid_id]=" + grid.resourceId();
   context += "&rendering[page_id]=" + context_page_id()
-  $.ajax({ data: context, url: renderings_url(), type: 'POST' });
+  $.ajax({ data: context, url: Routing.renderings_url(), type: 'POST' });
 };
 
 function update_content_of_rendering(content,rendering) {
   var what = content.typeAndId();
   data = 'rendering[content_id]=' + what.id;
   data += '&rendering[content_type]=' + what.type;
-  $.ajax({ url: rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
+  $.ajax({ url: Routing.rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
 }
 
 function update_part_of_rendering(part, rendering) {
   data = 'rendering[part_id]=' + part.resourceId();
-  $.ajax({ url: rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
+  $.ajax({ url: Routing.rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
 }
 
 $(function() {
@@ -206,7 +206,7 @@ $(function() {
     var rendering = $(this);
     rendering.prepend(
       $('<div />').addClass('admin').attr('id', 'admin_' + rendering.resourceIdentifier())
-        .append( $('<a>edit</a>').addClass('edit rendering').attr('href', rendering_url({id: $(this).resourceId()})) )
+        .append( $('<a>edit</a>').addClass('edit rendering').attr('href', Routing.rendering_url({id: $(this).resourceId()})) )
         .append( $('<span>drag</span>').addClass('handle'))
     )
   });
@@ -307,21 +307,21 @@ $(function() {
               switch(droppee.type) {
                 case 'Rendering': /* drop renderings (hints) from toolbox, updates its #grid */
                   $.ajax({
-                    url: rendering_url({id: droppee.id}),
+                    url: Routing.rendering_url({id: droppee.id}),
                     data: context,
                     type: 'PUT'
                   });
                   break;
                 case 'Part': /* Part from Toolbox creates Rendering without a Content */
                   $.ajax({
-                    url: renderings_url(),
+                    url: Routing.renderings_url(),
                     data: context + '&rendering[part_id]=' + droppee.id,
                     type: 'POST'
                   });
                   break;
                 default: /* dropping anything else will create a Rendering with this assigned as content */
                   $.ajax({
-                    url: renderings_url(),
+                    url: Routing.renderings_url(),
                     data: context + 
                           '&rendering[content_id]=' + droppee.id +
                           '&rendering[content_type]=' + droppee.type,
@@ -348,7 +348,7 @@ $(function() {
           grid = ui.item.parent();
           $.ajax({
             data: grid.sortable("serialize"),
-            url: order_children_grid_url({id: grid.resourceId()}),
+            url: Routing.order_children_grid_url({id: grid.resourceId()}),
             type: 'POST'
           });
         }

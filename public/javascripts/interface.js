@@ -151,7 +151,7 @@ $(function() {
       tolerance: 'touch',
       drop: function(e,ui) {
         $.ajax({
-          url: clipboard_url(),
+          url: Routing.clipboard_url(),
           data: {id: $(ui.draggable).resourceIdentifier()},
           type: 'POST'
         });
@@ -165,7 +165,7 @@ $(function() {
     item.find('img.remove').click(function(event) { 
       item.remove(); 
       $.ajax({
-        url: clipboard_url(),
+        url: Routing.clipboard_url(),
         data: {id: item.resourceIdentifier()},
         type: 'DELETE'
       });

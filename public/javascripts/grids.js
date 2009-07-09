@@ -10,7 +10,7 @@ PageEditable = Behavior.create({
           $div(
             {class: 'admin', id: admin_id},
             [ 
-              $a({href: page_url({id: page_id}), class: 'edit page'},'edit')
+              $a({href: Routing.page_url({id: page_id}), class: 'edit page'},'edit')
             ]
           )
         );
@@ -30,7 +30,7 @@ GridEditable = Behavior.create({
         $div(
           {class: 'admin', id: admin_id},
           [ 
-            $a({href: edit_grid_url({id: numeric_id_for(this.element)}), class: 'edit grid'},'edit')
+            $a({href: Routing.edit_grid_url({id: numeric_id_for(this.element)}), class: 'edit grid'},'edit')
           ]
         )
       );
@@ -53,7 +53,7 @@ ContentEditable = Behavior.create({
         $div(
           {class: 'admin', id: admin_id},
           [ 
-            $a({href: rendering_url({id: numeric_id_for(this.element)}), class: 'edit rendering'},'edit'),
+            $a({href: Routing.rendering_url({id: numeric_id_for(this.element)}), class: 'edit rendering'},'edit'),
             $span({class: 'handle'},'drag')
           ]
         )
@@ -143,7 +143,7 @@ SortableRenderings = Behavior.create({
   },
   _onOrdering: function(element) {
     poststring = Sortable.serialize(element, {tag: 'div', name: 'renderings'});
-    url = order_renderings_grid_url({ id: numeric_id_for(element) })
+    url = Routing.order_renderings_grid_url({ id: numeric_id_for(element) })
     new Ajax.Request(url, {asynchronous:true, evalScripts:true, parameters:poststring});
   }
 });
