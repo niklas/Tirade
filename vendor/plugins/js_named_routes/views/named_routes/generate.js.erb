@@ -16,6 +16,8 @@ var Routing = {
 
 		if (options.format == '') {
 		  segments = segments.replace( /\(\.:format\)\?/ , '')
+		} else {
+		  segments = segments.replace( /\(\.:format\)\?/ , '.:format')
 		}
 		for (var prop in options) {
 			segments = segments.replace(":"+prop, options[prop]);
