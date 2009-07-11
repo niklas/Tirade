@@ -105,4 +105,18 @@
       });
     });
   };
+
+  
+  $.fn.fieldFor = function(name) {
+    return $(this).find('di.' + name).find(':input')
+  };
+
+
+  $.fn.enableField = function(name) {
+    $(this).find('.' + name).show();
+    return $(this).fieldFor(name).show().enable();
+  };
+  $.fn.disableField = function(name) {
+    return $(this).fieldFor(name).disable();
+  };
 })(jQuery);
