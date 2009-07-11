@@ -52,7 +52,8 @@ class Part < ActiveRecord::Base
 
   def load_configuration_from(yaml_path)
     yaml_path = configuration_path_of yaml_path
-    YAML.load_file(yaml_path).symbolize_keys
+    yaml = YAML.load_file(yaml_path)
+    yaml ? yaml.symbolize_keys : {}
   rescue Errno::ENOENT
     nil
   end
