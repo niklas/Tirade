@@ -77,6 +77,8 @@ $.ajaxSetup({
   }
 });
 
+jQuery.metadata.setType( 'elem', 'script' );
+
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
