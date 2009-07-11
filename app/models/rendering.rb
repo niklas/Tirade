@@ -22,9 +22,9 @@ class Rendering < ActiveRecord::Base
   # extend ActiveSupport::Memoizable
 
   acts_as_renderer
-  serialize :scope_definition, HashWithIndifferentAccess
+  serialize :scope_definition, Hash
   def scope_definition
-    self[:scope_definition] ||= HashWithIndifferentAccess.new
+    self[:scope_definition] ||= Hash.new
   end
 
   # For now, all associatable Conten Types should at least have a 'title' column
@@ -65,6 +65,10 @@ class Rendering < ActiveRecord::Base
     modifications && ( modifications['grid'].andand.last || (gid = modifications['grid_id'].andand.last && Grid.find_by_id(gid)) )
   end
 
+  def singular?
+    !plural?
+  end
+
   Assignments = %w(none fixed by_title_from_trailing_url scope).freeze unless defined?(Assignments)
 
   validates_inclusion_of :assignment, :in => Assignments, :allow_nil => true
@@ -82,7 +86,7 @@ class Rendering < ActiveRecord::Base
       end
     # TODO: singular/plural flag for Part
     when 'scope'
-      content_by_scope.first
+      plural? ? content_by_scope : content_by_scope.first
     else
       content_without_dynamic_assignments
     end

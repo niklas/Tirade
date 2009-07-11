@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090706151920) do
+ActiveRecord::Schema.define(:version => 20090711174603) do
 
   create_table "artists", :force => true do |t|
     t.string   "title"
@@ -119,10 +119,10 @@ ActiveRecord::Schema.define(:version => 20090706151920) do
     t.datetime "updated_at"
   end
 
-  add_index "machinetaggings", ["machinetag_id", "machinetaggable_type"], :name => "index_mtaggings_on_mtag_id_and_mtaggable_type"
-  add_index "machinetaggings", ["machinetaggable_id", "machinetaggable_type"], :name => "index_mtaggings_on_mtaggable_id_and_mtaggable_type"
   add_index "machinetaggings", ["machinetag_id", "machinetaggable_type", "user_id"], :name => "index_mtaggings_on_user_id_and_mtag_id_and_mtaggable_type"
+  add_index "machinetaggings", ["machinetag_id", "machinetaggable_type"], :name => "index_mtaggings_on_mtag_id_and_mtaggable_type"
   add_index "machinetaggings", ["machinetaggable_id", "machinetaggable_type", "user_id"], :name => "index_mtaggings_on_user_id_and_mtaggable_id_and_mtaggable_type"
+  add_index "machinetaggings", ["machinetaggable_id", "machinetaggable_type"], :name => "index_mtaggings_on_mtaggable_id_and_mtaggable_type"
 
   create_table "machinetags", :force => true do |t|
     t.string   "namespace",             :limit => 128
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20090706151920) do
     t.text     "options"
     t.string   "assignment",       :limit => 32, :default => "fixed"
     t.text     "scope_definition"
+    t.boolean  "plural",                         :default => false
   end
 
   create_table "roles", :force => true do |t|

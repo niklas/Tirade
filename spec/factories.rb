@@ -25,4 +25,12 @@ Factory.define :rendering do |f|
   f.association :grid
   f.assignment 'fixed'
   f.content_type 'Content'
+  f.scope_definition({})
+  f.plural false
+end
+
+Factory.define :scoped_rendering, :parent => :rendering do |f|
+  f.assignment 'scope'
+  f.content_type 'Document'
+  f.plural true
 end

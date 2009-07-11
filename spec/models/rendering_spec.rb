@@ -264,83 +264,49 @@ describe "A Rendering", "with an assigned Content" do
 end
 
 describe "A Rendering", "with an assignment by_title_from_trailing_url " do
-  fixtures :all
   before(:each) do
-    @page = pages(:portal)
-    @rendering = Rendering.new(
-      :page => @page,
-      :grid => @page.grids.first,
-      :content_type => 'Content',
-      :assignment => 'by_title_from_trailing_url',
-      :part => simple_preview
-    )
+    @rendering = Factory.build :rendering, :assignment => 'by_title_from_trailing_url'
     @rendering.stub!(:trailing_path_of_page).and_return(['Goodbye'])
   end
   it "should find Content#find_by_slug(trailing_path_of_page.urlize)" do
-    Content.should_receive(:find_by_slug).with('goodbye').and_return( contents(:love_letter) )
-    @rendering.content.should_not be_nil
+    content = "jojojo"
+    Content.should_receive(:find_by_slug).with('goodbye').and_return( content )
+    @rendering.content.should == content
   end
   it "should be able to render a Part for single Content"
   it "should give the (remaining) :trailing_path_of_page into the part ?"
 end
 
-describe "A Rendering", "with a scoped assignment for Document" do
-  fixtures :all
-  before(:each) do
-    @page = pages(:main)
-    @scope = {
-      :order => 'title',
-      :skip => 3,
-      :limit => 5
-    }.with_indifferent_access
-    @rendering = Rendering.new(
-      :page => @page,
-      :grid => @page.grids.first,
-      :content_type => 'Document',
-      :assignment => 'scope',
-      :scope_definition => @scope,
-      :part => simple_preview
-    )
-  end
+
+describe "Rendering with collection of Documents", :shared => true do
   it "should be valid" do
     @rendering.should be_valid
   end
-  it "should accept the scope definition" do
-    @rendering.scope_definition.should == @scope
-  end
-  it "should use the scope definition in the searchlogic conditions" do
-    @rendering.scope.conditions.with_indifferent_access.should == @scope
-  end
-  it "should find the Documents with the specified scope" do
-    contents = @rendering.content
-    contents.should_not be_empty
-    contents.should == Document.find(:all, :order => 'title', :offset => 3, :limit => 5)
+  it "should return a collection of Documents" do
+    @rendering.content.should respond_to(:each)
+    @rendering.content.first.should be_a(Document)
   end
 end
 
 
-describe "A Rendering", "with a scoped assignment for Document, but empty scope hash" do
-  fixtures :all
-  before(:each) do
-    @page = pages(:main)
-    @rendering = Rendering.new(
-      :page => @page,
-      :grid => @page.grids.first,
-      :content_type => 'Document',
-      :assignment => 'scope',
-      :scope_definition => {}.with_indifferent_access,
-      :part => simple_preview
-    )
+
+describe Rendering, "scoped for multiple Documents" do
+  before( :each ) do
+    @rendering = Factory.build(:scoped_rendering)
   end
-  it "should be valid" do
-    @rendering.should be_valid
+  it_should_behave_like 'Rendering with collection of Documents'
+end
+
+
+
+
+describe Rendering, "scoped for multiple Documents with order" do
+  before( :each ) do
+    @rendering = Factory.build(:scoped_rendering, :scope_definition => {:order => 'ascending_by_title'})
   end
-  it "should accept the empty scope hash" do
-    @rendering.scope_definition.should == {}
-  end
-  it "should find all Documents" do
-    contents = @rendering.content
-    contents.should_not be_empty
-    contents.should == Document.all
+  it_should_behave_like 'Rendering with collection of Documents'
+
+  it "should have set the order in the conditions" do
+    @rendering.scope.order.should == 'ascending_by_title'
   end
 end
