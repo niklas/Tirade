@@ -26,13 +26,6 @@ module Tirade
           if liquids = opts.delete(:liquid) + [:slug, :table_name]
             liquid_methods *liquids
           end
-          named_scope :order, lambda { |o|
-            if !o.blank?
-              {:order => o}
-            else
-              {}
-            end
-          }
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?
               {:conditions => "#{sanitize_sql(f)} > NOW()"}
@@ -74,8 +67,16 @@ module Tirade
         end
 
         def comparisons_grouped_by_column
-          columns.inject({}) do |comps, col|
-            comps.merge col.name => %w(equals does_not_equal)
+          columns.inject({}) do |all_comps, col|
+            comps = case col.type
+              when :integer, :datetime
+                %w( greater_than greater_than_or_equal_to equals less_than_or_equal_to less_than )
+              when :string, :text
+                %w( equals does_not_equal begins_with ends_with like )
+              else
+                []
+              end
+            all_comps.merge col.name => comps
           end
         end
       end
