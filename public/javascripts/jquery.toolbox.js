@@ -212,6 +212,9 @@ var Toolbox = {
           .find('> di:not(.assignment)').hide()
             .find(':input').disable();
         form.find('di.association.one.content .live_search').hide();
+        form.find('div.scopes').hide().find(':input').disable();
+        form.find('div.scopes .define :input').hide();
+        form.find('div.scopes .define a.create_scope').hide();
         switch (form.find('select#rendering_assignment').val()) {
           case 'none':
             break;
@@ -219,16 +222,61 @@ var Toolbox = {
             form.find('di.association.one.content').show().find('input.association_id, input.association_type').enable();
             break;
           case 'by_title_from_trailing_url':
-            form.find('di.content_type').show().find('select').enable();
+            form.enableField('content_type');
             break;
           case 'scope':
-            form.find('di.content_type').show().find('select').enable();
-            form.find('di.scope').show().find(':input').enable();
+            var t = form.enableField('content_type').val();
+            var scope = form.find('div.scopes.' + t).show();
+            scope.find(' > di :input').enable();  /* enable non-filtering scopes like order etc */
             break;
         }
       }
       renderingAssignmentFormUpdate();
       form.find('select#rendering_assignment').change( renderingAssignmentFormUpdate );
+      form.find('select#rendering_content_type').change( renderingAssignmentFormUpdate );
+
+      $('<a href="#" class="remove">Remove</a>').appendTo(form.find('div.pool di dt'));
+
+      form.find('a.add').unbind('click').click( function(ev) {
+        var link = $(ev.target);
+        var define = link.parents('.define');
+        var meta = define.metadata();
+        var pool = define.siblings('div.pool');
+
+        define.find(':input').show();
+        var select_column = define.find('select[name=select_column]');
+        var select_comparison = define.find('select[name=select_comparison]');
+        var ok = define.find('.create_scope').show();
+
+        select_column.find('option').remove();
+        $.each(meta.columns, function() {
+          $('<option value ="' + this.name + '">' + this.name +'</option>').appendTo(select_column)
+        })
+
+        var updateComparisons = function() {
+          select_comparison.find('option').remove();
+          $.each(meta.comparisons[ select_column.val() ], function() {
+            $('<option value ="' + this + '">' + this +'</option>').appendTo(select_comparison)
+          }) 
+        }
+
+        select_column.unbind('change').change( updateComparisons );
+        updateComparisons();
+
+        ok.click( function(ev) {
+          var scope_name = select_column.val() + '_' + select_comparison.val();
+          var scope = pool.find('di.' + scope_name).clone()
+          scope
+            .find(':input').enable().end()
+            .find('a.remove').click(function() { scope.remove() }).end()
+            .insertAfter(define);
+          ok.hide();
+          define.find(':input').hide();
+          ev.preventDefault();
+          return false;
+        });
+
+      });
     });
 
 

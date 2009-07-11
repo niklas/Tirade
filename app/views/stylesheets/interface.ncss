@@ -388,7 +388,7 @@ div.live_search {
 }
 
 a {
-  .create, .edit, .update, .delete, .show, .refresh_page, .index {
+  .create, .edit, .update, .delete, .show, .refresh_page, .index, .add, .remove {
     text-indent: -5000px;
     width: 16px;
     height: 16px;
@@ -400,6 +400,15 @@ a {
   }
   .create {
     background-image: url(/images/icons/small/plus.gif);
+  }
+  .add {
+    background-image: url(/images/icons/small/plus.gif);
+  }
+  .remove {
+    background-image: url(/images/icons/small/minus.gif);
+  }
+  .ok {
+    background-image: url(/images/icons/small/checkmark.gif);
   }
   .show, .index {
     margin-top: -5px;
@@ -423,7 +432,7 @@ a {
 /* here was div.node */
 ul.list, dl, ul.tree {
   a {
-    position: absolute;
+    /* position: absolute; */
     .show, .index {
       right: <%= @small %>;
       display: none !important;

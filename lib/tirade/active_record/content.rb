@@ -72,6 +72,12 @@ module Tirade
           self.marked_up_fields.flatten!
           self.marked_up_fields.uniq!
         end
+
+        def comparisons_grouped_by_column
+          columns.inject({}) do |comps, col|
+            comps.merge col.name => %w(equals does_not_equal)
+          end
+        end
       end
 
       module InstanceMethods

@@ -32,7 +32,7 @@ class Rendering < ActiveRecord::Base
     Tirade::ActiveRecord::Content.classes
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
@@ -82,7 +82,7 @@ class Rendering < ActiveRecord::Base
       end
     # TODO: singular/plural flag for Part
     when 'scope'
-      content_by_scope
+      content_by_scope.first
     else
       content_without_dynamic_assignments
     end
@@ -101,7 +101,7 @@ class Rendering < ActiveRecord::Base
   #memoize :scope
 
   def scope=(new_scope)
-    raise "must set new scope: #{new_scope.inspect}"
+    self.scope_definition = new_scope
   end
 
   def content_by_scope(thescope=self.scope)
