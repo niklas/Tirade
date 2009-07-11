@@ -31,11 +31,7 @@ module Tirade
     end
 
     def date_select(field, options = {}, html_options = {})
-      @template.content_tag(
-        :span,
-        wrap(field,options, super(field, options, html_options)),
-        :class => 'date'
-      )
+      wrap(field,options, super(field, options, html_options))
     end
 
     def check_box(field, options = {}, checked_value = "1", unchecked_value = "0")
