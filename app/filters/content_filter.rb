@@ -13,6 +13,10 @@ module ContentFilter
     end
   end
 
+  def yaml_debug(thingy)
+    thingy.to_yaml
+  end
+
   def title_link(content, base_url=nil)
     base_url ||= content.table_name
     %Q~<a href="/#{base_url}/#{content.slug}">#{content.title}</a>~
