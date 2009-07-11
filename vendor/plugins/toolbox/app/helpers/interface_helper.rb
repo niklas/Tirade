@@ -284,4 +284,9 @@ module InterfaceHelper
       end
     end
   end
+
+  def metadata(data)
+    content_tag :script, data.to_json, :type => 'application/json'
+  end
+
 end
