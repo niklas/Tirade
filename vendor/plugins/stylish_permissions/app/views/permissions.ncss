@@ -10,6 +10,12 @@ div.rendering.without_content {
 
 body.role_admin {
    a,span { display: inline; }
+   a { 
+     .create, .update, .destroy, .show, .edit, .new, .handle, .warning {
+       display: block;
+     }
+   }
+
    div.admin a { display: block; }
    form,div { display: block; }
    div.rendering.without_content {
