@@ -54,9 +54,9 @@ module ToolboxHelper
     title = case exception
             when ActionView::TemplateError
               <<-EOTITLE 
-                #{h exception.original_exception.class.name} in
-                #{h page.context.request.parameters["controller"].capitalize if page.context.request.parameters["controller"]}
-                ##{h page.context.request.parameters["action"]}
+                #{exception.original_exception.class.name} in
+                #{page.context.request.parameters["controller"].capitalize if page.context.request.parameters["controller"]}
+                ##{page.context.request.parameters["action"]}
               EOTITLE
             else
               exception.class.name
