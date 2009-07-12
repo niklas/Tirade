@@ -3,6 +3,16 @@ var Toolbox = {
   findOrCreate: function() {
     if ( this.element().length == 0 ) {
       $('body').appendDom(Toolbox.Templates.toolbox);
+      $('body #toolbox_body')
+        .dialog({
+          closeOnEscape: false,
+          minHeight: 400,
+          minWidth: 300,
+          title: 'Toolbox Dialog',
+          dragStart: function() { Toolbox.body().css('overflow-x', 'auto')},
+          dragStop:  function() { Toolbox.body().css('overflow-x', 'hidden')},
+          resizeStop: Toolbox.callback.resized
+        }).parent().attr('id', 'toolbox');
       this.content().appendDom(Toolbox.Templates.frame("preparing Toolbox.."));
       this.sidebarVisible = true;
       this.expireBehaviors();
@@ -13,16 +23,6 @@ var Toolbox = {
   },
   applyBehaviors: function() {
     this.element()
-      .draggable({ 
-        handle: 'div.head',
-        opacity: 0.8,
-        start: function() { Toolbox.body().css('overflow-x', 'auto')},
-        stop:  function() { Toolbox.body().css('overflow-x', 'hidden')}
-      } )
-      .resizable( {
-        minWidth: 300, minHeight: 400,
-        stop: Toolbox.callback.resized,
-      })
       .find('> div.body')
         .serialScroll({
           target: 'div.content',
@@ -131,15 +131,15 @@ var Toolbox = {
 
     // Init and Auto-Refresh the Dashboard
     Toolbox.frameByHref('/dashboard').refresh();
-    $.timer(60 * 1000,function(timer) {
-      if (!Toolbox.element()) {
-        timer.stop();
-      } else {
-        if (!Toolbox.minimized) {
-          Toolbox.frameByHref('/dashboard').refresh();
-        }
-      }
-    });
+    //$.timer(60 * 1000,function(timer) {
+    //  if (!Toolbox.element()) {
+    //    timer.stop();
+    //  } else {
+    //    if (!Toolbox.minimized) {
+    //      Toolbox.frameByHref('/dashboard').refresh();
+    //    }
+    //  }
+    //});
     this.frames(' textarea.markitup.textile').livequery(function() {
       $(this).markItUp(myTextileSettings);
     });
@@ -648,31 +648,25 @@ Toolbox.Templates = {
     ] }
   ],
   toolbox: [
-    { tagName: 'div', id: 'toolbox', childNodes: [
-      { tagName: 'div', class: 'head', childNodes: [
-        { tagName: 'span', class: 'content title', innerHTML: 'Toolbox Title is loooooooooooooong' },
-        { tagName: 'span', class: 'buttons', childNodes: [
-          { tagName: 'img', class: 'close', src: '/images/icons/small/x.gif' },
-          { tagName: 'img', class: 'max',   src: '/images/icons/small/grow.gif' },
-          { tagName: 'img', class: 'min',   src: '/images/icons/small/pause.gif' }
-        ]}
-      ]},
-      { tagName: 'div', class: 'sidebar left', childNodes: [
-        { tagName: 'ul', class: 'history' },
-        { tagName: 'ul', class: 'clipboard list records' },
-        { tagName: 'ul', class: 'actions', childNodes: [
-          { tagName: 'li', childNodes: [  { tagName: 'a', class: 'toggle edit grid', innerHTML: 'Toggle Edit Grid'}  ] },
-          { tagName: 'li', childNodes: [  { tagName: 'a', class: 'refresh_page', innerHTML: 'Refresh Page'}  ] }
-        ] }
-      ] },
-      { tagName: 'div', class: 'body', childNodes: [
-        { tagName: 'div', class: 'content', id: 'toolbox_content' }
-      ]},
-      { tagName: 'div', class: 'foot', childNodes: [
-        { tagName: 'span', class: 'content status' },
-        { tagName: 'img', class: 'resize ui-resizable-se ui-resizable-handle', src: '/images/icons/resize.gif' }
-      ]},
+    { tagName: 'div', id: 'toolbox_body', class: 'body', childNodes: [
+      { tagName: 'div', class: 'content', id: 'toolbox_content' }
+    ]},
+  ],
+  toolboxFoot: [
+    { tagName: 'div', class: 'foot', childNodes: [
+      { tagName: 'span', class: 'content status' },
+      { tagName: 'img', class: 'resize ui-resizable-se ui-resizable-handle', src: '/images/icons/resize.gif' }
     ]}
+  ],
+  sideBar: [
+    { tagName: 'div', class: 'sidebar left', childNodes: [
+      { tagName: 'ul', class: 'history' },
+      { tagName: 'ul', class: 'clipboard list records' },
+      { tagName: 'ul', class: 'actions', childNodes: [
+        { tagName: 'li', childNodes: [  { tagName: 'a', class: 'toggle edit grid', innerHTML: 'Toggle Edit Grid'}  ] },
+        { tagName: 'li', childNodes: [  { tagName: 'a', class: 'refresh_page', innerHTML: 'Refresh Page'}  ] }
+      ] }
+    ] }
   ]
 }
 

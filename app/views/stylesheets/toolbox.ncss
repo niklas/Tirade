@@ -16,71 +16,16 @@ body {
 }
 
 #toolbox {
-  display:none;
-  height:400px;
-  width:300px;
-  left:300px;
   position:fixed;
-  top:100px;
-  z-index: 10;
-  .ui-draggable-dragging {
-    border: none;
-    padding: 0;
-    margin: 0;
-  }
-  > div {
-    .head, .body, .foot, .busy {
-       left: 0; right: 0px;
-       position: absolute;
-     }
-  }
   tbody {
     overflow: auto; /* HACK so that toolbox elements are on top of flash */
   }
-  div.head {
-     /*
-    background-image: url(../images/window/top_end.png);
-    background-position: right top;
-    background-repeat: no-repeat; */
-    cursor:move;
-    height: 2.3em;
-    top: 0;
-    overflow:hidden;
-    span.buttons {
-      position: absolute;
-      right: 0;
-      top: 0;
-      img {
-        cursor:pointer;
-        float: right;
-        margin: 0.5em 0.2em;
-      }
-    }
-    span.title {
-       /*
-      background-image: url(../images/window/top_start.png);
-      background-position:left top;
-      background-repeat:no-repeat; */
-      font-family:Arial,Helvetica,sans-serif;
-      font-size: 130%;
-      font-weight:bold;
-      line-height: 180%;
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-      overflow:hidden;
-      display: block;
-      float: left;
-    }
-  }
+
+  /* Frame Setup */
   div.body {
-     /*
-    background-image: url(../images/window/bottom_end.png);
-    background-position:right bottom;
-    background-repeat:no-repeat; */
-    top: 2.3em;
-    bottom: 1.7em;
     overflow: hidden;
     z-index: 2;
+    padding: 0;
     > div.content {
       font-family:Arial,Helvetica,sans-serif;
       <% max_frames = 10 %>
@@ -92,106 +37,102 @@ body {
          float: left;
          height: 100%;
          width: <%= 100.0 / max_frames %>%;
-         ul.linkbar {
-           top: -60px;
-         }
-         ul.bottom_linkbar {
-           bottom: 0;
-         }
-         ul.linkbar, ul.bottom_linkbar {
-           display:block;
-           font-size:12px;
-           font-weight:normal;
-           height:30px;
-           line-height:30px;
-           margin:0pt;
-           padding:0;
-           text-decoration:none;
-           position: absolute;
-           width: 100%;
-           z-index: 2;
-           li {
-             a,button,input.submit {
-               float: right;
-               padding: 0.3em;
-               margin: 0.4em;
-               text-decoration:none;
-               .back {
-                 float: left;
-               }
-             }
-           }
-         }
-         div.accordion {
-           width: 100%;
-           overflow-x: hidden;
-           overflow-y: auto;
-           *.accordion_toggle {
-             cursor:pointer;
-             display:block;
-             font-size:12px;
-             font-weight:normal;
-             height:30px;
-             line-height:30px;
-             margin:0pt;
-             padding:0pt 10px;
-             text-decoration:none;
-             clear: both;
-           }
-           *.accordion_content {
-             overflow: hidden;
-           }
-         }
-         code {
-           width: 98%;
-           margin: 1%;
-           float: left;
-           overflow: auto;
-           padding: <%= @small %>;
-           line-height: 1.23em;
-           letter-spacing: 0.07em;
-         }
-         textarea {
-           width: 97%;
-           height: 4em;
-           font-size: 100%; /* HACK for elastic */
-           #part_liquid {
-             font-familiy: monospace;
-           }
-         }
-         input.submit.save {
-           float: right;
-           margin: 0.7em;
-         }
-         dl {
-           margin: 0;
-           float: left;
-           clear: both;
-           width: 100%;
-           di {
-             width: 100%;
-             float: left;
-             clear: both;
-             dt {
-               font-weight:bold;
-               float: left;
-               clear: left;
-               margin: <%= @medium %>;
-             }
-             .list dd {
-               margin: 0;
-             }
-             dd {
-               width: 80%;
-               margin: <%= @medium %>;
-               dt,dd {
-                 margin: <%= @small %>;
-               }
-               float: right;
-               clear: right;
-             }
-           }
-         }
+      }
+    }
+  }
+  div.accordion {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    *.accordion_toggle {
+      line-height: 2.3em;
+      padding: 0pt 2.3em;
+      clear: both;
+    }
+    *.accordion_content {
+      overflow: hidden;
+    }
+  }
+
+  div.content {
+    ul.linkbar {
+      top: -60px;
+    }
+    ul.bottom_linkbar {
+      bottom: 0;
+    }
+    ul.linkbar, ul.bottom_linkbar {
+      display:block;
+      font-size:12px;
+      font-weight:normal;
+      height:30px;
+      line-height:30px;
+      margin:0pt;
+      padding:0;
+      text-decoration:none;
+      position: absolute;
+      width: 100%;
+      z-index: 2;
+      li {
+        a,button,input.submit {
+          float: right;
+          padding: 0.3em;
+          margin: 0.4em;
+          text-decoration:none;
+          .back {
+            float: left;
+          }
+        }
+      }
+    }
+    code {
+      width: 98%;
+      margin: 1%;
+      float: left;
+      overflow: auto;
+      padding: <%= @small %>;
+      line-height: 1.23em;
+      letter-spacing: 0.07em;
+    }
+    textarea {
+      width: 97%;
+      height: 4em;
+      font-size: 100%; /* HACK for elastic */
+      #part_liquid {
+        font-familiy: monospace;
+      }
+    }
+    input.submit.save {
+      float: right;
+      margin: 0.7em;
+    }
+    dl {
+      margin: 0;
+      float: left;
+      clear: both;
+      width: 100%;
+      di {
+        width: 100%;
+        float: left;
+        clear: both;
+        dt {
+          font-weight:bold;
+          float: left;
+          clear: left;
+          margin: <%= @medium %>;
+        }
+        .list dd {
+          margin: 0;
+        }
+        dd {
+          width: 80%;
+          margin: <%= @medium %>;
+          dt,dd {
+            margin: <%= @small %>;
+          }
+          float: right;
+          clear: right;
+        }
       }
     }
   }
@@ -204,11 +145,6 @@ body {
       display: block;
       font-size: 85%;
     }
-  }
-  img.resize {
-    cursor:se-resize;
-    position: absolute;
-    right: 0; bottom: 0;
   }
   div.sidebar {
     overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
