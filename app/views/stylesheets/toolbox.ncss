@@ -55,24 +55,17 @@ body {
   }
 
   div.content {
-    ul.linkbar {
-      top: -60px;
-    }
     ul.bottom_linkbar {
       bottom: 0;
     }
     ul.linkbar, ul.bottom_linkbar {
       display:block;
-      font-size:12px;
-      font-weight:normal;
-      height:30px;
-      line-height:30px;
+      height: 2.3em;
+      line-height: 2.3em;
       margin:0pt;
       padding:0;
-      text-decoration:none;
-      position: absolute;
-      width: 100%;
       z-index: 2;
+      border-bottom: none;
       li {
         a,button,input.submit {
           float: right;

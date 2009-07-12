@@ -59,14 +59,20 @@ var Toolbox = {
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
+
     });
 
     this.linkBar().livequery(function() { 
-      Toolbox.linkBarOn();
       if ($(this).find('> li > a.back').length == 0) {
         $(this).appendDom(Toolbox.Templates.backButton)
       }
-      $(this).addRESTLinks($(this).parents('div.frame')) ;
+      $(this).addClass('ui-widget-header').slideUp().addRESTLinks($(this).parents('div.frame'));
+      Toolbox.head().unbind('mouseenter').mouseenter(
+        function() { Toolbox.linkBar().stop().slideDown('fast') }
+      );
+      $(this).mouseleave(
+        function() { Toolbox.linkBar().pause(300).stop().slideUp('slow') }
+      );
     });
 
     // Keep track of frames in history
@@ -441,6 +447,9 @@ var Toolbox = {
   last: function(rest) {
     return this.frames(':last' +(rest||''));
   },
+  head: function(rest) {
+    return this.element('> div.ui-dialog-titlebar:first'+(rest||''))
+  },
   body: function(rest) {
     return this.element('> div.body'+(rest||''))
   },
@@ -541,7 +550,6 @@ var Toolbox = {
       return this.sidebarOn(after)
   },
   linkBar: function() {
-    // Toolbox.last('ul.linkbar')
     return(Toolbox.last(' ul.linkbar'));
   },
   linkBarOn: function(after) {
