@@ -2,7 +2,7 @@
 <div class="warning">
   This Rendering has no Content assigned. Please drop
   <% unless rendering.part.nil? %>
-    a <%= rendering.part.preferred_types.to_sentence(:connector => 'or') %>
+    a <%= rendering.part.preferred_types.to_sentence(:word_connector => 'or') %>
   <% else %>
     one
   <% end %>
