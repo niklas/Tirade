@@ -15,7 +15,7 @@ body {
    }
 }
 
-.ui-dialog .ui-dialog-titlebar-sidebar { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 26px 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-sidebar { position: absolute; left: .3em; top: 50%; width: 19px; margin: -10px 26px 0 0; padding: 1px; height: 18px; }
 .ui-dialog .ui-dialog-titlebar-sidebar span { display: block; margin: 1px; }
 .ui-dialog .ui-dialog-titlebar-sidebar:hover, .ui-dialog .ui-dialog-titlebar-sidebar:focus { padding: 0; }
 
@@ -135,10 +135,12 @@ body {
       }
     }
   }
-  div.foot {
+  div#toolbox_footer {
     bottom: 0;
     height: 1.7em;
     overflow: hidden;
+    position: absolute;
+    width: 100%;
     span.status {
       float: left;
       display: block;

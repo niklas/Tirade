@@ -9,8 +9,8 @@ var Toolbox = {
           minHeight: 400,
           minWidth: 300,
           title: 'Toolbox Dialog',
-          dragStart: function() { Toolbox.body().css('overflow-x', 'auto')},
-          dragStop:  function() { Toolbox.body().css('overflow-x', 'hidden')},
+          dragStart: function() { Toolbox.body.css('overflow-x', 'auto')},
+          dragStop:  function() { Toolbox.body.css('overflow-x', 'hidden')},
           drag: Toolbox.callback.drag,
           resizeStop: Toolbox.callback.resized
         }).parent().attr('id', 'toolbox');
@@ -20,40 +20,46 @@ var Toolbox = {
       Toolbox.callback.drag();
 
       this.content().appendDom(Toolbox.Templates.frame("preparing Toolbox.."));
-      this.addButtons();
+      this.setup();
       this.expireBehaviors();
       this.applyBehaviors();
     };
     this.setSizes();
     return this.element();
   },
-  addButtons: function() {
-    toolboxSidebarToggle = $('<a href="#"/>')
+  setup: function() {
+    this.body = $('div#toolbox_body');
+
+    this.footer = $('<div />')
+      .addClass('ui-widget-header ui-corner-all')
+      .attr('id', 'toolbox_footer')
+      .insertAfter(Toolbox.body);
+
+    this.toggleSideBarButton = $('<a href="#"/>')
       .addClass('ui-corner-all ui-dialog-titlebar-sidebar')
       .attr('role', 'button')
       .hover(
-         function() { toolboxSidebarToggle.addClass('ui-state-hover'); },
-         function() { toolboxSidebarToggle.removeClass('ui-state-hover'); }
+         function() { Toolbox.toggleSideBarButton.addClass('ui-state-hover'); },
+         function() { Toolbox.toggleSideBarButton.removeClass('ui-state-hover'); }
       )
-      .focus(function() { toolboxSidebarToggle.addClass('ui-state-focus'); })
-      .blur(function() { toolboxSidebarToggle.removeClass('ui-state-focus'); })
       .mousedown(function(ev) { ev.stopPropagation(); })
       .click(function(event) {
          if (Toolbox.sideBarVisible) {
            Toolbox.sideBarOff()
-           toolboxSidebarToggle.removeClass('ui-state-active');
+           Toolbox.toggleSideBarButton.removeClass('ui-state-active');
          } else {
            Toolbox.sideBarOn()
-           toolboxSidebarToggle.addClass('ui-state-active');
+           Toolbox.toggleSideBarButton.addClass('ui-state-active');
          }
          return false;
       })
-      .appendTo(Toolbox.head()),
+      .appendTo(Toolbox.footer);
+
     $('<span/>')
       .addClass('ui-icon ui-icon-power')
       .text('toggle sidebar')
-      .appendTo(toolboxSidebarToggle);
-    toolboxSidebarToggle.disableSelection();
+      .appendTo(Toolbox.toggleSideBarButton);
+
   },
   applyBehaviors: function() {
     this.element()
@@ -64,8 +70,8 @@ var Toolbox = {
           lazy: true,
           items: 'div.content > div.frame',
           prev: 'a.prev', next: 'a.next',
-          onBefore: function() { Toolbox.body().css('overflow-x', 'auto'); return true  },
-          onAfter:  function() { Toolbox.body().css('overflow-x', 'hidden'); return true},
+          onBefore: function() { Toolbox.body.css('overflow-x', 'auto'); return true  },
+          onAfter:  function() { Toolbox.body.css('overflow-x', 'hidden'); return true},
           axis: 'x',
           duration: 500
         })
@@ -104,7 +110,7 @@ var Toolbox = {
       Toolbox.head().unbind('mouseenter').mouseenter(
         function() { Toolbox.linkBar().stop().slideDown('fast') }
       );
-      $(this).mouseleave(
+      Toolbox.last().unbind('mouseenter').mouseenter(
         function() { Toolbox.linkBar().pause(300).stop().slideUp('slow') }
       );
     });
@@ -484,9 +490,6 @@ var Toolbox = {
   head: function(rest) {
     return this.element('> div.ui-dialog-titlebar:first'+(rest||''))
   },
-  body: function(rest) {
-    return this.element('> div.body'+(rest||''))
-  },
   sideBar: function(rest) {
     return $('div#toolbox_sidebar' +(rest||''))
   },
@@ -551,7 +554,7 @@ var Toolbox = {
         Toolbox.element().animate(
           { height: Toolbox.decorationHeight()-1}, 
           { duration: 700, complete: function() {
-            Toolbox.body().hide();
+            Toolbox.body.hide();
             Toolbox.sideBar().hide();
           }}
         )
@@ -604,7 +607,7 @@ var Toolbox = {
     if (!this.minimized) {
       this.minimize();
     } else {
-      Toolbox.body().show();
+      Toolbox.body.show();
       Toolbox.setSizes();
       this.element().animate(
         { height: this.oldHeight || 400}, 
@@ -645,9 +648,9 @@ var Toolbox = {
 
   callback: {
     resized: function(e,ui) {
-      Toolbox.frames().height(Toolbox.body().height());
-      Toolbox.frames().width(Toolbox.body().width());
-      Toolbox.body()[0].scrollLeft = Toolbox.last()[0].offsetLeft;
+      Toolbox.frames().height(Toolbox.body.height());
+      Toolbox.frames().width(Toolbox.body.width());
+      Toolbox.body[0].scrollLeft = Toolbox.last()[0].offsetLeft;
     },
     drag: function(e, ui) {
       if (Toolbox.sideBarVisible) {
