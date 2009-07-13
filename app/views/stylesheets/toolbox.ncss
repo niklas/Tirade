@@ -15,11 +15,16 @@ body {
    }
 }
 
+.ui-dialog .ui-dialog-titlebar-sidebar { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 26px 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-sidebar span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-sidebar:hover, .ui-dialog .ui-dialog-titlebar-sidebar:focus { padding: 0; }
+
 #toolbox {
   position:fixed;
   tbody {
     overflow: auto; /* HACK so that toolbox elements are on top of flash */
   }
+
 
   /* Frame Setup */
   div.body {
@@ -139,54 +144,52 @@ body {
       font-size: 85%;
     }
   }
-  div.sidebar {
-    overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
-    padding: 0;
-    margin: 0 0 0 0px;
-    position: absolute;
-    left: -233px;
-    top: 50px;
-    width: 230px;
-    height: 80%;
-    z-index: 1;
-    ul.history, ul.clipboard {
-      display: block;
-      padding: 0px;
-      margin: 0;
-    }
-    ul.history { 
-      min-height: 25%;
-    }
-    ul.clipboard { 
-      min-height: 50%;
-      position: absolute;
-      bottom: 25px;
-    }
-    ul.actions {
-      position: absolute;
-      bottom: 0;
-      padding: 2px 0;
-      li {
-        float: left;
-      }
-    }
-    ul {
-       padding: 0px;
-       margin: 2px 0;
-       li {
-          display: block;
-          padding: 0;
-          a {
-             text-decoration: none;
-             display: block;
-          }
-       }
-    }
-  }
   div.busy {
     background: url(/images/transparent.png);
     z-index: 5;
     text-align: center;
     left: auto; right: 0;
+  }
+}
+div#toolbox_sidebar {
+  overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
+  padding: 0;
+  margin: 0 0 0 0px;
+  position: absolute;
+  width: 230px;
+  height: 300px;
+  z-index: 1;
+  ul.history, ul.clipboard {
+    display: block;
+    padding: 0px;
+    margin: 0;
+  }
+  ul.history { 
+    min-height: 25%;
+  }
+  ul.clipboard { 
+    min-height: 50%;
+    position: absolute;
+    bottom: 25px;
+  }
+  ul.actions {
+    position: absolute;
+    bottom: 0;
+    padding: 2px 0;
+    li {
+      float: left;
+    }
+  }
+  ul {
+     padding: 0px;
+     margin: 2px 0;
+     li {
+        display: block;
+        padding: 0;
+        a {
+           text-decoration: none;
+           display: block;
+        }
+     }
   }
 }
