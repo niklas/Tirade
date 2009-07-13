@@ -31,17 +31,13 @@ var Toolbox = {
     this.body = $('div#toolbox_body');
 
     this.footer = $('<div />')
-      .addClass('ui-widget-header ui-corner-all')
+      .addClass('ui-widget-header ui-corner-all footer')
       .attr('id', 'toolbox_footer')
       .insertAfter(Toolbox.body);
 
-    this.toggleSideBarButton = $('<a href="#"/>')
-      .addClass('ui-corner-all ui-dialog-titlebar-sidebar')
-      .attr('role', 'button')
-      .hover(
-         function() { Toolbox.toggleSideBarButton.addClass('ui-state-hover'); },
-         function() { Toolbox.toggleSideBarButton.removeClass('ui-state-hover'); }
-      )
+    this.header = this.element().find('> div.ui-widget-header.ui-dialog-titlebar:first').addClass('header');
+
+    this.toggleSideBarButton = $.ui.button({class: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
       .mousedown(function(ev) { ev.stopPropagation(); })
       .click(function(event) {
          if (Toolbox.sideBarVisible) {
@@ -55,10 +51,13 @@ var Toolbox = {
       })
       .appendTo(Toolbox.footer);
 
-    $('<span/>')
-      .addClass('ui-icon ui-icon-power')
-      .text('toggle sidebar')
-      .appendTo(Toolbox.toggleSideBarButton);
+    this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back'})
+      .click( function(event) { 
+        event.preventDefault();
+        Toolbox.pop() 
+        return false;
+      })
+      .appendTo(Toolbox.header);
 
   },
   applyBehaviors: function() {
@@ -775,4 +774,27 @@ jQuery.fn.formInFrameInToolbox = function(options) {
   var defaults = {
   };
   var options = $.extend(defaults, options);
+};
+
+jQuery.ui.button = function(options) {
+  var defaults = {
+    hover: true,
+    icon: 'help',
+    text: 'Help',
+    selectable: false
+  };
+  var options = $.extend(defaults, options);
+  var button = $('<a href="#" />')
+    .addClass('ui-corner-all ui-button ' + options.class)
+    .attr('role', 'button');
+  if (options.hover) button.hover(
+       function() { button.addClass('ui-state-hover'); },
+       function() { button.removeClass('ui-state-hover'); }
+     );
+  $('<span/>')
+    .addClass('ui-icon ui-icon-' + options.icon)
+    .text(options.text)
+    .appendTo(button);
+  if (!options.selectable) button.disableSelection();
+  return button
 };

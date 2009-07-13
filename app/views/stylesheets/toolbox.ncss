@@ -15,9 +15,15 @@ body {
    }
 }
 
-.ui-dialog .ui-dialog-titlebar-sidebar { position: absolute; left: .3em; top: 50%; width: 19px; margin: -10px 26px 0 0; padding: 1px; height: 18px; }
-.ui-dialog .ui-dialog-titlebar-sidebar span { display: block; margin: 1px; }
-.ui-dialog .ui-dialog-titlebar-sidebar:hover, .ui-dialog .ui-dialog-titlebar-sidebar:focus { padding: 0; }
+.ui-dialog .ui-button {
+  padding: 1px;
+  display: block;
+  margin: -10px 0 0 0;
+  height: 18px;
+  width: 19px;
+  span { display: block; margin: 1px; }
+  :focus, :hover { padding: 0; }
+}
 
 #toolbox {
   position:fixed;
@@ -25,6 +31,12 @@ body {
     overflow: auto; /* HACK so that toolbox elements are on top of flash */
   }
 
+  a.ui-button {
+    position: absolute;
+    top: 50%;
+    .toggle-sidebar { left: 0.3em }
+    .back { right: 2.3em }
+  }
 
   /* Frame Setup */
   div.body {
@@ -78,9 +90,6 @@ body {
           padding: 0.3em;
           margin: 0.4em;
           text-decoration:none;
-          .back {
-            float: left;
-          }
         }
       }
     }
