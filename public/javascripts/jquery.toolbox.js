@@ -59,6 +59,10 @@ var Toolbox = {
       })
       .appendTo(Toolbox.header);
 
+    this.toggleSizeButton = $.ui.button({icon: 'arrow-4-diag', text: 'maximize', class: 'min-max' })
+      .toggle(Toolbox.maximize, Toolbox.unmaximize)
+      .appendTo(Toolbox.header);
+
   },
   applyBehaviors: function() {
     this.element()
@@ -76,21 +80,8 @@ var Toolbox = {
         })
         .end()
         // Buttons
-      .find(' > div.head > span.buttons')
-        .find('> img.close').click(function() { Toolbox.close() }).end()
-        .find('> img.min').click(function() { Toolbox.minimize() }).end()
-        .find('> img.max').toggle(Toolbox.maximize, Toolbox.unmaximize).end()
-      .end()
       .show();
     // Back button
-    this.element(" a.back[href='#']").livequery(function() { 
-      $(this).click(function(event) { 
-        event.preventDefault();
-        $('div.active').removeClass('active');
-        Toolbox.pop() 
-      })
-    });
-
 
     this.sideBar(' ul.actions a.toggle.edit.grid').toggleEditPage();
     this.sideBar(' ul.actions a.refresh_page').click(function(e) { $.get('/') });
@@ -98,7 +89,6 @@ var Toolbox = {
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
-
     });
 
     this.linkBar().livequery(function() { 

@@ -35,7 +35,8 @@ body {
     position: absolute;
     top: 50%;
     .toggle-sidebar { left: 0.3em }
-    .back { right: 2.3em }
+    .back    { right: 4.2em }
+    .min-max { right: 2.3em }
   }
 
   /* Frame Setup */
