@@ -292,7 +292,6 @@ form {
   }
 }
 ul.list {
-  width: 100%;
   margin: 0;
   clear: both;
   li { 
@@ -387,54 +386,15 @@ div.live_search {
   }
 }
 
-a {
-  .create, .edit, .update, .delete, .show, .refresh_page, .index, .add, .remove {
-    text-indent: -5000px;
-    width: 16px;
-    height: 16px;
-    margin-top: -8px;
-    top: 50%;
-    z-index: 3;
-    background: transparent url(/images/icons/small/vegetable.gif) no-repeat scroll right;
-    cursor: pointer;
-  }
-  .create {
-    background-image: url(/images/icons/small/plus.gif);
-  }
-  .add {
-    background-image: url(/images/icons/small/plus.gif);
-  }
-  .remove {
-    background-image: url(/images/icons/small/minus.gif);
-  }
-  .ok {
-    background-image: url(/images/icons/small/checkmark.gif);
-  }
-  .show, .index {
-    margin-top: -5px;
-    height: 10px;
-    background-image: url(/images/icons/show-arrow.png);
-  }
-  .edit {
-    background-image: url(../images/icons/small/edit.gif);
-  }
-  .create.layout {
-    background-image: url(../images/icons/small/template.gif);
-  }
-  .create.prepare.rendering {
-    background-image: url(../images/icons/small/plus.gif);
-  }
-  .refresh_page {
-    background-image: url(../images/icons/small/refresh.gif);
-  }
-}
-
 /* here was div.node */
 ul.list, dl, ul.tree {
   a {
     /* position: absolute; */
     .show, .index {
+      position: absolute;
       right: <%= @small %>;
+      top: 50%;
+      margin-top: -8px;
       display: none !important;
     }
     .toggle_live_search {

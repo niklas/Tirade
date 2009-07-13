@@ -94,8 +94,8 @@ $(function() {
 
 
   /* Resourceful Links in Toolbox */
-  $('div#toolbox > div.body > div.content > div.frame a.show').livequery(function() { $(this).useToolbox(); });
-  $('div#toolbox > div.body > div.content > div.frame a.index').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.show').livequery(function() { $(this).useToolbox({icon: 'circle-triangle-e'}); });
+  $('div#toolbox > div.body > div.content > div.frame a.index').livequery(function() { $(this).useToolbox({icon: 'circle-triangle-e'}); });
   $('div#toolbox > div.body > div.content > div.frame a.new').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).useToolbox(); });
   $('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).useToolbox(); });

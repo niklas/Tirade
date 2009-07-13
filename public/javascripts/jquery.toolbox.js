@@ -747,6 +747,9 @@ jQuery.fn.useToolbox = function(options) {
     start: function() {}
   };
   var options = $.extend(defaults, options);
+  if (options.icon) {
+    $(this).addClass('ui-icon ui-icon-' + options.icon)
+  }
   if ( !$(this).hasClass("without_toolbox") ) {
     return $(this).resourcefulLink({
       start: function(event) {
