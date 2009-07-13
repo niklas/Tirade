@@ -505,10 +505,10 @@ var Toolbox = {
     return $('div#toolbox' +(rest||''));
   },
   next: function() {
-    return this.scroller().trigger('next');
+    return this.body.trigger('next');
   },
   prev: function() {
-    return this.scroller().trigger('prev');
+    return this.body.trigger('prev');
   },
   close: function() {
     this.expireBehaviors();
