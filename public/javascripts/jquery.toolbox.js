@@ -15,12 +15,11 @@ var Toolbox = {
           resizeStop: Toolbox.callback.resized
         }).parent().attr('id', 'toolbox');
 
-      $('body').appendDom(Toolbox.Templates.sideBar);
       this.sideBarVisible = false;
+      this.setup();
       Toolbox.callback.drag();
 
       this.content().appendDom(Toolbox.Templates.frame("preparing Toolbox.."));
-      this.setup();
       this.expireBehaviors();
       this.applyBehaviors();
     };
@@ -36,6 +35,31 @@ var Toolbox = {
       .insertAfter(Toolbox.body);
 
     this.header = this.element().find('> div.ui-widget-header.ui-dialog-titlebar:first').addClass('header');
+
+    this.sideBar = $('<div />')
+      .addClass('sidebar left ui-widget-content')
+      .attr('id', 'toolbox_sidebar')
+      .appendTo('body');
+
+    this.history = $('<ul />')
+      .addClass('history list records')
+      .appendTo(Toolbox.sideBar);
+
+    this.clipboard = $('<ul />')
+      .addClass('clipboard list records')
+      .appendTo(Toolbox.sideBar);
+
+    this.sideBarActions = $('<div />')
+      .addClass('ui-widget-header ui-corder-all actions')
+      .appendTo(Toolbox.sideBar);
+
+    this.toggleEditGridButton = $.ui.button({class: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'pencil'})
+      .appendTo(Toolbox.sideBarActions)
+      .toggleEditPage();
+
+    this.refreshPageButton = $.ui.button({class: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
+      .click(function(e) { $.get('/') })
+      .appendTo(Toolbox.sideBarActions);
 
     this.toggleSideBarButton = $.ui.button({class: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
       .mousedown(function(ev) { ev.stopPropagation(); })
@@ -108,7 +132,7 @@ var Toolbox = {
     this.frames().livequery(function() { 
       var frame = $(this);
       var href = frame.attr('href');
-      Toolbox.history().appendDom(
+      Toolbox.history.appendDom(
         Toolbox.Templates.historyItem( frame.attr('title'), href )
       );
     });
@@ -127,11 +151,6 @@ var Toolbox = {
           {tagName: 'input', type: 'hidden', name: 'context_page_id', value: $('body > div.page').resourceId() }
         ]);
     });
-
-    this.history('> li > a.jump').livequery('click', function(event) {
-      event.preventDefault();
-    });
-
 
     // Accordion, open in last used section
     this.accordion().livequery(function() { 
@@ -351,7 +370,6 @@ var Toolbox = {
     this.element(" a.back[href='#']").expire();
     this.frames(':not(:first)').expire();
     this.frames(' form').expire();
-    this.history('> li > a.jump').expire();
     this.last(' input.search_term').expire();
     this.last(' div.search_results ul.list li').expire();
     this.last(' di.selectable').expire();
@@ -391,7 +409,7 @@ var Toolbox = {
   surrounds: function(position) {
     return(
       Toolbox.element().surrounds(position) ||
-      Toolbox.sideBar().surrounds(position)
+      Toolbox.sideBar.surrounds(position)
     );
   },
   pop: function() {
@@ -399,7 +417,7 @@ var Toolbox = {
     this.prev();
     setTimeout( function() {
       Toolbox.last().remove();
-      Toolbox.history(' li:not(:first):last').remove();
+      Toolbox.history.find(' li:not(:first):last').remove();
       Toolbox.setTitle();
     }, 500);
   },
@@ -479,15 +497,6 @@ var Toolbox = {
   head: function(rest) {
     return this.element('> div.ui-dialog-titlebar:first'+(rest||''))
   },
-  sideBar: function(rest) {
-    return $('div#toolbox_sidebar' +(rest||''))
-  },
-  clipboard: function(rest) {
-    return this.sideBar('> ul.clipboard'+(rest||''))
-  },
-  history: function(rest) {
-    return this.sideBar('> ul.history'+(rest||''))
-  },
   busyBox: function(rest) {
     return this.element('> div.busy'+(rest||''))
   },
@@ -544,7 +553,7 @@ var Toolbox = {
           { height: Toolbox.decorationHeight()-1}, 
           { duration: 700, complete: function() {
             Toolbox.body.hide();
-            Toolbox.sideBar().hide();
+            Toolbox.sideBar.hide();
           }}
         )
       });
@@ -553,19 +562,19 @@ var Toolbox = {
   },
   sideBarOn: function(after) {
     if (this.sideBarVisible) 
-      return this.sideBar();
+      return this.sideBar;
     this.sideBarVisible = true;
-    return this.sideBar().show().animate(
-      { left: '-='+(Toolbox.sideBar().width())},
+    return this.sideBar.show().animate(
+      { left: '-='+(Toolbox.sideBar.width())},
       { duration: 500, complete: after }
     )
   },
   sideBarOff: function(after) {
     if (!this.sideBarVisible)  // And if it's already off?
-      return this.sideBar();   //  - I just walk away!
+      return this.sideBar;   //  - I just walk away!
     this.sideBarVisible = false;
-    return this.sideBar().animate(
-      { left: '+='+(Toolbox.sideBar().width())},
+    return this.sideBar.animate(
+      { left: '+='+(Toolbox.sideBar.width())},
       { duration: 500, complete: after }
     );
   },
@@ -643,11 +652,11 @@ var Toolbox = {
     },
     drag: function(e, ui) {
       if (Toolbox.sideBarVisible) {
-        Toolbox.sideBar()[0].style.left = (Toolbox.element().position().left - Toolbox.sideBar().width()) + 'px';
-        Toolbox.sideBar()[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
+        Toolbox.sideBar[0].style.left = (Toolbox.element().position().left - Toolbox.sideBar.width()) + 'px';
+        Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
       } else {
-        Toolbox.sideBar()[0].style.left = (Toolbox.element().position().left) + 'px';
-        Toolbox.sideBar()[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
+        Toolbox.sideBar[0].style.left = (Toolbox.element().position().left) + 'px';
+        Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
       }
     }
   }
@@ -695,22 +704,6 @@ Toolbox.Templates = {
       { tagName: 'div', class: 'content', id: 'toolbox_content' }
     ]},
   ],
-  toolboxFoot: [
-    { tagName: 'div', class: 'foot', childNodes: [
-      { tagName: 'span', class: 'content status' },
-      { tagName: 'img', class: 'resize ui-resizable-se ui-resizable-handle', src: '/images/icons/resize.gif' }
-    ]}
-  ],
-  sideBar: [
-    { tagName: 'div', id: 'toolbox_sidebar', class: 'sidebar left ui-widget-content', childNodes: [
-      { tagName: 'ul', class: 'history' },
-      { tagName: 'ul', class: 'clipboard list records' },
-      { tagName: 'ul', class: 'actions', childNodes: [
-        { tagName: 'li', childNodes: [  { tagName: 'a', class: 'toggle edit grid', innerHTML: 'Toggle Edit Grid'}  ] },
-        { tagName: 'li', childNodes: [  { tagName: 'a', class: 'refresh_page', innerHTML: 'Refresh Page'}  ] }
-      ] }
-    ] }
-  ]
 }
 
 jQuery.fn.update = function(options) {
