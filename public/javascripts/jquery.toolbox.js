@@ -107,9 +107,6 @@ var Toolbox = {
       .show();
     // Back button
 
-    this.sideBar(' ul.actions a.toggle.edit.grid').toggleEditPage();
-    this.sideBar(' ul.actions a.refresh_page').click(function(e) { $.get('/') });
-
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
       Toolbox.setTitle();
@@ -439,6 +436,9 @@ var Toolbox = {
   },
   setTitle: function(title) {
     return $('span#ui-dialog-title-toolbox_body').html( title || Toolbox.last().attr('title'));
+  },
+  setClipboard: function(html) {
+    return this.clipboard.html(html);
   },
   setStatus: function(status) {
     return this.element('> div.foot span.status').html(status);
