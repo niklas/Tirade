@@ -1,9 +1,5 @@
 <% thepage ||= show || @page %>
 
-<% links do %>
-  <li><%= edit_page_link(thepage) %> </li>
-<% end %>
-
 <% accordion do %>
 
   <% accordion_item 'General', :content_tag => :dl do %>

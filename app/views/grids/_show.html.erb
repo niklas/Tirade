@@ -1,6 +1,5 @@
 <% grid ||= show %>
 <% links do %>
-  <li><%= edit_grid_link grid %></li>
   <% if grid.root? %>
     <li><%= link_to_remote 'wrap', :url => grids_url(:grid => {:yui => 'yui-u', :child_id => grid}), :method => :post, :confirm => 'This will wrap this grid into another and will assign it as new layout to all relevant pages. Use this if you want to add a new row under THIS grid.' %></li>
   <% end %>
