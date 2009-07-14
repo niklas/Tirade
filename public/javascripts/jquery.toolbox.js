@@ -20,6 +20,7 @@ var Toolbox = {
       Toolbox.callback.drag();
 
       $.ui.frame("preparing Toolbox..").appendTo( this.content() );
+      this.frameCount = 1;
       this.expireBehaviors();
       this.applyBehaviors();
       this.element().show();
@@ -391,6 +392,7 @@ var Toolbox = {
   },
   push: function(content,options) {
     $.ui.frame(content, options).appendTo( this.content() );
+    this.frameCount++;
     this.next();
   },
   error: function( content, options ) {
@@ -409,8 +411,10 @@ var Toolbox = {
     );
   },
   pop: function() {
-    if ( this.frames().length > 1 ) {
+    if ( this.frameCount > 1 ) {
       $('body').applyRoles();
+      this.frameCount--;
+      this.refreshBackButton();
       this.prev();
       setTimeout( this.removeLastFrame, 500 );
     }
@@ -420,9 +424,10 @@ var Toolbox = {
     Toolbox.history.find(' li:not(:first):last').remove();
     Toolbox.setTitle();
     Toolbox.refreshBackButton();
+    Toolbox.frameCount = Toolbox.frames().length;
   },
   refreshBackButton: function() {
-    if ( Toolbox.frames().length > 1 )
+    if ( Toolbox.frameCount > 1 )
       Toolbox.backButton.removeClass('ui-state-disabled')
     else
       Toolbox.backButton.addClass('ui-state-disabled')
