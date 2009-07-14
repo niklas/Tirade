@@ -22,6 +22,7 @@ var Toolbox = {
       this.content().appendDom(Toolbox.Templates.frame("preparing Toolbox.."));
       this.expireBehaviors();
       this.applyBehaviors();
+      this.element().show();
     };
     this.setSizes();
     return this.element();
@@ -89,23 +90,22 @@ var Toolbox = {
 
   },
   applyBehaviors: function() {
-    this.element()
-      .find('> div.body')
-        .serialScroll({
-          target: 'div.content',
-          step: 1, cycle: false,
-          lazy: true,
-          items: 'div.content > div.frame',
-          prev: 'a.prev', next: 'a.next',
-          onBefore: function() { Toolbox.body.css('overflow-x', 'auto'); return true  },
-          onAfter:  function() { Toolbox.body.css('overflow-x', 'hidden'); return true},
-          axis: 'x',
-          duration: 500
-        })
-        .end()
-        // Buttons
-      .show();
-    // Back button
+    this.body.serialScroll({
+      target: 'div.content',
+      step: 1, cycle: false,
+      lazy: true,
+      items: 'div.frame',
+    onBefore: function() { 
+      Toolbox.body.css('overflow-x', 'auto'); 
+      return true  
+  },
+      onAfter:  function() { Toolbox.body.css('overflow-x', 'hidden'); return true},
+      axis: 'x',
+      duration: 300
+    })
+
+    //this.body.bind('prev.serialScroll', function() { console.debug("body prev") });
+    //this.body.bind('next.serialScroll', function() { console.debug("body next") });
 
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
