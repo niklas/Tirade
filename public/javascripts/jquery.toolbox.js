@@ -114,16 +114,7 @@ var Toolbox = {
     });
 
     this.linkBar().livequery(function() { 
-      if ($(this).find('> li > a.back').length == 0) {
-        $(this).appendDom(Toolbox.Templates.backButton)
-      }
-      $(this).addClass('ui-widget-header').slideUp().addRESTLinks($(this).parents('div.frame'));
-      Toolbox.head().unbind('mouseenter').mouseenter(
-        function() { Toolbox.linkBar().stop().slideDown('fast') }
-      );
-      Toolbox.last().unbind('mouseenter').mouseenter(
-        function() { Toolbox.linkBar().pause(300).stop().slideUp('slow') }
-      );
+      $(this).addClass('ui-widget-header ui-corner-bottom').addRESTLinks($(this).parents('div.frame'));
     });
 
     // Keep track of frames in history
@@ -732,9 +723,7 @@ jQuery.fn.useToolbox = function(options) {
     start: function() {}
   };
   var options = $.extend(defaults, options);
-  if (options.icon) {
-    $(this).addClass('ui-icon ui-icon-' + options.icon)
-  }
+  if (options.icon) { $(this).uiIcon(icon); }
   if ( !$(this).hasClass("without_toolbox") ) {
     return $(this).resourcefulLink({
       start: function(event) {
@@ -746,6 +735,22 @@ jQuery.fn.useToolbox = function(options) {
   } else {
     return $(this);
   }
+};
+
+jQuery.fn.uiIcon = function(icon) {
+  return $(this).each(function() {
+    var $a = $(this);
+    var $span = $('<span />')
+      .addClass('ui-icon ui-icon-' + icon)
+      .html( $a.html() )
+    $a.attr('title', $a.attr('title') || $a.text())
+      .html( $span )
+      .addClass('ui-corner-all')
+      .hover(
+         function() { $(this).addClass('ui-state-hover'); },
+         function() { $(this).removeClass('ui-state-hover'); }
+       );
+  });
 };
 
 jQuery.fn.frameInToolbox = function(options) {

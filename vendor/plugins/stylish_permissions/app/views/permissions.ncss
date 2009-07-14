@@ -10,6 +10,7 @@ div.rendering.without_content {
 
 body.role_admin {
    a,span { display: inline; }
+   span.ui-icon { display: block; }
    a { 
      .create, .update, .destroy, .show, .edit, .new, .handle, .warning {
        display: block;
@@ -33,6 +34,7 @@ body.role_admin {
          form.<%= res %>.<%= perm.app_method %> { display: block; }
          div.<%= res %>.<%= perm.app_method %> { display: block; }
          span.<%= res %>.<%= perm.app_method %> { display: inline; }
+         span.<%= res %>.<%= perm.app_method %>.ui-icon { display: block; }
       <% end %>
    <% end %>
 }

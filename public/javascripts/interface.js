@@ -94,12 +94,12 @@ $(function() {
 
 
   /* Resourceful Links in Toolbox */
-  $('div#toolbox > div.body > div.content > div.frame a.show').livequery(function() { $(this).useToolbox({icon: 'circle-triangle-e'}); });
-  $('div#toolbox > div.body > div.content > div.frame a.index').livequery(function() { $(this).useToolbox({icon: 'circle-triangle-e'}); });
-  $('div#toolbox > div.body > div.content > div.frame a.new').livequery(function() { $(this).useToolbox(); });
-  $('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).useToolbox(); });
-  $('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).useToolbox(); });
-  $('div#toolbox > div.sidebar a.show').livequery(function() { $(this).useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.index').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.new').livequery(function() { $(this).uiIcon('plus').useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).uiIcon('pencil').useToolbox(); });
+  $('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).uiIcon('trash').useToolbox(); });
+  $('div#toolbox > div.sidebar a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
   $('div#toolbox > div.body > div.content ul.tree.tree_root').livequery(function() { 
     $('div.node:not(:has(span.handle)):not(.page)', this).livequery( function() {
       $(this).append( $('<span>drag</span>').addClass('handle'))
