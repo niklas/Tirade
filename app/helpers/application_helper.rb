@@ -72,4 +72,13 @@ module ApplicationHelper
     options
   end
 
+  def show_link_to(thingy, options = {})
+    label = options.delete(:label) || thingy.andand.title || thingy.andand.label || "Show #{thingy.class} #{thingy.id}"
+    singular = thingy.class.name.underscore
+    add_class_to_html_options(options, 'show')
+    add_class_to_html_options(options, "show_#{singular}")
+    add_class_to_html_options(options, singular)
+    link_to(label, thingy, options)
+  end
+
 end
