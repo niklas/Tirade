@@ -141,12 +141,12 @@ class ResourcefulViews
         opts[:sending] = opts.delete(:parameters) and ResourcefulViews.deprecation_warning('Please use :sending instead of :parameters') if opts[:parameters]
         parameters = opts.delete(:sending) || {}
         if block_given?
-          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts), block.binding)
+          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts))
             parameters.collect{ |key, value|
-              concat(hidden_field_tag(key.to_s, value, :id => nil), block.binding)
+              concat(hidden_field_tag(key.to_s, value, :id => nil))
             }
             yield
-          concat('</form>', block.binding)
+          concat('</form>')
         else
           opts_for_button = opts.delete(:button) || {}
           opts_for_button.merge!(:type => 'submit')
@@ -243,10 +243,10 @@ class ResourcefulViews
         if block_given?
           opts[:method] = :get
           args_for_fields_for = ['#{resource.singular}']
-          concat(form_tag(new_#{resource.name_prefix}#{resource.singular}_path(*args), opts), block.binding)
-          concat(parameters.collect{|key, value| hidden_field_tag(key.to_s, value, :id => nil)}.join, block.binding) unless parameters.empty?
+          concat(form_tag(new_#{resource.name_prefix}#{resource.singular}_path(*args), opts))
+          concat(parameters.collect{|key, value| hidden_field_tag(key.to_s, value, :id => nil)}.join) unless parameters.empty?
           fields_for(*args_for_fields_for, &block)
-          concat('</form>', block.binding)
+          concat('</form>')
         else
           label = opts.delete(:label) || 'New'
           args << parameters unless parameters.empty?
@@ -371,14 +371,14 @@ class ResourcefulViews
       def #{resource.singular}_list(opts={}, &block)
         content = capture(&block)
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_list', *(opts.delete(:class) || '').split)
-        concat(content_tag((opts[:ordered] ? :ol : :ul), content, opts), block.binding)
+        concat(content_tag((opts[:ordered] ? :ol : :ul), content, opts))
       end
       def #{resource.singular}_item(*args, &block)
         opts = args.extract_options!
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', *(opts.delete(:class) || '').split)
         opts[:id] = '#{resource.singular}_' + args.first.id.to_s unless args.empty?
         content = capture(&block)
-        concat(content_tag(:li, content, opts), block.binding)
+        concat(content_tag(:li, content, opts))
       end
     end_eval
   end
@@ -404,14 +404,14 @@ class ResourcefulViews
       def #{resource.singular}_table(opts={}, &block)
         content = capture(&block)
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}_table', *(opts.delete(:class) || '').split)
-        concat(content_tag(:table, content, opts), block.binding)
+        concat(content_tag(:table, content, opts))
       end
       def #{resource.singular}_row(*args, &block)
         opts = args.extract_options!
         opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', *(opts.delete(:class) || '').split)
         opts[:id] = '#{resource.singular}_' + args.first.id.to_s unless args.empty?
         content = capture(&block)
-        concat(content_tag(:tr, content, opts), block.binding)
+        concat(content_tag(:tr, content, opts))
       end
     end_eval
   end
@@ -468,11 +468,11 @@ class ResourcefulViews
           args_for_fields_for = ['#{resource.singular}']
           args_for_fields_for.push(args.pop) if args.length > #{number_of_expected_args}
           opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'create', *(opts.delete(:class) || '').split)
-          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts), block.binding)
-            concat(resource_attributes.collect{|key, value| hidden_field_tag('#{resource.singular}[' + key.to_s + ']', value, :id => nil)}.join, block.binding)
-            concat(parameters.collect{|key, value| hidden_field_tag(key, value, :id => nil)}.join, block.binding)
+          concat(form_tag(#{resource.name_prefix}#{resource.plural}_path(*args), opts))
+            concat(resource_attributes.collect{|key, value| hidden_field_tag('#{resource.singular}[' + key.to_s + ']', value, :id => nil)}.join)
+            concat(parameters.collect{|key, value| hidden_field_tag(key, value, :id => nil)}.join)
             fields_for(*args_for_fields_for, &block)
-          concat('</form>', block.binding)
+          concat('</form>')
         else
           label = opts.delete(:label) || 'Add'
           opts_for_button = opts.delete(:button) || {}
@@ -539,9 +539,9 @@ class ResourcefulViews
           #{'args_for_fields_for.push(args.last)' if resource_is_plural}
           opts[:class] = ResourcefulViews.resourceful_classnames('#{resource.singular}', 'update', *(opts.delete(:class) || '').split)
           opts[:method] = :put
-          concat(form_tag(#{resource.name_prefix}#{resource.singular}_path(*args), opts), block.binding)
+          concat(form_tag(#{resource.name_prefix}#{resource.singular}_path(*args), opts))
           fields_for(*args_for_fields_for, &block)
-          concat('</form>', block.binding)
+          concat('</form>')
         else
           opts = args.extract_options!
           label = opts.delete(:label) || 'Save'
