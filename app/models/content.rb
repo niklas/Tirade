@@ -46,10 +46,6 @@ class Content < ActiveRecord::Base
 
   has_slug :prepend_id => false
 
-  def to_param
-    self.id
-  end
-
   def self.sample
     new(
       :title => "Example Content Record",
