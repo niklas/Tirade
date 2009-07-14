@@ -104,8 +104,9 @@ var Toolbox = {
       duration: 300
     })
 
-    //this.body.bind('prev.serialScroll', function() { console.debug("body prev") });
-    //this.body.bind('next.serialScroll', function() { console.debug("body next") });
+    this.body.bind('prev.serialScroll', this.refreshBackButton );
+    this.body.bind('next.serialScroll', this.refreshBackButton );
+    this.refreshBackButton();
 
     // Set Title of last frame
     this.frames(':not(:first)').livequery(function() { 
@@ -409,13 +410,23 @@ var Toolbox = {
     );
   },
   pop: function() {
-    $('body').applyRoles();
-    this.prev();
-    setTimeout( function() {
-      Toolbox.last().remove();
-      Toolbox.history.find(' li:not(:first):last').remove();
-      Toolbox.setTitle();
-    }, 500);
+    if ( this.frames().length > 1 ) {
+      $('body').applyRoles();
+      this.prev();
+      setTimeout( this.removeLastFrame, 500 );
+    }
+  },
+  removeLastFrame: function() {
+    Toolbox.last().remove();
+    Toolbox.history.find(' li:not(:first):last').remove();
+    Toolbox.setTitle();
+    Toolbox.refreshBackButton();
+  },
+  refreshBackButton: function() {
+    if ( Toolbox.frames().length > 1 )
+      Toolbox.backButton.removeClass('ui-state-disabled')
+    else
+      Toolbox.backButton.addClass('ui-state-disabled')
   },
   popAndRefreshLast: function() {
     this.last().prev().refresh();
