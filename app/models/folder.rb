@@ -31,4 +31,7 @@ class Folder < Content
       :description => "You won't find anything in this Folder"
     )
   end
+  def icon_name
+    'folder'
+  end
 end
