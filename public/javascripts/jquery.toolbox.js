@@ -19,7 +19,7 @@ var Toolbox = {
       this.setup();
       Toolbox.callback.drag();
 
-      this.content().appendDom(Toolbox.Templates.frame("preparing Toolbox.."));
+      $.ui.frame("preparing Toolbox..").appendTo( this.content() );
       this.expireBehaviors();
       this.applyBehaviors();
       this.element().show();
@@ -390,8 +390,7 @@ var Toolbox = {
     return this.element(' > div.head').height() + this.element(' > div.foot').height()
   },
   push: function(content,options) {
-    this.content()
-      .appendDom(Toolbox.Templates.frame(content,options));
+    $.ui.frame(content, options).appendTo( this.content() );
     this.next();
   },
   error: function( content, options ) {
@@ -681,16 +680,6 @@ Toolbox.Templates = {
       { tagName: 'li', href: href, class: 'jump', innerHTML: title }
     ]);
   },
-  frame: function(content,options) {
-    var options = jQuery.extend({
-      href:       '/dashboard',
-      title:      'Dashboard'
-    }, options);
-    class = options.class ? 'frame ' + options.class : 'frame'
-    return([
-      { tagName: 'div', class: class, href: options.href, title: options.title, innerHTML: content }
-    ]);
-  },
   bottomLinkBar: [
     {tagName: 'ul', class: 'bottom_linkbar' }
   ],
@@ -780,4 +769,21 @@ jQuery.ui.button = function(options) {
     .appendTo(button);
   if (!options.selectable) button.disableSelection();
   return button
+};
+
+jQuery.ui.frame = function(content, options) {
+  var defaults = {
+    href: '/dashboard',
+    title: 'Dashboard'
+  };
+  var options = $.extend(defaults, options);
+  class = options.class ? 'frame ' + options.class : 'frame'
+
+  return $('<div/>')
+    .addClass('frame')
+    .addClass(options.class)
+    .attr('role', 'frame')
+    .attr('title', options.title)
+    .attr('href', options.href)
+    .html(content);
 };
