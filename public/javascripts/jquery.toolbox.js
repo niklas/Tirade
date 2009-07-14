@@ -79,7 +79,7 @@ var Toolbox = {
     this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back'})
       .click( function(event) { 
         event.preventDefault();
-        Toolbox.pop() 
+        Toolbox.pop();
         return false;
       })
       .appendTo(Toolbox.header);
@@ -328,6 +328,14 @@ var Toolbox = {
       $(this).siblings('.live_search').toggle();
     });
 
+    this.every('.linkbar a.ok', function() {
+      $(this).click(function(e) {
+        e.preventDefault();
+        Toolbox.pop();
+        return false;
+      }).uiIcon('circle-check')
+    });
+
     // redirect the Submit button from bottomLinkBar
     this.last(' form:has(input.submit:visible)').livequery(function() {
       Toolbox.bottomLinkBar().appendDom(
@@ -452,6 +460,9 @@ var Toolbox = {
   },
   unBusy: function() {
     return this.element().unBusy();
+  },
+  every: function(selector, todo) {
+    $(selector, this.element()).livequery(todo)
   },
   beExclusiveDroppable: function() {
     if ( !this.exclusiveDroppable ) {
