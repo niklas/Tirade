@@ -114,7 +114,7 @@ $(function() {
   $('div#toolbox ul.list.records > li,div#toolbox dl di dd.record').livequery(function() {
     $(this).draggable({ 
       helper: 'clone', 
-      zIndex: 500, 
+      zIndex: 9000, 
       appendTo: 'body',
       scroll: true,
       cursor: 'crosshair',
