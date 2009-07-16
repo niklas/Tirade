@@ -213,9 +213,17 @@ var Toolbox = {
       })
     });
 
-    this.last(' ul.list').livequery(function() { $(this).unbind('dblclick').dblclick(function(e) {
-      $(e.target).find('a:first').click()
-    })});
+    this.last(' ul.list').livequery(function() { 
+      $(this)
+        .find('li')
+          .addClass('ui-widget-content ui-corner-all')
+        .end()
+        .find('li:has(a.show, a.index)')
+          .css('cursor', 'pointer')
+          .hover( function() { $(this).addClass('ui-state-hover')}, function() { $(this).removeClass('ui-state-hover') })
+        .end()
+        .unbind('dblclick').dblclick(function(e) { $(e.target).find('a:first').click() });
+    });
 
     this.last(' di.association.one dd > ul.list').livequery(function() { $(this).hasOneEditor() });
     this.last(' di.association.many dd > ul.list').livequery(function() { $(this).hasManyEditor() });

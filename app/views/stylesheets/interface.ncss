@@ -80,7 +80,6 @@ body div {
       border-bottom: 1px solid transparent;
       margin: 0 0 1em 0;
       div.node {
-         background-image: url(../images/ui/list_item_bg.png);
          padding: 0.8em;
          position: relative;
       } 
@@ -295,14 +294,10 @@ ul.list {
   margin: 0;
   clear: both;
   li { 
-    min-height: 19px;
-    line-height: 19px;
     position: relative;
     text-align: left;
     padding: 0.3em;
-    display: block;
-    background-image: url(../images/ui/list_item_bg.png);
-    margin: 0;
+    margin: 1px 0;
     .image {
       img {
         float: left; 
