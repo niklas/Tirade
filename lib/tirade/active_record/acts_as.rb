@@ -23,7 +23,11 @@ module Tirade
         end
 
         def classes
-          @symbols.map(&:to_s).map(&:classify).map(&:constantize)
+          class_names.map(&:constantize)
+        end
+
+        def class_names
+          @symbols.map(&:to_s).map(&:classify)
         end
       end
     end
