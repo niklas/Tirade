@@ -39,7 +39,7 @@
   padding: <%= @small %> <%= @big %>;
   list-style: none;
   margin: 0;
-  a.show, e.edit, e.index { display: none; }
+  a.show, a.edit, a.index { display: none; }
   img.association { display: none; }
 }
 
