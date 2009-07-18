@@ -80,6 +80,13 @@ describe DocumentsController do
     
   end
 
+  describe "every request", :shared => true do
+    it "should succeed"
+    it "should prepare clipboard"
+    it "should set context page"
+    it "should set the formbuilder"
+  end
+
   describe "by AJAX" do
 
     describe "get /index without any params" do
@@ -108,6 +115,32 @@ describe DocumentsController do
       it "should set the toolbox header" do
         get :index, :format => 'js'
         response.should set_toolbox_header('Documents')
+      end
+
+    end
+
+    describe "get /index from livesearch" do
+      def do_search(term='lot')
+        get :index, :format => 'js', :search => {:term => term}
+      end
+
+      before( :each ) do
+        do_search
+      end
+
+      it_should_behave_like 'every request'
+
+      it "should set assigns" do
+        assigns[:collection].should_not be_blank
+        assigns[:documents].should_not be_blank
+      end
+
+      it "should render a list" do
+        response.should render_template('contents/_list_item.erb')
+      end
+
+      it "should pupulate a div.search_results" do
+        unescape_rjs(response.body).should have_text(%r~Toolbox.last\(\).find\("div.search_results.documents"\).html\(~)
       end
 
     end
@@ -149,6 +182,8 @@ describe DocumentsController do
         response.should update_last_frame
         response.should set_toolbox_header('Document #\d+')
       end
+
+      it "should add the Document to the clipboard"
       
     end
 
