@@ -34,7 +34,7 @@ Rails::Initializer.run do |config|
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
-   #config.plugins = [ :all, :acts_as_renderer ]
+  config.plugins = [ :theme_support, :all ]
   config.gem 'desert', :version => '>=0.5.0'
   config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
 
