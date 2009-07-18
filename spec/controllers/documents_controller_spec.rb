@@ -128,6 +128,30 @@ describe DocumentsController do
 
     end
 
+    describe "creating a valid Document" do
+
+      def do_create
+        post :create, :document => Factory.attributes_for(:document), :format => 'js'
+      end
+
+      it "should succeed" do
+        do_create
+        response.should be_success
+      end
+
+      it "should save the Document" do
+        lambda { do_create }.should change(Document,:count).by(1)
+      end
+
+      it "should update the last toolbox frame with 'show'" do
+        do_create
+        response.should render_template('contents/_show.html.erb')
+        response.should update_last_frame
+        response.should set_toolbox_header('Document #\d+')
+      end
+      
+    end
+
     describe "get /show" do
 
       before( :each ) do
@@ -158,6 +182,25 @@ describe DocumentsController do
         response.should render_template('contents/_form.html.erb')
       end
 
+    end
+
+    describe "put /update with valid attributes" do
+      
+      before( :each ) do
+        put :update, :id => @document.to_param, :document => Factory.attributes_for(:document), :format => 'js'
+      end
+
+      it "should succeed" do
+        response.should be_success
+      end
+
+      it "should pop the last frame from the Toolbox" do
+        response.should pop_frame_and_refresh_last
+      end
+
+      it "should update the 'show' frames" do
+        pending "TODO: update all show from application"
+      end
     end
 
   end

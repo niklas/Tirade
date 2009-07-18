@@ -38,15 +38,34 @@ module ToolboxSpecHelper
       @expected = expected
     end
     def matches?(js)
-      @unescaped_rjs = unescape_rjs(js.body)
+      @unescaped_rjs = unescape_rjs(js)
       @unescaped_rjs =~ %r~Toolbox.push~
     end
     def failure_message
       "did not push frame into toolbox"
     end
   end
+
+
+  class UpdateLastToolboxFrame
+    def initialize(expected_action = 'show')
+      @expected_action = expected_action
+    end
+
+    def matches?(js)
+      @unescaped_rjs = unescape_rjs(js)
+      @unescaped_rjs =~ %r~Toolbox.updateLastFrame~
+    end
+
+    def failure_message
+      "did not update last frame of toolbox"
+    end
+  end
+
+
   # Unescapes a RJS string.
   def unescape_rjs(rjs_string)
+    rjs_string = rjs_string.body if rjs_string.respond_to?(:body)
     # RJS encodes double quotes and line breaks.
     rjs_string.gsub('\"', '"').
     gsub(/\\\//, '/').
@@ -67,8 +86,16 @@ module ToolboxSpecHelper
     have_text( %r~"title": "#{expected}"~)
   end
 
+  def pop_frame_and_refresh_last
+    have_text( /Toolbox.popAndRefreshLast\(\)/ )
+  end
+
   def push_frame(expected='')
     PushToolboxFrame.new(expected)
+  end
+
+  def update_last_frame(*args)
+    UpdateLastToolboxFrame.new(*args)
   end
 
 end
