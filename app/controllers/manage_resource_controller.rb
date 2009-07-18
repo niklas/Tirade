@@ -42,8 +42,8 @@ class ManageResourceController < ResourceController::Base
         end
       end
 
-      create.flash '#{human_name} successfully created!'
       create.wants.js do
+        flash[:notice] = "#{human_name} successfully created!"
         render :update do |page|
           page.update_last_toolbox_frame(   # replace the form with /show
             :partial => "/show", :object => object,
@@ -51,8 +51,11 @@ class ManageResourceController < ResourceController::Base
           )
         end
       end
+      create.failure.wants.js do
+        flash[:error] = "Failed to create #{human_name}"
+        update_or_show_form_in_toolbox
+      end
 
-      create.failure.wants.js { update_or_show_form_in_toolbox }
 
       show.wants.js do
         render :update do |page|
@@ -137,5 +140,10 @@ class ManageResourceController < ResourceController::Base
       ActionView::Base.default_form_builder = NormalFormBuilder
     end
   end
+
+  def non_form_submit?
+    params[:commit].blank?
+  end
+  helper_method :non_form_submit?
 
 end

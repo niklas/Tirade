@@ -86,6 +86,10 @@ module ToolboxSpecHelper
     have_text( %r~"title": "#{expected}"~)
   end
 
+  def set_toolbox_status(expected)
+    have_text( %r~Toolbox.setStatus\(".*#{expected}.*"\)~)
+  end
+
   def pop_frame_and_refresh_last
     have_text( /Toolbox.popAndRefreshLast\(\)/ )
   end

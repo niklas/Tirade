@@ -152,6 +152,39 @@ describe DocumentsController do
       
     end
 
+    describe "creating a Document with invalid attributes" do
+
+      def do_create
+        post :create, :document => Factory.attributes_for(:document), :format => 'js'
+      end
+
+      before( :each ) do
+        @new_document = Factory.build :document
+        @new_document.stub!(:valid?).and_return(false)
+        Document.stub!(:new).and_return(@new_document)
+      end
+
+      it "should succeed" do
+        do_create
+        response.should be_success
+      end
+
+      it "should not save the Document" do
+        lambda { do_create }.should_not change(Document,:count)
+      end
+
+      it "should rerender the form" do
+        do_create
+        response.should render_template('contents/_form.html.erb')
+      end
+
+      it "should show validation errors" do
+        do_create
+        response.should set_toolbox_status('Failed to create Document')
+      end
+      
+    end
+
     describe "get /show" do
 
       before( :each ) do
