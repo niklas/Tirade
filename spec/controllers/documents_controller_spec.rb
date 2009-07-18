@@ -236,6 +236,28 @@ describe DocumentsController do
       end
     end
 
+    describe "put /update with invalid attributes" do
+      
+      before( :each ) do
+        @document.stub!(:valid?).and_return(false)
+        Document.stub!(:find).and_return(@document)
+        put :update, :id => @document.to_param, :document => Factory.attributes_for(:document), :format => 'js'
+      end
+
+      it "should succeed" do
+        response.should be_success
+      end
+
+      it "should rerender the form" do
+        response.should render_template('contents/_form.html.erb')
+      end
+
+      it "should show validation errors" do
+        response.should set_toolbox_status('Failed to update Document')
+      end
+
+    end
+
   end
 
 end

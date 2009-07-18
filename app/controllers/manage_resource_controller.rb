@@ -75,15 +75,17 @@ class ManageResourceController < ResourceController::Base
         end
       end
 
-      update do
-        flash '#{human_name} successfully updated!'
-        wants.js do
-          render :update do |page|
-            page.toolbox.pop_and_refresh_last()
-          end
+      update.wants.js do
+        flash[:notice] = "#{human_name} successfully updated!"
+        render :update do |page|
+          page.toolbox.pop_and_refresh_last()
         end
 
-        failure.wants.js { update_or_show_form_in_toolbox }
+      end
+
+      update.failure.wants.js do
+        flash[:error] = "Failed to update #{human_name}"
+        update_or_show_form_in_toolbox
       end
 
     end
