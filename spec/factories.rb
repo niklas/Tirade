@@ -3,6 +3,11 @@ Factory.define :content do |f|
   f.body "A lot of Text"
 end
 
+Factory.define :document, :parent => :content do |f|
+  f.sequence(:title) { |i| "Document ##{i}"}
+  f.add_attribute :type, 'Document'
+end
+
 Factory.define :page do |f|
   f.sequence(:title) { |i| "Page ##{i}"}
   f.sequence(:url) { |i| "/page/auto/#{i}"}
