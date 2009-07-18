@@ -32,6 +32,19 @@ module ToolboxSpecHelper
       "deactivated all active divs, but it shouldn't"
     end
   end
+
+  class PushToolboxFrame
+    def initialize(expected='')
+      @expected = expected
+    end
+    def matches?(js)
+      @unescaped_rjs = unescape_rjs(js.body)
+      @unescaped_rjs =~ %r~Toolbox.push~
+    end
+    def failure_message
+      "did not push frame into toolbox"
+    end
+  end
   # Unescapes a RJS string.
   def unescape_rjs(rjs_string)
     # RJS encodes double quotes and line breaks.
@@ -51,8 +64,11 @@ module ToolboxSpecHelper
     DeactivateAll.new
   end
   def set_toolbox_header(expected)
-    have_rjs(:chained_replace_html,'toolbox_header')
-    have_text(expected)
+    have_text( %r~"title": "#{expected}"~)
+  end
+
+  def push_frame(expected='')
+    PushToolboxFrame.new(expected)
   end
 
 end
