@@ -99,6 +99,7 @@ module ToolboxHelper
     )
   end
 
+  # FIXME obsolte, use #object and #collection from resource_controller
   # returns the active model you set in your controller (@article)
   def model
     (@model ||= instance_variable_get("@#{controller.controller_name.singularize}")) || 
@@ -118,7 +119,7 @@ module ToolboxHelper
     returning [] do |ary|
       if content.is_a? Hash
         content[:layout] ||= '/layouts/toolbox'
-        content[:object] ||= @model || @models
+        content[:object] ||= object || collection
         ary << content.delete(:title) || content[:object].andand.title || 'Foo Title'
         begin
           result = render(content)
