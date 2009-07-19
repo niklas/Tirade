@@ -5,22 +5,22 @@ describe Part::ThemeController do
     login_as :quentin
   end
   describe "route generation" do
-    it "should map { :action => 'show', :id => 'cool', :part_id => 23} to /manage/parts/23/theme/cool" do
-      route_for(:controller => 'part/theme', :action => 'show', :id => 'cool', :part_id => '23').should == 
-        "/manage/parts/23/theme/cool"
+    it "should map { :action => 'show', :id => 'test', :part_id => 23} to /manage/parts/23/theme/test" do
+      route_for(:controller => 'part/theme', :action => 'show', :id => 'test', :part_id => '23').should == 
+        "/manage/parts/23/theme/test"
     end
   end
 
   describe "route recognition" do
-    it "should generate params { :action => 'show', :id => 'cool', :part_id => 23} from GET /manage/parts/23/theme/cool" do
-      params_from(:get, '/manage/parts/23/theme/cool').should == {
+    it "should generate params { :action => 'show', :id => 'test', :part_id => 23} from GET /manage/parts/23/theme/test" do
+      params_from(:get, '/manage/parts/23/theme/test').should == {
         :controller => 'part/theme', :action => 'show',
-        :part_id => "23", :id => 'cool'
+        :part_id => "23", :id => 'test'
       }
     end
   end
 
-  describe "handling GET /manage/parts/23/theme/cool with AJAX" do
+  describe "handling GET /manage/parts/23/theme/test with AJAX" do
     before(:each) do
       @part = mock_model(Part, :class_name => 'Part', :table_name => 'parts' )
       @part.stub!(:current_theme=).and_return(true)
@@ -28,7 +28,7 @@ describe Part::ThemeController do
     end
 
     def do_get
-      get :show, :part_id => 23, :id => 'cool', :format => 'js'
+      get :show, :part_id => 23, :id => 'test', :format => 'js'
     end
 
     it "should be successful" do
@@ -48,17 +48,17 @@ describe Part::ThemeController do
 
     it "should assign the theme for the view" do
       do_get
-      assigns[:theme].should == 'cool'
+      assigns[:theme].should == 'test'
     end
 
     it "should set the theme for the part" do
-      @part.should_receive(:current_theme=).with("cool")
+      @part.should_receive(:current_theme=).with("test")
       do_get
     end
 
   end
 
-  describe "handling DELETE /manage/parts/23/theme/cool with ajax" do
+  describe "handling DELETE /manage/parts/23/theme/test with ajax" do
     before(:each) do
       @part = mock_model(Part, :table_name => 'parts')
       @part.stub!(:current_theme=).and_return(true)
@@ -67,7 +67,7 @@ describe Part::ThemeController do
     end
 
     def do_delete
-      get :destroy, :part_id => 23, :id => 'cool', :format => 'js'
+      get :destroy, :part_id => 23, :id => 'test', :format => 'js'
     end
 
     it "should be successful" do
@@ -87,11 +87,11 @@ describe Part::ThemeController do
 
     it "should assign the theme for the view" do
       do_delete
-      assigns[:theme].should == 'cool'
+      assigns[:theme].should == 'test'
     end
 
     it "should delete the alternative liquid code and configuration" do
-      @part.should_receive(:remove_theme!).with("cool").and_return(true)
+      @part.should_receive(:remove_theme!).with("test").and_return(true)
       do_delete
     end
 

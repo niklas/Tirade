@@ -33,7 +33,7 @@ describe 'A Part with a name' do
     @part.partial_name.should == 'parts/stock/general_preview'
   end
   it "should know its liquid path for writing" do
-    @part.theme_path.should =~ %r~themes/cool/views/parts/stock/general_preview.html.liquid~
+    @part.theme_path.should =~ %r~themes/test/views/parts/stock/general_preview.html.liquid~
   end
   it "should not write its liquid code to a file (because it is blank) on saving" do
     #File.stub!(:open).with(any_args()).and_return(true)
@@ -346,19 +346,19 @@ describe "The simple preview Part" do
     @part.active_path.should =~ %r~spec/fixtures/views/parts/stock/simple_preview.html.liquid$~
   end
   it "should know about its path for the contex ttheme" do
-    @part.theme_path.should =~ %r~themes/cool/views/parts/stock/simple_preview.html.liquid$~
+    @part.theme_path.should =~ %r~themes/test/views/parts/stock/simple_preview.html.liquid$~
   end
   it "should know about its path for a given a theme" do
-    @part.theme_path('freezing_cool').should =~ %r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~
+    @part.theme_path('freezing_test').should =~ %r~themes/freezing_test/views/parts/stock/simple_preview.html.liquid$~
   end
 
   it "should know it is in the theme if the part file exists there" do
-    File.stub!(:file?).with(%r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~).and_return(true)
-    @part.should be_in_theme('freezing_cool')
+    File.stub!(:file?).with(%r~themes/freezing_test/views/parts/stock/simple_preview.html.liquid$~).and_return(true)
+    @part.should be_in_theme('freezing_test')
   end
   it "should know it is not in the theme if the part file does not exist there" do
-    File.should_receive(:file?).with(%r~themes/freezing_cool/views/parts/stock/simple_preview.html.liquid$~).and_return(false)
-    @part.should_not be_in_theme('freezing_cool')
+    File.should_receive(:file?).with(%r~themes/freezing_test/views/parts/stock/simple_preview.html.liquid$~).and_return(false)
+    @part.should_not be_in_theme('freezing_test')
   end
 
  # it "should find its existing file in the fixtures" do
@@ -400,15 +400,15 @@ describe "The Image Preview form the fixtures" do
   end
 end
 
-describe "Alternative Part in Theme 'cool'" do
+describe "Alternative Part in Theme 'test'" do
   fixtures :parts
   before(:each) do
-    @theme = 'cool'
+    @theme = 'test'
     @part = parts(:simple_preview)
     @part.current_theme = @theme
 
     @liquid_paths = [
-      "#{RAILS_ROOT}/themes/cool/views/parts/stock/simple_preview.html.liquid",
+      "#{RAILS_ROOT}/themes/test/views/parts/stock/simple_preview.html.liquid",
       "#{RAILS_ROOT}/spec/fixtures/views/parts/stock/simple_preview.html.liquid"
     ] 
     @part.stub!(:liquid_paths).and_return(@liquid_paths)
@@ -419,18 +419,18 @@ describe "Alternative Part in Theme 'cool'" do
   end
 
   it "should load its liquid code from theme path if it exists" do
-    File.should_receive(:file?).with(@liquid_paths.first).at_least(1).and_return(true) # cool theme exists
-    @part.should_receive(:load_liquid_from).with(%r~themes/cool~).and_return("themed liquid code")
+    File.should_receive(:file?).with(@liquid_paths.first).at_least(1).and_return(true) # test theme exists
+    @part.should_receive(:load_liquid_from).with(%r~themes/test~).and_return("themed liquid code")
     @part.liquid.should == 'themed liquid code'
   end
 
   it "should remove liquid code and configuration of the given theme" do
     theme_path = @liquid_paths.first
     configuration_path = theme_path.sub(/html.liquid$/,'yml')
-    File.should_receive(:file?).with(theme_path).at_least(1).and_return(true) # cool theme exists
+    File.should_receive(:file?).with(theme_path).at_least(1).and_return(true) # test theme exists
     File.should_receive(:delete).with(theme_path).once.and_return(true)
 
-    File.should_receive(:file?).with(configuration_path).at_least(1).and_return(true) # cool theme exists (config)
+    File.should_receive(:file?).with(configuration_path).at_least(1).and_return(true) # test theme exists (config)
     File.should_receive(:delete).with(configuration_path).once.and_return(true)
 
     @part.should_not_receive(:destroy)

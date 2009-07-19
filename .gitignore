@@ -3,3 +3,4 @@
 .*.swo
 /doc
 db/*sql
+themes/test
