@@ -39,20 +39,20 @@ var Toolbox = {
     this.header = this.element().find('> div.ui-widget-header.ui-dialog-titlebar:first').addClass('header');
 
     this.sideBar = $('<div />')
-      .addClass('sidebar left ui-widget-content')
+      .addClass('sidebar left ui-corner-all')
       .attr('id', 'toolbox_sidebar')
       .appendTo('body');
 
     this.history = $('<ul />')
-      .addClass('history list records')
+      .addClass('history list records ui-widget-content ui-corner-all')
       .appendTo(Toolbox.sideBar);
 
     this.clipboard = $('<ul />')
-      .addClass('clipboard list records')
+      .addClass('clipboard list records ui-widget-content ui-corner-all')
       .appendTo(Toolbox.sideBar);
 
     this.sideBarActions = $('<div />')
-      .addClass('ui-widget-header ui-corder-all actions')
+      .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
 
     this.toggleEditGridButton = $.ui.button({class: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'pencil'})

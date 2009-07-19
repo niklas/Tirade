@@ -179,17 +179,15 @@ div#toolbox_sidebar {
   }
   ul.history { 
     min-height: 25%;
+    margin-bottom: 0.3em;
   }
   ul.clipboard { 
     min-height: 50%;
-    position: absolute;
     bottom: 25px;
+    margin-bottom: 0.3em;
   }
-  ul.actions {
-    position: absolute;
-    bottom: 0;
-    padding: 2px 0;
-    li {
+  div.actions {
+    a {
       float: left;
     }
   }
