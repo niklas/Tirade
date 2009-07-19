@@ -141,16 +141,23 @@ class Part < ActiveRecord::Base
       self.errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
     end
 
+    must_have_valid_html
+
+  end
+
+  def must_have_valid_html
     unless html.blank?
-      parser = XML::Parser.new
-      parser.string = "<div>#{html}</div>"
+      parser = XML::Parser.string "<div>#{html}</div>"
       msgs = []
-      XML::Parser.register_error_handler lambda { |msg| msgs << msg }
+      XML::Error.set_handler { |error| msgs << error.to_s }
       begin
         parser.parse
       rescue Exception => e
         self.errors.add(:html, '<pre>' + msgs.collect{|c| c.to_s.h }.join + '</pre>')
+      ensure
+        XML::Error.reset_handler
       end
+
     else
       # TODO warning when :html is blank?
       #self.errors.add(:html, "no HTML found")
