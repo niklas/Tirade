@@ -1,26 +1,18 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/contents/edit.html.erb" do
-  ActionView::Base.default_form_builder = NormalFormBuilder
-  include ContentsHelper
+  ActionView::Base.class_eval do 
+    self.default_form_builder = NormalFormBuilder
+    include ContentsHelper
+    include InterfaceHelper
+  end
   
   before do
-    @content = mock_model(Content)
-    @content.stub!(:title).and_return("MyString")
-    @content.stub!(:description).and_return("MyText")
-    @content.stub!(:markup?).and_return(false)
-    @content.stub!(:acting_roles).and_return([])
-    @content.stub!(:body).and_return("MyText")
-    @content.stub!(:published_at).and_return(Time.now)
-    @content.stub!(:new_record?).and_return(false)
-    @content.stub!(:images).and_return([])
-    @content.stub!(:class_name).and_return('Content')
-    @content.stub!(:table_name).and_return('contents')
-    @content.stub!(:wanted_parent_id).and_return(nil)
-    @content.stub!(:acts_as?).and_return(false)
-    # FIXME why does InterfaceHelper#current_model not recognize @content
-    assigns[:model] = @content
+    @content = Factory(:content)
+    assigns[:object] = @content
     assigns[:content] = @content
+    template.stub!(:model_name).and_return('Content')
+    template.stub!(:model).and_return(Content)
   end
 
 
