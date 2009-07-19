@@ -1,5 +1,4 @@
-class PagesController < ApplicationController
-  feeds_toolbox_with :page
+class PagesController < ManageResourceController::Base
 
   def preview
     if @page = Page.find_by_id(params[:id])
@@ -25,9 +24,10 @@ class PagesController < ApplicationController
       page.insert_page(@page)
     end
   end
-  alias :after_update_toolbox_for_show :show_if_fresh
-  alias :after_update_toolbox_for_created :show_if_fresh
-  alias :after_update_toolbox_for_updated :show_if_fresh
+  # TODO re-enable hooks
+  #alias :after_update_toolbox_for_show :show_if_fresh
+  #alias :after_update_toolbox_for_created :show_if_fresh
+  #alias :after_update_toolbox_for_updated :show_if_fresh
 
 
 end

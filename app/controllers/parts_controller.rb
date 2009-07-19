@@ -1,12 +1,9 @@
-class PartsController < ApplicationController
-  feeds_toolbox_with :part
-  layout 'admin'
-
-  def index
+class PartsController < ManageResourceController::Base
+  index.before do
     Part.sync!
-    @models = @parts = Part.search(params[:search].andand[:term]).paginate(:page => params[:page], :per_page => 30)
-    render_toolbox_action :index
   end
+
+  # TODO update renderings for part after update
 
   def after_update_toolbox_for_updated(page)
     if @context_page

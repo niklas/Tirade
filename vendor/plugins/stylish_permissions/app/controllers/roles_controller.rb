@@ -1,6 +1,6 @@
-class RolesController < ApplicationController
+class RolesController < ManageResourceController::Base
+  # TODO move into model
   before_filter :fix_hbtm_ids, :only => [:update]
-  feeds_toolbox_with :role
 
   private
   def fix_hbtm_ids

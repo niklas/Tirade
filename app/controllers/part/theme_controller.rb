@@ -1,7 +1,7 @@
-class Part::ThemeController < ApplicationController
+class Part::ThemeController < ManageResourceController::Base
+  # TODO spec and make work again
   before_filter :fetch_part
   before_filter :fetch_theme
-  feeds_toolbox_with :part, :except => :all
 
   def show
     @part.current_theme = @theme

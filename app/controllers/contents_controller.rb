@@ -1,6 +1,5 @@
-class ContentsController < ApplicationController
+class ContentsController < ManageResourceController::Base
   before_filter :which_content_type, :only => [:create, :new]
-  feeds_toolbox_with :content
   # GET /contents
   # GET /contents.xml
   def index

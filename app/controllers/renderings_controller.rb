@@ -1,6 +1,6 @@
-class RenderingsController < ApplicationController
+class RenderingsController < ManageResourceController::Base
+  # TODo make work again
   protect_from_forgery :only => []
-  feeds_toolbox_with :rendering
 
   def after_update_toolbox_for_created(page)
     page.update_grid_for(@rendering)

@@ -1,18 +1,9 @@
-class ImagesController < ApplicationController
+class ImagesController < ManageResourceController::Base
   protect_from_forgery :only => [:create, :destroy]
-
-  layout 'admin'
   in_place_edit_for :image, :title
-  feeds_toolbox_with :image
-  
-  def index
-    # TODO: Pagination
-    @models = @images = Image.search(params[:search].andand[:term]).find(:all, :order => 'created_at DESC')
-
-    render_toolbox_action :index
-  end
 
   # TODO append .js in multipartform
+  # TODO multiple jupload with flash or so..
   def create
     @model = @image = Image.new(params[:image])
 

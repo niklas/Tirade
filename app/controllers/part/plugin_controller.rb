@@ -1,7 +1,7 @@
-class Part::PluginController < ApplicationController
+class Part::PluginController < ManageResourceController::Base
+  # TODO spec and make work again
   before_filter :fetch_part
   before_filter :fetch_plugin
-  feeds_toolbox_with :part, :except => :all
 
   def show
     @part.current_plugin = @plugin

@@ -1,7 +1,7 @@
-class GridsController < ApplicationController
+class GridsController < ManageResourceController::Base
+  # spec and make work again
   before_filter :login_required
   #before_filter :fetch_associated_rendering, :only => [:edit, :update]
-  feeds_toolbox_with :grid
   before_filter :fetch_grid, :except => [:index, :new]
   
   # FIXME (must be done in ressourcefull_views plugin)

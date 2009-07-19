@@ -1,6 +1,6 @@
-class GroupsController < ApplicationController
+class GroupsController < ManageResourceController::Base
+  # TODO move into model
   before_filter :fix_hbtm_ids, :only => [:update]
-  feeds_toolbox_with :group
 
   private
   def fix_hbtm_ids
