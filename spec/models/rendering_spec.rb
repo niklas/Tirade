@@ -310,3 +310,32 @@ describe Rendering, "scoped for multiple Documents with order" do
     @rendering.scope.order.should == 'ascending_by_title'
   end
 end
+
+describe Rendering, "without content", :type => :helper do
+  before( :each ) do
+    @rendering = Factory(:rendering, :content => nil)
+  end
+
+  it "should really have no content" do
+    @rendering.content.should be_nil
+  end
+
+  describe "rendering it" do
+    def do_render
+      @html = @rendering.render
+    end
+
+    it "should be sucessful" do
+      lambda { do_render }.should_not raise_error
+    end
+
+    it "should render with a warning about not having any content" do
+      do_render
+      @html.should_not be_blank
+      @html.should have_text(/This Rendering has no Content assigned/)
+    end
+
+  end
+
+
+end
