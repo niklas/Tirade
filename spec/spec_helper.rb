@@ -57,7 +57,7 @@ end
 def mock_controller
   controller = mock(PublicController)
   controller.stub!(:current_theme).and_return('cool')
-  controller.stub!(:view_paths).and_return([ File.join(RAILS_ROOT,'spec','fixtures','views') ])
+  controller.stub!(:view_paths).and_return([ 'app/views', File.join(RAILS_ROOT,'spec','fixtures','views') ])
   controller.stub!(:master_helper_module).and_return(PublicController.new.master_helper_module)
   controller
 end
