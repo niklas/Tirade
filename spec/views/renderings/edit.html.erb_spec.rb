@@ -2,7 +2,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/renderings/edit.html.erb" do
   include RenderingsHelper
-  ActionView::Base.default_form_builder = NormalFormBuilder
+  ActionView::Base.class_eval do
+    self.default_form_builder = NormalFormBuilder
+    include InterfaceHelper
+  end
   
   before do
     login_as :quentin
