@@ -1,20 +1,21 @@
 # == Schema Information
-# Schema version: 20090412210854
+# Schema version: 20090711174603
 #
 # Table name: renderings
 #
-#  id           :integer         not null, primary key
-#  page_id      :integer         
-#  content_id   :integer         
-#  part_id      :integer         
-#  grid_id      :integer         
-#  position     :integer         
-#  created_at   :datetime        
-#  updated_at   :datetime        
-#  content_type :string(255)     
-#  options      :text            
-#  assignment   :string(32)      default("fixed")
-#  scope        :text            
+#  id               :integer         not null, primary key
+#  page_id          :integer         
+#  content_id       :integer         
+#  part_id          :integer         
+#  grid_id          :integer         
+#  position         :integer         
+#  created_at       :datetime        
+#  updated_at       :datetime        
+#  content_type     :string(255)     
+#  options          :text            
+#  assignment       :string(32)      default("fixed")
+#  scope_definition :text            
+#  plural           :boolean         
 #
 
 class Rendering < ActiveRecord::Base
