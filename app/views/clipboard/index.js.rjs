@@ -1,1 +1,1 @@
-page.toolbox.clipboard.html render(:partial => 'index')
+page.toolbox.set_clipboard render(:partial => 'index')
