@@ -8,8 +8,7 @@ dependencies.module_eval do
       if Tirade::ActiveRecord::Content.class_names.include?(class_name)
         ActiveRecord::Base::logger.debug("Tirade will define a #{qualified_name}")
         Object.class_eval <<-EODECL
-          class #{qualified_name} < ApplicationController
-            feeds_toolbox_with :#{class_name.underscore}
+          class #{qualified_name} < ManageResourceController::Base
           end
         EODECL
         autoloaded_constants << qualified_name
