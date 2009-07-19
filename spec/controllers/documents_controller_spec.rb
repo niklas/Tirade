@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 # This is one of the automatically detected Controller, so we have to define it here
-class DocumentsController < ManageResourceController; end
+class DocumentsController < ManageResourceController::Base; end
 
 describe DocumentsController do
   before( :each ) do
@@ -13,7 +13,7 @@ describe DocumentsController do
   end
 
   it "should be a ManageResourceController" do
-    controller.should be_a(ManageResourceController)
+    controller.should be_a(ManageResourceController::Base)
   end
 
   it "should manage Documents" do
