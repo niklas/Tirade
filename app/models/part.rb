@@ -77,10 +77,8 @@ class Part < ActiveRecord::Base
   end
 
   def title
-    if !active_plugin.blank?
-      "#{name} in '#{active_plugin}' plugin"
-    elsif !active_theme.blank?
-      "#{name} in '#{active_theme}' theme"
+    if !current_plugin.blank?
+      "#{name} in '#{current_plugin}' plugin"
     elsif in_theme?
       "#{name} in '#{current_theme}' theme"
     else
