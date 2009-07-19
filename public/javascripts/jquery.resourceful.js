@@ -119,4 +119,23 @@
   $.fn.disableField = function(name) {
     return $(this).fieldFor(name).disable();
   };
+
+  $.fn.listOfItems = function() {
+    return $(this).each( function() {
+      $('li', this).livequery( function() { $(this).itemInList() } );
+      $(this)
+        .unbind('dblclick').dblclick(function(e) { $(e.target).find('a.show,a.index').filter(':first').click() });
+    });
+  };
+
+  $.fn.itemInList = function() {
+    return $(this).each(function() {
+      $(this)
+        .addClass('ui-widget-content ui-corner-all')
+        .filter(':has(a.show,a.index)')
+          .css('cursor', 'pointer')
+          .hover( function() { $(this).addClass('ui-state-hover')}, function() { $(this).removeClass('ui-state-hover') })
+        .end()
+    });
+  };
 })(jQuery);

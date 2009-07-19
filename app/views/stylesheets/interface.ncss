@@ -1,22 +1,22 @@
 /* Drag & Drop */
 *.active-droppable, *.active-sortable {
-  background: url(../images/pentagon-tile.jpg) repeat;
+  background: url(../images/pentagon-tile.jpg) repeat !important;
   min-height: 1em;
 }
 
 *.ui-sortable.empty, *.ui-droppable.empty  {
-  background: url(../images/pentagon-tile.jpg) repeat;
+  background: url(../images/pentagon-tile.jpg) repeat !important;
   min-height: 3em;
   min-width; 6em;
 }
 *.placeholder, *.ui-sortable-placeholder {
-  background: url(../images/pentagon-tile-active.jpg) repeat;
+  background: url(../images/pentagon-tile-active.jpg) repeat !important;
   min-height: 3em;
   min-width: 6em;
 }
 
 *.drop-hover {
-  background: url(../images/pentagon-tile-active.jpg) repeat;
+  background: url(../images/pentagon-tile-active.jpg) repeat !important;
 }
 *.ui-draggable, *.ui-sortable {
   span.handle {
@@ -39,8 +39,8 @@
   padding: <%= @small %> <%= @big %>;
   list-style: none;
   margin: 0;
-  a.show, a.edit, a.index { display: none; }
-  img.association { display: none; }
+  a.show, a.edit, a.index { display: none !important; }
+  a.association { display: none !important; }
 }
 
 
@@ -401,22 +401,21 @@ ul.list, dl, ul.tree {
       top: -1.7em;
       right: 0;
     }
-  }
-  img.association {
-    position: absolute;
-    display: none;
-    top: 50%;
-    margin-right: 16px;
-    margin-top: -8px;
-    right: <%= @medium %>;
-    cursor: pointer;
+    .association {
+      position: absolute;
+      display: none !important;
+      top: 50%;
+      margin-right: 16px;
+      margin-top: -8px;
+      right: <%= @medium %>;
+    }
   }
   img.icon {
     margin: 0 6px 0 0;
     float: left;
   }
   li:hover, di:hover > *, li:hover > div.node  {
-    > a.show, > a.index, > img.association {
+    > a.show, > a.index, > a.association {
       display: block !important;
     }
   }

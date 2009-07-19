@@ -89,6 +89,7 @@ var Toolbox = {
       .toggle(Toolbox.maximize, Toolbox.unmaximize)
       .appendTo(Toolbox.header);
 
+    this.elements = $('#toolbox, #toolbox_sidebar');
   },
   applyBehaviors: function() {
     this.body.serialScroll({
@@ -211,18 +212,6 @@ var Toolbox = {
           .attr('href',field.val())
           .val('');
       })
-    });
-
-    this.last(' ul.list').livequery(function() { 
-      $(this)
-        .find('li')
-          .addClass('ui-widget-content ui-corner-all')
-        .end()
-        .find('li:has(a.show, a.index)')
-          .css('cursor', 'pointer')
-          .hover( function() { $(this).addClass('ui-state-hover')}, function() { $(this).removeClass('ui-state-hover') })
-        .end()
-        .unbind('dblclick').dblclick(function(e) { $(e.target).find('a:first').click() });
     });
 
     this.last(' di.association.one dd > ul.list').livequery(function() { $(this).hasOneEditor() });
@@ -494,13 +483,13 @@ var Toolbox = {
   },
   beGhost: function() {
     if ( !this.ghosted ) {
-      this.element().animate({opacity: 0.42, duration: 1000});
+      this.elements.stop().animate({opacity: 0.42, duration: 500});
       this.ghosted = true;
     }
   },
   unGhost: function() {
     if ( this.ghosted ) {
-      this.element().animate({opacity: 1, duration: 1000});
+      this.elements.stop().animate({opacity: 1, duration: 500});
       this.ghosted = false;
     }
   },
@@ -536,11 +525,12 @@ var Toolbox = {
   },
   close: function() {
     this.expireBehaviors();
+    this.sideBar.remote();
     this.element().remove();
     $('div.active').removeClass('active');
   },
   otherDroppables: function() {
-    return this.element().siblings().find('.ui-droppable')
+    return this.element().siblings(':not(#toolbox_sidebar)').find('.ui-droppable')
   },
   accordion: function() {
     return this.last(' div.accordion')

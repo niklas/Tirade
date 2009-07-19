@@ -192,11 +192,11 @@ div#toolbox_sidebar {
     }
   }
   ul {
-     padding: 0px;
+     padding: 0.3em;
      margin: 2px 0;
      li {
         display: block;
-        padding: 0;
+        padding: 0.3em;
         a {
            text-decoration: none;
            display: block;
