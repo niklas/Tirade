@@ -1,24 +1,17 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/pages/edit.html.erb" do
-  include PagesHelper
-  fixtures :all
+  ActionView::Base.class_eval do
+    include PagesHelper
+    include InterfaceHelper
+  end
   
   before do
-    @page = mock_model Page,
-      :title => 'Sub',
-      :url => 'main/sub',
-      :wanted_parent_id => 1,
-      :table_name => 'pages',
-      :class_name => 'Page',
-      :root? => false,
-      :parent => pages(:main),
-      :layout_id => 23,
-      :width => '500px',
-      :alignment => 'center'
-
+    @page = Factory(:page)
+    template.stub!(:model_name).and_return('Page')
+    template.stub!(:model).and_return(Page)
     assigns[:page] = @page
-    template.controller.stub!(:controller_name).and_return("pages")
+    assigns[:object] = @page
   end
 
   it "should render edit form with some fields" do
