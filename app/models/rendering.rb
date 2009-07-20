@@ -176,7 +176,8 @@ class Rendering < ActiveRecord::Base
 
   def context(assings={})
     {
-      'page' => page
+      'page' => page,
+      'trailing_path_of_page' => trailing_path_of_page
     }
   end
 

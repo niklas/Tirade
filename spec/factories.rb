@@ -42,3 +42,10 @@ Factory.define :scoped_rendering, :parent => :rendering do |f|
   f.content_type 'Document'
   f.plural true
 end
+
+Factory.define :image do |f|
+  f.sequence(:title) { |i| "Image ##{i}"}
+  f.sequence(:image_file_name) {|i| "a_nice_image#{i}.jpg" }
+  f.image_content_type 'image/jpg'
+  f.image_file_size 2342
+end

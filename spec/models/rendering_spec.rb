@@ -256,25 +256,88 @@ describe "The Renderings loaded by fixtures" do
 
 end
 
-describe "A Rendering", "with an assigned Content" do
-  it "should find fixed content (polymorphic)"
-  it "should be able to render a Part for single Content"
-  it "should give the (remaining) :trailing_path_of_page into the part ?"
-  it "should have assignment: :fixed"
+describe Rendering, "with Page with trailing path" do
+  before( :each ) do
+    @rendering = Factory(:rendering)
+    @page = @rendering.page
+    @trailing_path = ["Goodbye", "Morning", "Glory"]
+    @page.stub!(:trailing_path).and_return(@trailing_path)
+  end
+
+  it "should access this path" do
+    @rendering.trailing_path_of_page.should== @trailing_path
+  end
+
+  it "should include this path in its final options" do
+    @rendering.final_options.should have_key('trailing_path_of_page')
+    @rendering.final_options['trailing_path_of_page'].should == @trailing_path
+  end
+end
+
+describe "renderable Rendering", :shared => true do
+  before( :each ) do
+    @trailing_path = ['Goodbye']
+    @rendering.stub!(:trailing_path_of_page).and_return(@trailing_path)
+  end
+  def do_render
+    @html = @rendering.render
+  end
+
+  it "should be successful" do
+    lambda { do_render }.should_not raise_error
+    @html.should_not be_blank
+  end
+  
+  it "should give the (remaining) :trailing_path_of_page into the part" do
+    @rendering.final_options.should have_key('trailing_path_of_page')
+    @rendering.final_options['trailing_path_of_page'].should == @trailing_path
+  end
+end
+
+describe "A Rendering", "with a fixed assigned Document" do
+  before( :each ) do
+    @content = Factory(:document)
+    @rendering = Factory(:rendering, :assignment => 'fixed', :content => @content)
+  end
+  it "should find fixed content (polymorphic)" do
+    @rendering.content.should_not be_nil
+    @rendering.content.should == @content
+    @rendering.content_type.should == 'Content' # STI parent
+    @rendering.content_id.should == @content.id
+  end
+  it "should have assignment: :fixed" do
+    @rendering.assignment.should == 'fixed'
+  end
+  it_should_behave_like 'renderable Rendering'
+end
+
+describe "A Rendering", "with a fixed assigned Image" do
+  before( :each ) do
+    @content = Factory(:image)
+    @rendering = Factory(:rendering, :assignment => 'fixed', :content => @content)
+  end
+  it "should find fixed content (polymorphic)" do
+    @rendering.content.should_not be_nil
+    @rendering.content.should == @content
+    @rendering.content_type.should == 'Image'
+    @rendering.content_id.should == @content.id
+  end
+  it "should have assignment: :fixed" do
+    @rendering.assignment.should == 'fixed'
+  end
+  it_should_behave_like 'renderable Rendering'
 end
 
 describe "A Rendering", "with an assignment by_title_from_trailing_url " do
   before(:each) do
     @rendering = Factory.build :rendering, :assignment => 'by_title_from_trailing_url'
-    @rendering.stub!(:trailing_path_of_page).and_return(['Goodbye'])
   end
   it "should find Content#find_by_slug(trailing_path_of_page.urlize)" do
     content = "jojojo"
     Content.should_receive(:find_by_slug).with('goodbye').and_return( content )
     @rendering.content.should == content
   end
-  it "should be able to render a Part for single Content"
-  it "should give the (remaining) :trailing_path_of_page into the part ?"
+  it_should_behave_like 'renderable Rendering'
 end
 
 
@@ -286,6 +349,7 @@ describe "Rendering with collection of Documents", :shared => true do
     @rendering.content.should respond_to(:each)
     @rendering.content.first.should be_a(Document)
   end
+  it_should_behave_like 'renderable Rendering'
 end
 
 
@@ -336,6 +400,5 @@ describe Rendering, "without content", :type => :helper do
     end
 
   end
-
 
 end
