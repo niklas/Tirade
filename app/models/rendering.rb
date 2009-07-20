@@ -19,9 +19,6 @@
 #
 
 class Rendering < ActiveRecord::Base
-  # TODO enable Memoizable
-  # extend ActiveSupport::Memoizable
-
   acts_as_renderer
   serialize :scope_definition, Hash
   def scope_definition
@@ -37,9 +34,6 @@ class Rendering < ActiveRecord::Base
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
-
-  # TODO
-  # validate_scope_fields, should be present in content_class
 
   belongs_to :page
   belongs_to :part
@@ -85,7 +79,6 @@ class Rendering < ActiveRecord::Base
       if content_type && content_slug = trailing_path_of_page.first.andand.sluggify
         content_type.constantize.find_by_slug(content_slug)
       end
-    # TODO: singular/plural flag for Part
     when 'scope'
       plural? ? content_by_scope : content_by_scope.first
     else
@@ -102,10 +95,9 @@ class Rendering < ActiveRecord::Base
       raise "no content_type set"
     end
   end
-  # TODO memoize
-  #memoize :scope
 
   def scope=(new_scope)
+    @scope = nil
     self.scope_definition = new_scope
   end
 
