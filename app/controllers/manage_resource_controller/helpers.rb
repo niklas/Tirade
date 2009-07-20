@@ -21,10 +21,9 @@ module ManageResourceController
     end
 
     def set_form_builder
-      if request.xhr?
-        ActionView::Base.default_form_builder = ToolboxFormBuilder
-      else
-        ActionView::Base.default_form_builder = NormalFormBuilder
+      respond_to do |wants|
+        wants.js { ActionView::Base.default_form_builder = ToolboxFormBuilder }
+        wants.html { ActionView::Base.default_form_builder = NormalFormBuilder }
       end
     end
 

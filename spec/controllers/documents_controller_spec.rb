@@ -92,36 +92,42 @@ describe DocumentsController do
       do_request
     end
     it "should set context page"
-    it "should set the formbuilder"
+  end
+
+  describe "every request with form", :shared => true do
+    it "should set the formbuilder" do
+      ActionView::Base.should_receive(:default_form_builder=).with(ToolboxFormBuilder)
+      do_request
+    end
   end
 
   describe "by AJAX" do
 
     describe "get /index without any params" do
-
-      it "should succeed" do
+      def do_request
         get :index, :format => 'js'
-        response.should be_success
       end
 
+      it_should_behave_like 'every request'
+
       it "should set assigns" do
-        get :index, :format => 'js'
+        do_request
         assigns[:collection].should_not be_blank
         assigns[:documents].should_not be_blank
       end
 
       it "should render a list" do
-        get :index, :format => 'js'
+        do_request
         response.should render_template('_list.html.erb')
       end
 
       it "should push the list into toolbox" do
-        get :index, :format => 'js'
+        do_request
         response.should push_frame
       end
 
       it "should set the toolbox header" do
-        get :index, :format => 'js'
+        do_request
         response.should set_toolbox_header('Documents')
       end
 
@@ -153,16 +159,15 @@ describe DocumentsController do
     end
     
     describe "get /new" do
-
-      before( :each ) do
+      def do_request
         get :new, :format => 'js'
       end
 
-      it "should succeed" do
-        response.should be_success
-      end
+      it_should_behave_like 'every request'
+      it_should_behave_like 'every request with form'
 
       it "should render the contents form (document has no own yet )" do
+        do_request
         response.should render_template('contents/_form.html.erb')
       end
 
@@ -173,6 +178,9 @@ describe DocumentsController do
       def do_request
         post :create, :document => Factory.attributes_for(:document), :format => 'js'
       end
+
+      it_should_behave_like 'every request'
+      it_should_behave_like 'every request with form'
 
       it "should save the Document" do
         lambda { do_request }.should change(Document,:count).by(1)
@@ -192,16 +200,17 @@ describe DocumentsController do
         do_request
       end
 
-      it_should_behave_like 'every request'
-      
     end
 
-    describe "creating a Document with invalid attributes" do
+    describe "trying to create a Document with invalid attributes" do
 
       def do_request
         post :create, :document => Factory.attributes_for(:document), :format => 'js'
       end
 
+      it_should_behave_like 'every request'
+      it_should_behave_like 'every request with form'
+      
       before( :each ) do
         @new_document = Factory.build :document
         @new_document.stub!(:valid?).and_return(false)
@@ -228,22 +237,19 @@ describe DocumentsController do
         clipboard.should_not_receive(:<<)
         do_request
       end
-      
-      it_should_behave_like 'every request'
 
     end
 
     describe "get /show" do
 
-      before( :each ) do
+      def do_request
         get :show, :id => @document.to_param, :format => 'js'
       end
 
-      it "should succeed" do
-        response.should be_success
-      end
+      it_should_behave_like 'every request'
 
       it "should render show partial" do
+        do_request
         response.should render_template('contents/_show.html.erb')
       end
 
@@ -251,31 +257,31 @@ describe DocumentsController do
     
     describe "get /edit" do
 
-      before( :each ) do
+      def do_request
         get :edit, :id => @document.to_param, :format => 'js'
       end
 
-      it "should succeed" do
-        response.should be_success
-      end
+      it_should_behave_like 'every request'
+      it_should_behave_like 'every request with form'
 
       it "should render the contents form (document has no own yet )" do
+        do_request
         response.should render_template('contents/_form.html.erb')
       end
 
     end
 
     describe "put /update with valid attributes" do
-      
-      before( :each ) do
+
+      def do_request
         put :update, :id => @document.to_param, :document => Factory.attributes_for(:document), :format => 'js'
       end
-
-      it "should succeed" do
-        response.should be_success
-      end
+      
+      it_should_behave_like 'every request'
+      it_should_behave_like 'every request with form'
 
       it "should pop the last frame from the Toolbox" do
+        do_request
         response.should pop_frame_and_refresh_last
       end
 
@@ -285,22 +291,26 @@ describe DocumentsController do
     end
 
     describe "put /update with invalid attributes" do
+
+      def do_request
+        put :update, :id => @document.to_param, :document => Factory.attributes_for(:document), :format => 'js'
+      end
       
+      it_should_behave_like 'every request'
+      it_should_behave_like 'every request with form'
+
       before( :each ) do
         @document.stub!(:valid?).and_return(false)
         Document.stub!(:find).and_return(@document)
-        put :update, :id => @document.to_param, :document => Factory.attributes_for(:document), :format => 'js'
-      end
-
-      it "should succeed" do
-        response.should be_success
       end
 
       it "should rerender the form" do
+        do_request
         response.should render_template('contents/_form.html.erb')
       end
 
       it "should show validation errors" do
+        do_request
         response.should set_toolbox_status('Failed to update Document')
       end
 
