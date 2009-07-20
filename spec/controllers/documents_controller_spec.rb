@@ -81,8 +81,16 @@ describe DocumentsController do
   end
 
   describe "every request", :shared => true do
-    it "should succeed"
-    it "should prepare clipboard"
+    it "should succeed" do
+      do_request
+      response.should be_success
+    end
+    it "should prepare clipboard" do
+      clipboard = mock_model(Clipboard)
+      clipboard.stub!(:<<).and_return(true)
+      ::Clipboard.should_receive(:new).and_return( clipboard )
+      do_request
+    end
     it "should set context page"
     it "should set the formbuilder"
   end
@@ -120,26 +128,25 @@ describe DocumentsController do
     end
 
     describe "get /index from livesearch" do
-      def do_search(term='lot')
+      def do_request(term='lot')
         get :index, :format => 'js', :search => {:term => term}
-      end
-
-      before( :each ) do
-        do_search
       end
 
       it_should_behave_like 'every request'
 
       it "should set assigns" do
+        do_request
         assigns[:collection].should_not be_blank
         assigns[:documents].should_not be_blank
       end
 
       it "should render a list" do
+        do_request
         response.should render_template('contents/_list_item.erb')
       end
 
       it "should pupulate a div.search_results" do
+        do_request
         unescape_rjs(response.body).should have_text(%r~Toolbox.last\(\).find\("div.search_results.documents"\).html\(~)
       end
 
@@ -163,33 +170,35 @@ describe DocumentsController do
 
     describe "creating a valid Document" do
 
-      def do_create
+      def do_request
         post :create, :document => Factory.attributes_for(:document), :format => 'js'
       end
 
-      it "should succeed" do
-        do_create
-        response.should be_success
-      end
-
       it "should save the Document" do
-        lambda { do_create }.should change(Document,:count).by(1)
+        lambda { do_request }.should change(Document,:count).by(1)
       end
 
       it "should update the last toolbox frame with 'show'" do
-        do_create
+        do_request
         response.should render_template('contents/_show.html.erb')
         response.should update_last_frame
         response.should set_toolbox_header('Document #\d+')
       end
 
-      it "should add the Document to the clipboard"
+      it "should add the Document to the clipboard" do
+        clipboard = mock_model(::Clipboard)
+        ::Clipboard.stub!(:new).and_return(clipboard)
+        clipboard.stub!(:<<).with(kind_of(Document)).and_return(true)
+        do_request
+      end
+
+      it_should_behave_like 'every request'
       
     end
 
     describe "creating a Document with invalid attributes" do
 
-      def do_create
+      def do_request
         post :create, :document => Factory.attributes_for(:document), :format => 'js'
       end
 
@@ -199,25 +208,29 @@ describe DocumentsController do
         Document.stub!(:new).and_return(@new_document)
       end
 
-      it "should succeed" do
-        do_create
-        response.should be_success
-      end
-
       it "should not save the Document" do
-        lambda { do_create }.should_not change(Document,:count)
+        lambda { do_request }.should_not change(Document,:count)
       end
 
       it "should rerender the form" do
-        do_create
+        do_request
         response.should render_template('contents/_form.html.erb')
       end
 
       it "should show validation errors" do
-        do_create
+        do_request
         response.should set_toolbox_status('Failed to create Document')
       end
+
+      it "should not add the unsaved Document to the clipboard" do
+        clipboard = mock_model(::Clipboard)
+        ::Clipboard.stub!(:new).and_return(clipboard)
+        clipboard.should_not_receive(:<<)
+        do_request
+      end
       
+      it_should_behave_like 'every request'
+
     end
 
     describe "get /show" do

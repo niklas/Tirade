@@ -93,16 +93,6 @@ class ApplicationController < ActionController::Base
     cookies[:roles] = roles
   end
 
-  def prepare_clipboard
-    @clipboard ||= Clipboard.new(session)
-  end
-  def add_created_model_to_clipboard
-    if @model
-      @clipboard << @model
-    end
-    true
-  end
-
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'da7c5d7c04e209653d264f43028c248a'
