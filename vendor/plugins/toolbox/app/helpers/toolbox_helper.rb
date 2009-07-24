@@ -33,19 +33,19 @@ module ToolboxHelper
   end
 
   def push_toolbox_content(content)
-    title, content = prepare_content(content)
+    title, content = context.prepare_content(content)
     page.toolbox.push content, :href => clean_url, :title => title
     set_toolbox_status
   end
 
   def refresh_toolbox_content(content)
-    title, content = prepare_content(content)
+    title, content = context.prepare_content(content)
     page.toolbox.frame_by_href(clean_url).update :content => content, :title => title
     set_toolbox_status
   end
 
   def update_last_toolbox_frame(content)
-    title, content = prepare_content(content)
+    title, content = context.prepare_content(content)
     page.toolbox.update_last_frame content, :title => title
     set_toolbox_status
   end
@@ -62,7 +62,7 @@ module ToolboxHelper
               exception.class.name
             end
     partial = ApplicationController.rescue_templates[exception.class.name]
-    title, content = prepare_content(:title => title, :partial => "/toolbox/#{partial}", :object => exception)
+    title, content = context.prepare_content(:title => title, :partial => "/toolbox/#{partial}", :object => exception)
     page.toolbox.error content, :title => title
     set_toolbox_status
   end
@@ -110,8 +110,6 @@ module ToolboxHelper
     (@models ||= instance_variable_get("@#{controller.controller_name}")) || raise("no #{controller.controller_name} loaded")
   end
 
-  private
-
   def clean_url
     context.request.path # url.sub(/_=\d+/,'').sub(/\?$/,'')
   end
@@ -119,7 +117,6 @@ module ToolboxHelper
     returning [] do |ary|
       if content.is_a? Hash
         content[:layout] ||= '/layouts/toolbox'
-        content[:object] ||= object || collection
         ary << content.delete(:title) || content[:object].andand.title || 'Foo Title'
         begin
           result = render(content)
