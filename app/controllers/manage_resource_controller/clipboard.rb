@@ -13,7 +13,7 @@ module ManageResourceController
     end
 
     def add_created_model_to_clipboard
-      @clipboard << object if object && !object.new_record?
+      @clipboard << object if @object && !@object.new_record?
       true
     end
 
