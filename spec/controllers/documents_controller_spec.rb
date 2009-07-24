@@ -91,7 +91,6 @@ describe DocumentsController do
       ::Clipboard.should_receive(:new).and_return( clipboard )
       do_request
     end
-    it "should set context page"
   end
 
   describe "every request with form", :shared => true do
@@ -102,6 +101,20 @@ describe DocumentsController do
   end
 
   describe "by AJAX" do
+
+    describe "a get request with context page set in header" do
+      def do_request
+        @request.env['Tirade-Page'] = 23
+        get :index, :format => 'js'
+      end
+
+      it_should_behave_like 'every request'
+
+      it "should set context page from request header" do
+        Page.should_receive(:find_by_id).with(23).and_return( Factory(:page) )
+        do_request
+      end
+    end
 
     describe "get /index without any params" do
       def do_request

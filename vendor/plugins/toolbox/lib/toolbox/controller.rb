@@ -261,30 +261,6 @@ module Tirade
         end
       end
 
-      def set_form_builder
-        if request.xhr?
-          ActionView::Base.default_form_builder = ToolboxFormBuilder
-        else
-          ActionView::Base.default_form_builder = NormalFormBuilder
-        end
-      end
-
-      def non_form_submit?
-        params[:commit].blank?
-      end
-
-      def set_context_page
-        context_page
-        true
-      end
-
-      def context_page
-        return @context_page if @context_page
-        if page_id = (request.headers['Tirade-Page'] || params[:context_page_id].andand.to_i)
-          @context_page = Page.find_by_id(page_id)
-        end
-      end
-
     end
   end
 end

@@ -30,5 +30,19 @@ module ManageResourceController
     def non_form_submit?
       params[:commit].blank?
     end
+
+    def set_context_page
+      context_page
+      true
+    end
+
+    def context_page
+      return @context_page if @context_page
+      logger.debug("setting context page. header: #{request.headers['Tirade-Page']} ")
+      if page_id = (request.headers['Tirade-Page'] || params[:context_page_id].andand.to_i)
+        @context_page = Page.find_by_id(page_id)
+      end
+    end
+
   end
 end
