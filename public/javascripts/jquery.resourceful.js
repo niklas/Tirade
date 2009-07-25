@@ -78,7 +78,7 @@
     if (!options.url) options.url = resource.attr('href');
 
 
-    if (m = options.url.match(/([^\/]+)s\/([^\/]+)/)) { // has id/slug after plural
+    if ( (m = options.url.match(/([^\/]+)s\/([^\/]+)/)) && m[1] != 'new') { // has id/slug after plural
       options.class += ' ' + m[1];
       var actions = [
         { name: 'Edit', class: 'edit', url: options.url + '/edit' },
