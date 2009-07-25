@@ -1,5 +1,4 @@
 class ImagesController < ManageResourceController::Base
-  protect_from_forgery :only => [:create, :destroy]
   in_place_edit_for :image, :title
 
   # TODO append .js in multipartform
@@ -7,8 +6,8 @@ class ImagesController < ManageResourceController::Base
   def create
     @model = @image = Image.new(params[:image])
 
-    
     if @image.save
+      #@image.image_content_type = MIME::Types.type_for(@image.original_filename).to_s 
       @models = @images = [@image] + @image.multiple_images
       @model = @image = @images.first
       responds_to_parent do

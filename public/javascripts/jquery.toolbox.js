@@ -320,6 +320,27 @@ var Toolbox = {
       });
     });
 
+    this.last(' form#new_image').livequery(function() {
+      var form = $(this);
+      $('<a/>').attr('href', '#').text("Go").click( function() { form.uploadifyUpload()  }).appendTo(form.parent());
+      $('<a/>').attr('href', '#').text("Clear").click( function() { form.uploadifyClearQueue()  }).appendTo(form.parent());
+      form.uploadify({
+        uploader: '/flash/uploadify.swf',
+        multi: true,
+        script: Routing.images_path({
+          '_tirade-v2_session' : encodeURIComponent(Toolbox.cookie)
+        }),
+        scriptData: {
+          authenticity_token: encodeURIComponent(form.parent().find('span.rails-auth-token').text())
+        },
+        method: 'POST',
+        fileDataName: form.find(':input[type=file]:first').attr('name'),
+        simUploadLimit: 1,
+        buttonText: 'Browse',
+        cancelImg: '/images/icons/small/x.gif',
+      });
+    });
+
 
     this.last(' a.toggle_live_search').livequery('click', function(e) {
       e.preventDefault();
