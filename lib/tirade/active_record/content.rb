@@ -23,7 +23,7 @@ module Tirade
             acts_as! :slugged
             has_slug :prepend_id => false
           end
-          if liquids = opts.delete(:liquid) + [:slug, :table_name]
+          if liquids = (opts.delete(:liquid) || []) + [:slug, :table_name]
             liquid_methods *liquids
           end
           named_scope :with_later_than_now, lambda { |f|
