@@ -81,4 +81,8 @@ module ApplicationHelper
     link_to(label, thingy, options)
   end
 
+  def session_key_name
+    ActionController::Base.session_options[:key]
+  end
+
 end

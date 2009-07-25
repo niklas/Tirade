@@ -34,12 +34,14 @@ Rails::Initializer.run do |config|
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   config.plugins = [ :theme_support, :all ]
+  config.gem 'mime-types', :lib => 'mime/types'
   config.gem 'desert', :version => '>=0.5.0'
   config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
   config.gem 'libxml-ruby', :version => '>=1.1.3', :lib => 'xml'
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( 
+    #{RAILS_ROOT}/app/middleware 
     #{RAILS_ROOT}/app/filters 
     #{RAILS_ROOT}/app/tags 
     #{RAILS_ROOT}/app/controllers/part
@@ -53,20 +55,6 @@ Rails::Initializer.run do |config|
   # in the database in UTC, and return them converted to the specified local zone.
   # Run "rake -D time" for a list of tasks for finding time zone names. Uncomment to use default local time.
   config.time_zone = 'UTC'
-
-  # Your secret key for verifying cookie session data integrity.
-  # If you change this key, all old sessions will become invalid!
-  # Make sure the secret is at least 30 characters and all random, 
-  # no regular words or you'll be exposed to dictionary attacks.
-  config.action_controller.session = {
-    :session_key => '_tirade-v2_session',
-    :secret      => '9ca10e0b49d90f6bcab2b8fe9ffd811d3ddaa51d4c35f21a1c6936eb08bfe13a1aaf31690f6cbf2a7c234ecd5f25c90b2a9498feb89749fd32bd01f582162abd'
-  }
-
-  # Use the database for sessions instead of the cookie-based default,
-  # which shouldn't be used to store highly confidential information
-  # (create the session table with "rake db:sessions:create")
-  # config.action_controller.session_store = :active_record_store
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
