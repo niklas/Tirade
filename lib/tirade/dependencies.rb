@@ -6,19 +6,22 @@ dependencies.module_eval do
     begin
       load_missing_constant_without_tirade(from_mod, const_name)
     rescue NameError => e
-      if qualified_name =~ /^(\w+)Controller$/i
+      if qualified_name =~ /^(\w+s)Controller$/i
         class_name = $1.singularize
-        if  Tirade::ActiveRecord::Content.class_names.include?(class_name)
+        if Tirade::ActiveRecord::Content.class_names.include?(class_name)
           ActiveRecord::Base::logger.debug("Tirade will define a #{qualified_name}")
           Object.class_eval <<-EODECL
             class #{qualified_name} < ManageResourceController::Base
+              unloadable
             end
           EODECL
           autoloaded_constants << qualified_name
-          return qualified_name.constantize
+          from_mod.const_get(qualified_name)
+        else
+          raise e
         end
       else
-        raise
+        raise e
       end
     end
   end
