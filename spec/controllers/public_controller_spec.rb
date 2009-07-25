@@ -93,4 +93,16 @@ describe PublicController do
     end
   end
 
+
+end
+
+describe PublicController, "accessing not existing page" do
+  integrate_views
+  describe "not logged in" do
+    it "should be successful" do
+      get :index, :path => %w(posts 1)
+      response.should be_success
+    end
+    it "should be 'Not Found'"
+  end
 end
