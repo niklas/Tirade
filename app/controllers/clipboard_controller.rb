@@ -1,5 +1,5 @@
 class ClipboardController < ApplicationController
-  before_filter :prepare_clipboard
+  include ManageResourceController::Clipboard
   protect_from_forgery :only => []
   def index
   end
