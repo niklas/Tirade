@@ -72,7 +72,8 @@ module InterfaceHelper
     if thing.is_a?(ActiveRecord::Base)
       content_tag :li, 
         single_item(thing, opts),
-        :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}", :rel => dom_id(thing)
+        :class => "#{dom_id(thing)} #{thing.table_name.singularize} #{toolbox_item_cycle}", :rel => dom_id(thing),
+        :title => h(thing.title)
     else
       content_tag :li, 
         show_value(thing, opts),
