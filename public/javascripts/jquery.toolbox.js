@@ -11,13 +11,14 @@ var Toolbox = {
           title: 'Toolbox Dialog',
           dragStart: function() { Toolbox.body.css('overflow-x', 'auto')},
           dragStop:  function() { Toolbox.body.css('overflow-x', 'hidden')},
-          drag: Toolbox.callback.drag,
+          drag: Toolbox.callback.sideBarFollow,
+          beforeClose: Toolbox.close,
           resizeStop: Toolbox.callback.resized
         }).parent().attr('id', 'toolbox');
 
       this.sideBarVisible = false;
       this.setup();
-      Toolbox.callback.drag();
+      Toolbox.callback.sideBarFollow();
 
       $.ui.frame("preparing Toolbox..").appendTo( this.content() );
       this.frameCount = 1;
@@ -85,9 +86,15 @@ var Toolbox = {
       })
       .appendTo(Toolbox.header);
 
-    this.toggleSizeButton = $.ui.button({icon: 'arrow-4-diag', text: 'maximize', class: 'min-max' })
-      .toggle(Toolbox.maximize, Toolbox.unmaximize)
-      .appendTo(Toolbox.header);
+    this.maximizeButton = $.ui.button({icon: 'arrow-4-diag', text: 'maximize', class: 'size-max' })
+      .click(Toolbox.maximize).appendTo(Toolbox.header);
+
+    this.normalSizeButton = $.ui.button({icon: 'pin-s', text: 'normalize', class: 'size-normal' })
+      .click(Toolbox.unmaximize).appendTo(Toolbox.header);
+
+    this.tileButton = $.ui.button({icon: 'triangle-2-e-w', text: 'tile', class: 'size-tile' })
+      .click(Toolbox.tile).appendTo(Toolbox.header);
+    Toolbox.setWindowState('normal');
 
     this.elements = $('#toolbox, #toolbox_sidebar');
   },
@@ -546,7 +553,7 @@ var Toolbox = {
   },
   close: function() {
     this.expireBehaviors();
-    this.sideBar.remote();
+    this.sideBar.remove();
     this.element().remove();
     $('div.active').removeClass('active');
   },
@@ -657,22 +664,63 @@ var Toolbox = {
       .data('position', this.element().position())
   },
   maximize: function() {
-    Toolbox.storeSizeAndPosition();
-    Toolbox.element().animate(
-      {height: '100%', width: '75%', top: 0, left: '25%'},
-      'slow', 'linear', Toolbox.callback.resized
+    if (Toolbox.windowState == 'normal') Toolbox.storeSizeAndPosition();
+    if (Toolbox.windowState == 'tiled') {
+      $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear');
+    }
+    Toolbox.element().stop().animate(
+      {height: '98%', width: '66%', top: '1%', left: '33%'},
+      'slow', 'linear', function() { Toolbox.callback.resized(); Toolbox.callback.sideBarFollow() }
     );
+    Toolbox.setWindowState('maximized');
   },
   unmaximize: function() {
     var position = Toolbox.element().data('position');
-    Toolbox.element().animate({
+    if (Toolbox.windowState == 'tiled') {
+      $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear');
+    }
+    Toolbox.element().stop().animate({
       height: Toolbox.element().data('height'), 
       width:  Toolbox.element().data('width'), 
       top: position.top, 
       left: position.left
-    },'fast', 'linear', Toolbox.callback.resized);
+      },
+      'slow', 'linear', function() { Toolbox.callback.resized(); Toolbox.callback.sideBarFollow() }
+    );
+    Toolbox.setWindowState('normal');
   },
-
+  tile: function() {
+    if (Toolbox.windowState == 'normal') Toolbox.storeSizeAndPosition();
+    Toolbox.element().stop().animate(
+      {height: '50%', width: '30%', top: '1%', left: '69%'},
+      'slow', 'linear', Toolbox.callback.resized
+    );
+    Toolbox.sideBar.stop().animate(
+      {height: '45%', width: '30%', top: '54%', left: '69%' },
+      'slow', 'linear');
+    $('body').stop().animate( {paddingRight: '33%'}, 'slow', 'linear');
+    Toolbox.setWindowState('tiled');
+  },
+  setWindowState: function(state) {
+    this.windowState = state;
+    switch (state) {
+      case 'normal':
+        this.maximizeButton.removeClass('ui-state-disabled');
+        this.normalSizeButton.addClass('ui-state-disabled');
+        this.tileButton.removeClass('ui-state-disabled');
+        break;
+      case 'maximized':
+        this.maximizeButton.addClass('ui-state-disabled');
+        this.normalSizeButton.removeClass('ui-state-disabled');
+        this.tileButton.removeClass('ui-state-disabled');
+        break;
+      case 'tiled':
+        this.maximizeButton.removeClass('ui-state-disabled');
+        this.normalSizeButton.removeClass('ui-state-disabled');
+        this.tileButton.addClass('ui-state-disabled');
+        break;
+    }
+  },
   bottomLinkBar: function(rest) {
     if (this.last('>ul.bottom_linkbar').length == 0) {
       this.last().appendDom(Toolbox.Templates.bottomLinkBar);
@@ -686,7 +734,8 @@ var Toolbox = {
       Toolbox.frames().width(Toolbox.body.width());
       Toolbox.body[0].scrollLeft = Toolbox.last()[0].offsetLeft;
     },
-    drag: function(e, ui) {
+    sideBarFollow: function(e, ui) {
+      Toolbox.sideBar.width( Toolbox.element().data('width') * 0.7 );
       if (Toolbox.sideBarVisible) {
         Toolbox.sideBar[0].style.left = (Toolbox.element().position().left - Toolbox.sideBar.width()) + 'px';
         Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';

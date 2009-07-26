@@ -31,12 +31,17 @@ body {
     overflow: auto; /* HACK so that toolbox elements are on top of flash */
   }
 
+  *.ui-dialog-titlebar span.ui-dialog-title {
+      margin-left: 1em;
+  }
   a.ui-button {
     position: absolute;
     top: 50%;
     .toggle-sidebar { left: 0.3em }
-    .back    { right: 4.2em }
-    .min-max { right: 2.3em }
+    .back    { left: 0 }
+    .size-normal { right: 6.3em }
+    .size-max    { right: 4.3em }
+    .size-tile   { right: 2.3em }
   }
 
   /* Frame Setup */
@@ -178,11 +183,13 @@ div#toolbox_sidebar {
     margin: 0;
   }
   ul.history { 
-    min-height: 25%;
+    min-height: 45%;
+    max-height: 50%;
     margin-bottom: 0.3em;
   }
   ul.clipboard { 
-    min-height: 50%;
+    min-height: 45%;
+    max-height: 50%;
     bottom: 25px;
     margin-bottom: 0.3em;
   }
