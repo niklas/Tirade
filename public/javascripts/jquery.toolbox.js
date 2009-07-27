@@ -2,23 +2,24 @@
 var Toolbox = {
   findOrCreate: function() {
     if ( this.element().length == 0 ) {
+      Toolbox.minHeight = 400;
       $('body').appendDom(Toolbox.Templates.toolbox);
       $('body #toolbox_body')
         .dialog({
           closeOnEscape: false,
-          minHeight: 400,
+          minHeight: Toolbox.minHeight,
           minWidth: 300,
           title: 'Toolbox Dialog',
           dragStart: function() { Toolbox.body.css('overflow-x', 'auto')},
           dragStop:  function() { Toolbox.body.css('overflow-x', 'hidden')},
-          drag: Toolbox.callback.sideBarFollow,
+          drag: Toolbox.sync.sideBarPosition,
           beforeClose: Toolbox.close,
-          resizeStop: Toolbox.callback.resized
+          resizeStop: Toolbox.sync.all
         }).parent().attr('id', 'toolbox');
 
       this.sideBarVisible = false;
       this.setup();
-      Toolbox.callback.sideBarFollow();
+      Toolbox.sync.sideBar();
 
       $.ui.frame("preparing Toolbox..").appendTo( this.content() );
       this.frameCount = 1;
@@ -608,7 +609,7 @@ var Toolbox = {
       return this.sideBar;
     this.sideBarVisible = true;
     return this.sideBar.show().animate(
-      { left: '-='+(Toolbox.sideBar.width())},
+      { left: (Toolbox.element().position().left - Toolbox.sideBar.width())},
       { duration: 500, complete: after }
     )
   },
@@ -617,7 +618,7 @@ var Toolbox = {
       return this.sideBar;   //  - I just walk away!
     this.sideBarVisible = false;
     return this.sideBar.animate(
-      { left: '+='+(Toolbox.sideBar.width())},
+      { left: Toolbox.element().position().left},
       { duration: 500, complete: after }
     );
   },
@@ -668,9 +669,16 @@ var Toolbox = {
     if (Toolbox.windowState == 'tiled') {
       $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear');
     }
+
+    Toolbox.toggleSideBarButton.addClass('ui-state-disabled');
+    
+    Toolbox.sideBar.stop().animate(
+      {height: '98%', width: '30%'},
+      'slow', 'linear', function() { Toolbox.sync.sideBarPosition(); Toolbox.sideBarOn();}
+    );
     Toolbox.element().stop().animate(
       {height: '98%', width: '66%', top: '1%', left: '33%'},
-      'slow', 'linear', function() { Toolbox.callback.resized(); Toolbox.callback.sideBarFollow() }
+      'slow', 'linear', function() { Toolbox.sync.frames(); }
     );
     Toolbox.setWindowState('maximized');
   },
@@ -679,21 +687,23 @@ var Toolbox = {
     if (Toolbox.windowState == 'tiled') {
       $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear');
     }
+    Toolbox.toggleSideBarButton.removeClass('ui-state-disabled');
     Toolbox.element().stop().animate({
       height: Toolbox.element().data('height'), 
       width:  Toolbox.element().data('width'), 
       top: position.top, 
       left: position.left
       },
-      'slow', 'linear', function() { Toolbox.callback.resized(); Toolbox.callback.sideBarFollow() }
+      'slow', 'linear', function() { Toolbox.sync.frames(); Toolbox.sync.sideBar() }
     );
     Toolbox.setWindowState('normal');
   },
   tile: function() {
     if (Toolbox.windowState == 'normal') Toolbox.storeSizeAndPosition();
+    Toolbox.toggleSideBarButton.addClass('ui-state-disabled');
     Toolbox.element().stop().animate(
       {height: '50%', width: '30%', top: '1%', left: '69%'},
-      'slow', 'linear', Toolbox.callback.resized
+      'slow', 'linear', Toolbox.sync.frames
     );
     Toolbox.sideBar.stop().animate(
       {height: '45%', width: '30%', top: '54%', left: '69%' },
@@ -728,14 +738,29 @@ var Toolbox = {
     return this.last('>ul.bottom_linkbar' + (rest||''));
   },
 
-  callback: {
-    resized: function(e,ui) {
-      Toolbox.frames().height(Toolbox.body.height());
-      Toolbox.frames().width(Toolbox.body.width());
-      Toolbox.body[0].scrollLeft = Toolbox.last()[0].offsetLeft;
+  sync: {
+    /* if we resize manually (maximize, tile) */
+    body: function() {
+      Toolbox.body.css({ height: 0, minHeight: 0, width: 'auto' });
+      var dialogHeight = Math.max( Toolbox.element().height(), Toolbox.minHeight);
+      var nonContentHeight = Toolbox.element().css({height: 'auto'}).height();
+      Toolbox.body.css({
+        minHeight: Math.max(dialogHeight - nonContentHeight, 0),
+        height: Math.max(dialogHeight - nonContentHeight, 0)
+      })
     },
-    sideBarFollow: function(e, ui) {
-      Toolbox.sideBar.width( Toolbox.element().data('width') * 0.7 );
+    frames: function() {
+      Toolbox.sync.body();
+      Toolbox.sync.scroller();
+    },
+    scroller: function() {
+      if (Toolbox.last().length > 0) Toolbox.body[0].scrollLeft = Toolbox.last()[0].offsetLeft;
+    },
+    sideBar: function() {
+      Toolbox.sync.sideBarSize();
+      Toolbox.sync.sideBarPosition();
+    },
+    sideBarPosition: function() {
       if (Toolbox.sideBarVisible) {
         Toolbox.sideBar[0].style.left = (Toolbox.element().position().left - Toolbox.sideBar.width()) + 'px';
         Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
@@ -743,8 +768,16 @@ var Toolbox = {
         Toolbox.sideBar[0].style.left = (Toolbox.element().position().left) + 'px';
         Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
       }
+    },
+    sideBarSize: function() {
+      Toolbox.sideBar.width(  Toolbox.element().width() * 0.7 );
+      Toolbox.sideBar.height( Toolbox.element().height() * 0.9 );
+    },
+    all: function() {
+      Toolbox.sync.frames();
+      Toolbox.sync.sideBar();
     }
-  }
+  },
 
 };
 
