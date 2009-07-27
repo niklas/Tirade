@@ -66,11 +66,15 @@ var Focus = {
       .hide()
       .appendTo($('body'));
 
+    this.titleBar = $('<div/>')
+      .addClass('ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix')
+      .attr('role', 'titlebar')
+      .appendTo(this.frameTop);
 
     this.title = $('<span/>')
       .addClass('ui-dialog-title title')
       .text('Title')
-      .appendTo(this.frameTop);
+      .appendTo(this.titleBar);
 
     this.tabsTop = $('<ul />')
       .addClass('ui-tabs')
@@ -86,5 +90,8 @@ var Focus = {
   },
   frames: function() {
     return $('body div.focus')
+  },
+  setTitle: function(text) {
+    return this.title.text(text);
   }
 };
