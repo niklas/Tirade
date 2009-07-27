@@ -154,6 +154,8 @@ class Rendering < ActiveRecord::Base
     ].compact.join(' with ')
   end
 
+  alias_method :title, :label
+
   def brothers_by_part
     page.renderings.with_part(self.part)
   end
