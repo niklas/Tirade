@@ -1,0 +1,15 @@
+body {
+  div.focus {
+    position: absolute;
+    background: url(../images/pentagon-tile.jpg) repeat;
+    .left {
+      border-right: none;
+    }
+    .right {
+      border-left: none;
+    }
+    .bottom {
+      border-top: none;
+    }
+  }
+}
