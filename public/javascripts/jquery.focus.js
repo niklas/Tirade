@@ -1,9 +1,13 @@
 var Focus = {
   on: function(element) {
-    var element = this.element = $(element);
-    if (element.length == 0) return;
+    this.element = $(element);
+    if (this.element.length == 0) return;
     if (!this.exists()) this._createFrame();
-
+    this.updateFrame();
+  },
+  updateFrame: function() {
+    if (this.element.length == 0) return;
+    var element = this.element;
     var border = 5;
     var padding = 3;
     var left = element.offset().left;
@@ -34,7 +38,6 @@ var Focus = {
       width: border,
       height: element.height() + header + border + 2*padding
     });
-
   },
   _createFrame: function() {
     var classes = 'focus ui-widget';
