@@ -1,6 +1,7 @@
 var Focus = {
   on: function(element) {
     var element = this.element = $(element);
+    if (element.length == 0) return;
     if (!this.exists()) this._createFrame();
 
     var border = 5;
