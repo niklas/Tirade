@@ -25,23 +25,25 @@ body {
   :focus, :hover { padding: 0; }
 }
 
+a.ui-button {
+  position: absolute;
+  top: 50%;
+  .toggle-sidebar { left: 0.3em }
+  .back    { left: 0 }
+  .size-normal { right: 6.3em }
+  .size-max    { right: 4.3em }
+  .size-tile   { right: 2.3em }
+}
+
+*.ui-dialog-titlebar span.ui-dialog-title {
+  margin-left: 1em;
+}
+
+
 #toolbox {
   position:fixed;
   tbody {
     overflow: auto; /* HACK so that toolbox elements are on top of flash */
-  }
-
-  *.ui-dialog-titlebar span.ui-dialog-title {
-      margin-left: 1em;
-  }
-  a.ui-button {
-    position: absolute;
-    top: 50%;
-    .toggle-sidebar { left: 0.3em }
-    .back    { left: 0 }
-    .size-normal { right: 6.3em }
-    .size-max    { right: 4.3em }
-    .size-tile   { right: 2.3em }
   }
 
   /* Frame Setup */

@@ -59,7 +59,7 @@ var Toolbox = {
 
     this.toggleEditGridButton = $.ui.button({class: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'pencil'})
       .appendTo(Toolbox.sideBarActions)
-      .toggleEditPage();
+      .toggle( Focus.start, Focus.stop);
 
     this.refreshPageButton = $.ui.button({class: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { $.get('/') })
