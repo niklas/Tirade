@@ -19,7 +19,7 @@ var Focus = {
     this.updateFrame();
     return this;
   },
-  off: function() {
+  stop: function() {
     $('body').animate({paddingTop: 0});
     return this.frames().remove();
   },
