@@ -13,8 +13,8 @@ var Focus = {
     if (!this.exists()) return;
     this.element = $(element);
     var options = this.element.data('focus-options');
-    this.tabsTo( $(options.children, this.element) );
-    this.setTitle( this.element.typeAndId().type );
+    if (options.children) this.tabsTo( $(options.children, this.element) );
+    this.setTitle( this.element.attr('title') || this.element.typeAndId().type );
     this.updateFrame();
     return this;
   },
@@ -151,10 +151,11 @@ var Focus = {
       var $self = $(this);
       var link = $('<a />')
         .attr('href', '#')
-        .text( $(this).typeAndId().type )
+        .text( $(this).attr('title') || $(this).typeAndId().type )
         .click(function() { $self.trigger('tirade.focus') })
         .wrap('<li></li>')
         .parent()
+        .addClass('ui-state-default ui-corner-bottom')
         .appendTo( Focus.tabsTop );
     });
   }

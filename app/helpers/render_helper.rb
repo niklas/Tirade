@@ -25,7 +25,7 @@ module RenderHelper
         clss += " #{rendering.content.class.to_s.underscore}"
         rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
       end,
-      :id => dom_id(rendering), :class => clss, :rel => dom_id(rendering)
+      :id => dom_id(rendering), :class => clss, :rel => dom_id(rendering), :title => rendering.title
     )
   end
 
@@ -53,6 +53,7 @@ module RenderHelper
     add_class_to_html_options(opts, grid.title.domify) unless grid.title.blank?
     opts[:id] = dom_id(grid) # unless opts[:id].nil?
     opts[:rel] = dom_id(grid)
+    opts[:title] = grid.title
     if wrapper = opts.delete(:wrapper)
       div_wrap( content_tag(:div, inner_html, opts), "#{wrapper} col")
     else
@@ -96,7 +97,7 @@ module RenderHelper
         content_tag(
           :div,
           layout.render_in_page(thepage),
-          {:class => "page #{dom_id(thepage)}"}
+          {:class => "page #{dom_id(thepage)}", :title => thepage.title}
         ),
         'page_margins', :style => thepage.style
       )
