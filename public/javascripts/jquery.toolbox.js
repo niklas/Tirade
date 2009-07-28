@@ -119,71 +119,28 @@ var Toolbox = {
     this.refreshBackButton();
 
     // Set Title of last frame
-    this.frames(':not(:first)').livequery(function() { 
+    $('> div.content > div.frame:last', this.body).livequery(function() { 
       Toolbox.setTitle();
     });
 
-    this.linkBar().livequery(function() { 
-      $(this).addClass('ui-widget-header ui-corner-bottom').addRESTLinks($(this).parents('div.frame'));
-    });
 
-    // Keep track of frames in history
-    this.frames().livequery(function() { 
-      var frame = $(this);
-      var href = frame.attr('href');
-      Toolbox.history.appendDom(
-        Toolbox.Templates.historyItem( frame.attr('title'), href )
-      );
-    });
-
-    // Ajaxify forms
-    this.frames(' form').livequery(function() {
-      $(this)
-        .each( function() { this.action += '.js'; })
-        .ajaxForm({
-          dataType: 'script',
-          beforeSubmit: function() {
-            Toolbox.beBusy("submitting " + Toolbox.last().attr('title'))
-          }
-        })
-        .appendDom([
-          {tagName: 'input', type: 'hidden', name: 'context_page_id', value: $('body > div.page').resourceId() }
-        ]);
-    });
-
-    // Accordion, open in last used section
-    this.accordion().livequery(function() { 
-      active = 0;
-      if (name = Toolbox.activeSectionName) { 
-        active = '[name=' + name + ']' 
-      };
-      $(this).accordion({ 
-        header: 'h3.accordion_toggle', 
-        selectedClass: 'selected',
-        autoHeight: false,
-        alwaysOpen: false,
-        active: active
-      })
-      .bind("accordionchange", function(event, ui) {
-        if (ui.newHeader) {
-          Toolbox.saveActive(ui.newHeader);
-          //Toolbox.accordion().scrollTo(ui.newHeader, 500);
-        }
-      });
+    $('> div.content > div.frame', this.body).livequery(function() {
+      $(this).frameInToolbox();
     });
 
     // Scroll to selected accordion section
-    this.accordion(' h3.selected').livequery(function() { 
-      var s = $(this);
-      $.timer(300,function(timer) {
-        timer.stop();
-        Toolbox.accordion().scrollTo(s, 500);
-        $(this).addClass('scrolled');
-      })
-    });
+    // TODO needed?
+    //this.accordion(' h3.selected').livequery(function() { 
+    //  var s = $(this);
+    //  $.timer(300,function(timer) {
+    //    timer.stop();
+    //    Toolbox.accordion().scrollTo(s, 500);
+    //    $(this).addClass('scrolled');
+    //  })
+    //});
 
     // Init and Auto-Refresh the Dashboard
-    Toolbox.frameByHref('/dashboard').refresh();
+    //Toolbox.frameByHref('/dashboard').refresh();
     //$.timer(60 * 1000,function(timer) {
     //  if (!Toolbox.element()) {
     //    timer.stop();
@@ -193,42 +150,8 @@ var Toolbox = {
     //    }
     //  }
     //});
-    this.frames(' textarea.markitup.textile').livequery(function() {
-      $(this).markItUp(myTextileSettings);
-    });
-    this.frames(' textarea:not(.markitup)').livequery(function() {
-      if ( !$(this).data('hasElastic') )
-        $(this).elastic().data('hasElastic', true);
-    });
-    this.last(' div.live_search input.search_term').livequery(function() {
-      var field = $(this);
-      $(this).attr("autocomplete", "off").typeWatch({
-        wait: 500,
-        captureLength: 2,
-        callback: function(val) {
-          $.ajax({
-            data: { 'search[term]' : encodeURIComponent(val) },
-            url: field.attr('href')
-          });
-        }
-      })
-    });
-    this.last(' div.live_search.polymorphic select.polymorph_search_url').livequery(function() { 
-      var field = $(this);
-      $(this).change(function() {
-        $(this).siblings('input.search_term:first')
-          .attr('href',field.val())
-          .val('');
-      })
-    });
 
-    this.last(' di.association.one dd > ul.list').livequery(function() { $(this).hasOneEditor() });
-    this.last(' di.association.many dd > ul.list').livequery(function() { $(this).hasManyEditor() });
 
-    // mark empty association lists
-    this.last(' di.association dd > ul.list:not(:has(li))').livequery(function() {
-      $(this).addClass('empty');
-    });
 
     // search results items
     this.last(' di.association dd div.live_search div.search_results ul.list li').livequery(function() {
@@ -247,138 +170,19 @@ var Toolbox = {
 
 
     // Double click selectable attributes to edit them
-    this.last(' di.selectable').livequery(function() {
-      $(this).dblclick( function() {
-        $(this).parents('div.frame').find('ul.linkbar li a.edit:first').click();
-      });
-    });
+    // FIXME what?
+    //this.last(' di.selectable').livequery(function() {
+    //  $(this).dblclick( function() {
+    //    $(this).parents('div.frame').find('ul.linkbar li a.edit:first').click();
+    //  });
+    //});
 
-    // Part assignment form
-    this.last(' form.edit_rendering').livequery(function() {
-      var form = $(this);
-      renderingAssignmentFormUpdate = function (e) {
-        form.find('h3.what + dl')
-          .find('> di:not(.assignment)').hide()
-            .find(':input').disable();
-        form.find('di.association.one.content .live_search').hide();
-        form.find('div.scopes').hide().find(':input').disable();
-        form.find('div.scopes .define :input').hide();
-        form.find('div.scopes .define a.create_scope').hide();
-        switch (form.find('select#rendering_assignment').val()) {
-          case 'none':
-            break;
-          case 'fixed':
-            form.find('di.association.one.content').show().find('input.association_id, input.association_type').enable();
-            break;
-          case 'by_title_from_trailing_url':
-            form.enableField('content_type');
-            break;
-          case 'scope':
-            var t = form.enableField('content_type').val();
-            var scope = form.find('div.scopes.' + t).show();
-            scope.find(' > di :input').enable();  /* enable non-filtering scopes like order etc */
-            break;
-        }
-      }
-      renderingAssignmentFormUpdate();
-      form.find('select#rendering_assignment').change( renderingAssignmentFormUpdate );
-      form.find('select#rendering_content_type').change( renderingAssignmentFormUpdate );
-
-      $('<a href="#" class="remove">Remove</a>').appendTo(form.find('div.pool di dt'));
-
-      form.find('a.add').unbind('click').click( function(ev) {
-        var link = $(ev.target);
-        var define = link.parents('.define');
-        var meta = define.metadata();
-        var pool = define.siblings('div.pool');
-
-        define.find(':input').show();
-        var select_column = define.find('select[name=select_column]');
-        var select_comparison = define.find('select[name=select_comparison]');
-        var ok = define.find('.create_scope').show();
-
-        select_column.find('option').remove();
-        $.each(meta.columns, function() {
-          $('<option value ="' + this.name + '">' + this.name +'</option>').appendTo(select_column)
-        })
-
-        var updateComparisons = function() {
-          select_comparison.find('option').remove();
-          $.each(meta.comparisons[ select_column.val() ], function() {
-            $('<option value ="' + this + '">' + this +'</option>').appendTo(select_comparison)
-          }) 
-        }
-
-        select_column.unbind('change').change( updateComparisons );
-        updateComparisons();
-
-        ok.click( function(ev) {
-          var scope_name = select_column.val() + '_' + select_comparison.val();
-          var scope = pool.find('di.' + scope_name).clone()
-          scope
-            .find(':input').enable().end()
-            .find('a.remove').click(function() { scope.remove() }).end()
-            .insertAfter(define);
-          ok.hide();
-          define.find(':input').hide();
-          ev.preventDefault();
-          return false;
-        });
-
-      });
-    });
-
-    this.last(' form#new_image').livequery(function() {
-      var form = $(this);
-      $('<a/>').attr('href', '#').text("Go").click( function() { form.uploadifyUpload()  }).appendTo(form.parent());
-      $('<a/>').attr('href', '#').text("Clear").click( function() { form.uploadifyClearQueue()  }).appendTo(form.parent());
-      form.uploadify({
-        uploader: '/flash/uploadify.swf',
-        multi: true,
-        script: Routing.images_path({
-          '_tirade-v2_session' : encodeURIComponent(Toolbox.cookie)
-        }),
-        scriptData: {
-          authenticity_token: encodeURIComponent(form.parent().find('span.rails-auth-token').text())
-        },
-        method: 'POST',
-        fileDataName: form.find(':input[type=file]:first').attr('name'),
-        simUploadLimit: 1,
-        buttonText: 'Browse',
-        cancelImg: '/images/icons/small/x.gif',
-      });
-    });
 
 
     this.last(' a.toggle_live_search').livequery('click', function(e) {
       e.preventDefault();
       $(this).siblings('.live_search').toggle();
     });
-
-    this.every('.linkbar a.ok', function() {
-      $(this).click(function(e) {
-        e.preventDefault();
-        Toolbox.pop();
-        return false;
-      }).uiIcon('circle-check')
-    });
-
-    // redirect the Submit button from bottomLinkBar
-    this.last(' form:has(input.submit:visible)').livequery(function() {
-      Toolbox.bottomLinkBar().appendDom(
-        Toolbox.Templates.submitButton
-      );
-      var orgbutton = $(this).find('input.submit').hide();
-      Toolbox.bottomLinkBar('> li.submit > a.submit')
-        .text( orgbutton.attr('value') )
-        .click(function(e) {
-          e.preventDefault();
-          form = Toolbox.last(' form');
-          form[0].clk = orgbutton[0];
-          form.submit();
-        });
-    });
-
 
     // Ajax callbacks
     this.element()
@@ -389,19 +193,10 @@ var Toolbox = {
     this.setSizes();
   },
   expireBehaviors: function() {
-    this.frames().expire();
-    this.accordion().expire();
-    this.element(" a.back[href='#']").expire();
-    this.frames(':not(:first)').expire();
-    this.frames(' form').expire();
-    this.last(' input.search_term').expire();
-    this.last(' div.search_results ul.list li').expire();
-    this.last(' di.selectable').expire();
-    this.last(' label + ul.list li').expire();
-    this.last(' label + ul.list').expire();
-    this.last(' label + ul.association.one li').expire();
-    this.last('>ul.bottom_linkbar li.submit a.submit').expire();
-
+    $('> div.content > div.frame:last', this.body).expire();
+    $('> div.content > div.frame', this.body).expire();
+    this.last(' di.association dd div.live_search div.search_results ul.list li').expire()
+    this.last(' a.toggle_live_search').expire();
   },
   setSizes: function() {
     /* this.scroller().height( this.bodyHeight() );
@@ -802,11 +597,6 @@ Toolbox.Templates = {
   bottomLinkBar: [
     {tagName: 'ul', class: 'bottom_linkbar' }
   ],
-  submitButton: [
-    { tagName: 'li', class: 'submit', childNodes: [
-      { tagName: 'a', class: 'submit', href: '#' }
-    ] }
-  ],
   toolbox: [
     { tagName: 'div', id: 'toolbox_body', class: 'body', childNodes: [
       { tagName: 'div', class: 'content', id: 'toolbox_content' }
@@ -874,11 +664,229 @@ jQuery.fn.frameInToolbox = function(options) {
   var defaults = {
   };
   var options = $.extend(defaults, options);
+  return $(this).each(function() {
+    var frame = this;
+    var $frame = $(this);
+
+    $('ul.linkbar', frame)
+      .addClass('ui-widget-header ui-corner-bottom')
+      .addRESTLinks($frame)
+      .find('a.ok')
+        .click(function(e) {
+          e.preventDefault();
+          Toolbox.pop();
+          return false;
+        }).uiIcon('circle-check')
+      .end()
+
+    /* TODO history 
+    this.frames().livequery(function() { 
+      var frame = $(this);
+      var href = frame.attr('href');
+      Toolbox.history.appendDom(
+        Toolbox.Templates.historyItem( frame.attr('title'), href )
+      );
+    });
+    */
+
+
+   /* TODO Context Page only per head ? */
+   $('form', frame).livequery(function() { $(this).formInFrameInToolbox() });
+
+    $('div.accordion', frame).livequery(function() { 
+      active = 0;
+      if (name = Toolbox.activeSectionName) { 
+        active = '[name=' + name + ']' 
+      };
+      $(this).accordion({ 
+        header: 'h3.accordion_toggle', 
+        selectedClass: 'selected',
+        autoHeight: false,
+        alwaysOpen: false,
+        active: active
+      })
+      .bind("accordionchange", function(event, ui) { /* FIXME WTF is this? */
+        if (ui.newHeader) {
+          Toolbox.saveActive(ui.newHeader);
+          //Toolbox.accordion().scrollTo(ui.newHeader, 500);
+        }
+      });
+    })
+    $('div.live_search input.search_term', frame).livequery(function() {
+      var field = $(this);
+      $(this).attr("autocomplete", "off").typeWatch({
+        wait: 500,
+        captureLength: 2,
+        callback: function(val) {
+          $.ajax({
+            data: { 'search[term]' : encodeURIComponent(val) },
+            url: field.attr('href')
+          });
+        }
+      })
+    });
+    $('div.live_search.polymorphic select.polymorph_search_url', frame).livequery(function() { 
+      var field = $(this);
+      $(this).change(function() {
+        $(this).siblings('input.search_term:first')
+          .attr('href',field.val())
+          .val('');
+      })
+    });
+  });
 };
+
 jQuery.fn.formInFrameInToolbox = function(options) {
   var defaults = {
   };
   var options = $.extend(defaults, options);
+  return $(this).each(function() {
+    var form = this;
+    var $form = $(this);
+
+    form.action += '.js';
+
+    $form.ajaxForm({
+      dataType: 'script',
+      beforeSubmit: function() {
+        Toolbox.beBusy("submitting " + $form.parents('div.frame').attr('title'))
+      }
+    });
+
+    if ($form.is('.edit_rendering')) $form.editRenderingFormInFrameInToolbox();
+    if ($form.is('.new_image')) $form.newImageFormInFrameInToolbox();
+
+    $('textarea.markitup.textile', form).livequery(function() {
+      $(this).markItUp(myTextileSettings);
+    });
+    $('textarea:not(.markitup)', form).livequery(function() {
+      if ( !$(this).data('hasElastic') )
+        $(this).elastic().data('hasElastic', true);
+    });
+    $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
+    $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor() });
+    // mark empty association lists
+    $('di.association dd > ul.list:not(:has(li))', form).livequery(function() {
+      $(this).addClass('empty');
+    });
+
+    // redirect the Submit button from bottomLinkBar
+    if ($form.has('input.submit:visible')) {
+      var orgbutton = $form.find('input.submit:visible').hide();
+      $.ui.button({icon: 'disc', text: orgbutton.attr('value'), class: 'submit' })
+        .click(function(e) {
+          e.preventDefault();
+          form[0].clk = orgbutton[0];
+          form.submit();
+        });
+      };
+
+  });
+};
+
+jQuery.fn.newImageFormInFrameInToolbox = function(options) {
+  var defaults = {
+  };
+  var options = $.extend(defaults, options);
+  return $(this).each(function() {
+    var form = $(this);
+    $('<a/>').attr('href', '#').text("Go").click( function() { form.uploadifyUpload()  }).appendTo(form.parent());
+    $('<a/>').attr('href', '#').text("Clear").click( function() { form.uploadifyClearQueue()  }).appendTo(form.parent());
+    form.uploadify({
+      uploader: '/flash/uploadify.swf',
+      multi: true,
+      script: Routing.images_path({
+        '_tirade-v2_session' : encodeURIComponent(Toolbox.cookie)
+      }),
+      scriptData: {
+        authenticity_token: encodeURIComponent(form.parent().find('span.rails-auth-token').text())
+      },
+      method: 'POST',
+      fileDataName: form.find(':input[type=file]:first').attr('name'),
+      simUploadLimit: 1,
+      buttonText: 'Browse',
+      cancelImg: '/images/icons/small/x.gif',
+    });
+  });
+};
+
+jQuery.fn.editRenderingFormInFrameInToolbox = function(options) {
+  var defaults = {
+  };
+  var options = $.extend(defaults, options);
+  return $(this).each(function() {
+    var form = $(this);
+    renderingAssignmentFormUpdate = function (e) {
+      form.find('h3.what + dl')
+        .find('> di:not(.assignment)').hide()
+          .find(':input').disable();
+      form.find('di.association.one.content .live_search').hide();
+      form.find('div.scopes').hide().find(':input').disable();
+      form.find('div.scopes .define :input').hide();
+      form.find('div.scopes .define a.create_scope').hide();
+      switch (form.find('select#rendering_assignment').val()) {
+        case 'none':
+          break;
+        case 'fixed':
+          form.find('di.association.one.content').show().find('input.association_id, input.association_type').enable();
+          break;
+        case 'by_title_from_trailing_url':
+          form.enableField('content_type');
+          break;
+        case 'scope':
+          var t = form.enableField('content_type').val();
+          var scope = form.find('div.scopes.' + t).show();
+          scope.find(' > di :input').enable();  /* enable non-filtering scopes like order etc */
+          break;
+      }
+    }
+    renderingAssignmentFormUpdate();
+    form.find('select#rendering_assignment').change( renderingAssignmentFormUpdate );
+    form.find('select#rendering_content_type').change( renderingAssignmentFormUpdate );
+
+    $('<a href="#" class="remove">Remove</a>').appendTo(form.find('div.pool di dt'));
+
+    form.find('a.add').unbind('click').click( function(ev) {
+      var link = $(ev.target);
+      var define = link.parents('.define');
+      var meta = define.metadata();
+      var pool = define.siblings('div.pool');
+
+      define.find(':input').show();
+      var select_column = define.find('select[name=select_column]');
+      var select_comparison = define.find('select[name=select_comparison]');
+      var ok = define.find('.create_scope').show();
+
+      select_column.find('option').remove();
+      $.each(meta.columns, function() {
+        $('<option value ="' + this.name + '">' + this.name +'</option>').appendTo(select_column)
+      })
+
+      var updateComparisons = function() {
+        select_comparison.find('option').remove();
+        $.each(meta.comparisons[ select_column.val() ], function() {
+          $('<option value ="' + this + '">' + this +'</option>').appendTo(select_comparison)
+        }) 
+      }
+
+      select_column.unbind('change').change( updateComparisons );
+      updateComparisons();
+
+      ok.click( function(ev) {
+        var scope_name = select_column.val() + '_' + select_comparison.val();
+        var scope = pool.find('di.' + scope_name).clone()
+        scope
+          .find(':input').enable().end()
+          .find('a.remove').click(function() { scope.remove() }).end()
+          .insertAfter(define);
+        ok.hide();
+        define.find(':input').hide();
+        ev.preventDefault();
+        return false;
+      });
+
+    });
+  });
 };
 
 jQuery.ui.button = function(options) {
