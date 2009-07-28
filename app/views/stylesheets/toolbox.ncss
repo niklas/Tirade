@@ -25,7 +25,7 @@ body {
   :focus, :hover { padding: 0; }
 }
 
-a.ui-button {
+.ui-widget a.ui-button {
   position: absolute;
   top: 50%;
   .toggle-sidebar { left: 0.3em }
@@ -50,7 +50,7 @@ a.ui-button {
   div.body {
     overflow: hidden;
     z-index: 2;
-    padding: 0;
+    padding: 0 0 1.7em 0; /* place for footer */
     > div.content {
       font-family:Arial,Helvetica,sans-serif;
       <% max_frames = 10 %>
@@ -196,6 +196,7 @@ div#toolbox_sidebar {
     margin-bottom: 0.3em;
   }
   div.actions {
+    height: 1.7em;
     a {
       float: left;
     }
