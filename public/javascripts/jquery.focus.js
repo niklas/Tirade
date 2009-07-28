@@ -13,7 +13,8 @@ var Focus = {
     if (!this.exists()) return;
     this.element = $(element);
     var options = this.element.data('focus-options');
-    if (options.children) this.tabsTo( $(options.children, this.element) );
+    this.tabsToTop( options.children ?  $(options.children, this.element) : []);
+    this.tabsToLeft( options.left_children ?  $(options.left_children, this.element) : []);
     this.setTitle( this.element.attr('title') || this.element.typeAndId().type );
     this.updateFrame();
     return this;
@@ -100,24 +101,15 @@ var Focus = {
       .text('Title')
       .appendTo(this.titleBarTop);
 
-    this.tabBarTop = $('<div />')
-      .addClass('ui-tabs ui-widget ui-widget-content  ui-corner-all')
-      .hide()
-      .appendTo(this.frameTop);
+    var tabs = $('<div />').addClass('ui-tabs').hide();
 
     this.tabsTop = $('<ul />')
       .addClass('ui-tabs-nav ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
-      .appendTo(this.tabBarTop);
-
-    this.titleBarLeft = $('<div/>')
-      .addClass('ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix')
-      .attr('role', 'titlebar')
-      .appendTo(this.frameLeft);
+      .appendTo( tabs.clone().appendTo(this.frameTop) );
 
     this.tabsLeft = $('<ul />')
       .addClass('ui-tabs-nav ui-tabs ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
-      .hide()
-      .appendTo(this.frameLeft);
+      .appendTo( tabs.clone().appendTo(this.frameLeft) );
     $('body').css('padding-top', '5em');
   },
   exists: function() {
@@ -139,12 +131,18 @@ var Focus = {
       }
     }
   },
-  tabsTo: function(elements) {
+  tabsToTop: function(elements) {
+    this.tabsTo( Focus.tabsTop, elements );
+  },
+  tabsToLeft: function(elements) {
+    this.tabsTo( Focus.tabsLeft, elements );
+  },
+  tabsTo: function(container, elements) {
     if (elements.length == 0) {
-      Focus.tabsTop.parent().hide();
+      container.parent().hide();
       return;
     }
-    Focus.tabsTop
+    container
       .find('li').remove().end()
       .parent().show();
     return elements.each( function() {
@@ -155,8 +153,12 @@ var Focus = {
         .click(function() { $self.trigger('tirade.focus') })
         .wrap('<li></li>')
         .parent()
-        .addClass('ui-state-default ui-corner-bottom')
-        .appendTo( Focus.tabsTop );
+        .addClass('ui-state-default')
+        .appendTo( container );
+      if (container.closest('.focus').is('.left'))
+        link.height($self.height());
+      else
+        link.width($self.width());
     });
   }
 };
@@ -165,7 +167,8 @@ var Focus = {
 $.fn.focusable = function(options) {
   var defaults = {
     parent: 'div',
-    children: 'div'
+    children: 'div',
+    side_children: null
   };
   var options = $.extend(defaults, options);
 
@@ -181,6 +184,6 @@ $.fn.focusable = function(options) {
 
 $( function() {
   $('div.page').focusable({parent: null, children: '>div.grid'});
-  $('div.grid').focusable({parent: 'div.grid, div.page', children: '> * > div.grid,>div.grid,>div.rendering'});
+  $('div.grid').focusable({parent: 'div.grid, div.page', children: '> * > div.grid,>div.grid', left_children: '>div.rendering'});
   $('div.rendering').focusable({parent: 'div.grid', children: null});
 });
