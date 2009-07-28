@@ -10,13 +10,11 @@ module ManageResourceController
     end
 
     private
-    def update_or_show_form_in_toolbox
-      render :update do |page|
-        if non_form_submit?
-          page.push_toolbox_content(:partial => "/form", :object => object)
-        else
-          page.update_last_toolbox_frame(:partial => "/form", :object => object)
-        end
+    def update_or_show_form_in_toolbox(page)
+      if non_form_submit?
+        page.push_toolbox_content(:partial => "/form", :object => object)
+      else
+        page.update_last_toolbox_frame(:partial => "/form", :object => object)
       end
     end
 
