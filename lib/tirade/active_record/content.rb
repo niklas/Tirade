@@ -85,6 +85,10 @@ module Tirade
         def markup?(field)
           self.class.marked_up_fields.include?(field.to_sym)
         end
+
+        def controller_name
+          self.class.controller_name
+        end
       end
     end
   end
