@@ -1,9 +1,15 @@
 var Focus = {
   on: function(element) {
-    this.element = $(element);
-    if (this.element.length == 0) return;
+    var e = $(element);
+    if (e.length == 0) return;
     if (!this.exists()) this._createFrame();
+    this.to(e);
+    return this;
+  },
+  to: function(element) {
+    this.element = $(element);
     this.updateFrame();
+    return this;
   },
   updateFrame: function() {
     if (this.element.length == 0) return;
