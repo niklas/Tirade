@@ -1,5 +1,5 @@
 class GridsController < ManageResourceController::Base
-  # spec and make work again
+  # TODO spec and make work again
   before_filter :login_required
   #before_filter :fetch_associated_rendering, :only => [:edit, :update]
   before_filter :fetch_grid, :except => [:index, :new]
@@ -69,6 +69,15 @@ class GridsController < ManageResourceController::Base
       refresh @old_grids + [@grid]
     else
       refresh
+    end
+  end
+
+  def update_page_on_show(page)
+    super
+    if @grid.leaf?
+      page.focus.on("div.grid_#{@grid.id}", :title => @grid.title, :left_tabs => render(:partial => 'focus_tabs_renderings', :object => @grid))
+    else
+      page.focus.on("div.grid_#{@grid.id}", :title => @grid.title, :tabs => render(:partial => 'focus_tabs_children', :object => @grid))
     end
   end
 

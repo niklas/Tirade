@@ -77,6 +77,7 @@ module ApplicationHelper
     singular = thingy.class.name.underscore
     add_class_to_html_options(options, 'show')
     add_class_to_html_options(options, "show_#{singular}")
+    add_class_to_html_options(options, dom_id(thingy))
     add_class_to_html_options(options, singular)
     link_to(label, thingy, options)
   end

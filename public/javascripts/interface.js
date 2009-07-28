@@ -104,8 +104,6 @@ $(function() {
     $('div.node:not(:has(span.handle)):not(.page)', this).livequery( function() {
       $(this).append( $('<span>drag</span>').addClass('handle'))
     });
-    $(this).mirrorsLayout(); 
-    $(this).editLayout(); 
   });
 
   /* 

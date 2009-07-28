@@ -2,6 +2,11 @@ class RenderingsController < ManageResourceController::Base
   # TODo make work again
   protect_from_forgery :only => []
 
+  def update_page_on_show(page)
+    super
+    page.focus.on("div.rendering_#{@rendering.id}", :title => @rendering.title)
+  end
+
   def after_update_toolbox_for_created(page)
     page.update_grid_for(@rendering)
     page.unmark_all_active

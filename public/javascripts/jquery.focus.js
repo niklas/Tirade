@@ -1,8 +1,22 @@
 var Focus = {
-  on: function(element) {
+  on: function(element, options) {
     var e = $(element);
     if (e.length == 0) return;
     if (!this.exists()) this._createFrame();
+    this.element = $(element);
+    if (options.title) this.setTitle(options.title);
+
+    if (options.tabs) { 
+        this.setTopTabs(options.tabs)
+    } else {
+      this.tabBarTop.hide();
+    }
+    if (options.left_tabs) { 
+      this.setLeftTabs(options.left_tabs)
+    } else {
+      this.tabsLeft.hide();
+    }
+
     this.to(e);
     return this;
   },
@@ -10,6 +24,9 @@ var Focus = {
     this.element = $(element);
     this.updateFrame();
     return this;
+  },
+  off: function() {
+    return this.frames().remove();
   },
   updateFrame: function() {
     if (this.element.length == 0) return;
@@ -75,7 +92,7 @@ var Focus = {
       .hide()
       .appendTo($('body'));
 
-    this.titleBar = $('<div/>')
+    this.titleBarTop = $('<div/>')
       .addClass('ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix')
       .attr('role', 'titlebar')
       .appendTo(this.frameTop);
@@ -83,14 +100,24 @@ var Focus = {
     this.title = $('<span/>')
       .addClass('ui-dialog-title title')
       .text('Title')
-      .appendTo(this.titleBar);
+      .appendTo(this.titleBarTop);
 
-    this.tabsTop = $('<ul />')
-      .addClass('ui-tabs')
+    this.tabBarTop = $('<div />')
+      .addClass('ui-tabs ui-widget ui-widget-content  ui-corner-all')
       .hide()
       .appendTo(this.frameTop);
+
+    this.tabsTop = $('<ul />')
+      .addClass('ui-tabs-nav ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
+      .appendTo(this.tabBarTop);
+
+    this.titleBarLeft = $('<div/>')
+      .addClass('ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix')
+      .attr('role', 'titlebar')
+      .appendTo(this.frameLeft);
+
     this.tabsLeft = $('<ul />')
-      .addClass('ui-tabs')
+      .addClass('ui-tabs-nav ui-tabs ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
       .hide()
       .appendTo(this.frameLeft);
   },
@@ -100,7 +127,49 @@ var Focus = {
   frames: function() {
     return $('body div.focus')
   },
-  setTitle: function(text) {
+  setTitle: function(text, place) {
     return this.title.text(text);
+  },
+  setTabs: function(html, place) {
+    place = place || 'top'
+    switch (place) {
+      case 'top': 
+        this.setTopTabs(html);
+        break;
+      case 'left': 
+        this.setLeftTabs(html);
+        break;
+      default: return
+    }
+  },
+  setTopTabs: function(html) {
+    var element = Focus.element;
+    this.tabsLeft.hide();
+    this.tabsTop.html(html)
+      .parent().show().end()
+      .find('li')
+        .each(function() {
+          var link = $('a.show', this);
+          var target = element.find('div.' + link.resourceIdentifier());
+          link.click( function() { Focus.to(target) } );
+          $(this).width(target.width());
+        })
+        .addClass('ui-state-default ui-corner-bottom')
+        .find('a.show').useToolbox();
+  },
+  setLeftTabs: function(html) {
+    var element = Focus.element;
+    this.tabBarTop.hide();
+    this.tabsLeft.html(html)
+      .show()
+      .find('li')
+        .each(function() {
+          var link = $('a.show', this);
+          var target = element.find('div.' + link.resourceIdentifier());
+          link.click( function() { Focus.to(target) } );
+          $(this).height(target.height());
+        })
+        .addClass('ui-state-default ui-corner-left')
+        .find('a.show').useToolbox();
   }
 };
