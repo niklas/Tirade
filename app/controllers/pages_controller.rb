@@ -17,6 +17,11 @@ class PagesController < ManageResourceController::Base
     end
   end
 
+  def update_page_on_show(page)
+    super
+    page.focus.to("div.page_#{@page.id}").set_title(@page.title)
+  end
+
   private
   def show_if_fresh(page)
     if @page.fresh?
