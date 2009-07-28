@@ -139,48 +139,6 @@ var Focus = {
       }
     }
   },
-  setTabs: function(html, place) {
-    place = place || 'top'
-    switch (place) {
-      case 'top': 
-        this.setTopTabs(html);
-        break;
-      case 'left': 
-        this.setLeftTabs(html);
-        break;
-      default: return
-    }
-  },
-  setTopTabs: function(html) {
-    var element = Focus.element;
-    this.tabsLeft.hide();
-    this.tabsTop.html(html)
-      .parent().show().end()
-      .find('li')
-        .each(function() {
-          var link = $('a.show', this);
-          var target = element.find('div.' + link.resourceIdentifier());
-          link.click( function() { Focus.to(target) } );
-          $(this).width(target.width());
-        })
-        .addClass('ui-state-default ui-corner-bottom')
-        .find('a.show').useToolbox();
-  },
-  setLeftTabs: function(html) {
-    var element = Focus.element;
-    this.tabBarTop.hide();
-    this.tabsLeft.html(html)
-      .show()
-      .find('li')
-        .each(function() {
-          var link = $('a.show', this);
-          var target = element.find('div.' + link.resourceIdentifier());
-          link.click( function() { Focus.to(target) } );
-          $(this).height(target.height());
-        })
-        .addClass('ui-state-default ui-corner-left')
-        .find('a.show').useToolbox();
-  },
   tabsTo: function(elements) {
     if (elements.length == 0) {
       Focus.tabsTop.parent().hide();
