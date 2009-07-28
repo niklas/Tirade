@@ -23,6 +23,9 @@ var Focus = {
     $('body').animate({paddingTop: 0});
     return this.frames().remove();
   },
+  sync: function() {
+    Focus.updateFrame();
+  },
   updateFrame: function() {
     if (this.element.length == 0) return;
     var element = this.element;
