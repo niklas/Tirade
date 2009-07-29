@@ -1,0 +1,6 @@
+-if layout = page.final_layout
+  %div.page_margins{:style => page.style}
+    %div.page{:class => dom_id(page), :title => page.title}
+      = render_grid(layout, :page => page)
+-else
+  = page_without_layout_warning(page)

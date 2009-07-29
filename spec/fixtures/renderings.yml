@@ -39,3 +39,12 @@ about:
 
 
 
+ddm_welcome:
+  id: 13371
+  page_id: 1337
+  grid_id: 5
+  assignment: fixed
+  content: introduction
+  content_type: Document
+  part: simple_preview
+  position: 1

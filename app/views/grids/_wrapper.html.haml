@@ -1,0 +1,5 @@
+- if wrapper.wrapper_css.blank?
+  = yield
+- else
+  %div.col{:class => wrapper.wrapper_css}
+    = yield

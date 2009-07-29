@@ -1,0 +1,21 @@
+- options = {}
+- add_class_to_html_options options, dom_id(grid)
+- add_class_to_html_options options, grid.own_css
+- add_class_to_html_options options, grid.title.domify unless grid.title.blank?
+- options[:id] = dom_id(grid)
+- options[:title] = grid.title
+- options[:rel] = dom_id(grid)
+%div.grid{options}
+  -if grid.visible_children.empty?
+    - if page
+      - renderings = page.renderings.for_grid(grid)
+      - if renderings.empty?
+        %div= "no renderings found for page. empty."
+      - else
+        - renderings.each do |rendering|
+          = render_rendering(rendering, :page => page, :grid => grid)
+    - else
+      %div= "no children and no page given. empty?"
+  - else
+    - grid.visible_children.each do |child, css|
+      = render_grid(child, :page => page)

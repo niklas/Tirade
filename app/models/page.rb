@@ -139,7 +139,7 @@ class Page < ActiveRecord::Base
   end
 
   def render
-    render_to_string(:inline => '<%= render_page(page)  %>', :locals => { :page => self })
+    render_to_string(:inline => %Q[<%= render(:partial => 'pages/page', :object => page)  %>], :locals => { :page => self })
   end
 
   def style

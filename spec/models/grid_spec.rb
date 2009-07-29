@@ -400,7 +400,7 @@ describe 'A', Grid, 's Associations' do
 end
 
 describe Grid, "structure of DDM Page", :type => :helper do
-  fixtures :pages, :grids, :renderings, :parts
+  fixtures :pages, :grids, :renderings, :parts, :contents
 
   before(:each) do
     @page = pages(:ddm)
@@ -410,51 +410,63 @@ describe Grid, "structure of DDM Page", :type => :helper do
     @html ||= @page.render
   end
 
+  it "should have a rendering in content grid" do
+    renderings(:ddm_welcome).should_not be_nil
+    @page.should have_at_least(1).renderings_for_grid( grids(:content) )
+  end
+
   it "should provide correct CSS classes" do
     grids(:main_vs_sidebar).own_css.should include('subcolumns')
+    grids(:main_vs_sidebar).wrapper_css.should be_blank
     grids(:main_vs_sidebar).children_css.should include('c75l')
     grids(:main_vs_sidebar).children_css.should include('c25r')
 
     grids(:menu_vs_content).own_css.should include('subcolumns')
+    grids(:menu_vs_content).wrapper_css.should == 'c75l'
     grids(:menu_vs_content).children_css.should include('c38l')
     grids(:menu_vs_content).children_css.should include('c62r')
 
     grids(:menu).own_css.should include('subcl')
+    grids(:menu).wrapper_css.should == 'c38l'
     grids(:menu).children_css.should be_empty
 
     grids(:sidebar).own_css.should include('subcr')
+    grids(:sidebar).wrapper_css.should == 'c25r'
     grids(:sidebar).children_css.should be_empty
 
     grids(:content).own_css.should include('subcr')
+    grids(:content).wrapper_css.should == 'c62r'
     grids(:content).children_css.should be_empty
   end
 
-  it "should have the proper YAML tags" do
-    html.should have_tag 'div.page.page_1337' do#           o Page
-      with_tag 'div.subcolumns' do         #            \  Grid 1 (75-25) Main vs Sidebar
-        with_tag 'div.col.c75l' do             #          |
-          with_tag 'div.subcolumns' do     #         \    |  Grid 2 (75- / 38-62) - Main (Menu vs Content)
-            with_tag 'div.col.c38l' do # menu  #      |   |   
-              with_tag 'div.subcl' do      #        \ |   |    Grid 4 (38- / R) Menu
-                #with_tag 'div.rendering.menu' do#\  | |   |  
+  it "should not wrap layout into a .col" do
+    html.should_not have_tag('div.page > div.col')
+  end
+
+  it "should have the proper YAML tags"do 
+    html.should have_tag 'div.page.page_1337'do 
+      with_tag 'div#grid_1.subcolumns.grid.grid_1.main_vs_sidebar'do 
+        with_tag 'div.col.c75l'do 
+          with_tag 'div#grid_2.subcolumns.grid.grid_2.main_menu_vs_content'do 
+            with_tag 'div.col.c38l'do 
+              with_tag 'div#grid_4.subcl.leaf.grid.grid_4.menu'do 
+                #with_tag 'div.rendering.menu'do 
                 #  with_tag 'ul'            #      | | |   |  
                 #end                        #     /  | |   |                       
-                #with_tag 'div.rendering.logo' do#\  | |   |   
+                #with_tag 'div.rendering.logo'do 
                 #  with_tag 'img'           #      | | |   |  
                 #end                        #     /  / |   |                       
               end                          #          |   |                   
             end                            #          |   |                   
           end                              #          /   |                   
-          with_tag 'div.col.c62r' do # content #          |                 
-            with_tag 'div.subcr' do        #              |  \              
-              #with_tag 'div.rendering'     #              |  |  Grid 5 (-62 | R) Content
+          with_tag 'div.col.c62r'do 
+            with_tag 'div#grid_5.subcr.grid.grid_5.content'do 
+              with_tag 'div.rendering.rendering_13371.document'
             end                            #              |  /              
           end                              #              |                 
         end                                #              |
-        with_tag 'div.col.c25r' do # sidebar   #          |                 
-          with_tag 'div.subcr' do          #              |  \  
-            #with_tag 'div.rendering.simple_preview'#   O  |  |  Grid 3 (-25 / R) Sidebar
-          end                              #              |  /  
+        with_tag 'div.col.c25r'do 
+          with_tag 'div#grid_3.subcr.grid.grid_3.sidebar'
         end                                #              |
       end                                  #              /
     end                                

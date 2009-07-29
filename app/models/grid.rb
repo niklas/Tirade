@@ -134,6 +134,14 @@ class Grid < ActiveRecord::Base
     end
   end
 
+  def wrapper_css
+    if root?
+      ''
+    else
+      parent.children_css[position]
+    end
+  end
+
   def children_css
     Divisions[division] || raise("illegal division: #{division}")
   end

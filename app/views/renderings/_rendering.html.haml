@@ -1,0 +1,18 @@
+- rendering.page = page if page
+- options = {}
+- add_class_to_html_options options, 'rendering'
+- add_class_to_html_options options, dom_id(rendering)
+- add_class_to_html_options options, rendering.part.andand.filename
+- options[:id] = dom_id(rendering)
+- options[:rel] = dom_id(rendering)
+- options[:title] = rendering.title
+- if !rendering.has_content?
+  - if rendering.part && rendering.part.preferred_types.blank?
+    = rendering.part.render(rendering.final_options, rendering.context_in_registers)
+  - else
+    %div.without_content{options}= render(:partial => 'renderings/without_content', :object => rendering)
+- elsif rendering.part.nil?
+  %div.without_part{options}= render(:partial => 'renderings/without_part', :object => rendering)
+- else
+  - add_class_to_html_options options, rendering.content.class.to_s.underscore
+  %div{options}= rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
