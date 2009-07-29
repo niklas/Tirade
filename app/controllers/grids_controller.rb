@@ -74,11 +74,7 @@ class GridsController < ManageResourceController::Base
 
   def update_page_on_show(page)
     super
-    if @grid.leaf?
-      page.focus.on("div.grid_#{@grid.id}", :title => @grid.title, :left_tabs => render(:partial => 'focus_tabs_renderings', :object => @grid))
-    else
-      page.focus.on("div.grid_#{@grid.id}", :title => @grid.title, :tabs => render(:partial => 'focus_tabs_children', :object => @grid))
-    end
+    page.select("div.grid_#{@grid.id}").trigger('tirade.focus')
   end
 
   private

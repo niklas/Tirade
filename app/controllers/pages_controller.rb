@@ -19,7 +19,7 @@ class PagesController < ManageResourceController::Base
 
   def update_page_on_show(page)
     super
-    page.focus.on("div.page_#{@page.id}", :title => @page.title, :tabs => render(:partial => 'focus_tabs', :object => @page))
+    page.select("div.page_#{@page.id}").trigger('tirade.focus')
   end
 
   private

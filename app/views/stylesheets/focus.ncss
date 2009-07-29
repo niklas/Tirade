@@ -19,5 +19,10 @@ body {
     .bottom {
       border-top: none;
     }
+    .top {
+       a.show {
+         right: 0;
+       }
+    }
   }
 }

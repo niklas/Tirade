@@ -29,9 +29,15 @@
     if (match = $(this)[0].className.match(/([\w_]+)_(\d+)/)) {
       return({
         type: $.string(match[1]).gsub(/_/,'-').capitalize().camelize().str,
+        resource: match[1],
         id: match[2]
       });
     }
+  };
+
+  $.fn.showUrl = function() {
+    var typeAndId = $(this).typeAndId();
+    return Routing[typeAndId.resource + '_path']({id: typeAndId.id})
   };
 
 

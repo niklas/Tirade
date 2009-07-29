@@ -4,7 +4,7 @@ class RenderingsController < ManageResourceController::Base
 
   def update_page_on_show(page)
     super
-    page.focus.on("div.rendering_#{@rendering.id}", :title => @rendering.title)
+    page.select("div.rendering_#{@rendering.id}").trigger('tirade.focus')
   end
 
   def after_update_toolbox_for_created(page)

@@ -16,10 +16,12 @@ var Focus = {
     this.tabsToTop( options.children ?  $(options.children, this.element) : []);
     this.tabsToLeft( options.left_children ?  $(options.left_children, this.element) : []);
     this.setTitle( this.element.attr('title') || this.element.typeAndId().type );
+    this.showButton.attr('href', this.element.showUrl()  );
     this.updateFrame();
     return this;
   },
   stop: function() {
+    $(window).unbind('resize', Focus.sync);
     $('body').animate({paddingTop: 0});
     return this.frames().remove();
   },
@@ -113,6 +115,11 @@ var Focus = {
     this.tabsLeft = $('<ul />')
       .addClass('ui-tabs-nav ui-tabs ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
       .appendTo( tabs.clone().appendTo(this.frameLeft) );
+
+    this.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox'})
+      .appendTo(this.titleBarTop);
+
+    $(window).bind('resize', Focus.sync);
     $('body').css('padding-top', '5em');
   },
   exists: function() {
