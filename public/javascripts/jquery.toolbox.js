@@ -350,8 +350,8 @@ var Toolbox = {
   close: function() {
     this.expireBehaviors();
     this.sideBar.remove();
-    this.element().remove();
     $('div.active').removeClass('active');
+    return true;
   },
   otherDroppables: function() {
     return this.element().siblings(':not(#toolbox_sidebar)').find('.ui-droppable')
@@ -634,7 +634,7 @@ jQuery.fn.useToolbox = function(options) {
   if ( !$(this).hasClass("without_toolbox") ) {
     return $(this).resourcefulLink({
       start: function(event) {
-        Toolbox.findOrCreate();
+        Toolbox.findOrCreate(options);
         Toolbox.beBusy('Loading');
         options.start(event);
       }
