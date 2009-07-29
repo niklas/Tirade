@@ -3,7 +3,7 @@
   <%= li_link_to 'Create', new_page_path(:page => {:url => @full_path.andand.join('/') || '' }), :class => 'new page' %>
 <% end %>
 
-<div class="error">
+<% error_tag do %>
   Page not found. How did you get here, hmm?
   <%= link_to 'Create one', new_page_path(:page => {:url => @full_path.andand.join('/') || '' }), :class => 'new page with_toolbox' %>
-</div>
+<% end %>

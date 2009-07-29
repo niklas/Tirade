@@ -26,6 +26,19 @@ module ApplicationHelper
     content_tag(:div,text,{:class => 'warning'})
   end
 
+  def error_tag(opts={}, &block)
+    add_class_to_html_options opts, 'ui-corner-all'
+    add_class_to_html_options opts, 'ui-state-error'
+    concat widget_tag(
+      content_tag(:div, capture(&block), opts), :class => 'error'
+    )
+  end
+
+  def widget_tag(content, opts={})
+    add_class_to_html_options opts, 'ui-widget'
+    content_tag(:div, content, opts)
+  end
+
   def context
     page.instance_variable_get("@context").instance_variable_get("@template")
   end

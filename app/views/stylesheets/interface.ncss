@@ -49,10 +49,17 @@ body div {
     padding: 0.5em;
     margin: 1em;
     color: <%= @colors[:warning] %>;
-    font-weight: bold;
-    background: transparent;
     font-size: 100%;
     line-height: 100%;
+  }
+  .error {
+    width: 33%;
+    min-width: 30em;
+    max-width: 90%;
+    margin: 1em auto;
+    div.ui-state-error {
+      padding: 1em;
+    }
   }
 
 
