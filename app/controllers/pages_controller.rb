@@ -19,7 +19,16 @@ class PagesController < ManageResourceController::Base
 
   def update_page_on_show(page)
     super
-    page.select("div.page_#{@page.id}").trigger('tirade.focus')
+    show_if_fresh(page)
+  end
+
+  def update_page_on_update(page)
+    super
+    show_if_fresh(page)
+  end
+  def update_page_on_create(page)
+    super
+    show_if_fresh(page)
   end
 
   private
@@ -27,12 +36,8 @@ class PagesController < ManageResourceController::Base
     if @page.fresh?
       page.clear
       page.insert_page(@page)
+      page.select("div.page_#{@page.id}").trigger('tirade.focus')
     end
   end
-  # TODO re-enable hooks
-  #alias :after_update_toolbox_for_show :show_if_fresh
-  #alias :after_update_toolbox_for_created :show_if_fresh
-  #alias :after_update_toolbox_for_updated :show_if_fresh
-
 
 end
