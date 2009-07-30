@@ -895,11 +895,13 @@ jQuery.ui.button = function(options) {
     hover: true,
     icon: 'help',
     text: 'Help',
+    href: '#',
     selectable: false
   };
   var options = $.extend(defaults, options);
-  var button = $('<a href="#" />')
+  var button = $('<a/>')
     .addClass('ui-corner-all ui-button ' + options.class)
+    .attr('href', options.href)
     .attr('role', 'button');
   if (options.hover) button.hover(
        function() { button.addClass('ui-state-hover'); },
@@ -908,6 +910,7 @@ jQuery.ui.button = function(options) {
   $('<span/>')
     .addClass('ui-icon ui-icon-' + options.icon)
     .text(options.text)
+    .attr('title', options.title || options.text)
     .appendTo(button);
   if (!options.selectable) button.disableSelection();
   return button
