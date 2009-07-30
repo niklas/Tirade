@@ -1,5 +1,5 @@
 (function($) {
-  $.focusable = function(action, new_options) {
+  window.Focus = $.focusable = function(action, new_options) {
     // events.trigger('event');
     return options;
   };
