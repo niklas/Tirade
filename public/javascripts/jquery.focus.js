@@ -1,7 +1,6 @@
 (function($) {
   window.Focus = $.focusable = function(action, new_options) {
     // events.trigger('event');
-    return options;
   };
 
   $.extend( $.focusable, {
@@ -69,6 +68,9 @@
         .addClass('ui-tabs-nav ui-tabs ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
         .appendTo( tabs.clone().appendTo($.focusable.frameLeft) );
 
+      $.focusable.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', class: 'pick'})
+        .click( $.focusable.pick )
+        .appendTo($.focusable.titleBarTop);
       $.focusable.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox'})
         .appendTo($.focusable.titleBarTop);
 
@@ -102,6 +104,21 @@
       // $.focusable.clearButtons();
       // $.focusable.setButtons(this.element.);
       $.focusable.sync();
+    },
+    pick: function(ev) {
+      var clicker = $(this);
+      clicker.addClass('ui-state-active');
+      if (ev) ev.stopPropagation();
+      $('body')
+        .css('cursor', 'crosshair')
+        .one('click', function(ev) {
+          ev.stopPropagation();
+          $.focusable.on( ev.target );
+          $('body').css('cursor', 'auto');
+          clicker.removeClass('ui-state-active');
+          return false;
+        });
+      return(clicker);
     },
     back: function() {
       if (!$.focusable.exists()) return;
