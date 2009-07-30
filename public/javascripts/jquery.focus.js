@@ -7,7 +7,8 @@
     defaults: {
       parent: 'div',
       children: 'div',
-      side_children: null
+      side_children: null,
+      buttons: function() {}
     },
     frameClasses: 'focus ui-widget',
     current: null,
@@ -16,6 +17,7 @@
     },
     open: function() {
       var classes = $.focusable.frameClasses;
+      /* Frame parts */
       $.focusable.frameBottom = $('<div/>')
         .addClass('bottom ui-corner-bottom')
         .addClass(classes)
@@ -44,19 +46,20 @@
         .hide()
         .appendTo($('body'));
 
+      /* Title (Bar) */
+
       $.focusable.titleBarTop = $('<div/>')
         .addClass('ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix')
         .attr('role', 'titlebar')
         .appendTo($.focusable.frameTop);
 
-      $.focusable.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back'})
-        .click( $.focusable.back )
-        .appendTo($.focusable.titleBarTop);
 
       $.focusable.titleElement = $('<span/>')
         .addClass('ui-dialog-title title')
         .text('Title')
         .appendTo($.focusable.titleBarTop);
+
+      /* Tabs*/
 
       var tabs = $('<div />').addClass('ui-tabs').hide();
 
@@ -68,11 +71,25 @@
         .addClass('ui-tabs-nav ui-tabs ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
         .appendTo( tabs.clone().appendTo($.focusable.frameLeft) );
 
-      $.focusable.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', class: 'pick'})
+      /* Buttons */
+
+      $.focusable.leftButtons = $('<span />')
+        .addClass('buttons left')
+        .prependTo( $.focusable.titleBarTop );
+      $.focusable.rightButtons = $('<span />')
+        .addClass('buttons right')
+        .prependTo( $.focusable.titleBarTop );
+
+      $.focusable.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', class: 'pick sticky'})
         .click( $.focusable.pick )
-        .appendTo($.focusable.titleBarTop);
-      $.focusable.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox'})
-        .appendTo($.focusable.titleBarTop);
+        .appendTo($.focusable.leftButtons);
+
+      $.focusable.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox sticky'})
+        .appendTo($.focusable.rightButtons);
+
+      $.focusable.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back sticky'})
+        .click( $.focusable.back )
+        .prependTo($.focusable.leftButtons);
 
       $(window).bind('resize', $.focusable.sync);
       $('body').css('padding-top', '9em');
@@ -101,6 +118,7 @@
       $.focusable.fillLeftTabs( options.left_children ?  $(options.left_children, e) : []);
       $.focusable.title( e.attr('title') || e.typeAndId().type );
       $.focusable.showButton.attr('href', e.showUrl()  );
+      $.focusable.setButtons( options.buttons.call(e) );
       // $.focusable.clearButtons();
       // $.focusable.setButtons(this.element.);
       $.focusable.sync();
@@ -204,6 +222,12 @@
         else
           link.width($self.width());
       });
+    },
+    setButtons: function(buttons) {
+      $.focusable.rightButtons.find('a:not(.sticky)').remove();
+      if (buttons && buttons.length > 0) {
+        $(buttons).appendTo( $.focusable.rightButtons )
+      }
     }
   });
 
