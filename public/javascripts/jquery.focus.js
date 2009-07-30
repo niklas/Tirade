@@ -254,12 +254,6 @@
       });
   };
 
-  $( function() {
-    $('div.page').focusable({parent: null, children: '>div.grid'});
-    $('div.grid').focusable({parent: 'div.grid, div.page', children: '> * > div.grid,>div.grid', left_children: '>div.rendering'});
-    $('div.rendering').focusable({parent: 'div.grid', children: null});
-  });
-
 })(jQuery);
 
 

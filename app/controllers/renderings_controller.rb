@@ -1,41 +1,31 @@
 class RenderingsController < ManageResourceController::Base
-  # TODo make work again
-  protect_from_forgery :only => []
-
   def update_page_on_show(page)
     super
-    page.select("div.rendering_#{@rendering.id}").trigger('tirade.focus')
+    page.update_rendering(@rendering) 
+    @rendering.brothers_by_part.each do |brother|
+      page.update_rendering(brother)
+    end if params[:part]
+    page.focus_on(@rendering)
   end
 
-  def after_update_toolbox_for_created(page)
+  def update_page_on_create(page)
     page.update_grid_for(@rendering)
-    page.unmark_all_active
-    page.mark_as_active(@rendering)
+    page.focus_on(@rendering)
   end
 
-  def after_update_toolbox_for_updated(page)
-    page.unmark_all_active
+  def update_page_on_created(page)
     page.update_rendering(@rendering)
     if @rendering.grid_changed? || @rendering.grid_id_changed?
       page.remove_rendering(@rendering)
       page.update_grid_in_page(@rendering.grid, @rendering.page) 
       page.update_grid_in_page(@rendering.old_grid, @rendering.page) 
     end
-    page.mark_as_active(@rendering)
+    page.focus_on(@rendering)
   end
 
-  def after_update_toolbox_for_show(page)
-    page.update_rendering(@rendering) 
-    @rendering.brothers_by_part.each do |brother|
-      page.update_rendering(brother)
-    end if params[:part]
-    page.unmark_all_active
-    #page.mark_as_active(@rendering)
-  end
-
-  def after_update_toolbox_for_destroyed(page)
+  def update_page_on_destroy(page)
     page.update_grid_for(@rendering)
-    page.unmark_all_active
+    page.focus_on(@rendering.grid)
   end
 
   def duplicate

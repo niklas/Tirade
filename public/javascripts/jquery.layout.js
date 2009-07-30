@@ -4,6 +4,7 @@
  * */
 
 function context_page_id() {
+  alert("you shall now use $.tirade.currentPageId()");
   return $('body div.page').resourceId();
 }
 
@@ -40,10 +41,10 @@ function order_children_for_grid(event, ui) {
   event.preventDefault();event.stopPropagation();
 };
 
-function create_new_rendering_for_grid(grid) {
+function new_rendering_for_grid(grid) {
   context = "rendering[grid_id]=" + grid.resourceId();
   context += "&rendering[page_id]=" + context_page_id()
-  $.ajax({ data: context, url: Routing.renderings_url(), type: 'POST' });
+  $.ajax({ data: context, url: Routing.new_rendering_url(), type: 'GET' });
 };
 
 function update_content_of_rendering(content,rendering) {
@@ -200,7 +201,7 @@ $(function() {
     });
   };
 
-
+  /*
   // Admin Bars on Renderings
   $('body.role_admin div.page div.rendering').livequery(function(i) {
     var rendering = $(this);
@@ -225,6 +226,7 @@ $(function() {
         div.append( $('<span>drag</span>').addClass('handle'))
     )
   });
+  */
 
   $.fn.toggleEditPage = function() {
     $(this).toggle( 
@@ -355,4 +357,34 @@ $(function() {
       })
     });
   }
+
+  $.tirade = function() { return this };
+
+  $.extend($.tirade, {
+    currentPageId: function() {
+      return $('body div.page').resourceId();
+    }
+  });
+
+
+  $('div.page').focusable({parent: null, children: '>div.grid'});
+  $('div.grid').focusable({
+    parent: 'div.grid, div.page', 
+    children: '> * > div.grid,>div.grid', 
+    left_children: '>div.rendering',
+    buttons: function() {
+      var grid = this;
+      return([
+        $.ui.button({
+          icon: 'circle-plus', text: 'add rendering', 
+          class: 'new rendering with_toolbox',
+          href: Routing.new_rendering_url({
+            'rendering[grid_id]': grid.resourceId(),
+            'rendering[page_id]': $.tirade.currentPageId()
+          })
+        })
+      ]);
+    }
+  });
+  $('div.rendering').focusable({parent: 'div.grid', children: null});
 });
