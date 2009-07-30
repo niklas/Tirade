@@ -783,7 +783,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
     // redirect the Submit button from bottomLinkBar
     if ($form.find('input.submit:visible').length) {
       var orgbutton = $form.find('input.submit:visible').hide();
-      $.ui.button({icon: 'disc', text: orgbutton.attr('value'), class: 'submit' })
+      $.ui.button({icon: 'disk', text: orgbutton.attr('value'), class: 'submit' })
         .click(function(e) {
           e.preventDefault();
           form[0].clk = orgbutton[0];
