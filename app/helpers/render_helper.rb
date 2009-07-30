@@ -45,4 +45,8 @@ module RenderHelper
   def insert_page(thepage)
     page.select('body').prepend render(:inline => "<%= render_page(thepage) %>" , :locals => {:thepage => thepage})
   end
+
+  def focus_on(record)
+    page.focus.on( '.' + context.dom_id(record) )
+  end
 end
