@@ -1,6 +1,6 @@
 var Focus = {
   on: function(element, options) {
-    var e = $(element);
+    var e = $(element).closest('.ui-focusable');
     if (e.length == 0) return;
     if (!this.exists()) this._createFrame();
     this.to(e);
@@ -17,6 +17,8 @@ var Focus = {
     this.tabsToLeft( options.left_children ?  $(options.left_children, this.element) : []);
     this.setTitle( this.element.attr('title') || this.element.typeAndId().type );
     this.showButton.attr('href', this.element.showUrl()  );
+    // this.clearButtons();
+    // this.setButtons(this.element.);
     this.updateFrame();
     return this;
   },
@@ -36,18 +38,19 @@ var Focus = {
     var left = element.offset().left;
     var top = element.offset().top;
     var header = this.frameTop.outerHeight();
+    var eWidth = element.outerWidth({margin: true});
     var dialogPadding = this.frameTop.outerWidth() - this.frameTop.width();
 
     this.frameTop.show().animate({
       top: top - header - padding, 
       left: left - border - padding, 
-      width: element.width() + 2*border + 2*padding - dialogPadding
+      width: eWidth + 2*border + 2*padding - dialogPadding
     });
     this.frameBottom.show().animate({
       top: top + element.height() + padding, 
       left: left - border - padding, 
       height: border,
-      width: element.width() + 2*border + 2*padding
+      width: eWidth + 2*border + 2*padding
     });
     this.frameLeft.show().animate({
       top: top - header - padding, 
@@ -57,7 +60,7 @@ var Focus = {
     });
     this.frameRight.show().animate({
       top: top - header - padding, 
-      left: left + element.width() + padding, 
+      left: left + eWidth + padding, 
       width: border,
       height: element.height() + header + border + 2*padding
     });

@@ -47,10 +47,10 @@
 body div {
   .warning {
     padding: 0.5em;
-    margin: 1em;
-    color: <%= @colors[:warning] %>;
-    font-size: 100%;
-    line-height: 100%;
+    overflow: hidden;
+    .empty {
+      min-height: 8em;
+    }
   }
   .error {
     width: 33%;

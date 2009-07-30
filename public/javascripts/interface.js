@@ -200,22 +200,4 @@ $(function() {
   });
 
 
-  /* empty grid */
-  $('body.role_admin div.page div.grid:not(:has(div.grid, div.rendering))').livequery(function() {
-    $(this).addClass('empty').append('<div class="warning">Empty Grid. Open Toolbox, click on + to add Renderings</div>');
-  });
-
-  // mark hovered divs as hovered. we can get them later by $('div.hovered').last() for positioniing the toolbox
-  $('div.rendering > div.admin, div.grid > div.admin').livequery(function() {
-    $(this).hover(
-      function() { 
-        $(this).parent().addClass('hover') 
-      }, 
-      function() { 
-        $('div.page .hover').removeClass('hover'); 
-      }
-    );
-  });
-
-
 });
