@@ -1,6 +1,6 @@
 
 var Toolbox = {
-  findOrCreate: function() {
+  findOrCreate: function(options) {
     if ( this.element().length == 0 ) {
       Toolbox.minHeight = 400;
       $('body').appendDom(Toolbox.Templates.toolbox);
@@ -28,6 +28,14 @@ var Toolbox = {
       this.element().show();
     };
     this.setSizes();
+    switch (options.mode) {
+      case 'tiled': 
+        this.tile();
+        break;
+      case 'maximized':
+        this.maximize();
+        break;
+    }
     return this.element();
   },
   setup: function() {
@@ -627,21 +635,23 @@ jQuery.fn.refresh = function() {
 
 jQuery.fn.useToolbox = function(options) {
   var defaults = {
+    mode: 'normal',
     start: function() {}
   };
-  var options = $.extend(defaults, options);
-  if (options.icon) { $(this).uiIcon(icon); }
-  if ( !$(this).hasClass("without_toolbox") ) {
-    return $(this).resourcefulLink({
+  return this.each(function() {
+    var options = $.extend(defaults, options);
+    if (options.icon) { $(this).uiIcon(icon); }
+    if ( $(this).hasClass('without_toolbox') ) return; /* next ? */
+    if ( $(this).hasClass('tiled') ) options.mode = 'tiled';
+    if ( $(this).hasClass('maximized') ) options.mode = 'maximized';
+    $(this).resourcefulLink({
       start: function(event) {
         Toolbox.findOrCreate(options);
         Toolbox.beBusy('Loading');
         options.start(event);
       }
     })
-  } else {
-    return $(this);
-  }
+  });
 };
 
 jQuery.fn.uiIcon = function(icon) {

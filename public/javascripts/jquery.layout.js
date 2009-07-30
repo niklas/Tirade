@@ -377,7 +377,7 @@ $(function() {
       return([
         $.ui.button({
           icon: 'circle-plus', text: 'add rendering', 
-          class: 'new rendering with_toolbox',
+          class: 'new rendering with_toolbox tiled',
           href: Routing.new_rendering_url({
             'rendering[grid_id]': grid.resourceId(),
             'rendering[page_id]': $.tirade.currentPageId()
