@@ -73,7 +73,7 @@
         .appendTo($.focusable.titleBarTop);
 
       $(window).bind('resize', $.focusable.sync);
-      $('body').css('padding-top', '5em');
+      $('body').css('padding-top', '9em');
     },
     start: function() {
       $.focusable.on( $('.ui-focusable:first') );
@@ -122,8 +122,8 @@
       var padding = 3;
       var left = e.offset().left;
       var top = e.offset().top;
-      var header = $.focusable.frameTop.outerHeight();
       var eWidth = e.outerWidth({margin: true});
+      var header = $.focusable.frameTop.width(eWidth).outerHeight();
       var dialogPadding = $.focusable.frameTop.outerWidth() - $.focusable.frameTop.width();
 
       $.focusable.frameTop.show().animate({
