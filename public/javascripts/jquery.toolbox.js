@@ -87,22 +87,33 @@ var Toolbox = {
       })
       .appendTo(Toolbox.footer);
 
+    this.leftButtons = $('<span/>')
+      .addClass('buttons left')
+      .prependTo(Toolbox.header);
+    this.rightButtons = $('<span/>')
+      .addClass('buttons right')
+      .prependTo(Toolbox.header);
+
     this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back'})
       .click( function(event) { 
         event.preventDefault();
         Toolbox.pop();
         return false;
       })
-      .appendTo(Toolbox.header);
+      .prependTo(Toolbox.leftButtons);
 
     this.maximizeButton = $.ui.button({icon: 'arrow-4-diag', text: 'maximize', class: 'size-max' })
-      .click(Toolbox.maximize).appendTo(Toolbox.header);
+      .click(Toolbox.maximize).appendTo(Toolbox.rightButtons);
 
     this.normalSizeButton = $.ui.button({icon: 'pin-s', text: 'normalize', class: 'size-normal' })
-      .click(Toolbox.unmaximize).appendTo(Toolbox.header);
+      .click(Toolbox.unmaximize).appendTo(Toolbox.rightButtons);
 
     this.tileButton = $.ui.button({icon: 'triangle-2-e-w', text: 'tile', class: 'size-tile' })
-      .click(Toolbox.tile).appendTo(Toolbox.header);
+      .click(Toolbox.tile).appendTo(Toolbox.rightButtons);
+
+    this.closeButton = this.header.find('a.ui-dialog-titlebar-close')
+      .prependTo(Toolbox.rightButtons);
+
     Toolbox.setWindowState('normal');
 
     this.elements = $('#toolbox, #toolbox_sidebar');

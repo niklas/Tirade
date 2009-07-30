@@ -455,3 +455,34 @@ div.busy {
   }
 }
 
+
+*.ui-dialog {
+  *.ui-button {
+    padding: 1px;
+    display: block;
+    height: 18px;
+    width: 19px;
+    span { display: block; margin: 1px; }
+    :focus, :hover { padding: 0; }
+  }
+
+  *.ui-dialog-titlebar {
+     span.buttons {
+       a {
+         position: static; /* undo jquery ui-dialog-titlebar-close */
+       }
+       .left {
+         float: left;
+         margin: 0 0 0 -0.7em;
+       }
+       .left a {
+         float: left;
+         margin: 0;
+       }
+       .right, .right a {
+         float: right;
+         margin: 0;
+       }
+     }
+  }
+}

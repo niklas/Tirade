@@ -20,16 +20,6 @@ body {
       border-top: none;
     }
     .top {
-       span.buttons {
-         .left, .left a {
-           float: left;
-           margin: 0;
-         }
-         .right, .right a {
-           float: right;
-           margin: 0;
-         }
-       }
     }
   }
 }
