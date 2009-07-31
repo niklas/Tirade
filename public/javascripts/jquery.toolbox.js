@@ -65,9 +65,9 @@ var Toolbox = {
       .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
 
-    this.toggleEditGridButton = $.ui.button({class: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'pencil'})
+    this.pickFocusButton = $.ui.button({class: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'suitcase'})
       .appendTo(Toolbox.sideBarActions)
-      .toggle( Focus.start, Focus.stop);
+      .click( $.tirade.focus.pick );
 
     this.refreshPageButton = $.ui.button({class: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { $.get('/') })

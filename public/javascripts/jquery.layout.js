@@ -358,7 +358,7 @@ $(function() {
     });
   }
 
-  $.tirade = function() { return this };
+  if (!$.tirade) $.tirade = {};
 
   $.extend($.tirade, {
     currentPageId: function() {

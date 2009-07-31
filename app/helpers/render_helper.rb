@@ -47,6 +47,12 @@ module RenderHelper
   end
 
   def focus_on(record)
-    page.focus.on( '.' + context.dom_id(record) )
+    page.select( '.' + context.dom_id(record) ).closest('.ui-focusable').focusable('focus')
+  end
+
+  def link_to_focus(record, options = {})
+    label = options.delete(:label) || 'Focus'
+    add_class_to_html_options options, 'focus'
+    link_to_function(label, options) {|p| p.focus_on(record)}
   end
 end

@@ -1,127 +1,149 @@
 (function($) {
-  window.Focus = $.focusable = function(action, new_options) {
-    // events.trigger('event');
+
+  /* Focusable Elements */
+  $.widget('ui.focusable', {
+    _init: function() {
+      this.element.addClass('ui-focusable');
+    },
+    focus: function() {
+      $.tirade.focus.on(this.element, this.options);
+    }
+  });
+  $.ui.focusable.defaults = {
+    parent: 'div',
+    children: 'div',
+    side_children: null,
+    buttons: function() {}
   };
 
-  $.extend( $.focusable, {
-    defaults: {
-      parent: 'div',
-      children: 'div',
-      side_children: null,
-      buttons: function() {}
-    },
-    frameClasses: 'focus ui-widget',
-    current: null,
-    exists: function() {
-      return $.focusable.frames().length > 0;
-    },
-    open: function() {
-      var classes = $.focusable.frameClasses;
+
+  if (!$.tirade) $.tirade = {};
+
+  /* The one and only focus */
+  $.tirade.focus = function(options) {
+    this.prepare();
+    return this;
+  };
+  $.extend( $.tirade.focus, {
+    _open: function(element) {
+      if (!element) element = $(this.root);
+      this.element = $(element).filter(':first');
+      var classes = this.frameClasses;
       /* Frame parts */
-      $.focusable.frameBottom = $('<div/>')
+      this.frameBottom = $('<div/>')
         .addClass('bottom ui-corner-bottom')
         .addClass(classes)
         .attr('role', 'focus')
         .hide()
-        .appendTo($('body'));
+        .appendTo(this.element);
 
-      $.focusable.frameLeft = $('<div/>')
+      this.frameLeft = $('<div/>')
         .addClass('left ui-corner-left')
         .addClass(classes)
         .attr('role', 'focus')
         .hide()
-        .appendTo($('body'));
+        .appendTo(this.element);
 
-      $.focusable.frameRight = $('<div/>')
+      this.frameRight = $('<div/>')
         .addClass('right ui-corner-right')
         .addClass(classes)
         .attr('role', 'focus')
         .hide()
-        .appendTo($('body'));
+        .appendTo(this.element);
 
-      $.focusable.frameTop = $('<div/>')
+      this.frameTop = $('<div/>')
         .addClass('top ui-dialog ui-widget-content ui-corner-top')
         .addClass(classes)
         .attr('role', 'focus')
         .hide()
-        .appendTo($('body'));
+        .appendTo(this.element);
 
       /* Title (Bar) */
 
-      $.focusable.titleBarTop = $('<div/>')
+      this.titleBarTop = $('<div/>')
         .addClass('ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix')
         .attr('role', 'titlebar')
-        .appendTo($.focusable.frameTop);
+        .appendTo(this.frameTop);
 
 
-      $.focusable.titleElement = $('<span/>')
+      this.titleElement = $('<span/>')
         .addClass('ui-dialog-title title')
         .text('Title')
-        .appendTo($.focusable.titleBarTop);
+        .appendTo(this.titleBarTop);
 
       /* Tabs*/
 
       var tabs = $('<div />').addClass('ui-tabs').hide();
 
-      $.focusable.tabsTop = $('<ul />')
+      this.tabsTop = $('<ul />')
         .addClass('ui-tabs-nav ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
-        .appendTo( tabs.clone().appendTo($.focusable.frameTop) );
+        .appendTo( tabs.clone().appendTo(this.frameTop) );
 
-      $.focusable.tabsLeft = $('<ul />')
+      this.tabsLeft = $('<ul />')
         .addClass('ui-tabs-nav ui-tabs ui-widget-header ui-helper-reset ui-corner-all ui-helper-clearfix')
-        .appendTo( tabs.clone().appendTo($.focusable.frameLeft) );
+        .appendTo( tabs.clone().appendTo(this.frameLeft) );
 
       /* Buttons */
 
-      $.focusable.leftButtons = $('<span />')
+      this.leftButtons = $('<span />')
         .addClass('buttons left')
-        .prependTo( $.focusable.titleBarTop );
-      $.focusable.rightButtons = $('<span />')
+        .prependTo( this.titleBarTop );
+      this.rightButtons = $('<span />')
         .addClass('buttons right')
-        .prependTo( $.focusable.titleBarTop );
+        .prependTo( this.titleBarTop );
 
-      $.focusable.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', class: 'pick sticky'})
-        .click( $.focusable.pick )
-        .appendTo($.focusable.leftButtons);
+      this.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', class: 'pick sticky'})
+        .click( this.pick )
+        .appendTo(this.leftButtons);
 
-      $.focusable.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox sticky'})
-        .appendTo($.focusable.rightButtons);
+      this.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox sticky'})
+        .appendTo(this.rightButtons);
 
-      $.focusable.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back sticky'})
-        .click( $.focusable.back )
-        .prependTo($.focusable.leftButtons);
+      this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back sticky'})
+        .click( this.back )
+        .prependTo(this.leftButtons);
 
-      $(window).bind('resize', $.focusable.sync);
-      $('body').css('padding-top', '9em');
+      $(window).bind('resize', this.sync);
+      this.element.css('padding-top', '9em');
+    },
+    frameClasses: 'focus ui-widget',
+    current: null,
+    currentOptions: null,
+    exists: function() {
+      return this._frames().length > 0;
     },
     start: function() {
-      $.focusable.on( $('.ui-focusable:first') );
+      $('.ui-focusable:first').focusable('focus');
     },
     stop: function() {
-      $(window).unbind('resize', $.focusable.sync);
-      $('body').animate({paddingTop: 0});
-      return $.focusable.frames().remove();
+      $(window).unbind('resize', this.sync);
+      this.element.animate({paddingTop: 0});
+      return this.frames().remove();
     },
-    on: function(element) {
-      var e = $(element).closest('.ui-focusable');
-      if (e.length == 0) return;
-      if (!$.focusable.exists()) $.focusable.open();
-      $.focusable.goto(e);
+    prepare: function() {
+      if (!this.exists()) this._open();
+    },
+    root: 'body',
+    on: function(element, options) {
+      element = $(element);
+      if (element.length == 0) return;
+      this.prepare();
+      this.goto(element, options);
       return this;
     },
-    goto: function(element) {
-      var e =  $(element).closest('.ui-focusable');
+    goto: function(element, options) {
+      var e =  $(element);
       if (e.length == 0) return;
-      $.focusable.current = e;
-      var options = e.data('focusable:options');
-      $.focusable.fillTopTabs( options.children ?  $(options.children, e) : []);
-      $.focusable.fillLeftTabs( options.left_children ?  $(options.left_children, e) : []);
-      $.focusable.title( e.attr('title') || e.typeAndId().type );
-      $.focusable.showButton.attr('href', e.showUrl()  );
-      $.focusable.setButtons( options.buttons.call(e) );
-      // $.focusable.clearButtons();
-      // $.focusable.setButtons(this.element.);
-      $.focusable.sync();
+      this.current = element;
+      this.currentOptions = options;
+      this._fillTopTabs( options.children ?  $(options.children, e) : []);
+      this._fillLeftTabs( options.left_children ?  $(options.left_children, e) : []);
+      this.title( e.attr('title') || e.typeAndId().type );
+      this.showButton.attr('href', e.showUrl()  );
+      this._setButtons( options.buttons.call(e) );
+      // this.clearButtons();
+      // this.setButtons(this.element.);
+      this.sync();
     },
     pick: function(ev) {
       var clicker = $(this);
@@ -131,7 +153,7 @@
         .css('cursor', 'crosshair')
         .one('click', function(ev) {
           ev.stopPropagation();
-          $.focusable.on( ev.target );
+          $(ev.target).closest('.ui-focusable').focusable('focus');
           $('body').css('cursor', 'auto');
           clicker.removeClass('ui-state-active');
           return false;
@@ -139,48 +161,52 @@
       return(clicker);
     },
     back: function() {
-      if (!$.focusable.exists()) return;
-      var e = $.focusable.current;
-      var options = e.data('focusable:options');
+      if (!$.tirade.focus.exists()) return;
+      var e = $.tirade.focus.current;
+      var options = $.tirade.focus.currentOptions;
       if (options.parent) {
-        var parent = e.parent().closest(options.parent).closest('.ui-focusable');
+        var parent = e
+          .parent()
+          .closest(options.parent)
+          .closest('.ui-focusable');
         if (parent.length == 1) {
-          parent.trigger('tirade.focus');
+          parent.focusable('focus');
         }
       }
     },
     sync: function() {
-      var e = $.focusable.current;
-      if (e.length == 0) return;
+      var self = $.tirade.focus;
+      var e = self.current;
+      if (!e || e.length == 0) return;
 
       var border = 5;
       var padding = 3;
       var left = e.offset().left;
       var top = e.offset().top;
       var eWidth = e.outerWidth({margin: true});
-      ow = $.focusable.frameTop.width();
-      var header = $.focusable.frameTop.width(eWidth).outerHeight();
-      ow = $.focusable.frameTop.width(ow);
-      var dialogPadding = $.focusable.frameTop.outerWidth() - $.focusable.frameTop.width();
+      ow = self.frameTop.width();
+      var header = self.frameTop.width(eWidth).outerHeight();
+      ow = self.frameTop.width(ow);
+      var dialogPadding = self.frameTop.outerWidth() - self.frameTop.width();
 
-      $.focusable.frameTop.show().animate({
+      self.frameTop.show().animate({
         top: top - header - padding, 
         left: left - border - padding, 
         width: eWidth + 2*border + 2*padding - dialogPadding
       });
-      $.focusable.frameBottom.show().animate({
+      self.frameBottom.show().animate({
         top: top + e.height() + padding, 
         left: left - border - padding, 
         height: border,
         width: eWidth + 2*border + 2*padding
       });
-      $.focusable.frameLeft.show().animate({
+      self.frameLeft.show().animate({
         top: top - header - padding, 
         left: left - border - padding, 
         width: border,
         height: e.height() + header + border + 2*padding
       });
-      $.focusable.frameRight.show().animate({
+      self.frameRight.show().animate({
         top: top - header - padding, 
         left: left + eWidth + padding, 
         width: border,
@@ -188,18 +214,18 @@
       });
     },
     title: function(new_title) {
-      $.focusable.titleElement.text(new_title);
+      this.titleElement.text(new_title);
     },
-    frames: function() {
+    _frames: function() {
       return $('body div.focus')
     },
-    fillTopTabs: function(elements) { 
-      return $.focusable.fillTabs( $.focusable.tabsTop, elements );
+    _fillTopTabs: function(elements) { 
+      return this._fillTabs( this.tabsTop, elements );
     },
-    fillLeftTabs: function(elements) { 
-      return $.focusable.fillTabs( $.focusable.tabsLeft, elements );
+    _fillLeftTabs: function(elements) { 
+      return this._fillTabs( this.tabsLeft, elements );
     },
-    fillTabs: function(container, elements) {
+    _fillTabs: function(container, elements) {
       if (!container) return;
       elements = $(elements).filter('.ui-focusable');
       if (elements.length == 0) {
@@ -214,7 +240,7 @@
         var link = $('<a />')
           .attr('href', '#')
           .text( $self.attr('title') || $self.typeAndId().type )
-          .click(function() { $.focusable.goto($self) })
+          .click(function() { $self.focusable('focus') })
           .wrap('<li></li>')
           .parent()
           .addClass('ui-state-default')
@@ -225,37 +251,15 @@
           link.width($self.width());
       });
     },
-    setButtons: function(buttons) {
-      $.focusable.rightButtons.find('a:not(.sticky)').remove();
+    _setButtons: function(buttons) {
+      this.rightButtons.find('a:not(.sticky)').remove();
       if (buttons && buttons.length > 0) {
-        $(buttons).appendTo( $.focusable.rightButtons )
+        $(buttons).appendTo( this.rightButtons )
       }
     }
   });
 
-  $.fn.focusable = function(action, options) {
-    if (typeof(action) == 'object') {
-      options = action;
-    };
-    return this
-      .each(function() {
-        e = $(this);
-        //$.each(options, function(event, fn) {
-        //  if (typeof(fn) == 'function')
-        //    e.bind(event, fn);
-        //});
-        //e.trigger('event');
-        options = $.extend({}, $.focusable.defaults, e.data('focusable:options'), options);
-        e.data('focusable:options', options);
-      })
-      .addClass('ui-focusable')
-      .bind('tirade.focus', function(event) {
-        $.focusable.on(event.target);
-        event.stopPropagation();
-        return false;
-      });
-  };
-
+  //Focus = $('body').tirade.focus();
 })(jQuery);
 
 
