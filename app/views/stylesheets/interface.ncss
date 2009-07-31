@@ -77,17 +77,16 @@ body div {
   ul.tree {
     .tree_root {
       clear: both;
-      padding: 0 0 3em 0;
+      padding: 0;
       margin: 0;
       background-color: white;
     }
     list-style: none;
     li {
-      border-left: 1px solid #cccccc;
-      border-bottom: 1px solid transparent;
-      margin: 0 0 1em 0;
+      border-left: 1px solid transparent;
+      margin: 00;
       div.node {
-         padding: 0.8em;
+         padding: 0.4em 0 0 0.8em;
          position: relative;
       } 
       position: relative;
@@ -100,7 +99,7 @@ body div {
       }
     }
     li:hover {
-      border-bottom: 1px solid #999999;
+      border-left: 1px solid #999999;
     }
   }
   div.tree ul.tree {
