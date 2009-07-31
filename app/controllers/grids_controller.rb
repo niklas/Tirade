@@ -74,7 +74,7 @@ class GridsController < ManageResourceController::Base
 
   def update_page_on_show(page)
     super
-    page.select("div.grid_#{@grid.id}").trigger('tirade.focus')
+    page.focus_on(@grid)
   end
 
   private

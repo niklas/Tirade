@@ -36,7 +36,7 @@ class PagesController < ManageResourceController::Base
     if @page.fresh?
       page.clear
       page.insert_page(@page)
-      page.select("div.page_#{@page.id}").trigger('tirade.focus')
+      page.focus_on(@page)
     end
   end
 
