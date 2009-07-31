@@ -481,7 +481,7 @@ var Toolbox = {
   maximize: function() {
     if (Toolbox.windowState == 'normal') Toolbox.storeSizeAndPosition();
     if (Toolbox.windowState == 'tiled') {
-      $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear', Focus.sync );
+      $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear', $.tirade.focus.sync );
     }
 
     Toolbox.toggleSideBarButton.addClass('ui-state-disabled');
@@ -499,7 +499,7 @@ var Toolbox = {
   unmaximize: function() {
     var position = Toolbox.element().data('position');
     if (Toolbox.windowState == 'tiled') {
-      $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear', Focus.sync );
+      $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear', $.tirade.focus.sync );
     }
     Toolbox.toggleSideBarButton.removeClass('ui-state-disabled');
     Toolbox.element().stop().animate({
@@ -522,7 +522,7 @@ var Toolbox = {
     Toolbox.sideBar.stop().animate(
       {height: '45%', width: '30%', top: '54%', left: '69%' },
       'slow', 'linear');
-    $('body').stop().animate( {paddingRight: '33%'}, 'slow', 'linear', Focus.sync);
+    $('body').stop().animate( {paddingRight: '33%'}, 'slow', 'linear', $.tirade.focus.sync);
     Toolbox.setWindowState('tiled');
   },
   setWindowState: function(state) {
