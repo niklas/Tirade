@@ -486,3 +486,12 @@ div.busy {
      }
   }
 }
+
+div.minimized {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0.7em;
+  min-width: 15em;
+  max-width: 42%;
+}
