@@ -1,0 +1,6 @@
+a<%= authorized %> { display: inline; }
+a.ui-icon<%= authorized %> { display: block; }
+span<%= authorized %> { display: inline; }
+span.ui-icon<%= authorized %> { display: block; }
+form<%= authorized %> { display: block; }
+div<%= authorized %> { display: block; }
