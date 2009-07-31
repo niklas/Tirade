@@ -158,7 +158,9 @@
       var left = e.offset().left;
       var top = e.offset().top;
       var eWidth = e.outerWidth({margin: true});
+      ow = $.focusable.frameTop.width();
       var header = $.focusable.frameTop.width(eWidth).outerHeight();
+      ow = $.focusable.frameTop.width(ow);
       var dialogPadding = $.focusable.frameTop.outerWidth() - $.focusable.frameTop.width();
 
       $.focusable.frameTop.show().animate({
