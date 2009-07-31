@@ -603,19 +603,6 @@ Toolbox.Templates = {
   removeButton: [
     { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' }
   ],
-  backButton: [
-    { tagName: 'li', childNodes: [
-      { tagName: 'a', class: 'back', href: '#', innerHTML: 'back' }
-    ]}
-  ],
-  historyItem: function(title, href) {
-    return([
-      { tagName: 'li', href: href, class: 'jump', innerHTML: title }
-    ]);
-  },
-  bottomLinkBar: [
-    {tagName: 'ul', class: 'bottom_linkbar' }
-  ],
   toolbox: [
     { tagName: 'div', id: 'toolbox_body', class: 'body', childNodes: [
       { tagName: 'div', class: 'content', id: 'toolbox_content' }
