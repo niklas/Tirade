@@ -11,6 +11,16 @@ Rendering = {
       contentType: 'application/json; charset=utf-8',
       type: 'POST'
     });
+  },
+  createButton: function(attributes) {
+    return $.ui.button({
+      icon: 'circle-plus', text: 'create rendering', 
+      class: 'create rendering'
+    })
+    .click(function() {
+      Toolbox.open();
+      Rendering.create(attributes)
+    })
   }
 }
 
@@ -393,19 +403,10 @@ $(function() {
           if (grid.find('>div.rendering').length > 1) {
             alert("button to make sortable");
           }
-          buttons.push(
-            $.ui.button({
-              icon: 'circle-plus', text: 'add rendering', 
-              class: 'create rendering'
-            })
-            .click(function() {
-              Toolbox.open();
-              Rendering.create({
-                grid_id: grid.resourceId(),
-                page_id: $.tirade.currentPageId()
-              });
-            })
-          );
+          buttons.push( Rendering.createButton({
+            grid_id: grid.resourceId(),
+            page_id: $.tirade.currentPageId()
+          }));
         }
         return buttons;
       }
