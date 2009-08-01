@@ -22,31 +22,55 @@ Rendering = {
       Rendering.create(attributes)
     })
   }
-}
+};
+
+Grid = {
+  sortRenderings: function(grid) {
+    $.ajax({
+      data: grid.sortable("serialize", {attribute: 'rel'}),
+      url: Routing.order_renderings_grid_url({id: grid.resourceId()}),
+      type: 'POST'
+    });
+  },
+  sortRenderingsButton: function(grid) {
+    return $.ui.button({
+      icon: 'shuffle', text: 'sort Renderings', 
+      class: 'sort grid renderings'
+      })
+      .toggle(
+        function() {
+          $(this).addClass('ui-state-active');
+          grid.sortable('destroy').sortable({
+            items: '> *.rendering',
+            connectWith: ['div.page div.grid.leaf'],
+            tolerance: 'pointer',
+            containment: 'body',
+            appendTo: 'body',
+            placeholder: 'placeholder',
+            //cursorAt: { top: 2, left: 2 },
+            opacity: 0.5,
+            activate: function(e, ui) { 
+              grid.addClass('active-sortable'); 
+            },
+            deactivate: function(e, ui) {
+              grid.removeClass('active-sortable'); 
+            }
+          });
+        },
+        function() {
+          Grid.sortRenderings(grid);
+          grid.sortable('destroy');
+          $(this).removeClass('ui-state-active');
+        }
+      );
+  }
+};
 
 function context_page_id() {
   alert("you shall now use $.tirade.currentPageId()");
   return $('body div.page').resourceId();
 }
 
-function order_renderings_for_grid(event, ui) {
-  var list = ui.element;
-  if (list.is('.grid')) {
-    var grid = list;
-  } else {
-    var grid = list.parents('.grid:first');
-  }
-  console.debug("Saving Order of Renderings for", grid[0], 'list:' + list[0]);
-  console.debug(list.sortable("serialize", {attribute: 'rel'}));
-  if (list.find(ui.item).length) { // only if the dropped item is in our list know, we have only to track sorting and adding here
-    $.ajax({
-      data: list.sortable("serialize", {attribute: 'rel'}),
-      url: Routing.order_renderings_grid_url({id: grid.resourceId()}),
-      type: 'POST'
-    });
-  }
-  event.preventDefault();event.stopPropagation();
-};
 function order_children_for_grid(event, ui) {
   var list = ui.placeholder.parent();
   var grid = list.parents('.grid:first');
@@ -106,26 +130,6 @@ $(function() {
     // Grid with Renderings
     $('*.grid > *:has(> li.rendering, > div.rendering)', this).livequery(function() {
       $(this).sortable({
-        items: '> *.rendering',
-        connectWith: ['*.grid > :not(:has(> *.grid))', '*.grid > *.empty'],
-        tolerance: 'pointer',
-        containment: tree,
-        handle: 'span.handle',
-        placeholder: 'placeholder',
-        forcePlaceHolderSize: true,
-        cursorAt: { top: 2, left: 2 },
-        opacity: 0.5,
-        update: function(e,ui) {
-          if (!ui.sender) order_renderings_for_grid(e,ui);
-        },
-        receive: function(e,ui) {
-          if (ui.sender) order_renderings_for_grid(e,ui);
-        },
-        remove: function(e,ui) {
-          $('*.' + ui.item.resourceIdentifier(), $('div.page')).remove();
-        },
-        activate: function(e, ui) { ui.element.addClass('active-sortable'); },
-        deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
       })/*.droppable({
         accept: 'li.rendering',
         tolerance: 'pointer',
@@ -401,7 +405,7 @@ $(function() {
         buttons = [];
         if (grid.is('.leaf')) {
           if (grid.find('>div.rendering').length > 1) {
-            alert("button to make sortable");
+            buttons.push( Grid.sortRenderingsButton(grid) );
           }
           buttons.push( Rendering.createButton({
             grid_id: grid.resourceId(),
