@@ -1,7 +1,8 @@
 # The RenderHelper should contain all the helpers to render Pages, Grids, Randerings and Parts
 module RenderHelper
-  def warning(message)
-    content_tag(:div, message, :class => 'warning')
+  def warning(message, opts={})
+    add_class_to_html_options opts, 'warning'
+    content_tag(:div, message, opts)
   end
 
   def render_page(thepage, locals = {})
@@ -28,9 +29,7 @@ module RenderHelper
   end
 
   def page_without_layout_warning(thepage)
-    content_tag(:div,
-                'Page has no Layout, drop one',
-                :class => 'warning page_without_layot')
+    warning('Page has no Layout, drop one', :class => 'page_without_layout')
   end
 
   def remove_page
@@ -46,7 +45,7 @@ module RenderHelper
     page.select('body').prepend render(:inline => "<%= render_page(thepage) %>" , :locals => {:thepage => thepage})
   end
 
-  def focus_on(record)
+  def focus_on(record, options={})
     page.select( '.' + context.dom_id(record) ).closest('.ui-focusable').focusable('focus')
   end
 

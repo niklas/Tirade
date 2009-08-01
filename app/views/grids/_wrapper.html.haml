@@ -1,4 +1,4 @@
-- if wrapper.wrapper_css.blank?
+- if wrapper.root?
   = yield
 - else
   %div.col{:class => wrapper.wrapper_css}

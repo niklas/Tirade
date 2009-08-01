@@ -1,6 +1,9 @@
 var Toolbox = {
   defaults: {
   },
+  open: function(options) {
+    return this.findOrCreate(options);
+  },
   findOrCreate: function(options) {
     options = $.extend({}, this.defaults, options)
     if ( this.element().length == 0 ) {

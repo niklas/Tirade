@@ -1,0 +1,9 @@
+- rendering ||= without_content
+%div.warning
+  This Rendering has no Part.
+  - if rendering.has_content?
+    %h3 Suggestions for
+      = rendering.content_type.pluralize
+    %ul
+      - Part.for_content(rendering.content).each do |part|
+        %li= part.title

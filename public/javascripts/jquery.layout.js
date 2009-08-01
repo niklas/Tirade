@@ -3,6 +3,17 @@
  *
  * */
 
+Rendering = {
+  create: function(attributes) {
+    $.ajax({
+      url: Routing.renderings_url({format: 'js'}),
+      data: $.toJSON({rendering: attributes}),
+      contentType: 'application/json; charset=utf-8',
+      type: 'POST'
+    });
+  }
+}
+
 function context_page_id() {
   alert("you shall now use $.tirade.currentPageId()");
   return $('body div.page').resourceId();
@@ -367,24 +378,46 @@ $(function() {
   });
 
 
-  $('div.page').focusable({parent: null, children: '>div.grid'});
-  $('div.grid').focusable({
-    parent: 'div.grid, div.page', 
-    children: '> * > div.grid,>div.grid', 
-    left_children: '>div.rendering',
-    buttons: function() {
-      var grid = this;
-      return([
-        $.ui.button({
-          icon: 'circle-plus', text: 'add rendering', 
-          class: 'new rendering with_toolbox tiled',
-          href: Routing.new_rendering_url({
-            'rendering[grid_id]': grid.resourceId(),
-            'rendering[page_id]': $.tirade.currentPageId()
-          })
-        })
-      ]);
-    }
+  $('div.page').livequery(function() {
+    $(this).focusable({parent: null, children: '>div.grid'});
   });
-  $('div.rendering').focusable({parent: 'div.grid', children: null});
+  $('div.page div.grid').livequery(function() {
+    $(this).focusable({
+      parent: 'div.grid, div.page', 
+      children: '> * > div.grid,>div.grid', 
+      left_children: '>div.rendering',
+      buttons: function() {
+        var grid = $(this);
+        buttons = [];
+        if (grid.is('.leaf')) {
+          if (grid.find('>div.rendering').length > 1) {
+            alert("button to make sortable");
+          }
+          buttons.push(
+            $.ui.button({
+              icon: 'circle-plus', text: 'add rendering', 
+              class: 'create rendering'
+            })
+            .click(function() {
+              Toolbox.open();
+              Rendering.create({
+                grid_id: grid.resourceId(),
+                page_id: $.tirade.currentPageId()
+              });
+            })
+          );
+        }
+        return buttons;
+      }
+    })
+  });
+  $('div.page div.grid div.rendering').livequery(function() {
+    $(this).focusable({parent: 'div.grid', children: null});
+  });
+
+  $('div.page div.warning').livequery(function() {
+    $(this)
+      .addClass('ui-state-highlight')
+      .addClass('ui-corner-all')
+  });
 });

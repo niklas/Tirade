@@ -8,22 +8,28 @@ class RenderingsController < ManageResourceController::Base
     page.focus_on(@rendering)
   end
 
-  def update_page_on_create(page)
-    page.update_grid_for(@rendering)
+  def update_page_on_new_action(page)
+    super
+    page.select_grid(@rendering.grid, '.warning').remove
+    page.select_grid(@rendering.grid, '.new_rendering').remove
+    page.select_grid(@rendering.grid).prepend(
+      page.render_rendering(@rendering, :page => @rendering.page)
+    )
     page.focus_on(@rendering)
   end
 
-  def update_page_on_created(page)
-    page.update_rendering(@rendering)
-    if @rendering.grid_changed? || @rendering.grid_id_changed?
-      page.remove_rendering(@rendering)
-      page.update_grid_in_page(@rendering.grid, @rendering.page) 
-      page.update_grid_in_page(@rendering.old_grid, @rendering.page) 
-    end
-    page.focus_on(@rendering)
+  def update_page_on_create(page)
+    super
+    page.update_grid_for(@rendering)
+  end
+
+  def update_page_on_failed_create(page)
+    super
+    logger.debug(params[:_json].to_yaml)
   end
 
   def update_page_on_destroy(page)
+    super
     page.update_grid_for(@rendering)
     page.focus_on(@rendering.grid)
   end

@@ -1,0 +1,8 @@
+- rendering ||= without_content
+%div.warning
+  This Rendering has no Content
+  - unless rendering.part.nil?
+    %h3== Suggestions for #{rendering.part.title}
+    %ul
+      - rendering.part.preferred_types.each do |klass|
+        %li= klass

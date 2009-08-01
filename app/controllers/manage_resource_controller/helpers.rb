@@ -21,6 +21,7 @@ module ManageResourceController
     def set_form_builder
       respond_to do |wants|
         wants.js { ActionView::Base.default_form_builder = ToolboxFormBuilder }
+        wants.json { ActionView::Base.default_form_builder = ToolboxFormBuilder }
         wants.html { ActionView::Base.default_form_builder = NormalFormBuilder }
       end
     end
