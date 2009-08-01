@@ -27,7 +27,8 @@
             function() { $(this).removeClass('ui-state-hover') }
           )
           .click(function() { Toolbox.goto($frame); })
-          .appendTo($.tirade.history.element);
+          .appendTo($.tirade.history.element)
+          .slideDown('fast');
     },
     clear: function() {
       return this.items().remove();
