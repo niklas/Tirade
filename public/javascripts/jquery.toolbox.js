@@ -22,6 +22,7 @@ var Toolbox = {
       Toolbox.sync.sideBar();
 
       $.ui.frame("preparing Toolbox..").appendTo( this.content() );
+      $.tirade.history.sync();
       this.frameCount = 1;
       this.expireBehaviors();
       this.applyBehaviors();
@@ -53,8 +54,7 @@ var Toolbox = {
       .attr('id', 'toolbox_sidebar')
       .appendTo('body');
 
-    this.history = $('<ul />')
-      .addClass('history list records ui-widget-content ui-corner-all')
+    this.history = $.tirade.history.build()
       .appendTo(Toolbox.sideBar);
 
     this.clipboard = $('<ul />')
@@ -120,15 +120,18 @@ var Toolbox = {
   },
   applyBehaviors: function() {
     this.body.serialScroll({
-      target: 'div.content',
       step: 1, cycle: false,
       lazy: true,
+      event: null,
       items: 'div.frame',
-    onBefore: function() { 
-      Toolbox.body.css('overflow-x', 'auto'); 
-      return true  
-  },
-      onAfter:  function() { Toolbox.body.css('overflow-x', 'hidden'); return true},
+      onBefore: function() { 
+        Toolbox.body.css('overflow-x', 'auto'); 
+        return true  
+      },
+      onAfter:  function() { 
+        Toolbox.body.css('overflow-x', 'hidden'); 
+        return true
+      },
       axis: 'x',
       duration: 300
     })
@@ -231,9 +234,15 @@ var Toolbox = {
     return this.element(' > div.head').height() + this.element(' > div.foot').height()
   },
   push: function(content,options) {
-    $.ui.frame(content, options).appendTo( this.content() );
+    var frame = $.ui.frame(content, options).appendTo( this.content() );
+    $.tirade.history.append(frame);
     this.frameCount++;
     this.next();
+  },
+  goto: function(frame) {
+    var $frame = $(frame).closest('.frame');
+    index = Math.max(0, this.frames().index($frame));
+    return this.body.trigger('goto', [index] );
   },
   error: function( content, options ) {
     var options = jQuery.extend({
@@ -260,9 +269,10 @@ var Toolbox = {
     }
   },
   removeLastFrame: function() {
-    Toolbox.last().remove();
-    Toolbox.history.find(' li:not(:first):last').remove();
+    var frame = Toolbox.last().remove();
+    Toolbox.element().trigger('toolbox.frame.removed', frame);
     Toolbox.setTitle();
+    History.pop();
     Toolbox.refreshBackButton();
     Toolbox.frameCount = Toolbox.frames().length;
   },
@@ -686,17 +696,6 @@ jQuery.fn.frameInToolbox = function(options) {
           return false;
         }).uiIcon('circle-check')
       .end()
-
-    /* TODO history 
-    this.frames().livequery(function() { 
-      var frame = $(this);
-      var href = frame.attr('href');
-      Toolbox.history.appendDom(
-        Toolbox.Templates.historyItem( frame.attr('title'), href )
-      );
-    });
-    */
-
 
    /* TODO Context Page only per head ? */
    $('form', frame).livequery(function() { $(this).formInFrameInToolbox() });
