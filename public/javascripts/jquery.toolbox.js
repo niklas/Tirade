@@ -1,6 +1,8 @@
-
 var Toolbox = {
+  defaults: {
+  },
   findOrCreate: function(options) {
+    options = $.extend({}, this.defaults, options)
     if ( this.element().length == 0 ) {
       Toolbox.minHeight = 400;
       $('body').appendDom(Toolbox.Templates.toolbox);
@@ -615,7 +617,7 @@ Toolbox.Templates = {
   ],
   toolbox: [
     { tagName: 'div', id: 'toolbox_body', class: 'body', childNodes: [
-      { tagName: 'div', class: 'content', id: 'toolbox_content' }
+      { tagName: 'div', class: 'content ui-helper-clearfix', id: 'toolbox_content' }
     ]},
   ],
 }

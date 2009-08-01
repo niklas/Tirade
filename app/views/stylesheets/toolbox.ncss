@@ -35,8 +35,11 @@ body {
   div.body {
     overflow: hidden;
     z-index: 2;
-    padding: 0 0 1.7em 0; /* place for footer */
+    margin: 0 0 1.7em 0; /* place for footer */
+    padding: 0;
+    position: relative;
     > div.content {
+      position: relative;
       font-family:Arial,Helvetica,sans-serif;
       <% max_frames = 10 %>
       width: <%= max_frames * 100 %>%; /* yes, very wide */
