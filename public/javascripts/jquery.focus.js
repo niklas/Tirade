@@ -4,6 +4,9 @@
   $.widget('ui.focusable', {
     _init: function() {
       this.element.addClass('ui-focusable');
+      if ($.tirade.focus.exists()) {
+        this.focus();
+      }
     },
     focus: function() {
       $.tirade.focus.on(this.element, this.options);
