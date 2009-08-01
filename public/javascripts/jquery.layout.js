@@ -63,6 +63,45 @@ Grid = {
           $(this).removeClass('ui-state-active');
         }
       );
+  },
+  sortChildren: function(grid) {
+    $.ajax({
+      data: grid.sortable("serialize", {attribute: 'rel'}),
+      url: Routing.order_children_grid_url({id: grid.resourceId()}),
+      type: 'POST'
+    });
+  },
+  sortChildrenButton: function(grid) {
+    return $.ui.button({
+      icon: 'shuffle', text: 'sort Children', 
+      class: 'sort grid grids rendering'
+      })
+      .toggle(
+        function() {
+          $(this).addClass('ui-state-active');
+          grid.sortable('destroy').sortable({
+            items: '> .col',
+            connectWith: ['div.page div.grid:not(.leaf)'],
+            tolerance: 'pointer',
+            containment: 'body',
+            appendTo: 'body',
+            placeholder: 'placeholder',
+            //cursorAt: { top: 2, left: 2 },
+            opacity: 0.5,
+            activate: function(e, ui) { 
+              grid.addClass('active-sortable'); 
+            },
+            deactivate: function(e, ui) {
+              grid.removeClass('active-sortable'); 
+            }
+          });
+        },
+        function() {
+          Grid.sortChildren(grid);
+          grid.sortable('destroy');
+          $(this).removeClass('ui-state-active');
+        }
+      );
   }
 };
 
@@ -70,27 +109,6 @@ function context_page_id() {
   alert("you shall now use $.tirade.currentPageId()");
   return $('body div.page').resourceId();
 }
-
-function order_children_for_grid(event, ui) {
-  var list = ui.placeholder.parent();
-  var grid = list.parents('.grid:first');
-  console.debug("Sorting Order of children for", grid[0], 'list:' + $(list)[0]);
-  console.debug(list.sortable("serialize", {attribute: 'rel'}));
-  if (grid.find('.' + ui.item.resourceIdentifier()).length) {
-    $.ajax({
-      data: list.sortable("serialize", {attribute: 'rel'}),
-      url: Routing.order_children_grid_url({id: grid.resourceId()}),
-      type: 'POST'
-    });
-  }
-  event.preventDefault();event.stopPropagation();
-};
-
-function new_rendering_for_grid(grid) {
-  context = "rendering[grid_id]=" + grid.resourceId();
-  context += "&rendering[page_id]=" + context_page_id()
-  $.ajax({ data: context, url: Routing.new_rendering_url(), type: 'GET' });
-};
 
 function update_content_of_rendering(content,rendering) {
   var what = content.typeAndId();
@@ -126,51 +144,6 @@ $(function() {
     var tree = $(this);
 
     // Mirror hovered Grids
-
-    // Grid with Renderings
-    $('*.grid > *:has(> li.rendering, > div.rendering)', this).livequery(function() {
-      $(this).sortable({
-      })/*.droppable({
-        accept: 'li.rendering',
-        tolerance: 'pointer',
-        activeClass: 'active-droppable',
-        hoverClass: 'drop-hover',
-        greedy: true,
-        drop: order_renderings_for_grid
-        })*/;
-    });
-      // Sort Children of Grid
-    $('*.grid > *:has(> li.grid, > div.grid)', this).livequery(function() {
-      $(this).sortable({
-        items: '> *.grid',
-        connectWith: ['*.grid > :not(:has(> *.rendering))', '*.grid > *.empty'],
-        tolerance: 'pointer',
-        containment: tree,
-        handle: 'span.handle',
-        placeholder: 'placeholder',
-        forcePlaceHolderSize: true,
-        cursorAt: { top: 2, left: 2 },
-        opacity: 0.5,
-        update: function(e,ui) {
-          if (!ui.sender) order_children_for_grid(e,ui);
-        },
-        receive: function(e,ui) {
-          if (ui.sender) order_children_for_grid(e,ui);
-        },
-        remove: function(e, ui) {
-          console.debug("Removed element from", this)
-        },
-        activate: function(e, ui) { ui.element.addClass('active-sortable'); },
-        deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
-      })/*.droppable({
-        accept: 'li.grid',
-        tolerance: 'pointer',
-        activeClass: 'active-droppable',
-        hoverClass: 'drop-hover',
-        greedy: true,
-        drop: order_children_for_grid
-        })*/;
-    });
 
     // Move Renderings/Grids to empty Grid
     $('li.grid:not(:has(> ul))', this).livequery(function() {
@@ -403,6 +376,9 @@ $(function() {
       buttons: function() {
         var grid = $(this);
         buttons = [];
+        if (grid.find('>.col').length > 1) {
+          buttons.push( Grid.sortChildrenButton(grid) );
+        }
         if (grid.is('.leaf')) {
           if (grid.find('>div.rendering').length > 1) {
             buttons.push( Grid.sortRenderingsButton(grid) );

@@ -1,5 +1,5 @@
 - if wrapper.root?
   = yield
 - else
-  %div.col{:class => wrapper.wrapper_css}
+  %div.col{:class => wrapper.wrapper_css, :rel => dom_id(wrapper)}
     = yield
