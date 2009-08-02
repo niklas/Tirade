@@ -12,13 +12,15 @@ module InterfaceHelper
   #     <% end %>
   #   <% end %>
   def accordion(opts={}, &block)
-    dom = opts.delete(:id) || 'accordion'
-    concat content_tag( :div, capture(&block), :id => dom, :class => 'accordion')
+    add_class_to_html_options(opts, 'accordion')
+    opts[:id] ||= 'accordion'
+    concat content_tag( :div, capture(&block), opts)
   end
 
   def accordion_item(title="Accordion Item", opts={}, &block)
     tag2 = opts.delete(:content_tag) || :dl
     add_class_to_html_options(opts, 'accordion_content')
+    add_class_to_html_options(opts, 'ui-helper-clearfix')
     toggle_class = "accordion_toggle #{title.urlize}"
     concat content_tag(:h3,title, :class => toggle_class, :name => title.urlize)
     concat content_tag(tag2,capture(&block), opts)
@@ -221,6 +223,8 @@ module InterfaceHelper
   def di_dt_dd(dt,dd, opts={})
     dd_opts = opts.delete(:dd)
     add_class_to_html_options(opts, toolbox_row_cycle)
+    add_class_to_html_options(opts, 'ui-corner-all')
+    add_class_to_html_options(opts, 'ui-helper-clearfix')
     content_tag(:di,
                 (dt.blank? ? '' : content_tag(:dt, dt)) +
                 content_tag(:dd, dd, dd_opts),

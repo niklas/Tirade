@@ -1,65 +1,8 @@
 #toolbox {
-  border-top: 2px solid <%= @colors[:toolbox_border] %>; 
-  border-left: 2px solid <%= @colors[:toolbox_border] %>;
-  background-color: <%= @colors[:base] %>;
-  div.ui-resizable-handle {
-    background-color: <%= @colors[:decoration] %> !important;
-  }
-  a:hover, img.association:hover {
-    background-color: <%= @colors[:hover] %>;
-  }
-  div.head {
-    background-color: <%= @colors[:decoration] %>;
-    background-image: url(/images/toolbox_title.png);
-    span.title {
-      color: <%= @colors[:base] %>;
-    }
-  }
   div.body {
     > div.content {
       background-color: <%= @colors[:base] %>;
       > div.frame {
-        ul.linkbar, ul.bottom_linkbar {
-          background: <%= @colors[:element] %>;
-          border-bottom: 1px solid <%= @colors[:base] %>;
-          color: <%= @colors[:text] %>;
-          li {
-            a,button,input.submit {
-              background-color: <%= @colors[:clickable] %>;
-              color: <%= @colors[:base] %>;
-            }
-            a.submit {
-               background: <%= @colors[:clickable] %> 
-                           url(../images/icons/small/checkmark.gif) 
-                           no-repeat 0.4em 0.4em
-                           !important;
-               padding: 0.4em !important;
-               text-indent: 16px;
-               outline: 0;
-               margin: 0.4em;
-               font-weight: bold;
-            }
-          }
-        }
-        div.accordion {
-          *.accordion_toggle {
-             color: <%= @colors[:text] %>;
-             background: <%= @colors[:element] %> url(../images/ui/accordion_head_bg.png);
-             border-bottom: 1px solid <%= @colors[:base] %>;
-          }
-          *.selected {
-             background: <%= @colors[:selected] %> url(../images/ui/accordion_head_bg_selected.png);
-          }
-        }
-
-        div.live_search {
-          background: <%= @colors[:element] %>;
-          color: <%= @colors[:text] %>;
-          ul {
-            background: <%= @colors[:base] %>;
-          }
-        }
-
         ul.records {
           li {
             .odd { background-color: <%= @colors[:base].brighter %>; }
@@ -77,7 +20,7 @@
         }
         dl { 
           di {
-            border-bottom: thin solid <%= @colors[:decoration] %>;
+            border: thin solid <%= @colors[:decoration] %>;
             .odd { background-color: <%= @colors[:base].brighter %>; }
             .even { background-color: <%= @colors[:base].darker %>; }
             :hover { background-color: <%= @colors[:hover] %>; }
@@ -93,27 +36,5 @@
         }
       }
     }
-  }
-  div.foot {
-    color: <%= @colors[:base] %>;
-    background-color: <%= @colors[:decoration] %>;
-  }
-  div.sidebar {
-    border-bottom: 1px solid <%= @colors[:toolbox_border_dark] %>;
-    border-top:    1px solid <%= @colors[:toolbox_border] %>;
-    border-left:   1px solid <%= @colors[:toolbox_border] %>;
-    border-right:  3px solid <%= @colors[:toolbox_border] %>;
-    background-color: <%= @colors[:base] %>;
-    ul.history, ul.clipboard {
-      border-bottom:1px solid <%= @colors[:decoration] %>;
-    }
-  }
-  div.busy {
-    span.message {
-      color: <%= @colors[:base] %>;
-    }
-  }
-  *.warning {
-    color: <%= @colors[:warning] %>;
   }
 }

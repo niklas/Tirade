@@ -50,6 +50,7 @@ body {
          float: left;
          height: 100%;
          width: <%= 100.0 / max_frames %>%;
+         position: relative;
       }
     }
   }
@@ -116,9 +117,7 @@ body {
       clear: both;
       width: 100%;
       di {
-        width: 100%;
-        float: left;
-        clear: both;
+        margin: 0.3em 0;
         dt {
           font-weight:bold;
           float: left;
