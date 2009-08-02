@@ -8,7 +8,6 @@ module ManageResourceController
         create.failure.flash "Failed to create #{human_name}."
         update.failure.flash "Failed to update #{human_name}."
         ResourceController::ACTIONS.each do |action|
-          update_method = 
           send(action) do
             wants.js do
               render :update do |page|
