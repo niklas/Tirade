@@ -30,6 +30,7 @@ module ManageResourceController
     def self.included(base)
       base.class_eval do
         extend ClassMethods
+        before_filter :load_object, :only => [:preview]
       end
     end
       
@@ -95,5 +96,22 @@ module ManageResourceController
       update_or_show_form_in_toolbox(page)
     end
 
+    def preview
+      if object
+        model.without_modification do
+          object.attributes = object_params
+          respond_to do |wants|
+            wants.js do
+              render :update do |page|
+                controller.update_page_on_preview(page)
+              end
+            end
+          end
+        end
+      end
+    end
+
+    def update_page_on_preview(page)
+    end
   end
 end

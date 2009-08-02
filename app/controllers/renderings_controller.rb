@@ -52,18 +52,9 @@ class RenderingsController < ManageResourceController::Base
     end
   end
 
-  def preview
-    if @rendering = Rendering.find(params[:id])
-      Rendering.without_modification do
-        @rendering.attributes = params[:rendering]
-        respond_to do |wants|
-          wants.js do
-            render :update do |page|
-              page.update_rendering(@rendering)
-            end
-          end
-        end
-      end
-    end
+  def update_page_on_preview(page)
+    super
+    page.update_rendering(@rendering)
   end
+
 end
