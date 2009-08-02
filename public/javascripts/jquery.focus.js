@@ -246,6 +246,7 @@
           .click(function() { $self.focusable('focus') })
           .wrap('<li></li>')
           .parent()
+          .attr('rel', $self.attr('rel'))
           .addClass('ui-state-default')
           .appendTo( container );
         if (container.closest('.focus').is('.left'))
