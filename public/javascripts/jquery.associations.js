@@ -57,54 +57,71 @@
     });
   };
 
-  $.fn.hasManyEditor = function(options) {
-    var defaults = {
-    };
-    var options = $.extend(defaults, options);
-    return this.each(function() {
-      var list = $(this)
+  $.widget('ui.hasManyEditor', {
+    _init: function() {
+      var list = this.element;
+      var o = this.options;
       list.droppable({
         accept: function(draggable) { 
           return(
-            draggable.is('li') &&
+            draggable.is(o.accept) &&
             draggable.parent()[0] != list[0] &&
             draggable.typeAndId()
           );
         },
-        hoverClass: 'hover',
+        hoverClass: 'drop-hover',
         activeClass: 'active-droppable',
         greedy: true,
-        tolerance: 'touch',
+        tolerance: 'pointer',
         drop: function(e,ui) {
-          $(ui.draggable).clone().appendTo(list);
+          ui.draggable.clone().appendTo(list);
         }
-      });
-      $('li', list).livequery(function() {
-        $(this).hasManyEditorElement();
-      });
-    });
+      })
+      .addClass(this.widgetBaseClass)
+      .addClass('ui-corner-all')
+      .addClass('empty');
+
+      $(o.items, list[0]).livequery(
+        function() {
+          $(this).hasManyEditorElement();
+          list.removeClass('empty');
+        },
+        function() {
+          if (list.find(o.items).length == 0) list.addClass('empty');
+        }
+      );
+
+    }
+  })
+  $.ui.hasManyEditor.defaults = {
+    items: 'li.record',
+    accept: 'li.record'
   };
 
-  $.fn.hasManyEditorElement = function(options) {
-    var defaults = {
-    };
-    var options = $.extend(defaults, options);
-    this.each(function() {
-      var item = $(this);
+  $.widget('ui.hasManyEditorElement', {
+    _init: function() {
+      var item = this.element;
+      var o = this.options;
+      var list = item.closest(o.list);
       var id = item.resourceId();
-      item.parent()
-          .removeClass('empty')
-          .siblings('input[type=hidden][value=empty]')
-            .clone().attr('value',id).appendTo(item);
 
-      item
-        .find('img.association').remove().end()
-        .appendDom(Toolbox.Templates.removeButton)
-        .find('img.remove').click(function(event) {
+      /* Add hidden input field with id, template is an empty one */
+      list
+        .removeClass('empty')
+        .siblings('input.association_id[type=hidden][value=empty]')
+          .clone().attr('value',id).appendTo(item);
+
+      item.find('a.association.remove').remove();
+      $.ui.button({icon: 'minus', text: 'remove', class: 'association remove'})
+        .click(function(event) {
           item.remove();
-          Toolbox.last(' ul.list:not(:has(li))').addClass('empty');
-        });
-    });
+          event.preventDefault(); event.stopPropagation();
+        })
+        .appendTo(item);
+    }
+  });
+  $.ui.hasManyEditorElement.defaults = {
+    list: 'ul.ui-hasManyEditor'
   };
 
 })(jQuery);

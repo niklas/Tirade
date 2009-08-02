@@ -1,12 +1,17 @@
 /* Drag & Drop */
+
+
 *.active-droppable, *.active-sortable {
   background: url(../images/pentagon-tile.jpg) repeat !important;
   min-height: 1em;
   div.warning { background: transparent }
+  .drop-hover {
+    background: url(../images/pentagon-tile-active.jpg) repeat !important;
+  }
 }
 
 *.ui-sortable.empty, *.ui-droppable.empty  {
-  background: url(../images/pentagon-tile.jpg) repeat !important;
+  background: url(../images/pentagon-tile.jpg) repeat;
   min-height: 3em;
   min-width; 6em;
 }
@@ -16,9 +21,6 @@
   min-width: 6em;
 }
 
-*.drop-hover {
-  background: url(../images/pentagon-tile-active.jpg) repeat !important;
-}
 *.ui-draggable, *.ui-sortable {
   span.handle {
     position: absolute;
@@ -224,11 +226,6 @@ div#toolbox {
 }
 
 form {
-  div,p,ul {
-    float: left; 
-    width: 100%;
-    margin: 0;
-  }
   label {
     float: left;
     text-align: left;
@@ -337,7 +334,7 @@ di.record {
 /* If we edit an association , place the add/remove icons on the left */
 di.association {
   dd {
-    width: 100%;
+    width: 100% !important;
     margin: 0 !important;
     position: relative;
   }
@@ -345,10 +342,10 @@ di.association {
     display: none;
   }
   ul.list {
-    background-color: <%= @colors[:base] %>;
     margin: 5%;
     padding: 2.5%;
     width: 85%;
+    list-style: none;
     li {
       position: relative;
       a.show {

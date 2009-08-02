@@ -709,9 +709,6 @@ jQuery.fn.frameInToolbox = function(options) {
         }).uiIcon('circle-check')
       .end()
 
-   /* TODO Context Page only per head ? */
-   $('form', frame).livequery(function() { $(this).formInFrameInToolbox() });
-
     $('div.accordion', frame).livequery(function() { 
       active = 0;
       if (name = Toolbox.activeSectionName) { 
@@ -752,6 +749,9 @@ jQuery.fn.frameInToolbox = function(options) {
           .val('');
       })
     });
+   /* TODO Context Page only per head ? */
+    $('form', frame).livequery(function() { $(this).formInFrameInToolbox() });
+
   });
 };
 
@@ -782,7 +782,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
       if ( !$(this).data('hasElastic') )
         $(this).elastic().data('hasElastic', true);
     });
-    $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
+    //$('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
     $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor() });
     // mark empty association lists
     $('di.association dd > ul.list:not(:has(li))', form).livequery(function() {
