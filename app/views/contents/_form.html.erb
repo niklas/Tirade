@@ -1,11 +1,8 @@
 <% content ||= form || @content %>
 
-<%= error_messages_for :content, :object => content %>
+<%= error_messages_for :content %>
 
-<% path = content.new_record? ? contents_path : content_path(content) %>
-<% method = content.new_record? ? :post : :put %>
-<% classes = content.new_record? ? 'create content' : 'edit content' %>
-<% form_for(:content, content, :url => path, :html => {:method => method, :class => classes} ) do |f| %>
+<% form_for(content) do |f| %>
   <% accordion do %>
 
     <% accordion_item "General" do %>
