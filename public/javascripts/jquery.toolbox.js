@@ -242,7 +242,7 @@ var Toolbox = {
     var frame = $.ui.frame(content, options).appendTo( this.content() );
     $.tirade.history.append(frame);
     this.frameCount++;
-    this.next();
+    this.goto(frame);
   },
   goto: function(frame) {
     var $frame = $(frame).closest('.frame');
