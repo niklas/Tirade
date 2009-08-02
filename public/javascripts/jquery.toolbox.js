@@ -765,13 +765,6 @@ jQuery.fn.formInFrameInToolbox = function(options) {
 
     form.action += '.js';
 
-    $form.ajaxForm({
-      dataType: 'script',
-      beforeSubmit: function() {
-        Toolbox.beBusy("submitting " + $form.parents('div.frame').attr('title'))
-      }
-    });
-
     if ($form.is('.edit_rendering')) $form.editRenderingFormInFrameInToolbox();
     if ($form.is('.new_image')) $form.newImageFormInFrameInToolbox();
 
@@ -785,17 +778,20 @@ jQuery.fn.formInFrameInToolbox = function(options) {
     $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
     $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor() });
 
-    // redirect the Submit button from bottomLinkBar
-    if ($form.find('input.submit:visible').length) {
-      var orgbutton = $form.find('input.submit:visible').hide();
-      $.ui.button({icon: 'disk', text: orgbutton.attr('value'), class: 'submit' })
-        .click(function(e) {
-          e.preventDefault();
-          form[0].clk = orgbutton[0];
-          form.submit();
-        })
-        .appendTo(Toolbox.linkBar());
-    };
+    $form.find(':submit')
+      .addClass('ui-corner-all')
+      .addClass('ui-state-default')
+      .hover(
+         function() { $(this).addClass('ui-state-hover'); },
+         function() { $(this).removeClass('ui-state-hover'); }
+       );
+    
+    $form.ajaxForm({
+      dataType: 'script',
+      beforeSubmit: function() {
+        Toolbox.beBusy("submitting " + $form.parents('div.frame').attr('title'))
+      }
+    });
 
   });
 };

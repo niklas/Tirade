@@ -107,9 +107,14 @@ body {
         font-familiy: monospace;
       }
     }
-    input.submit.save {
-      float: right;
-      margin: 0.7em;
+    input.submit {
+      background-color:transparent;
+      border: medium none;
+      margin: 0.3em;
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
     }
     dl {
       margin: 0;
