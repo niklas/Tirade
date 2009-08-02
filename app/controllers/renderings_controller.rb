@@ -28,6 +28,14 @@ class RenderingsController < ManageResourceController::Base
     logger.debug(params[:_json].to_yaml)
   end
 
+  def update_page_on_update(page)
+    if non_form_submit?
+      page.update_rendering(@rendering)
+    else
+      super
+    end
+  end
+
   def update_page_on_destroy(page)
     super
     page.update_grid_for(@rendering)

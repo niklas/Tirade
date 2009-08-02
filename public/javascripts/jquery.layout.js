@@ -21,6 +21,18 @@ Rendering = {
       Toolbox.open();
       Rendering.create(attributes)
     })
+  },
+  update: function(rendering, attributes) {
+    rendering = $(rendering).closest('.rendering');
+    $.ajax({
+      url: Routing.rendering_url({
+        id: rendering.resourceId(), 
+        format: 'js'
+      }),
+      data: $.toJSON({rendering: attributes}),
+      contentType: 'application/json; charset=utf-8',
+      type: 'PUT'
+    });
   }
 };
 
@@ -108,18 +120,6 @@ Grid = {
 function context_page_id() {
   alert("you shall now use $.tirade.currentPageId()");
   return $('body div.page').resourceId();
-}
-
-function update_content_of_rendering(content,rendering) {
-  var what = content.typeAndId();
-  data = 'rendering[content_id]=' + what.id;
-  data += '&rendering[content_type]=' + what.type;
-  $.ajax({ url: Routing.rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
-}
-
-function update_part_of_rendering(part, rendering) {
-  data = 'rendering[part_id]=' + part.resourceId();
-  $.ajax({ url: Routing.rendering_url({id: rendering.resourceId()}), data: data, type: 'PUT' });
 }
 
 $(function() {
@@ -258,26 +258,6 @@ $(function() {
             deactivate: function(e, ui) { ui.element.removeClass('active-sortable'); }
           })
         });
-        $('body div.page div.rendering.without_content').livequery(function() {
-          $(this).droppable({
-            accept: 'li:not(.part)',
-            activeClass: 'active-droppable',
-            hoverClass: 'drop-hover',
-            greedy: true,
-            tolerance: 'pointer',
-            drop: function(e,ui) { update_content_of_rendering(ui.draggable, ui.element); }
-          });
-        });
-        $('body div.page div.rendering.without_part').livequery(function() {
-          $(this).droppable({
-            accept: 'li.part',
-            activeClass: 'active-droppable',
-            hoverClass: 'drop-hover',
-            greedy: true,
-            tolerance: 'pointer',
-            drop: function(e,ui) { update_part_of_rendering(ui.draggable, ui.element) }
-          });
-        });
 
       },
       function() {
@@ -393,7 +373,48 @@ $(function() {
     })
   });
   $('div.page div.grid div.rendering').livequery(function() {
-    $(this).focusable({parent: 'div.grid', children: null});
+    $(this).focusable({
+      parent: 'div.grid', 
+      children: null,
+      visit: function() {
+        var $rendering = $(this);
+        if ($rendering.is('.without_content')) {
+          $rendering.droppable({
+            accept: 'li.record:not(.part)',
+            activeClass: 'active-droppable',
+            hoverClass: 'drop-hover',
+            greedy: true,
+            tolerance: 'pointer',
+            drop: function(e,ui) { 
+              var content = ui.draggable.typeAndId();
+              Rendering.update($rendering, {
+                content_type: content.type,
+                content_id: content.id
+              });
+            }
+          });
+        }
+        if ($rendering.is('.without_part')) {
+          $rendering.droppable({
+            accept: 'li.part',
+            activeClass: 'active-droppable',
+            hoverClass: 'drop-hover',
+            greedy: true,
+            tolerance: 'pointer',
+            drop: function(e,ui) { 
+              var part = ui.draggable.typeAndId();
+              Rendering.update($rendering, {
+                part_id: part.id
+              });
+            }
+          });
+        }
+      },
+      leave: function() {
+        var $rendering = $(this);
+        $rendering.droppable('destroy');
+      }
+    });
   });
 
   $('div.page div.warning').livequery(function() {

@@ -2,6 +2,7 @@
 *.active-droppable, *.active-sortable {
   background: url(../images/pentagon-tile.jpg) repeat !important;
   min-height: 1em;
+  div.warning { background: transparent }
 }
 
 *.ui-sortable.empty, *.ui-droppable.empty  {

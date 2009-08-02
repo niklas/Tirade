@@ -16,7 +16,10 @@
     parent: 'div',
     children: 'div',
     side_children: null,
-    buttons: function() {}
+    // this will point to focusable
+    buttons: function() {},
+    visit: function() {},
+    leave: function() {}
   };
 
 
@@ -137,6 +140,10 @@
     goto: function(element, options) {
       var e =  $(element);
       if (e.length == 0) return;
+      if (this.current) {
+        var callback = this.currentOptions.leave; 
+        if ($.isFunction(callback)) callback.apply(this.current);
+      }
       this.current = element;
       this.currentOptions = options;
       this._fillTopTabs( options.children ?  $(options.children, e) : []);
@@ -144,6 +151,8 @@
       this.title( e.attr('title') || e.typeAndId().type );
       this.showButton.attr('href', e.showUrl()  );
       this._setButtons( options.buttons.call(e) );
+      var callback = this.currentOptions.visit; 
+      if ($.isFunction(callback)) callback.apply(this.current);
       // this.clearButtons();
       // this.setButtons(this.element.);
       this.sync();

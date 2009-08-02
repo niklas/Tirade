@@ -1,8 +1,13 @@
 - rendering ||= without_content
 %div.warning
-  This Rendering has no Content
-  - unless rendering.part.nil?
-    %h3== Suggestions for #{rendering.part.title}
-    %ul
-      - rendering.part.preferred_types.each do |klass|
-        %li= klass
+  %p This Rendering has no Content.
+  - if rendering.content_type.blank?
+    %p Drop a single one here or select a type.
+    - unless rendering.part.nil?
+      %h3== Avaiable Content Types for #{rendering.part.title}
+      = render :partial => 'renderings/avaiable_types', :object => rendering.part.preferred_types_classes
+    - else
+      %h3== Avaiable Content Types
+      = render :partial => 'renderings/avaiable_types', :object => Tirade::ActiveRecord::Content.classes
+  - else
+    %p== Wants a #{index_link_to(rendering.content_type.constantize, :class => 'with_toolbox', :label => rendering.content_type)}. Drop one or specify a scope in the toolbox.

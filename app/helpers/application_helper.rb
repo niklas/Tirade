@@ -95,6 +95,14 @@ module ApplicationHelper
     link_to(label, thingy, options)
   end
 
+  def index_link_to(klass, options = {})
+    label = options.delete(:label) || klass.to_s.pluralize
+    add_class_to_html_options(options, 'index')
+    add_class_to_html_options(options, "index_#{klass.table_name}")
+    add_class_to_html_options(options, klass.table_name)
+    link_to(label, {:controller => klass.controller_name}, options)
+  end
+
   def session_key_name
     ActionController::Base.session_options[:key]
   end

@@ -1,0 +1,4 @@
+%ul
+  - avaiable_types.each do |klass|
+    %li= link_to_function klass, %Q[Rendering.update(this, {content_type: '#{klass}'})]
+
