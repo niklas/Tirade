@@ -11,7 +11,7 @@ div.rendering.without_content {
 body.role_admin {
    a,span { 
     display: inline;
-    .ui-icon {
+    .ui-icon, .ui-button {
       .create, .update, .destroy, .show, .edit, .new, .handle, .warning {
         display: block;
       }

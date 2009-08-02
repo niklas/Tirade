@@ -657,13 +657,21 @@ jQuery.fn.useToolbox = function(options) {
     if ( $(this).hasClass('without_toolbox') ) return; /* next ? */
     if ( $(this).hasClass('tiled') ) options.mode = 'tiled';
     if ( $(this).hasClass('maximized') ) options.mode = 'maximized';
-    $(this).resourcefulLink({
-      start: function(event) {
-        Toolbox.findOrCreate(options);
-        Toolbox.beBusy('Loading');
-        options.start(event);
-      }
-    })
+    $(this).resourcefulLink().opensToolbox(options);
+  });
+};
+
+jQuery.fn.opensToolbox = function(options) {
+  var defaults = {
+    mode: 'normal'
+  };
+
+  return this.each(function() {
+    var options = $.extend(defaults, options);
+    $(this).click(function() {
+      Toolbox.findOrCreate(options);
+      Toolbox.beBusy('Loading');
+    });
   });
 };
 
@@ -693,7 +701,6 @@ jQuery.fn.frameInToolbox = function(options) {
 
     $('ul.linkbar', frame)
       .addClass('ui-widget-header ui-corner-bottom')
-      .addRESTLinks($frame)
       .find('a.ok')
         .click(function(e) {
           e.preventDefault();
@@ -931,16 +938,35 @@ jQuery.ui.button = function(options) {
 jQuery.ui.frame = function(content, options) {
   var defaults = {
     href: '/dashboard',
-    title: 'Dashboard'
+    title: 'Dashboard',
+    action: 'index',
+    resource_name: 'admin'
   };
   var options = $.extend(defaults, options);
-  class = options.class ? 'frame ' + options.class : 'frame'
+  class = options.class ? 'frame ' + options.class : 'frame';
 
-  return $('<div/>')
+  var $frame = $('<div/>')
     .addClass('frame')
-    .addClass(options.class)
+    .addClass(class)
     .attr('role', 'frame')
     .attr('title', options.title)
     .attr('href', options.href)
     .html(content);
+
+  var $linkbar = $frame.find('ul.linkbar');
+  if ($linkbar.length) {
+    switch(options.action) {
+      case 'index':
+        $.tirade.resourceful.newButton(options.resource_name).opensToolbox().appendTo($linkbar);
+        break;
+      case 'show':
+        $.tirade.resourceful.editButton(options.resource_name, options.id).opensToolbox().appendTo($linkbar);
+        $.tirade.resourceful.deleteButton(options.resource_name, options.id).opensToolbox().appendTo($linkbar);
+        break;
+    }
+  }
+
+
+
+  return $frame;
 };

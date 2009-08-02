@@ -33,8 +33,15 @@ module ToolboxHelper
   end
 
   def push_toolbox_content(content)
+    id = content[:object].andand.id
     title, content = context.prepare_content(content)
-    page.toolbox.push content, :href => clean_url, :title => title
+    page.toolbox.push content, 
+      :href => clean_url, 
+      :title => title, 
+      :action => context.controller.action_name, 
+      :controller => context.controller.controller_name,
+      :resource_name => context.controller.model_name,
+      :id => id
     set_toolbox_status
   end
 

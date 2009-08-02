@@ -1,4 +1,67 @@
 (function($){
+  if (!$.tirade) $.tirade = {};
+  $.tirade.resourceful = function(options) {
+    return this;
+  };
+
+  $.extend( $.tirade.resourceful, {
+    delete: function(resource_name, id) {
+      return $.ajax({
+        url: Routing[resource_name + '_path']({id: id}),
+        type: 'DELETE', data: ''
+      });
+    },
+    deleteButton: function(resource_name, id) {
+      return $.ui.button({
+        icon: 'trash', text: 'Delete ' + resource_name,
+        class: 'delete'
+      })
+      .addClass(resource_name)
+      .click(function(event) {
+        if (confirm("Really delete?")) $.tirade.resourceful.delete(resource_name, id);
+        event.preventDefault(); event.stopPropagation();
+        return false;
+      })
+    },
+    new: function(resource_name, attributes) {
+      return $.ajax({
+        url: Routing['new_' + resource_name + '_path'](attributes),
+        type: 'GET'
+      });
+    },
+    newButton: function(resource_name, attributes) {
+      return $.ui.button({
+        icon: 'plus', text: 'New ' + $.string(resource_name).capitalize().str, 
+        class: 'new'
+      })
+      .addClass(resource_name)
+      .click(function(event) {
+        $.tirade.resourceful.new(resource_name, attributes);
+        event.preventDefault(); event.stopPropagation();
+        return false;
+      })
+    },
+    edit: function(resource_name, id) {
+      return $.ajax({
+        url: Routing['edit_' + resource_name + '_path']({id: id}),
+        type: 'GET'
+      });
+    },
+    editButton: function(resource_name, id) {
+      return $.ui.button({
+        icon: 'pencil', text: 'Edit',
+        class: 'edit'
+      })
+      .addClass(resource_name)
+      .click(function(event) {
+        $.tirade.resourceful.edit(resource_name, id);
+        event.preventDefault(); event.stopPropagation();
+        return false;
+      })
+    }
+
+  });
+
   // returns just the number (23 of image_23)
   $.fn.resourceId = function() {
     var obj = $(this);
@@ -35,7 +98,7 @@
     }
   };
 
-  $.fn.showUrl = function() {
+  $.fn.resourceURL = function() {
     var typeAndId = $(this).typeAndId();
     return Routing[typeAndId.resource + '_path']({id: typeAndId.id})
   };
@@ -81,7 +144,7 @@
     };
     var options = $.extend(defaults, options);
 
-    if (!options.url) options.url = resource.attr('href');
+    if (!options.url) options.url = resource.attr('href') || resource.resourceURL();
 
 
     if ( (m = options.url.match(/([^\/]+)s\/([^\/]+)/)) && m[1] != 'new') { // has id/slug after plural

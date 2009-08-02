@@ -462,6 +462,7 @@ div.busy {
     display: block;
     height: 18px;
     width: 19px;
+    float: left;
     span { display: block; margin: 1px; }
     :focus, :hover { padding: 0; }
   }

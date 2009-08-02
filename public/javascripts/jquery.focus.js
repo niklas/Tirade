@@ -149,7 +149,7 @@
       this._fillTopTabs( options.children ?  $(options.children, e) : []);
       this._fillLeftTabs( options.left_children ?  $(options.left_children, e) : []);
       this.title( e.attr('title') || e.typeAndId().type );
-      this.showButton.attr('href', e.showUrl()  );
+      this.showButton.attr('href', e.resourceURL()  );
       this._setButtons( options.buttons.call(e) );
       var callback = this.currentOptions.visit; 
       if ($.isFunction(callback)) callback.apply(this.current);
