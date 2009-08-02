@@ -172,14 +172,14 @@ div#toolbox_sidebar {
     margin: 0;
   }
   ul.history { 
-    min-height: 45%;
     max-height: 50%;
     margin-bottom: 0.3em;
   }
   ul.clipboard { 
-    min-height: 45%;
+    min-height: 20%;
     max-height: 50%;
     bottom: 25px;
+    padding-bottom: 5em;
     margin-bottom: 0.3em;
   }
   div.actions {
