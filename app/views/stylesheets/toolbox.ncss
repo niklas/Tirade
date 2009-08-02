@@ -186,6 +186,9 @@ div#toolbox_sidebar {
     bottom: 25px;
     padding-bottom: 5em;
     margin-bottom: 0.3em;
+    li {
+      cursor: pointer;
+    }
   }
   div.actions {
     height: 1.7em;

@@ -29,6 +29,7 @@ var Toolbox = {
       $.ui.frame("preparing Toolbox..").appendTo( this.content() );
       $.tirade.history.sync();
       this.frameCount = 1;
+      this.currentFrameIndex = 0;
       this.expireBehaviors();
       this.applyBehaviors();
       this.element().show();
@@ -246,7 +247,7 @@ var Toolbox = {
   },
   goto: function(frame) {
     var $frame = $(frame).closest('.frame');
-    index = Math.max(0, this.frames().index($frame));
+    this.currentFrameIndex = index = Math.max(0, this.frames().index($frame));
     return this.body.trigger('goto', [index] );
   },
   error: function( content, options ) {
