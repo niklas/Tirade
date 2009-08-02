@@ -1,61 +1,76 @@
 (function($){
-  $.fn.hasOneEditor = function(options) {
-    var defaults = {
-    };
-    var options = $.extend(defaults, options);
-
-    return this.each(function() {
-      var list = $(this);
+  $.widget('ui.hasOneEditor', {
+    _init: function() {
+      var list = this.element;
+      var o = this.options;
       list.droppable({
         accept: function(draggable) { 
           return(
-            draggable.is('li') &&
+            draggable.is(o.items) &&
             draggable.parent()[0] != list[0] &&
             draggable.typeAndId()
           );
         },
-        hoverClass: 'hover',
+        hoverClass: 'drop-hover',
         activeClass: 'active-droppable',
         greedy: true,
-        tolerance: 'touch',
+        tolerance: 'pointer',
         drop: function(e,ui) {
           var item = $(ui.draggable);
-          list.find('li').remove();
+          list.find(o.items).remove();
           item.clone().appendTo(list);
         }
-      });
-      $('li', list).livequery(function() {
-        $(this).hasOneEditorElement();
-      });
-    });
-  }
+      })
+      .addClass(this.widgetBaseClass)
+      .addClass('ui-corner-all')
+      .addClass('empty');
 
-  $.fn.hasOneEditorElement = function(options) {
-    var defaults = {
-    };
-    var options = $.extend(defaults, options);
-    this.each(function() {
-      var item = $(this);
+      $(o.items, list[0]).livequery(
+        function() {
+          $(this).hasOneEditorElement();
+          list.removeClass('empty');
+        },
+        function() {
+          if (list.find(o.items).length == 0) list.addClass('empty');
+        }
+      );
+
+    }
+  })
+  $.ui.hasOneEditor.defaults = {
+    items: 'li.record'
+  };
+
+  /* Fills hidden input fields with id and type of dropped element */
+  $.widget('ui.hasOneEditorElement', {
+    _init: function() {
+      var item = this.element;
+      var o = this.options;
+      var list = item.closest(o.list);
       if ( attrs = item.typeAndId() ) {
-        item.parent()
-          .removeClass('empty')
+        list
           .siblings('input.association_id:first').val(attrs.id).end()
           .siblings('input.association_type:first').val(attrs.type).end()
       } else {
         item.remove();
+        return;
       };
-     item 
-      .find('img.association').remove().end()
-      .appendDom(Toolbox.Templates.removeButton)
-      .find('img.remove').click(function(event) {
-        item.parent()
-          .siblings('input.association_id:first').val('').end()
-          .siblings('input.association_type:first').val('').end()
-        item.remove();
-        Toolbox.last(' ul.list:not(:has(li))').addClass('empty');
-      });
-    });
+      item.find('a.association').remove();
+      $.ui.button({icon: 'minus', text: 'remove', class: 'association remove'})
+        .click(function(event) {
+          list
+            .siblings('input.association_id:first').val('').end()
+            .siblings('input.association_type:first').val('').end()
+          item.remove();
+          event.preventDefault(); event.stopPropagation();
+        })
+        .appendTo(item);
+    }
+  });
+  $.ui.hasOneEditorElement.defaults = {
+    list: 'ul.ui-hasOneEditor'
   };
+
 
   $.widget('ui.hasManyEditor', {
     _init: function() {
@@ -64,7 +79,7 @@
       list.droppable({
         accept: function(draggable) { 
           return(
-            draggable.is(o.accept) &&
+            draggable.is(o.items) &&
             draggable.parent()[0] != list[0] &&
             draggable.typeAndId()
           );
@@ -94,8 +109,7 @@
     }
   })
   $.ui.hasManyEditor.defaults = {
-    items: 'li.record',
-    accept: 'li.record'
+    items: 'li.record'
   };
 
   $.widget('ui.hasManyEditorElement', {
@@ -111,7 +125,7 @@
         .siblings('input.association_id[type=hidden][value=empty]')
           .clone().attr('value',id).appendTo(item);
 
-      item.find('a.association.remove').remove();
+      item.find('a.association').remove();
       $.ui.button({icon: 'minus', text: 'remove', class: 'association remove'})
         .click(function(event) {
           item.remove();

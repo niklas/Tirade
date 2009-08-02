@@ -782,12 +782,8 @@ jQuery.fn.formInFrameInToolbox = function(options) {
       if ( !$(this).data('hasElastic') )
         $(this).elastic().data('hasElastic', true);
     });
-    //$('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
+    $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
     $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor() });
-    // mark empty association lists
-    $('di.association dd > ul.list:not(:has(li))', form).livequery(function() {
-      $(this).addClass('empty');
-    });
 
     // redirect the Submit button from bottomLinkBar
     if ($form.find('input.submit:visible').length) {
