@@ -1,6 +1,6 @@
 <% content ||= attribute || @rendering.andand.content || @content %>
 <% if content %>
-  <%= show_content_link(content) %>
+  <%= show_link_to(content) %>
   <%= content.title %>
 <% else %>
   <%=_ 'none' %>
