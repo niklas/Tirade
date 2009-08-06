@@ -1,5 +1,6 @@
 class ImagesController < ManageResourceController::Base
   in_place_edit_for :image, :title
+  skip_before_filter :login_required, :only => :custom
 
   # TODO append .js in multipartform
   # TODO multiple jupload with flash or so..
