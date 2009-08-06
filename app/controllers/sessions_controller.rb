@@ -18,8 +18,11 @@ class SessionsController < ApplicationController
         cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
       end
       set_roles
-      redirect_back_or_default('/')
       flash[:notice] = "Logged in successfully"
+      respond_to do |wants|
+        wants.html  { redirect_back_or_default('/') }
+        wants.js    { render :action => 'index', :controller => 'admin'}
+      end
     else
       flash[:notice] = "Logged in failed. Is your name and password correct?"
       respond_to do |wants|
