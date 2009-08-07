@@ -15,8 +15,8 @@ var Toolbox = {
           minHeight: Toolbox.minHeight,
           minWidth: 300,
           title: 'Toolbox Dialog',
-          dragStart: function() { Toolbox.body.css('overflow-x', 'auto')},
-          dragStop:  function() { Toolbox.body.css('overflow-x', 'hidden')},
+          dragStart: Toolbox.overflowsOff,
+          dragStop:  Toolbox.overflowsOn,
           drag: Toolbox.sync.sideBarPosition,
           beforeClose: Toolbox.close,
           resizeStop: Toolbox.sync.all
@@ -130,16 +130,10 @@ var Toolbox = {
       lazy: true,
       event: null,
       items: 'div.frame',
-      onBefore: function() { 
-        Toolbox.body.css('overflow-x', 'auto'); 
-        return true  
-      },
-      onAfter:  function() { 
-        Toolbox.body.css('overflow-x', 'hidden'); 
-        return true
-      },
+      onBefore: Toolbox.overflowsOff,
+      onAfter:  Toolbox.overflowsOn,
       axis: 'x',
-      duration: 300
+      duration: 555
     })
 
     this.body.bind('prev.serialScroll', this.refreshBackButton );
@@ -287,6 +281,20 @@ var Toolbox = {
       Toolbox.backButton.removeClass('ui-state-disabled')
     else
       Toolbox.backButton.addClass('ui-state-disabled')
+  },
+  overflowsOff: function() {
+    Toolbox.overflows().css('overflow', 'visible');
+    return true;
+  },
+  overflowsOn: function() {
+    Toolbox.overflows().css('overflow', '');
+    return true;
+  },
+  overflows: function() {
+    return Toolbox
+      .frames()
+      .add('div.frame .accordion')
+      .add('div.frame .accordion_content')
   },
   popAndRefreshLast: function() {
     this.last().prev().refresh();
