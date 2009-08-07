@@ -29,6 +29,7 @@
       return $('<li />')
           .addClass('item')
           .addClass('ui-state-default ui-corner-left ui-widget-content')
+          .css('cursor', 'pointer')
           .text( $frame.attr('title') )
           .hover(
             function() { $(this).addClass('ui-state-hover') },
