@@ -396,7 +396,7 @@ describe Rendering, "without content", :type => :helper do
     it "should render with a warning about not having any content" do
       do_render
       @html.should_not be_blank
-      @html.should have_text(/This Rendering has no Content assigned/)
+      @html.should have_text(/This Rendering has no Content/)
     end
 
   end
