@@ -22,6 +22,10 @@ module Tirade
           @symbols |= Array(klass.to_s.tableize.to_sym)
         end
 
+        def unregister_class(klass)
+          symbols.delete(klass.to_s.tableize.to_sym) if symbols
+        end
+
         def classes
           class_names.map(&:constantize)
         end

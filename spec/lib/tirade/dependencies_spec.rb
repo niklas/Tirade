@@ -7,6 +7,7 @@ describe "Using a missing constant" do
     @constant = Object.const_get @name
   end
   def dereference!(name)
+    Tirade::ActiveRecord::Content.unregister_class name
     ActiveSupport::Dependencies.remove_constant name
     ActiveSupport::Dependencies.autoloaded_constants.delete name
   end
