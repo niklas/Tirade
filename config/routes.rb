@@ -52,7 +52,6 @@ ActionController::Routing::Routes.draw do |map|
 
   end
   map.dashboard '/dashboard', :controller => 'admin'
-  map.resource :session
   
   map.with_options :controller => 'users' do |page|    
     page.activate '/activate/:activation_code', :action => 'activate', :activation_code => nil
@@ -61,7 +60,8 @@ ActionController::Routing::Routes.draw do |map|
     page.reset_password '/reset_password/:id', :action => 'reset_password'
   end
   
-  map.with_options :controller => 'sessions' do |page|
+  map.resources :user_sessions, :only => [:new, :create, :destroy]
+  map.with_options :controller => 'user_sessions' do |page|
     page.login '/login', :action => 'new'
     page.logout '/logout', :action => 'destroy'
   end

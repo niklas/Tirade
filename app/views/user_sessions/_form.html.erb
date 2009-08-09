@@ -1,0 +1,12 @@
+<% user_session ||= form %>
+
+<%= error_messages_for :user_session, :object => user_session %>
+
+<% form_for user_session do |f| %>
+
+  <%= f.text_field :login %>
+  <%= f.password_field :password %>
+  <%= f.check_box :remember_me %>
+
+  <%= f.submit 'Log in' %>
+<% end %>

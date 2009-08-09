@@ -37,6 +37,7 @@ Rails::Initializer.run do |config|
   config.gem 'mime-types', :lib => 'mime/types'
   config.gem 'desert', :version => '>=0.5.0'
   config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
+  config.gem 'binarylogic-authlogic', :source => 'http://gems.github.com', :lib => 'authlogic'
   config.gem 'libxml-ruby', :version => '>=1.1.3', :lib => 'xml'
 
   # Add additional load paths for your own custom dirs
@@ -63,5 +64,4 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
-  config.active_record.observers = :user_observer
 end
