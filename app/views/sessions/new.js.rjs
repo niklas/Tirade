@@ -1,1 +1,0 @@
-page.push_or_refresh_last(:partial => "sessions/form", :title => 'Log in')
