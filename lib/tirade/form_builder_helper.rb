@@ -6,6 +6,10 @@ module Tirade
       wrap(field, options, super(field,options))
     end
 
+    def password_field(field, options = {})
+      wrap(field, options, super(field,options))
+    end
+
     def text_area(field, options = {})
       if @object.markup?(field)
         options[:class] ||= ''
