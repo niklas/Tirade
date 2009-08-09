@@ -40,3 +40,13 @@ describe RenderHelper, 'rendering' do
   end
   
 end
+
+describe RenderHelper, "helpers" do
+  describe "link_to_focus" do
+    it "should render a link" do
+      helper.stub!(:add_class_to_html_options).and_return(true)
+      html = helper.link_to_focus Factory(:rendering)
+      html.should have_tag('a')
+    end
+  end
+end

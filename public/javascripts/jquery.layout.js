@@ -149,7 +149,8 @@ $(function() {
     $(this).focusable({parent: null, children: '>div.grid'});
   });
   $('div.page div.grid').livequery(function() {
-    $(this).focusable({
+    var $grid = $(this);
+    $grid.focusable({
       parent: 'div.grid, div.page', 
       children: '> * > div.grid,>div.grid', 
       left_children: '>div.rendering',
@@ -170,10 +171,18 @@ $(function() {
         }
         return buttons;
       }
-    })
+    });
+    if ($grid.is('.without_renderings')) {
+      $('<a />')
+        .text('Focus')
+        .href('#')
+        .click( $grid.focus )
+        .appendTo($grid);
+    };
   });
   $('div.page div.grid div.rendering').livequery(function() {
-    $(this).focusable({
+    var $rendering = $(this);
+    $rendering.focusable({
       parent: 'div.grid', 
       children: null,
       visit: function() {
@@ -215,6 +224,13 @@ $(function() {
         $rendering.droppable('destroy');
       }
     });
+    if ($rendering.is('.without_content, .without_part')) {
+      $('<a />')
+        .text('Focus')
+        .href('#')
+        .click( $rendering.focus )
+        .appendTo($rendering);
+    };
   });
 
   $('div.page div.warning').livequery(function() {
