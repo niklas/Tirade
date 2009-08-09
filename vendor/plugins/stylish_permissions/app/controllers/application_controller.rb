@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  before_filter :set_current_permissions
-  before_filter :check_permissions
+  #before_filter :set_current_permissions
+  #before_filter :check_permissions
   # Check the users permissions. If the current user is allowed to access, return
   # true, otherwise redirect to '/'. This method is used as a
   # before_filter in all controllers
