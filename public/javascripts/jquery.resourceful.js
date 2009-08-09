@@ -106,7 +106,7 @@
 
   $.fn.resourcefulLink = function(options) {
     var defaults = {
-      start: function() { console.debug("no callback") }
+      start: function() { }
     };
     var options = $.extend(defaults, options);
 
