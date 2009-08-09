@@ -39,6 +39,7 @@ Rails::Initializer.run do |config|
   config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
   config.gem 'binarylogic-authlogic', :source => 'http://gems.github.com', :lib => 'authlogic'
   config.gem 'libxml-ruby', :version => '>=1.1.3', :lib => 'xml'
+  config.gem 'lockdown', :lib => false, :version => '1.2.0'
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( 
