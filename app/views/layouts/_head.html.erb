@@ -10,35 +10,44 @@
 <%= stylesheet_link_tag('jquery-ui') %>
 
 <%= javascript_include_tag 'named_routes' %>
-<%= javascript_include_tag "jquery" %>
-<%= javascript_include_tag "jquery.metadata.js" %>
-<%= javascript_include_tag "jquery.ui" %>
-<%= javascript_include_tag "jquery.param" %>
-<%= javascript_include_tag "jquery.json" %>
-<%= javascript_include_tag "jquery.pause" %>
-<%= javascript_include_tag "jquery.scrollTo.js" %>
-<%= javascript_include_tag "jquery.serialScroll.js" %>
-<%= javascript_include_tag "jquery.layout" %>
-<%= javascript_include_tag "jquery.livequery" %>
-<%= javascript_include_tag "jquery.appendDom" %>
-<%= javascript_include_tag "jquery.form" %>
-<%= javascript_include_tag "jquery.timer" %>
-<%= javascript_include_tag "jquery.string" %>
-<%= javascript_include_tag "jquery.elastic" %>
-<%= javascript_include_tag "jquery.cookie" %>
-<%= javascript_include_tag "jquery.typewatch" %>
-<%= javascript_include_tag "jquery.formwatch" %>
-<%= javascript_include_tag "jquery.chili" %>
-<%= javascript_include_tag "markitup.textile" %>
-<%= javascript_include_tag *%w(swfobject jquery.uploadify) %>
-<%= javascript_include_tag "jquery.markitup" %>
-<%= javascript_include_tag "jquery.resourceful" %>
-<%= javascript_include_tag "jquery.associations" %>
-<%= javascript_include_tag "jquery.history" %>
-<%= javascript_include_tag "jquery.toolbox" %>
-<%= javascript_include_tag "jquery.focus" %>
-<%= javascript_include_tag "jrails" %>
-<%= javascript_include_tag "interface" %>
+
+<%= javascript_include_tag %w( 
+                               jquery 
+                               jquery.metadata
+                               jquery.ui
+                               jquery.param
+                               jquery.json
+                               jquery.cookie
+                               jquery.string
+                               jquery.timer
+                               jquery.form
+                               jquery.string
+                               jquery.pause
+                               jquery.scrollTo
+                               jquery.serialScroll
+                               jquery.livequery), :cache => 'cache/jquery-base' %>
+
+<%= javascript_include_tag %w(
+                               jquery.appendDom
+                               jquery.elastic
+                               jquery.typewatch
+                               jquery.formwatch
+                               jquery.chili
+                               markitup.textile
+                               jquery.markitup
+                               swfobject
+                               jquery.uploadify
+                               jrails
+                              ), :cache => 'cache/jquery-plus' %>
+
+<%= javascript_include_tag %w(
+                               jquery.layout
+                               jquery.resourceful
+                               jquery.associations
+                               jquery.history
+                               jquery.toolbox
+                               jquery.focus
+                               interface
+                              ), :cache => 'cache/tirade' %>
 
 <% javascript_include_tag *%w(application) %>
-<% javascript_include_tag *%w(swfobject) %>
