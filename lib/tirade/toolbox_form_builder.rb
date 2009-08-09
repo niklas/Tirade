@@ -3,9 +3,11 @@ class ToolboxFormBuilder < ActionView::Helpers::FormBuilder
   include Tirade::FormBuilderHelper
   def submit(label="Submit", opts={})
     if @object.new_record?
-      super('Create', :class => 'submit create', :title => 'Create')
+      label ||= 'Create'
+      super(label, :class => 'submit create', :title => label)
     else
-      super('Save', :class => 'submit save', :title => 'Save')
+      label ||= 'Save'
+      super(label, :class => 'submit save', :title => label)
     end
   end
 
