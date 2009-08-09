@@ -16,9 +16,20 @@ describe UserSessionsController do
         response.should be_success
       end
 
-      it "should load dashboard into toolbox" do
+      it "should refresh the dashboard" do
         do_login
-        response.body.should =~ /dashboard/i
+        response.body.should include(%Q[Toolbox.frameByHref("/dashboard").refresh()])
+      end
+
+      it "should remove the login frame" do
+        do_login
+        response.body.should include(%Q[Toolbox.frameByHref("/login").remove()])
+      end
+
+      it "should scroll the toolbox to the first frame (aka dashboard)" do
+        do_login
+        response.body.should include(%Q[Toolbox.goto(0)])
+        
       end
       
     end

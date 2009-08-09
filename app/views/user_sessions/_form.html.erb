@@ -4,9 +4,14 @@
 
 <% form_for user_session do |f| %>
 
-  <%= f.text_field :login %>
-  <%= f.password_field :password %>
-  <%= f.check_box :remember_me %>
+  <% accordion_item 'Authentication', :content_tag => :dl do %>
 
-  <%= f.submit 'Log in' %>
+    <%= f.text_field :login %>
+    <%= f.password_field :password %>
+    <%= f.check_box :remember_me %>
+
+    <%= f.submit 'Log in' %>
+
+  <% end %>
+
 <% end %>
