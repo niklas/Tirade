@@ -1,7 +1,10 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/contents/new.html.erb" do
-  ActionView::Base.default_form_builder = NormalFormBuilder
+  ActionView::Base.class_eval do
+    include InterfaceHelper
+    self.default_form_builder = NormalFormBuilder
+  end
   include ContentsHelper
   
   describe "for a NewsItem" do
@@ -21,24 +24,24 @@ describe "/contents/new.html.erb" do
     it "should render new form" do
       render "/contents/new.html.erb"
 
-      response.should have_tag("form[action=?][method=post]", contents_path) do
+      response.should have_tag("form[action=?][method=post]", '/manage/news_items') do
         without_tag('p.default.warning')
-        without_tag("input#content_state[name=?]", "content[state]")
-        without_tag("input#content_position[name=?]", "content[position]")
-        without_tag("input#content_lft[name=?]", "content[lft]")
-        without_tag("input#content_rgt[name=?]", "content[rgt]")
-        without_tag("textarea#content_body", "content[body]")
-        with_tag("input#content_title[name=?]", "content[title]")
+        without_tag("input#news_item_state[name=?]", "news_item[state]")
+        without_tag("input#news_item_position[name=?]", "news_item[position]")
+        without_tag("input#news_item_lft[name=?]", "news_item[lft]")
+        without_tag("input#news_item_rgt[name=?]", "news_item[rgt]")
+        without_tag("textarea#news_item_body", "news_item[body]")
+        with_tag("input#news_item_title[name=?]", "news_item[title]")
         #with_tag('p') do
         #  with_tag('label', 'Description')
-        #  with_tag("textarea#content_description[name=?]", "content[description]")
+        #  with_tag("textarea#news_item_description[name=?]", "news_item[description]")
         #end
-        with_tag("textarea#content_body[name=?]", "content[body]")
+        with_tag("textarea#news_item_body[name=?]", "news_item[body]")
         #with_tag('p.type') do
         #  with_tag('label', 'Type')
-        #  with_tag("select#content_type[name=?]", "content[type]")
+        #  with_tag("select#news_item_type[name=?]", "news_item[type]")
         #end
-        with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
+        with_tag("select#news_item_wanted_parent_id[name=?]", "news_item[wanted_parent_id]")
       end
     end
   end
@@ -60,88 +63,24 @@ describe "/contents/new.html.erb" do
     it "should render new form" do
       render "/contents/new.html.erb"
       
-      response.should have_tag("form[action=?][method=post]", contents_path) do
+      response.should have_tag("form[action=?][method=post]", documents_path) do
         without_tag('p.default.warning')
-        without_tag("input#content_state[name=?]", "content[state]")
-        without_tag("input#content_position[name=?]", "content[position]")
-        without_tag("input#content_lft[name=?]", "content[lft]")
-        without_tag("input#content_rgt[name=?]", "content[rgt]")
-        with_tag("input#content_title[name=?]", "content[title]")
-        with_tag("textarea#content_description[name=?]", "content[description]")
-        with_tag("textarea#content_body[name=?]", "content[body]")
+        without_tag("input#document_state[name=?]", "document[state]")
+        without_tag("input#document_position[name=?]", "document[position]")
+        without_tag("input#document_lft[name=?]", "document[lft]")
+        without_tag("input#document_rgt[name=?]", "document[rgt]")
+        with_tag("input#document_title[name=?]", "document[title]")
+        with_tag("textarea#document_description[name=?]", "document[description]")
+        with_tag("textarea#document_body[name=?]", "document[body]")
         #with_tag('div.type') do
         #  with_tag('label', 'Type')
-        #  with_tag("select#content_type[name=?]", "content[type]")
+        #  with_tag("select#document_type[name=?]", "document[type]")
         #end
-        with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
+        with_tag("select#document_wanted_parent_id[name=?]", "document[wanted_parent_id]")
       end
     end
   end
 
-  describe "for a completly unknown content type that inherits directly from Content" do
-    before(:each) do
-      class ZweiHimmelHundeAufDemWegZurHoelle < Content; end
-      @content = mock_model(ZweiHimmelHundeAufDemWegZurHoelle)
-      @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).and_return(false)
-      @content.stub!(:title).and_return("Hölle hölle hölle")
-      @content.stub!(:type).and_return("ZweiHimmelHundeAufDemWegZurHoelle")
-      @content.stub!(:wanted_parent_id).and_return(88-66+23)
-      @content.stub!(:acting_roles).and_return([])
-      assigns[:content] = @content
-    end
-
-    it "should render new form with default fields and warning" do
-      render "/contents/new.html.erb"
-      
-      response.should have_tag("form[action=?][method=post]", contents_path) do
-        with_tag('p.default.warning') do
-          with_tag('pre', %r~Missing template /contents/_zwei_himmel_hunde_auf_dem_weg_zur_hoelle_fields~)
-        end
-        without_tag("input#content_state[name=?]", "content[state]")
-        without_tag("input#content_position[name=?]", "content[position]")
-        without_tag("input#content_lft[name=?]", "content[lft]")
-        without_tag("input#content_rgt[name=?]", "content[rgt]")
-        with_tag("input#content_title[name=?]", "content[title]")
-      end
-    end
-  end
-
-  describe "for a completly unknown content type that inherits from Document" do
-    before(:each) do
-      class ZweiEinhalbHimmelHundeAufDemWegZurHoelle < Document; end
-      @content = mock_model(ZweiEinhalbHimmelHundeAufDemWegZurHoelle)
-      @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).and_return(false)
-      @content.stub!(:title).and_return("Hölle hölle hölle")
-      @content.stub!(:type).and_return("ZweiEinhalbHimmelHundeAufDemWegZurHoelle")
-      @content.stub!(:description).and_return("Bud Spencer")
-      @content.stub!(:body).and_return("Italo Zingarelli")
-      @content.stub!(:wanted_parent_id).and_return(88-66+42)
-      @content.stub!(:acting_roles).and_return([])
-      assigns[:content] = @content
-    end
-
-    it "should render new form for Document (its superclass)" do
-      render "/contents/new.html.erb"
-      
-      response.should have_tag("form[action=?][method=post]", contents_path) do
-        without_tag('p.default.warning')
-        without_tag("input#content_state[name=?]", "content[state]")
-        without_tag("input#content_position[name=?]", "content[position]")
-        without_tag("input#content_lft[name=?]", "content[lft]")
-        without_tag("input#content_rgt[name=?]", "content[rgt]")
-        with_tag("input#content_title[name=?]", "content[title]")
-        with_tag("textarea#content_description[name=?]", "content[description]")
-        with_tag("textarea#content_body[name=?]", "content[body]")
-        #with_tag('p.type') do
-        #  with_tag('label', 'Type')
-        #  with_tag("select#content_type[name=?]", "content[type]")
-        #end
-        with_tag("select#content_wanted_parent_id[name=?]", "content[wanted_parent_id]")
-      end
-    end
-  end
 end
 
 
