@@ -240,8 +240,13 @@ var Toolbox = {
     this.goto(frame);
   },
   goto: function(frame) {
-    var $frame = $(frame).closest('.frame');
-    this.currentFrameIndex = index = Math.max(0, this.frames().index($frame));
+    if (frame.jquery) {
+      var $frame = $(frame).closest('.frame');
+      var index = Math.max(0, this.frames().index($frame));
+    } else {
+      var index = frame;
+    }
+    this.currentFrameIndex = index;
     return this.body.trigger('goto', [index] );
   },
   error: function( content, options ) {
