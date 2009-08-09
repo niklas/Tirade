@@ -13,24 +13,6 @@ class ApplicationController < ActionController::Base
   # ==================
   include AuthenticatedSystem
   
-  # When access is denied redirect to the login page.
-  def access_denied
-    respond_to do |format|
-      format.js do
-        flash[:error] = "You must be logged in to access this feature."
-        render :template => 'sessions/new'
-      end
-      format.html do
-        store_location
-        flash[:error] = "You must be logged in to access this feature."
-        redirect_to '/login'
-      end
-      format.xml do
-        request_http_basic_authentication 'Password required to access this feature.'
-      end
-    end
-  end
-
 
   def current_theme
     @current_theme ||= (Settings.public_theme || Settings.current_theme)
@@ -64,23 +46,6 @@ class ApplicationController < ActionController::Base
         end      
       end
     end
-  end
-
-  def redirect_back_or_default(default)
-    respond_to do |wants|
-      wants.html { redirect_to(session[:return_to] || default) }
-      wants.js do
-        render :update do |page|
-          if session[:return_to]
-            page.toolbox.pop_and_refresh_last() 
-            # TODO what else? where did we came from? was there a Toolbox frame involved?
-          else
-            page.toolbox.pop_and_refresh_last()
-          end
-        end
-      end
-    end
-    session[:return_to] = nil
   end
 
   def set_roles
