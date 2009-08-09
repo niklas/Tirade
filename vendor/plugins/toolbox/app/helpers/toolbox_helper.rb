@@ -33,7 +33,11 @@ module ToolboxHelper
   end
 
   def push_toolbox_content(content)
-    id = content[:object].andand.id
+    id = if content[:object].andand.is_a?(ActiveRecord::Base)
+           content[:object].id
+         else
+           nil
+         end
     title, content = context.prepare_content(content)
     page.toolbox.push content, 
       :href => clean_url, 
