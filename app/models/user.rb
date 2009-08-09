@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20090711174603
+# Schema version: 20090809144154
 #
 # Table name: users
 #
@@ -7,9 +7,9 @@
 #  login                     :string(255)     
 #  email                     :string(255)     
 #  remember_token            :string(255)     
-#  crypted_password          :string(40)      
+#  crypted_password          :string(128)     default(""), not null
 #  password_reset_code       :string(40)      
-#  salt                      :string(40)      
+#  salt                      :string(128)     default(""), not null
 #  activation_code           :string(40)      
 #  remember_token_expires_at :datetime        
 #  activated_at              :datetime        
@@ -18,6 +18,7 @@
 #  created_at                :datetime        
 #  updated_at                :datetime        
 #  is_admin                  :boolean         
+#  persistence_token         :string(255)     
 #
 
 class User < ActiveRecord::Base
