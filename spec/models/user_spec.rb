@@ -1,5 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User do
-  # All done by Authlogic
+  it "should succeed creating a new :valid_user from the Factory" do
+    Factory.create(:valid_user)
+  end
+    
+  it "should invalid :invalid_user factory" do
+    Factory.build(:invalid_user).should be_invalid
+  end
 end

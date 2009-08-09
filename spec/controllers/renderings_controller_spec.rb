@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RenderingsController do
   before(:each) do
-    login_as :quentin
+    login_as :valid_user
   end
     
   describe "handling GET /renderings" do
@@ -31,7 +31,7 @@ describe RenderingsController do
   describe "handling GET /renderings/1" do
 
     before(:each) do
-      login_as :quentin
+      login_as :valid_user
       @rendering = mock_model(Rendering)
       Rendering.stub!(:find).and_return(@rendering)
     end

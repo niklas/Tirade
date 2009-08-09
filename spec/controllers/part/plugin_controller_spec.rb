@@ -2,7 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Part::PluginController do
   before :each do
-    login_as :quentin
+    login_as :valid_user
   end
 
   describe "route generation" do

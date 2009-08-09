@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PartsController do
   before(:each) do
-    login_as :quentin
+    login_as :valid_user
     Part.stub!(:sync!).and_return(true)
   end
 
