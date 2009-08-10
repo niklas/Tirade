@@ -1,5 +1,6 @@
 class NamedRoutesController < ActionController::Base
   caches_page :generate
+  skip_before_filter :login_required
 
   self.view_paths = File.join(File.dirname(__FILE__), '../views/named_routes')
   layout nil

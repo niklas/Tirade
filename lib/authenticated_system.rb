@@ -3,6 +3,8 @@ module AuthenticatedSystem
     base.class_eval do 
       filter_parameter_logging :password, :password_confirmation
       helper_method :current_user_session, :current_user, :logged_in?
+      hide_action :current_user_session, :current_user, :logged_in?, :login_required, 
+        :access_denied, :store_location, :redirect_back_or_default
     end
   end
 
@@ -23,22 +25,6 @@ module AuthenticatedSystem
       !!current_user
     end
 
-    # Check if the user is authorized
-    #
-    # Override this method in your controllers if you want to restrict access
-    # to only a few actions or if you want to check if the user
-    # has the correct rights.
-    #
-    # Example:
-    #
-    #  # only allow nonbobs
-    #  def authorized?
-    #    current_user.login != "bob"
-    #  end
-    def authorized?
-      logged_in?
-    end
-
     # Filter method to enforce a login requirement.
     #
     # To require logins for all actions, use this in your controllers:
@@ -54,7 +40,7 @@ module AuthenticatedSystem
     #   skip_before_filter :login_required
     #
     def login_required
-      authorized? || access_denied
+      logged_in? || access_denied
     end
 
     # Redirect as appropriate when an access request fails.
@@ -65,8 +51,13 @@ module AuthenticatedSystem
     # behavior in case the user is not authorized
     # to access the requested action.  For example, a popup window might
     # simply close itself.
-    def access_denied
-      flash[:error] = "You must be logged in to access this feature."
+    def access_denied(error=nil)
+      logger.debug("  !!! Access Denied: #{error.inspect}   !!!")
+      if error
+        flash[:error] = "You must be logged in to access this feature. (#{error.message})"
+      else
+        flash[:error] = "You must be logged in to access this feature."
+      end
       respond_to do |format|
         format.js do
           render :template => 'user_sessions/new'

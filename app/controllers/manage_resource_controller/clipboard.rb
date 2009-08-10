@@ -8,6 +8,8 @@ module ManageResourceController
       end
     end
 
+    private
+
     def prepare_clipboard
       @clipboard ||= ::Clipboard.new(session)
     end

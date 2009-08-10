@@ -9,6 +9,8 @@ module ManageResourceController
     helper_method :collection
     helper_method :build_object
 
+    hide_action :resource_name, :human_name, :belongs_to, :route_name, :object_name
+
     include ManageResourceController::Clipboard
     include ManageResourceController::Helpers
     include  ManageResourceController::Actions
@@ -22,6 +24,7 @@ module ManageResourceController
       child.setup_actions
     end
 
+    private
     def human_name
       model_name.humanize
     end

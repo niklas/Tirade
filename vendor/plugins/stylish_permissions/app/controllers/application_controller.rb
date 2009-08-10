@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   # Check the users permissions. If the current user is allowed to access, return
   # true, otherwise redirect to '/'. This method is used as a
   # before_filter in all controllers
+  private
   def check_permissions
     return false if current_user.blank?
 
@@ -53,7 +54,6 @@ class ApplicationController < ActionController::Base
     session[:current_permissions_names] || []
   end
 
-  protected
   # TODO does not realize when a Permission (...) is deleted (no changes in #updated_at)
   def set_current_permissions
     return unless current_user

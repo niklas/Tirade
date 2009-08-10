@@ -8,6 +8,8 @@ module ManageResourceController
         create.failure.flash "Failed to create #{human_name}."
         update.failure.flash "Failed to update #{human_name}."
         ResourceController::ACTIONS.each do |action|
+          hide_action "update_page_on_#{action}"
+          hide_action "update_page_on_failed_#{action}"
           send(action) do
             wants.js do
               render :update do |page|
@@ -25,6 +27,7 @@ module ManageResourceController
             end
           end
         end
+        hide_action :update_page_on_preview
       end
     end
     def self.included(base)
@@ -33,7 +36,23 @@ module ManageResourceController
         before_filter :load_object, :only => [:preview]
       end
     end
+
+    def preview
+      if object
+        model.without_modification do
+          object.attributes = object_params
+          respond_to do |wants|
+            wants.js do
+              render :update do |page|
+                controller.update_page_on_preview(page)
+              end
+            end
+          end
+        end
+      end
+    end
       
+    private
       # Update search results in last frame of toolbox or just push the list
     def update_page_on_index(page)
       if params[:search]
@@ -94,21 +113,6 @@ module ManageResourceController
 
     def update_page_on_failed_update(page)
       update_or_show_form_in_toolbox(page)
-    end
-
-    def preview
-      if object
-        model.without_modification do
-          object.attributes = object_params
-          respond_to do |wants|
-            wants.js do
-              render :update do |page|
-                controller.update_page_on_preview(page)
-              end
-            end
-          end
-        end
-      end
     end
 
     def update_page_on_preview(page)

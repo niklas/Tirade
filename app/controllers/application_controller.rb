@@ -12,6 +12,9 @@ class ApplicationController < ActionController::Base
   # = Authentication =
   # ==================
   include AuthenticatedSystem
+
+  hide_action :check_request_authorization
+  hide_action :configure_lockdown
   
 
   def current_theme
@@ -19,6 +22,8 @@ class ApplicationController < ActionController::Base
   end
   hide_action :current_theme
   helper_method :current_theme
+
+  private
 
   # Returns the names of all controllers that should be interacted with (resourceful)
   #  * must be plural
@@ -33,7 +38,6 @@ class ApplicationController < ActionController::Base
   helper_method :primary_controller_names
   
 
-  private
   def violate_mvc
     [Grid, Rendering, Part].each { |k| k.active_controller = self }
   end

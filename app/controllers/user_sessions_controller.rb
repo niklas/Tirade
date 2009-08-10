@@ -1,9 +1,6 @@
 class UserSessionsController < ManageResourceController::Base
   skip_before_filter :login_required, :except => [:edit, :update, :destroy]
-  def blaobject
-    current_user_session
-  end
-
+  private
   def update_page_on_create(page)
     # do NOT render 'show'
     page.toolbox.frame_by_href(dashboard_path).refresh
