@@ -40,7 +40,7 @@ module AuthenticatedSystem
     #   skip_before_filter :login_required
     #
     def login_required
-      logged_in? || access_denied
+      logged_in? || access_denied(SecurityError.new('You Must be logged in to access this feature'))
     end
 
     # Redirect as appropriate when an access request fails.
@@ -51,7 +51,7 @@ module AuthenticatedSystem
     # behavior in case the user is not authorized
     # to access the requested action.  For example, a popup window might
     # simply close itself.
-    def access_denied(error=nil)
+    def ancient_access_denied(error=nil)
       logger.debug("  !!! Access Denied: #{error.inspect}   !!!")
       if error
         flash[:error] = "You must be logged in to access this feature. (#{error.message})"
