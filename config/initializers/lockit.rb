@@ -26,4 +26,7 @@ module Lockdown::Frameworks::Rails::Controller::Lock
               end
             end
           end
+    def logged_in?
+      !!current_user
+    end
 end
