@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PartsController do
   before(:each) do
     login_as :valid_user
+    skip_lockdown
     Part.stub!(:sync!).and_return(true)
   end
 

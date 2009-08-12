@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ContentsController do
   before :each do
     login_as :valid_user
+    skip_lockdown
   end
   describe "handling GET /contents" do
 

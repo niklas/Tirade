@@ -2,6 +2,9 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ApplicationHelper do
   fixtures :all
+  before( :each ) do
+    helper_authorizes_all
+  end
 
   it "should build link to main page" do
     helper.public_content_link(pages(:main)).should have_tag('a[href=?]','/')

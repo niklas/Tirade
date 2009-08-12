@@ -3,6 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe RenderingsController do
   before(:each) do
     login_as :valid_user
+    skip_lockdown
   end
     
   describe "handling GET /renderings" do
@@ -32,6 +33,7 @@ describe RenderingsController do
 
     before(:each) do
       login_as :valid_user
+      skip_lockdown
       @rendering = mock_model(Rendering)
       Rendering.stub!(:find).and_return(@rendering)
     end

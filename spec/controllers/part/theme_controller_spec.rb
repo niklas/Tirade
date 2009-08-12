@@ -3,6 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Part::ThemeController do
   before :each do
     login_as :valid_user
+    skip_lockdown
   end
   describe "route generation" do
     it "should map { :action => 'show', :id => 'test', :part_id => 23} to /manage/parts/23/theme/test" do

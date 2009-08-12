@@ -12,6 +12,7 @@ describe GridsController do
     fixtures :users
     before(:each) do
       login_as :valid_user
+      skip_lockdown
       @grid = Grid.new
       Grid.stub!(:find).and_return(@grid)
     end
