@@ -16,6 +16,7 @@ describe 'NormalFormBuilder', 'in a form with new Content' do
     @view = ActionView::Base.new
     @view.stub!(:url_for).and_return('/foo')
     @view.stub!(:protect_against_forgery?).and_return(false)
+    @view.stub!(:authorized?).and_return(true)
     @content = Factory.build :content
     @builder = NormalFormBuilder.new :content, Content.new, @view, {}, nil
   end

@@ -48,6 +48,10 @@ Spec::Runner.configure do |config|
       klass.active_controller = mock_controller
     end
   end
+
+  config.before(:all) do
+    Lockdown::Database.sync_with_db
+  end
 end
 
 def simple_preview
@@ -62,5 +66,6 @@ def mock_controller
   controller.stub!(:view_paths).and_return([ 'app/views', File.join(RAILS_ROOT,'spec','fixtures','views') ])
   controller.stub!(:master_helper_module).and_return(PublicController.new.master_helper_module)
   controller.stub!(:url_for).and_return('some-url')
+  controller.stub!(:authorized?).and_return(true)
   controller
 end

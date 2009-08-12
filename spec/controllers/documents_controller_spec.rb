@@ -5,7 +5,7 @@ class DocumentsController < ManageResourceController::Base; end
 
 describe DocumentsController do
   before( :each ) do
-    login_as :valid_user
+    login_as :valid_user, :user_groups => [:admin_documents]
     Document.destroy_all
     @document = Factory.create(:document)
     @documents = [@document]
