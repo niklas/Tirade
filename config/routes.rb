@@ -64,6 +64,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'user_sessions' do |page|
     page.login '/login', :action => 'new'
     page.logout '/logout', :action => 'destroy'
+    page.status '/status', :action => 'show'
   end
 
   map.custom_image 'upload/images/:id/custom/:geometry/:filename', :controller => 'images', :action => 'custom', 

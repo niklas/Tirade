@@ -13,6 +13,13 @@ describe PublicController do
       get 'index'
       response.should be_success
     end
+
+    it "should show a link to log in" do
+      get 'index'
+      response.should have_tag('.loginout') do
+        with_tag 'a.login'
+      end
+    end
   end
 
   describe 'route recognition' do

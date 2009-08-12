@@ -1,5 +1,5 @@
-<div class="minimized ui-widget ui-widget-header ui-corner-tl">
-  <p class="loginout ui-helper-clearfix">
+<div class="loginout minimized ui-widget ui-widget-header ui-corner-tl">
+  <p class="ui-helper-clearfix">
   <% if logged_in? %>
     Logged in as <%= current_user.login %>
     <%= link_to "Log out", logout_path, :class => 'logout' %>

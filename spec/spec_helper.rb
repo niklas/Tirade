@@ -8,6 +8,8 @@ require File.expand_path(File.dirname(__FILE__) + "/factories")
 include AuthenticatedTestHelper
 require File.dirname(__FILE__) + '/generic_spec_helper'
 include GenericSpecHelper
+require File.dirname(__FILE__) + '/rjs_spec_helper'
+include RJSSpecHelper
 require File.dirname(__FILE__) + '/toolbox_spec_helper'
 include ToolboxSpecHelper
 

@@ -5,7 +5,7 @@ module AuthenticatedSystem
       helper_method :current_user_session, :current_user, :logged_in?
       hide_action :current_user_session, :current_user, :logged_in?, :login_required, 
         :access_denied, :store_location, :redirect_back_or_default
-    end
+    end if base.is_a?(Class)
   end
 
   protected
@@ -45,32 +45,29 @@ module AuthenticatedSystem
 
     # Redirect as appropriate when an access request fails.
     #
-    # The default action is to redirect to the login screen.
-    #
-    # Override this method in your controllers if you want to have special
-    # behavior in case the user is not authorized
-    # to access the requested action.  For example, a popup window might
-    # simply close itself.
-    def ancient_access_denied(error=nil)
-      logger.debug("  !!! Access Denied: #{error.inspect}   !!!")
-      if error
-        flash[:error] = "You must be logged in to access this feature. (#{error.message})"
-      else
-        flash[:error] = "You must be logged in to access this feature."
+    # Overrides the prropriate method provided by Lockdown and Authlogic
+    def access_denied(e)
+      RAILS_DEFAULT_LOGGER.info "Access denied: #{e}"
+
+      if Lockdown::System.fetch(:logout_on_access_violation)
+        reset_session
       end
       respond_to do |format|
+        format.html do
+          store_location
+          redirect_to Lockdown::System.fetch(:access_denied_path)
+          return
+        end
         format.js do
           render :template => 'user_sessions/new'
         end
-        format.html do
-          store_location
-          redirect_to login_url
-        end
         format.xml do
-          request_http_basic_authentication 'Password required to access this feature.'
+          headers["Status"] = "Unauthorized"
+          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
+          render :text => e.message, :status => "401 Unauthorized"
+          return
         end
       end
-      return false
     end
 
 

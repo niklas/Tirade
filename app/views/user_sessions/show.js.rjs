@@ -1,0 +1,1 @@
+page.select('body > div.loginout').replace_with(render :partial => 'shared/loginout' )
