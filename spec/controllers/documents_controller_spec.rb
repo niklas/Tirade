@@ -4,24 +4,12 @@ require File.dirname(__FILE__) + '/../spec_helper'
 class DocumentsController < ManageResourceController::Base; end
 
 describe DocumentsController do
-  before( :each ) do
-    login_as :valid_user, :user_groups => [:admin_documents]
-    Document.destroy_all
-    @document = Factory.create(:document)
-    @documents = [@document]
-    5.times { @documents << Factory.create(:document) }
-  end
-
   it "should be a ManageResourceController" do
     controller.should be_a(ManageResourceController::Base)
   end
 
   it "should manage Documents" do
     controller.send(:model).should == Document
-  end
-
-  it "should have some Documents provided" do
-    Document.should have_at_least(6).records
   end
 
   describe "route recognition" do
@@ -108,6 +96,20 @@ describe DocumentsController do
   end
 
   describe "by AJAX" do
+
+    before( :each ) do
+      login_as :valid_user, :user_groups => [:admin_documents]
+      skip_lockdown
+      Document.destroy_all
+      @document = Factory.create(:document)
+      @documents = [@document]
+      5.times { @documents << Factory.create(:document) }
+    end
+
+    it "should have some Documents provided" do
+      Document.should have_at_least(6).records
+    end
+
 
     describe "get /index without any params" do
       def do_request
