@@ -63,6 +63,7 @@ describe DocumentsController do
     end
 
     it "should map document_path(document) to /manage/documents/:id" do
+      @document = Factory(:document)
       document_path(@document).should =~ %r~^/manage/documents/document-\d+~ 
     end
     
