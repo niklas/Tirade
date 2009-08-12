@@ -4,8 +4,10 @@ class UserGroup < ActiveRecord::Base
 
   validates_presence_of :name
 
-  extend Lockdown::Helper
+  #extend Lockdown::Helper
 
+  # FIXME make work again - if we extend wtih Lockdown::Helper it is autoloaded to early and includes it twice in ActionView::Base,
+  # thus hiding all links
   def self.find_by_symbolic_name!(sym)
     name = string_name(sym)
     find_by_name!( name )

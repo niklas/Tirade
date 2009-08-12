@@ -126,4 +126,4 @@ module CollectiveIdea::Acts::NestedSet::InstanceMethods
   end
 end
 
-ThemeController.send :include, Sass::ThemeSupport
+#ThemeController.send :include, Sass::ThemeSupport
