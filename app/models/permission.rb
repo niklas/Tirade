@@ -1,3 +1,14 @@
+# == Schema Information
+# Schema version: 20090809211822
+#
+# Table name: permissions
+#
+#  id         :integer         not null, primary key
+#  created_at :datetime        
+#  updated_at :datetime        
+#  name       :string(255)     
+#
+
 class Permission < ActiveRecord::Base
   has_and_belongs_to_many :user_groups
 
