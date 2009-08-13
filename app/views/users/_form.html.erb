@@ -1,26 +1,27 @@
 <%= error_messages_for :user %>
-<% form_for :user, :url => users_path  do |f| -%>
 
-  <p>
-     <%= f.label :login %>
-     <%= f.text_field :login %>
-  </p>
+<% form_for user do |f| %>
 
-  <p>
-     <%= f.label :email %>
-     <%= f.text_field :email %>
-  </p>
+  <% accordion do %>
 
-  <p>
-     <%= f.label :password %>
-     <%= f.password_field :password %>
-  </p>
+    <% accordion_item 'Base' do %>
+      <%= f.text_field :login %>
 
-  <p>
-     <%= f.label :password_confirmation %>
-     <%= f.password_field :password_confirmation %>
-  </p>
+      <% if user.new_record? %>
+        <%= f.password_field :password %>
+        <%= f.password_field :password_confirmation %>
+      <% end %>
 
-  <p><%= submit_tag 'Sign up', :class => 'submit' %></p>
-<% end -%>
+      <%= f.text_field :email %>
+    <% end %>
+
+    <% accordion_item 'Groups' do %>
+      <%= f.has_many :user_groups %>
+    <% end %>
+
+    <%= f.submit %>
+
+  <% end %>
+
+<% end %>
 

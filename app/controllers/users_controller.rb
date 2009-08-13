@@ -1,13 +1,7 @@
-class UsersController < ApplicationController  
-  # Protect these actions behind an admin login
-  # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
-  before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
-  skip_before_filter :login_required, :only => [:new,:create, :activate]
+class UsersController < ManageResourceController::Base
+  skip_before_filter :login_required, :only => [:new, :create]
   
-  def new
-  end
-
-  def create
+  def signup
     cookies.delete :auth_token
     # protects against session fixation attacks, wreaks havoc with 
     # request forgery protection.
@@ -71,12 +65,6 @@ class UsersController < ApplicationController
     else
       flash[:warning] = "Password mismatch" 
     end  
-  end
-
-  protected
-  
-  def find_user
-    @user = User.find(params[:id])
   end
 
 end

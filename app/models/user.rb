@@ -37,5 +37,9 @@ class User < ActiveRecord::Base
   def may?(*args)
     true
   end
+
+  def title
+    login
+  end
   
 end

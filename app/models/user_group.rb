@@ -4,6 +4,12 @@ class UserGroup < ActiveRecord::Base
 
   validates_presence_of :name
 
+  default_scope :order => 'name'
+
+  def title
+    name
+  end
+
   #extend Lockdown::Helper
 
   # FIXME make work again - if we extend wtih Lockdown::Helper it is autoloaded to early and includes it twice in ActionView::Base,

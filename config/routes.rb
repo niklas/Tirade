@@ -38,6 +38,8 @@ ActionController::Routing::Routes.draw do |map|
                   :unsuspend => :put,
                   :purge     => :delete}
 
+    manage.resources :user_groups
+
     manage.resources :images,
       :member => {:set_image_title => :post}
 
