@@ -71,17 +71,11 @@ module ManageResourceController
     end
 
     def update_page_on_new_action(page)
-      page.push_toolbox_content(
-        :partial => "/form", :object => build_object,
-        :title => "New #{human_name}"
-      )
+      page.push_toolbox_partial('/form', build_object, :title => "New #{human_name}")
     end
 
     def update_page_on_create(page)
-      page.update_last_toolbox_frame(   # replace the form with /show
-        :partial => "/show", :object => object,
-        :title => "#{human_name} ##{object.id}"
-      )
+      page.push_toolbox_partial('/show', object)
     end
 
     def update_page_on_failed_create(page)
@@ -89,10 +83,7 @@ module ManageResourceController
     end
 
     def update_page_on_show(page)
-      page.push_toolbox_content(
-        :partial => "/show", :object => object,
-        :title => object.andand.title || "#{human_name} ##{object.id}"
-      )
+      page.push_toolbox_partial('/show', object)
     end
 
     def update_page_on_failed_show(page)
@@ -100,10 +91,7 @@ module ManageResourceController
     end
 
     def update_page_on_edit(page)
-      page.push_toolbox_content(
-        :partial => "/form", :object => object,
-        :title => "Edit #{human_name} ##{object.id}"
-      )
+      page.push_toolbox_partial('/form', object, :title => "Edit #{human_name}")
     end
 
     # Update the page on updating the record, rjs builder as argument

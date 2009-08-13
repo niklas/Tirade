@@ -32,6 +32,18 @@ module ToolboxHelper
     end
   end
 
+  def push_toolbox_partial(partial, thingy=nil, options={})
+    options.reverse_merge!({
+      :partial => partial.starts_with?('/') ?  partial : "/#{partial}",
+      :title => thingy ? (thingy.title || "#{human_name} ##{thingy.id}") : human_name.pluralize,
+      :object => thingy,
+      :locals => thingy ? {
+        thingy.table_name.singularize.to_sym => thingy
+      } : nil
+    })
+    push_toolbox_content(options)
+  end
+
   def push_toolbox_content(content)
     id = if content[:object].andand.is_a?(ActiveRecord::Base)
            content[:object].id
