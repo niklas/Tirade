@@ -52,6 +52,9 @@ Lockdown::System.configure do
   #       *Notice: Do not add leading or trailing slashes,
   #                Lockdown will handle this
   #
+
+  options[:session_timeout_method] = :clear_authlogic_session
+
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Define permissions
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

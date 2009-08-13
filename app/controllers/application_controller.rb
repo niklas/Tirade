@@ -15,6 +15,8 @@ class ApplicationController < ActionController::Base
 
   hide_action :check_request_authorization
   hide_action :configure_lockdown
+
+  helper_method :current_user_is_admin?
   
 
   def current_theme

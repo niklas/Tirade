@@ -97,4 +97,9 @@ module AuthenticatedSystem
       session[:return_to] = nil
     end
 
+    def clear_authlogic_session
+      sess = current_user_session
+      sess.destroy if sess
+    end
+
 end
