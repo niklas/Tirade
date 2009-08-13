@@ -92,7 +92,12 @@ module InterfaceHelper
   end
 
   def icon_for(thing)
-    name = thing.respond_to?(:icon_name) ? thing.icon_name : thing.table_name.singularize
+    name = case thing
+           when String
+             thing.underscore
+           else
+             thing.respond_to?(:icon_name) ? thing.icon_name : thing.class_name.underscore 
+           end
     path = thing.respond_to?(:icon_path) ? thing.icon_path : %Q~icons/types/#{name}.png~
     image_tag(path, :class => 'icon')
   end

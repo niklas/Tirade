@@ -13,6 +13,7 @@
     <ul class="list">
       <% Tirade::ActiveRecord::Content.classes.each do |klass| %>
         <li>
+          <%= icon_for(klass.name) %>
           <%= klass.name.pluralize %>
           <%= link_to klass.name.pluralize, {:controller => klass.controller_name}, :class => "index #{klass.table_name}" %>
         </li>
@@ -24,6 +25,7 @@
     <ul class="list">
       <% %w(pages grids parts renderings).each do |cname| %>
         <li>
+          <%= icon_for(cname.singularize) %>
           <%= cname.humanize %>
           <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
         </li>
@@ -33,8 +35,9 @@
   
   <% accordion_item "Admin" do %>
     <ul class="list">
-      <% %w(users roles groups permissions).each do |cname| %>
+      <% %w(users user_groups permissions).each do |cname| %>
         <li>
+          <%= icon_for(cname.singularize) %>
           <%= cname.humanize %>
           <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
         </li>
