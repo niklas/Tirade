@@ -1,6 +1,13 @@
 class Permission < ActiveRecord::Base
   has_and_belongs_to_many :user_groups
+
   
+  default_scope :order => 'name'
+
+  def title
+    name
+  end
+
 	def all_users
 		User.find_by_sql <<-SQL
 			select users.* 

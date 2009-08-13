@@ -1,0 +1,12 @@
+<% accordion do %>
+
+  <% accordion_item 'Base' do %>
+    <%= show user_group, :name %>
+  <% end %>
+
+  <% accordion_item 'Authorization' do %>
+    <%= show user_group, :permissions %>
+    <%= show user_group, :users %>
+  <% end %>
+
+<% end %>
