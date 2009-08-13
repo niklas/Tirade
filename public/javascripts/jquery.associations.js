@@ -95,6 +95,7 @@
       .addClass(this.widgetBaseClass)
       .addClass('ui-corner-all')
       .addClass('empty');
+      .siblings('input.association_id[type=hidden][value=empty]').disable();
 
       $(o.items, list[0]).livequery(
         function() {
@@ -123,7 +124,7 @@
       list
         .removeClass('empty')
         .siblings('input.association_id[type=hidden][value=empty]')
-          .clone().attr('value',id).appendTo(item);
+          .clone().enable().attr('value',id).appendTo(item);
 
       item.find('a.association').remove();
       $.ui.button({icon: 'minus', text: 'remove', class: 'association remove'})
