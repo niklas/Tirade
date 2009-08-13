@@ -1,1 +1,3 @@
 page.select('body > div.loginout').replace_with(render :partial => 'shared/loginout' )
+page.toolbox.frame_by_href('/dashboard').update :title => 'Dashboard', :content => render(:partial => '/shared/dashboard')
+page.toolbox.set_clipboard render(:partial => '/clipboard/index')

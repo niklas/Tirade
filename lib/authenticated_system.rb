@@ -53,13 +53,13 @@ module AuthenticatedSystem
         reset_session
       end
       respond_to do |format|
+        format.js do
+          render :action => 'new', :controller => 'user_sessions'
+        end
         format.html do
           store_location
           redirect_to Lockdown::System.fetch(:access_denied_path)
           return
-        end
-        format.js do
-          render :template => 'user_sessions/new'
         end
         format.xml do
           headers["Status"] = "Unauthorized"

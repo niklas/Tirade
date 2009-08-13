@@ -51,7 +51,6 @@ ActionController::Routing::Routes.draw do |map|
     end
 
   end
-  map.dashboard '/dashboard', :controller => 'admin'
   
   map.with_options :controller => 'users' do |page|    
     page.activate '/activate/:activation_code', :action => 'activate', :activation_code => nil
@@ -64,6 +63,7 @@ ActionController::Routing::Routes.draw do |map|
   map.with_options :controller => 'user_sessions' do |page|
     page.login '/login', :action => 'new'
     page.logout '/logout', :action => 'destroy'
+    page.dashboard '/dashboard', :action => 'show'
     page.status '/status', :action => 'show'
   end
 

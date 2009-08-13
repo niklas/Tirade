@@ -1,7 +1,11 @@
 class UserSessionsController < ManageResourceController::Base
   skip_before_filter :login_required, :except => [:edit, :update, :destroy]
   def show
-    @user_session = UserSession.find
+    @user_session = current_user_session
+  end
+  def destroy
+    current_user_session.destroy
+    redirect_to root_url
   end
   private
   def update_page_on_create(page)

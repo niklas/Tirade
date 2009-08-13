@@ -945,8 +945,8 @@ jQuery.ui.frame = function(content, options) {
   var defaults = {
     href: '/dashboard',
     title: 'Dashboard',
-    action: 'index',
-    resource_name: 'admin'
+    action: 'show',
+    resource_name: 'user_session'
   };
   var options = $.extend(defaults, options);
   class = options.class ? 'frame ' + options.class : 'frame';
