@@ -87,7 +87,7 @@ module InterfaceHelper
     partial = opts[:partial] || 'list_item'
     partial = "/#{thing.table_name}/#{partial}" unless partial =~ %r~^/~
     icon_for(thing) + 
-    render( :partial => partial, :object => thing, :locals => {:model => thing})
+    render( :partial => partial, :object => thing, :locals => {:model => thing, thing.table_name.singularize.to_sym => thing})
   end
 
   def icon_for(thing)
