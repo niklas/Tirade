@@ -26,6 +26,9 @@ module Tirade
           if liquids = (opts.delete(:liquid) || []) + [:slug, :table_name]
             liquid_methods *liquids
           end
+          if translations = opts.delete(:translate)
+            translates *translations
+          end
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?
               {:conditions => "#{sanitize_sql(f)} > NOW()"}
