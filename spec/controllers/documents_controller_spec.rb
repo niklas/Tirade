@@ -62,9 +62,9 @@ describe DocumentsController do
       route_for(:controller => "documents", :action => "edit", :id => '1').should == "/manage/documents/1/edit"
     end
 
-    it "should map document_path(document) to /manage/documents/:id" do
+    it "should map document_path(document) to /en/manage/documents/:id" do
       @document = Factory(:document)
-      document_path(@document).should =~ %r~^/manage/documents/document-\d+~ 
+      document_path(@document).should =~ %r~^/en/manage/documents/document-\d+~ 
     end
     
   end
