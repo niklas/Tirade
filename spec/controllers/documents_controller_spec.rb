@@ -99,7 +99,7 @@ describe DocumentsController do
   describe "by AJAX" do
 
     before( :each ) do
-      login_as :valid_user, :user_groups => [:admin_documents]
+      login_as :valid_user
       skip_lockdown
       Document.destroy_all
       @document = Factory.create(:document)
