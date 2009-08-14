@@ -94,7 +94,7 @@
       })
       .addClass(this.widgetBaseClass)
       .addClass('ui-corner-all')
-      .addClass('empty');
+      .addClass('empty')
       .siblings('input.association_id[type=hidden][value=empty]').disable();
 
       $(o.items, list[0]).livequery(
