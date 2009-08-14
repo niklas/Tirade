@@ -29,7 +29,12 @@ describe Document do
 
     describe "in locale 'de'" do
       before( :each ) do
+        @old_locale = I18n.locale
         I18n.locale = :de
+      end
+
+      after( :each ) do
+        I18n.locale = @old_locale
       end
 
       it "should fall back on en locale" do
