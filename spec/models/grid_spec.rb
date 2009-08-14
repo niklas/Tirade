@@ -205,10 +205,9 @@ describe Grid, :type => :helper do
     end
 
     describe ", rendering the left col in the main page" do
-      before(:each) do
-        @html = grids(:layout_50_50_1).render_in_page(pages(:main))
-      end
       it do
+        pending("Must spec grid rendering in real helper")
+        @html = grids(:layout_50_50_1).render_in_page(pages(:main))
         @html.should have_tag('div.grid.subcl') do
           with_tag('div.rendering.simple_preview.document') do
             without_tag('h2', 'Welcome')
@@ -228,10 +227,9 @@ describe Grid, :type => :helper do
     end
 
     describe ", rendering the right col in the main page" do
-      before(:each) do
-        @html = grids(:layout_50_50_2).render_in_page(pages(:main))
-      end
       it "render it" do
+        pending("Must spec grid rendering in real helper")
+        @html = grids(:layout_50_50_2).render_in_page(pages(:main))
         @html.should have_tag('div.grid.subcr') do
           with_tag('div.rendering.simple_preview.document') do
             with_tag('h2', 'Introduction')
@@ -254,10 +252,9 @@ describe Grid, :type => :helper do
     end
 
     describe ", rendering both the cols in the 50/50 layout for the main page" do
-      before(:each) do
-        @html = grids(:layout50_50).render_in_page(pages(:main))
-      end
       it "should render it" do
+        pending("Must spec grid rendering in real helper")
+        @html = grids(:layout50_50).render_in_page(pages(:main))
         @html.should have_tag('div.grid.subcolumns') do
           with_tag('div.col.c50l div.grid.subcl') do
             with_tag('div.rendering.simple_preview.document') do
@@ -440,10 +437,12 @@ describe Grid, "structure of DDM Page", :type => :helper do
   end
 
   it "should not wrap layout into a .col" do
+    pending("Must spec grid rendering in real helper")
     html.should_not have_tag('div.page > div.col')
   end
 
   it "should have the proper YAML tags"do 
+    pending("Must spec grid rendering in real helper")
     html.should have_tag 'div.page.page_1337'do 
       with_tag 'div#grid_1.subcolumns.grid.grid_1.main_vs_sidebar'do 
         with_tag 'div.col.c75l'do 
