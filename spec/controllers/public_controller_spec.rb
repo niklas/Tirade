@@ -32,6 +32,9 @@ describe PublicController do
     it "should recognize '/portal/children-section'" do
       params_from(:get, '/portal/children-section').should == {:controller => 'public', :action => 'index', :path => ['portal','children-section']}
     end
+    it "should recognize 'de/portal/children-section'" do
+      params_from(:get, '/de/portal/children-section').should == {:controller => 'public', :action => 'index', :locale => 'de', :path => ['portal','children-section']}
+    end
   end
 
   describe 'url recognition' do

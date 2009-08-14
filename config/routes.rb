@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 
+  map.filter :locale
+
   Dir.glob(File.join(RAILS_ROOT,'vendor','plugins','tirade_*')) do |path|
     name = path.sub(%r~^.*/~,'')
     map.routes_from_plugin(name.to_sym)
