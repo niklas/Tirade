@@ -14,6 +14,11 @@ describe PublicController do
       response.should be_success
     end
 
+    it "should render something" do
+      get :index
+      response.body.should_not be_blank
+    end
+
     it "should show a link to log in" do
       get 'index'
       response.should have_tag('.loginout') do
