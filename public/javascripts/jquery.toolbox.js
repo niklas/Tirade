@@ -732,7 +732,8 @@ jQuery.fn.frameInToolbox = function(options) {
         header: 'h3.accordion_toggle', 
         selectedClass: 'selected',
         autoHeight: false,
-        alwaysOpen: false,
+        fillSpace: true,
+        alwaysOpen: true,
         active: active
       })
       .bind("accordionchange", function(event, ui) { /* FIXME WTF is this? */
