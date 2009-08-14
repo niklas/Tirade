@@ -22,5 +22,6 @@
 
 # A Document is a simple Text, nothing special for now
 class Document < Content
-  acts_as_content :liquid => [:title, :description, :body, :slug]
+  acts_as_content :liquid => [:title, :description, :body, :slug],
+    :translate => [:title, :description, :body]
 end
