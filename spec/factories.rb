@@ -5,6 +5,7 @@ end
 
 Factory.define :document do |f|
   f.sequence(:title) { |i| "Document ##{i}"}
+  f.sequence(:slug) { |i| "document-#{i}-slug"}
   f.body "A lot of Text"
 end
 
