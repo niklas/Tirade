@@ -1,4 +1,4 @@
-I18n.locale = :en
+I18n.default_locale = :en
 
 require 'globalize/i18n/missing_translations_log_handler'
 I18n.exception_handler = :missing_translations_log_handler
