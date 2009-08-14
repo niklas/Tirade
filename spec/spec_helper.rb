@@ -13,6 +13,8 @@ include RJSSpecHelper
 require File.dirname(__FILE__) + '/toolbox_spec_helper'
 include ToolboxSpecHelper
 
+Lockdown::Database.sync_with_db
+
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
@@ -49,10 +51,6 @@ Spec::Runner.configure do |config|
     [Part, Rendering, Page].each do |klass|
       klass.active_controller = mock_controller
     end
-  end
-
-  config.before(:all) do
-    Lockdown::Database.sync_with_db
   end
 end
 
