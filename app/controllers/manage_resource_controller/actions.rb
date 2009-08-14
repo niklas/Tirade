@@ -75,7 +75,10 @@ module ManageResourceController
     end
 
     def update_page_on_create(page)
-      page.push_toolbox_partial('/show', object)
+      page.update_last_toolbox_frame(   # replace the form with /show
+        :partial => "/show", :object => object,
+        :title => "#{human_name} ##{object.id}"
+      )
     end
 
     def update_page_on_failed_create(page)
