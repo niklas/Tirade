@@ -63,7 +63,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
   before(:each) do
     @page = pages(:main)
     @grid = grids(:layout_50_50_1)
-    @goodbye = contents(:goodbye)
+    @goodbye = Factory(:document, :title => 'Goodbye', :body => 'If you read this, the page has come to an end' )
     lambda do
       @rendering = Rendering.create!(
         :page => @page,
@@ -109,7 +109,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
   before(:each) do
     @page = pages(:main)
     @grid = grids(:layout_50_50_1)
-    @love_letter = contents(:love_letter)
+    @love_letter = Factory(:document, :title => 'Love', :body => 'Hello Bla')
     @create_rendering = Proc.new {
       @rendering = Rendering.create!(
         :page => @page,
