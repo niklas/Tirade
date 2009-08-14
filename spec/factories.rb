@@ -3,9 +3,9 @@ Factory.define :content do |f|
   f.body "A lot of Text"
 end
 
-Factory.define :document, :parent => :content do |f|
+Factory.define :document do |f|
   f.sequence(:title) { |i| "Document ##{i}"}
-  f.add_attribute :type, 'Document'
+  f.body "A lot of Text"
 end
 
 Factory.define :page do |f|
