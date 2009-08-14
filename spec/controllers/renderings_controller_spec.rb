@@ -247,7 +247,7 @@ describe RenderingsController do
   
     it "should redirect to the list of renderings" do
       do_delete
-      response.should redirect_to('/manage/renderings')
+      response.should redirect_to('/en/manage/renderings')
     end
   end
 end
