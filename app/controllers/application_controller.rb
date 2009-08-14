@@ -64,6 +64,11 @@ class ApplicationController < ActionController::Base
     cookies[:roles] = roles
   end
 
+  before_filter :set_locale
+  def set_locale
+    I18n.locale = params[:locale].to_sym if params[:locale]
+  end
+
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'da7c5d7c04e209653d264f43028c248a'
