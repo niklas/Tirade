@@ -24,7 +24,7 @@ describe "/contents/new.html.erb" do
     it "should render new form" do
       render "/contents/new.html.erb"
 
-      response.should have_tag("form[action=?][method=post]", '/manage/news_items') do
+      response.should have_tag("form[action=?][method=post]", '/en/manage/news_items') do
         without_tag('p.default.warning')
         without_tag("input#news_item_state[name=?]", "news_item[state]")
         without_tag("input#news_item_position[name=?]", "news_item[position]")
