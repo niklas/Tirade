@@ -28,6 +28,9 @@ module Tirade
           end
           if translations = opts.delete(:translate)
             translates *translations
+            unless translation_table_exists?
+              create_translation_table!(automatic_translation_fields) 
+            end
           end
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?
@@ -80,6 +83,25 @@ module Tirade
                 []
               end
             all_comps.merge col.name => comps
+          end
+        end
+
+        # Does the table for globalize translations exist?
+        def translation_table_exists?
+          connection.table_exists?(translation_table_name)
+        end
+
+        # Name of the database table that holds the translations (globalize)
+        def translation_table_name
+          self.name.underscore + '_translations'
+        end
+
+        # returns a hash of field names to types for all the given translatable attributes
+        # assumes that all attributes are database columns
+        def automatic_translation_fields
+          globalize_options[:translated_attributes].inject({}) do |cols, field| 
+            cols[field] = columns_hash[field.to_s].type
+            cols
           end
         end
       end
