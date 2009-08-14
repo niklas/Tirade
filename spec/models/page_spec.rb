@@ -181,6 +181,7 @@ describe "The main Page with all fixtures", :type => :helper do
     it "should mark the first of renderings and grids"
 
     it "should have the complete page structure" do
+      pending("move to helper spec")
       @html.should have_tag('div.page_margins') do
         with_tag('div.page') do
           with_tag('div.subcolumns') do
