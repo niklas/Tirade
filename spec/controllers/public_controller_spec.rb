@@ -9,6 +9,8 @@ describe PublicController do
 
 
   describe "GET 'index'" do
+    integrate_views
+
     it "should be successful" do
       get 'index'
       response.should be_success
@@ -25,6 +27,14 @@ describe PublicController do
         with_tag 'a.login'
       end
     end
+
+    it "should load a root page" do
+      get 'index'
+      page = assigns[:page]
+      page.should_not be_nil
+      page.should be_a(Page)
+      page.should be_root
+    end
   end
 
   describe 'route recognition' do
@@ -39,6 +49,9 @@ describe PublicController do
     end
     it "should recognize 'de/portal/children-section'" do
       params_from(:get, '/de/portal/children-section').should == {:controller => 'public', :action => 'index', :locale => 'de', :path => ['portal','children-section']}
+    end
+    it "should recognize 'en/portal/children-section'" do
+      params_from(:get, '/en/portal/children-section').should == {:controller => 'public', :action => 'index', :locale => 'en', :path => ['portal','children-section']}
     end
   end
 
