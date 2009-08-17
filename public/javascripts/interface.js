@@ -106,7 +106,7 @@ $(function() {
    */
   $('ul.list.records > li, dl > di > dd.record').livequery(function() {
     $(this)
-    .addClass('ui-widget-content ui-corner-all')
+    .addClass('ui-widget-content ui-corner-all ui-helper-clearfix')
     .draggable({ 
       helper: 'clone', 
       zIndex: 9000, 
