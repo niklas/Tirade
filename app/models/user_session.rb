@@ -5,4 +5,8 @@ class UserSession < Authlogic::Session::Base
   def table_name
     'user_sessions'
   end
+
+  def title
+    "Session"
+  end
 end
