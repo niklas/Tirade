@@ -35,7 +35,7 @@ module ToolboxHelper
   def push_toolbox_partial(partial, thingy=nil, options={})
     options.reverse_merge!({
       :partial => partial.starts_with?('/') ?  partial : "/#{partial}",
-      :title => thingy ? (thingy.title || "#{human_name} ##{thingy.id}") : human_name.pluralize,
+      :title => thingy ? (thingy.title || "#{context.human_name} ##{thingy.id}") : context.human_name.pluralize,
       :object => thingy,
       :locals => thingy ? {
         thingy.table_name.singularize.to_sym => thingy
