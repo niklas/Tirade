@@ -83,11 +83,6 @@ $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
   $('a.with_toolbox').livequery(function() { $(this).useToolbox(); });
-  $('a.dashboard').livequery('click', function(event) { 
-    event.preventDefault();
-    Toolbox.findOrCreate();
-    Toolbox.last().refresh();
-  });
 
   $('code.html').livequery(function() { $(this).chili() });
   $('code.liquid').livequery(function() { $(this).chili() });
