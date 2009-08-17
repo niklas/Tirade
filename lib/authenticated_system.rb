@@ -54,7 +54,9 @@ module AuthenticatedSystem
       end
       respond_to do |format|
         format.js do
-          render :action => 'new', :controller => 'user_sessions'
+          render :update do |page|
+            page.push_toolbox_partial('/user_sessions/form', UserSession.new)
+          end
         end
         format.html do
           store_location

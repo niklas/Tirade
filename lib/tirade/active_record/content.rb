@@ -31,6 +31,7 @@ module Tirade
             unless translation_table_exists?
               create_translation_table!(automatic_translation_fields) 
             end
+            acts_as! :translated
           end
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?

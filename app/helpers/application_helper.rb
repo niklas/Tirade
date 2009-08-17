@@ -86,13 +86,21 @@ module ApplicationHelper
   end
 
   def show_link_to(thingy, options = {})
+    link_to_show(thingy, options)
+  end
+
+  def link_to_show(thingy, options={})
     label = options.delete(:label) || thingy.andand.title || "Show #{thingy.class} #{thingy.id}"
     singular = thingy.class.name.underscore
     add_class_to_html_options(options, 'show')
     add_class_to_html_options(options, "show_#{singular}")
     add_class_to_html_options(options, dom_id(thingy))
     add_class_to_html_options(options, singular)
-    link_to(label, thingy, options)
+
+    prms = options.delete(:params) || {}
+    url_method = "#{singular}_path"
+    url = send(url_method, thingy, prms)
+    link_to(label, url, options)
   end
 
   def index_link_to(klass, options = {})
@@ -101,6 +109,20 @@ module ApplicationHelper
     add_class_to_html_options(options, "index_#{klass.table_name}")
     add_class_to_html_options(options, klass.table_name)
     link_to(label, {:controller => klass.controller_name}, options)
+  end
+
+  def link_to_edit(thingy, options={})
+    label = options.delete(:label) || thingy.andand.title || "Edit #{thingy.class} #{thingy.id}"
+    singular = thingy.class.name.underscore
+    add_class_to_html_options(options, 'edit')
+    add_class_to_html_options(options, "edit_#{singular}")
+    add_class_to_html_options(options, dom_id(thingy))
+    add_class_to_html_options(options, singular)
+
+    prms = options.delete(:params) || {}
+    url_method = "edit_#{singular}_path"
+    url = send(url_method, thingy, prms)
+    link_to(label, url, options)
   end
 
   def session_key_name

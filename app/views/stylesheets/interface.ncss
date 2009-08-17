@@ -327,7 +327,7 @@ di.record {
     position: relative;
     padding-right: 25px !important;
   }
-  a.show {
+  a.show, a.edit {
     right: 0.3em;
   }
 }
@@ -349,7 +349,7 @@ di.association {
     list-style: none;
     li {
       position: relative;
-      a.show {
+      a.show, a.edit {
         right: 0.3em;
       }
     }
@@ -390,7 +390,7 @@ div.live_search {
 ul.list, dl, ul.tree {
   a {
     /* position: absolute; */
-    .show, .index {
+    .show, .index, .edit {
       position: absolute;
       right: <%= @small %>;
       top: 50%;
@@ -420,7 +420,7 @@ ul.list, dl, ul.tree {
     float: left;
   }
   li:hover, di:hover > *, li:hover > div.node  {
-    > a.show, > a.index, > a.association {
+    > a.show, > a.index, a.edit, > a.association {
       display: block !important;
     }
   }

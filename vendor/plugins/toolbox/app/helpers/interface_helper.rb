@@ -285,6 +285,7 @@ module InterfaceHelper
     )
   end
 
+  # Renders the views for alle actings defined on the model class
   def actings_for(record)
     returning '' do |html|
       record.acting_roles.each do |role|

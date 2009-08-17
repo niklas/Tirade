@@ -9,6 +9,12 @@ Factory.define :document do |f|
   f.body "A lot of Text"
 end
 
+Factory.define :news_item do |f|
+  f.sequence(:title) { |i| "News Item ##{i}"}
+  f.sequence(:slug) { |i| "news-item-#{i}-slug"}
+  f.body "A lot of Text"
+end
+
 Factory.define :page do |f|
   f.sequence(:title) { |i| "Page ##{i}"}
   f.sequence(:url) { |i| "/page/auto/#{i}"}
