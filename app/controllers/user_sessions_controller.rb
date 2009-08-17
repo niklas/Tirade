@@ -16,6 +16,7 @@ class UserSessionsController < ManageResourceController::Base
     page.toolbox.frame_by_href(dashboard_path).refresh
     page.toolbox.frame_by_href(login_path).remove()
     page.toolbox.goto(0)
+    page.history.sync()
   end
 
   def set_lockdown_values
