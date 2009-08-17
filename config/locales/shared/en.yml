@@ -3,6 +3,7 @@ en:
     language: 'Language'
     locale:
       name: 'English'
+    logged_in_as: 'Logged in as {{name}}'
     dashboard:
       welcome_guest: 'Welcome guest user'
       welcome: 'Welcome {{name}}'
