@@ -1,8 +1,8 @@
 <p>
   <% if logged_in? %>
-    Welcome <%= current_user.full_name %>
+    <%= t '.welcome',:name => current_user.full_name %>
   <% else %>
-    Welcome Guest!
+    <%= t '.welcome_guest' %>
   <% end %>
 </p>
 
@@ -28,6 +28,17 @@
           <%= icon_for(cname.singularize) %>
           <%= cname.humanize %>
           <%= link_to cname.humanize, {:controller => cname}, :class => "index #{cname}" %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% accordion_item t('shared.language') do %>
+    <ul class="list">
+      <% (I18n.available_locales - [:root]).each do |locale| %>
+        <li>
+          <%= t('shared.locale.name', :locale => locale) %>
+          <%= link_to_open t('shared.locale.name', :locale => locale), dashboard_path(:locale => locale), :class => 'index dashboard' %>
         </li>
       <% end %>
     </ul>

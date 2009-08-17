@@ -1,0 +1,8 @@
+en:
+  shared:
+    language: 'Language'
+    locale:
+      name: 'English'
+    dashboard:
+      welcome_guest: 'Welcome guest user'
+      welcome: 'Welcome {{name}}'
