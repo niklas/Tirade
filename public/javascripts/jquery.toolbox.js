@@ -18,7 +18,7 @@ var Toolbox = {
           dragStart: Toolbox.overflowsOff,
           dragStop:  Toolbox.overflowsOn,
           drag: Toolbox.sync.sideBarPosition,
-          beforeClose: Toolbox.close,
+          close: Toolbox.close,
           resizeStop: Toolbox.sync.all
         }).parent().attr('id', 'toolbox');
 
@@ -396,8 +396,10 @@ var Toolbox = {
     return this.body.trigger('prev');
   },
   close: function() {
-    this.expireBehaviors();
-    this.sideBar.remove();
+    Toolbox.expireBehaviors();
+    Toolbox.sideBar.remove();
+    Toolbox.element().remove();
+    $('body #toolbox_body').remove();
     $('div.active').removeClass('active');
     return true;
   },
