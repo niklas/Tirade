@@ -1,16 +1,13 @@
 body {
   div.focus {
     position: absolute;
-    background: url(../images/pentagon-tile.jpg) repeat;
+    background: url(/images/pentagon-tile.jpg) repeat;
     .left {
       border-right: none;
       ul.ui-tabs {
         position: absolute;
         right: 0;
         bottom: 0;
-        a.show {
-          padding: 1em;
-        }
       }
     }
     .right {
