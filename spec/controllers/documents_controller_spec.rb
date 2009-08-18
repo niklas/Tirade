@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 # This is one of the automatically detected Controller, so we have to define it here
+# It is an example how every child class of ManageResourceController::Base should behave.
 class DocumentsController < ManageResourceController::Base; end
 
 describe DocumentsController do
@@ -93,6 +94,13 @@ describe DocumentsController do
     it "should set the formbuilder" do
       ActionView::Base.should_receive(:default_form_builder=).with(ToolboxFormBuilder)
       do_request
+    end
+  end
+
+  describe "every request that sets flash messages", :shared => true do
+    it "should render flash messages as gritter notifications" do
+      do_request
+      response.body.should =~ %r~\$\.gritter\.add\(\{.*\}\)~
     end
   end
 
@@ -190,6 +198,7 @@ describe DocumentsController do
 
       it_should_behave_like 'every request'
       it_should_behave_like 'every request with form'
+      it_should_behave_like 'every request that sets flash messages'
 
       it "should save the Document" do
         lambda { do_request }.should change(Document,:count).by(1)
@@ -219,6 +228,7 @@ describe DocumentsController do
 
       it_should_behave_like 'every request'
       it_should_behave_like 'every request with form'
+      it_should_behave_like 'every request that sets flash messages'
       
       before( :each ) do
         @new_document = Factory.build :document
@@ -317,6 +327,7 @@ describe DocumentsController do
       
       it_should_behave_like 'every request'
       it_should_behave_like 'every request with form'
+      it_should_behave_like 'every request that sets flash messages'
 
       before( :each ) do
         @document.stub!(:valid?).and_return(false)
