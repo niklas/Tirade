@@ -9,15 +9,7 @@ describe "/contents/new.html.erb" do
   
   describe "for a NewsItem" do
     before(:each) do
-      @content = mock_model(NewsItem)
-      @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).and_return(false)
-      @content.stub!(:title).and_return("New News")
-      @content.stub!(:description).and_return("nothing")
-      @content.stub!(:body).and_return("great news everyone!")
-      @content.stub!(:type).and_return("NewsItem")
-      @content.stub!(:wanted_parent_id).and_return(3)
-      @content.stub!(:acting_roles).and_return([])
+      @content = Factory.build(:news_item)
       assigns[:content] = @content
     end
 
@@ -48,15 +40,7 @@ describe "/contents/new.html.erb" do
 
   describe "for a Document" do
     before(:each) do
-      @content = mock_model(Document)
-      @content.stub!(:new_record?).and_return(true)
-      @content.stub!(:markup?).and_return(false)
-      @content.stub!(:title).and_return("New Document")
-      @content.stub!(:description).and_return("Document Description")
-      @content.stub!(:body).and_return("Document Body")
-      @content.stub!(:type).and_return("Document")
-      @content.stub!(:wanted_parent_id).and_return(3)
-      @content.stub!(:acting_roles).and_return([])
+      @content = Factory.build(:document)
       assigns[:content] = @content
     end
 
@@ -69,9 +53,9 @@ describe "/contents/new.html.erb" do
         without_tag("input#document_position[name=?]", "document[position]")
         without_tag("input#document_lft[name=?]", "document[lft]")
         without_tag("input#document_rgt[name=?]", "document[rgt]")
-        with_tag("input#document_title[name=?]", "document[title]")
-        with_tag("textarea#document_description[name=?]", "document[description]")
-        with_tag("textarea#document_body[name=?]", "document[body]")
+        with_tag("input#document_title[name=?]", "document[translations][en][title]")
+        with_tag("textarea#document_description[name=?]", "document[translations][en][description]")
+        with_tag("textarea#document_body[name=?]", "document[translations][en][body]")
         #with_tag('div.type') do
         #  with_tag('label', 'Type')
         #  with_tag("select#document_type[name=?]", "document[type]")

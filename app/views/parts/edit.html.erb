@@ -3,9 +3,8 @@
 <% end %>
 
 <%= error_messages_for :part %>
-<% update_part_form(@part, :html => {:id => 'editing_part'}) do |f| %>
-  <%= render :partial => 'fields', :object => f %>
-<% end %>
+
+<%= render :partial => 'parts/form', :object => @part %>
 
 <%= link_to 'Cancel', @part %> |
 <%= link_to 'Back', parts_path %>

@@ -5,15 +5,7 @@ describe "/parts/edit.html.erb" do
   ActionView::Base.default_form_builder = NormalFormBuilder
   
   before do
-    @part = mock_model(Part)
-    @part.stub!(:name).and_return("MyString")
-    @part.stub!(:markup?).and_return(false)
-    @part.stub!(:filename).and_return("MyString")
-    @part.stub!(:options_as_yaml).and_return("MyText")
-    @part.stub!(:preferred_types).and_return(['Foo', 'Bar'])
-    @part.stub!(:rhtml).and_return("<p>My RHTML</p>")
-    @part.stub!(:in_theme?).and_return(false)
-    @part.stub!(:use_theme).and_return(false)
+    @part = Factory(:part)
     assigns[:part] = @part
   end
 
@@ -22,9 +14,7 @@ describe "/parts/edit.html.erb" do
     
     response.should have_tag("form[action=#{part_path(@part)}][method=post]") do
       with_tag('input#part_name[name=?]', "part[name]")
-      with_tag('input#part_filename[name=?]', "part[filename]")
-      with_tag("textarea#part_rhtml[name=?]", "part[rhtml]")
-      with_tag("div#preview")
+      with_tag("textarea#part_liquid[name=?]", "part[liquid]")
     end
   end
 end
