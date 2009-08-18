@@ -13,7 +13,6 @@ module InterfaceHelper
   #   <% end %>
   def accordion(opts={}, &block)
     add_class_to_html_options(opts, 'accordion')
-    opts[:id] ||= 'accordion'
     concat content_tag( :div, capture(&block), opts)
   end
 
