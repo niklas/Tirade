@@ -9,7 +9,7 @@ module Tirade
       end
     end
     def tag_name_with_translation
-      if @object.acts_as?(:translated) && @object.translates?(@method_name)
+      if @object && @object.acts_as?(:translated) && @object.translates?(@method_name)
         tag_name_without_translation.sub %r~\[~, "[translations][#{I18n.locale}]["
       else
         tag_name_without_translation
