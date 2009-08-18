@@ -105,7 +105,7 @@ module ManageResourceController
 
     # Update the page on updating the record, rjs builder as argument
     def update_page_on_update(page)
-      page.toolbox.pop_and_refresh_last()
+      page.toolbox.frame_by_href(url_for(:action => 'show', :only_path => true)).html(render(:partial => "#{object.table_name}/show", :object => object))
     end
 
     def update_page_on_failed_update(page)

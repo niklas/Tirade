@@ -298,14 +298,11 @@ describe DocumentsController do
       
       it_should_behave_like 'every request'
       it_should_behave_like 'every request with form'
+      it_should_behave_like 'every request that sets flash messages'
 
-      it "should pop the last frame from the Toolbox" do
+      it "should update the matching 'show' frames by url" do
         do_request
-        response.should pop_frame_and_refresh_last
-      end
-
-      it "should update the 'show' frames" do
-        pending "TODO: update all show from application"
+        response.body.should include(%Q~Toolbox.frameByHref("#{document_path(@document)}").html(~)
       end
     end
 
