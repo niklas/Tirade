@@ -88,7 +88,11 @@ module ManageResourceController
     end
 
     def update_page_on_show(page)
-      page.push_toolbox_partial('/show', object)
+      if wants_refresh?
+        page.toolbox.frame_by_href(clean_url).html(render(:partial => "#{object.table_name}/show", :object => object))
+      else
+        page.push_toolbox_partial('/show', object)
+      end
     end
 
     def update_page_on_failed_show(page)
@@ -109,6 +113,10 @@ module ManageResourceController
     end
 
     def update_page_on_preview(page)
+    end
+
+    def wants_refresh?
+      !params[:refresh].blank?
     end
   end
 end

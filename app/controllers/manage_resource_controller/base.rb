@@ -8,6 +8,7 @@ module ManageResourceController
     helper_method :object
     helper_method :collection
     helper_method :build_object
+    helper_method :clean_url
 
     hide_action :resource_name, :human_name, :belongs_to, :route_name, :object_name
 
@@ -27,6 +28,10 @@ module ManageResourceController
     end
 
     private
+    def clean_url
+      request.path # url.sub(/_=\d+/,'').sub(/\?$/,'')
+    end
+
     def human_name
       model_name.humanize
     end

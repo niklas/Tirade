@@ -52,7 +52,7 @@ module ToolboxHelper
          end
     title, content = context.prepare_content(content)
     page.toolbox.push content, 
-      :href => clean_url, 
+      :href => context.clean_url, 
       :title => title, 
       :action => context.controller.action_name, 
       :controller => context.controller.controller_name,
@@ -133,9 +133,6 @@ module ToolboxHelper
     (@models ||= instance_variable_get("@#{controller.controller_name}")) || raise("no #{controller.controller_name} loaded")
   end
 
-  def clean_url
-    context.request.path # url.sub(/_=\d+/,'').sub(/\?$/,'')
-  end
   def prepare_content(content)
     returning [] do |ary|
       if content.is_a? Hash
