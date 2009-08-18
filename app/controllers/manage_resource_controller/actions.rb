@@ -14,6 +14,7 @@ module ManageResourceController
             wants.js do
               render :update do |page|
                 controller.send "update_page_on_#{action}", page
+                controller.render_flash_messages_as_notifications(page)
               end
             end
             if ResourceController::FAILABLE_ACTIONS.include?(action)
@@ -21,6 +22,7 @@ module ManageResourceController
                 wants.js do
                   render :update do |page|
                     controller.send "update_page_on_failed_#{action}", page
+                    controller.render_flash_messages_as_notifications(page)
                   end
                 end
               end

@@ -3,3 +3,6 @@
 
 en:
   hello: "Hello world"
+  flash:
+    notice: 'Notice'
+    error: 'Error'

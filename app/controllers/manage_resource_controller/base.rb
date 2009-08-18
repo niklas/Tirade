@@ -13,7 +13,8 @@ module ManageResourceController
 
     include ManageResourceController::Clipboard
     include ManageResourceController::Helpers
-    include  ManageResourceController::Actions
+    include ManageResourceController::Actions
+    include ManageResourceController::Notifications
     include Lockdown::Session
 
     rescue_from 'ActionView::TemplateError', :with => :rescue_error
