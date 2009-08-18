@@ -37,7 +37,7 @@ describe Document do
         I18n.locale = @old_locale
       end
 
-      it "should fall back on en locale" do
+      it "should fall back on 'en' locale" do
         @document.title.should be_fallback
         @document.title.locale.should == :en
         @document.title.requested_locale.should == :de
@@ -45,6 +45,47 @@ describe Document do
 
       it "should still have a title by falling back" do
         @document.title.should_not be_blank
+      end
+
+      context "updating attributes" do
+        before( :each ) do
+          @updating = lambda {
+            @document.update_attributes(:title => 'Deutscher Titel')
+          }
+        end
+        it "should create 'de' locale" do
+          @updating.should change(@document.globalize_translations, :count).by(1)
+        end
+
+        it "should keep the 'de' locale" do
+          @updating.call
+          @document.reload
+          @document.title.should == 'Deutscher Titel'
+          @document.title.locale.should == :de
+        end
+      end
+
+      context "updating attributes with specified locale" do
+        before( :each ) do
+          @attributes = {
+            :translations => {
+              :de => {:title => 'Deutscher Titel'}
+            }
+          }
+          @updating = lambda {
+            @document.update_attributes(@attributes)
+          }
+        end
+        it "should create 'de' locale" do
+          @updating.should change(@document.globalize_translations, :count).by(1)
+        end
+
+        it "should keep the 'de' locale" do
+          @updating.call
+          @document.reload
+          @document.title.should == 'Deutscher Titel'
+          @document.title.locale.should == :de
+        end
       end
     end
 

@@ -1,4 +1,25 @@
 module Tirade
+
+  module TranslatingInstanceTag
+    # FIXME if you can do that without alias_method_chain, please show me. 
+    # I seem to be too stupid to overwrite a method by just including a Module
+    def self.included(base)
+      base.class_eval do
+        alias_method_chain :tag_name, :translation
+      end
+    end
+    def tag_name_with_translation
+      if @object.acts_as?(:translated) && @object.translates?(@method_name)
+        tag_name_without_translation.sub %r~\[~, "[translations][#{I18n.locale}]["
+      else
+        tag_name_without_translation
+      end
+    end
+  end
+  ActionView::Helpers::InstanceTag.class_eval do
+    include TranslatingInstanceTag
+  end
+
   module FormBuilderHelper
     include ScopeFormBuilderMethods
 

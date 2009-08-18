@@ -112,6 +112,14 @@ module Tirade
           self.class.marked_up_fields.include?(field.to_sym)
         end
 
+        def translates?(field)
+          self.class.globalize_options[:translated_attributes].include?(field.to_sym)
+        end
+
+        def translations=(translation_attributes)
+          set_translations(translation_attributes)
+        end
+
         def controller_name
           self.class.controller_name
         end

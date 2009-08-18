@@ -299,6 +299,16 @@ describe DocumentsController do
       end
     end
 
+    describe "put /update with valid attributes for 'de' locale" do
+      def do_request
+        put :update, :id => @document.to_param, :document => { :translations => {:de => Factory.attributes_for(:document) } }, :format => 'js'
+      end
+
+      it "should create 'de' locale" do
+        lambda { do_request }.should change(DocumentTranslation, :count).by(1)
+      end
+    end
+
     describe "put /update with invalid attributes" do
 
       def do_request

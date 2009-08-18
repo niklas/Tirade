@@ -4,12 +4,12 @@
     <% Locale.activated.each do |locale| %>
       <% if record.translated_locales.include?(locale) %>
         <li class="translation">
-          <%= t('shared.locale.name', :name => locale) %>
+        <%= t('shared.locale.name', :locale => locale) %>
           <%= link_to_show record, :params => {:locale => locale } %>
         </li>
       <% else %>
         <li class="translation missing">
-          <%= t 'shared.locale.missing', :name => locale %>
+          <%= t 'shared.locale.missing', :name => t("shared.locale.#{locale}") %>
           <%= link_to_edit record, :params => { :locale => locale } %>
         </li>
       <% end %>

@@ -35,7 +35,7 @@
 
   <% accordion_item t('shared.language') do %>
     <ul class="list">
-      <% (I18n.available_locales - [:root]).each do |locale| %>
+      <% Locale.activated.each do |locale| %>
         <li>
           <%= t('shared.locale.name', :locale => locale) %>
           <%= link_to_open t('shared.locale.name', :locale => locale), dashboard_path(:locale => locale), :class => 'index dashboard' %>

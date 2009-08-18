@@ -3,7 +3,9 @@ de:
     language: 'Sprache'
     locale:
       name: 'Deutsch'
-      missing: 'Übersetzung for {{name}} fehlt'
+      missing: 'Übersetzung für {{name}} fehlt'
+      de: 'deutsch'
+      en: 'englisch'
     logged_in_as: 'Angemeldet als {{name}}'
     dashboard:
       welcome_guest: 'Willkommen Gast'

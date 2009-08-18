@@ -3,7 +3,9 @@ en:
     language: 'Language'
     locale:
       name: 'English'
-      missing: 'translation to {{name}} missing'
+      missing: 'translation to {{name}} is missing'
+      de: 'German'
+      en: 'English'
     logged_in_as: 'Logged in as {{name}}'
     dashboard:
       welcome_guest: 'Welcome guest user'
