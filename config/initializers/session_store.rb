@@ -10,10 +10,10 @@ ActionController::Base.session = {
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rake db:sessions:create")
-# config.action_controller.session_store = :active_record_store
+ActionController::Base.session_store = :mem_cache_store
 
-ActionController::Dispatcher.middleware.insert_before(
-  ActionController::Session::CookieStore, 
-  FlashSessionCookieMiddleware, 
-  ActionController::Base.session_options[:key]
-)
+#ActionController::Dispatcher.middleware.insert_before(
+#  ActionController::Session::CookieStore, 
+#  FlashSessionCookieMiddleware, 
+#  ActionController::Base.session_options[:key]
+#)
