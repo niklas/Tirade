@@ -301,7 +301,7 @@ describe DocumentsController do
 
     describe "put /update with valid attributes for 'de' locale" do
       def do_request
-        put :update, :id => @document.to_param, :document => { :translations => {:de => Factory.attributes_for(:document) } }, :format => 'js'
+        put :update, :id => @document.to_param, :document => { :translations => {:de => { :title => 'Deutscher Titel' } } }, :format => 'js'
       end
 
       it "should create 'de' locale" do
