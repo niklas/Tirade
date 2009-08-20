@@ -41,5 +41,9 @@ class User < ActiveRecord::Base
   def title
     login
   end
+
+  def full_name
+    login
+  end
   
 end

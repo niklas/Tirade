@@ -32,6 +32,7 @@ ActionController::Routing::Routes.draw do |map|
                   :purge     => :delete}
 
     manage.resources :user_groups
+    manage.resources :permissions
 
     manage.resources :images,
       :member => {:set_image_title => :post}
