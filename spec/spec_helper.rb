@@ -12,6 +12,18 @@ require File.dirname(__FILE__) + '/rjs_spec_helper'
 include RJSSpecHelper
 require File.dirname(__FILE__) + '/toolbox_spec_helper'
 include ToolboxSpecHelper
+require 'lockdown/rspec_helper'
+module Lockdown
+  module RspecHelper
+    def mock_user
+      activate_authlogic
+      user = Factory(:valid_user)
+      sess = UserSession.create user
+      user
+    end
+  end
+end
+include Lockdown::RspecHelper
 
 Lockdown::Database.sync_with_db
 

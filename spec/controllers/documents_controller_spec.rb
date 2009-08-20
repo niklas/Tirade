@@ -107,8 +107,8 @@ describe DocumentsController do
   describe "by AJAX" do
 
     before( :each ) do
-      login_as :valid_user
-      skip_lockdown
+      login_with_group :admin_documents
+      login_standard
       Document.destroy_all
       @document = Factory.create(:document)
       @documents = [@document]
@@ -117,6 +117,10 @@ describe DocumentsController do
 
     it "should have some Documents provided" do
       Document.should have_at_least(6).records
+    end
+
+    it "should allow all access" do
+      allowed_actions.should == all_actions
     end
 
 

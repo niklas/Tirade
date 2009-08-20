@@ -2,8 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ContentsController do
   before :each do
-    login_as :valid_user
-    skip_lockdown
+    login_admin # we have no group for Content
   end
   describe "handling GET /contents" do
 

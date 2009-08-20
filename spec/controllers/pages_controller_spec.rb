@@ -2,8 +2,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PagesController do
   before(:each) do
-    login_as :valid_user
-    skip_lockdown
+    login_with_group :admin_pages
+    login_standard
   end
   describe "handling GET /pages" do
 

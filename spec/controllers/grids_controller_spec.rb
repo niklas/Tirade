@@ -11,8 +11,8 @@ describe GridsController do
   describe "GET 'show'" do
     fixtures :users
     before(:each) do
-      login_as :valid_user
-      skip_lockdown
+      login_with_group :admin_grids
+      login_standard
       @grid = Grid.new
       Grid.stub!(:find).and_return(@grid)
     end

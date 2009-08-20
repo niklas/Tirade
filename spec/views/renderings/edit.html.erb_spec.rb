@@ -8,7 +8,8 @@ describe "/renderings/edit.html.erb" do
   end
   
   before do
-    login_as :valid_user
+    login_with_group :admin_renderings
+    login_standard
     @rendering = Factory(:rendering)
     assigns[:rendering] = @rendering
   end

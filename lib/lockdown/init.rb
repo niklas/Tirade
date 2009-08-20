@@ -159,9 +159,15 @@ Lockdown::System.configure do
     set_tiered_permissions resource
   end
 
-  %w(pages grids renderings).each do |resource|
+  %w(pages grids renderings parts).each do |resource|
     set_tiered_permissions resource
   end
+
+  set_permission(:admin_parts_more).
+    with_controller(:part__plugin).
+    and_controller(:part__theme)
+  set_protected_access :admin_parts_more
+  set_user_group :admin_parts, :admin_parts, :admin_parts_more
 
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
