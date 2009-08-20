@@ -46,8 +46,7 @@ namespace :tirade do
 
     desc "Sync migrations from installed plugins"
     task :sync_migrations do
-      raise "pending"
-      system "rsync -ruv vendor/plugins/tirade_*/db/migrate db"
+      system "rsync -uv vendor/plugins/tirade_*/db/migrate/*.rb db/migrate/"
     end
 
     desc "Sync content type icons from installed plugins"
