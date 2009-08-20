@@ -43,7 +43,7 @@ class ContentTypeGenerator < ModelGenerator
       end
 
       m.directory File.join(root,'config')
-      m.template 'config/desert_routes.rb', File.join(root, 'config/desert_routes.rb')
+      m.template 'config/routes.rb', File.join(root, 'config/routes.rb')
 
       m.readme 'INSTALLED'
 

@@ -40,5 +40,14 @@ namespace :tirade do
         end
       end
     end
+
+    desc "Sync all stuff from plugins"
+    task :sync => [:sync_migrations]
+
+    desc "Sync migrations from installed plugins"
+    task :sync_migrations do
+      raise "pending"
+      system "rsync -ruv vendor/plugins/*/db/migrate db"
+    end
   end
 end

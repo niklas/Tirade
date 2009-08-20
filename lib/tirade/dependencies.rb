@@ -1,8 +1,8 @@
 dependencies = ActiveSupport.const_defined?(:Dependencies) ? ActiveSupport::Dependencies : Dependencies
 dependencies.module_eval do
   def load_missing_constant_with_tirade(from_mod, const_name)
-    from_mod = guard_against_anonymous_module(from_mod)
     qualified_name = qualified_name_for from_mod, const_name
+    ActiveRecord::Base::logger.debug("load missing constant #{const_name} from #{from_mod}")
     begin
       load_missing_constant_without_tirade(from_mod, const_name)
     rescue NameError => e

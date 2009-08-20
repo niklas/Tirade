@@ -10,9 +10,6 @@ RAILS_GEM_VERSION = '2.3.2' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-require 'desert'
-require 'acting'
-require 'tirade'
 
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
@@ -34,8 +31,8 @@ Rails::Initializer.run do |config|
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   config.plugins = [ :theme_support, :all ]
+  config.gem 'andand'
   config.gem 'mime-types', :lib => 'mime/types'
-  config.gem 'desert', :version => '>=0.5.0'
   config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
   config.gem 'binarylogic-authlogic', :source => 'http://gems.github.com', :lib => 'authlogic'
   config.gem 'libxml-ruby', :version => '>=1.1.3', :lib => 'xml'

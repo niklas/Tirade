@@ -1,4 +1,3 @@
-require_plugin 'toolbox'
-
+$:.unshift "#{File.dirname(__FILE__)}/lib"
 require 'user'
-User.class_eval { include ::StylishPermissions::User }
+::User.class_eval { include ::StylishPermissions::User }

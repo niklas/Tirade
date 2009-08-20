@@ -114,7 +114,7 @@ Lockdown::System.configure do
 
   set_permission(:generated_stylesheets).
     with_controller(:stylesheets).
-    only_methods(:toolbox, :toolbox_colors, :interface, :focus).
+    only_methods(:toolbox, :toolbox_colors, :interface, :focus, :permissions).
     set_as_public_access
 
   set_permission(:theme).
@@ -163,11 +163,12 @@ Lockdown::System.configure do
     set_tiered_permissions resource
   end
 
-  set_permission(:admin_parts_more).
-    with_controller(:part__plugin).
-    and_controller(:part__theme)
-  set_protected_access :admin_parts_more
-  set_user_group :admin_parts, :admin_parts, :admin_parts_more
+  # FIXME Namespaced controllers seem still to cause problems
+  #set_permission(:admin_parts_more).
+  #  with_controller(:part__plugin).
+  #  and_controller(:part__theme)
+  #set_protected_access :admin_parts_more
+  #set_user_group :admin_parts, :admin_parts, :admin_parts_more
 
   set_permission(:own_account).
     with_controller(:accounts).
