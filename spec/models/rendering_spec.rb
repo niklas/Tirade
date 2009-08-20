@@ -261,7 +261,11 @@ describe Rendering, "with Page with trailing path" do
     @rendering = Factory(:rendering)
     @page = @rendering.page
     @trailing_path = ["Goodbye", "Morning", "Glory"]
-    @page.stub!(:trailing_path).and_return(@trailing_path)
+    @rendering.page.trailing_path = @trailing_path
+  end
+
+  it "should keep the same page" do
+    @rendering.page.should == @page
   end
 
   it "should access this path" do
