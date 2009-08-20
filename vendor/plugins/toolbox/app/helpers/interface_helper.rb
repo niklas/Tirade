@@ -152,7 +152,7 @@ module InterfaceHelper
       begin
         val = show_value(val,opts)
       rescue Exception => e
-        logger.debug("cannot show #{obj.class}##{name}: #{h e.message}\n#{e.backtrace}")
+        logger.debug("cannot show #{obj.class}##{name}: #{h e.message}\n#{e.backtrace.join("\n")}")
         return content_tag(:span, "cannot show #{obj.class}##{name}: #{h e.message}", :class => 'warning')
       end
 
