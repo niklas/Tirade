@@ -81,7 +81,7 @@ describe ApplicationHelper do
       @record = Factory(:news_item)
     end
 
-    it "should build a link to edit a Document" do
+    it "should build a link to edit a NewsItem" do
       helper.link_to_edit(@record).should have_tag('a.edit.news_item[href=?]', edit_news_item_path(@record))
     end
     
