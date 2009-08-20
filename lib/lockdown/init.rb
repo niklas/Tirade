@@ -169,6 +169,11 @@ Lockdown::System.configure do
   set_protected_access :admin_parts_more
   set_user_group :admin_parts, :admin_parts, :admin_parts_more
 
+  set_permission(:own_account).
+    with_controller(:accounts).
+    only_methods(:show, :edit, :update)
+  set_protected_access :own_account
+
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Built-in user groups

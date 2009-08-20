@@ -10,3 +10,4 @@ en:
     dashboard:
       welcome_guest: 'Welcome guest user'
       welcome: 'Welcome {{name}}'
+    your_account: 'Your Account'

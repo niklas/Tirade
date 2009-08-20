@@ -9,6 +9,16 @@
 
 <% accordion do %>
 
+  <% accordion_item "Base" do %>
+    <ul class="list">
+      <li>
+      <%= icon_for('User') %>
+      <%= t('shared.your_account') %>
+      <%= link_to t('shared.your_account'), account_path, :class => 'show' %>
+      </li>
+    </ul>
+  <% end %>
+
   <% accordion_item "Contents" do %>
     <ul class="list">
       <% Tirade::ActiveRecord::Content.classes.each do |klass| %>

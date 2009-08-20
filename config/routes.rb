@@ -54,6 +54,8 @@ ActionController::Routing::Routes.draw do |map|
       manage.resources klass.controller_name, :member => {:preview => :put}
     end
 
+    manage.resource :account, :except => [:index]
+
   end
   
   map.with_options :controller => 'users' do |page|    
