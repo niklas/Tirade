@@ -7,12 +7,12 @@
     <% accordion_item 'Base' do %>
       <%= f.text_field :login %>
 
-      <% if user.new_record? %>
-        <%= f.password_field :password %>
-        <%= f.password_field :password_confirmation %>
-      <% end %>
-
       <%= f.text_field :email %>
+    <% end %>
+
+    <% accordion_item 'Password' do %>
+      <%= f.password_field :password %>
+      <%= f.password_field :password_confirmation %>
     <% end %>
 
     <% accordion_item 'Groups' do %>
