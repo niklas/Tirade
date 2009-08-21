@@ -19,12 +19,12 @@ describe UserSessionsController do
 
       it "should refresh the dashboard" do
         do_login
-        response.body.should include(%Q[Toolbox.frameByHref("/en/dashboard").refresh()])
+        response.body.should include(%Q[Toolbox.frames(":resource(user_session/show)").refresh()])
       end
 
       it "should remove the login frame" do
         do_login
-        response.body.should include(%Q[Toolbox.frameByHref("/en/login").remove()])
+        response.body.should include(%Q[Toolbox.frames(":resource(user_session/new)").remove()])
       end
 
       it "should scroll the toolbox to the first frame (aka dashboard)" do

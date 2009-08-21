@@ -16,6 +16,11 @@ module ToolboxHelper
     end
   end
 
+  # Select a frame by controller and action
+  def select_frame(contr, act='index')
+    page.toolbox.frames(":resource(#{contr}/#{act})")
+  end
+
   def push_or_refresh(content)
     if context.params[:refresh].blank? && context.params[:commit].blank?
       push_toolbox_content(content)

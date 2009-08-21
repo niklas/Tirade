@@ -13,8 +13,8 @@ class UserSessionsController < ManageResourceController::Base
   private
   def update_page_on_create(page)
     # do NOT render 'show'
-    page.toolbox.frame_by_href(dashboard_path).refresh
-    page.toolbox.frame_by_href(login_path).remove()
+    page.select_frame('user_session', 'show').refresh
+    page.select_frame('user_session', 'new').remove
     page.toolbox.goto(0)
     page.history.sync()
   end

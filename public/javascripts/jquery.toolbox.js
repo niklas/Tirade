@@ -650,10 +650,7 @@ jQuery.fn.update = function(options) {
   return $(this);
 }
 jQuery.fn.refresh = function() {
-  if ($(this).hasClass('frame'))
-    var href = $(this).attr('href')
-  else
-    var href = $(this).parents('div.frame').attr('href');
+  var href = $(this).closest('.frame').data('url');
   if (href) {
     $.ajax({
       url: href + '?refresh=1',
@@ -947,6 +944,7 @@ jQuery.ui.frame = function(content, options) {
     href: '/dashboard',
     title: 'Dashboard',
     action: 'show',
+    controller: 'user_session',
     resource_name: 'user_session'
   };
   var options = $.extend(defaults, options);
@@ -955,9 +953,16 @@ jQuery.ui.frame = function(content, options) {
   var $frame = $('<div/>')
     .addClass('frame')
     .addClass(class)
+
     .attr('role', 'frame')
     .attr('title', options.title)
     .attr('href', options.href)
+
+    .data('url', options.href)
+    .data('title', options.title)
+    .data('action', options.action)
+    .data('controller', options.controller)
+
     .html(content);
 
   var $linkbar = $frame.find('ul.linkbar');
@@ -977,3 +982,11 @@ jQuery.ui.frame = function(content, options) {
 
   return $frame;
 };
+
+jQuery.expr[':'].resource = function(obj, index, meta, stack) {
+  if ( match = meta[3].match(/^(\w+)\/(\w+)$/) ) {
+    return ($(obj).data('controller') == match[1] && $(obj).data('action') == match[2]);
+  } else {
+    return false;
+  }
+}
