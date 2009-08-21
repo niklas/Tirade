@@ -15,10 +15,6 @@
       <%= f.password_field :password_confirmation %>
     <% end %>
 
-    <% accordion_item 'Groups' do %>
-      <%= f.has_many :user_groups %>
-    <% end %>
-
     <%= f.submit %>
 
   <% end %>

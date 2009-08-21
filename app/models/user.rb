@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     c.transition_from_restful_authentication = true
   end
 
-  # FIXME: user can change his groups
+  attr_accessible :login, :email, :password, :password_confirmation
 
   has_and_belongs_to_many :user_groups
 
