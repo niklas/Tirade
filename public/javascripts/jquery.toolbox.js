@@ -26,7 +26,15 @@ var Toolbox = {
       this.setup();
       Toolbox.sync.sideBar();
 
-      $.ui.frame("preparing Toolbox..").appendTo( this.content() );
+      $('<div />')
+        .addClass('frame')
+        .text("preparing Toolbox..")
+        .data('url', '/dashboard')
+        .data('title', 'Dashboard')
+        .data('action', 'show')
+        .data('controller', 'user_session')
+        .appendTo( this.content() );
+
       $.tirade.history.sync();
       this.frameCount = 1;
       this.currentFrameIndex = 0;
@@ -233,8 +241,12 @@ var Toolbox = {
   decorationHeight: function() {
     return this.element(' > div.head').height() + this.element(' > div.foot').height()
   },
-  push: function(content,options) {
-    var frame = $.ui.frame(content, options).appendTo( this.content() );
+  push: function(frame_html,options) {
+    var frame = $(frame_html);
+    if (!frame.hasClass('frame')) {
+      frame = frame.wrap('<div class="frame"></div>').parent();
+    }
+    frame.appendTo( this.content() );
     $.tirade.history.append(frame);
     this.frameCount++;
     this.goto(frame);
@@ -712,7 +724,18 @@ jQuery.fn.frameInToolbox = function(options) {
     var frame = this;
     var $frame = $(this);
 
-    $('ul.linkbar', frame)
+    $frame.attr('role', 'frame');
+
+    var meta = $frame.metadata();
+    if (meta.length) {
+      $frame
+        .data('url', meta.href)
+        .data('title', meta.title)
+        .data('action', meta.action)
+        .data('controller', meta.controller);
+    }
+
+    var $linkbar = $('ul.linkbar', frame)
       .addClass('ui-widget-header ui-corner-bottom')
       .find('a.ok')
         .click(function(e) {
@@ -720,7 +743,19 @@ jQuery.fn.frameInToolbox = function(options) {
           Toolbox.pop();
           return false;
         }).uiIcon('circle-check')
-      .end()
+      .end();
+
+    if ($linkbar.length) {
+      switch(meta.action) {
+        case 'index':
+          $.tirade.resourceful.newButton(meta.resource_name).opensToolbox().appendTo($linkbar);
+          break;
+        case 'show':
+          $.tirade.resourceful.editButton(meta.resource_name, meta.id).opensToolbox().appendTo($linkbar);
+          $.tirade.resourceful.deleteButton(meta.resource_name, meta.id).opensToolbox().appendTo($linkbar);
+          break;
+      }
+    }
 
     $('div.accordion', frame).livequery(function() { 
       active = 0;
@@ -937,50 +972,6 @@ jQuery.ui.button = function(options) {
     .appendTo(button);
   if (!options.selectable) button.disableSelection();
   return button
-};
-
-jQuery.ui.frame = function(content, options) {
-  var defaults = {
-    href: '/dashboard',
-    title: 'Dashboard',
-    action: 'show',
-    controller: 'user_session',
-    resource_name: 'user_session'
-  };
-  var options = $.extend(defaults, options);
-  class = options.class ? 'frame ' + options.class : 'frame';
-
-  var $frame = $('<div/>')
-    .addClass('frame')
-    .addClass(class)
-
-    .attr('role', 'frame')
-    .attr('title', options.title)
-    .attr('href', options.href)
-
-    .data('url', options.href)
-    .data('title', options.title)
-    .data('action', options.action)
-    .data('controller', options.controller)
-
-    .html(content);
-
-  var $linkbar = $frame.find('ul.linkbar');
-  if ($linkbar.length) {
-    switch(options.action) {
-      case 'index':
-        $.tirade.resourceful.newButton(options.resource_name).opensToolbox().appendTo($linkbar);
-        break;
-      case 'show':
-        $.tirade.resourceful.editButton(options.resource_name, options.id).opensToolbox().appendTo($linkbar);
-        $.tirade.resourceful.deleteButton(options.resource_name, options.id).opensToolbox().appendTo($linkbar);
-        break;
-    }
-  }
-
-
-
-  return $frame;
 };
 
 jQuery.expr[':'].resource = function(obj, index, meta, stack) {
