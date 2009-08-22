@@ -12,9 +12,9 @@ module ManageResourceController
     private
     def update_or_show_form_in_toolbox(page)
       if non_form_submit?
-        page.push_toolbox_content(:partial => "/form", :object => object)
+        page.push_frame_for(object, 'form')
       else
-        page.update_last_toolbox_frame(:partial => "/form", :object => object)
+        page.update_frame_for(object, 'form')
       end
     end
 
@@ -28,6 +28,10 @@ module ManageResourceController
 
     def non_form_submit?
       params[:commit].blank?
+    end
+
+    def wants_refresh?
+      !params[:refresh].blank?
     end
 
     def set_context_page

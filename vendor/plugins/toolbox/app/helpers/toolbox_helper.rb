@@ -1,5 +1,9 @@
 module ToolboxHelper
+  include UtilityHelper
+  include RjsHelper
+
   def update_toolbox(opts = {})
+    raise "deprecated?"
     if header = (opts[:header] || opts[:top])
       page[:toolbox_top].replace_html header
     end
@@ -19,6 +23,64 @@ module ToolboxHelper
   # Select a frame by controller and action
   def select_frame(contr, act='index')
     page.toolbox.frames(":resource(#{contr}/#{act})")
+  end
+
+  def select_frame_for(record, action='show')
+    page.toolbox.frames(".#{action}.#{context.dom_id(record)}")
+  end
+
+  def frame_for(record, partial='show', opts={})
+    add_class_to_html_options opts, 'frame'
+    add_class_to_html_options opts, partial
+    add_class_to_html_options opts, 'edit' if partial=='form'
+    add_class_to_html_options opts, 'new' if record.new_record?
+    add_class_to_html_options opts, dom_id(record)
+    add_class_to_html_options opts, record.resource_name
+    inner = frame_content_for(record, partial)
+    inner << frame_metainfo_for(record)
+    content_tag(:div, inner, opts)
+  end
+
+  def frame_content_for(record, partial='show', opts={})
+    opts.reverse_merge!({
+      :layout => '/layouts/toolbox',
+      :partial => "/#{partial}",
+      :object => record,
+      :locals => record ? {
+        record.controller_name.singularize.to_sym => record
+      } : nil
+    })
+    begin
+      render(opts)
+    rescue ActionView::MissingTemplate => e
+      # try to add the table name to the partial path
+      if opts[:partial] !~ %r~./~
+        opts[:partial] = "/#{record.table_name}/#{partial}"
+        retry
+      else
+        raise e
+      end
+    end
+  end
+
+  def frame_metainfo_for(record, meta={})
+    meta.reverse_merge!({
+      :href => request.url, 
+      :title => record.title || "#{record.class_name} ##{record.id}", 
+      :action => controller.action_name, 
+      :controller => controller.controller_name,
+      :resource_name => record.resource_name,
+      :id => record.id
+    })
+    metadata(meta)
+  end
+
+  def push_frame_for(object,partial='show', opts={})
+    page.toolbox.push context.frame_for(object, partial, opts)
+  end
+
+  def update_frame_for(object, partial='show', opts={})
+    page.select_frame_for(object, partial).html context.frame_content_for(object, partial, opts)
   end
 
   def push_or_refresh(content)
@@ -146,7 +208,7 @@ module ToolboxHelper
         begin
           result = render(content)
           ary << result
-        rescue ActionView::MissingTemplate => e  # try to add the table name to the partial path
+        rescue ActionView::MissingTemplate => e 
           if content[:partial] && content[:object] && content[:partial] !~ %r~./~ 
             content[:partial] = "/#{content[:object].table_name}/#{content[:partial]}"
             retry

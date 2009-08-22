@@ -1,0 +1,16 @@
+<%= error_messages_for :user_group %>
+
+<% form_for user_group do |f| %>
+
+  <% accordion do %>
+
+    <% accordion_item 'Users' do %>
+      <%= f.has_many :users %>
+    <% end %>
+
+    <%= f.submit %>
+
+  <% end %>
+
+<% end %>
+

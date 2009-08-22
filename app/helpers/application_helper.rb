@@ -39,10 +39,6 @@ module ApplicationHelper
     content_tag(:div, content, opts)
   end
 
-  def context
-    page.instance_variable_get("@context").instance_variable_get("@template")
-  end
-
   def public_content_link(content,opts = {})
     content = Page.find_by_url(content) if content.is_a?(String)
     return "[link target not found]" unless content
@@ -68,22 +64,6 @@ module ApplicationHelper
     output << "</script>"
   end
 
-  # Makes sure that the given class is in the options which are used for
-  # tag helpers like content_tag, link_to etc.
-  def add_class_to_html_options(options,name)
-    return {} if options.nil?
-    if name.is_a?(Array)
-      name.flatten.each { |n| add_class_to_html_options(options,n)}
-    else
-      if options.has_key? :class
-        return if name =~ /^odd|even$/ && options[:class] =~ /odd|even/
-        options[:class] += " #{name}" unless options[:class] =~ /\b#{name}\b/
-      else
-        options[:class] = name.to_s
-      end
-    end
-    options
-  end
 
   def show_link_to(thingy, options = {})
     link_to_show(thingy, options)

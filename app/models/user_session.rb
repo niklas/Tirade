@@ -6,6 +6,14 @@ class UserSession < Authlogic::Session::Base
     'user_sessions'
   end
 
+  def resource_name
+    'user_session'
+  end
+
+  def controller_name
+    'user_sessions'
+  end
+
   def title
     "Session"
   end

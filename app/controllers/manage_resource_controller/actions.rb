@@ -73,25 +73,23 @@ module ManageResourceController
     end
 
     def update_page_on_new_action(page)
-      page.push_toolbox_partial('/form', build_object, :title => "New #{human_name}")
+      page.push_frame_for(build_object, 'form', :title => "New #{human_name}")
     end
 
     def update_page_on_create(page)
-      page.update_last_toolbox_frame(   # replace the form with /show
-        :partial => "/show", :object => object,
-        :title => "#{human_name} ##{object.id}"
-      )
+      page.select_frame(resource_name, 'new').replace frame_for(object)
     end
 
     def update_page_on_failed_create(page)
       update_or_show_form_in_toolbox(page)
     end
 
+    # TODO must add :object_name (:as) to partial call => refactor ToolboxHelper
     def update_page_on_show(page)
       if wants_refresh?
-        page.toolbox.frame_by_href(clean_url).html(render(:partial => "#{object.table_name}/show", :object => object))
+        page.select_frame_for(object).html frame_content_for(object)
       else
-        page.push_toolbox_partial('/show', object)
+        page.push_frame_for(object)
       end
     end
 
@@ -100,12 +98,12 @@ module ManageResourceController
     end
 
     def update_page_on_edit(page)
-      page.push_toolbox_partial('/form', object, :title => "Edit #{human_name}")
+      page.push_frame_for(object, 'form')
     end
 
-    # Update the page on updating the record, rjs builder as argument
     def update_page_on_update(page)
-      page.toolbox.frame_by_href(url_for(:action => 'show', :only_path => true)).html(render(:partial => "#{object.table_name}/show", :object => object))
+      page.select_frame_for(object).refresh
+      page.select_frame_for(object, 'edit').remove
     end
 
     def update_page_on_failed_update(page)
@@ -113,10 +111,6 @@ module ManageResourceController
     end
 
     def update_page_on_preview(page)
-    end
-
-    def wants_refresh?
-      !params[:refresh].blank?
     end
   end
 end

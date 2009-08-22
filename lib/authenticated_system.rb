@@ -55,7 +55,7 @@ module AuthenticatedSystem
       respond_to do |format|
         format.js do
           render :update do |page|
-            page.push_toolbox_partial('/user_sessions/form', UserSession.new)
+            page.push_frame_for(UserSession.new, '/user_sessions/form')
           end
         end
         format.html do

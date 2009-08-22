@@ -38,5 +38,26 @@ module RJSSpecHelper
     ReplaceElement.new(expected)
   end
 
+
+  class HelperRJSPageProxy
+    def initialize(context)
+      @context = context
+      @context.class_eval do # patch the context so that the JavaScriptGenerator uses our helper
+        define_method :helpers do
+          subject
+        end
+      end
+    end
+
+    def method_missing(method, *arguments)
+      block = Proc.new { |page|  @lines = []; page.send(method, *arguments) }
+      ActionView::Helpers::PrototypeHelper::JavaScriptGenerator.new(@context, &block).to_s
+    end
+  end
+
+  def rjs_for
+    HelperRJSPageProxy.new(self)
+  end
+
 end
 

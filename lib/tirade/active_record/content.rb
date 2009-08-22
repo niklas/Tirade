@@ -123,6 +123,10 @@ module Tirade
         def controller_name
           self.class.controller_name
         end
+
+        def resource_name
+          controller_name.singularize
+        end
       end
     end
   end
