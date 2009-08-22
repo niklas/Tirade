@@ -36,6 +36,10 @@ module ManageResourceController
       model_name.humanize
     end
 
+    def resource_name
+      model_name
+    end
+
     def collection
       @collection ||= filtered_collection
     end

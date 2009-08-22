@@ -1,10 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
+
 describe ToolboxHelper do
 
   before( :each ) do
     helper.stub!(:render).and_return("stubbed render call")
     @document = Factory(:document)
+    controller.stub!(:human_name).and_return('Documents')
+    helper.stub!(:resource_name).and_return('document')
   end
 
   it "should help to select a frame by controller and action" do
@@ -61,6 +64,20 @@ describe ToolboxHelper do
     end
   end
 
+  it "should build a frame for a collection" do
+    5.times { Factory(:document) }
+    all_documents = Document.all
+    helper.should_receive(:render).with(
+      :partial => '/list',
+      :object => all_documents,
+      :locals => {:documents => all_documents},
+      :layout => '/layouts/toolbox'
+    ).and_return('list of documents')
+    helper.frame_for_collection(all_documents).should have_tag("div.frame.index.document") do
+      with_tag('script.metadata[type=application/json]')
+    end
+  end
+
   it "should help to push a frame to toolbox to show a record" do
     helper.stub!(:frame_for).and_return('Frame Content')
     rjs_for.push_frame_for(@document).should == %Q[Toolbox.push("Frame Content");]
@@ -69,7 +86,24 @@ describe ToolboxHelper do
   it "should help to update a frame for a record" do
     helper.stub!(:frame_content_for).and_return('Frame Content')
     rjs_for.update_frame_for(@document).should == %Q[Toolbox.frames(".show.document_#{@document.id}").html("Frame Content");]
-    
+  end
+
+  it "should help to push a frame for a collection" do
+    5.times { Factory(:document) }
+    helper.stub!(:frame_for_collection).and_return("Frame with collection")
+    rjs_for.push_frame_for(Document.all).should == %Q[Toolbox.push("Frame with collection");]
+  end
+
+
+  it "should build frame for error" do
+    error = mock(ActionView::TemplateError)
+    ApplicationController.stub!(:rescue_templates).and_return('Spec::Mocks::Mock' => 'template_error')
+    helper.should_receive(:render).with(
+      :partial => '/toolbox/template_error',
+      :object => error,
+      :layout => '/layouts/toolbox'
+    ).and_return('error')
+    helper.frame_for_error(error).should have_tag('div.frame.error')
   end
 
 

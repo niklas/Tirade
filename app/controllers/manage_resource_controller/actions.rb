@@ -65,10 +65,7 @@ module ManageResourceController
           target.html(page.context.list_of(collection, :force_list => true))
         end
       else
-        page.push_or_refresh( 
-          :partial => "/list", :object => collection,
-          :title => human_name.pluralize
-        )
+        page.push_frame_for(collection)
       end
     end
 

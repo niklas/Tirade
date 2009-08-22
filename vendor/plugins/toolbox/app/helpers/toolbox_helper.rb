@@ -33,12 +33,37 @@ module ToolboxHelper
     add_class_to_html_options opts, 'frame'
     add_class_to_html_options opts, partial
     add_class_to_html_options opts, 'edit' if partial=='form'
-    add_class_to_html_options opts, 'new' if record.new_record?
-    add_class_to_html_options opts, dom_id(record)
-    add_class_to_html_options opts, record.resource_name
+    if record.respond_to?(:resource_name)
+      add_class_to_html_options opts, 'new' if record.new_record?
+      add_class_to_html_options opts, dom_id(record)
+      add_class_to_html_options opts, record.resource_name
+    end
     inner = frame_content_for(record, partial)
     inner << frame_metainfo_for(record)
     content_tag(:div, inner, opts)
+  end
+
+  def frame_for_collection(collection, opts={})
+    partial = 'list'
+    add_class_to_html_options opts, 'frame'
+    add_class_to_html_options opts, 'index'
+    add_class_to_html_options opts, collection.first.resource_name unless collection.empty?
+    add_class_to_html_options opts, partial
+    inner = frame_content_for_collection(collection, partial)
+    inner << frame_metadata_for_collection(collection)
+    content_tag(:div, inner, opts)
+  end
+
+  def frame_content_for_collection(collection, partial='list', opts={})
+    opts.reverse_merge!({
+      :layout => '/layouts/toolbox',
+      :partial => "/#{partial}",
+      :object => collection,
+      :locals => collection ? {
+        resource_name.pluralize.to_sym => collection
+      } : nil
+    })
+    render opts
   end
 
   def frame_content_for(record, partial='show', opts={})
@@ -47,7 +72,7 @@ module ToolboxHelper
       :partial => "/#{partial}",
       :object => record,
       :locals => record ? {
-        record.controller_name.singularize.to_sym => record
+        resource_name.to_sym => record
       } : nil
     })
     begin
@@ -69,92 +94,57 @@ module ToolboxHelper
       :title => record.title || "#{record.class_name} ##{record.id}", 
       :action => controller.action_name, 
       :controller => controller.controller_name,
-      :resource_name => record.resource_name,
+      :resource_name => resource_name,
       :id => record.id
     })
     metadata(meta)
   end
 
-  def push_frame_for(object,partial='show', opts={})
-    page.toolbox.push context.frame_for(object, partial, opts)
+  def frame_metadata_for_collection(collection, meta={})
+    meta.reverse_merge!({
+      :href => request.url, 
+      :title => human_name.pluralize,
+      :action => controller.action_name, 
+      :controller => controller.controller_name,
+      :resource_name => resource_name
+    })
+    metadata(meta)
+  end
+
+  def push_frame_for(object,partial=nil, opts={})
+    if object.respond_to?(:each)
+      page.toolbox.push context.frame_for_collection(object, opts)
+    else
+      page.toolbox.push context.frame_for(object, partial, opts)
+    end
   end
 
   def update_frame_for(object, partial='show', opts={})
     page.select_frame_for(object, partial).html context.frame_content_for(object, partial, opts)
   end
 
-  def push_or_refresh(content)
-    if context.params[:refresh].blank? && context.params[:commit].blank?
-      push_toolbox_content(content)
-    else
-      refresh_toolbox_content(content)
-    end
+  def push_toolbox_error(exception)
+    page.toolbox.push context.frame_for_error(exception)
   end
 
-  def push_or_refresh_last(content)
-    if context.params[:refresh].blank? && context.params[:commit].blank?
-      push_toolbox_content(content)
-    else
-      update_last_toolbox_frame(content)
-    end
-  end
-
-  def push_toolbox_partial(partial, thingy=nil, options={})
-    options.reverse_merge!({
-      :partial => partial.starts_with?('/') ?  partial : "/#{partial}",
-      :title => thingy ? (thingy.title || "#{context.human_name} ##{thingy.id}") : context.human_name.pluralize,
-      :object => thingy,
-      :locals => thingy ? {
-        thingy.table_name.singularize.to_sym => thingy
-      } : nil
-    })
-    push_toolbox_content(options)
-  end
-
-  def push_toolbox_content(content)
-    id = if content[:object].andand.is_a?(ActiveRecord::Base)
-           content[:object].id
-         else
-           nil
-         end
-    title, content = context.prepare_content(content)
-    page.toolbox.push content, 
-      :href => context.clean_url, 
-      :title => title, 
-      :action => context.controller.action_name, 
-      :controller => context.controller.controller_name,
-      :resource_name => context.controller.model_name,
-      :id => id
-    set_toolbox_status
-  end
-
-  def refresh_toolbox_content(content)
-    title, content = context.prepare_content(content)
-    page.toolbox.frame_by_href(clean_url).update :content => content, :title => title
-    set_toolbox_status
-  end
-
-  def update_last_toolbox_frame(content)
-    title, content = context.prepare_content(content)
-    page.toolbox.update_last_frame content, :title => title
-    set_toolbox_status
-  end
-
-  def toolbox_error(exception)
+  def frame_for_error(exception)
     title = case exception
             when ActionView::TemplateError
               <<-EOTITLE 
                 #{exception.original_exception.class.name} in
-                #{page.context.request.parameters["controller"].capitalize if page.context.request.parameters["controller"]}
-                ##{page.context.request.parameters["action"]}
+                #{request.parameters["controller"].andand.capitalize}
+                ##{request.parameters["action"]}
               EOTITLE
             else
               exception.class.name
             end
     partial = ApplicationController.rescue_templates[exception.class.name]
-    title, content = context.prepare_content(:title => title, :partial => "/toolbox/#{partial}", :object => exception)
-    page.toolbox.error content, :title => title
-    set_toolbox_status
+    inner = render(
+      :partial => "/toolbox/#{partial}",
+      :layout => '/layouts/toolbox',
+      :object => exception
+    )
+    content_tag(:div, inner, :class => 'frame error')
   end
 
   # Update a single attribute with jquery.

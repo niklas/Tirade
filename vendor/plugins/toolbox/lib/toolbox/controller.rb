@@ -255,7 +255,7 @@ module Tirade
           wants.html { render :text => exception.inspect.to_s, :status => 500}
           wants.js do
             render :update do |page|
-              page.toolbox_error exception
+              page.push_toolbox_error exception
             end
           end
         end
