@@ -19,19 +19,22 @@ module Tirade
         def acts_as_content(opts={})
           Tirade::ActiveRecord::Content.register_class(self)
           acts_as! :content
-          if table_exists? && column_names.include?('slug')
-            acts_as! :slugged
-            has_slug :prepend_id => false
-          end
-          if liquids = (opts.delete(:liquid) || []) + [:slug, :table_name]
-            liquid_methods *liquids
-          end
-          if translations = opts.delete(:translate)
-            translates *translations
-            unless translation_table_exists?
-              create_translation_table!(automatic_translation_fields) 
+          if table_exists?
+            if column_names.include?('slug')
+              acts_as! :slugged
+              has_slug :prepend_id => false
             end
-            acts_as! :translated
+            if translations = opts.delete(:translate)
+              translates *translations
+              unless translation_table_exists?
+                create_translation_table!(automatic_translation_fields) 
+              end
+              acts_as! :translated
+            end
+            if liquids = (opts.delete(:liquid) || []) + [:slug, :table_name]
+              liquid_methods *liquids
+              acts_as! :marked_up
+            end
           end
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?
