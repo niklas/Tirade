@@ -74,7 +74,7 @@ module ManageResourceController
     end
 
     def update_page_on_create(page)
-      page.select_frame(resource_name, 'new').replace frame_for(object)
+      page.select_frame(resource_name, 'new').replace context.frame_for(object)
     end
 
     def update_page_on_failed_create(page)
