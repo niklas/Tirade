@@ -1,15 +1,22 @@
-set :application, (ENV['NAME'] || "tirade")
-set :repository,  "svn://lanpartei.de/tirade/branches/tirade-v2"
 
-load 'config/lanpartei'
+set :target, (ENV['TARGET'] || ENV['Target'] || ENV['target'])
+if target.nil? || target.empty?
+  puts "please give a TARGET which is defined in config/targets"
+  exit
+end
+
+load "config/targets/#{target}"
 
 namespace :deploy do
   task :after_symlink, :roles => [:app] do
-    lanpartei.after_symlink
-    shared_to_current = "{#{deploy_to}/shared/,#{current_release}}"
     shared_dir = "#{deploy_to}/shared"
+    config_dir = "#{shared_dir}/config"
+    shared_to_current = "{#{shared_dir}/,#{current_release}}"
+
+    run "mkdir -p #{config_dir}"
 
     run "ln -fs #{shared_to_current}/config/application.yml" 
+    run "ln -fs #{shared_to_current}/config/database.yml" 
 
     run "mkdir -p #{deploy_to}/shared/public/upload" 
     run "ln -fs #{shared_to_current}/public/upload"
