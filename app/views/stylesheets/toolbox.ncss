@@ -17,6 +17,7 @@ body {
 
 #toolbox {
   position:fixed;
+  font-size: 77%;
   tbody {
     overflow: auto; /* HACK so that toolbox elements are on top of flash */
   }
