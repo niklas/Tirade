@@ -974,10 +974,3 @@ jQuery.ui.button = function(options) {
   return button
 };
 
-jQuery.expr[':'].resource = function(obj, index, meta, stack) {
-  if ( match = meta[3].match(/^(\w+)\/(\w+)$/) ) {
-    return ($(obj).data('controller') == match[1] && $(obj).data('action') == match[2]);
-  } else {
-    return false;
-  }
-}
