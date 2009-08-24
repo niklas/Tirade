@@ -31,6 +31,8 @@ Rails::Initializer.run do |config|
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   config.plugins = [ :theme_support, :all ]
+  config.gem 'haml'
+  config.gem 'RedCloth', :lib => 'redcloth'
   config.gem 'andand'
   config.gem 'mime-types', :lib => 'mime/types'
   config.gem 'binarylogic-searchlogic', :source => 'http://gems.github.com', :lib => 'searchlogic'
