@@ -1,4 +1,5 @@
 module InterfaceHelper
+  include UtilityHelper
   include TextFilter # for markup
 
   # Opens up a Wrapper for an +accordion+ with 1 or more +acction_item+s. Use it as a block
