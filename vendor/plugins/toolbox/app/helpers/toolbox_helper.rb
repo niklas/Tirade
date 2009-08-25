@@ -29,100 +29,17 @@ module ToolboxHelper
     page.toolbox.frames(".#{action}.#{context.dom_id(record)}")
   end
 
-  def frame_for(record, partial='show', opts={})
-    add_class_to_html_options opts, 'frame'
-    add_class_to_html_options opts, partial
-    add_class_to_html_options opts, 'edit' if partial=='form'
-    if record.respond_to?(:resource_name)
-      add_class_to_html_options opts, 'new' if record.new_record?
-      add_class_to_html_options opts, dom_id(record)
-      add_class_to_html_options opts, record.resource_name
-    end
-    add_metadata_to_html_options opts, frame_metadata_for(record)
-    inner = frame_content_for(record, partial)
-    content_tag(:div, inner, opts)
+  def frame_for(thingy, partial='show', opts={})
+    FrameRenderer.for(thingy, partial, self, opts).to_s
   end
 
-  def frame_for_collection(collection, opts={})
-    partial = 'list'
-    add_class_to_html_options opts, 'frame'
-    add_class_to_html_options opts, 'index'
-    add_class_to_html_options opts, collection.first.resource_name unless collection.empty?
-    add_class_to_html_options opts, partial
-    add_metadata_to_html_options opts, frame_metadata_for(collection)
-    inner = frame_content_for_collection(collection, partial)
-    content_tag(:div, inner, opts)
+  def frame_content_for(thingy, partial='show', opts={})
+    FrameRenderer.for(thingy, partial, self, opts).inner
   end
 
-  def frame_content_for_collection(collection, partial='list', opts={})
-    opts.reverse_merge!({
-      :layout => '/layouts/toolbox',
-      :partial => "/#{partial}",
-      :object => collection,
-      :locals => collection ? {
-        resource_name.pluralize.to_sym => collection
-      } : nil
-    })
-    render opts
-  end
 
-  def frame_content_for(record, partial='show', opts={})
-    opts.reverse_merge!({
-      :layout => '/layouts/toolbox',
-      :partial => "/#{partial}",
-      :object => record,
-      :locals => record ? {
-        resource_name.to_sym => record
-      } : nil
-    })
-    begin
-      render(opts)
-    rescue ActionView::MissingTemplate => e
-      # try to add the table name to the partial path
-      if opts[:partial] !~ %r~./~
-        opts[:partial] = "/#{record.table_name}/#{partial}"
-        retry
-      else
-        raise e
-      end
-    end
-  end
-
-  def frame_metadata_for(thingy, meta={})
-    if thingy.respond_to?(:each)
-      frame_metadata_for_collection(thingy, meta)
-    else
-      frame_metadata_for_record(thingy, meta)
-    end
-  end
-
-  def frame_metadata_for_record(record, meta={})
-    meta.reverse_merge!({
-      :href => request.url, 
-      :title => record.title || "#{record.class_name} ##{record.id}", 
-      :action => controller.action_name, 
-      :controller => controller.controller_name,
-      :resource_name => resource_name,
-      :id => record.id
-    })
-  end
-
-  def frame_metadata_for_collection(collection, meta={})
-    meta.reverse_merge!({
-      :href => request.url, 
-      :title => controller.human_name.pluralize,
-      :action => controller.action_name, 
-      :controller => controller.controller_name,
-      :resource_name => resource_name
-    })
-  end
-
-  def push_frame_for(object,partial=nil, opts={})
-    if object.respond_to?(:each)
-      page.toolbox.push context.frame_for_collection(object, opts)
-    else
-      page.toolbox.push context.frame_for(object, partial, opts)
-    end
+  def push_frame_for(thingy,partial=nil, opts={})
+    page.toolbox.push context.frame_for(thingy, partial, opts)
   end
 
   def update_frame_for(object, partial='show', opts={})
@@ -194,29 +111,6 @@ module ToolboxHelper
   # returns the active list of models you set in your controller (@articles)
   def models
     (@models ||= instance_variable_get("@#{controller.controller_name}")) || raise("no #{controller.controller_name} loaded")
-  end
-
-  def prepare_content(content)
-    returning [] do |ary|
-      if content.is_a? Hash
-        content[:layout] ||= '/layouts/toolbox'
-        ary << content.delete(:title) || content[:object].andand.title || 'Foo Title'
-        begin
-          result = render(content)
-          ary << result
-        rescue ActionView::MissingTemplate => e 
-          if content[:partial] && content[:object] && content[:partial] !~ %r~./~ 
-            content[:partial] = "/#{content[:object].table_name}/#{content[:partial]}"
-            retry
-          else
-            raise e
-          end
-        end
-      else
-        ary << "#{context.controller.action_name} #{context.controller.controller_name}"
-        ary << content
-      end
-    end
   end
 
 

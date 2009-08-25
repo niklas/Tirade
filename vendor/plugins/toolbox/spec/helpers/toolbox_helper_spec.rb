@@ -67,7 +67,7 @@ describe ToolboxHelper do
       :locals => {:documents => all_documents},
       :layout => '/layouts/toolbox'
     ).and_return('list of documents')
-    helper.frame_for_collection(all_documents).should have_tag("div.frame.index.document")
+    helper.frame_for(all_documents, 'list').should have_tag("div.frame.index.document")
   end
 
   it "should help to push a frame to toolbox to show a record" do
@@ -82,7 +82,7 @@ describe ToolboxHelper do
 
   it "should help to push a frame for a collection" do
     5.times { Factory(:document) }
-    helper.stub!(:frame_for_collection).and_return("Frame with collection")
+    helper.stub!(:frame_for).and_return("Frame with collection")
     rjs_for.push_frame_for(Document.all).should == %Q[Toolbox.push("Frame with collection");]
   end
 
