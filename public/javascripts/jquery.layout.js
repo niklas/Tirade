@@ -145,10 +145,10 @@ $(function() {
   });
 
 
-  $('div.page').livequery(function() {
+  $('body > div.page_margins > div.page').livequery(function() {
     $(this).focusable({parent: null, children: '>div.grid'});
   });
-  $('div.page div.grid').livequery(function() {
+  $('body > div.page_margins > div.page div.grid').livequery(function() {
     var $grid = $(this);
     $grid.focusable({
       parent: 'div.grid, div.page', 
@@ -180,7 +180,7 @@ $(function() {
         .appendTo($grid);
     };
   });
-  $('div.page div.grid div.rendering').livequery(function() {
+  $('body > div.page_margins > div.page div.grid div.rendering').livequery(function() {
     var $rendering = $(this);
     $rendering.focusable({
       parent: 'div.grid', 
