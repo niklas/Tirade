@@ -108,3 +108,15 @@ class CollectionFrameRenderer < FrameRenderer
     css << collection.first.resource_name unless collection.empty?
   end
 end
+
+class ExceptionFrameRenderer < FrameRenderer
+  alias_method :exception, :thingy
+  def css
+    super + %w(error exception)
+  end
+  def render_options
+    super.merge({
+      :partial => "/toolbox/#{partial}"
+    })
+  end
+end

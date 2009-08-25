@@ -62,12 +62,7 @@ module ToolboxHelper
               exception.class.name
             end
     partial = ApplicationController.rescue_templates[exception.class.name]
-    inner = render(
-      :partial => "/toolbox/#{partial}",
-      :layout => '/layouts/toolbox',
-      :object => exception
-    )
-    content_tag(:div, inner, :class => 'frame error')
+    ExceptionFrameRenderer.new(exception, partial, self).to_s
   end
 
   # Update a single attribute with jquery.
