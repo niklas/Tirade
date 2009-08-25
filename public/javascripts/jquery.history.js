@@ -30,7 +30,7 @@
           .addClass('item')
           .addClass('ui-state-default ui-corner-left ui-widget-content')
           .css('cursor', 'pointer')
-          .text( $frame.attr('title') )
+          .html( $frame.data('title') || $frame.attr('title') )
           .hover(
             function() { $(this).addClass('ui-state-hover') },
             function() { $(this).removeClass('ui-state-hover') }

@@ -146,13 +146,8 @@ var Toolbox = {
 
     this.body.bind('prev.serialScroll', this.refreshBackButton );
     this.body.bind('next.serialScroll', this.refreshBackButton );
+    this.body.bind('notify.serialScroll', this.setTitle );
     this.refreshBackButton();
-
-    // Set Title of last frame
-    $('> div.content > div.frame:last', this.body).livequery(function() { 
-      Toolbox.setTitle();
-    });
-
 
     $('> div.content > div.frame', this.body).livequery(function() {
       $(this).frameInToolbox();
@@ -256,6 +251,7 @@ var Toolbox = {
       var $frame = $(frame).closest('.frame');
       var index = Math.max(0, this.frames().index($frame));
     } else {
+      var $frame = this.frames().eq(index);
       var index = frame;
     }
     this.currentFrameIndex = index;
@@ -288,10 +284,10 @@ var Toolbox = {
   removeLastFrame: function() {
     var frame = Toolbox.last().remove();
     Toolbox.element().trigger('toolbox.frame.removed', frame);
-    Toolbox.setTitle();
     History.pop();
     Toolbox.refreshBackButton();
     Toolbox.frameCount = Toolbox.frames().length;
+    Toolbox.currentFrameIndex--;
   },
   refreshBackButton: function() {
     if ( Toolbox.frameCount > 1 )
@@ -330,7 +326,11 @@ var Toolbox = {
     this.setTitle(options.title);
   },
   setTitle: function(title) {
-    return $('span#ui-dialog-title-toolbox_body').html( title || Toolbox.last().attr('title'));
+    if (!title) {
+      title = Toolbox.currentFrame().data('title') || 
+          Toolbox.currentFrame().attr('title');
+    }
+    return $('span#ui-dialog-title-toolbox_body').html( title );
   },
   setClipboard: function(html) {
     return this.clipboard.html(html);
@@ -382,6 +382,9 @@ var Toolbox = {
   },
   frameByHref: function(href,rest) {
     return this.frames('[href=' + href + ']'+(rest||''))
+  },
+  currentFrame: function() {
+    return this.frames().eq(this.currentFrameIndex);
   },
   scroller: function(rest) {
     return this.element('> div.body'+(rest||''));
@@ -727,7 +730,8 @@ jQuery.fn.frameInToolbox = function(options) {
     $frame.attr('role', 'frame');
 
     var meta = $frame.metadata();
-    if (meta.length) {
+    if (meta.href) {
+      Toolbox.setTitle(meta.title);
       $frame
         .data('url', meta.href)
         .data('title', meta.title)

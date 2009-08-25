@@ -5,81 +5,82 @@
 
 
 
-// Auto preview
-jQuery.fn.preview = function() {
-  var url = $(this).attr('action') + '/preview';
-  var form = $(this);
-  var fetchPreview = function(data) {
-    $.ajax({
-      url: url, 
-      type: 'POST',
-      data: data || form.formSerialize()
-    });
-  };
-  Toolbox.scroller().one('prev', function() {
-    fetchPreview(form.find('input[name=authenticity_token],input[name=_method],input[name=context_page_id]').serialize()); /* reset old state */
-  });
-
-  form.formWatch({callback: fetchPreview});
-}
-
-// Apply roles classes from cookie (for body etc.)
-jQuery.fn.applyRoles = function() {
-  var e = $(this);
-  if ($.cookie("roles")) {
-    $(e[0].className.split(/ /)).each(function(i,cls) {
-      if (cls.match(/role_\S*/))
-        e.removeClass(cls)
-    });
-    $($.cookie("roles").split(/&/)).each(function(i,role) {
-      e.addClass('role_' + role);
-    });
-    e.addClass('cookie_roles');
-  }
-  return(e);
-}
-
-jQuery.fn.surrounds = function(position) {
-  me = $(this);
-  meoff = me.offset();
-  return(
-      meoff.top < position.top && meoff.left < position.left &&
-      meoff.top + me.height() > position.top &&
-      meoff.left + me.width() > position.left
-  );
-}
-
-jQuery.fn.beBusy = function(message) {
-  var e = $(this);
-  e.appendDom([
-    { tagName: 'div', class: 'busy', childNodes: [
-      { tagName: 'span', class: 'message', innerHTML: 'Loading' },
-      { tagName: 'img', class: 'status', src: '/images/toolbox/pentagon.gif' }
-    ] },
-  ]);
-
-  if (message)
-    $('span.message', e).text(message);
-    
-    return e.fadeIn(230);
-}
-jQuery.fn.unBusy = function() {
-  return $('div.busy', this).fadeOut(230).remove();
-}
 
 
 ChiliBook.recipeFolder = 'javascripts/syntax/'
 
-$.ajaxSetup({
-  dataType: 'script',
-  beforeSend: function(request) {
-    request.setRequestHeader("Tirade-Page", $('div.page').resourceId() )
-  }
-});
-
-jQuery.metadata.setType( 'attr', 'data' );
-
 $(function() {
+  // Auto preview
+  $.fn.preview = function() {
+    var url = $(this).attr('action') + '/preview';
+    var form = $(this);
+    var fetchPreview = function(data) {
+      $.ajax({
+        url: url, 
+        type: 'POST',
+        data: data || form.formSerialize()
+      });
+    };
+    Toolbox.scroller().one('prev', function() {
+      fetchPreview(form.find('input[name=authenticity_token],input[name=_method],input[name=context_page_id]').serialize()); /* reset old state */
+    });
+
+    form.formWatch({callback: fetchPreview});
+  }
+
+  // Apply roles classes from cookie (for body etc.)
+  $.fn.applyRoles = function() {
+    var e = $(this);
+    if ($.cookie("roles")) {
+      $(e[0].className.split(/ /)).each(function(i,cls) {
+        if (cls.match(/role_\S*/))
+          e.removeClass(cls)
+      });
+      $($.cookie("roles").split(/&/)).each(function(i,role) {
+        e.addClass('role_' + role);
+      });
+      e.addClass('cookie_roles');
+    }
+    return(e);
+  }
+
+  $.fn.surrounds = function(position) {
+    me = $(this);
+    meoff = me.offset();
+    return(
+        meoff.top < position.top && meoff.left < position.left &&
+        meoff.top + me.height() > position.top &&
+        meoff.left + me.width() > position.left
+    );
+  }
+
+  $.fn.beBusy = function(message) {
+    var e = $(this);
+    e.appendDom([
+      { tagName: 'div', class: 'busy', childNodes: [
+        { tagName: 'span', class: 'message', innerHTML: 'Loading' },
+        { tagName: 'img', class: 'status', src: '/images/toolbox/pentagon.gif' }
+      ] },
+    ]);
+
+    if (message)
+      $('span.message', e).text(message);
+      
+      return e.fadeIn(230);
+  }
+  $.fn.unBusy = function() {
+    return $('div.busy', this).fadeOut(230).remove();
+  }
+
+  $.ajaxSetup({
+    dataType: 'script',
+    beforeSend: function(request) {
+      request.setRequestHeader("Tirade-Page", $('div.page').resourceId() )
+    }
+  });
+
+  $.metadata.setType( 'attr', 'data' );
+
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
   $('a.with_toolbox').livequery(function() { $(this).useToolbox(); });
