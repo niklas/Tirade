@@ -47,7 +47,7 @@ class FrameRenderer
     {
       :layout => '/layouts/toolbox',
       :object => thingy,
-      :partial => "/#{partial}"
+      :partial => partial
     }
   end
 
