@@ -144,6 +144,7 @@ class CollectionFrameRenderer < FrameRenderer
     css = super
     css << 'index'
     css << collection.first.resource_name unless collection.empty?
+    css
   end
 end
 
