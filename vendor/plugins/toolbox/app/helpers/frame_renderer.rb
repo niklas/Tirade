@@ -3,7 +3,7 @@ class FrameRenderer
   def initialize(thingy, partial, template, options={})
     @thingy = thingy
     @template = template
-    @partial = partial
+    @partial = partial || default_partial
     @options = options
   end
 
@@ -15,12 +15,27 @@ class FrameRenderer
     end
   end
 
+  def default_partial
+    'show'
+  end
+
   def to_s
     template.content_tag(:div, inner, html_options)
   end
 
   def inner
-    template.render render_options
+    tried_with_slash = false
+    begin
+      template.render render_options
+    rescue ActionView::MissingTemplate => e
+      if !partial.starts_with?('/') && !tried_with_slash
+        tried_with_slash = true
+        @partial = "/#{partial}"
+        retry
+      else
+        raise e
+      end
+    end
   end
 
   def html_options
@@ -66,6 +81,10 @@ class RecordFrameRenderer < FrameRenderer
     })
   end
 
+  def default_partial
+    'show'
+  end
+
   def render_options
     super.merge({
       :locals => record ? {
@@ -101,7 +120,9 @@ class CollectionFrameRenderer < FrameRenderer
       } : nil
     })
   end
-
+  def default_partial
+    'list'
+  end
   def css
     css = super
     css << 'index'
