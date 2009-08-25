@@ -24,12 +24,10 @@ class FrameRenderer
   end
 
   def inner
-    tried_with_slash = false
     begin
       template.render render_options
     rescue ActionView::MissingTemplate => e
-      if !partial.starts_with?('/') && !tried_with_slash
-        tried_with_slash = true
+      if !partial.starts_with?('/')
         @partial = "/#{partial}"
         retry
       else
@@ -87,6 +85,21 @@ class RecordFrameRenderer < FrameRenderer
 
   def default_partial
     'show'
+  end
+
+  def inner
+    tried_with_name = false
+    begin
+      super
+    rescue ActionView::MissingTemplate => e
+      if !tried_with_name # already tried_with_slash
+        tried_with_name = true
+        @partial = "/#{record.table_name}#{partial}"
+        retry
+      else
+        raise e
+      end
+    end
   end
 
   def render_options

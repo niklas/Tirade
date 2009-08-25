@@ -86,12 +86,25 @@ module ToolboxSpecHelper
     have_text( %r~&quot;title&quot;: &quot;#{expected}&quot;~)
   end
 
+  def set_notification(expected)
+    have_text %r[\$\.gritter\.add\(\{"text": ".*#{Regexp.escape expected}.*"\}\)]
+  end
+
   def set_toolbox_status(expected)
     have_text( %r~Toolbox.setStatus\(".*#{expected}.*"\)~)
   end
 
+  def select_frame(expected)
+    resource = Regexp.escape(expected)
+    have_text( %r~Toolbox.frames\(":resource\(#{resource}\)"\)~)
+  end
+
   def pop_frame_and_refresh_last
     have_text( /Toolbox.popAndRefreshLast\(\)/ )
+  end
+
+  def request_refresh_for(object, action="show")
+    have_text %r[Toolbox\.frames\("\.#{action}\.#{object.class.to_s.underscore}_#{object.id}"\)\.refresh\(\)]
   end
 
   def push_frame(expected='')

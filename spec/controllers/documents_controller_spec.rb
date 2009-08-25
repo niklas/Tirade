@@ -208,10 +208,10 @@ describe DocumentsController do
         lambda { do_request }.should change(Document,:count).by(1)
       end
 
-      it "should update the last toolbox frame with 'show'" do
+      it "should update the 'new' frame with 'show'" do
         do_request
         response.should render_template('contents/_show.html.erb')
-        response.should update_last_frame
+        response.should select_frame('documents/new')
         response.should set_toolbox_header('Document #\d+')
       end
 
@@ -251,7 +251,7 @@ describe DocumentsController do
 
       it "should show validation errors" do
         do_request
-        response.should set_toolbox_status('Failed to create Document')
+        response.should set_notification('Failed to create Document')
       end
 
       it "should not add the unsaved Document to the clipboard" do
@@ -304,9 +304,9 @@ describe DocumentsController do
       it_should_behave_like 'every request with form'
       it_should_behave_like 'every request that sets flash messages'
 
-      it "should update the matching 'show' frames by url" do
+      it "should request refresh for all 'show' frames for the document" do
         do_request
-        response.body.should include(%Q~Toolbox.frameByHref("#{document_path(@document)}").html(~)
+        response.body.should request_refresh_for(@document, 'show')
       end
     end
 
@@ -342,7 +342,7 @@ describe DocumentsController do
 
       it "should show validation errors" do
         do_request
-        response.should set_toolbox_status('Failed to update Document')
+        response.should set_notification('Failed to update Document')
       end
 
     end
