@@ -65,19 +65,19 @@ describe PublicController do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
       Page.should_receive(:find_by_url).with('foo').and_return( nil )
       get :index, :path => ['foo','bar']
-      assigns[:page].should be_nil
+      assigns[:page].should be_new_record
     end
     it "should accept '/foo/bar' with extra param" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
       Page.should_receive(:find_by_url).with('foo').and_return( nil )
       get :index, :path => ['foo','bar'], :q => 'some param'
-      assigns[:page].should be_nil
+      assigns[:page].should be_new_record
     end
     it "should accept '/foo/bar' with extra params" do
       Page.should_receive(:find_by_url).with('foo/bar').and_return( nil )
       Page.should_receive(:find_by_url).with('foo').and_return( nil )
       get :index, :path => ['foo','bar'], :q => 'some param', :x => 'you know', :y => 'do we need this?'
-      assigns[:page].should be_nil
+      assigns[:page].should be_new_record
     end
     it "should accept '/portal/children-section'" do
       Page.should_receive(:find_by_url).with('portal/children-section').and_return( pages(:children_section) )
@@ -96,7 +96,7 @@ describe PublicController do
       Page.should_receive(:find_by_url).with('part1/part2').and_return( nil )
       Page.should_receive(:find_by_url).with('part1').and_return( nil )
       get :index, :path => %w(part1 part2 part3 part4 part5)
-      assigns[:page].should be_nil
+      assigns[:page].should be_new_record
       assigns[:page_path].should be_empty
       assigns[:trailing_path].should == %w(part1 part2 part3 part4 part5)
     end
@@ -126,11 +126,60 @@ end
 
 describe PublicController, "accessing not existing page" do
   integrate_views
+  def do_request
+    get :index, :path => %w(posts 1)
+  end
   describe "not logged in" do
     it "should be successful" do
-      get :index, :path => %w(posts 1)
+      do_request
       response.should be_success
     end
-    it "should be 'Not Found'"
+    it "should be 'Not Found'" do
+      do_request
+      response.should  have_tag('div.error', /not found/i)
+    end
+  end
+end
+
+describe PublicController, "accessing a page without layout" do
+  integrate_views
+  before( :each ) do
+    login_standard
+    login_with_groups :layout_administration
+    @page = Factory(:page, :layout => nil)
+  end
+
+  def do_request
+    get :index, :path => @page.url.split('/')
+  end
+
+  it "should be successful" do
+    do_request
+    response.should be_success
+  end
+
+  it "should show warning about the page not having a layout" do
+    do_request
+    response.should have_tag('div.page_margins div.page') do
+      with_tag 'div.warning', /no layout/i
+    end
+  end
+
+  describe "without any grids in the database" do
+    before( :each ) do
+      Grid.destroy_all
+    end
+    it "should offer to create one" do
+      do_request
+      response.should have_tag('div.page') do
+        with_tag 'div.warning' do
+          with_tag('a.new.grid.with_toolbox')
+        end
+      end
+    end
+  end
+
+  describe "with some grids in the database" do
+    it "should present them for selection"
   end
 end

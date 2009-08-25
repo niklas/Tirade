@@ -10,7 +10,7 @@
     - if page
       - renderings = page.renderings.for_grid(grid)
       - if renderings.empty?
-        = render(:partial => 'grids/without_renderings', :object => grid, :page => page)
+        = render(:partial => 'grids/without_renderings', :object => grid, :locals => {:page => page})
       - else
         - renderings.each do |rendering|
           = render_rendering(rendering, :page => page, :grid => grid)

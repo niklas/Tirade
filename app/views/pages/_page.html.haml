@@ -3,4 +3,4 @@
     %div.page{:class => dom_id(page), :title => page.title}
       = render_grid(layout, :page => page)
 -else
-  = page_without_layout_warning(page)
+  = render :partial => 'pages/without_layout', :object => page, :locals => {:page => page}

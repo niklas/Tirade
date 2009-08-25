@@ -17,7 +17,7 @@ end
 
 Factory.define :page do |f|
   f.sequence(:title) { |i| "Page ##{i}"}
-  f.sequence(:url) { |i| "/page/auto/#{i}"}
+  f.sequence(:url) { |i| "page/auto-#{i}"}
   f.width '500px'
   f.alignment 'center'
   f.association :layout, :factory => :grid

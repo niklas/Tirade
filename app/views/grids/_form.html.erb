@@ -7,6 +7,7 @@
       <%= f.select :division, Grid::Divisions.keys %>
       <%= f.text_field :title %>
       <%= f.check_box :inherit_renderings %>
+      <%= f.hidden_field :page_id %>
     <% end %>
 
     <% unless (grids_renderings = Rendering.for_grid(grid)).empty? %>

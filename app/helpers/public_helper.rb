@@ -7,7 +7,7 @@ module PublicHelper
   def title
     returning '' do |title|
       if @page
-        title << @page.title
+        title << @page.title unless @page.title.blank?
       end
       if main = Settings.title || 'Tirade'
         title << " - #{main}"

@@ -192,6 +192,20 @@ class Grid < ActiveRecord::Base
     self.class.create(:yui => new_yui, :child_id => self.id)
   end
 
+  attr_reader :page_id
+  def page_id=(page_id)
+    @page_id = page_id.to_i
+  end
+  def current_page
+    page_id && Page.find_by_id(page_id)
+  end
+  after_create do |grid|
+    if page = grid.current_page
+      page.layout = grid
+      page.save!
+    end
+  end
+
   attr_writer :child_id
   protected
   def auto_create_missing_children

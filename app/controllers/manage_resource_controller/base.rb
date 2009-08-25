@@ -3,6 +3,8 @@ module ManageResourceController
 
     helper :interface
     helper :toolbox
+    helper :utility
+    helper :rjs
     helper_method :resource_name
     helper_method :human_name
     helper_method :object

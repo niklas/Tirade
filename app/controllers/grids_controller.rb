@@ -2,7 +2,7 @@ class GridsController < ManageResourceController::Base
   # TODO spec and make work again
   before_filter :login_required
   #before_filter :fetch_associated_rendering, :only => [:edit, :update]
-  before_filter :fetch_grid, :except => [:index, :new]
+  before_filter :fetch_grid, :except => [:index, :new, :create]
   
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
@@ -10,6 +10,15 @@ class GridsController < ManageResourceController::Base
   def index
     @models = @grids = Grid.find(:all, :conditions => {:parent_id => nil})
     render_toolbox_action :index
+  end
+
+  def update_page_on_create(page)
+    super
+    if thepage = @grid.current_page
+      page.focus_on(thepage)
+      page.clear
+      page.insert_page(thepage)
+    end
   end
 
   def after_update_toolbox_for_destroyed(page)

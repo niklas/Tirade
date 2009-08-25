@@ -1,4 +1,2 @@
-page.push_toolbox_content(
-  :partial => 'page_not_found',
-  :title => 'Page not found'
-)
+page.clear
+page.select('body').append(render(:partial => 'page_not_found'))

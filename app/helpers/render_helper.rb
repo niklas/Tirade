@@ -6,6 +6,7 @@ module RenderHelper
   end
 
   def render_page(thepage, locals = {})
+    locals.reverse_merge! :page => thepage
     render(:partial => 'pages/page', :object => thepage, :locals => locals)
   end
 
@@ -42,7 +43,7 @@ module RenderHelper
   end
 
   def insert_page(thepage)
-    page.select('body').prepend render(:inline => "<%= render_page(thepage) %>" , :locals => {:thepage => thepage})
+    page.select('body').prepend render_page(thepage)
   end
 
   def focus_on(record, options={})

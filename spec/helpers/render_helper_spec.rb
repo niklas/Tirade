@@ -10,7 +10,7 @@ describe RenderHelper, 'rendering' do
       helper.should_receive(:render).with(
         :partial => 'pages/page',
         :object => pages(:main),
-        :locals => {}
+        :locals => {:page => pages(:main) }
       ).and_return('page partial')
       helper.render_page( pages(:main) ).should == 'page partial'
     end
