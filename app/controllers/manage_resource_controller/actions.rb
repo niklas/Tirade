@@ -65,7 +65,7 @@ module ManageResourceController
           target.html(page.context.list_of(collection, :force_list => true))
         end
       else
-        page.push_frame_for(collection)
+        page.push_frame_for(collection,'list')
       end
     end
 
