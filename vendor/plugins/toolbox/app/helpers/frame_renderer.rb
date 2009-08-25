@@ -52,7 +52,7 @@ class FrameRenderer
 
   def meta
     {
-      :href => template.send(:request).url, 
+      :href => request.url, 
       :action => controller.action_name, 
       :controller => controller.controller_name
     }
@@ -68,6 +68,10 @@ class FrameRenderer
 
   def controller
     template.send(:controller)
+  end
+
+  def request
+    template.send(:request)
   end
 end
 
