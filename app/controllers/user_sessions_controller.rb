@@ -20,7 +20,7 @@ class UserSessionsController < ManageResourceController::Base
   end
 
   def set_lockdown_values
-    if user = @user_session.user
+    if user = @user_session.andand.user
       add_lockdown_session_values(user)
     end
   end
