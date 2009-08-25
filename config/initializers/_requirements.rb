@@ -5,7 +5,7 @@
 #end
 
 require 'monkey_patches'
+require 'acting'
 require 'libxml'
 require 'tirade'
-require 'acting'
 
