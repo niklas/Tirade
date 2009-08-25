@@ -6,7 +6,7 @@ describe ToolboxHelper do
   before( :each ) do
     helper.stub!(:render).and_return("stubbed render call")
     @document = Factory(:document)
-    controller.stub!(:human_name).and_return('Documents')
+    helper.stub!(:human_name).and_return('Documents')
     helper.stub!(:resource_name).and_return('document')
   end
 
@@ -33,7 +33,7 @@ describe ToolboxHelper do
       :locals => {:document => @document}, 
       :layout => '/layouts/toolbox'
     ).and_return('content')
-    helper.frame_for(@document).should have_tag("div.frame.show.document.document_#{@document.id}")
+    helper.frame_for(@document).should have_tag("div.frame.show.document.document_#{@document.id}[data]")
   end
 
   it "should build a frame to edit a record" do
@@ -43,7 +43,7 @@ describe ToolboxHelper do
       :locals => {:document => @document},
       :layout => '/layouts/toolbox'
     ).and_return('form')
-    helper.frame_for(@document, 'form').should have_tag("div.frame.edit.document_#{@document.id}")
+    helper.frame_for(@document, 'form').should have_tag("div.frame.edit.document_#{@document.id}[data]")
   end
 
 
@@ -55,7 +55,7 @@ describe ToolboxHelper do
       :locals => {:document => document},
       :layout => '/layouts/toolbox'
     ).and_return('form')
-    helper.frame_for(document, 'form', :title => 'New Document').should have_tag("div.frame.new.document.new_document")
+    helper.frame_for(document, 'form', :title => 'New Document').should have_tag("div.frame.new.document.new_document[data]")
   end
 
   it "should build a frame for a collection" do
@@ -67,7 +67,7 @@ describe ToolboxHelper do
       :locals => {:documents => all_documents},
       :layout => '/layouts/toolbox'
     ).and_return('list of documents')
-    helper.frame_for(all_documents, 'list').should have_tag("div.frame.index.document")
+    helper.frame_for(all_documents, 'list').should have_tag("div.frame.index.document[data]")
   end
 
   it "should help to push a frame to toolbox to show a record" do
@@ -95,7 +95,7 @@ describe ToolboxHelper do
       :object => error,
       :layout => '/layouts/toolbox'
     ).and_return('error')
-    helper.frame_for_error(error).should have_tag('div.frame.error')
+    helper.frame_for_error(error).should have_tag('div.frame.error[data]')
   end
 
 

@@ -51,18 +51,7 @@ module ToolboxHelper
   end
 
   def frame_for_error(exception)
-    title = case exception
-            when ActionView::TemplateError
-              <<-EOTITLE 
-                #{exception.original_exception.class.name} in
-                #{request.parameters["controller"].andand.capitalize}
-                ##{request.parameters["action"]}
-              EOTITLE
-            else
-              exception.class.name
-            end
-    partial = ApplicationController.rescue_templates[exception.class.name]
-    ExceptionFrameRenderer.new(exception, partial, self).to_s
+    ExceptionFrameRenderer.new(exception, nil, self).to_s
   end
 
   # Update a single attribute with jquery.
