@@ -16,8 +16,8 @@ module UtilityHelper
     options
   end
 
-  def metadata(data)
-    content_tag :script, data.to_json, :type => 'application/json', :class => 'metadata'
+  def add_metadata_to_html_options(options, data)
+    options[:data] = data.to_json
   end
 
 end

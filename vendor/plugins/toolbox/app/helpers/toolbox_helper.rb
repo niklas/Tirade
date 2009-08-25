@@ -38,8 +38,8 @@ module ToolboxHelper
       add_class_to_html_options opts, dom_id(record)
       add_class_to_html_options opts, record.resource_name
     end
+    add_metadata_to_html_options opts, frame_metadata_for(record)
     inner = frame_content_for(record, partial)
-    inner << frame_metainfo_for(record)
     content_tag(:div, inner, opts)
   end
 
@@ -49,8 +49,8 @@ module ToolboxHelper
     add_class_to_html_options opts, 'index'
     add_class_to_html_options opts, collection.first.resource_name unless collection.empty?
     add_class_to_html_options opts, partial
+    add_metadata_to_html_options opts, frame_metadata_for(collection)
     inner = frame_content_for_collection(collection, partial)
-    inner << frame_metadata_for_collection(collection)
     content_tag(:div, inner, opts)
   end
 
@@ -88,7 +88,15 @@ module ToolboxHelper
     end
   end
 
-  def frame_metainfo_for(record, meta={})
+  def frame_metadata_for(thingy, meta={})
+    if thingy.respond_to?(:each)
+      frame_metadata_for_collection(thingy, meta)
+    else
+      frame_metadata_for_record(thingy, meta)
+    end
+  end
+
+  def frame_metadata_for_record(record, meta={})
     meta.reverse_merge!({
       :href => request.url, 
       :title => record.title || "#{record.class_name} ##{record.id}", 
@@ -97,18 +105,16 @@ module ToolboxHelper
       :resource_name => resource_name,
       :id => record.id
     })
-    metadata(meta)
   end
 
   def frame_metadata_for_collection(collection, meta={})
     meta.reverse_merge!({
       :href => request.url, 
-      :title => human_name.pluralize,
+      :title => controller.human_name.pluralize,
       :action => controller.action_name, 
       :controller => controller.controller_name,
       :resource_name => resource_name
     })
-    metadata(meta)
   end
 
   def push_frame_for(object,partial=nil, opts={})

@@ -33,9 +33,7 @@ describe ToolboxHelper do
       :locals => {:document => @document}, 
       :layout => '/layouts/toolbox'
     ).and_return('content')
-    helper.frame_for(@document).should have_tag("div.frame.show.document.document_#{@document.id}") do
-      with_tag('script.metadata[type=application/json]')
-    end
+    helper.frame_for(@document).should have_tag("div.frame.show.document.document_#{@document.id}")
   end
 
   it "should build a frame to edit a record" do
@@ -45,9 +43,7 @@ describe ToolboxHelper do
       :locals => {:document => @document},
       :layout => '/layouts/toolbox'
     ).and_return('form')
-    helper.frame_for(@document, 'form').should have_tag("div.frame.edit.document_#{@document.id}") do
-      with_tag('script.metadata[type=application/json]')
-    end
+    helper.frame_for(@document, 'form').should have_tag("div.frame.edit.document_#{@document.id}")
   end
 
 
@@ -59,9 +55,7 @@ describe ToolboxHelper do
       :locals => {:document => document},
       :layout => '/layouts/toolbox'
     ).and_return('form')
-    helper.frame_for(document, 'form', :title => 'New Document').should have_tag("div.frame.new.document.new_document") do
-      with_tag('script.metadata[type=application/json]')
-    end
+    helper.frame_for(document, 'form', :title => 'New Document').should have_tag("div.frame.new.document.new_document")
   end
 
   it "should build a frame for a collection" do
@@ -73,9 +67,7 @@ describe ToolboxHelper do
       :locals => {:documents => all_documents},
       :layout => '/layouts/toolbox'
     ).and_return('list of documents')
-    helper.frame_for_collection(all_documents).should have_tag("div.frame.index.document") do
-      with_tag('script.metadata[type=application/json]')
-    end
+    helper.frame_for_collection(all_documents).should have_tag("div.frame.index.document")
   end
 
   it "should help to push a frame to toolbox to show a record" do

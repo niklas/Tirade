@@ -77,7 +77,7 @@ $.ajaxSetup({
   }
 });
 
-jQuery.metadata.setType( 'elem', 'script' );
+jQuery.metadata.setType( 'attr', 'data' );
 
 $(function() {
   $('div.admin > a').livequery(function() { $(this).useToolbox(); });
