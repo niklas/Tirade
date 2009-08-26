@@ -42,7 +42,7 @@ module ManageResourceController
     def preview
       if object
         model.without_modification do
-          object.attributes = object_params
+          @object.update_attributes object_params
           respond_to do |wants|
             wants.js do
               render :update do |page|
@@ -110,7 +110,10 @@ module ManageResourceController
     end
 
     def update_page_on_edit(page)
-      page.push_frame_for(object, 'form')
+      model.without_modification do
+        object.attributes = object_params
+        page.push_frame_for(object, 'form')
+      end
     end
 
     def update_page_on_update(page)
