@@ -1,3 +1,9 @@
+set :application, (ENV['NAME'] || "tirade")
+set :scm, :git
+set :repository,  "git://github.com/niklas/Tirade.git" 
+set :git_enable_submodules,1
+set :local_repository, "."
+set :branch, 'master'
 
 set :target, (ENV['TARGET'] || ENV['Target'] || ENV['target'])
 if target.nil? || target.empty?
