@@ -7,7 +7,7 @@
   $.extend( $.tirade.resourceful, {
     delete: function(resource_name, id) {
       return $.ajax({
-        url: Routing[resource_name + '_path']({id: id}),
+        url: Routing[resource_name + '_path']({id: id, format:'js', authenticity_token: $.tirade.resourceful.authToken() }),
         type: 'DELETE', data: ''
       });
     },
@@ -24,6 +24,8 @@
       })
     },
     new: function(resource_name, attributes) {
+      attributes.format = 'js';
+      attributes.authenticity_token = $.tirade.resourceful.authToken();
       return $.ajax({
         url: Routing['new_' + resource_name + '_path'](attributes),
         type: 'GET'
@@ -43,7 +45,7 @@
     },
     edit: function(resource_name, id) {
       return $.ajax({
-        url: Routing['edit_' + resource_name + '_path']({id: id}),
+        url: Routing['edit_' + resource_name + '_path']({id: id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()}),
         type: 'GET'
       });
     },
@@ -58,6 +60,9 @@
         event.preventDefault(); event.stopPropagation();
         return false;
       })
+    },
+    authToken: function() {
+      return $('span.rails-auth-token:last').text();
     }
 
   });
@@ -100,7 +105,7 @@
 
   $.fn.resourceURL = function() {
     var typeAndId = $(this).typeAndId();
-    return Routing[typeAndId.resource + '_path']({id: typeAndId.id})
+    return Routing[typeAndId.resource + '_path']({id: typeAndId.id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()})
   };
 
 
