@@ -44,8 +44,16 @@ class FrameRenderer
     options
   end
 
+  def partial_name
+    if partial.index('/')
+      partial.split('/').last
+    else
+      partial
+    end
+  end
+
   def css
-    ['frame', partial.gsub('/','')]
+    ['frame', partial_name]
   end
 
   def meta
