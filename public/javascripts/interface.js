@@ -93,6 +93,7 @@ $(function() {
   $('ul.list > li > a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
   $('ul.list > li > a.index').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
   $('ul.list > li > a.edit').livequery(function() { $(this).uiIcon('pencil').useToolbox(); });
+  $('dd.record > a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
   //$('div#toolbox > div.body > div.content > div.frame a.new').livequery(function() { $(this).uiIcon('plus').useToolbox(); });
   //$('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).uiIcon('pencil').useToolbox(); });
   //$('div#toolbox > div.body > div.content > div.frame a.destroy').livequery(function() { $(this).uiIcon('trash').useToolbox(); });
