@@ -19,12 +19,12 @@ module Tirade
     def select_scope_from_pool(content_type)
       inner = returning '' do |html|
         html << @template.link_to('add', '#', :class => 'add')
-        html << @template.metadata(:columns => content_type.columns, :comparisons => content_type.comparisons_grouped_by_column)
         html << @template.link_to('OK', '#', :class => 'create_scope ok')
         html << @template.select_tag('select_comparison', [])
         html << @template.select_tag('select_column', [])
       end
-      wrap('define', {:label => "Define Scope for #{content_type}"}, inner)
+      meta = {:columns => content_type.columns, :comparisons => content_type.comparisons_grouped_by_column}
+      wrap('define', {:label => "Define Scope for #{content_type}", :data => meta.to_json}, inner)
     end
 
     # All possible scopes for given content type
