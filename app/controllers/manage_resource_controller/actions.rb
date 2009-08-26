@@ -130,5 +130,9 @@ module ManageResourceController
         end
       end
     end
+
+    def update_page_on_destroy(page)
+      page.select_frame_for(object).remove
+    end
   end
 end
