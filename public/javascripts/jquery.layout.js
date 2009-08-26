@@ -227,8 +227,9 @@ $(function() {
     if ($rendering.is('.without_content, .without_part')) {
       $('<a />')
         .text('Focus')
-        .href('#')
-        .click( $rendering.focus )
+        .attr('href', '#')
+        .attr('title', 'Focus')
+        .click( function() { $rendering.focusable('focus') } )
         .appendTo($rendering);
     };
   });

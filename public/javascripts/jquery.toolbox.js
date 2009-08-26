@@ -736,20 +736,23 @@ jQuery.fn.frameInToolbox = function(options) {
         .data('url', meta.href)
         .data('title', meta.title)
         .data('action', meta.action)
-        .data('controller', meta.controller);
+        .data('controller', meta.controller)
+        .data('resource_name', meta.resource_name);
     }
 
-    var $linkbar = $('ul.linkbar', frame)
-      .addClass('ui-widget-header ui-corner-bottom')
-      .find('a.ok')
-        .click(function(e) {
-          e.preventDefault();
-          Toolbox.pop();
-          return false;
-        }).uiIcon('circle-check')
-      .end();
+    var $linkbar = $('ul.linkbar', frame);
 
     if ($linkbar.length) {
+      $linkbar
+        .addClass('ui-widget-header ui-corner-bottom')
+        .find('a.ok')
+          .click(function(e) {
+            e.preventDefault();
+            Toolbox.pop();
+            return false;
+          }).uiIcon('circle-check')
+        .end();
+
       switch(meta.action) {
         case 'index':
           $.tirade.resourceful.newButton(meta.resource_name).opensToolbox().appendTo($linkbar);
