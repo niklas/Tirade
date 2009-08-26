@@ -139,7 +139,10 @@ var Toolbox = {
       event: null,
       items: 'div.frame',
       onBefore: Toolbox.overflowsOff,
-      onAfter:  Toolbox.overflowsOn,
+      onAfter:  function() {
+        Toolbox.overflowsOn();
+        $.tirade.history.sync();
+      },
       axis: 'x',
       duration: 555
     })
@@ -149,9 +152,10 @@ var Toolbox = {
     this.body.bind('notify.serialScroll', this.setTitle );
     this.refreshBackButton();
 
-    $('> div.content > div.frame', this.body).livequery(function() {
-      $(this).frameInToolbox();
-    });
+    $('> div.content > div.frame', this.body).livequery(
+      function() { $(this).frameInToolbox() },
+      function() { $.tirade.history.sync() }
+    );
 
     // Scroll to selected accordion section
     // TODO needed?
