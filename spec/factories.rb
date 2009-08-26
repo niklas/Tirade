@@ -31,7 +31,7 @@ end
 Factory.define :part do |f|
   f.sequence(:name) { |i| "Part ##{i}"}
   f.sequence(:filename) { |i| "part_#{i}" }
-  f.preferred_types %w(Content)
+  f.preferred_types %w(Document)
 end
 
 Factory.define :rendering do |f|
