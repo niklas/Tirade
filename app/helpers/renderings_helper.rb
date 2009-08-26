@@ -12,7 +12,7 @@ module RenderingsHelper
 
   def select_rendering(rendering)
     did = page.context.dom_id(rendering)
-    page.select("div.rendering.#{did}, div##{did}")
+    page.select("div.page_margins div.page div.rendering.#{did}")
   end
 
   def remove_rendering(rendering)
