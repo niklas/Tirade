@@ -820,7 +820,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
     form.action += '.js';
 
     if ($form.is('.edit_rendering')) $form.editRenderingFormInFrameInToolbox();
-    if ($form.is('.new_image')) $form.newImageFormInFrameInToolbox();
+    if ($form.is('.new_image.with_flash')) $form.newImageFormInFrameInToolbox();
 
     $('textarea.markitup.textile', form).livequery(function() {
       $(this).markItUp(myTextileSettings);

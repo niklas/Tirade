@@ -12,17 +12,17 @@ module ManageResourceController
           hide_action "update_page_on_failed_#{action}"
           send(action) do
             wants.js do
-              render :update do |page|
-                controller.send "update_page_on_#{action}", page
-                controller.render_flash_messages_as_notifications(page)
+              update_page_in_toolbox do |page|
+                self.send "update_page_on_#{action}", page
+                self.render_flash_messages_as_notifications(page)
               end
             end
             if ResourceController::FAILABLE_ACTIONS.include?(action)
               failure do
                 wants.js do
-                  render :update do |page|
-                    controller.send "update_page_on_failed_#{action}", page
-                    controller.render_flash_messages_as_notifications(page)
+                  update_page_in_toolbox do |page|
+                    self.send "update_page_on_failed_#{action}", page
+                    self.render_flash_messages_as_notifications(page)
                   end
                 end
               end
@@ -55,6 +55,20 @@ module ManageResourceController
     end
       
     private
+    # Handle file uploads through iframe, see jquery.form.js and render_to_parent
+    def update_page_in_toolbox
+      if  multipart_form?
+        responds_to_parent do
+          render :update do |page|
+            yield page
+          end
+        end
+      else
+        render :update do |page|
+          yield page
+        end
+      end
+    end
       # Update search results in last frame of toolbox or just push the list
     def update_page_on_index(page)
       if params[:search]

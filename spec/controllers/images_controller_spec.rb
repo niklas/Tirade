@@ -20,4 +20,30 @@ describe ImagesController do
     end
   end
 
+  describe "using Toolbox" do
+    before( :each ) do
+      login_standard
+      login_with_groups :admin_images
+    end
+
+    describe "uploading an image (multipart)" do
+      def do_request
+        filename = "%s/%s/%s" % [ File.dirname(__FILE__), '../../public/images', 'pentagon-tile.jpg' ]
+        file = ActionController::TestUploadedFile.new(filename)
+        post :create, :image => {:image => file }, :format => 'js'
+      end
+
+      it "should be successful" do
+        do_request
+        response.should be_success
+      end
+
+      it "should wrap the JS response into HTML for iframe support" do
+        do_request
+        response.body.should have_tag('html > body > script[type=text/javascript]', /window\.eval/)
+      end
+    end
+    
+  end
+
 end

@@ -5,7 +5,3 @@
   <%= f.file_field :image %>
   <%= f.submit 'Upload Images' %>
 <% end %>
-
-<% javascript_tag do %>
-  Toolbox.cookie ='<%= u cookies[session_key_name] %>';
-<% end %>

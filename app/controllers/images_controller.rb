@@ -4,7 +4,7 @@ class ImagesController < ManageResourceController::Base
 
   # TODO append .js in multipartform
   # TODO multiple jupload with flash or so..
-  def create
+  def old_create
     @model = @image = Image.new(params[:image])
 
     if @image.save

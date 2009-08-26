@@ -30,6 +30,11 @@ module ManageResourceController
       params[:commit].blank?
     end
 
+    # Is any given param not a string.
+    def multipart_form?
+      object_params.andand.values.andand.any? {|d| !d.is_a?(String)}
+    end
+
     def wants_refresh?
       !params[:refresh].blank?
     end
