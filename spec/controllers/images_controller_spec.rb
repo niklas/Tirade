@@ -30,6 +30,8 @@ describe ImagesController do
       def do_request
         filename = "%s/%s/%s" % [ File.dirname(__FILE__), '../../public/images', 'pentagon-tile.jpg' ]
         file = ActionController::TestUploadedFile.new(filename)
+        Image.any_instance.stubs(:valid?).returns(true)
+        Image.any_instance.stubs(:save).returns(true)
         post :create, :image => {:image => file }, :format => 'js'
       end
 
