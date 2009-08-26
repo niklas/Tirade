@@ -70,9 +70,6 @@ body div {
   .grid {
     position: relative;
     .empty {
-      div.admin {
-        display: block;
-      }
       height: 8em;
     }
   }
@@ -108,80 +105,29 @@ body div {
   div.tree ul.tree {
     margin: 0;
   }
-  .rendering {
-    position: relative;
-    clear: both;
-    .fake {
-      height: 8em;
-      span.message {
-        font-size: 130%;
-        padding: <%= @medium %>;
-        background-color: <%= @colors[:base] %>;
-        position: relative;
-        top: 23%; left: 42%;
+  .page_margins div.page div {
+    .rendering {
+      position: relative;
+      clear: both;
+      .fake {
+        height: 8em;
+        span.message {
+          font-size: 130%;
+          padding: <%= @medium %>;
+          background-color: <%= @colors[:base] %>;
+          position: relative;
+          top: 23%; left: 42%;
+        }
       }
     }
-  }
-  .rendering:hover > div.admin {
-    display: block;
-  }
-  .grid.hover                   { background: #aaa;}
-  .grid .grid.hover             { background: #bbb;}
-  .grid .grid .grid.hover       { background: #ccc;}
-  .grid .grid .grid .grid.hover { background: #ddd;}
-  .rendering.hover              { background: url(../images/pentagon-tile.jpg) repeat <%= @colors[:hover] %>;}
+    .grid.hover                   { background: #aaa;}
+    .grid .grid.hover             { background: #bbb;}
+    .grid .grid .grid.hover       { background: #ccc;}
+    .grid .grid .grid .grid.hover { background: #ddd;}
+    .rendering.hover              { background: url(../images/pentagon-tile.jpg) repeat <%= @colors[:hover] %>;}
 
-  > div.admin {
-    display: none;
-    a {
-      margin: 2px;
-      float: left;
-    }
-    span.handle {
-      position: static;
-      margin: 2px;
-      float: left;
-    }
-  }
-  .grid  > div.admin { 
-    background: url(../images/admin_corner_horizontal_br.png) no-repeat scroll 100% 0;
-    position: absolute;
-    top: 0; left: 10%;
-    width: auto;
-    height: 20px;
-    padding: 3px 20px 15px 7px;
-    z-index: 1;
-  }
-  .page {
-
-    *.grid.subcolumns > div.col > .grid > div.admin,
-    *.grid.subcolumns > div.col + div.col + div.col > .grid > div.admin {
-      left: auto; right: 0;
-      background: url(../images/admin_corner_horizontal_bl.png) no-repeat scroll 0 0;
-      padding: 3px 7px 15px 20px;
-    }
-    > .grid > div.admin,
-    *.grid.subcolumns > div.admin,
-    *.grid.subcolumns > div.col + div.col > .grid > div.admin { 
-      left: 0;  right: auto;
-      background: url(../images/admin_corner_horizontal_br.png) no-repeat scroll 100% 0;
-      padding: 3px 20px 15px 7px;
-    }
   }
 
-
-  .rendering > div.admin { 
-    background: url(../images/admin_corner_vertical.png) no-repeat scroll 0 100%;
-    position: absolute;
-    top: 0; right: 0;
-    width: 20px;
-    height: auto;
-    padding: 7px 3px 20px 15px;
-    z-index: 2;
-  }
-  .grid.subcl.leaf > div.rendering > div.admin {
-    top: 26px;
-  }
 }
 
 
