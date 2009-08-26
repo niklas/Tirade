@@ -39,7 +39,7 @@ Factory.define :rendering do |f|
   f.association :page
   f.association :grid
   f.assignment 'fixed'
-  f.content_type 'Content'
+  f.content_type 'Document'
   f.scope_definition({})
   f.plural false
 end
