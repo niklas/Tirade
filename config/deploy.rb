@@ -57,5 +57,10 @@ namespace :deploy do
   task :fix_plugins do
     run "find -P #{deploy_to}/shared/plugins -mindepth 1 -maxdepth 2 -type d -name '.git' -execdir git reset --hard ';'; true"
   end
+
+  desc "Restart Passenger by touching"
+  task :restart do
+    run "touch #{current_release}/tmp/restart.txt"
+  end
 end
 
