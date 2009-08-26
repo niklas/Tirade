@@ -69,8 +69,8 @@ module ActsAsConfigurable
 
         case item 
         when BooleanItem
-          @template.check_box_tag("#{@object_name}[options][#{item.name}]", "1", @object.options[item.name]) + 
-          @template.hidden_field_tag("#{@object_name}[options][#{item.name}]", "0")
+          @template.hidden_field_tag("#{@object_name}[options][#{item.name}]", "0") + 
+          @template.check_box_tag("#{@object_name}[options][#{item.name}]", "1", @object.options[item.name])
         else
           @template.text_field_tag("#{@object_name}[options][#{item.name}]", @object.options[item.name])
         end
