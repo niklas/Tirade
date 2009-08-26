@@ -47,6 +47,13 @@ class Rendering < ActiveRecord::Base
       {}
     end
   }
+  named_scope :for_content, lambda {|content|
+    if content
+      {:conditions => {:content_id => content.id, :content_type => content.class_name }}
+    else
+      {}
+    end
+  }
   attr_accessor :modifications
   before_save do |rendering|
     rendering.modifications = rendering.changes.dup

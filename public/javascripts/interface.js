@@ -12,7 +12,8 @@ ChiliBook.recipeFolder = 'javascripts/syntax/'
 $(function() {
   // Auto preview
   $.fn.preview = function() {
-    var url = $(this).attr('action') + '/preview';
+    var url = $.string( $(this).attr('action')  )
+      .sub(/\.js$/, function(match) { return "/preview"+match }).str;
     var form = $(this);
     var fetchPreview = function(data) {
       $.ajax({
@@ -174,9 +175,6 @@ $(function() {
       })
       .appendTo(item);
   });
-  $('form.edit_part, form.edit_rendering').livequery(function() { $(this).preview(); });
-  $('form.edit.content').livequery(function() { $(this).preview(); });
-  $('form.edit_page').livequery(function() { $(this).preview(); });
   $('body').applyRoles();
 
 

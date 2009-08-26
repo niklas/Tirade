@@ -46,7 +46,7 @@ module ManageResourceController
           respond_to do |wants|
             wants.js do
               render :update do |page|
-                controller.update_page_on_preview(page)
+                controller.send :update_page_on_preview, page
               end
             end
           end
@@ -123,6 +123,12 @@ module ManageResourceController
     end
 
     def update_page_on_preview(page)
+      if object.acts_as?(:content)
+        @context_page.renderings.for_content(object).each do |rendering|
+          rendering.content = object
+          page.update_rendering(rendering)
+        end
+      end
     end
   end
 end

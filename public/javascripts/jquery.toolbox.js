@@ -839,6 +839,8 @@ jQuery.fn.formInFrameInToolbox = function(options) {
          function() { $(this).addClass('ui-state-hover'); },
          function() { $(this).removeClass('ui-state-hover'); }
        );
+
+    $form.preview();
     
     $form.ajaxForm({
       dataType: 'script',
