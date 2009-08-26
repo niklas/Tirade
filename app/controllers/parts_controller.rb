@@ -1,8 +1,4 @@
 class PartsController < ManageResourceController::Base
-  index.before do
-    Part.sync!
-  end
-
   # TODO update renderings for part after update
 
   def after_update_toolbox_for_updated(page)
@@ -35,4 +31,10 @@ class PartsController < ManageResourceController::Base
       end
     end
   end
+
+  private
+  def sync_parts
+    Part.sync!
+  end
+  before_filter :sync_parts, :only => :index
 end

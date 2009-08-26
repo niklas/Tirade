@@ -139,10 +139,11 @@ class Part < ActiveRecord::Base
       self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
     rescue TemplateNotFound => e
       self.errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
+    rescue UnsupportedContentType => e
+      self.errors.add(:content_type, e.message)
     end
 
     must_have_valid_html
-
   end
 
   def must_have_valid_html
