@@ -1,2 +1,7 @@
 %div.warning.empty
-  Grid has no Renderings!
+  Grid has no Renderings. Focus it and add one or split
+  %ul
+  - Grid::NameByDivision.each do |divi, name|
+    - next if divi == 'leaf'
+    - next if divi == grid.division
+    %li= link_to name, edit_grid_path(grid, :grid => {:division => divi}), :class => 'edit grid with_toolbox'

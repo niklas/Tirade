@@ -14,15 +14,26 @@ class GridsController < ManageResourceController::Base
 
   def update_page_on_create(page)
     super
-    if thepage = @grid.current_page
+    if thepage = object.current_page
       page.focus_on(thepage)
       page.clear
       page.insert_page(thepage)
     end
   end
 
-  def after_update_toolbox_for_destroyed(page)
-    page.select_grid(@grid).remove
+  def update_page_on_destroy(page)
+    super
+    page.select_grid(object).remove
+  end
+
+  def update_page_on_preview(page)
+    super
+    page.update_grid_in_page(object, @context_page) if @context_page
+  end
+
+  def update_page_on_update(page)
+    super
+    page.update_grid_in_page(object, @context_page) if @context_page
   end
 
   # TODO create: assign the new grid to params[:page_id]'s Page
