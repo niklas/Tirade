@@ -32,7 +32,7 @@ module ManageResourceController
 
     # Is any given param not a string.
     def multipart_form?
-      object_params.andand.values.andand.any? {|d| d.is_a?(File)}
+      object_params.andand.values.andand.any? {|d| d.respond_to?(:content_type)}
     end
 
     def wants_refresh?
