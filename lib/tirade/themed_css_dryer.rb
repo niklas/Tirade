@@ -10,7 +10,8 @@ module Tirade::ThemedCssDryer
     if file.split(%r{[\\/]}).include?("..") || !File.exists?(file_path) || file.blank?
       return
     else
-      render :file => file_path
+      append_view_path("#{Theme.path_to_theme(params[:theme])}/stylesheets")
+      render :template => file_name, :content_type => 'text/css'
     end
   end
 
