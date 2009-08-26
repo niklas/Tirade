@@ -45,7 +45,7 @@ class FrameRenderer
   end
 
   def css
-    ['frame', partial]
+    ['frame', partial.gsub('/','')]
   end
 
   def meta
