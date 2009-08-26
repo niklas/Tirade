@@ -1,9 +1,8 @@
 <% content ||= form || @content %>
 
-<%= error_messages_for :content %>
-
 <% form_for(content) do |f| %>
   <% accordion do %>
+    <%= f.error_messages %>
 
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
