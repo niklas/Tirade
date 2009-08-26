@@ -5,7 +5,9 @@ module Tirade
     # I seem to be too stupid to overwrite a method by just including a Module
     def self.included(base)
       base.class_eval do
-        alias_method_chain :tag_name, :translation
+        # disabled, because we set the locale in the routes and do not have multi-language forms
+        # (editing two languages at the same time . even this could be done with to separate forms)
+        #alias_method_chain :tag_name, :translation
       end
     end
     def tag_name_with_translation

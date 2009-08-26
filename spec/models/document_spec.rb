@@ -9,9 +9,9 @@ describe Document do
     Document.should be_acts_as(:slugged)
   end
 
-  describe "from Factory" do
+  describe "build from Factory" do
     before( :each ) do
-      @document = Factory(:document)
+      @document = Factory.build(:document)
     end
 
     it "should be a Document" do
@@ -26,9 +26,14 @@ describe Document do
       @document.title.should_not be_blank
     end
 
+    it "should create default translation when saving" do
+      lambda { @document.save }.should change(DocumentTranslation, :count).by(1)
+    end
 
-    describe "in locale 'de'" do
+
+    describe "saved, switching to locale 'de'" do
       before( :each ) do
+        @document.save
         @old_locale = I18n.locale
         I18n.locale = :de
       end
@@ -83,6 +88,7 @@ describe Document do
         it "should keep the 'de' locale" do
           @updating.call
           @document.reload
+          @document.title.should be_a(Globalize::Translation)
           @document.title.should == 'Deutscher Titel'
           @document.title.locale.should == :de
         end
@@ -90,4 +96,5 @@ describe Document do
     end
 
   end
+
 end

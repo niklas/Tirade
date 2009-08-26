@@ -53,9 +53,9 @@ describe "/contents/new.html.erb" do
         without_tag("input#document_position[name=?]", "document[position]")
         without_tag("input#document_lft[name=?]", "document[lft]")
         without_tag("input#document_rgt[name=?]", "document[rgt]")
-        with_tag("input#document_title[name=?]", "document[translations][en][title]")
-        with_tag("textarea#document_description[name=?]", "document[translations][en][description]")
-        with_tag("textarea#document_body[name=?]", "document[translations][en][body]")
+        with_tag("input#document_title[name=?]", "document[title]")
+        with_tag("textarea#document_description[name=?]", "document[description]")
+        with_tag("textarea#document_body[name=?]", "document[body]")
         #with_tag('div.type') do
         #  with_tag('label', 'Type')
         #  with_tag("select#document_type[name=?]", "document[type]")
