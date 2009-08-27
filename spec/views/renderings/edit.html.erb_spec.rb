@@ -12,13 +12,15 @@ describe "/renderings/edit.html.erb" do
     login_standard
     @rendering = Factory(:rendering)
     assigns[:rendering] = @rendering
+    render "/renderings/edit.html.erb"
+  end
+
+  it "should be success" do
+    response.should be_success
   end
 
   it "should render edit form" do
-    render "/renderings/edit.html.erb"
-
-    response.should be_success
-
+    pending("think about how to define the scopes")
     response.should have_tag("form[action=#{rendering_path(@rendering)}][method=post]") do
       with_tag('select#rendering_assignment[name=?]', 'rendering[assignment]')
       with_tag('div.scopes.Content') do
