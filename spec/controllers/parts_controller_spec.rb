@@ -42,7 +42,7 @@ describe PartsController do
     end
   
     def do_get
-      get :show, :id => @part.id
+      get :show, :id => @part.to_param
     end
 
     it "should be successful" do
@@ -56,7 +56,7 @@ describe PartsController do
     end
   
     it "should find the part requested" do
-      Part.should_receive(:find).with(@part.id.to_s).and_return(@part)
+      Part.should_receive(:find).with(@part.to_param).and_return(@part)
       do_get
     end
   
@@ -112,7 +112,7 @@ describe PartsController do
     end
   
     def do_get
-      get :edit, :id => @part.id
+      get :edit, :id => @part.to_param
     end
 
     it "should be successful" do
@@ -189,11 +189,11 @@ describe PartsController do
 
       def do_put
         @part.should_receive(:update_attributes).and_return(true)
-        put :update, :id => @part.id
+        put :update, :id => @part.to_param
       end
 
       it "should find the part requested" do
-        Part.should_receive(:find).with(@part.id.to_s).and_return(@part)
+        Part.should_receive(:find).with(@part.to_param).and_return(@part)
         do_put
       end
 
@@ -218,7 +218,7 @@ describe PartsController do
 
       def do_put
         @part.should_receive(:update_attributes).and_return(false)
-        put :update, :id => @part.id
+        put :update, :id => @part.to_param
       end
 
       it "should re-render 'edit'" do
@@ -237,11 +237,11 @@ describe PartsController do
     end
   
     def do_delete
-      delete :destroy, :id => @part.id
+      delete :destroy, :id => @part.to_param
     end
 
     it "should find the part requested" do
-      Part.should_receive(:find).with(@part.id.to_s).and_return(@part)
+      Part.should_receive(:find).with(@part.to_param).and_return(@part)
       do_delete
     end
   
