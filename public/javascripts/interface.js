@@ -56,21 +56,20 @@ $(function() {
   }
 
   $.fn.beBusy = function(message) {
-    var e = $(this);
-    e.appendDom([
-      { tagName: 'div', class: 'busy', childNodes: [
-        { tagName: 'span', class: 'message', innerHTML: 'Loading' },
-        { tagName: 'img', class: 'status', src: '/images/toolbox/pentagon.gif' }
-      ] },
-    ]);
+    var div = $('<div/>')
+      .addClass('busy')
+      .hide();
 
-    if (message)
-      $('span.message', e).text(message);
-      
-      return e.fadeIn(230);
+    $('<span />')
+      .addClass('message')
+      .html(message || 'Loading')
+      .appendTo(div);
+    $('div.busy', this).remove();
+
+    return div.appendTo(this).fadeIn(500);
   }
   $.fn.unBusy = function() {
-    return $('div.busy', this).fadeOut(230).remove();
+    return $('div.busy', this).remove();
   }
 
   $.ajaxSetup({
@@ -82,7 +81,6 @@ $(function() {
 
   $.metadata.setType( 'attr', 'data' );
 
-  $('div.admin > a').livequery(function() { $(this).useToolbox(); });
   $('a.login').livequery(function() { $(this).useToolbox(); });
   $('a.with_toolbox').livequery(function() { $(this).useToolbox(); });
 

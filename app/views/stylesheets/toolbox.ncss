@@ -156,12 +156,6 @@ body {
       font-size: 85%;
     }
   }
-  div.busy {
-    background: url(/images/transparent.png);
-    z-index: 5;
-    text-align: center;
-    left: auto; right: 0;
-  }
 }
 div#toolbox_sidebar {
   overflow: hidden; /* FIXME no overflow-y:auto; because of flickering */
