@@ -334,11 +334,21 @@ end
 
 describe "A Rendering", "with an assignment by_title_from_trailing_url " do
   before(:each) do
-    @rendering = Factory.build :rendering, :assignment => 'by_title_from_trailing_url'
+    @rendering = Factory :rendering, :assignment => 'by_title_from_trailing_url'
+    @rendering.stub!(:trailing_path_of_page).and_return('goodbye')
+  end
+  it "should be valid" do
+    @rendering.should be_valid
+  end
+  it "should assignmend by_title_from_trailing_url" do
+    @rendering.assignment.should == 'by_title_from_trailing_url'
+  end
+  it "should look for Documents" do
+    @rendering.content_type.should == 'Document'
   end
   it "should find Content#find_by_slug(trailing_path_of_page.urlize)" do
     content = "jojojo"
-    Content.should_receive(:find_by_slug).with('goodbye').and_return( content )
+    Document.should_receive(:find_by_slug).with('goodbye').and_return( content )
     @rendering.content.should == content
   end
   it_should_behave_like 'renderable Rendering'
