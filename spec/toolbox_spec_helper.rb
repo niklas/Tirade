@@ -83,11 +83,11 @@ module ToolboxSpecHelper
     DeactivateAll.new
   end
   def set_toolbox_header(expected)
-    have_text( %r~&quot;title&quot;: &quot;#{expected}&quot;~)
+    have_text( %r~&quot;title&quot;:\s*&quot;#{expected}&quot;~)
   end
 
   def set_notification(expected)
-    have_text %r[\$\.gritter\.add\(\{"text": ".*#{Regexp.escape expected}.*"\}\)]
+    have_text %r[\$\.gritter\.add\(\{"text":\s*".*#{Regexp.escape expected}.*"\}\)]
   end
 
   def set_toolbox_status(expected)
