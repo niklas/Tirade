@@ -22,7 +22,7 @@ module Tirade
           if table_exists?
             if column_names.include?('slug')
               acts_as! :slugged
-              has_slug :prepend_id => false
+              has_slug :prepend_id => false, :source_column => :title_from_default_locale
             end
             if translations = opts.delete(:translate)
               translates *translations
@@ -129,6 +129,14 @@ module Tirade
 
         def resource_name
           controller_name.singularize
+        end
+
+        def title_from_default_locale
+          if acts_as? :translated
+            globalize_translations.locale_equals(I18n.default_locale.to_s).first.andand.title || title
+          else
+            title
+          end
         end
       end
     end

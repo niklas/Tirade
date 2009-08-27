@@ -26,8 +26,23 @@ describe Document do
       @document.title.should_not be_blank
     end
 
+    it "should use the 'de' title as title from default locale, because latter does not exist" do
+      @document.title_from_default_locale.should_not be_blank
+    end
+
     it "should create default translation when saving" do
       lambda { @document.save }.should change(DocumentTranslation, :count).by(1)
+    end
+
+    describe "saved" do
+      before( :each ) do
+        @document.save
+      end
+
+      it "should have a 'en' translation (default)" do
+        en = @document.globalize_translations.locale_equals('en')
+        en.should_not be_empty
+      end
     end
 
 
@@ -52,6 +67,7 @@ describe Document do
         @document.title.should_not be_blank
       end
 
+
       context "updating attributes" do
         before( :each ) do
           @updating = lambda {
@@ -60,6 +76,12 @@ describe Document do
         end
         it "should create 'de' locale" do
           @updating.should change(@document.globalize_translations, :count).by(1)
+          @document.globalize_translations.locale_equals('de').should_not be_empty
+        end
+
+        it "should keep the 'en' locale" do
+          @updating.call
+          @document.globalize_translations.locale_equals('en').should_not be_empty
         end
 
         it "should keep the 'de' locale" do
@@ -68,9 +90,16 @@ describe Document do
           @document.title.should == 'Deutscher Titel'
           @document.title.locale.should == :de
         end
+
+        it "should keep the title from default locale" do
+          @updating.call
+          @document.reload
+          @document.title_from_default_locale.should_not == @document.title
+        end
+
       end
 
-      context "updating attributes with specified locale" do
+      context "updating attributes with specified locale (not neccessary in the moment)" do
         before( :each ) do
           @attributes = {
             :translations => {
