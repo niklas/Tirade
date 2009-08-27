@@ -687,6 +687,7 @@ jQuery.fn.useToolbox = function(options) {
     var options = $.extend(defaults, options);
     if (options.icon) { $(this).uiIcon(icon); }
     if ( $(this).hasClass('without_toolbox') ) return; /* next ? */
+    if ( $(this).hasClass('ui-uses-toolbox') ) return; /* next ? */
     if ( $(this).hasClass('tiled') ) options.mode = 'tiled';
     if ( $(this).hasClass('maximized') ) options.mode = 'maximized';
     $(this).resourcefulLink().opensToolbox(options);
@@ -700,7 +701,7 @@ jQuery.fn.opensToolbox = function(options) {
 
   return this.each(function() {
     var options = $.extend(defaults, options);
-    $(this).click(function() {
+    $(this).addClass('ui-uses-toolbox').click(function() {
       Toolbox.findOrCreate(options);
       Toolbox.beBusy('Loading');
     });
