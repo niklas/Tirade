@@ -194,82 +194,6 @@ describe Grid, :type => :helper do
     it "should have a proper name (for da humanz)" do
       grids(:layout50_50).name.should == '50% - 50%'
     end
-
-    describe ", rendering the left col" do
-      before(:each) do
-        @html = grids(:layout_50_50_1).render
-      end
-      it do
-        @html.should have_tag('div.grid.subcl')
-      end
-    end
-
-    describe ", rendering the left col in the main page" do
-      it do
-        pending("Must spec grid rendering in real helper")
-        @html = grids(:layout_50_50_1).render_in_page(pages(:main))
-        @html.should have_tag('div.grid.subcl') do
-          with_tag('div.rendering.simple_preview.document') do
-            without_tag('h2', 'Welcome')
-            with_tag('p', /If you read this, you earned a big hug!/)
-          end
-        end
-      end
-    end
-
-    describe ", rendering the right col" do
-      before(:each) do
-        @html = grids(:layout_50_50_2).render
-      end
-      it "render it" do
-        @html.should have_tag('div.grid.subcr')
-      end
-    end
-
-    describe ", rendering the right col in the main page" do
-      it "render it" do
-        pending("Must spec grid rendering in real helper")
-        @html = grids(:layout_50_50_2).render_in_page(pages(:main))
-        @html.should have_tag('div.grid.subcr') do
-          with_tag('div.rendering.simple_preview.document') do
-            with_tag('h2', 'Introduction')
-            with_tag('p', /Tirade is a CMS/)
-          end
-        end
-      end
-    end
-
-    describe ", rendering both the cols in the 50/50 layout" do
-      before(:each) do
-        @html = grids(:layout50_50).render
-      end
-      it "render it" do
-        @html.should have_tag('div.grid.subcolumns') do
-          with_tag('div.col.c50l div.grid.subcl')
-          with_tag('div.col.c50l + div.col.c50r div.grid.subcr')
-        end
-      end
-    end
-
-    describe ", rendering both the cols in the 50/50 layout for the main page" do
-      it "should render it" do
-        pending("Must spec grid rendering in real helper")
-        @html = grids(:layout50_50).render_in_page(pages(:main))
-        @html.should have_tag('div.grid.subcolumns') do
-          with_tag('div.col.c50l div.grid.subcl') do
-            with_tag('div.rendering.simple_preview.document') do
-              with_tag('p', /If you read this, you earned a big hug!/)
-            end
-          end
-          with_tag('div.col.c50l + div.col.c50r div.grid.subcr') do
-            with_tag('div.rendering.simple_preview.document') do
-              with_tag('h2', 'Introduction')
-              with_tag('p', /Tirade is a CMS/)
-            end
-          end
-        end
-      end
-    end
   end
 end
 
@@ -396,17 +320,13 @@ describe 'A', Grid, 's Associations' do
   end
 end
 
-describe Grid, "structure of DDM Page", :type => :helper do
+describe Grid, "structure of DDM Page" do
   fixtures :pages, :grids, :renderings, :parts, :contents
 
   before(:each) do
     @page = pages(:ddm)
   end
   
-  def html
-    @html ||= @page.render
-  end
-
   it "should have a rendering in content grid" do
     renderings(:ddm_welcome).should_not be_nil
     @page.should have_at_least(1).renderings_for_grid( grids(:content) )
@@ -436,38 +356,4 @@ describe Grid, "structure of DDM Page", :type => :helper do
     grids(:content).children_css.should be_empty
   end
 
-  it "should not wrap layout into a .col" do
-    pending("Must spec grid rendering in real helper")
-    html.should_not have_tag('div.page > div.col')
-  end
-
-  it "should have the proper YAML tags"do 
-    pending("Must spec grid rendering in real helper")
-    html.should have_tag 'div.page.page_1337'do 
-      with_tag 'div#grid_1.subcolumns.grid.grid_1.main_vs_sidebar'do 
-        with_tag 'div.col.c75l'do 
-          with_tag 'div#grid_2.subcolumns.grid.grid_2.main_menu_vs_content'do 
-            with_tag 'div.col.c38l'do 
-              with_tag 'div#grid_4.subcl.leaf.grid.grid_4.menu'do 
-                #with_tag 'div.rendering.menu'do 
-                #  with_tag 'ul'            #      | | |   |  
-                #end                        #     /  | |   |                       
-                #with_tag 'div.rendering.logo'do 
-                #  with_tag 'img'           #      | | |   |  
-                #end                        #     /  / |   |                       
-              end                          #          |   |                   
-            end                            #          |   |                   
-          end                              #          /   |                   
-          with_tag 'div.col.c62r'do 
-            with_tag 'div#grid_5.subcr.grid.grid_5.content'do 
-              with_tag 'div.rendering.rendering_13371.document'
-            end                            #              |  /              
-          end                              #              |                 
-        end                                #              |
-        with_tag 'div.col.c25r'do 
-          with_tag 'div#grid_3.subcr.grid.grid_3.sidebar'
-        end                                #              |
-      end                                  #              /
-    end                                
-  end
 end
