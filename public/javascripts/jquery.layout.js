@@ -19,6 +19,7 @@ Rendering = {
     })
     .click(function() {
       Toolbox.open();
+      Toolbox.beBusy();
       Rendering.create(attributes)
     })
   },
@@ -164,10 +165,13 @@ $(function() {
           if (grid.find('>div.rendering').length > 1) {
             buttons.push( Grid.sortRenderingsButton(grid) );
           }
-          buttons.push( Rendering.createButton({
-            grid_id: grid.resourceId(),
-            page_id: $.tirade.currentPageId()
-          }));
+          buttons.push( 
+            Rendering.createButton({
+              grid_id: grid.resourceId(),
+              page_id: $.tirade.currentPageId()
+            })
+            .click( function() { grid.beBusy() })
+          );
         }
         return buttons;
       }
@@ -200,6 +204,7 @@ $(function() {
             greedy: true,
             tolerance: 'pointer',
             drop: function(e,ui) { 
+              $rendering.beBusy();
               var droppee = ui.draggable.typeAndId();
               if (droppee.type == 'Part') {
                 Rendering.update($rendering, {
