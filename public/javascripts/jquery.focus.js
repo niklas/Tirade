@@ -261,7 +261,7 @@
         if (container.closest('.focus').is('.left'))
           link.height($self.height());
         else
-          link.width($self.width());
+          link.width($self.width() * 0.96);
       });
     },
     _setButtons: function(buttons) {
