@@ -6,13 +6,25 @@
 - options[:id] = dom_id(rendering)
 - options[:rel] = dom_id(rendering)
 - options[:title] = rendering.title
-- if !rendering.has_content?
-  - if rendering.part && rendering.part.preferred_types.blank?
+- if rendering.part.nil?
+  - add_class_to_html_options options, 'without_part'
+  - content_for :rendering do
+    = render(:partial => 'renderings/without_part', :object => rendering)
+
+- case rendering.assignment
+- when 'none'
+  - content_for :rendering do
     = rendering.part.render(rendering.final_options, rendering.context_in_registers)
-  - else
-    %div.without_content{options}= render(:partial => 'renderings/without_content', :object => rendering)
-- elsif rendering.part.nil?
-  %div.without_part{options}= render(:partial => 'renderings/without_part', :object => rendering)
 - else
-  - add_class_to_html_options options, rendering.content.class.to_s.underscore
-  %div{options}= rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
+  - if rendering.has_content?
+    - add_class_to_html_options options, rendering.content.class.to_s.underscore
+    - unless rendering.part.nil?
+      - content_for :rendering do
+        = rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
+  - else
+    - add_class_to_html_options options, 'without_content'
+    - content_for :rendering do
+      = render(:partial => 'renderings/without_content', :object => rendering)
+
+%div{options}
+  = yield :rendering

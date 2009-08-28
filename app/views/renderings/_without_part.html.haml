@@ -1,8 +1,8 @@
 - rendering ||= without_part
-%div.warning
+%div.warning.without_part
   %p This Rendering has no Part.
   - if rendering.has_content?
     %h3== Suggestions for #{rendering.content_type}
-    %ul
+    %ul.list
       - Part.for_content(rendering.content).each do |part|
-        %li= link_to_function part.title, %Q[Rendering.update(this, {part_id: '#{part.id}'})]
+        %li= link_to_function part.title, %Q[Rendering.update(this, {part_id: '#{part.id}'})], :class => 'update rendering'

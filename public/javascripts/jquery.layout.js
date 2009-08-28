@@ -188,7 +188,7 @@ $(function() {
       visit: function() {
         var $rendering = $(this);
         if ($rendering.is('.without_content')) {
-          $rendering.droppable({
+          $rendering.find('div.warning.without_content').droppable({
             accept: 'li.record:not(.part)',
             activeClass: 'active-droppable',
             hoverClass: 'drop-hover',
@@ -204,7 +204,7 @@ $(function() {
           });
         }
         if ($rendering.is('.without_part')) {
-          $rendering.droppable({
+          $rendering.find('div.warning.without_part').droppable({
             accept: 'li.part',
             activeClass: 'active-droppable',
             hoverClass: 'drop-hover',
