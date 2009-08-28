@@ -85,8 +85,8 @@ var Toolbox = {
 
     this.refreshPageButton = $.ui.button({class: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { 
-        page = $('body > div.page_margins > div.page');
-        url = page.metadata().url || window.location.pathname;
+        var page = $('body > div.page_margins > div.page');
+        var url = page.metadata().url || window.location.pathname;
         page.beBusy('refreshing');
         $.get(url);
         e.stopPropagation(); e.preventDefault();
