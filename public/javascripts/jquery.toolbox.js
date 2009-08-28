@@ -845,7 +845,9 @@ jQuery.fn.formInFrameInToolbox = function(options) {
          function() { $(this).removeClass('ui-state-hover'); }
        );
 
-    $form.preview();
+    if (!$form.hasClass('new_user_session')) {
+      $form.preview();
+    }
     
     $form.ajaxForm({
       dataType: 'script',
