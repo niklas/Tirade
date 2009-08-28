@@ -38,6 +38,18 @@ Rendering = {
 };
 
 Grid = {
+  update: function(grid, attributes) {
+    grid = $(grid).closest('div.grid');
+    $.ajax({
+      url: Routing.grid_url({
+        id: grid.resourceId(), 
+        format: 'js'
+      }),
+      data: $.toJSON({grid: attributes}),
+      contentType: 'application/json; charset=utf-8',
+      type: 'PUT'
+    });
+  },
   sortRenderings: function(grid) {
     $.ajax({
       data: grid.sortable("serialize", {attribute: 'rel'}),

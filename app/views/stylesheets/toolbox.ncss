@@ -164,7 +164,7 @@ div#toolbox_sidebar {
   position: absolute;
   width: 230px;
   height: 300px;
-  z-index: 1;
+  z-index: 1000;
   ul.history, ul.clipboard {
     display: block;
     padding: 0px;

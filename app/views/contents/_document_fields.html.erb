@@ -1,4 +1,8 @@
-<%= document_fields.text_area :description %>
+<% accordion_item 'Description' do %>
+  <%= document_fields.text_area :description %>
+<% end %>
 
-<%= document_fields.text_area :body %>
+<% accordion_item 'Body' do %>
+  <%= document_fields.text_area :body %>
+<% end %>
 

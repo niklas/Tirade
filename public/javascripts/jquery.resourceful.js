@@ -24,8 +24,10 @@
       })
     },
     new: function(resource_name, attributes) {
-      attributes.format = 'js';
-      attributes.authenticity_token = $.tirade.resourceful.authToken();
+      attributes = $.extend({
+        format: 'js',
+        authenticity_token: $.tirade.resourceful.authToken()
+      }, attributes);
       return $.ajax({
         url: Routing['new_' + resource_name + '_path'](attributes),
         type: 'GET'

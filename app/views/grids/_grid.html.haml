@@ -8,7 +8,7 @@
 %div.grid{options}
   -if grid.visible_children.empty?
     - if page
-      - renderings = page.renderings.for_grid(grid)
+      - renderings = grid.renderings_for_page(page)
       - if renderings.empty?
         = render(:partial => 'grids/without_renderings', :object => grid, :locals => {:grid => grid, :page => page})
       - else

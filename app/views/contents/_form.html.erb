@@ -13,9 +13,7 @@
       <%= f.collection_select :wanted_parent_id, Folder.find(:all), :id, :title, :label => 'Parent Folder'  %>
     <% end %>
 
-    <% accordion_item "Specific" do %>
-      <%= render_form_fields_for(f) %>
-    <% end %>
+    <%= render_form_fields_for(f) %>
 
     <%= f.actings %>
 

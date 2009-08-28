@@ -61,6 +61,11 @@ class Grid < ActiveRecord::Base
     renderings.count
   end
 
+  # Rendering inheritance over pages
+  def renderings_for_page(page)
+    page.renderings_for_grid(self)
+  end
+
   def after_destroy
     if parent
       parent.save

@@ -1,7 +1,16 @@
 %div.warning.empty
-  Grid has no Renderings. Focus it and add one or split
-  %ul
-  - Grid::NameByDivision.each do |divi, name|
-    - next if divi == 'leaf'
-    - next if divi == grid.division
-    %li= link_to name, edit_grid_path(grid, :grid => {:division => divi}), :class => 'edit grid with_toolbox'
+  This Box is empty. You have the choice:
+
+  %ol
+    %li Focus it and add a Rendering (Content+Part)
+    %li 
+      %span Further devide it
+      %ul
+        - Grid::NameByDivision.each do |divi, name|
+          - next if divi == 'leaf'
+          - next if divi == grid.division
+          %li
+            = link_to name, edit_grid_path(grid, :grid => {:division => divi}), :class => 'edit grid with_toolbox'
+    - unless grid.inherit_renderings? || page.root?
+      %li
+        = link_to_function "Use Content from parent page", %Q[Grid.update(this, {inherit_renderings: 1})], :class => 'update grid'
