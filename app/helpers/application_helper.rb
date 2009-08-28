@@ -86,8 +86,8 @@ module ApplicationHelper
   def index_link_to(klass, options = {})
     label = options.delete(:label) || klass.to_s.pluralize
     add_class_to_html_options(options, 'index')
-    add_class_to_html_options(options, "index_#{klass.table_name}")
-    add_class_to_html_options(options, klass.table_name)
+    add_class_to_html_options(options, "index_#{klass.controller_name}")
+    add_class_to_html_options(options, klass.controller_name)
     link_to(label, {:controller => klass.controller_name}, options)
   end
 
