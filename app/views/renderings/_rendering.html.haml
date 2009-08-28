@@ -1,3 +1,4 @@
+- out = ''
 - rendering.page = page if page
 - options = {}
 - add_class_to_html_options options, 'rendering'
@@ -6,25 +7,32 @@
 - options[:id] = dom_id(rendering)
 - options[:rel] = dom_id(rendering)
 - options[:title] = rendering.title
+- accept_drop = false
+
 - if rendering.part.nil?
   - add_class_to_html_options options, 'without_part'
-  - content_for :rendering do
+  - accept_drop = true
+  - out << capture do
     = render(:partial => 'renderings/without_part', :object => rendering)
 
 - case rendering.assignment
 - when 'none'
-  - content_for :rendering do
+  - out << capture do
     = rendering.part.render(rendering.final_options, rendering.context_in_registers)
 - else
   - if rendering.has_content?
     - add_class_to_html_options options, rendering.content.class.to_s.underscore
     - unless rendering.part.nil?
-      - content_for :rendering do
+      - out << capture do
         = rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
   - else
     - add_class_to_html_options options, 'without_content'
-    - content_for :rendering do
+    - accept_drop = true
+    - out << capture do
       = render(:partial => 'renderings/without_content', :object => rendering)
 
-%div{options}
-  = yield :rendering
+- if accept_drop
+  - add_class_to_html_options options, 'droppable'
+  - options[:data] = {:acceptDropOf => rendering.drop_acceptions.map(&:underscore)}.to_json unless rendering.drop_acceptions.empty?
+
+%div{options}= out

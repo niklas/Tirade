@@ -75,10 +75,7 @@ describe "/rendering/_rendering.html.haml" do
       before( :each ) do
         @rendering = Factory :rendering, :part => nil
       end
-      it_should_behave_like 'layout component'
-      it "should show a warning about missing part" do
-        html.should have_warning('without_part')
-      end
+      it_should_behave_like 'missing a Part'
     end
 
     describe "with assignment 'none' without a Content" do
@@ -93,7 +90,10 @@ describe "/rendering/_rendering.html.haml" do
         @rendering = Factory :rendering, :assignment => 'fixed', :content_type => nil
       end
       it_should_behave_like 'missing a Content'
-      it "should present a list of all supported Content Types of the Part to select" do
+      it "should have a part with supported Content types" do
+        @rendering.part.supported_types.should_not be_empty
+      end
+      it "should present a list of all supported Content types of the Part to select" do
         html.should have_tag('ul.list') do
           @rendering.part.supported_types.each do |ctype|
             with_update_link("content_type: '#{ctype}'")

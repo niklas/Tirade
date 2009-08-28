@@ -173,6 +173,27 @@ class Rendering < ActiveRecord::Base
       merge(part.andand.options || {})
   end
 
+  def needs_content?
+    assignment != 'none'
+  end
+
+  def drop_acceptions
+    returning [] do |accept|
+      if part.nil?
+        accept << 'Part' 
+        if !has_content? && needs_content?
+          if content_type.blank?
+            accept << Tirade::ActiveRecord::Content.classes
+          else
+            accept << content_type 
+          end
+        end
+      else
+        accept << part.supported_types unless part.supported_types.blank?
+      end
+    end.flatten.compact.map(&:to_s).uniq
+  end
+
   def render
     render_to_string(:inline => '<%= render_rendering(rendering) %>', :locals => {:rendering => self})
   end

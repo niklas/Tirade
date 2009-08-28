@@ -187,34 +187,30 @@ $(function() {
       children: null,
       visit: function() {
         var $rendering = $(this);
-        if ($rendering.is('.without_content')) {
-          $rendering.find('div.warning.without_content').droppable({
-            accept: 'li.record:not(.part)',
+        if ($rendering.is('.droppable')) {
+          if (acceptedClasses = $rendering.metadata().acceptDropOf) {
+            accepting = acceptedClasses.map( function(c) { return 'li.' + c }).join(',')
+          } else {
+            accepting = 'li.record:not(.part)'
+          }
+          $rendering.droppable({
+            accept: accepting,
             activeClass: 'active-droppable',
             hoverClass: 'drop-hover',
             greedy: true,
             tolerance: 'pointer',
             drop: function(e,ui) { 
-              var content = ui.draggable.typeAndId();
-              Rendering.update($rendering, {
-                content_type: content.type,
-                content_id: content.id
-              });
-            }
-          });
-        }
-        if ($rendering.is('.without_part')) {
-          $rendering.find('div.warning.without_part').droppable({
-            accept: 'li.part',
-            activeClass: 'active-droppable',
-            hoverClass: 'drop-hover',
-            greedy: true,
-            tolerance: 'pointer',
-            drop: function(e,ui) { 
-              var part = ui.draggable.typeAndId();
-              Rendering.update($rendering, {
-                part_id: part.id
-              });
+              var droppee = ui.draggable.typeAndId();
+              if (droppee.type == 'Part') {
+                Rendering.update($rendering, {
+                  part_id: droppee.id
+                });
+              } else {
+                Rendering.update($rendering, {
+                  content_type: droppee.type,
+                  content_id: droppee.id
+                })
+              }
             }
           });
         }

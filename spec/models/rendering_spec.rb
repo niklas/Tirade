@@ -398,6 +398,12 @@ describe Rendering, "without content", :type => :helper do
     @rendering.content.should be_nil
   end
 
+  it "should accept drop of all content types of the part" do
+    @rendering.part.supported_types.each do |ctype|
+      @rendering.drop_acceptions.should include(ctype)
+    end
+  end
+
   describe "rendering it" do
     def do_render
       @html = @rendering.render
@@ -415,4 +421,27 @@ describe Rendering, "without content", :type => :helper do
 
   end
 
+end
+
+describe Rendering, "without Part" do
+  before( :each ) do
+    @rendering = Factory :rendering, :part => nil, :content => Factory(:document)
+  end
+  it "should accept only drop of part" do
+    @rendering.drop_acceptions.should == %w(Part)
+  end
+end
+
+describe "without a Part or any Content" do
+  before( :each ) do
+    @rendering = Factory :rendering, :part => nil, :content_type => nil
+  end
+  it "should accept drop of part" do
+    @rendering.drop_acceptions.should include('Part')
+  end
+  it "should accept drop of all registered content types" do
+    Tirade::ActiveRecord::Content.classes.each do |ctype|
+      @rendering.drop_acceptions.should include(ctype.to_s)
+    end
+  end
 end
