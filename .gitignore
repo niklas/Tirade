@@ -4,4 +4,5 @@
 /doc
 db/*sql
 db/schema.rb
-themes/test
+!themes/default
+themes/*
