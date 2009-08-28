@@ -852,7 +852,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
          function() { $(this).removeClass('ui-state-hover'); }
        );
 
-    if (!$form.hasClass('new_user_session')) {
+    if ($form.attr('method') == 'put') {
       $form.preview();
     }
     
