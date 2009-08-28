@@ -371,7 +371,7 @@ module ActsAsConfigurable
     def acts_as_custom_configurable(options = {})
       options.symbolize_keys!
       if assoc = options[:defined_by]
-        delegate (options[:defined_in] || :defined_options), :to => assoc.to_sym
+        delegate (options[:defined_in] || :defined_options), :to => assoc.to_sym, :allow_nil => true
       end
       options.reverse_merge!(:using => :options, :defined_in => :defined_options)
       write_inheritable_hash(:acts_as_custom_configurable_options, options)
