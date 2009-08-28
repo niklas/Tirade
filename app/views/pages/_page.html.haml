@@ -1,6 +1,13 @@
--if layout = page.final_layout
-  %div.page_margins{:style => page.style}
-    %div.page{:class => dom_id(page), :title => page.title}
+- layout = page.final_layout
+- margin_options = {}
+- margin_options[:style] = page.style if layout
+- options = {}
+- options[:data] = {:url => page.url, :title => page.title}.to_json if logged_in?
+- options[:title] = page.title
+- add_class_to_html_options options, dom_id(page)
+%div.page_margins{margin_options}
+  %div.page{options}
+    - if layout
       = render_grid(layout, :page => page)
--else
-  = render :partial => 'pages/without_layout', :object => page, :locals => {:page => page}
+    - else
+      = render :partial => 'pages/without_layout', :object => page, :locals => {:page => page}

@@ -40,9 +40,9 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :title, :scope => :parent_id
   validates_uniqueness_of :url, :allow_nil => true
 
-  validates_format_of :width, :with => /\A\d+(px|em|ex|%)|auto\Z/, :allow_nil => true
+  validates_format_of :width, :with => /\A\d+(px|em|ex|%)|auto\Z/, :allow_blank => true
   Alignments = %w(left center right)
-  validates_inclusion_of :alignment, :in => Alignments, :allow_nil => true
+  validates_inclusion_of :alignment, :in => Alignments, :allow_blank => true
 
   BlacklistesTitles = %w(manage themes)
 
@@ -64,6 +64,10 @@ class Page < ActiveRecord::Base
 
   def final_layout
     layout || parent.andand.final_layout
+  end
+
+  def final_alignment
+    alignment.blank? ? parent.andand.final_alignment : alignment
   end
 
   def generated_url
@@ -145,7 +149,7 @@ class Page < ActiveRecord::Base
   def style
     returning '' do |css|
       css << %Q~width: #{width.blank? ? 'auto' : width};~
-      case alignment
+      case final_alignment
       when 'center'
         css << %q~margin: 0 auto~
       when 'right'
