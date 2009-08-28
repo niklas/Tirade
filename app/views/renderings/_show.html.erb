@@ -25,7 +25,9 @@
 
   <% accordion_item "How" do %>
     <%= show rendering, :part, :selectable => true %>
-    <%= show rendering, :options %>
+    <% if rendering.part %>
+      <%= show rendering, :options %>
+    <% end %>
   <% end %>
 
   <% accordion_item "Where" do %>
