@@ -25,6 +25,9 @@
     - unless rendering.part.nil?
       - out << capture do
         = rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
+  - elsif rendering.part.andand.static?
+    - out << capture do
+      = rendering.part.render(rendering.final_options, rendering.context_in_registers)
   - else
     - add_class_to_html_options options, 'without_content'
     - accept_drop = true

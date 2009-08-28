@@ -23,7 +23,7 @@ Rendering = {
     })
   },
   update: function(rendering, attributes) {
-    rendering = $(rendering).closest('.rendering');
+    rendering = $(rendering).closest('div.rendering');
     $.ajax({
       url: Routing.rendering_url({
         id: rendering.resourceId(), 

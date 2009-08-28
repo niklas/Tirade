@@ -145,6 +145,14 @@ describe "/rendering/_rendering.html.haml" do
       
     end
 
+    describe "with a static Part and no Content" do
+      before( :each ) do
+        @rendering = Factory :rendering, :part => Factory(:static_part), :content => nil
+      end
+
+      it_should_behave_like 'finished component'
+    end
+
   end
 
 

@@ -537,6 +537,19 @@ describe "A Part which renders the simple_preview by filter" do
 end
 
 
+describe Part, "static" do
+  before( :each ) do
+    @part = Factory :static_part
+  end
+  it "should be static" do
+    @part.should be_static
+  end
+  it "should have pure preferred_types of 'none'" do
+    @part.read_attribute(:preferred_types).should == %w(none)
+  end
+end
+
+
 #describe "A Part with content_numerus/_quantum" do
 #  it "can render no Content"
 #  it "can render a single Content"

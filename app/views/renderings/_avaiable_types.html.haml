@@ -1,4 +1,6 @@
 %ul.list
   - avaiable_types.each do |klass|
-    %li= link_to_function klass, %Q[Rendering.update(this, {content_type: '#{klass}'})], :class => 'update rendering'
+    %li
+      = icon_for(klass.to_s)
+      = link_to_function klass, %Q[Rendering.update(this, {content_type: '#{klass}'})], :class => 'update rendering'
 

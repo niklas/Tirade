@@ -10,6 +10,10 @@ class Part < ActiveRecord::Base
     preferred_types.join(', ')
   end
 
+  def static?
+    read_attribute(:preferred_types).andand.include?('none')
+  end
+
 
   # FIXME dynamicx, reusable!
   def self.valid_content_types

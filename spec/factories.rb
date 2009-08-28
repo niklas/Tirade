@@ -34,6 +34,10 @@ Factory.define :part do |f|
   f.preferred_types %w(Document)
 end
 
+Factory.define :static_part, :parent => :part do |f|
+  f.preferred_types %w(none)
+end
+
 Factory.define :rendering do |f|
   f.association :part
   f.association :page
