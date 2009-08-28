@@ -84,7 +84,14 @@ var Toolbox = {
       .click( $.tirade.focus.pick );
 
     this.refreshPageButton = $.ui.button({class: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
-      .click(function(e) { $.get('/') })
+      .click(function(e) { 
+        page = $('body > div.page_margins > div.page');
+        url = page.metadata().url || window.location.pathname;
+        page.beBusy('refreshing');
+        $.get(url);
+        e.stopPropagation(); e.preventDefault();
+        return false;
+      })
       .appendTo(Toolbox.sideBarActions);
 
     this.toggleSideBarButton = $.ui.button({class: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
