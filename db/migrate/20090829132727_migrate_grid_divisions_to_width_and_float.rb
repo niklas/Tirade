@@ -2,7 +2,9 @@ class MigrateGridDivisionsToWidthAndFloat < ActiveRecord::Migration
   def self.up
     Grid.transaction do
       Grid.all.each do |grid|
-        grid.update_attributes!(:division => grid[:division]) unless grid[:division].blank?
+        grid.width ||= 100
+        grid.division = grid[:division] unless grid[:division].blank?
+        grid.save!
       end
     end
   end
