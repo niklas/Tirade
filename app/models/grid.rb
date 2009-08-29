@@ -55,8 +55,26 @@ class Grid < ActiveRecord::Base
     'leaf' => [],
     'wrap' => []
   }
-  validates_presence_of :division
-  validates_inclusion_of :division, :in => Divisions.keys, :allow_nil => true
+
+  # YAML
+
+  Widths = [100, 50, 25, 75, 33, 28, 62]
+  validates_presence_of :width
+  validates_inclusion_of :width, :in => Widths
+
+  Floats = %w(l r)
+  validates_inclusion_of :float, :in => Floats, :allow_blank => true
+
+  def yaml_class
+    "c#{width}#{float || 'l'}"
+  end
+
+  def yaml_content_class
+    "subc#{float}"
+  end
+
+
+
 
   has_many :pages, :foreign_key => 'layout_id'
   has_many :renderings

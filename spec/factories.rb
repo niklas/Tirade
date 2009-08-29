@@ -25,7 +25,8 @@ end
 
 Factory.define :grid do |f|
   f.sequence(:title) { |i| "Grid ##{i}"}
-  f.division 'leaf'
+  f.float 'l'
+  f.width 50
 end
 
 Factory.define :part do |f|
