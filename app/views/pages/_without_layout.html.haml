@@ -3,7 +3,7 @@
   - if Grid.roots.count > 0
     select one of
     - Grid.roots.each do |grid|
-      = link_to grid.name, edit_page_path(page, :page => {:layout_id => grid.id})
+      = link_to grid.title, edit_page_path(page, :page => {:layout_id => grid.id})
   - else
     = link_to "create a layout", new_grid_path(:grid => {:page_id => page.id}), :class => 'new grid with_toolbox'
 
