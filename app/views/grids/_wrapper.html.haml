@@ -1,4 +1,4 @@
-- if wrapper.root?
+- if wrapper.root? || wrapper.is_wrapper?
   = yield
 - else
   %div.col{:class => wrapper.wrapper_css, :rel => dom_id(wrapper)}

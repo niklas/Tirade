@@ -16,6 +16,9 @@
           = render_rendering(rendering, :page => page, :grid => grid)
     - else
       %div= "no children and no page given. empty?"
+  - elsif grid.division == 'wrap'
+    - grid.children.each do |child|
+      = render_grid(child, :page => page)
   - else
-    - grid.visible_children.each do |child, css|
+    - grid.visible_children.each do |child|
       = render_grid(child, :page => page)

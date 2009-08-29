@@ -38,6 +38,25 @@ Rendering = {
 };
 
 Grid = {
+  create: function(attributes) {
+    $.ajax({
+      url: Routing.grids_url({format: 'js'}),
+      data: $.toJSON({grid: attributes}),
+      contentType: 'application/json; charset=utf-8',
+      type: 'POST'
+    });
+  },
+  createButton: function(attributes) {
+    return $.ui.button({
+      icon: 'circle-plus', text: 'create child', 
+      class: 'create grid'
+    })
+    .click(function() {
+      Toolbox.open();
+      Toolbox.beBusy();
+      Grid.create(attributes)
+    })
+  },
   update: function(grid, attributes) {
     grid = $(grid).closest('div.grid');
     $.ajax({
@@ -173,7 +192,7 @@ $(function() {
         if (grid.find('>.col').length > 1) {
           buttons.push( Grid.sortChildrenButton(grid) );
         }
-        if (grid.is('.leaf')) {
+        if (grid.hasClass('leaf')) {
           if (grid.find('>div.rendering').length > 1) {
             buttons.push( Grid.sortRenderingsButton(grid) );
           }
@@ -181,6 +200,15 @@ $(function() {
             Rendering.createButton({
               grid_id: grid.resourceId(),
               page_id: $.tirade.currentPageId()
+            })
+            .click( function() { grid.beBusy() })
+          );
+        }
+        if (grid.hasClass('wrap')) {
+          buttons.push( 
+            Grid.createButton({
+              parent_id: grid.resourceId(),
+              division: 'leaf'
             })
             .click( function() { grid.beBusy() })
           );

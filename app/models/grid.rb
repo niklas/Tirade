@@ -28,7 +28,8 @@ class Grid < ActiveRecord::Base
     '25-75'    =>	'25% - 75%',
     '62-38'    => '62% - 38%',
     '38-62'    => '38% - 62%',
-    'leaf'     =>   'content'
+    'leaf'     => 'content',
+    'wrap'     => 'Wrapper'
   }
   IdealChildrenCount = {
     '50-50'   =>  2,
@@ -39,7 +40,8 @@ class Grid < ActiveRecord::Base
     '66-33'   =>	2,
     '38-62'   =>	2,
     '62-38'   =>	2,
-    'leaf'    =>  0
+    'leaf'    =>  0,
+    'wrap'    =>  0
   }
   Divisions = {
     '50-50' => %w(c50l c50r),
@@ -50,7 +52,8 @@ class Grid < ActiveRecord::Base
     '66-33'   =>	%w(c66l c33r),
     '38-62'   =>	%w(c38l c62r),
     '62-38'   =>	%w(c62l c38r),
-    'leaf' => [] 
+    'leaf' => [],
+    'wrap' => []
   }
   validates_presence_of :division
   validates_inclusion_of :division, :in => Divisions.keys, :allow_nil => true
@@ -120,12 +123,18 @@ class Grid < ActiveRecord::Base
     end
   end
 
+  def is_wrapper?
+    division == 'wrap'
+  end
+
   def position
     self_and_siblings.index(self)
   end
 
   def own_css
     case division
+    when 'wrap'
+      []
     when 'leaf'
       if !position
         %w(root leaf)
