@@ -143,4 +143,18 @@ describe "empty", Grid do
   describe_children_creation_by_division 'leaf', []
   describe_children_creation_by_division 'wrap', []
 
+  describe "appending a new Grid to it" do
+    before( :each ) do
+      @appending = lambda { @new = Grid.create!(:append_to_parent_id => @grid.id ) }
+    end
+
+    it "should succeed" do
+      @appending.should_not raise_error
+    end
+
+    it "should create a child Grid" do
+      @appending.should change(@grid.children, :count).by(1)
+    end
+  end
+
 end

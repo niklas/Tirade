@@ -131,8 +131,16 @@ class Grid < ActiveRecord::Base
     end
   end
 
-  after_save :wrap_children
+  attr_accessor :append_to_parent_id
+  after_save :append_to_parent_if_moved
+  def append_to_parent_if_moved
+    if append_to_parent_id
+      self.move_to_child_of append_to_parent_id
+      append_to_parent_id = nil
+    end
+  end
 
+  after_save :wrap_children
   def add_child(child_grid=nil)
     child_grid ||= self.class.new(:division => 'leaf')
     child_grid.save!

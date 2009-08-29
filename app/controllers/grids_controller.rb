@@ -14,7 +14,7 @@ class GridsController < ManageResourceController::Base
 
   def update_page_on_create(page)
     super
-    if thepage = object.current_page
+    if thepage = @context_page
       page.focus_on(thepage)
       page.clear
       page.insert_page(thepage)
@@ -34,18 +34,6 @@ class GridsController < ManageResourceController::Base
   def update_page_on_update(page)
     super
     page.update_grid_in_page(object, @context_page) if @context_page
-  end
-
-  # TODO create: assign the new grid to params[:page_id]'s Page
-  def create_child
-    @child = @grid.add_child
-    respond_to do |wants|
-      wants.js do
-        render :update do |page|
-          page.select_grid(@grid).append(@child.render).highlight
-        end
-      end
-    end
   end
 
   # Remove this Grid an all its siblings, placing their children into its parent

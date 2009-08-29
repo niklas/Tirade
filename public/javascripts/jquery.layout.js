@@ -204,11 +204,10 @@ $(function() {
             .click( function() { grid.beBusy() })
           );
         }
-        if (grid.hasClass('wrap')) {
+        if (grid.find('>div.rendering').length == 0) {
           buttons.push( 
             Grid.createButton({
-              parent_id: grid.resourceId(),
-              division: 'leaf'
+              append_to_parent_id: grid.resourceId(), width: 100
             })
             .click( function() { grid.beBusy() })
           );
