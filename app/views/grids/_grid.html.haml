@@ -12,12 +12,12 @@
       - if renderings.empty?
         = render(:partial => 'grids/without_renderings', :object => grid, :locals => {:grid => grid, :page => page})
       - else
-        %div.col{:class => grid.yaml_column_class, :rel => dom_id(grid)}
+        %div.col{:class => grid.yaml_column_class}
         - renderings.each do |rendering|
           = render_rendering(rendering, :page => page, :grid => grid)
     - else
       %div= "no children and no page given. empty?"
   - else
     - grid.children.each do |child|
-      %div.col{:class => child.yaml_column_class, :rel => dom_id(grid)}
+      %div.col{:class => child.yaml_column_class, :rel => dom_id(child)}
         = render_grid(child, :page => page)
