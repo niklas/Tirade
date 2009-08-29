@@ -64,9 +64,23 @@ namespace :deploy do
   end
 end
 
+# give block with |aText,aStream,aState| that returns response or nil
+def run_respond(aCommand)
+ run(aCommand) do |ch,stream,text|
+ 	ch[:state] ||= { :channel => ch }
+ 	output = yield(text,stream,ch[:state])
+ 	ch.send_data(output) if output
+ end
+end
+
 namespace :db do
   task :download, :roles => [:db] do
-    run "cd #{current_release} && rake db:dump_production"
+    run_respond "cd #{current_release} && rake db:dump_production" do |text,stream,state|
+      case text
+        when /Password:/ then 
+          Capistrano::CLI.password_prompt("production db #{text}")+"\n"	# this prompts the local user with the remote prompt text, then returns the result
+      end        
+    end
     get '/tmp/production.sql', '/tmp/production.sql'
     run "cd #{current_release} && rake db:remove_production_dump"
   end
