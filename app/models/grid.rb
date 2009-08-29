@@ -57,7 +57,7 @@ class Grid < ActiveRecord::Base
   validates_inclusion_of :width, :in => Widths
 
   Floats = %w(l r)
-  validates_inclusion_of :float, :in => Floats, :allow_blank => true
+  validates_inclusion_of :float, :in => Floats, :allow_blank => true, :allow_nil => true
 
   validates_inclusion_of :division, :in => Divisions, :allow_blank => true
 
@@ -131,34 +131,13 @@ class Grid < ActiveRecord::Base
     end
   end
 
-  #after_save :wrap_children
-  #after_save :auto_create_missing_children
+  after_save :wrap_children
 
   def add_child(child_grid=nil)
     child_grid ||= self.class.new(:division => 'leaf')
     child_grid.save!
     child_grid.move_to_child_of self
     child_grid
-  end
-
-  def is_first_child?
-    self == self.parent.andand.visible_children.andand.first || false
-  end
-
-  def name
-    if 'leaf' == self.division
-      if root?
-        "root"
-      else
-        if parent.name == 'root'
-          '100%'
-        else
-          parent.name.andand.split(/[\s-]+/).andand[position] || 'Leaf'
-        end
-      end
-    else
-      NameByDivision[division] || '[unknown]'
-    end
   end
 
   def position
@@ -178,8 +157,7 @@ class Grid < ActiveRecord::Base
   end
 
   def icon_name
-    case division
-    when 'leaf'
+    if children.empty?
       'grid-single'
     else
       'grid'
