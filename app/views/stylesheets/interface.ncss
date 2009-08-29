@@ -50,6 +50,7 @@
 body div {
   .warning {
     padding: 0.5em;
+    margin: 0.5em;
     overflow: hidden;
     .empty {
       min-height: 8em;
