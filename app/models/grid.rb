@@ -69,6 +69,7 @@ class Grid < ActiveRecord::Base
     returning [] do |css|
       css << "subc#{float}"
       css << 'subcolumns' unless empty?
+      css << 'leaf' if children.empty?
     end.flatten.uniq.join(' ')
   end
 
