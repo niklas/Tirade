@@ -47,7 +47,7 @@ describe Grid, "structure of DDM Page" do
 
 end
 
-describe Grid do
+describe Grid, 'with' do
   def self.describe_valid_column(description, attributes={})
     describe description do
       before( :all ) do
@@ -73,8 +73,80 @@ describe Grid do
   describe_valid_column '33% floating left' , :width => 33, :float => 'l', :yaml => 'c33l', :yaml_content => 'subcl'
   describe_valid_column '33% not floating'  , :width => 33, :float => nil, :yaml => 'c33l', :yaml_content => 'subc'
   describe_valid_column '33% floating right', :width => 33, :float => 'r', :yaml => 'c33r', :yaml_content => 'subcr'
-  describe_valid_column '28% floating right', :width => 28, :float => 'r', :yaml => 'c28r', :yaml_content => 'subcr'
-  describe_valid_column '28% floating right', :width => 28, :float => 'r', :yaml => 'c28r', :yaml_content => 'subcr'
+  describe_valid_column '66% floating left',  :width => 66, :float => 'l', :yaml => 'c66l', :yaml_content => 'subcl'
+  describe_valid_column '66% floating right', :width => 66, :float => 'r', :yaml => 'c66r', :yaml_content => 'subcr'
+  describe_valid_column '38% floating right', :width => 38, :float => 'r', :yaml => 'c38r', :yaml_content => 'subcr'
+  describe_valid_column '38% floating right', :width => 38, :float => 'r', :yaml => 'c38r', :yaml_content => 'subcr'
   describe_valid_column '62% floating right', :width => 62, :float => 'r', :yaml => 'c62r', :yaml_content => 'subcr'
   describe_valid_column '62% floating right', :width => 62, :float => 'r', :yaml => 'c62r', :yaml_content => 'subcr'
+  describe_valid_column '100% not floating' , :width =>100, :float => nil, :yaml => nil, :yaml_content => 'subcolumns'
+
+end
+
+
+describe "empty", Grid do
+  before( :each ) do
+    @grid = Factory :grid, :width => 100, :float => nil
+  end
+  it "should be a wrapper" do
+    @grid.should be_wrapper
+  end
+  it "should be empty" do
+    @grid.should be_empty
+  end
+
+  def self.describe_children_creation_by_division(division, children_attributes)
+    describe "updating division to #{division}" do
+      before( :each ) do
+        @updating = lambda { @grid.update_attributes!(:division =>division) }
+      end
+      it "should succeed" do
+        @updating.should_not raise_error
+      end
+      it "should create children with proper floats and widths" do
+        @updating.should change(@grid.children, :count).by(children_attributes.size)
+        children_attributes.zip(@grid.children).each do |attrs,child|
+          child.should_not be_nil
+          attrs.each do |key, val|
+            child.send(key).should == val
+          end
+        end
+      end
+    end
+  end
+
+  describe_children_creation_by_division '50-50', [
+    {:width => 50, :float => 'l'},
+    {:width => 50, :float => 'r'}
+  ]
+  describe_children_creation_by_division '33-33-33', [
+    {:width => 33, :float => 'l'},
+    {:width => 33, :float => 'l'},
+    {:width => 33, :float => 'r'}
+  ]
+  describe_children_creation_by_division '25-75', [
+    {:width => 25, :float => 'l'},
+    {:width => 75, :float => 'r'}
+  ]
+  describe_children_creation_by_division '75-25', [
+    {:width => 75, :float => 'l'},
+    {:width => 25, :float => 'r'}
+  ]
+  describe_children_creation_by_division '33-66', [
+    {:width => 33, :float => 'l'},
+    {:width => 66, :float => 'r'}
+  ]
+  describe_children_creation_by_division '66-33', [
+    {:width => 66, :float => 'l'},
+    {:width => 33, :float => 'r'}
+  ]
+  describe_children_creation_by_division '38-62', [
+    {:width => 38, :float => 'l'},
+    {:width => 62, :float => 'r'}
+  ]
+  describe_children_creation_by_division '62-38', [
+    {:width => 62, :float => 'l'},
+    {:width => 38, :float => 'r'}
+  ]
+
 end

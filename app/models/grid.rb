@@ -43,36 +43,77 @@ class Grid < ActiveRecord::Base
     'leaf'    =>  0,
     'wrap'    =>  0
   }
-  Divisions = {
-    '50-50' => %w(c50l c50r),
-    '75-25' => %w(c75l c25r),
-    '25-75' => %w(c25l c75r),
-    '33-33-33' => %w(c33l c33X c33r),
-    '33-66'   =>	%w(c33l c66r),
-    '66-33'   =>	%w(c66l c33r),
-    '38-62'   =>	%w(c38l c62r),
-    '62-38'   =>	%w(c62l c38r),
-    'leaf' => [],
-    'wrap' => []
-  }
+  Divisions = [
+    '50-50', '75-25', '25-75',
+    '33-33-33', '33-66', '66-33',
+    '38-62', '62-38',
+    'leaf', 'wrap'
+  ]
 
   # YAML
 
-  Widths = [100, 50, 25, 75, 33, 28, 62]
+  Widths = [100, 50, 25, 75, 66, 33, 38, 62]
   validates_presence_of :width
   validates_inclusion_of :width, :in => Widths
 
   Floats = %w(l r)
   validates_inclusion_of :float, :in => Floats, :allow_blank => true
 
+  validates_inclusion_of :division, :in => Divisions, :allow_blank => true
+
   def yaml_class
-    "c#{width}#{float || 'l'}"
+    "c#{width}#{float || 'l'}" unless wrapper?
   end
 
   def yaml_content_class
-    "subc#{float}"
+    if wrapper?
+      'subcolumns'
+    else
+      "subc#{float}"
+    end
   end
 
+  def wrapper?
+    width == 100
+  end
+
+  def empty?
+    children.empty? && renderings.empty?
+  end
+
+  # Dividing
+
+  def division=(new_division)
+    division_will_change!
+    @division = new_division
+  end
+  attr_reader :division
+
+  after_save :apply_division
+  def apply_division
+    if @division
+      case @division
+      when '33-33-33'
+        ensure_children_for_division(@division, %w(l l r))
+      when /-/
+        ensure_children_for_division(@division, %w(l r))
+      end
+      @division = nil
+    end
+  end
+
+  # Make sure the first 2/3 children apply to the given division
+  def ensure_children_for_division(division, floats)
+    widths = division.split('-').map(&:to_i)
+    widths.zip(floats, children).each do |width, float, child|
+      if child
+        child.update_attributes!(:width => width, :float => float)
+      else
+        child = self.class.create!(:width => width, :float => float)
+        child.move_to_child_of self
+      end
+    end
+  end
 
 
 
@@ -94,17 +135,8 @@ class Grid < ActiveRecord::Base
     end
   end
 
-  after_save :wrap_children
-  after_save :auto_create_missing_children
-
-  def division=(new_division)
-    division_will_change!
-    write_attribute('division', new_division)
-    unless new_record? || !changes.empty?
-      auto_create_missing_children
-    end
-    division
-  end
+  #after_save :wrap_children
+  #after_save :auto_create_missing_children
 
   def add_child(child_grid=nil)
     child_grid ||= self.class.new(:division => 'leaf')
@@ -139,10 +171,6 @@ class Grid < ActiveRecord::Base
     else
       NameByDivision[division] || '[unknown]'
     end
-  end
-
-  def is_wrapper?
-    division == 'wrap'
   end
 
   def position
@@ -218,10 +246,6 @@ class Grid < ActiveRecord::Base
       we.each(&:destroy)
     end
 
-  end
-
-  def wrap!(new_yui='yui-u')
-    self.class.create(:yui => new_yui, :child_id => self.id)
   end
 
   attr_reader :page_id
