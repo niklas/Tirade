@@ -35,6 +35,7 @@ main_vs_sidebar:
   id: 1
   title: Main vs Sidebar
   parent_id: NULL
+  width: 100
   lft: 1000
   rgt: 2000
 

@@ -185,7 +185,11 @@ div#toolbox_sidebar {
     }
   }
   div.actions {
-    height: 1.7em;
+    position:absolute;
+    bottom:0;
+    height:18px;
+    left:0;
+    right:0;
     a {
       float: left;
     }

@@ -11,12 +11,13 @@
 <% end %>
 <% accordion do %>
   <% accordion_item 'Hierarchy' do %>
-    <%= show grid, :inherit_renderings %>
+    <%= show grid, :title %>
     <%= show grid, :parent %>
+    <%= show grid, :inherit_renderings %>
     <%= render_tree grid %>
   <% end %>
   <% accordion_item 'General' do %>
-    <%= show grid, :division %>
-    <%= show grid, :label %>
+    <%= show grid, :width %>
+    <%= show grid, :float %>
   <% end %>
 <% end %>

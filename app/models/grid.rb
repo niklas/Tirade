@@ -164,41 +164,16 @@ class Grid < ActiveRecord::Base
     self_and_siblings.index(self)
   end
 
-  def own_css
-    case division
-    when 'wrap'
-      []
-    when 'leaf'
-      if !position
-        %w(root leaf)
-      elsif self_and_siblings.count <= 2
-        [position == 0 ? 'subcl' : 'subcr', 'leaf']
+  def title
+    unless (t = read_attribute(:title)).blank?
+      t
+    else
+      if children.empty?
+        "#{width} %"
       else
-        [%w[subcl subc subcr][position], 'leaf']
+        children.map(&:title).join(' | ')
       end
-    else
-      %w(subcolumns)
     end
-  end
-
-  def wrapper_css
-    if root?
-      ''
-    else
-      parent.children_css[position]
-    end
-  end
-
-  def children_css
-    Divisions[division] || raise("illegal division: #{division}")
-  end
-
-  def visible_children_with_css
-    visible_children.zip(children_css)
-  end
-
-  def label
-    [title,name].compact.join(' - ')
   end
 
   def icon_name
