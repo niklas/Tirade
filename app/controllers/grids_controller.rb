@@ -7,11 +7,6 @@ class GridsController < ManageResourceController::Base
   # FIXME (must be done in ressourcefull_views plugin)
   protect_from_forgery :except => [:destroy,:order_renderings, :order_children]
 
-  def index
-    @models = @grids = Grid.find(:all, :conditions => {:parent_id => nil})
-    render_toolbox_action :index
-  end
-
   def update_page_on_create(page)
     super
     if thepage = @context_page
@@ -103,6 +98,9 @@ class GridsController < ManageResourceController::Base
   end
   def fetch_grid
     @model = @grid = Grid.find(params[:id])
+  end
+  def collection
+    end_of_association_chain.roots
   end
 
 end
