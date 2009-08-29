@@ -21,7 +21,6 @@ describe RenderHelper, 'rendering' do
       helper.should_receive(:render).with(
         :partial => 'grids/grid',
         :object => grids(:main_vs_sidebar),
-        :layout => 'grids/wrapper',
         :locals => {:page => false}
       ).and_return('grid partial')
       helper.render_grid( grids(:main_vs_sidebar) ).should == 'grid partial'
