@@ -21,9 +21,10 @@ describe Grid, "structure of DDM Page" do
 
   it "should provide correct CSS classes" do
     grids(:main_vs_sidebar).yaml_sub_class.should include('subcolumns')
-    grids(:main_vs_sidebar).yaml_column_class.should be_blank
+    grids(:main_vs_sidebar).yaml_sub_class.should include('subcl')
 
     grids(:menu_vs_content).yaml_sub_class.should include('subcolumns')
+    grids(:menu_vs_content).yaml_sub_class.should include('subcl')
     grids(:menu_vs_content).yaml_column_class.should == 'c75l'
 
     grids(:menu).yaml_sub_class.should include('subcl')
@@ -70,7 +71,7 @@ describe Grid, 'with' do
   describe_valid_column '38% floating right', :width => 38, :float => 'r', :column => 'c38r', :sub => 'subcr'
   describe_valid_column '62% floating right', :width => 62, :float => 'r', :column => 'c62r', :sub => 'subcr'
   describe_valid_column '62% floating right', :width => 62, :float => 'r', :column => 'c62r', :sub => 'subcr'
-  describe_valid_column '100% not floating' , :width =>100, :float => nil, :column => nil, :sub => 'subcolumns'
+  describe_valid_column '100% not floating' , :width =>100, :float => nil, :column => nil, :sub => 'subc'
 
 end
 

@@ -66,11 +66,10 @@ class Grid < ActiveRecord::Base
   end
 
   def yaml_sub_class
-    if wrapper?
-      'subcolumns'
-    else
-      "subc#{float}"
-    end
+    returning [] do |css|
+      css << "subc#{float}"
+      css << 'subcolumns' unless empty?
+    end.flatten.uniq.join(' ')
   end
 
   def wrapper?
@@ -82,29 +81,25 @@ class Grid < ActiveRecord::Base
   end
 
   # Dividing
-
-  def division=(new_division)
-    division_will_change!
-    @division = new_division
-  end
-  attr_reader :division
+  attr_accessor :division
 
   after_save :apply_division
   def apply_division
-    if @division
-      case @division
+    if division
+      case division
       when '33-33-33'
-        ensure_children_for_division(@division, %w(l l r))
+        ensure_children_for_division(division, %w(l l r))
       when /-/
-        ensure_children_for_division(@division, %w(l r))
+        ensure_children_for_division(division, %w(l r))
       end
-      @division = nil
+      division = nil
     end
   end
 
   # Make sure the first 2/3 children apply to the given division
   def ensure_children_for_division(division, floats)
     widths = division.split('-').map(&:to_i)
+    return if widths.length < floats.length
     widths.zip(floats, children).each do |width, float, child|
       if child
         child.update_attributes!(:width => width, :float => float)
