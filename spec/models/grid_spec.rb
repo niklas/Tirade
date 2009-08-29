@@ -15,34 +15,25 @@ describe Grid, "structure of DDM Page" do
   end
   
   it "should have a rendering in content grid" do
-    pending("fix later")
     renderings(:ddm_welcome).should_not be_nil
     @page.should have_at_least(1).renderings_for_grid( grids(:content) )
   end
 
   it "should provide correct CSS classes" do
-    pending("fix later")
-    grids(:main_vs_sidebar).own_css.should include('subcolumns')
-    grids(:main_vs_sidebar).wrapper_css.should be_blank
-    grids(:main_vs_sidebar).children_css.should include('c75l')
-    grids(:main_vs_sidebar).children_css.should include('c25r')
+    grids(:main_vs_sidebar).yaml_sub_class.should include('subcolumns')
+    grids(:main_vs_sidebar).yaml_column_class.should be_blank
 
-    grids(:menu_vs_content).own_css.should include('subcolumns')
-    grids(:menu_vs_content).wrapper_css.should == 'c75l'
-    grids(:menu_vs_content).children_css.should include('c38l')
-    grids(:menu_vs_content).children_css.should include('c62r')
+    grids(:menu_vs_content).yaml_sub_class.should include('subcolumns')
+    grids(:menu_vs_content).yaml_column_class.should == 'c75l'
 
-    grids(:menu).own_css.should include('subcl')
-    grids(:menu).wrapper_css.should == 'c38l'
-    grids(:menu).children_css.should be_empty
+    grids(:menu).yaml_sub_class.should include('subcl')
+    grids(:menu).yaml_column_class.should == 'c38l'
 
-    grids(:sidebar).own_css.should include('subcr')
-    grids(:sidebar).wrapper_css.should == 'c25r'
-    grids(:sidebar).children_css.should be_empty
+    grids(:sidebar).yaml_sub_class.should include('subcr')
+    grids(:sidebar).yaml_column_class.should == 'c25r'
 
-    grids(:content).own_css.should include('subcr')
-    grids(:content).wrapper_css.should == 'c62r'
-    grids(:content).children_css.should be_empty
+    grids(:content).yaml_sub_class.should include('subcr')
+    grids(:content).yaml_column_class.should == 'c62r'
   end
 
 end
@@ -51,35 +42,35 @@ describe Grid, 'with' do
   def self.describe_valid_column(description, attributes={})
     describe description do
       before( :all ) do
-        @yaml         ||= attributes.delete(:yaml)
-        @yaml_content ||= attributes.delete(:yaml_content)
+        @sub    ||= attributes.delete(:sub)
+        @column ||= attributes.delete(:column)
         @grid = Factory :grid, attributes
       end
       it "shoud be valid" do
         @grid.should be_valid
       end
       it "should provide proper YAML CSS classes" do
-        @grid.yaml_class.should == @yaml
-        @grid.yaml_content_class.should == @yaml_content
+        @grid.yaml_sub_class.should == @sub
+        @grid.yaml_column_class.should == @column
       end
     end
   end
-  describe_valid_column '50% floating left' , :width => 50, :float => 'l', :yaml => 'c50l', :yaml_content => 'subcl'
-  describe_valid_column '50% floating right', :width => 50, :float => 'r', :yaml => 'c50r', :yaml_content => 'subcr'
-  describe_valid_column '25% floating left' , :width => 25, :float => 'l', :yaml => 'c25l', :yaml_content => 'subcl'
-  describe_valid_column '25% floating right', :width => 25, :float => 'r', :yaml => 'c25r', :yaml_content => 'subcr'
-  describe_valid_column '75% floating left' , :width => 75, :float => 'l', :yaml => 'c75l', :yaml_content => 'subcl'
-  describe_valid_column '75% floating left' , :width => 75, :float => 'l', :yaml => 'c75l', :yaml_content => 'subcl'
-  describe_valid_column '33% floating left' , :width => 33, :float => 'l', :yaml => 'c33l', :yaml_content => 'subcl'
-  describe_valid_column '33% not floating'  , :width => 33, :float => nil, :yaml => 'c33l', :yaml_content => 'subc'
-  describe_valid_column '33% floating right', :width => 33, :float => 'r', :yaml => 'c33r', :yaml_content => 'subcr'
-  describe_valid_column '66% floating left',  :width => 66, :float => 'l', :yaml => 'c66l', :yaml_content => 'subcl'
-  describe_valid_column '66% floating right', :width => 66, :float => 'r', :yaml => 'c66r', :yaml_content => 'subcr'
-  describe_valid_column '38% floating right', :width => 38, :float => 'r', :yaml => 'c38r', :yaml_content => 'subcr'
-  describe_valid_column '38% floating right', :width => 38, :float => 'r', :yaml => 'c38r', :yaml_content => 'subcr'
-  describe_valid_column '62% floating right', :width => 62, :float => 'r', :yaml => 'c62r', :yaml_content => 'subcr'
-  describe_valid_column '62% floating right', :width => 62, :float => 'r', :yaml => 'c62r', :yaml_content => 'subcr'
-  describe_valid_column '100% not floating' , :width =>100, :float => nil, :yaml => nil, :yaml_content => 'subcolumns'
+  describe_valid_column '50% floating left' , :width => 50, :float => 'l', :column => 'c50l', :sub => 'subcl'
+  describe_valid_column '50% floating right', :width => 50, :float => 'r', :column => 'c50r', :sub => 'subcr'
+  describe_valid_column '25% floating left' , :width => 25, :float => 'l', :column => 'c25l', :sub => 'subcl'
+  describe_valid_column '25% floating right', :width => 25, :float => 'r', :column => 'c25r', :sub => 'subcr'
+  describe_valid_column '75% floating left' , :width => 75, :float => 'l', :column => 'c75l', :sub => 'subcl'
+  describe_valid_column '75% floating left' , :width => 75, :float => 'l', :column => 'c75l', :sub => 'subcl'
+  describe_valid_column '33% floating left' , :width => 33, :float => 'l', :column => 'c33l', :sub => 'subcl'
+  describe_valid_column '33% not floating'  , :width => 33, :float => nil, :column => 'c33l', :sub => 'subc'
+  describe_valid_column '33% floating right', :width => 33, :float => 'r', :column => 'c33r', :sub => 'subcr'
+  describe_valid_column '66% floating left',  :width => 66, :float => 'l', :column => 'c66l', :sub => 'subcl'
+  describe_valid_column '66% floating right', :width => 66, :float => 'r', :column => 'c66r', :sub => 'subcr'
+  describe_valid_column '38% floating right', :width => 38, :float => 'r', :column => 'c38r', :sub => 'subcr'
+  describe_valid_column '38% floating right', :width => 38, :float => 'r', :column => 'c38r', :sub => 'subcr'
+  describe_valid_column '62% floating right', :width => 62, :float => 'r', :column => 'c62r', :sub => 'subcr'
+  describe_valid_column '62% floating right', :width => 62, :float => 'r', :column => 'c62r', :sub => 'subcr'
+  describe_valid_column '100% not floating' , :width =>100, :float => nil, :column => nil, :sub => 'subcolumns'
 
 end
 
@@ -148,5 +139,7 @@ describe "empty", Grid do
     {:width => 62, :float => 'l'},
     {:width => 38, :float => 'r'}
   ]
+  describe_children_creation_by_division 'leaf', []
+  describe_children_creation_by_division 'wrap', []
 
 end

@@ -1,24 +1,23 @@
 - options = {}
 - add_class_to_html_options options, dom_id(grid)
-- add_class_to_html_options options, grid.own_css
+- add_class_to_html_options options, grid.yaml_sub_class
 - add_class_to_html_options options, grid.title.domify unless grid.title.blank?
 - options[:id] = dom_id(grid)
 - options[:title] = grid.title
 - options[:rel] = dom_id(grid)
 %div.grid{options}
-  -if grid.visible_children.empty?
+  -if grid.children.empty?
     - if page
       - renderings = grid.renderings_for_page(page)
       - if renderings.empty?
         = render(:partial => 'grids/without_renderings', :object => grid, :locals => {:grid => grid, :page => page})
       - else
+        %div.col{:class => grid.yaml_column_class, :rel => dom_id(grid)}
         - renderings.each do |rendering|
           = render_rendering(rendering, :page => page, :grid => grid)
     - else
       %div= "no children and no page given. empty?"
-  - elsif grid.division == 'wrap'
-    - grid.children.each do |child|
-      = render_grid(child, :page => page)
   - else
-    - grid.visible_children.each do |child|
-      = render_grid(child, :page => page)
+    - grid.children.each do |child|
+      %div.col{:class => child.yaml_column_class, :rel => dom_id(grid)}
+        = render_grid(child, :page => page)

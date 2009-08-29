@@ -12,7 +12,7 @@ module RenderHelper
 
   def render_grid(grid, locals = {})
     locals.reverse_merge! :page => false
-    render(:partial => 'grids/grid', :layout => 'grids/wrapper', :object => grid, :locals => locals)
+    render(:partial => 'grids/grid', :object => grid, :locals => locals)
   end
 
   def render_grid_in_page(grid, page)

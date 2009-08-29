@@ -4,35 +4,36 @@ layout50_50:
   id: 5050
   title: "50 / 50"
   parent_id: NULL
-  division: '50-50'
+  width: 100
+  float: nil
   lft: 1
   rgt: 1000
 
 layout_50_50_1:
   parent_id: 5050
   title: "50 / 50 left"
-  division: 'leaf'
+  width: 50
+  float: l
   lft: 2
   rgt: 10
 
 layout_50_50_2:
   parent_id: 5050
   title: "50 / 50 right"
-  division: 'leaf'
+  width: 50
+  float: r
   lft: 12
   rgt: 20
 
 layout33_33_33:
   title: Dreiteilung
   parent_id: NULL
-  division: 'leaf'
 
 
 # DDM Grids from YAML ( L for layout :)
 main_vs_sidebar:
   id: 1
   title: Main vs Sidebar
-  division: '75-25'
   parent_id: NULL
   lft: 1000
   rgt: 2000
@@ -40,7 +41,8 @@ main_vs_sidebar:
 menu_vs_content:
   id: 2
   title: Main (Menu vs Content)
-  division: '38-62'
+  width: 75
+  float: l
   parent_id: 1
   lft: 1010
   rgt: 1220
@@ -48,7 +50,8 @@ menu_vs_content:
 menu:
   id: 4
   title: Menu
-  division: 'leaf'
+  width: 38
+  float: l
   parent_id: 2
   lft: 1101
   rgt: 1110
@@ -56,7 +59,8 @@ menu:
 content:
   id: 5
   title: Content
-  division: 'leaf'
+  width: 62
+  float: r
   parent_id: 2
   lft: 1201
   rgt: 1211
@@ -64,7 +68,8 @@ content:
 sidebar:
   id: 3
   title: Sidebar
-  division: 'leaf'
+  width: 25
+  float: r
   parent_id: 1
   lft: 1501
   rgt: 1999

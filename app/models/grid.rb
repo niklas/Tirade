@@ -61,11 +61,11 @@ class Grid < ActiveRecord::Base
 
   validates_inclusion_of :division, :in => Divisions, :allow_blank => true
 
-  def yaml_class
+  def yaml_column_class
     "c#{width}#{float || 'l'}" unless wrapper?
   end
 
-  def yaml_content_class
+  def yaml_sub_class
     if wrapper?
       'subcolumns'
     else
@@ -143,14 +143,6 @@ class Grid < ActiveRecord::Base
     child_grid.save!
     child_grid.move_to_child_of self
     child_grid
-  end
-
-  def visible_children
-    ideal_children_count > 0 ? children.first(ideal_children_count) : children
-  end
-
-  def ideal_children_count
-    IdealChildrenCount[division] || 2
   end
 
   def is_first_child?
@@ -264,12 +256,6 @@ class Grid < ActiveRecord::Base
 
   attr_writer :child_id
   protected
-  def auto_create_missing_children
-    while children.length < ideal_children_count
-      add_child
-    end
-    true
-  end
 
   def wrap_children
     if root? && !@child_id.nil? && (thechild = Grid.find_by_id(@child_id)) 
