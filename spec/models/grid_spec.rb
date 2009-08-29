@@ -51,7 +51,7 @@ describe Grid, 'with' do
         @grid.should be_valid
       end
       it "should provide proper YAML CSS classes" do
-        @grid.yaml_sub_class.should == @sub
+        @grid.yaml_sub_class.should include(@sub)
         @grid.yaml_column_class.should == @column
       end
     end
