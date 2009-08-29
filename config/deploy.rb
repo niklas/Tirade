@@ -64,3 +64,11 @@ namespace :deploy do
   end
 end
 
+namespace :db do
+  task :download, :roles => [:db] do
+    run "cd #{current_release} && rake db:dump_production"
+    get '/tmp/production.sql', '/tmp/production.sql'
+    run "cd #{current_release} && rake db:remove_production_dump"
+  end
+end
+
