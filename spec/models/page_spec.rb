@@ -142,12 +142,9 @@ describe "The Pages in the fixtures" do
 end
 
 
-describe "The main Page with all fixtures", :type => :helper do
+describe "The main Page with all fixtures" do
   fixtures :all
   before(:each) do
-    Page.rebuild!
-    Grid.rebuild!
-    Content.rebuild!
     @page = pages(:main)
   end
   it "should have the right final_layout" do
@@ -169,37 +166,6 @@ describe "The main Page with all fixtures", :type => :helper do
   end
   it "should have some renderings" do
     @page.should have_at_least(3).renderings
-  end
-
-  describe ", rendering it" do
-    before(:each) do
-      @html = @page.render
-    end
-    it "should not be empty" do
-      @html.should_not be_empty
-    end
-    it "should mark the first of renderings and grids"
-
-    it "should have the complete page structure" do
-      pending("move to helper spec")
-      @html.should have_tag('div.page_margins') do
-        with_tag('div.page') do
-          with_tag('div.subcolumns') do
-            with_tag('div.c50l div.grid.subcl') do
-              with_tag('div.rendering.simple_preview.document') do
-                with_tag('p', /big hug/)
-              end
-            end
-            with_tag('div.c50r div.grid.subcr') do
-              with_tag('div.rendering.simple_preview.document') do
-                with_tag('h2','Introduction')
-                with_tag('p',/Tirade is a CMS/)
-              end
-            end
-          end
-        end
-      end
-    end
   end
 
   describe "switching the layout to a new one" do
