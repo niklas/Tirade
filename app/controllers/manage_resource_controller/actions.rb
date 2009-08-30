@@ -101,7 +101,7 @@ module ManageResourceController
     # TODO must add :object_name (:as) to partial call => refactor ToolboxHelper
     def update_page_on_show(page)
       if wants_refresh?
-        page.select_frame_for(object).html frame_content_for(object)
+        page.select_frame_for(object).html page.context.frame_content_for(object)
       else
         page.push_frame_for(object)
       end
