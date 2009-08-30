@@ -678,8 +678,13 @@ jQuery.fn.update = function(options) {
 jQuery.fn.refresh = function() {
   var href = $(this).closest('.frame').data('url');
   if (href) {
+    if (href.match(/\?/)) {
+      href = href + '&refresh=1'
+    } else {
+      href = href + '?refresh=1'
+    }
     $.ajax({
-      url: href + '?refresh=1',
+      url: href,
       type: 'GET'
     });
   }
