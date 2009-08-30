@@ -21,7 +21,8 @@
     = rendering.part.render(rendering.final_options, rendering.context_in_registers)
 - else
   - if rendering.has_content?
-    - add_class_to_html_options options, rendering.content.class.to_s.underscore
+    - add_class_to_html_options options, rendering.content.class.to_s.domify
+    - add_class_to_html_options options, rendering.content.title.domify
     - unless rendering.part.nil?
       - out << capture do
         = rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
