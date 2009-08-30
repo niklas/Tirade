@@ -78,6 +78,8 @@ module ManageResourceController
         else
           target.html(page.context.list_of(collection, :force_list => true))
         end
+      elsif wants_refresh?
+        page.select_frame(resource_name.pluralize, 'index').html page.context.frame_for(collection, 'list')
       else
         page.push_frame_for(collection,'list')
       end
