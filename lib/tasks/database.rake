@@ -3,7 +3,7 @@ namespace :db do
     load 'config/environment.rb'
     config = ActiveRecord::Base.configurations['production'].with_indifferent_access
     dump_file = "/tmp/production.sql"
-    do_dump = "pg_dump --format=plain --file=#{dump_file} --verbose --host=#{config[:host]} -W -U #{config[:username]} #{config[:database]}"
+    do_dump = "pg_dump --format=plain --clean --file=#{dump_file} --verbose --host=#{config[:host]} -W -U #{config[:username]} #{config[:database]}"
     p do_dump
     system do_dump
   end
