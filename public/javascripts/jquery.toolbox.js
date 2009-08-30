@@ -857,7 +857,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
          function() { $(this).removeClass('ui-state-hover'); }
        );
 
-    if ($form.attr('method') == 'put') {
+    if ($form.closest('.frame').data('action') == 'edit') {
       $form.preview();
     }
     
