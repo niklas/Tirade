@@ -87,7 +87,7 @@ module ToolboxSpecHelper
   end
 
   def set_notification(expected)
-    have_text %r[\$\.gritter\.add\(\{"text":\s*".*#{Regexp.escape expected}.*"\}\)]
+    have_text %r[\$\.gritter\.add\(\{[^{]*"text":\s*".*#{Regexp.escape expected}.*"\}\)]
   end
 
   def set_toolbox_status(expected)
