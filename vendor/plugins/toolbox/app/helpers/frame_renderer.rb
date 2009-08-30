@@ -85,7 +85,7 @@ class RecordFrameRenderer < FrameRenderer
   alias_method :record, :thingy
   def meta
     super.merge({
-      :title => record.title || "#{record.class_name} ##{record.id}", 
+      :title => record.new_record? ? "new #{record.class_name}" : (record.title || "#{record.class_name} ##{record.id}"), 
       :resource_name => template.resource_name,
       :id => record.id
     })
