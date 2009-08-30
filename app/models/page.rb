@@ -19,6 +19,7 @@
 class Page < ActiveRecord::Base
   acts_as_nested_set
   include LazyNestedSet
+  include Tirade::ActiveRecord::CssClasses
 
   attr_protected :created_at, :updated_at
 

@@ -21,6 +21,7 @@
 class Rendering < ActiveRecord::Base
   acts_as_renderer
   serialize :scope_definition, Hash
+  include Tirade::ActiveRecord::CssClasses
   def scope_definition
     self[:scope_definition] ||= Hash.new
   end
@@ -30,7 +31,7 @@ class Rendering < ActiveRecord::Base
     Tirade::ActiveRecord::Content.classes
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope, :css_classes, :css_classes_list
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id

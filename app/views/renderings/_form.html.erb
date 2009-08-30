@@ -27,6 +27,7 @@
     <% end %>
 
     <% accordion_item "How" do %>
+      <%= f.text_field :css_classes_list, :label => 'CSS classes' %>
       <%= f.has_one :part %>
     <% end %>
 

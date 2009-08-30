@@ -25,6 +25,7 @@
 
   <% accordion_item "How" do %>
     <%= show rendering, :part, :selectable => true %>
+    <%= show rendering, :css_classes, :label => 'extra CSS classes' %>
     <% if rendering.part %>
       <%= show rendering, :options %>
     <% end %>

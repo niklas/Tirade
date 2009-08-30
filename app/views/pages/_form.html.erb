@@ -17,6 +17,7 @@
 
     <% accordion_item "Layout" do %>
       <%= f.text_field :width, :label => 'Width' %>
+      <%= f.text_field :css_classes_list, :label => 'CSS classes' %>
       <%= f.select :alignment, Page::Alignments, :label => 'Alignment', :include_blank => 'inherit' %>
       <%= f.collection_select :layout_id, Grid.roots, :id, :title, {
         :include_blank => "from parent Page (#{f.object.parent.andand.final_layout.andand.title})", 

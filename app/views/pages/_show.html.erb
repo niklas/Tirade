@@ -12,6 +12,7 @@
 
   <% accordion_item "Layout", :content_tag => :dl do %>
     <%= show thepage, :width %>
+    <%= show thepage, :css_classes, :label => 'extra CSS classes' %>
     <%= show thepage, :alignment %>
     <%= render_tree thepage %>
   <% end %>

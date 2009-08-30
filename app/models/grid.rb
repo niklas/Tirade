@@ -19,6 +19,7 @@ class Grid < ActiveRecord::Base
 
   acts_as_nested_set 
   acts_as_renderer
+  include Tirade::ActiveRecord::CssClasses
   NameByDivision = {
     '50-50'    =>   '50% - 50%',
     '33-33-33' =>	'33% - 33% - 33%',

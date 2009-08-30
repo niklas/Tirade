@@ -445,3 +445,74 @@ describe "without a Part or any Content" do
     end
   end
 end
+
+describe Rendering, "with extra CSS classes" do
+  describe "valid Rendering", :shared => true do
+    it "should be valid" do
+      @rendering.should be_valid
+    end
+    it "should provide CSS classes as Array" do
+      @rendering.css_classes.should be_a(Array)
+    end
+    it "should not contain empty CSS classes" do
+      @rendering.css_classes.should_not include('')
+    end
+  end
+  describe "extra big Rendering", :shared => true do
+    it "should be extra" do
+      @rendering.css_classes.should include('extra')
+    end
+    it "should be big" do
+      @rendering.css_classes.should include('big')
+    end
+  end
+  describe "with one class" do
+    before( :each ) do
+      @rendering = Factory.build :rendering, :css_classes_list => 'big'
+    end
+    it_should_behave_like 'valid Rendering'
+    it "should be big" do
+      @rendering.css_classes.should include('big')
+    end
+  end
+  describe "with spaces" do
+    before( :each ) do
+      @rendering = Factory.build :rendering, :css_classes_list => 'extra big'
+    end
+    it_should_behave_like 'valid Rendering'
+    it_should_behave_like 'extra big Rendering'
+  end
+  describe "with commas" do
+    before( :each ) do
+      @rendering = Factory.build :rendering, :css_classes_list => 'extra,big'
+    end
+    it_should_behave_like 'valid Rendering'
+    it_should_behave_like 'extra big Rendering'
+  end
+  describe "with commas and spaces" do
+    before( :each ) do
+      @rendering = Factory.build :rendering, :css_classes_list => 'extra, big'
+    end
+    it_should_behave_like 'valid Rendering'
+    it_should_behave_like 'extra big Rendering'
+  end
+  describe "with bad characters in it" do
+    before( :each ) do
+      @rendering = Factory.build :rendering, :css_classes_list => '%extra, &big'
+    end
+    it "should not be valid" do
+      @rendering.should_not be_valid
+      @rendering.should have_at_least(1).errors_on(:css_classes)
+    end
+  end
+
+  describe "empty" do
+    before( :each ) do
+      @rendering = Factory.build :rendering, :css_classes_list => nil
+    end
+    it "should ne empty" do
+      @rendering.css_classes.should be_empty
+    end
+    it_should_behave_like 'valid Rendering'
+  end
+end
