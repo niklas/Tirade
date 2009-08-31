@@ -3,7 +3,6 @@
 - margin_options[:style] = page.style if layout
 - options = {}
 - options[:data] = {:url => page.url, :title => page.title}.to_json if logged_in?
-- options[:title] = page.title
 - add_class_to_html_options options, dom_id(page)
 - add_class_to_html_options options, page.css_classes unless page.css_classes.blank?
 %div.page_margins{margin_options}

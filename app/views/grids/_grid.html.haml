@@ -4,7 +4,6 @@
 - add_class_to_html_options options, grid.title.domify unless grid.title.blank?
 - add_class_to_html_options options, grid.css_classes unless grid.css_classes.blank?
 - options[:id] = dom_id(grid)
-- options[:title] = grid.title
 - options[:rel] = dom_id(grid)
 %div.grid{options}
   -if grid.children.empty?
