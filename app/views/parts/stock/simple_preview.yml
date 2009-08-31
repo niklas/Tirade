@@ -1,9 +1,10 @@
 --- 
-:preferred_types: 
-- Document
-- NewsItem
-- NewsFolder
 :defined_options: 
   show_title: 
   - boolean
   - "true"
+:description: Shows the title and description of the assigned Content
+:preferred_types: 
+- Document
+- NewsFolder
+- NewsItem
