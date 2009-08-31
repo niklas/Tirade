@@ -1,4 +1,6 @@
 <% part ||= list_item || @part %>
 <%= show_link_to(part) %>
 <%=h part.name %>
-(<%=h part.preferred_types_names %>)
+<% unless part.preferred_types.blank? %>
+  (<%=h part.preferred_types_names %>)
+<% end %>
