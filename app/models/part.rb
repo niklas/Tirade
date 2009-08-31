@@ -68,21 +68,13 @@ class Part < ActiveRecord::Base
     preferred_types.map(&:constantize)
   end
 
-  def label
-    name
-  end
-
-  def fullname
-    in_theme? ? "#{name} (#{current_theme})" : name
-  end
-
   def title
-    if !current_plugin.blank?
-      "#{name} in '#{current_plugin}' plugin"
-    elsif in_theme?
-      "#{name} in '#{current_theme}' theme"
-    else
-      name
+    returning name do |n|
+      if !current_plugin.blank?
+        n << " in '#{current_plugin}' plugin"
+      elsif in_theme?
+        n << " in '#{current_theme}' theme"
+      end
     end
   end
 

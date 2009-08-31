@@ -156,12 +156,15 @@ class Rendering < ActiveRecord::Base
   end
 
   def label
-    [
-      part.andand.label || '[brand new]',
-      content_title
-    ].compact.join(' with ')
+    returning '' do |l|
+      l << "#{part.title}" if part
+      if content_title.blank?
+        l << ' (blank)' if needs_content?
+      else
+        l << ": #{content_title}"
+      end
+    end
   end
-
   alias_method :title, :label
 
   def brothers_by_part
@@ -175,7 +178,9 @@ class Rendering < ActiveRecord::Base
   end
 
   def needs_content?
-    assignment != 'none'
+    if part
+      !part.static?
+    end
   end
 
   def drop_acceptions
