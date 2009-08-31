@@ -1,5 +1,7 @@
 <ul>
+{% if show_current_page %}
   <li>{{ page.root | render: 'link_to_page' }}</li>
+{% endif %}
 {% for child in page.root.public_children %}
   <li>{{ child | render: 'link_to_page' }}</li>
 {% endfor %}
