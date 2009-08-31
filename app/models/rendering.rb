@@ -180,6 +180,8 @@ class Rendering < ActiveRecord::Base
   def needs_content?
     if part
       !part.static?
+    else
+      true
     end
   end
 
