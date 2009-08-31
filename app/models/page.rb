@@ -25,7 +25,7 @@ class Page < ActiveRecord::Base
 
   acts_as_renderer
   acts_as_content :liquid => [
-    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root
+    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root, :public_siblings
   ]
   has_fulltext_search :title, :url
 
@@ -115,7 +115,11 @@ class Page < ActiveRecord::Base
   end
 
   def public_children
-    self.children.to_a
+    children.to_a
+  end
+
+  def public_siblings
+    siblings.to_a
   end
 
   def title_unless_root
