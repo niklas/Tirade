@@ -120,7 +120,7 @@ module ManageResourceController
 
     def update_page_on_update(page)
       page.select_frame_for(object).refresh
-      page.select_frame_for(object, 'edit').remove
+      page.select_frame_for(object, 'form').remove
     end
 
     def update_page_on_failed_update(page)
