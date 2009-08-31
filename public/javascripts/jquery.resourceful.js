@@ -107,7 +107,12 @@
 
   $.fn.resourceURL = function() {
     var typeAndId = $(this).typeAndId();
-    return Routing[typeAndId.resource + '_path']({id: typeAndId.id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()})
+    var route = Routing[typeAndId.resource + '_path'];
+    if (route) {
+      return route({id: typeAndId.id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()})
+    } else {
+      alert("resource not found: " + typeAndId.resorce);
+    }
   };
 
 
