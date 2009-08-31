@@ -67,6 +67,10 @@ body {
       overflow: auto;
       padding: 0;
       border: none;
+      margin-bottom: 3px;
+      *.ui-helper-clearfix {
+        margin-bottom: 23px;
+      }
     }
   }
 
@@ -118,15 +122,11 @@ body {
     }
     dl {
       margin: 0;
-      float: left;
-      clear: both;
       width: 100%;
       di {
         margin: 0.3em 0;
         dt {
           font-weight:bold;
-          float: left;
-          clear: left;
           margin: <%= @medium %>;
         }
         .list dd {
@@ -138,8 +138,6 @@ body {
           dt,dd {
             margin: <%= @small %>;
           }
-          float: right;
-          clear: right;
         }
       }
     }

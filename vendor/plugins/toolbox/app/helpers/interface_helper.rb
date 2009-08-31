@@ -20,7 +20,6 @@ module InterfaceHelper
   def accordion_item(title="Accordion Item", opts={}, &block)
     tag2 = opts.delete(:content_tag) || :dl
     add_class_to_html_options(opts, 'accordion_content')
-    add_class_to_html_options(opts, 'ui-helper-clearfix')
     toggle_class = "accordion_toggle #{title.urlize}"
     concat content_tag(:h3,title, :class => toggle_class, :name => title.urlize)
     concat content_tag(tag2,capture(&block), opts)
