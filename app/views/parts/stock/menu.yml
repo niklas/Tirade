@@ -1,7 +1,0 @@
---- 
-:defined_options: 
-  show_current_page: 
-  - boolean
-  - "false"
-:preferred_types: 
-- none
