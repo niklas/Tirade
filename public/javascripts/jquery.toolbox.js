@@ -140,7 +140,8 @@ var Toolbox = {
     this.elements = $('#toolbox, #toolbox_sidebar');
   },
   applyBehaviors: function() {
-    this.body.serialScroll({
+    var self = this;
+    self.body.serialScroll({
       step: 1, cycle: false,
       lazy: true,
       event: null,
@@ -154,14 +155,23 @@ var Toolbox = {
       duration: 555
     })
 
-    this.body.bind('prev.serialScroll', this.refreshBackButton );
-    this.body.bind('next.serialScroll', this.refreshBackButton );
-    this.body.bind('notify.serialScroll', this.setTitle );
-    this.refreshBackButton();
+    self.body.bind('prev.serialScroll', self.refreshBackButton );
+    self.body.bind('next.serialScroll', self.refreshBackButton );
+    self.body.bind('notify.serialScroll', self.setTitle );
+    self.refreshBackButton();
 
-    $('> div.content > div.frame', this.body).livequery(
-      function() { $(this).frameInToolbox() },
-      function() { $.tirade.history.sync() }
+    $('> div.content > div.frame', self.body).livequery(
+      function() { 
+        $(this).frameInToolbox();
+        self.frameCount = self.frames().length;
+      },
+      function() { 
+        $.tirade.history.sync();
+        self.frameCount = self.frames().length;
+        if (self.currentFrame().length == 0) {
+          self.currentFrameIndex = self.frameCount - 1;
+        }
+      }
     );
 
     // Scroll to selected accordion section
@@ -254,7 +264,6 @@ var Toolbox = {
     }
     frame.appendTo( this.content() );
     $.tirade.history.append(frame);
-    this.frameCount++;
     this.goto(frame);
   },
   goto: function(frame) {
@@ -286,7 +295,6 @@ var Toolbox = {
   pop: function() {
     if ( this.frameCount > 1 ) {
       $('body').applyRoles();
-      this.frameCount--;
       this.refreshBackButton();
       this.prev();
       setTimeout( this.removeLastFrame, 500 );
@@ -297,8 +305,6 @@ var Toolbox = {
     Toolbox.element().trigger('toolbox.frame.removed', frame);
     History.pop();
     Toolbox.refreshBackButton();
-    Toolbox.frameCount = Toolbox.frames().length;
-    Toolbox.currentFrameIndex--;
   },
   refreshBackButton: function() {
     if ( Toolbox.frameCount > 1 )
