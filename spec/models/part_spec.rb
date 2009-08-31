@@ -251,12 +251,12 @@ describe "A Part with basic Liquid that accepts and uses a Document" do
     @part = Part.new(
       :name => 'Document Preview',
       :filename => 'document_preview',
-      :liquid => %Q[<h1>{{ document_preview.title }}</h1>\n<p>{{ document_preview.body }}</p>],
+      :liquid => %Q[<h1>{{ document_preview.title }}</h1>\n<p>{{ document_preview.description }}</p>],
       :preferred_types => ["Document"]
     )
     @document = Document.new(
       :title => "My Title",
-      :body => "A not so long Paragraph"
+      :description => "A not so long Paragraph"
     )
   end
   it "should be valid" do
@@ -282,7 +282,7 @@ describe "A Part with Liquid which uses options" do
       :preferred_types => ["Document"],
       :defined_options => { 'show_one' => [:boolean, true]}
     )
-    @document = Document.new( :title => "My Title", :body => "A not so long Paragraph")
+    @document = Document.new( :title => "My Title", :description => "A not so long Paragraph")
   end
   it "should be valid" do
     @part.should be_valid
@@ -303,12 +303,12 @@ describe "A Part with Liquid that accepts and uses a Document with filters" do
     @part = Part.new(
       :name => 'Document Preview',
       :filename => 'document_preview',
-      :liquid => %Q[<h1>{{ document_preview.title|upcase}}</h1>\n<p>{{ document_preview.body|truncate: 10}}</p>],
+      :liquid => %Q[<h1>{{ document_preview.title|upcase}}</h1>\n<p>{{ document_preview.description|truncate: 10}}</p>],
       :preferred_types => ["Document"]
     )
     @document = Document.new(
       :title => "My Title",
-      :body => "A not so long Paragraph"
+      :description => "A not so long Paragraph"
     )
   end
   it "should be valid" do
@@ -512,7 +512,7 @@ describe "A Part which renders the simple_preview by filter" do
     before(:each) do
       @document = Document.new(
         :title => "My Title",
-        :body => "A not so long Paragraph"
+        :description => "A not so long Paragraph"
       )
       @context = {
         :registers => {
