@@ -95,7 +95,6 @@ body {
       }
     }
     code {
-      width: 98%;
       margin: 1%;
       float: left;
       overflow: auto;
