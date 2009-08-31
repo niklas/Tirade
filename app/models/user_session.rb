@@ -17,4 +17,8 @@ class UserSession < Authlogic::Session::Base
   def title
     "Session"
   end
+
+  def class_name
+    'UserSession'
+  end
 end
