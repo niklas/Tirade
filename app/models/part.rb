@@ -71,9 +71,9 @@ class Part < ActiveRecord::Base
   def title
     returning name do |n|
       if !current_plugin.blank?
-        n << " in '#{current_plugin}' plugin"
+        n << " (plugin: #{current_plugin})"
       elsif in_theme?
-        n << " in '#{current_theme}' theme"
+        n << " (theme: #{current_theme})"
       end
     end
   end
