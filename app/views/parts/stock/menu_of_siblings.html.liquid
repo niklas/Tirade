@@ -1,0 +1,14 @@
+{% if page.root? %}
+{% assign pages = page.public_children %}
+{% else %}
+{% assign pages = page.public_siblings %}
+{% endif %}
+<ul> 
+{% for subpage in pages %} 
+  <li 
+{% if subpage.id == page.id %} 
+class="active" 
+{% endif %} 
+>{{ subpage | link_to_page }}</li> 
+{% endfor %} 
+</ul> 

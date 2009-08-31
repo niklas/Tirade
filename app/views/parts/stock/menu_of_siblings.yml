@@ -1,0 +1,6 @@
+--- 
+:defined_options: {}
+
+:description: List of siblings of the current page. If visiting the root page, the list of its children
+:preferred_types: 
+- none

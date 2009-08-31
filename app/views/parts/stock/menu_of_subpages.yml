@@ -1,5 +1,6 @@
 --- 
 :defined_options: {}
 
+:description: A list of sub-pages for the current page. It changes depending which page is currently displayed
 :preferred_types: 
 - none
