@@ -25,7 +25,7 @@ class Page < ActiveRecord::Base
 
   acts_as_renderer
   acts_as_content :liquid => [
-    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root, :public_siblings
+    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root, :public_siblings, :lft, :rgt
   ]
   has_fulltext_search :title, :url
 
