@@ -1,0 +1,9 @@
+<ul> 
+{% for subpage in rooted_menu.public_children %} 
+  <li 
+{% if subpage.lft <= page.lft and page.rgt <= subpage.rgt %} 
+class="active" 
+{% endif %} 
+>{{ subpage | link_to_page }}</li> 
+{% endfor %} 
+</ul> 

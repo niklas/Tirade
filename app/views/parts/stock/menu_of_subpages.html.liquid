@@ -1,0 +1,5 @@
+<ul>
+{% for subpage in page.public_children %}
+  <li>{{ subpage | link_to_page }}</li>
+{% endfor %}
+</ul>
