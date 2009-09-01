@@ -14,15 +14,6 @@
       <% unless rendering.new_record? %>
         <% content_types = rendering.part.andand.preferred_types_classes || Rendering.valid_content_types %>
         <%= f.collection_select :content_type, content_types, :to_s, :to_s %>
-        <% f.fields_for :scope do |scope_form| %>
-          <% content_types.each do |content_type| %>
-            <div class="scopes <%= content_type -%>">
-              <%= scope_form.select_order_scope content_type %>
-              <%= scope_form.select_scope_from_pool content_type %>
-              <%= scope_form.scope_pool content_type %>
-            </div>
-          <% end %>
-        <% end %>
       <% end %>
     <% end %>
 
