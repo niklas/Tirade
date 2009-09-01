@@ -12,7 +12,16 @@ module RenderHelper
 
   def render_grid(grid, locals = {})
     locals.reverse_merge! :page => false
-    render(:partial => 'grids/grid', :object => grid, :locals => locals)
+    html = render(:partial => 'grids/grid', :object => grid, :locals => locals)
+    if grid.root?
+      html
+    else
+      opts = {}
+      opts[:style] = "width: #{grid.extra_width}" unless grid.extra_width.blank?
+      opts[:rel] = dom_id(grid)
+      add_class_to_html_options opts, grid.yaml_column_class
+      content_tag(:div, html, opts)
+    end
   end
 
   def render_grid_in_page(grid, page)

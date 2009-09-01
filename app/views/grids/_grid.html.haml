@@ -25,5 +25,4 @@
       %div= "no children and no page given. empty?"
   - else
     - grid.children.each do |child|
-      %div.col{:class => child.yaml_column_class, :rel => dom_id(child)}
-        = render_grid(child, :page => page)
+      = render_grid(child, :page => page)

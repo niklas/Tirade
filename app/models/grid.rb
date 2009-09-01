@@ -61,6 +61,7 @@ class Grid < ActiveRecord::Base
   validates_inclusion_of :float, :in => Floats, :allow_blank => true, :allow_nil => true
 
   validates_inclusion_of :division, :in => Divisions, :allow_blank => true
+  validates_format_of :extra_width, :with => /\A\d+(?:px|%)\Z/, :allow_blank => true, :message => "has no unit (px, %)"
 
   def yaml_column_class
     "c#{width}#{float || 'l'}" unless wrapper?
