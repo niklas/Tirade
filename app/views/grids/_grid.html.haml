@@ -5,6 +5,8 @@
 - add_class_to_html_options options, grid.css_classes unless grid.css_classes.blank?
 - options[:id] = dom_id(grid)
 - options[:rel] = dom_id(grid)
+- options[:data] = {:title => grid.title} if logged_in?
+- options[:data] = options[:data].to_json
 %div.grid{options}
   -if grid.children.empty?
     - if page

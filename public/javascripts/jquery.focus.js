@@ -148,7 +148,7 @@
       this.currentOptions = options;
       this._fillTopTabs( options.children ?  $(options.children, e) : []);
       this._fillLeftTabs( options.left_children ?  $(options.left_children, e) : []);
-      this.title( e.attr('title') || e.typeAndId().type );
+      this.title( e.attr('title') || e.metadata().title || e.typeAndId().type );
       this.showButton.attr('href', e.resourceURL()  );
       this._setButtons( options.buttons.call(e) );
       var callback = this.currentOptions.visit; 
@@ -251,7 +251,7 @@
         var $self = $(this);
         var link = $('<a />')
           .attr('href', '#')
-          .text( $self.attr('title') || $self.typeAndId().type )
+          .text( $self.attr('title') || $self.metadata().title || $self.typeAndId().type )
           .click(function() { $self.focusable('focus') })
           .wrap('<li></li>')
           .parent()

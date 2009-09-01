@@ -8,6 +8,7 @@
 - options[:id] = dom_id(rendering)
 - options[:rel] = dom_id(rendering)
 - accept_drop = false
+- options[:data] = {:title => rendering.title} if logged_in?
 
 - if rendering.part.nil?
   - add_class_to_html_options options, 'without_part'
@@ -42,6 +43,7 @@
 
 - if accept_drop
   - add_class_to_html_options options, 'droppable'
-  - options[:data] = {:acceptDropOf => rendering.drop_acceptions.map(&:underscore)}.to_json unless rendering.drop_acceptions.empty?
+  - options[:data][:acceptDropOf] = rendering.drop_acceptions.map(&:underscore) unless rendering.drop_acceptions.empty?
 
+- options[:data] = options[:data].to_json
 %div{options}= out
