@@ -8,7 +8,10 @@
 - options[:id] = dom_id(rendering)
 - options[:rel] = dom_id(rendering)
 - accept_drop = false
-- options[:data] = {:title => rendering.title} if logged_in?
+- if logged_in?
+  - options[:data] = {:title => rendering.title}
+- else
+  - options[:data] = {}
 
 - if rendering.part.nil?
   - add_class_to_html_options options, 'without_part'
