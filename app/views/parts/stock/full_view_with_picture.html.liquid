@@ -3,7 +3,7 @@
 {% endif %}
 
 {% if show_description %}
-<div class="description">{{ full_view_with_picture.description  }}</div>
+<div class="description">{{ full_view_with_picture.description | markup  }}</div>
 {% endif %}
 
 
@@ -17,5 +17,5 @@
   </div>
 {% endif %}
 
-  {{ full_view_with_picture.body }}
+  {{ full_view_with_picture.body | markup }}
 </div>
