@@ -68,7 +68,7 @@ namespace :deploy do
     run "cd #{current_release} && git pull origin master"
   end
 
-  task "Dirty update and restart"
+  desc "Dirty update and restart"
   task :upgrade, :roles => [:app] do
     update
     restart
