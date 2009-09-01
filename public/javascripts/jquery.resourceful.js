@@ -89,14 +89,14 @@
 
   // Returns image_23
   $.fn.resourceIdentifier = function() {
-    if ( m = $(this)[0].className.match(/([\w_]+_\d+)/)) {
+    if ( m = $(this).attr('rel').match(/([\w_]+_\d+)/)) {
       return(m[1])
     }
   };
 
   // Returns { type: 'Image', id: 23 }
   $.fn.typeAndId = function() {
-    if (match = $(this)[0].className.match(/([\w_]+)_(\d+)/)) {
+    if (match = $(this).attr('rel').match(/([\w_]+)_(\d+)/)) {
       return({
         type: $.string(match[1]).gsub(/_/,'-').capitalize().camelize().str,
         resource: match[1],
