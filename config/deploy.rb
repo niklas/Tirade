@@ -59,8 +59,19 @@ namespace :deploy do
   end
 
   desc "Restart Passenger by touching"
-  task :restart do
+  task :restart, :roles => [:app] do
     run "touch #{current_release}/tmp/restart.txt"
+  end
+
+  desc "Dirty update git by pulling from origin"
+  task :update, :roles => [:app] do
+    run "cd #{current_release} && git pull origin master"
+  end
+
+  task "Dirty update and restart"
+  task :upgrade, :roles => [:app] do
+    update
+    restart
   end
 end
 
