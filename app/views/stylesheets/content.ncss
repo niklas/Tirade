@@ -1,0 +1,12 @@
+body {
+  div.page_margins div.page {
+    div.image {
+      .left { float: left; }
+      .right { float: right; }
+      p.title {
+        margin: 0.3em auto;
+        font-size: 75%;
+      }
+    }
+  }
+}

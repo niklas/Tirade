@@ -1,0 +1,21 @@
+{% if show_title %}
+<h3 class="title">{{ full_view_with_picture.title }}</h3>
+{% endif %}
+
+{% if show_description %}
+<div class="description">{{ full_view_with_picture.description  }}</div>
+{% endif %}
+
+
+<div class="body">
+{% if show_picture and full_view_with_picture.image %}
+  <div class="image {{ align_picture }} ui-helper-clearfix">
+  {{ full_view_with_picture.image | scale: geometry | to_image }}
+  {% if show_picture_title %}
+  <p class="title">{{ full_view_with_picture.image.title }}</p> 
+  {% endif %}
+  </div>
+{% endif %}
+
+  {{ full_view_with_picture.body }}
+</div>

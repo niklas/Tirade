@@ -1,0 +1,26 @@
+--- 
+:defined_options: 
+  show_title: 
+  - boolean
+  - "true"
+  align_picture: 
+  - string
+  - right
+  show_description: 
+  - boolean
+  - "true"
+  geometry: 
+  - string
+  - 234x
+  show_picture: 
+  - boolean
+  - "true"
+  show_picture_title: 
+  - boolean
+  - "false"
+:description: ""
+:preferred_types: 
+- Document
+- Folder
+- NewsFolder
+- NewsItem
