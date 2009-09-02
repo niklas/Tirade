@@ -1,5 +1,9 @@
 <% thepage ||= show || @page %>
 
+<% links do %>
+  <%= public_page_link(@page, :label => 'show', :class => 'show page with_toolbox') %>
+<% end %>
+
 <% accordion do %>
 
   <% accordion_item 'General', :content_tag => :dl do %>
