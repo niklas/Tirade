@@ -79,5 +79,6 @@ def mock_controller
   controller.stub!(:master_helper_module).and_return(PublicController.new.master_helper_module)
   controller.stub!(:url_for).and_return('some-url')
   controller.stub!(:authorized?).and_return(true)
+  controller.stub!(:logged_in?).and_return(true)
   controller
 end
