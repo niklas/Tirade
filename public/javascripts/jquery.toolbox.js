@@ -180,7 +180,6 @@ var Toolbox = {
 
     self.body.bind('toolbox.frame.refresh', function(ev) {
       var target = $(ev.target);
-      console.debug("event: refresh")
       if (target.attr('role') == 'frame') { 
         target.data('metadata', null);
         target.frameInToolbox();
