@@ -30,6 +30,9 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :password, :password_confirmation
 
   has_and_belongs_to_many :user_groups, :uniq => true
+  def permissions
+    user_groups.collect(&:permissions).uniq
+  end
 
   # ===================
   # = Role Management =
