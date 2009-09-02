@@ -789,13 +789,23 @@ jQuery.fn.uiIcon = function(icon) {
     var $a = $(this);
     var $span = $('<span />')
       .addClass('ui-icon ui-icon-' + icon)
-      .html( $a.html() )
+      .html( $a.html() );
+    $a
+      .uiButton()
+      .addClass('ui-icon-button')
+      .html( $span );
+  });
+};
+
+jQuery.fn.uiButton = function() {
+  return $(this).each(function() {
+    var $a = $(this);
+    if ($a.hasClass('ui-button')) return;
     $a.attr('title', $a.attr('title') || $a.text())
-      .html( $span )
-      .addClass('ui-corner-all')
+      .addClass('ui-corner-all ui-button ui-state-default')
       .hover(
-         function() { $(this).addClass('ui-state-hover'); },
-         function() { $(this).removeClass('ui-state-hover'); }
+         function() { $(this).addClass('ui-state-hover') },
+         function() { $(this).removeClass('ui-state-hover') }
        );
   });
 };
@@ -841,6 +851,10 @@ jQuery.fn.frameInToolbox = function(options) {
             Toolbox.pop();
             return false;
           }).uiIcon('circle-check')
+        .end();
+      $linkbar
+        .find('a:not(.ok)')
+          .uiButton()
         .end();
 
       switch(meta.action) {
@@ -1028,7 +1042,7 @@ jQuery.ui.button = function(options) {
   };
   var options = $.extend(defaults, options);
   var button = $('<a/>')
-    .addClass('ui-corner-all ui-button ' + options.class)
+    .addClass('ui-corner-all ui-state-default ui-icon-button ui-button ' + options.class)
     .attr('href', options.href)
     .attr('role', 'button');
   if (options.hover) button.hover(

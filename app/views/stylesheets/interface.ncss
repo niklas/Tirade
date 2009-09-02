@@ -405,12 +405,19 @@ div.busy {
 
 *.ui-dialog {
   *.ui-button {
-    padding: 1px;
+    padding: 0px 10px;
+    font-size: 13px;
+    line-height: 19px;
     display: block;
     height: 18px;
-    width: 19px;
     float: left;
+    text-decoration: none;
+    margin: 0 2px;
     span { display: block; margin: 1px; }
+  }
+  *.ui-icon-button {
+    padding: 0px;
+    width: 19px;
     :focus, :hover { padding: 0; }
   }
 

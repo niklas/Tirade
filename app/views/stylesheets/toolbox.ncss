@@ -80,10 +80,10 @@ body {
     }
     ul.linkbar, ul.bottom_linkbar {
       display:block;
-      height: 2.3em;
-      line-height: 2.3em;
+      height: 21px;
+      line-height: 21px;
       margin:0pt;
-      padding:0;
+      padding: 3px;
       z-index: 2;
       li {
         a,button,input.submit {
