@@ -13,6 +13,10 @@ describe DocumentsController do
     controller.send(:model).should == Document
   end
 
+  it "should manage translatable Docoments" do
+    controller.send(:model).should be_acts_as(:translated)
+  end
+
   describe "route recognition" do
 
     it "should generate params { :controller => 'documents', action => 'index' } from GET /manage/documents" do

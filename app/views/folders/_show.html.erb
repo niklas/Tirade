@@ -1,0 +1,4 @@
+<% links do %>
+  <%= new_document_link(:label => 'new Document', :class => 'new document with_toolbox', :attributes => {:wanted_parent_id => folder.id}) %>
+<% end %>
+<%= list_of folder.children %>
