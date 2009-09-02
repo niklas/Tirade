@@ -53,13 +53,13 @@ class FrameRenderer
   end
 
   def css
-    ['frame', partial_name]
+    ['frame']
   end
 
   def meta
     {
       :href => request.url, 
-      :action => controller.action_name, 
+      :action => options[:action] || controller.action_name, 
       :controller => controller.controller_name
     }
   end
@@ -120,7 +120,6 @@ class RecordFrameRenderer < FrameRenderer
 
   def css
     css = super
-    css << 'edit' if partial == 'form'
     if record.respond_to?(:resource_name)
       css << 'new' if record.new_record?
       css << template.dom_id(record)

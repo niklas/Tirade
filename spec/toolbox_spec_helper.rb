@@ -94,9 +94,9 @@ module ToolboxSpecHelper
     have_text( %r~Toolbox.setStatus\(".*#{expected}.*"\)~)
   end
 
-  def select_frame(expected)
-    resource = Regexp.escape(expected)
-    have_text( %r~Toolbox.frames\(":resource\(#{resource}\)"\)~)
+  def select_toolbox_frame(expected)
+    selector = Regexp.escape(expected)
+    have_text( %r~Toolbox.frames\("#{selector}"\)~)
   end
 
   def pop_frame_and_refresh_last
@@ -104,7 +104,7 @@ module ToolboxSpecHelper
   end
 
   def request_refresh_for(object, action="show")
-    have_text %r[Toolbox\.frames\("\.#{action}\.#{object.class.to_s.underscore}_#{object.id}"\)\.refresh\(\)]
+    have_text %r[Toolbox\.frames\("\.#{object.class.to_s.underscore}_#{object.id}:resource\(#{object.class.to_s.underscore.pluralize}/#{action}\)"\)\.refresh\(\)]
   end
 
   def push_frame(expected='')

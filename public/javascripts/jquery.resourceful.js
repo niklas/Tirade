@@ -45,20 +45,21 @@
         return false;
       })
     },
-    edit: function(resource_name, id) {
-      return $.ajax({
+    edit: function(resource_name, id, ajax_options) {
+      var ajax_options = $.extend({}, ajax_options, {
         url: Routing['edit_' + resource_name + '_path']({id: id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()}),
         type: 'GET'
       });
+      return $.ajax(ajax_options);
     },
-    editButton: function(resource_name, id) {
+    editButton: function(resource_name, id, ajax_options) {
       return $.ui.button({
         icon: 'pencil', text: 'Edit',
         class: 'edit'
       })
       .addClass(resource_name)
       .click(function(event) {
-        $.tirade.resourceful.edit(resource_name, id);
+        $.tirade.resourceful.edit(resource_name, id, ajax_options);
         event.preventDefault(); event.stopPropagation();
         return false;
       })

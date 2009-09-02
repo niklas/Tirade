@@ -15,11 +15,12 @@ module RenderHelper
     html = render(:partial => 'grids/grid', :object => grid, :locals => locals)
     if grid.root?
       html
-    else
+    else # wrap in .col
       opts = {}
       opts[:style] = "width: #{grid.extra_width}" unless grid.extra_width.blank?
       opts[:rel] = dom_id(grid)
       add_class_to_html_options opts, grid.yaml_column_class
+      add_class_to_html_options opts, 'col'
       content_tag(:div, html, opts)
     end
   end

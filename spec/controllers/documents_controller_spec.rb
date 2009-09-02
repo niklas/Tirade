@@ -208,11 +208,11 @@ describe DocumentsController do
         lambda { do_request }.should change(Document,:count).by(1)
       end
 
-      it "should update the 'new' frame with 'show'" do
+      it "should update the 'new' (current) frame with 'show'" do
+        @request.env['Tirade-Frame'] = '2342'
         do_request
         response.should render_template('contents/_show.html.erb')
-        response.should select_frame('documents/new')
-        response.should set_toolbox_header('Document #\d+')
+        response.should select_toolbox_frame('#frame_2342')
       end
 
       it "should add the Document to the clipboard" do
@@ -292,6 +292,12 @@ describe DocumentsController do
         response.should render_template('contents/_form.html.erb')
       end
 
+      it "should replace the current frame ('show')" do
+        @request.env['Tirade-Frame'] = '2342'
+        do_request
+        response.should select_toolbox_frame('#frame_2342')
+      end
+
     end
 
     describe "put /update with valid attributes" do
@@ -307,6 +313,13 @@ describe DocumentsController do
       it "should request refresh for all 'show' frames for the document" do
         do_request
         response.body.should request_refresh_for(@document, 'show')
+      end
+
+      it "should update current frame with 'show'" do
+        @request.env['Tirade-Frame'] = '2342'
+        do_request
+        response.should render_template('contents/_show.html.erb')
+        response.should select_toolbox_frame('#frame_2342')
       end
     end
 

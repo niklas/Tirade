@@ -79,7 +79,8 @@ module ManageResourceController
           target.html(page.context.list_of(collection, :force_list => true))
         end
       elsif wants_refresh?
-        page.select_frame(resource_name.pluralize, 'index').html page.context.frame_for(collection, 'list')
+        # TODO replace current_frame
+        page.update_frames :index => [collection, 'list']
       else
         page.push_frame_for(collection,'list')
       end
@@ -90,7 +91,7 @@ module ManageResourceController
     end
 
     def update_page_on_create(page)
-      page.select_frame(resource_name.pluralize, 'new').replace_with page.context.frame_for(object)
+      page.update_current_frame(object, 'show', :action => 'show')
       page.select_frame(resource_name.pluralize, 'index').refresh()
     end
 
@@ -101,7 +102,7 @@ module ManageResourceController
     # TODO must add :object_name (:as) to partial call => refactor ToolboxHelper
     def update_page_on_show(page)
       if wants_refresh?
-        page.select_frame_for(object).html page.context.frame_content_for(object)
+        page.update_frame_for(object)
       else
         page.push_frame_for(object)
       end
@@ -114,13 +115,14 @@ module ManageResourceController
     def update_page_on_edit(page)
       model.without_modification do
         object.attributes = object_params
-        page.push_frame_for(object, 'form')
+        page.update_current_frame(object, 'form')
       end
     end
 
     def update_page_on_update(page)
-      page.select_frame_for(object).refresh
-      page.select_frame_for(object, 'form').remove
+      page.select_frame_for(object, 'show').refresh()
+      page.select_frame(resource_name.pluralize, 'index').refresh()
+      page.update_current_frame(object, 'show', :action => 'show')
     end
 
     def update_page_on_failed_update(page)
@@ -138,6 +140,7 @@ module ManageResourceController
 
     def update_page_on_destroy(page)
       page.select_frame_for(object).remove
+      page.select_frame(resource_name.pluralize, 'index').refresh()
     end
   end
 end

@@ -32,12 +32,13 @@ var Toolbox = {
         .data('url', '/dashboard')
         .data('title', 'Dashboard')
         .data('action', 'show')
-        .data('controller', 'user_session')
+        .data('controller', 'user_sessions')
         .appendTo( this.content() );
 
       $.tirade.history.sync();
       this.frameCount = 1;
       this.currentFrameIndex = 0;
+      this.frameIdCounter = 1;
       this.expireBehaviors();
       this.applyBehaviors();
       this.element().show();
@@ -162,17 +163,71 @@ var Toolbox = {
 
     $('> div.content > div.frame', self.body).livequery(
       function() { 
-        $(this).frameInToolbox();
         self.frameCount = self.frames().length;
+        $(this)
+          .frameInToolbox()
+          .trigger('toolbox.frame.create');
       },
       function() { 
-        $.tirade.history.sync();
         self.frameCount = self.frames().length;
+        self.body.trigger('toolbox.frame.remove');
         if (self.currentFrame().length == 0) {
-          self.currentFrameIndex = self.frameCount - 1;
+          self.goto( self.frameCount - 1 );
         }
+        $.tirade.history.sync();
       }
     );
+
+    self.body.bind('toolbox.frame.refresh', function(ev) {
+      var target = $(ev.target);
+      console.debug("event: refresh")
+      if (target.attr('role') == 'frame') { 
+        target.data('metadata', null);
+        target.frameInToolbox();
+      }
+    })
+
+    $('> div.content > div.frame div.accordion', self.body).livequery(function() { 
+      active = 0;
+      if (name = Toolbox.activeSectionName) { 
+        active = '[name=' + name + ']' 
+      };
+      $(this).accordion({ 
+        header: 'h3.accordion_toggle', 
+        selectedClass: 'selected',
+        clearStyle: true,
+        active: active
+      })
+      .bind("accordionchange", function(event, ui) { /* FIXME WTF is this? */
+        if (ui.newHeader) {
+          Toolbox.saveActive(ui.newHeader);
+          //Toolbox.accordion().scrollTo(ui.newHeader, 500);
+        }
+      });
+    })
+    $('> div.content > div.frame div.live_search input.search_term', self.body).livequery(function() {
+      var field = $(this);
+      $(this).attr("autocomplete", "off").typeWatch({
+        wait: 500,
+        captureLength: 2,
+        callback: function(val) {
+          $.ajax({
+            data: { 'search[term]' : encodeURIComponent(val) },
+            url: field.attr('href')
+          });
+        }
+      })
+    });
+    $('> div.content > div.frame div.live_search.polymorphic select.polymorph_search_url', self.body).livequery(function() { 
+      var field = $(this);
+      $(this).change(function() {
+        $(this).siblings('input.search_term:first')
+          .attr('href',field.val())
+          .val('');
+      })
+    });
+   /* TODO Context Page only per head ? */
+    $('> div.content > div.frame form', self.body).livequery(function() { $(this).formInFrameInToolbox() });
 
     // Scroll to selected accordion section
     // TODO needed?
@@ -302,9 +357,12 @@ var Toolbox = {
   },
   removeLastFrame: function() {
     var frame = Toolbox.last().remove();
-    Toolbox.element().trigger('toolbox.frame.removed', frame);
+    Toolbox.element().trigger('toolbox.frame.remove', frame);
     History.pop();
     Toolbox.refreshBackButton();
+  },
+  nextFrameId: function() {
+    return Toolbox.frameIdCounter++;
   },
   refreshBackButton: function() {
     if ( Toolbox.frameCount > 1 )
@@ -752,6 +810,15 @@ jQuery.fn.frameInToolbox = function(options) {
 
     $frame.attr('role', 'frame');
 
+    // Count frames to address them directly from ManageResourceController
+    var id = null;
+    if ( domid = $frame.attr('id') ) {
+      id = $frame.resourceId();
+    } else {
+      id = Toolbox.nextFrameId();
+    }
+    $frame.attr('id', 'frame_' + id);
+
     var meta = $frame.metadata();
     if (meta.href) {
       Toolbox.setTitle(meta.title);
@@ -781,53 +848,18 @@ jQuery.fn.frameInToolbox = function(options) {
           $.tirade.resourceful.newButton(meta.resource_name).opensToolbox().appendTo($linkbar);
           break;
         case 'show':
-          $.tirade.resourceful.editButton(meta.resource_name, meta.id).opensToolbox().appendTo($linkbar);
+          $.tirade.resourceful.editButton(meta.resource_name, meta.id, {
+            beforeSend: function(request) {
+              // FIXME must set Tirade-Page here AGAIN because the callbacks from ajaxSetup get overwritten by this one :(
+              request.setRequestHeader("Tirade-Page", $('div.page').resourceId() );
+              request.setRequestHeader("Tirade-Frame", id );
+            }
+          }).opensToolbox().appendTo($linkbar);
           $.tirade.resourceful.deleteButton(meta.resource_name, meta.id).opensToolbox().appendTo($linkbar);
           break;
       }
     }
 
-    $('div.accordion', frame).livequery(function() { 
-      active = 0;
-      if (name = Toolbox.activeSectionName) { 
-        active = '[name=' + name + ']' 
-      };
-      $(this).accordion({ 
-        header: 'h3.accordion_toggle', 
-        selectedClass: 'selected',
-        clearStyle: true,
-        active: active
-      })
-      .bind("accordionchange", function(event, ui) { /* FIXME WTF is this? */
-        if (ui.newHeader) {
-          Toolbox.saveActive(ui.newHeader);
-          //Toolbox.accordion().scrollTo(ui.newHeader, 500);
-        }
-      });
-    })
-    $('div.live_search input.search_term', frame).livequery(function() {
-      var field = $(this);
-      $(this).attr("autocomplete", "off").typeWatch({
-        wait: 500,
-        captureLength: 2,
-        callback: function(val) {
-          $.ajax({
-            data: { 'search[term]' : encodeURIComponent(val) },
-            url: field.attr('href')
-          });
-        }
-      })
-    });
-    $('div.live_search.polymorphic select.polymorph_search_url', frame).livequery(function() { 
-      var field = $(this);
-      $(this).change(function() {
-        $(this).siblings('input.search_term:first')
-          .attr('href',field.val())
-          .val('');
-      })
-    });
-   /* TODO Context Page only per head ? */
-    $('form', frame).livequery(function() { $(this).formInFrameInToolbox() });
 
   });
 };
@@ -839,6 +871,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
   return $(this).each(function() {
     var form = this;
     var $form = $(this);
+    var $frame = $form.closest('.frame');
 
     form.action += '.js';
 
@@ -861,14 +894,19 @@ jQuery.fn.formInFrameInToolbox = function(options) {
          function() { $(this).removeClass('ui-state-hover'); }
        );
 
-    if ($form.closest('.frame').data('action') == 'edit') {
+    if ($frame.data('action') == 'edit') {
       $form.preview();
     }
     
     $form.ajaxForm({
       dataType: 'script',
       beforeSubmit: function() {
-        Toolbox.beBusy("submitting " + $form.parents('div.frame').attr('title'))
+        Toolbox.beBusy("submitting " + $form.parents('div.frame').attr('title'));
+      },
+      beforeSend: function(request) {
+        // FIXME must set Tirade-Page here AGAIN because the callbacks from ajaxSetup get overwritten by this one :(
+        request.setRequestHeader("Tirade-Page", $('div.page').resourceId() );
+        request.setRequestHeader("Tirade-Frame", $frame.resourceId() );
       }
     });
 

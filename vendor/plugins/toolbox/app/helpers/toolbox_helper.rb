@@ -26,15 +26,27 @@ module ToolboxHelper
   end
 
   def select_frame_for(record, action='show')
-    page.toolbox.frames(".#{action}.#{context.dom_id(record)}")
+    page.toolbox.frames(".#{context.dom_id(record)}:resource(#{record.resource_name.pluralize}/#{action})")
+  end
+
+  def select_current_frame
+    if id = current_frame_id
+      page.toolbox.frames("#frame_#{id}")
+    else
+      page.toolbox.frames(':last')
+    end
+  end
+
+  def current_frame_id
+    page.context.request.headers['Tirade-Frame']
   end
 
   def frame_for(thingy, partial='show', opts={})
-    FrameRenderer.for(thingy, partial, self, opts).to_s
+    frame_renderer_for(thingy, partial, opts).to_s
   end
 
-  def frame_content_for(thingy, partial='show', opts={})
-    FrameRenderer.for(thingy, partial, self, opts).inner
+  def frame_renderer_for(thingy, partial=nil, opts={})
+    FrameRenderer.for(thingy, partial, self, opts)
   end
 
 
@@ -42,8 +54,29 @@ module ToolboxHelper
     page.toolbox.push context.frame_for(thingy, partial, opts)
   end
 
-  def update_frame_for(object, partial='show', opts={})
-    page.select_frame_for(object, partial).html context.frame_content_for(object, partial, opts)
+  def update_frame_for(object, updates={:show => 'show'})
+    updates.each do |target, partial|
+      selected_frame = page.select_frame_for( object, target.to_s )
+      page.update_selected_frame_with selected_frame, context.frame_renderer_for(object, partial.to_s)
+    end
+  end
+
+  def update_frames(updates={})
+    updates.each do |target, args|
+      selected_frame = page.select_frame( page.context.controller_name, target.to_s )
+      page.update_selected_frame_with selected_frame, context.frame_renderer_for(*args)
+    end
+  end
+
+  def update_current_frame(*args)
+    selected_frame = page.select_current_frame;
+    page.update_selected_frame_with selected_frame, context.frame_renderer_for(*args)
+  end
+
+  def update_selected_frame_with(frame, renderer)
+    frame.html renderer.inner
+    frame.attr 'data', renderer.meta.to_json
+    frame.trigger('toolbox.frame.refresh')
   end
 
   def push_toolbox_error(exception)

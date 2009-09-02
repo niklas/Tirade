@@ -14,7 +14,7 @@ module ManageResourceController
       if non_form_submit?
         page.push_frame_for(object, 'form')
       else
-        page.update_frame_for(object, 'form')
+        page.update_current_frame(object, 'form')
       end
     end
 
