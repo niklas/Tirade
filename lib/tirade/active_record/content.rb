@@ -112,11 +112,11 @@ module Tirade
 
       module InstanceMethods
         def markup?(field)
-          self.class.marked_up_fields.include?(field.to_sym)
+          self.class.marked_up_fields.andand.include?(field.to_sym)
         end
 
         def translates?(field)
-          self.class.globalize_options[:translated_attributes].include?(field.to_sym)
+          self.class.globalize_options[:translated_attributes].andand.include?(field.to_sym)
         end
 
         def translations=(translation_attributes)
