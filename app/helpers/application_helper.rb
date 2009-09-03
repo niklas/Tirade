@@ -118,6 +118,7 @@ module ApplicationHelper
 
     prms = options.delete(:params) || {}
     url_method = "edit_#{singular}_path"
+    return unless respond_to?(url_method)
     url = send(url_method, thingy, prms)
     link_to(label, url, options)
   end
