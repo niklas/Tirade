@@ -1,14 +1,28 @@
 module Tirade
   module ScopeFormBuilderMethods
     def define_scope
-      line = returning '' do |html|
-        html << @template.select_tag("#{@object_name}[field]", [])
-        html << @template.select_tag("#{@object_name}[comparison][]", [])
-        html << @template.text_field_tag("#{@object_name}[value][]", '')
+      inner = returning '' do |html|
+        html << scope_blueprint
       end
-      inner = @template.content_tag(:div, line, :class => 'scope blueprint', :style => 'display: none')
       wrap('scope', {:label => 'Scope', :class => 'define_scope'}, inner)
     end
+
+    private
+
+    def scope_blueprint
+      base = "#{@object_name}[scope_definition]"
+      inner = returning '' do |html|
+        html << @template.select_tag('attribute', [], :class => 'scope_attribute')
+        html << @template.select_tag('comparison', [], :class => 'scope_comparison')
+        html << @template.text_field_tag("#{base}[attribute][comparison]", '', :class => 'scope_value')
+      end
+      scope_wrap(inner,:class => 'scope blueprint', :style => 'display: none')
+    end
+
+    def scope_wrap(inner, opts={})
+      @template.content_tag(:div, inner, opts)
+    end
+
     def select_order_scope(content_type)
       fields = content_type.column_names
       collection_select :order, fields.map {|f| "ascending_by_#{f}" } + fields.map {|f| "descending_by_#{f}" }, :to_s, :to_s

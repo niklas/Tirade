@@ -142,10 +142,29 @@ body {
           margin: 0;
         }
         dd {
-          width: 80%;
           margin: <%= @medium %>;
           dt,dd {
             margin: <%= @small %>;
+          }
+        }
+        .define_scope {
+          dd {
+            clear: both;
+            div.scope {
+              * { 
+                float: left;
+                margin: <%= @small %>;
+              }
+              *.scope_attribute  { max-width: 20% }
+              *.scope_comparison { max-width: 25% }
+              *.scope_value      { max-width: 40% }
+              a.add {
+                position: static; float: left;
+              }
+              a.remove {
+                position: static; float: right;
+              }
+            }
           }
         }
       }
