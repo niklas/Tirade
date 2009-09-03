@@ -63,14 +63,9 @@ namespace :deploy do
     run "touch #{current_release}/tmp/restart.txt"
   end
 
-  desc "Dirty update git by pulling from origin"
-  task :update, :roles => [:app] do
-    run "cd #{current_release} && git pull origin master"
-  end
-
-  desc "Dirty update and restart"
+  desc "Dirty update by pullit from origin and restart"
   task :upgrade, :roles => [:app] do
-    update
+    run "cd #{current_release} && git pull origin master"
     restart
   end
 end
