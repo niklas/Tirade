@@ -34,9 +34,6 @@ ActionController::Routing::Routes.draw do |map|
     manage.resources :user_groups
     manage.resources :permissions
 
-    manage.resources :images,
-      :member => {:set_image_title => :post}
-
     manage.resource :clipboard, :controller => 'clipboard'
 
 
