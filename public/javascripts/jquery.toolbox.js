@@ -886,7 +886,7 @@ jQuery.fn.formInFrameInToolbox = function(options) {
     var $form = $(this);
     var $frame = $form.closest('.frame');
 
-    form.action += '.js';
+    if (!form.action.match(/\.js$/)) form.action += '.js';
 
     if ($form.is('.edit_rendering')) $form.editRenderingFormInFrameInToolbox();
     if ($form.is('.new_image.with_flash')) $form.newImageFormInFrameInToolbox();
