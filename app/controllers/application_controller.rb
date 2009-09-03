@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
   def set_locale
-    I18n.locale = params[:locale].to_sym if params[:locale]
+    I18n.locale = params[:locale].to_sym unless params[:locale].blank?
   end
 
   # See ActionController::RequestForgeryProtection for details
