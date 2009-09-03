@@ -22,10 +22,6 @@ class Rendering < ActiveRecord::Base
   acts_as_renderer
   serialize :scope_definition, Hash
   include Tirade::ActiveRecord::CssClasses
-  def scope_definition
-    self[:scope_definition] ||= Hash.new
-  end
-
   # For now, all associatable Conten Types should at least have a 'title' column
   def self.valid_content_types
     Tirade::ActiveRecord::Content.classes
@@ -98,7 +94,7 @@ class Rendering < ActiveRecord::Base
   # returns a SearchLogic::Search
   def scope
     if content_type
-      @scope ||= content_type.constantize.search(scope_definition)
+      content_type.constantize.search(scope_definition)
     else
       raise "no content_type set"
     end
@@ -112,6 +108,30 @@ class Rendering < ActiveRecord::Base
   def content_by_scope(thescope=self.scope)
     scope.all
   end
+
+  def scope_definition=(given)
+    given = given.dup
+    filtered = {}
+
+    if attribute = given.delete(:order_attribute)
+      direction = given.delete(:order_direction) || 'ascend'
+      filtered[:order] = %Q[#{direction}_by_#{attribute}]
+    end
+
+    given.select {|k,v| v.is_a?(Hash)}.each do |att, comps|
+      comps.each do |comp, val|
+        filtered["#{att}_#{comp}"] = val
+      end
+    end
+    given.delete_if {|k,v| v.is_a?(Hash)}
+
+    write_attribute :scope_definition, filtered.merge(given)
+  end
+
+  def scope_definition
+    read_attribute(:scope_definition) || Hash.new
+  end
+
 
   acts_as_list :scope => :grid_id
 

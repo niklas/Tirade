@@ -390,6 +390,44 @@ describe Rendering, "scoped for multiple Documents with order" do
   end
 end
 
+describe Rendering, "scoped by params" do
+  def self.it_should_create_scope_from_params(scope, prms={})
+    describe "with #{prms.inspect}" do
+      before( :each ) do
+        @rendering = Factory.build :scoped_rendering, :scope_definition => prms
+      end
+
+      it "should use conditions #{scope.conditions.inspect}" do
+        @rendering.scope.conditions.should == scope.conditions
+      end
+
+      it "should succeed searching" do
+        lambda { @rendering.scope.all }.should_not raise_error
+      end
+    end
+  end
+
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title'), :order_attribute => 'title', :order_direction => 'ascend'
+  it_should_create_scope_from_params Document.search(:order => 'descend_by_title'), :order_attribute => 'title', :order_direction => 'descend'
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title'), :order_attribute => 'title'
+
+  context 'order like named scope' do
+    it_should_create_scope_from_params Document.search(:order => 'ascend_by_title'), :order => 'ascend_by_title'
+  end
+
+  it_should_create_scope_from_params Document.search(:title_like => 'foo'), 
+     :title => { :like => 'foo' }
+
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo'), 
+    :order_attribute => 'title', :title => { :like => 'foo' }
+
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo', :id_lt => 23), 
+    :order_attribute => 'title', :title => { :like => 'foo' }, :id_lt => 23
+
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo', :id_gt => 23, :id_lte => 42), 
+    :order_attribute => 'title', :title => { :like => 'foo' }, :id => {:gt => 23, :lte => 42}
+end
+
 describe Rendering, "without content", :type => :helper do
   before( :each ) do
     @rendering = Factory(:rendering, :content => nil)
