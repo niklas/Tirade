@@ -144,6 +144,15 @@ module Tirade
       end
     end
 
+    def select_parent(field=:wanted_parent_id, opts={})
+      choices = @template.nested_set_options(@object.class, @object) do |i|
+        "#{'> ' * i.level} #{i.title}"
+      end
+      opts[:include_blank] = true
+      opts[:label] = "Parent #{@object_name}"
+      select field, choices, opts
+    end
+
     private
     def wrap(field, options, tag_output)
       label = @template.content_tag(

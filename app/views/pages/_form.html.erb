@@ -11,7 +11,7 @@
     <% end %>
 
     <% accordion_item "Hierarchy" do %>
-      <%= f.collection_select :wanted_parent_id, Page.all_except(thepage), :id, :title, :label => 'Parent Page', :include_blank => true  %>
+      <%= f.select_parent %>
     <% end %>
 
 

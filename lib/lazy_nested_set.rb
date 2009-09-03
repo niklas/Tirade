@@ -1,7 +1,7 @@
 # adds some methods to Models to set a #wanted_parent_id that gets applied after saving
 module LazyNestedSet
   def wanted_parent_id
-     @wanted_parent_id
+     @wanted_parent_id || read_attribute(:parent_id)
   end
 
   def wanted_parent_id=(new_parent_id)
