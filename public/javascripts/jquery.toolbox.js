@@ -1079,6 +1079,7 @@ $.ui.button = function(options) {
     icon: 'help',
     text: 'Help',
     href: '#',
+    class: 'help',
     selectable: false
   };
   var settings = $.extend(defaults, options);
