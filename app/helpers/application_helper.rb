@@ -70,7 +70,7 @@ module ApplicationHelper
   end
 
   def link_to_show(thingy, options={})
-    label = options.delete(:label) || thingy.andand.title || "Show #{thingy.class} #{thingy.id}"
+    label = options.delete(:label) || "Show #{title_for thingy}"
     singular = thingy.class.name.underscore
     add_class_to_html_options(options, 'show')
     add_class_to_html_options(options, "show_#{singular}")
@@ -84,15 +84,32 @@ module ApplicationHelper
   end
 
   def index_link_to(klass, options = {})
-    label = options.delete(:label) || klass.to_s.pluralize
+    label = options.delete(:label) || klass.to_s.pluralize.humanize
     add_class_to_html_options(options, 'index')
     add_class_to_html_options(options, "index_#{klass.controller_name}")
     add_class_to_html_options(options, klass.controller_name)
     link_to(label, {:controller => klass.controller_name}, options)
   end
 
+  def link_to_index(klass, options={})
+    index_link_to(klass, options)
+  end
+
+  def link_to_new(klass, options = {})
+    singular = klass.name.underscore
+    label = options.delete(:label) || "new #{singular.humanize}"
+    add_class_to_html_options(options, 'new')
+    add_class_to_html_options(options, "new_#{singular}")
+    add_class_to_html_options(options, klass.controller_name)
+
+    prms = options.delete(:params) || {}
+    url_method = "new_#{singular}_path"
+    url = send(url_method, prms)
+    link_to(label, url, options)
+  end
+
   def link_to_edit(thingy, options={})
-    label = options.delete(:label) || thingy.andand.title || "Edit #{thingy.class} #{thingy.id}"
+    label = options.delete(:label)  || "Edit #{title_for(thingy)}"
     singular = thingy.class.name.underscore
     add_class_to_html_options(options, 'edit')
     add_class_to_html_options(options, "edit_#{singular}")
@@ -103,6 +120,28 @@ module ApplicationHelper
     url_method = "edit_#{singular}_path"
     url = send(url_method, thingy, prms)
     link_to(label, url, options)
+  end
+
+  def link_to_destroy(thingy, options={})
+    label = options.delete(:label) || "Destroy #{title_for(thingy)}"
+    singular = thingy.class.name.underscore
+    add_class_to_html_options(options, 'destroy')
+    add_class_to_html_options(options, "destroy_#{singular}")
+    add_class_to_html_options(options, dom_id(thingy))
+    add_class_to_html_options(options, singular)
+
+    if false # disable js from rails .. will make ajax request from jquery.toolbox
+      options[:confirm] ||= "Really #{label}?"
+      options[:method] = :delete
+    end
+
+    url_method = "#{singular}_path"
+    url = send(url_method, thingy)
+    link_to(label, url, options)
+  end
+
+  def title_for(thingy)
+    thingy.andand.title || "#{thingy.class} ##{thingy.id}"
   end
 
   def session_key_name

@@ -765,7 +765,7 @@ jQuery.fn.useToolbox = function(options) {
     if ( $(this).hasClass('ui-uses-toolbox') ) return; /* next ? */
     if ( $(this).hasClass('tiled') ) options.mode = 'tiled';
     if ( $(this).hasClass('maximized') ) options.mode = 'maximized';
-    $(this).resourcefulLink().opensToolbox(options);
+    $(this).resourcefulLink(options).opensToolbox(options);
   });
 };
 
@@ -776,7 +776,8 @@ jQuery.fn.opensToolbox = function(options) {
 
   return this.each(function() {
     var options = $.extend(defaults, options);
-    $(this).addClass('ui-uses-toolbox').click(function() {
+    $(this).addClass('ui-uses-toolbox').click(function(event) {
+      if (event.stopped) return false;
       Toolbox.findOrCreate(options);
       Toolbox.beBusy('Loading');
     });
@@ -849,28 +850,26 @@ jQuery.fn.frameInToolbox = function(options) {
             e.preventDefault();
             Toolbox.pop();
             return false;
-          }).uiIcon('circle-check')
-        .end();
+          }).uiIcon('circle-check');
       $linkbar
-        .find('a:not(.ok)')
-          .uiButton()
-        .end();
-
-      switch(meta.action) {
-        case 'index':
-          $.tirade.resourceful.newButton(meta.resource_name).opensToolbox().appendTo($linkbar);
-          break;
-        case 'show':
-          $.tirade.resourceful.editButton(meta.resource_name, meta.id, {
+        .find('a.edit')
+          .uiIcon('pencil').useToolbox({
             beforeSend: function(request) {
               // FIXME must set Tirade-Page here AGAIN because the callbacks from ajaxSetup get overwritten by this one :(
               request.setRequestHeader("Tirade-Page", $('div.page').resourceId() );
               request.setRequestHeader("Tirade-Frame", id );
             }
-          }).opensToolbox().appendTo($linkbar);
-          $.tirade.resourceful.deleteButton(meta.resource_name, meta.id).opensToolbox().appendTo($linkbar);
-          break;
-      }
+          });
+      $linkbar
+        .find('a.new')
+          .uiIcon('plus').useToolbox();
+      $linkbar
+        .find('a.destroy')
+          .uiIcon('trash').useToolbox();
+      $linkbar
+        .find('a:not(.ui-button)')
+          .uiButton();
+
     }
 
 

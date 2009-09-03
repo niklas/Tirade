@@ -5,6 +5,7 @@ class FrameRenderer
     @template = template
     @partial = partial || default_partial
     @options = options
+    add_links
   end
 
   def self.for(thingy, partial, template, opts={})
@@ -18,6 +19,17 @@ class FrameRenderer
   def default_partial
     'show'
   end
+
+  def links
+    []
+  end
+
+  def add_links
+    links.each do |link|
+      template.content_for :linkbar, link
+    end
+  end
+
 
   def to_s
     template.content_tag(:div, inner, html_options)
@@ -56,10 +68,14 @@ class FrameRenderer
     ['frame']
   end
 
+  def action
+    (options[:action] || controller.action_name).to_s
+  end
+
   def meta
     {
       :href => request.url, 
-      :action => options[:action] || controller.action_name, 
+      :action => action, 
       :controller => controller.controller_name
     }
   end
@@ -68,7 +84,7 @@ class FrameRenderer
     {
       :layout => '/layouts/toolbox',
       :object => thingy,
-      :partial => partial
+      :partial => partial,
     }
   end
 
@@ -127,6 +143,17 @@ class RecordFrameRenderer < FrameRenderer
     end
     css
   end
+
+  def links
+    if action == 'show'
+      [
+        template.link_to_edit(record),
+        template.link_to_destroy(record)
+      ]
+    else
+      []
+    end
+  end
 end
 
 class CollectionFrameRenderer < FrameRenderer
@@ -152,6 +179,12 @@ class CollectionFrameRenderer < FrameRenderer
     css << 'index'
     css << collection.first.resource_name unless collection.empty?
     css
+  end
+
+  def links
+    [
+      template.link_to_new(template.resource_name.classify.constantize)
+    ]
   end
 end
 

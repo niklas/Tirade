@@ -129,18 +129,25 @@
         obj.click(function(event) {
           event.preventDefault();
           options.start(event);
-          meth = 'GET';
-          data = '';
+          var meth = 'GET';
+          var data = '';
+          var href = obj.attr('href');
           if (obj.hasClass('create'))
             meth = 'POST';
           if (obj.hasClass('destroy')) {
             meth = 'DELETE';
-            if (!confirm("Really delete?")) return false;
+            data = 'authenticity_token=' + $.tirade.resourceful.authToken();
+            if (!confirm("Really delete?")) { 
+              event.stopped = true; // bah.. we dont want other click handlers on this element to fire..
+              event.stopPropagation();
+              return false;
+            }
           };
-          $.ajax({
+          var ajaxopts = $.extend(options, {
             url: obj.attr('href'),
             type: meth, data: data
           });
+          $.ajax(ajaxopts);
         })
       }
     });

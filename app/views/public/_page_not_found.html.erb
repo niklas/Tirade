@@ -4,6 +4,6 @@
 <% end %>
 
 <% error_tag do %>
-  Page <em><%= @full_path.andand.join('/') -%></em> not found. How did you get here, hmm?
+  Page <em><%=h @full_path.andand.join('/') -%></em> not found. How did you get here, hmm?
   <%= link_to 'Create it', new_page_path(:page => {:url => @full_path.andand.join('/') || '' }), :class => 'new page with_toolbox' %>
 <% end %>
