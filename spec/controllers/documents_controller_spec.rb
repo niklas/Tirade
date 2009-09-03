@@ -376,6 +376,23 @@ describe DocumentsController do
 
     end
 
+    describe "get /scopes.json" do
+      def do_request
+        get :scopes, :format => 'json'
+      end
+
+      it "should succeed" do
+        do_request
+        response.should be_success
+      end
+
+      it "should return json" do
+        do_request
+        lambda { @parsed = JSON.parse response.body }.should_not raise_error
+        @parsed.should be_a(Hash)
+      end
+    end
+
   end
 
 end

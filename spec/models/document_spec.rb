@@ -9,6 +9,18 @@ describe Document do
     Document.should be_acts_as(:slugged)
   end
 
+  describe "scopes_grouped_by_column" do
+    subject { Document.scopes_grouped_by_column }
+    it { should be_a Hash }
+    it { should have_key('id') }
+    it { should have_key('title') }
+    it { should have_key('slug') }
+    it { should have_key('description') }
+    it { should have_key('body') }
+    it { should have_key('created_at') }
+    it { should have_key('updated_at') }
+  end
+
   describe "build from Factory" do
     before( :each ) do
       @document = Factory.build(:document)

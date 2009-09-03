@@ -76,7 +76,7 @@ module Tirade
           self.marked_up_fields.uniq!
         end
 
-        def comparisons_grouped_by_column
+        def scopes_grouped_by_column
           columns.inject({}) do |all_comps, col|
             comps = case col.type
               when :integer, :datetime
@@ -86,7 +86,7 @@ module Tirade
               else
                 []
               end
-            all_comps.merge col.name => comps
+            all_comps.merge col.name.to_s => comps
           end
         end
 

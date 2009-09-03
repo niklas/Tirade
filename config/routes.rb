@@ -43,7 +43,7 @@ ActionController::Routing::Routes.draw do |map|
     manage.resources :contents,
       :member => {:preview => :put}
     Tirade::ActiveRecord::Content.classes.each do |klass|
-      manage.resources klass.controller_name, :member => {:preview => :put}
+      manage.resources klass.controller_name, :member => {:preview => :put}, :collection => {:scopes => :get}
     end
 
     manage.resource :account, :except => [:index]

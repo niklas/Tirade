@@ -53,6 +53,17 @@ module ManageResourceController
         end
       end
     end
+
+    def scopes
+      if model.acts_as?(:content)
+        @scopes = model.scopes_grouped_by_column
+      else
+        @scopes = {}
+      end
+      respond_to do |wants|
+        wants.json { render :json => @scopes }
+      end
+    end
       
     private
     # Handle file uploads through iframe, see jquery.form.js and render_to_parent
