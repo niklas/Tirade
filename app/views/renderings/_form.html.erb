@@ -14,6 +14,7 @@
       <% unless rendering.new_record? %>
         <% content_types = rendering.part.andand.preferred_types_classes || Rendering.valid_content_types %>
         <%= f.collection_select :content_type, content_types, :to_s, :to_s %>
+        <%= f.define_scope %>
       <% end %>
     <% end %>
 

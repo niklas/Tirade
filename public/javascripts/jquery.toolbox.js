@@ -966,14 +966,18 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
   return $(this).each(function() {
     var form = $(this);
     var renderingAssignmentFormUpdate = function (e) {
+    var assignment = form.find('select#rendering_assignment');
+    var content_type = form.find('select#rendering_content_type');
+
+    var definer = form.find('di.define_scope');
+    var blueprint = definer.find('div.scope.blueprint');
+
+    var switchedAssignment = function (e) {
       form.find('h3.what + dl')
         .find('> di:not(.assignment)').hide()
           .find(':input').disable();
       form.find('di.association.one.content .live_search').hide();
-      form.find('div.scopes').hide().find(':input').disable();
-      form.find('div.scopes .define :input').hide();
-      form.find('div.scopes .define a.create_scope').hide();
-      switch (form.find('select#rendering_assignment').val()) {
+      switch (assignment.val()) {
         case 'none':
           break;
         case 'fixed':
@@ -984,8 +988,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
           break;
         case 'scope':
           var t = form.enableField('content_type').val();
-          var scope = form.find('div.scopes.' + t).show();
-          scope.find(' > di :input').enable();  /* enable non-filtering scopes like order etc */
+          definer.show().find(':input').enable();
           break;
       }
     };
@@ -1033,8 +1036,40 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
         ev.preventDefault();
         return false;
       });
+    var cloneBlueprint = function(scopes) {
+      var scopes = scopes;
+      definer.find('.cloned').remove();
+      set = blueprint.clone().removeClass('blueprint').addClass('cloned').appendTo(definer).show('slow');
+      set.find('option').remove();
+      set.find('select.cloned').remove();
+      var select_attributes = set.find('select:first').enable();
+      var select_comparisions = set.find('select:last').enable();
 
-    });
+      $.each(scopes, function(attribute, comparisons) {  
+        $('<option />').attr('value', attribute).text(attribute).appendTo(select_attributes);
+      });
+      select_attributes.change(function() {
+        var a = select_attributes.val();
+        select_comparisions.find('option').remove();
+        $.each(scopes[a], function(i, com) {
+          $('<option />').attr('value', com).text(com).appendTo(select_comparisions);
+        });
+      });
+    };
+    var switchedContentType = function(e) {
+      if ('scope' == assignment.val()) {
+        var plural = $.string(content_type.val()).underscore().str + 's';
+        var scope_url = Routing['scopes_'+  plural + '_path']();
+        $.getJSON( scope_url, function(scopes) {
+          cloneBlueprint(scopes);
+        });
+      }
+    };
+    switchedAssignment();
+
+    assignment.change( switchedAssignment );
+    content_type.change( switchedContentType );
+
   });
 };
 
