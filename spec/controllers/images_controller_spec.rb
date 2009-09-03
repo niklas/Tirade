@@ -32,6 +32,7 @@ describe ImagesController do
         file = ActionController::TestUploadedFile.new(filename)
         Image.any_instance.stubs(:valid?).returns(true)
         Image.any_instance.stubs(:save).returns(true)
+        Image.any_instance.stubs(:id).returns(2342)
         post :create, :image => {:image => file }, :format => 'js'
       end
 
