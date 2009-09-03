@@ -68,6 +68,11 @@ namespace :deploy do
     run "cd #{current_release} && git pull origin master"
     restart
   end
+
+  desc "Clear all caches"
+  task :clear_caches, :roles => [:app] do
+    run "cd #{current_release} && rake cache:clear:all themes:cache:remove tmp:cache:clear"
+  end
 end
 
 # give block with |aText,aStream,aState| that returns response or nil
