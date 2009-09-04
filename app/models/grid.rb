@@ -18,6 +18,7 @@ class Grid < ActiveRecord::Base
   attr_protected :id, :created_at, :updated_at
 
   acts_as_nested_set 
+  belongs_to :replacement, :class_name => 'Grid'
   acts_as_renderer
   include Tirade::ActiveRecord::CssClasses
   NameByDivision = {
@@ -123,7 +124,12 @@ class Grid < ActiveRecord::Base
 
   # Rendering inheritance over pages
   def renderings_for_page(page)
-    page.renderings_for_grid(self)
+    rs = page.renderings_for_grid(self)
+    if rs.empty?
+      renderings
+    else
+      rs
+    end
   end
 
   def after_destroy

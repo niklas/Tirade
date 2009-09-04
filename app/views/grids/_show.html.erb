@@ -10,13 +10,20 @@
   <li><%= link_to_remote 'add child', :url => create_child_grid_url(grid), :method => :post %> </li>
 <% end %>
 <% accordion do %>
-  <% accordion_item 'Hierarchy' do %>
+  <% accordion_item 'General' do %>
     <%= show grid, :title %>
+  <% end %>
+
+  <% accordion_item 'Layout' do %>
     <%= show grid, :parent %>
+    <% unless grid.replacement.nil? %>
+      <%= show grid, :replacement %>
+    <% end %>
     <%= show grid, :inherit_renderings %>
     <%= render_tree grid %>
   <% end %>
-  <% accordion_item 'General' do %>
+
+  <% accordion_item 'Design' do %>
     <%= show grid, :width %>
     <%= show grid, :extra_width unless grid.extra_width.blank? %>
     <%= show grid, :css_classes, :label => 'extra CSS classes' %>

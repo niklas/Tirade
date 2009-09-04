@@ -1,17 +1,24 @@
 <% grid = form || @grid %>
-<%= warning_tag 'Editing this grid may change the appearance of other pages. Decreasing its number of columns will hide the affected renderings - you can get them back.' unless grid.new_record? %>
+<%= warning_tag 'Editing this grid may change the appearance of other pages.' unless grid.new_record? %>
 <%= error_messages_for :grid %>
 <% form_for(grid) do |f| %>
   <% accordion do %>
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
+      <%= f.hidden_field :page_id %>
+    <% end %>
+
+    <% accordion_item "Layout" do %>
       <%= f.select :division, Grid::Divisions, :include_blank => true %>
+      <%= f.has_one :replacement %>
+      <%= f.check_box :inherit_renderings %>
+    <% end %>
+
+    <% accordion_item "Design" do %>
       <%= f.select :width, Grid::Widths, :label => 'Width in %' %>
       <%= f.text_field :extra_width %>
       <%= f.text_field :css_classes_list, :label => 'CSS classes' %>
       <%= f.select :float, %w(l r), :include_blank => true %>
-      <%= f.check_box :inherit_renderings %>
-      <%= f.hidden_field :page_id %>
     <% end %>
 
     <% unless (grids_renderings = Rendering.for_grid(grid)).empty? %>
