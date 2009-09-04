@@ -29,7 +29,7 @@ var Toolbox = {
       $('<div />')
         .addClass('frame')
         .text("preparing Toolbox..")
-        .data('url', '/dashboard')
+        .data('url', '/dashboard.js')
         .data('title', 'Dashboard')
         .data('action', 'show')
         .data('controller', 'user_sessions')
