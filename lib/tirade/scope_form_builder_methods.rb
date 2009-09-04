@@ -3,6 +3,11 @@ module Tirade
     def define_scope
       inner = returning '' do |html|
         html << scope_blueprint
+        @object.scope_definition.each do |att, comps|
+          comps.each do |comp, val|
+            html << single_scope(att,comp,val)
+          end
+        end
       end
       wrap('scope', {:label => 'Scope', :class => 'define_scope'}, inner)
     end
@@ -10,13 +15,18 @@ module Tirade
     private
 
     def scope_blueprint
+      single_scope('attribute', 'comparison', '', :class => 'blueprint', :style => 'display: none')
+    end
+
+    def single_scope(attribute, comparison, value, opts={})
+      @template.add_class_to_html_options opts, 'scope'
       base = "#{@object_name}[scope_definition]"
       inner = returning '' do |html|
         html << @template.select_tag('attribute', [], :class => 'scope_attribute')
         html << @template.select_tag('comparison', [], :class => 'scope_comparison')
-        html << @template.text_field_tag("#{base}[attribute][comparison]", '', :class => 'scope_value')
+        html << @template.text_field_tag("#{base}[#{attribute}][#{comparison}]", value, :class => 'scope_value')
       end
-      scope_wrap(inner,:class => 'scope blueprint', :style => 'display: none')
+      scope_wrap(inner,opts)
     end
 
     def scope_wrap(inner, opts={})

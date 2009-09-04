@@ -94,7 +94,7 @@ class Rendering < ActiveRecord::Base
   # returns a SearchLogic::Search
   def scope
     if content_type
-      content_type.constantize.search(scope_definition)
+      content_type.constantize.search(normalized_scope_definition)
     else
       raise "no content_type set"
     end
@@ -109,8 +109,13 @@ class Rendering < ActiveRecord::Base
     scope.all
   end
 
-  def scope_definition=(given)
-    given = given.dup
+  def scope_definition
+    read_attribute(:scope_definition) || Hash.new
+  end
+
+  # we save it like it came from the form, so we have to fix it for searchlogic
+  def normalized_scope_definition
+    given = scope_definition.dup
     filtered = {}
 
     if attribute = given.delete(:order_attribute)
@@ -125,11 +130,7 @@ class Rendering < ActiveRecord::Base
     end
     given.delete_if {|k,v| v.is_a?(Hash)}
 
-    write_attribute :scope_definition, filtered.merge(given)
-  end
-
-  def scope_definition
-    read_attribute(:scope_definition) || Hash.new
+    filtered.merge(given)
   end
 
 

@@ -970,53 +970,69 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
     var content_type = form.find('select#rendering_content_type');
 
     var definer = form.find('di.define_scope dd');
+    var scopes = null;
+
+    var cloneScope = function(original) {
+      return original.clone(true)
+        .removeClass('blueprint')
+        .show()
+        .appendTo(definer)
+        .find(':input').enable().end();
+    };
+
     var blueprint = definer.find('div.scope.blueprint').addClass('ui-helper-clearfix ui-corner-all');
-    var scopes = scopes;
-
-    var cloneBlueprint = function() {
-      definer.find('.cloned').remove();
-      set = blueprint.clone().removeClass('blueprint').addClass('cloned').appendTo(definer).show('slow');
-      set.find('option').remove();
-
-      var select_attribute = set.find('select.scope_attribute').enable();
-      var select_comparison = set.find('select.scope_comparison').enable();
-      var value = set.find('input.scope_value[type=text]').enable();
+    
+    blueprint.each(function() {
+      var $self = $(this);
+      var select_attribute = $self.find('select.scope_attribute');
+      var select_comparison = $self.find('select.scope_comparison');
+      var value = $self.find('input.scope_value[type=text]');
       var value_name = value.attr('name');
 
-      $.each(scopes, function(attribute, comparisons) {  
-        $('<option />').attr('value', attribute).text(attribute).appendTo(select_attribute);
-      });
-      var switchedAttribute = function() {
-        var a = select_attribute.val();
-        select_comparison.find('option').remove();
-        $.each(scopes[a], function(i, com) {
-          $('<option />').attr('value', com).text(com).appendTo(select_comparison);
-        });
-      };
+      $self.find('option').remove();
+
       var updateValueName = function() {
         var a = select_attribute.val();
         var c = select_comparison.val();
         var name = $.string( value_name ).sub(/attribute/, a).sub(/comparison/,c).str;
         value.attr('name', name);
       };
-
-      switchedAttribute(); 
-      updateValueName();
-      select_attribute.change( switchedAttribute );
-      select_attribute.change( updateValueName );
-      select_comparison.change( updateValueName);
-    };
-    var switchedContentType = function(e) {
-      if ('scope' == assignment.val()) {
-        var plural = $.string(content_type.val()).underscore().str + 's';
-        var scope_url = Routing['scopes_'+  plural + '_path']();
-        $.getJSON( scope_url, function(json) {
-          scopes = json;
-          cloneBlueprint();
+      var updateComparisons = function() {
+        var a = select_attribute.val();
+        select_comparison.find('option').remove();
+        $.each(scopes[a], function(i, com) {
+          $('<option />').attr('value', com).text(com).appendTo(select_comparison);
         });
-      }
-    };
-    var switchedAssignment = function (e) {
+        updateValueName();
+      };
+      content_type.change(function() {
+        if ('scope' == assignment.val()) {
+          var plural = $.string(content_type.val()).underscore().str + 's';
+          var scope_url = Routing['scopes_'+  plural + '_path']();
+          $.getJSON( scope_url, function(json) {
+            scopes = json;
+            /* remove invalid scope selects */
+            definer.find('div.scope:not(.blueprint)').remove(); 
+            $.each(scopes, function(attribute, comparisons) {  
+              $('<option />').attr('value', attribute).text(attribute).appendTo(select_attribute);
+            });
+            updateComparisons();
+            cloneScope($self);
+          });
+        }
+      });
+      $self.change( updateValueName );
+
+      $.ui.button({icon: 'plus', text: 'add', class: 'add'}).prependTo($self).click(function(ev) {
+        cloneScope( $(ev.target).closest('div.scope') );
+      });
+
+      $.ui.button({icon: 'minus', text: 'remove', class: 'remove'}).appendTo($self).click(function(ev) {
+        $(ev.target).closest('div.scope').remove();
+      });
+    });
+
+    var updateVisibilityOfContent = function (e) {
       form.find('h3.what + dl')
         .find('> di:not(.assignment)').hide()
           .find(':input').disable();
@@ -1036,7 +1052,6 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
           definer.show().find(':not(.blueprint) :input').enable();
           break;
       }
-      switchedContentType();
     };
     renderingAssignmentFormUpdate();
     form.find('select#rendering_assignment').change( renderingAssignmentFormUpdate );
@@ -1091,17 +1106,8 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       var select_attributes = set.find('select:first').enable();
       var select_comparisions = set.find('select:last').enable();
 
-    $.ui.button({icon: 'plus', text: 'add', class: 'add'}).prependTo(blueprint).click(function() {
-      cloneBlueprint();
-    });
-
-    $.ui.button({icon: 'minus', text: 'remove', class: 'remove'}).appendTo(blueprint).click(function(ev) {
-      $(ev.target).closest('div.scope').remove();
-    });
-
-    switchedAssignment();
-    assignment.change( switchedAssignment );
-    content_type.change( switchedContentType );
+    updateVisibilityOfContent();
+    assignment.change( updateVisibilityOfContent );
 
   });
 };
