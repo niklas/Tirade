@@ -43,7 +43,7 @@ module ApplicationHelper
     content = Page.find_by_url(content) if content.is_a?(String)
     return "[link target not found]" unless content
     label = opts.delete(:label) || content.title
-    url = [ public_content_path(content.url), opts.delete(:item_id)].compact.join('/')
+    url = [content.url, opts.delete(:item_id)].compact.join('/')
     link_to(label,url,opts)
   end
   alias :public_page_link :public_content_link
