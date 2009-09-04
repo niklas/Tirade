@@ -4,6 +4,7 @@ describe ApplicationHelper do
   fixtures :all
   before( :each ) do
     helper_authorizes_all
+    helper.extend UtilityHelper
   end
 
   describe "public_content_link" do
