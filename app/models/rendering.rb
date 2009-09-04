@@ -74,7 +74,7 @@ class Rendering < ActiveRecord::Base
 
   Assignments = %w(none fixed by_title_from_trailing_url scope).freeze unless defined?(Assignments)
 
-  validates_inclusion_of :assignment, :in => Assignments, :allow_nil => true
+  validates_inclusion_of :assignment, :in => Assignments
   belongs_to :content, :polymorphic => true
   def trailing_path_of_page
     page.andand.trailing_path || []

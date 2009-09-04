@@ -164,6 +164,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
         :page => @page,
         :grid => @grid,
         :content => @content,
+        :assignment => 'fixed',
         :part => parts(:image_preview)
       )
     end.should change(Rendering,:count).by(1)
@@ -176,10 +177,10 @@ describe Rendering, ' appended to the left column of the main page, containing a
   end
   it "should find the content" do
     lambda do
-      found_content = @page.renderings.for_grid(@grid).last.content
-      found_content.should be_instance_of(Image)
-      found_content.should == @content
+      @found_content = @page.renderings.for_grid(@grid).last.content
     end.should_not raise_error
+    @found_content.should be_instance_of(Image)
+    @found_content.should == @content
   end
 
 end
