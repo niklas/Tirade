@@ -5,25 +5,25 @@
   };
 
   $.extend( $.tirade.resourceful, {
-    delete: function(resource_name, id) {
+    destroy: function(resource_name, id) {
       return $.ajax({
         url: Routing[resource_name + '_path']({id: id, format:'js', authenticity_token: $.tirade.resourceful.authToken() }),
         type: 'DELETE', data: ''
       });
     },
-    deleteButton: function(resource_name, id) {
+    destroyButton: function(resource_name, id) {
       return $.ui.button({
         icon: 'trash', text: 'Delete ' + resource_name,
-        class: 'delete'
+        cssclass: 'delete'
       })
       .addClass(resource_name)
       .click(function(event) {
-        if (confirm("Really delete?")) $.tirade.resourceful.delete(resource_name, id);
+        if (confirm("Really delete?")) $.tirade.resourceful.destroy(resource_name, id);
         event.preventDefault(); event.stopPropagation();
         return false;
       })
     },
-    new: function(resource_name, attributes) {
+    doNew: function(resource_name, attributes) {
       attributes = $.extend({
         format: 'js',
         authenticity_token: $.tirade.resourceful.authToken()
@@ -36,11 +36,11 @@
     newButton: function(resource_name, attributes) {
       return $.ui.button({
         icon: 'plus', text: 'New ' + $.string(resource_name).capitalize().str, 
-        class: 'new'
+        cssclass: 'new'
       })
       .addClass(resource_name)
       .click(function(event) {
-        $.tirade.resourceful.new(resource_name, attributes);
+        $.tirade.resourceful.doNew(resource_name, attributes);
         event.preventDefault(); event.stopPropagation();
         return false;
       })
@@ -55,7 +55,7 @@
     editButton: function(resource_name, id, ajax_options) {
       return $.ui.button({
         icon: 'pencil', text: 'Edit',
-        class: 'edit'
+        cssclass: 'edit'
       })
       .addClass(resource_name)
       .click(function(event) {
@@ -153,47 +153,6 @@
     });
   };
 
-
-  $.fn.addRESTLinks = function(resource, options) {
-    var defaults = {
-      for: null,
-      authToken: resource.find('span.rails-auth-token').text() || 'AuthTokenNotFoundIn-addRestLinks',
-      url: null,
-      wrap: 'li',
-      class: ''
-    };
-    var options = $.extend(defaults, options);
-
-    if (!options.url) options.url = resource.attr('href') || resource.resourceURL();
-
-
-    if ( (m = options.url.match(/([^\/]+)s\/([^\/]+)/)) && m[1] != 'new') { // has id/slug after plural
-      options.class += ' ' + m[1];
-      var actions = [
-        { name: 'Edit', class: 'edit', url: options.url + '/edit' },
-        { name: 'Delete', class: 'destroy' }
-      ];
-    }
-    else if (m = options.url.match(/([^\/]+)s$/)) { // end with plural
-      options.class += ' ' + m[1];
-      var actions = [
-        { name: 'Create', class: 'new', url: options.url + '/new' }
-      ];
-    }
-    else return this;
-
-    return this.each(function() {
-      obj = $(this);
-      $.each(actions, function(i,action) {
-        if ( !obj.find('a').hasClass(action.class) ) {
-          url = (action.url || options.url) + '?authenticity_token='+options.authToken;
-          obj.appendDom([{
-            tagName: options.wrap, childNodes: [{ tagName: 'a', href: url, class: action.class, innerHTML: action.name }]
-          }]);
-        }
-      });
-    });
-  };
 
   
   $.fn.fieldFor = function(name) {

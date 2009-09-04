@@ -162,7 +162,7 @@ $(function() {
   $('div#toolbox_sidebar ul.clipboard li').livequery(function() {
     var item = $(this);
     item.find('a.association').remove();
-    $.ui.button({icon: 'circle-close', text: 'remove', class: 'association remove'})
+    $.ui.button({icon: 'circle-close', text: 'remove', cssclass: 'association remove'})
       .click(function(event) { 
         item.remove(); 
         $.ajax({
@@ -179,7 +179,7 @@ $(function() {
   /* TODO: move to acts_as_custom_configurable */
   $('form ul.define_options').livequery(function() {
     var list = $(this);
-    $.ui.button({icon: 'circle-plus', text: 'remove', class: 'add option'})
+    $.ui.button({icon: 'circle-plus', text: 'remove', cssclass: 'add option'})
       .click(function() {
         list.find('li:last').clone().removeClass('dummy').appendTo(list);
         return false;
@@ -188,7 +188,7 @@ $(function() {
   });
   $('form ul.define_options li:not(.dummy)').livequery(function() {
     var item = $(this);
-    $.ui.button({icon: 'circle-close', text: 'remove', class: 'association remove'})
+    $.ui.button({icon: 'circle-close', text: 'remove', cssclass: 'association remove'})
       .click(function() { item.remove(); return false; })
       .prependTo(item);
   });

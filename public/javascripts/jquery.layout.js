@@ -15,7 +15,7 @@ Rendering = {
   createButton: function(attributes) {
     return $.ui.button({
       icon: 'circle-plus', text: 'create rendering', 
-      class: 'create rendering'
+      cssclass: 'create rendering'
     })
     .click(function() {
       Toolbox.open();
@@ -49,7 +49,7 @@ Grid = {
   createButton: function(attributes) {
     return $.ui.button({
       icon: 'circle-plus', text: 'create child', 
-      class: 'create grid'
+      cssclass: 'create grid'
     })
     .click(function() {
       Toolbox.open();
@@ -79,7 +79,7 @@ Grid = {
   sortRenderingsButton: function(grid) {
     return $.ui.button({
       icon: 'shuffle', text: 'sort Renderings', 
-      class: 'sort grid renderings'
+      cssclass: 'sort grid renderings'
       })
       .toggle(
         function() {
@@ -118,7 +118,7 @@ Grid = {
   sortChildrenButton: function(grid) {
     return $.ui.button({
       icon: 'shuffle', text: 'sort Children', 
-      class: 'sort grid grids rendering'
+      cssclass: 'sort grid grids rendering'
       })
       .toggle(
         function() {

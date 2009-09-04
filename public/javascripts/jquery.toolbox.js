@@ -80,11 +80,11 @@ var Toolbox = {
       .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
 
-    this.pickFocusButton = $.ui.button({class: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'suitcase'})
+    this.pickFocusButton = $.ui.button({cssclass: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'suitcase'})
       .appendTo(Toolbox.sideBarActions)
       .click( $.tirade.focus.pick );
 
-    this.refreshPageButton = $.ui.button({class: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
+    this.refreshPageButton = $.ui.button({cssclass: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { 
         var page = $('body > div.page_margins > div.page');
         var url = page.metadata().url || window.location.pathname;
@@ -95,7 +95,7 @@ var Toolbox = {
       })
       .appendTo(Toolbox.sideBarActions);
 
-    this.toggleSideBarButton = $.ui.button({class: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
+    this.toggleSideBarButton = $.ui.button({cssclass: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
       .mousedown(function(ev) { ev.stopPropagation(); })
       .click(function(event) {
          if (Toolbox.sideBarVisible) {
@@ -116,7 +116,7 @@ var Toolbox = {
       .addClass('buttons right')
       .prependTo(Toolbox.header);
 
-    this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back'})
+    this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', cssclass: 'back'})
       .click( function(event) { 
         event.preventDefault();
         Toolbox.pop();
@@ -124,13 +124,13 @@ var Toolbox = {
       })
       .prependTo(Toolbox.leftButtons);
 
-    this.maximizeButton = $.ui.button({icon: 'arrow-4-diag', text: 'maximize', class: 'size-max' })
+    this.maximizeButton = $.ui.button({icon: 'arrow-4-diag', text: 'maximize', cssclass: 'size-max' })
       .click(Toolbox.maximize).appendTo(Toolbox.rightButtons);
 
-    this.normalSizeButton = $.ui.button({icon: 'pin-s', text: 'normalize', class: 'size-normal' })
+    this.normalSizeButton = $.ui.button({icon: 'pin-s', text: 'normalize', cssclass: 'size-normal' })
       .click(Toolbox.unmaximize).appendTo(Toolbox.rightButtons);
 
-    this.tileButton = $.ui.button({icon: 'triangle-2-e-w', text: 'tile', class: 'size-tile' })
+    this.tileButton = $.ui.button({icon: 'triangle-2-e-w', text: 'tile', cssclass: 'size-tile' })
       .click(Toolbox.tile).appendTo(Toolbox.rightButtons);
 
     this.closeButton = this.header.find('a.ui-dialog-titlebar-close')
@@ -335,7 +335,7 @@ var Toolbox = {
     var options = jQuery.extend({
       href:       'error',
       title:      'Error',
-      class:      'error'
+      cssclass:      'error'
     }, options);
     this.push(content, options);
   },
@@ -718,14 +718,14 @@ var Toolbox = {
 
 Toolbox.Templates = {
   addButton: [ 
-    { tagName: 'img', src: '/images/icons/small/plus.gif', class: 'association add' } 
+    { tagName: 'img', src: '/images/icons/small/plus.gif', cssclass: 'association add' } 
     ],
   removeButton: [
-    { tagName: 'img', src: '/images/icons/small/x.gif', class: 'association remove' }
+    { tagName: 'img', src: '/images/icons/small/x.gif', cssclass: 'association remove' }
   ],
   toolbox: [
-    { tagName: 'div', id: 'toolbox_body', class: 'body', childNodes: [
-      { tagName: 'div', class: 'content ui-helper-clearfix', id: 'toolbox_content' }
+    { tagName: 'div', id: 'toolbox_body', cssclass: 'body', childNodes: [
+      { tagName: 'div', cssclass: 'content ui-helper-clearfix', id: 'toolbox_content' }
     ]},
   ],
 }
@@ -1042,7 +1042,7 @@ jQuery.ui.button = function(options) {
   };
   var options = $.extend(defaults, options);
   var button = $('<a/>')
-    .addClass('ui-corner-all ui-state-default ui-icon-button ui-button ' + options.class)
+    .addClass('ui-corner-all ui-state-default ui-icon-button ui-button ' + options.cssclass)
     .attr('href', options.href)
     .attr('role', 'button');
   if (options.hover) button.hover(

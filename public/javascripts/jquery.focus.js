@@ -98,14 +98,14 @@
         .addClass('buttons right')
         .prependTo( this.titleBarTop );
 
-      this.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', class: 'pick sticky'})
+      this.pickButton = $.ui.button({icon: 'suitcase', text: 'pick', cssclass: 'pick sticky'})
         .click( this.pick )
         .appendTo(this.leftButtons);
 
-      this.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', class: 'show with_toolbox sticky'})
+      this.showButton = $.ui.button({icon: 'circle-triangle-e', text: 'show', cssclass: 'show with_toolbox sticky'})
         .appendTo(this.rightButtons);
 
-      this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', class: 'back sticky'})
+      this.backButton = $.ui.button({icon: 'circle-triangle-w', text: 'back', cssclass: 'back sticky'})
         .click( this.back )
         .prependTo(this.leftButtons);
 

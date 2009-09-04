@@ -56,7 +56,7 @@
         return;
       };
       item.find('a.association').remove();
-      $.ui.button({icon: 'minus', text: 'remove', class: 'association remove'})
+      $.ui.button({icon: 'minus', text: 'remove', cssclass: 'association remove'})
         .click(function(event) {
           list
             .siblings('input.association_id:first').val('').end()
@@ -127,7 +127,7 @@
           .clone().enable().attr('value',id).appendTo(item);
 
       item.find('a.association').remove();
-      $.ui.button({icon: 'minus', text: 'remove', class: 'association remove'})
+      $.ui.button({icon: 'minus', text: 'remove', cssclass: 'association remove'})
         .click(function(event) {
           item.remove();
           event.preventDefault(); event.stopPropagation();
