@@ -70,7 +70,7 @@ describe "/grids/_grid.html.haml" do
 
   describe "replacing the left side with a new Grid" do
     before( :each ) do
-      @replacement = Factory :grid, :title => 'Replacement', :float => 'l', :width => 50
+      @replacement = Factory :grid, :title => 'Replacement', :float => 'l', :width => 50, :inherit_renderings => true
       @grid = grids(:layout_50_50_1)
       @grid.update_attributes!(:replacement => @replacement)
       @rendering = Factory :rendering, :grid => @replacement, :css_classes_list => 'somewhere_else'

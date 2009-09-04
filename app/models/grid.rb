@@ -125,7 +125,7 @@ class Grid < ActiveRecord::Base
   # Rendering inheritance over pages
   def renderings_for_page(page)
     rs = page.renderings_for_grid(self)
-    if rs.empty?
+    if rs.empty? && inherit_renderings?
       renderings
     else
       rs
