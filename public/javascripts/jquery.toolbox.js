@@ -870,7 +870,9 @@ jQuery.fn.frameInToolbox = function(options) {
         .find('a:not(.ui-button)')
           .uiButton();
 
-    }
+    };
+
+    $('ul.tree.root', frame).treeview().addClass('ui-widget-content ui-corner-all').find('div.hitarea').addClass('ui-icon');
 
 
   });

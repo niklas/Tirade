@@ -82,7 +82,7 @@ module ManageResourceController
         # TODO replace current_frame
         page.update_frames :index => [collection, 'list']
       else
-        page.push_frame_for(collection,'list')
+        page.push_frame_for(collection, index_view)
       end
     end
 
@@ -141,6 +141,11 @@ module ManageResourceController
     def update_page_on_destroy(page)
       page.select_frame_for(object).remove
       page.select_frame(resource_name.pluralize, 'index').refresh()
+    end
+
+    # name of partial to render on /index
+    def index_view
+      'list'
     end
   end
 end

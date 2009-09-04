@@ -101,6 +101,41 @@ module InterfaceHelper
     image_tag(path, :class => 'icon')
   end
 
+  def tree_of(things, opts={})
+    raise ArgumentError, 'got nil list of things' if things.nil?
+    things = [things] unless things.respond_to?(:each)
+    kind = things.first.table_name rescue 'items'
+    inner = returning '' do |html|
+      things.each do |thing|
+        html << tree_item(thing, opts.merge(:in_tree => true), opts[:item] || {})
+      end
+    end
+    add_class_to_html_options(opts, kind)
+    add_class_to_html_options(opts, 'records') if things.first.andand.is_a?(ActiveRecord::Base)
+    add_class_to_html_options(opts, 'tree')
+    add_class_to_html_options(opts, 'empty') if things.blank?
+    add_class_to_html_options(opts, 'root') unless opts[:in_tree]
+    content_tag(:ul, inner, opts)
+  end
+
+  def tree_item(thing, opts={}, item_opts={})
+    return '' unless thing
+    if thing.is_a?(ActiveRecord::Base)
+      add_class_to_html_options item_opts, 'record' 
+      add_class_to_html_options item_opts, dom_id(thing)
+      add_class_to_html_options item_opts, thing.resource_name
+      item_opts[:rel] = dom_id(thing)
+    else
+      add_class_to_html_options item_opts, thing.class.to_s.domify
+      item_opts[:rel] = thing.class.to_s.domify
+    end
+    inner = returning '' do |html|
+      html << single_item(thing)
+      html << tree_of(thing.children, opts) unless thing.children.empty?
+    end
+    content_tag :li, inner, item_opts
+  end
+
   # You need a partial '/resources/table_row' and must write the +tr+
   def table_of(things,opts={})
     kind = things.first.table_name

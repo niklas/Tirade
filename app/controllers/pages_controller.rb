@@ -40,4 +40,12 @@ class PagesController < ManageResourceController::Base
     end
   end
 
+  def collection
+    end_of_association_chain.roots
+  end
+
+  def index_view
+    'tree'
+  end
+
 end

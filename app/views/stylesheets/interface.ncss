@@ -74,38 +74,6 @@ body div {
       height: 8em;
     }
   }
-
-  ul.tree {
-    .tree_root {
-      clear: both;
-      padding: 0;
-      margin: 0;
-      background-color: white;
-    }
-    list-style: none;
-    li {
-      border-left: 1px solid transparent;
-      margin: 00;
-      div.node {
-         padding: 0.4em 0 0 0.8em;
-         position: relative;
-      } 
-      position: relative;
-      font-weight: normal;
-      .active {
-        font-weight: bold;
-      }
-      span.label {
-        display: block;
-      }
-    }
-    li:hover {
-      border-left: 1px solid #999999;
-    }
-  }
-  div.tree ul.tree {
-    margin: 0;
-  }
   .page_margins div.page div {
     .rendering {
       position: relative;
@@ -241,27 +209,6 @@ form {
     }
   }
 }
-ul.list {
-  margin: 0;
-  clear: both;
-  li { 
-    position: relative;
-    text-align: left;
-    padding: 0.3em;
-    margin: 1px 0;
-    list-style: none;
-    .image {
-      img {
-        float: left; 
-      }
-      span.title {
-        float: left;
-        padding: <%= @medium %>;
-      }
-    }
-  }
-}
-
 span.title {
   font-weight: bold;
 }
@@ -335,6 +282,8 @@ div.live_search {
 
 /* here was div.node */
 ul.list, dl, ul.tree {
+  clear: both;
+  margin: 0;
   a {
     /* position: absolute; */
     .show, .index, .edit {
@@ -366,10 +315,43 @@ ul.list, dl, ul.tree {
     margin: 0 6px 0 0;
     float: left;
   }
+  li { 
+    position: relative;
+    text-align: left;
+    padding: 0.3em;
+    margin: 1px 0;
+    list-style: none;
+    .image {
+      img {
+        float: left; 
+      }
+      span.title {
+        float: left;
+        padding: <%= @medium %>;
+      }
+    }
+  }
+}
+
   li:hover, di:hover > *, li:hover > div.node  {
     > a.show, > a.index, a.edit, > a.association {
       display: block !important;
     }
+  }
+}
+
+ul.records.tree {
+ margin: 0;
+  .tree_root {
+    clear: both;
+    padding: 0;
+  }
+  list-style: none;
+  a.show { top: 8px; }
+  li {
+    position: relative;
+    font-weight: normal;
+    padding-left: 16px;
   }
 }
 

@@ -2,39 +2,6 @@
   div.body {
     > div.content {
       background-color: <%= @colors[:base] %>;
-      > div.frame {
-        ul.records {
-          li {
-            .odd { background-color: <%= @colors[:base].brighter %>; }
-            .even { background-color: <%= @colors[:base].darker %>; }
-            :hover { background-color: <%= @colors[:hover] %>; }
-            li {
-              .odd { background-color: <%= @colors[:base].brighter(2) %>; }
-              .even { background-color: <%= @colors[:base].darker %>; }
-              li {
-                .odd { background-color: <%= @colors[:base] %>; }
-                .even { background-color: <%= @colors[:base].darker %>; }
-              }
-            }
-          }
-        }
-        dl { 
-          di {
-            border: thin solid <%= @colors[:decoration] %>;
-            .odd { background-color: <%= @colors[:base].brighter %>; }
-            .even { background-color: <%= @colors[:base].darker %>; }
-            :hover { background-color: <%= @colors[:hover] %>; }
-            di {
-              .odd { background-color: <%= @colors[:base].brighter(2) %>; }
-              .even { background-color: <%= @colors[:base].darker %>; }
-              di {
-                .odd { background-color: <%= @colors[:base] %>; }
-                .even { background-color: <%= @colors[:base].darker %>; }
-              }
-            }
-          }
-        }
-      }
     }
   }
 }

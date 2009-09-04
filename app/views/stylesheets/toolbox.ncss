@@ -94,6 +94,16 @@ body {
         }
       }
     }
+    ul.treeview {
+      div.hitarea {
+        background-position: -160px -64px;
+        .expandable-hitarea { background-position: -32px -16px; }
+        .collapsable-hitarea { background-position: -64px -16px; }
+        margin-left: -16px;
+        float: left;
+        cursor: pointer;
+      }
+    }
     code {
       margin: 1%;
       float: left;

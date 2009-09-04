@@ -89,9 +89,9 @@ $(function() {
 
 
   /* Resourceful Links in Toolbox */
-  $('ul.list > li > a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').addClass('ui-state-highlight').useToolbox(); });
-  $('ul.list > li > a.index').livequery(function() { $(this).uiIcon('circle-triangle-e').addClass('ui-state-highlight').useToolbox(); });
-  $('ul.list > li > a.edit').livequery(function() { $(this).uiIcon('pencil').useToolbox(); });
+  $('ul.records li.record > a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').addClass('ui-state-highlight').useToolbox(); });
+  $('ul.list li > a.index').livequery(function() { $(this).uiIcon('circle-triangle-e').addClass('ui-state-highlight').useToolbox(); });
+  $('ul.records li.record > a.edit').livequery(function() { $(this).uiIcon('pencil').useToolbox(); });
   $('dd.record > a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
   //$('div#toolbox > div.body > div.content > div.frame a.new').livequery(function() { $(this).uiIcon('plus').useToolbox(); });
   //$('div#toolbox > div.body > div.content > div.frame a.edit').livequery(function() { $(this).uiIcon('pencil').useToolbox(); });
@@ -106,7 +106,7 @@ $(function() {
   /* 
    * Toolbox Drag+Drop
    */
-  $('ul.list.records > li, dl > di > dd.record').livequery(function() {
+  $('ul.records > li.record, dl > di > dd.record').livequery(function() {
     $(this)
     .addClass('ui-widget-content ui-corner-all ui-helper-clearfix')
     .draggable({ 
@@ -132,7 +132,7 @@ $(function() {
     });
   });
 
-  $('ul.list, dl.list').livequery(function() { $(this).listOfItems() });
+  $('ul.list, ul.records, dl.records').livequery(function() { $(this).listOfItems() });
 
   /*
    * Clipboard
