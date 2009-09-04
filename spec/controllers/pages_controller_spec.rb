@@ -27,7 +27,7 @@ describe PagesController do
     end
   
     it "should find all pages" do
-      Page.should_receive(:find).with(:all, {:offset => 0, :limit => 30}).and_return([@page])
+      Page.should_receive(:roots).and_return([@page])
       do_get
     end
   
