@@ -99,7 +99,7 @@ class GridsController < ManageResourceController::Base
   def fetch_grid
     @model = @grid = Grid.find(params[:id])
   end
-  def collection
+  def collection_of_roots # disabled
     end_of_association_chain.roots
   end
 
