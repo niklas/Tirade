@@ -718,14 +718,14 @@ var Toolbox = {
 
 Toolbox.Templates = {
   addButton: [ 
-    { tagName: 'img', src: '/images/icons/small/plus.gif', cssclass: 'association add' } 
+    { tagName: 'img', src: '/images/icons/small/plus.gif', 'class': 'association add' } 
     ],
   removeButton: [
-    { tagName: 'img', src: '/images/icons/small/x.gif', cssclass: 'association remove' }
+    { tagName: 'img', src: '/images/icons/small/x.gif', 'class': 'association remove' }
   ],
   toolbox: [
-    { tagName: 'div', id: 'toolbox_body', cssclass: 'body', childNodes: [
-      { tagName: 'div', cssclass: 'content ui-helper-clearfix', id: 'toolbox_content' }
+    { tagName: 'div', id: 'toolbox_body', 'class': 'body', childNodes: [
+      { tagName: 'div', 'class': 'content ui-helper-clearfix', id: 'toolbox_content' }
     ]},
   ],
 }
