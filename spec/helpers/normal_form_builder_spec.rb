@@ -108,7 +108,46 @@ describe 'NormalFormBuilder', 'in a form with new Content' do
 
 end
 
-describe NormalFormBuilder, 'in a form with existing Rendering' do
+describe NormalFormBuilder, 'in a form with existing NOT scoping Rendering' do
+  before(:each) do
+    ActionView::Base.send :include, ApplicationHelper
+    ActionView::Base.send :include, InterfaceHelper # FIXME shouldn't Desert have done this already?
+    @view = ActionView::Base.new
+    @view.view_paths.unshift 'app/views'
+    @view.stub!(:url_for).and_return('/foo')
+    @view.stub!(:protect_against_forgery?).and_return(false)
+    @view.stub!(:authorized?).and_return(true)
+    @rendering = Factory :rendering, :assignment => 'fixed'
+    @builder = NormalFormBuilder.new :rendering, @rendering, @view, {}, nil
+  end
+
+  it "should no scopings from Rendering" do
+    @rendering.should have(:no).scopings
+  end
+
+  describe "defining scope" do
+    before( :each ) do
+      @html = @builder.define_scope
+    end
+
+    it "should render something" do
+      @html.should_not be_blank
+    end
+
+    it "should render a set of fields as blueprint" do
+      @html.should have_tag('div.scoping.blueprint') do
+        with_tag('select.scope_attribute[name=?]', 'scope_attribute')
+        with_tag('select.scope_comparison[name=?]', 'scope_comparison')
+        with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute_comparison]')
+      end
+    end
+
+
+  end
+
+end
+
+describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
   before(:each) do
     ActionView::Base.send :include, ApplicationHelper
     ActionView::Base.send :include, InterfaceHelper # FIXME shouldn't Desert have done this already?
@@ -134,12 +173,8 @@ describe NormalFormBuilder, 'in a form with existing Rendering' do
       @html.should_not be_blank
     end
 
-    it "should render a set of fields as blueprint" do
-      @html.should have_tag('div.scoping.blueprint') do
-        with_tag('select.scope_attribute[name=?]', 'scope_attribute')
-        with_tag('select.scope_comparison[name=?]', 'scope_comparison')
-        with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute_comparison]')
-      end
+    it "should not render a blueprint, we can clone the existing ones" do
+      @html.should_not have_tag('div.scoping.blueprint')
     end
 
     it "should render a set of fields for 'title_like'" do

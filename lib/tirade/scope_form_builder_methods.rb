@@ -3,8 +3,9 @@ module Tirade
   module ScopeFormBuilderMethods
     def define_scope
       inner = returning '' do |html|
-        html << scope_blueprint
-        @object.scopings.each do |scoping|
+        scopings = @object.scopings
+        html << scope_blueprint if scopings.blank?
+        scopings.each do |scoping|
           html << single_scoping(scoping)
         end
       end
