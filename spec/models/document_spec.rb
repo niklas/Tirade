@@ -21,6 +21,16 @@ describe Document do
     it { should have_key('updated_at') }
   end
 
+  describe "scopes for title" do
+    subject { Document.scopes_for_column(:title) }
+    it { should be_an Array }
+    it { should include 'like'}
+    it { should include 'equals'}
+    it { should include 'does_not_equal'}
+    it { should include 'begins_with'}
+    it { should include 'ends_with'}
+  end
+
   describe "build from Factory" do
     before( :each ) do
       @document = Factory.build(:document)

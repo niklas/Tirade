@@ -105,5 +105,58 @@ describe 'NormalFormBuilder', 'in a form with new Content' do
     end
   end
 
+
 end
 
+describe NormalFormBuilder, 'in a form with existing Rendering' do
+  before(:each) do
+    ActionView::Base.send :include, ApplicationHelper
+    ActionView::Base.send :include, InterfaceHelper # FIXME shouldn't Desert have done this already?
+    @view = ActionView::Base.new
+    @view.view_paths.unshift 'app/views'
+    @view.stub!(:url_for).and_return('/foo')
+    @view.stub!(:protect_against_forgery?).and_return(false)
+    @view.stub!(:authorized?).and_return(true)
+    @rendering = Factory :scoped_rendering, :scope_definition => { :title => {:like => 'foo'}, :id => {:gt => 23, :lte => 42} }
+    @builder = NormalFormBuilder.new :rendering, @rendering, @view, {}, nil
+  end
+
+  it "should get 3 scopings from Rendering" do
+    @rendering.should have(3).scopings
+  end
+
+  describe "defining scope" do
+    before( :each ) do
+      @html = @builder.define_scope
+    end
+
+    it "should render something" do
+      @html.should_not be_blank
+    end
+
+    it "should render a set of fields for 'title_like'" do
+      @html.should have_tag('div.scope') do
+        with_tag('select.scope_attribute[name=?]', 'scope_attribute') do
+          with_tag('option[selected]', 'title')
+        end
+        with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
+          with_tag('option[selected]', 'like')
+        end
+        with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][title_like]')
+      end
+    end
+
+    it "should render a field to select attribute" do
+      @html.should have_tag('select.scope_attribute[name=?]', 'scope_attribute')
+    end
+    it "should render a field to select comparison" do
+      @html.should have_tag('select.scope_comparison[name=?]', 'scope_comparison')
+    end
+    it "should render a text field for each set scope" do
+      @html.should have_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][title_like]')
+      @html.should have_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][id_gt]')
+      @html.should have_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][id_lte]')
+    end
+  end
+
+end

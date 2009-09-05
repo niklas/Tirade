@@ -91,13 +91,16 @@ class Rendering < ActiveRecord::Base
   end
   alias_method_chain :content, :dynamic_assignments
 
-  # returns a SearchLogic::Search
-  def scope
+  def content_class
     if content_type
-      content_type.constantize.search(normalized_scope_definition)
+      content_type.constantize
     else
       raise "no content_type set"
     end
+  end
+  # returns a SearchLogic::Search
+  def scope
+    content_class.search(normalized_scope_definition)
   end
 
   def scope=(new_scope)
@@ -111,6 +114,24 @@ class Rendering < ActiveRecord::Base
 
   def scope_definition
     read_attribute(:scope_definition) || Hash.new
+  end
+
+  def scopings
+    scope_definition.map do |att, comps|
+      comps.map do |comp, val|
+        Scoping.new(att.to_s, comp.to_s, val)
+      end if comps.respond_to?(:map) # FIXME finals are ignored...
+    end.flatten.compact
+  end
+
+  class Scoping < Struct.new(:attribute, :comparison, :value)
+    def name
+      "#{attribute}_#{comparison}"
+    end
+
+    def method_missing(method_name, *args, &block)
+      value
+    end
   end
 
   # we save it like it came from the form, so we have to fix it for searchlogic

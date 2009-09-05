@@ -401,8 +401,28 @@ describe Rendering, "scoped by params" do
         @rendering.scope.conditions.should == scope.conditions
       end
 
+      it "should have content_class of Document" do
+        @rendering.content_class.should == Document
+      end
+
       it "should succeed searching" do
         lambda { @rendering.scope.all }.should_not raise_error
+      end
+
+      it "should provide scopings (for form)" do
+        lambda { @scopings = @rendering.scopings }.should_not raise_error
+        @scopings.should be_an(Array)
+        @scopings.should_not be_empty
+        @scopings.each do |scoping|
+          scoping.should be_a(Rendering::Scoping)
+          scoping.attribute.should be_a String
+          scoping.comparison.should be_a String
+          scoping.value.should_not be_blank
+          name = scoping.name
+          name.should_not be_blank
+          name.should == "#{scoping.attribute}_#{scoping.comparison}"
+          scoping.send(name).should == scoping.value
+        end
       end
     end
   end

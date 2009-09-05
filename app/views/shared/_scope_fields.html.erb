@@ -1,0 +1,10 @@
+<div class="scope">
+  <%= scope_fields.select_without_wrap :attribute, 
+    rendering.content_class.columns_hash.keys, {:include_blank => true}, 
+    :class => 'scope_attribute', :name => 'scope_attribute', :declare => true %>
+  <%= scope_fields.select_without_wrap :comparison, 
+    rendering.content_class.scopes_for_column(scoping.attribute), {:include_blank => true}, 
+    :class => 'scope_comparison', :name => 'scope_comparison', :declare => true %>
+  <%= scope_fields.text_field_without_wrap scoping.name, :class => 'scope_value' %>
+
+</div>

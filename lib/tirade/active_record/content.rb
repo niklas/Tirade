@@ -78,15 +78,19 @@ module Tirade
 
         def scopes_grouped_by_column
           columns.inject({}) do |all_comps, col|
-            comps = case col.type
-              when :integer, :datetime
-                %w( greater_than greater_than_or_equal_to equals less_than_or_equal_to less_than )
-              when :string, :text
-                %w( equals does_not_equal begins_with ends_with like )
-              else
-                []
-              end
-            all_comps.merge col.name.to_s => comps
+            all_comps.merge col.name.to_s => scopes_for_column(col)
+          end
+        end
+
+        def scopes_for_column(col)
+          col = columns_hash[col.to_s] unless col.is_a?(::ActiveRecord::ConnectionAdapters::Column)
+          case col.type
+          when :integer, :datetime
+            %w( greater_than greater_than_or_equal_to equals less_than_or_equal_to less_than )
+          when :string, :text
+            %w( equals does_not_equal begins_with ends_with like )
+          else
+            []
           end
         end
 
