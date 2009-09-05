@@ -319,11 +319,8 @@ Toolbox = {
     return this.element(' > div.head').height() + this.element(' > div.foot').height();
   },
   push: function(frame_html,options) {
-    var frame = $(frame_html);
-    if (!frame.hasClass('frame')) {
-      frame = frame.wrap('<div class="frame"></div>').parent();
-    }
-    frame.appendTo( this.content() );
+    this.content().append(frame_html);
+    var frame = this.content('>div.frame:last');
     $.tirade.history.append(frame);
     this.goTo(frame);
   },
