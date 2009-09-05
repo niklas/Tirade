@@ -337,7 +337,7 @@ Toolbox = {
       index = frame;
     }
     this.currentFrameIndex = index;
-    return this.body.trigger('goTo', [index] );
+    return this.body.trigger('goto', [index] );
   },
   error: function( content, options ) {
     var settings = $.extend({
