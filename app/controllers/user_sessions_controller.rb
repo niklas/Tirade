@@ -15,7 +15,7 @@ class UserSessionsController < ManageResourceController::Base
     # do NOT render 'show'
     page.select_frame('user_sessions', 'show').refresh
     page.select_frame('user_sessions', 'new').remove
-    page.toolbox.goto(0)
+    page.toolbox.go_to(0)
     page.history.sync()
   end
 
