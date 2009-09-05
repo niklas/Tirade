@@ -155,6 +155,7 @@ module Tirade
 
     private
     def wrap(field, options, tag_output)
+      @template.add_class_to_html_options options, field.to_s
       label = @template.content_tag(
         :label,
         (options.delete(:label) || field.to_s.humanize),
@@ -163,7 +164,7 @@ module Tirade
       @template.content_tag(
         :div,
         label + ' ' + tag_output,
-        {:class => field.to_s}
+        options
       )
     end
 

@@ -31,6 +31,16 @@ describe Document do
     it { should include 'ends_with'}
   end
 
+  describe "scopes for position" do
+    subject { Document.scopes_for_column(:position) }
+    it { should be_an Array }
+    it { should include 'lt'}
+    it { should include 'lte'}
+    it { should include 'equals'}
+    it { should include 'gte'}
+    it { should include 'gt'}
+  end
+
   describe "build from Factory" do
     before( :each ) do
       @document = Factory.build(:document)

@@ -18,8 +18,11 @@ module Tirade
     end
 
     def single_scoping(scoping, opts={})
-      fields_for "scope_definition", scoping, :builder => self.class do |scope_fields|
-        @template.render(:partial => '/shared/scope_fields', :object => scope_fields, :locals => {:rendering => @object, :scoping => scoping})
+      @template.add_class_to_html_options opts, 'scoping'
+      returning '' do |html|
+        fields_for "scope_definition", scoping, :builder => self.class do |scope_fields|
+          html << @template.render(:partial => '/shared/scope_fields', :object => scope_fields, :locals => {:rendering => @object, :scoping => scoping, :options => opts})
+        end
       end
     end
 

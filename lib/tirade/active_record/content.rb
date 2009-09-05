@@ -84,9 +84,10 @@ module Tirade
 
         def scopes_for_column(col)
           col = columns_hash[col.to_s] unless col.is_a?(::ActiveRecord::ConnectionAdapters::Column)
+          return [] if col.blank?
           case col.type
           when :integer, :datetime
-            %w( greater_than greater_than_or_equal_to equals less_than_or_equal_to less_than )
+            %w( gt gte equals lte lt )
           when :string, :text
             %w( equals does_not_equal begins_with ends_with like )
           else

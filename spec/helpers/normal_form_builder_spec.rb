@@ -134,28 +134,48 @@ describe NormalFormBuilder, 'in a form with existing Rendering' do
       @html.should_not be_blank
     end
 
+    it "should render a set of fields as blueprint" do
+      @html.should have_tag('div.scoping.blueprint') do
+        with_tag('select.scope_attribute[name=?]', 'scope_attribute')
+        with_tag('select.scope_comparison[name=?]', 'scope_comparison')
+        with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute_comparison]')
+      end
+    end
+
     it "should render a set of fields for 'title_like'" do
-      @html.should have_tag('div.scope') do
+      @html.should have_tag('div.scoping') do
         with_tag('select.scope_attribute[name=?]', 'scope_attribute') do
           with_tag('option[selected]', 'title')
         end
         with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
           with_tag('option[selected]', 'like')
         end
-        with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][title_like]')
+        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][title_like]', 'foo')
       end
     end
 
-    it "should render a field to select attribute" do
-      @html.should have_tag('select.scope_attribute[name=?]', 'scope_attribute')
+    it "should render a set of fields for 'id_gt'" do
+      @html.should have_tag('div.scoping') do
+        with_tag('select.scope_attribute[name=?]', 'scope_attribute') do
+          with_tag('option[selected]', 'id')
+        end
+        with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
+          with_tag('option[selected]', 'gt')
+        end
+        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_gt]',23)
+      end
     end
-    it "should render a field to select comparison" do
-      @html.should have_tag('select.scope_comparison[name=?]', 'scope_comparison')
-    end
-    it "should render a text field for each set scope" do
-      @html.should have_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][title_like]')
-      @html.should have_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][id_gt]')
-      @html.should have_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][id_lte]')
+
+    it "should render a set of fields for 'id_lte'" do
+      @html.should have_tag('div.scoping') do
+        with_tag('select.scope_attribute[name=?]', 'scope_attribute') do
+          with_tag('option[selected]', 'id')
+        end
+        with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
+          with_tag('option[selected]', 'lte')
+        end
+        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_lte]', 42)
+      end
     end
   end
 
