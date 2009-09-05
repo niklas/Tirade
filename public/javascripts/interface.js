@@ -2,18 +2,20 @@
  * Builds up the interface for tirade, needs jquery and more than one jquery plugin
  */
 
+/*jslint browser: true */
+/*global jQuery, ChiliBook, Toolbox, Routing */
 
 
 
 
 
-ChiliBook.recipeFolder = 'javascripts/syntax/'
+ChiliBook.recipeFolder = 'javascripts/syntax/';
 
-$(function() {
+(function($){
   // Auto preview
   $.fn.preview = function() {
     var url = $.string( $(this).attr('action')  )
-      .sub(/\.js$/, function(match) { return "/preview"+match }).str;
+      .sub(/\.js$/, function(match) { return "/preview"+match; }).str;
     var form = $(this);
     var fetchPreview = function(data) {
       $.ajax({
@@ -27,15 +29,16 @@ $(function() {
     });
 
     form.formWatch({callback: fetchPreview});
-  }
+  };
 
   // Apply roles classes from cookie (for body etc.)
   $.fn.applyRoles = function() {
     var e = $(this);
     if ($.cookie("roles")) {
       $(e[0].className.split(/ /)).each(function(i,cls) {
-        if (cls.match(/role_\S*/))
-          e.removeClass(cls)
+        if (cls.match(/role_\S*/)) {
+          e.removeClass(cls);
+        }
       });
       $($.cookie("roles").split(/&/)).each(function(i,role) {
         e.addClass('role_' + role);
@@ -43,17 +46,16 @@ $(function() {
       e.addClass('cookie_roles');
     }
     return(e);
-  }
+  };
 
   $.fn.surrounds = function(position) {
-    me = $(this);
-    meoff = me.offset();
-    return(
-        meoff.top < position.top && meoff.left < position.left &&
-        meoff.top + me.height() > position.top &&
-        meoff.left + me.width() > position.left
-    );
-  }
+    var me = $(this);
+    var meoff = me.offset();
+    return meoff.top < position.top && 
+           meoff.left < position.left &&
+           meoff.top + me.height() > position.top &&
+           meoff.left + me.width() > position.left;
+  };
 
   $.fn.beBusy = function(message) {
     var div = $('<div/>')
@@ -67,15 +69,15 @@ $(function() {
     $('div.busy', this).remove();
 
     return div.appendTo(this).fadeIn(500);
-  }
+  };
   $.fn.unBusy = function() {
     return $('div.busy', this).remove();
-  }
+  };
 
   $.ajaxSetup({
     dataType: 'script',
     beforeSend: function(request) {
-      request.setRequestHeader("Tirade-Page", $('div.page').resourceId() )
+      request.setRequestHeader("Tirade-Page", $('div.page').resourceId() );
     }
   });
 
@@ -84,8 +86,8 @@ $(function() {
   $('a.login').livequery(function() { $(this).useToolbox(); });
   $('a.with_toolbox').livequery(function() { $(this).useToolbox(); });
 
-  $('code.html').livequery(function() { $(this).chili() });
-  $('code.liquid').livequery(function() { $(this).chili() });
+  $('code.html').livequery(function() { $(this).chili(); });
+  $('code.liquid').livequery(function() { $(this).chili(); });
 
 
   /* Resourceful Links in Toolbox */
@@ -99,7 +101,7 @@ $(function() {
   //$('div#toolbox_sidebar a.show').livequery(function() { $(this).uiIcon('circle-triangle-e').useToolbox(); });
   $('div#toolbox > div.body > div.content ul.tree.tree_root').livequery(function() { 
     $('div.node:not(:has(span.handle)):not(.page)', this).livequery( function() {
-      $(this).append( $('<span>drag</span>').addClass('handle'))
+      $(this).append( $('<span>drag</span>').addClass('handle'));
     });
   });
 
@@ -123,7 +125,7 @@ $(function() {
         } else {
           Toolbox.unExclusiveDroppable();
           Toolbox.beGhost();
-        };
+        }
       },
       stop: function(e,ui) {
         Toolbox.unExclusiveDroppable();
@@ -132,7 +134,7 @@ $(function() {
     });
   });
 
-  $('ul.list, ul.records, dl.records').livequery(function() { $(this).listOfItems() });
+  $('ul.list, ul.records, dl.records').livequery(function() { $(this).listOfItems(); });
 
   /*
    * Clipboard
@@ -194,4 +196,4 @@ $(function() {
   });
 
 
-});
+})(jQuery);

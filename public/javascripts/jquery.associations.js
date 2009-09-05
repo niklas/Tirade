@@ -1,3 +1,6 @@
+/*jslint browser: true */
+/*global jQuery */
+
 (function($){
   $.widget('ui.hasOneEditor', {
     _init: function() {
@@ -31,12 +34,13 @@
           list.removeClass('empty');
         },
         function() {
-          if (list.find(o.items).length == 0) list.addClass('empty');
+          if (!list.find(o.items).length) { list.addClass('empty'); }
         }
       );
 
     }
-  })
+  });
+
   $.ui.hasOneEditor.defaults = {
     items: 'li.record'
   };
@@ -47,20 +51,21 @@
       var item = this.element;
       var o = this.options;
       var list = item.closest(o.list);
-      if ( attrs = item.typeAndId() ) {
+      var attrs = item.typeAndId();
+      if ( attrs ) {
         list
           .siblings('input.association_id:first').val(attrs.id).end()
-          .siblings('input.association_type:first').val(attrs.type).end()
+          .siblings('input.association_type:first').val(attrs.type).end();
       } else {
         item.remove();
         return;
-      };
+      }
       item.find('a.association').remove();
       $.ui.button({icon: 'minus', text: 'remove', cssclass: 'association remove'})
         .click(function(event) {
           list
             .siblings('input.association_id:first').val('').end()
-            .siblings('input.association_type:first').val('').end()
+            .siblings('input.association_type:first').val('').end();
           item.remove();
           event.preventDefault(); event.stopPropagation();
         })
@@ -103,12 +108,13 @@
           list.removeClass('empty');
         },
         function() {
-          if (list.find(o.items).length == 0) list.addClass('empty');
+          if (!list.find(o.items).length) { list.addClass('empty'); }
         }
       );
 
     }
-  })
+  });
+
   $.ui.hasManyEditor.defaults = {
     items: 'li.record'
   };

@@ -1,5 +1,8 @@
+/*jslint browser: true */
+/*global jQuery, Toolbox  */
+
 (function($) {
-  if (!$.tirade) $.tirade = {};
+  if (!$.tirade) { $.tirade = {}; }
   window.History = $.tirade.history = function(options) {
     return this;
   };
@@ -17,7 +20,7 @@
       var self = this;
       self.clear();
       Toolbox.frames().each(function() {
-        self.append(this)
+        self.append(this);
       });
       self.activate(Toolbox.currentFrameIndex);
     },
@@ -32,10 +35,10 @@
           .css('cursor', 'pointer')
           .html( $frame.data('title') || $frame.attr('title') )
           .hover(
-            function() { $(this).addClass('ui-state-hover') },
-            function() { $(this).removeClass('ui-state-hover') }
+            function() { $(this).addClass('ui-state-hover'); },
+            function() { $(this).removeClass('ui-state-hover'); }
           )
-          .click(function() { Toolbox.goto($frame); })
+          .click(function() { Toolbox.goTo($frame); })
           .appendTo($.tirade.history.element)
           .slideDown('fast');
     },
@@ -43,7 +46,7 @@
       return this.items().remove();
     },
     items: function() {
-      return this.element.find('li')
+      return this.element.find('li');
     },
     pop: function() {
       return this.items().filter(':last').remove();

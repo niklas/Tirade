@@ -1,3 +1,5 @@
+/*jslint browser: true */
+/*global jQuery */
 /*
  * FormWatch 0.1 Niklas Hofer, ripped of
  *	TypeWatch 2.0 - Original by Denny Ferrassoli / Refactored by Charles Christolini
@@ -32,7 +34,7 @@
 				timer.text = elTxt.toUpperCase();
 				timer.cb(elTxt);
 			}
-		};
+		}
 		
 		function watchElement(elem) {			
 			// Must be text or textarea
@@ -52,17 +54,16 @@
 					var timerWait = timer.wait;
 					var overrideBool = false;
 
-               if (jQuery(evt.target).hasClass('search_term')) return;
+               if (jQuery(evt.target).hasClass('search_term')) { return; }
 					
 					if (evt.keyCode == 13 && this.type.toUpperCase() == "TEXT") {
 						timerWait = 1;
 						overrideBool = true;
 					}
 					
-					var timerCallbackFx = function()
-					{
-						checkElement(timer, overrideBool)
-					}
+					var timerCallbackFx = function() {
+						checkElement(timer, overrideBool);
+					};
 					
 					// Clear timer					
 					clearTimeout(timer.timer);
@@ -73,7 +74,7 @@
 				jQuery(elem).keydown(startWatch);
 				jQuery(elem).mouseup(startWatch);
 			}
-		};
+		}
 		
 		// Watch Each Element
 		return this.each(function(index){

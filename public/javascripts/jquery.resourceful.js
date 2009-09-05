@@ -1,5 +1,8 @@
+/*jslint browser: true */
+/*global jQuery, Routing */
+
 (function($){
-  if (!$.tirade) $.tirade = {};
+  if (!$.tirade) { $.tirade = {}; }
   $.tirade.resourceful = function(options) {
     return this;
   };
@@ -18,10 +21,10 @@
       })
       .addClass(resource_name)
       .click(function(event) {
-        if (confirm("Really delete?")) $.tirade.resourceful.destroy(resource_name, id);
+        if (confirm("Really delete?")) { $.tirade.resourceful.destroy(resource_name, id); }
         event.preventDefault(); event.stopPropagation();
         return false;
-      })
+      });
     },
     doNew: function(resource_name, attributes) {
       attributes = $.extend({
@@ -43,10 +46,10 @@
         $.tirade.resourceful.doNew(resource_name, attributes);
         event.preventDefault(); event.stopPropagation();
         return false;
-      })
+      });
     },
-    edit: function(resource_name, id, ajax_options) {
-      var ajax_options = $.extend({}, ajax_options, {
+    edit: function(resource_name, id, options) {
+      var ajax_options = $.extend({}, options, {
         url: Routing['edit_' + resource_name + '_path']({id: id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()}),
         type: 'GET'
       });
@@ -62,7 +65,7 @@
         $.tirade.resourceful.edit(resource_name, id, ajax_options);
         event.preventDefault(); event.stopPropagation();
         return false;
-      })
+      });
     },
     authToken: function() {
       return $('span.rails-auth-token:last').text();
@@ -73,7 +76,9 @@
   // returns just the number (23 of image_23)
   $.fn.resourceId = function() {
     var obj = $(this);
-    if ( (id = obj.attr('id')) && (m = id.match(/(\d+)$/))) {
+    var id = obj.attr('id');
+    var m, first_href, action;
+    if ( (id ) && (m = id.match(/(\d+)$/))) {
       return(m[1]);
     } else if (
       (first_href = obj.children('a:first[href!=#]').attr('href')) &&
@@ -84,20 +89,20 @@
       (action.match(/(\d+)\D*$/))) {
       return(m[1]);
     } else if ( obj[0] && (m = obj[0].className.match(/_(\d+)/))) {
-      return(m[1])
+      return(m[1]);
     }
   };
 
   // Returns image_23
   $.fn.resourceIdentifier = function() {
-    if ( m = $(this).attr('rel').match(/([\w_]+_\d+)/)) {
-      return(m[1])
-    }
+    var m = $(this).attr('rel').match(/([\w_]+_\d+)/);
+    if ( m ) { return(m[1]); }
   };
 
   // Returns { type: 'Image', id: 23 }
   $.fn.typeAndId = function() {
-    if (match = $(this).attr('rel').match(/([\w_]+)_(\d+)/)) {
+    var match = $(this).attr('rel').match(/([\w_]+)_(\d+)/);
+    if (match) {
       return({
         type: $.string(match[1]).gsub(/_/,'-').capitalize().camelize().str,
         resource: match[1],
@@ -110,7 +115,7 @@
     var typeAndId = $(this).typeAndId();
     var route = Routing[typeAndId.resource + '_path'];
     if (route) {
-      return route({id: typeAndId.id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()})
+      return route({id: typeAndId.id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()});
     } else {
       alert("resource not found: " + typeAndId.resorce);
     }
@@ -121,19 +126,20 @@
     var defaults = {
       start: function() { }
     };
-    var options = $.extend(defaults, options);
+    var settings = $.extend(defaults, options);
 
     return this.each(function(i, element) {
       if (!element.onclick) {
         var obj = $(element);
         obj.click(function(event) {
           event.preventDefault();
-          options.start(event);
+          settings.start(event);
           var meth = 'GET';
           var data = '';
           var href = obj.attr('href');
-          if (obj.hasClass('create'))
+          if (obj.hasClass('create')) {
             meth = 'POST';
+          }
           if (obj.hasClass('destroy')) {
             meth = 'DELETE';
             data = 'authenticity_token=' + $.tirade.resourceful.authToken();
@@ -142,13 +148,13 @@
               event.stopPropagation();
               return false;
             }
-          };
+          }
           var ajaxopts = $.extend(options, {
             url: obj.attr('href'),
             type: meth, data: data
           });
           $.ajax(ajaxopts);
-        })
+        });
       }
     });
   };
@@ -156,7 +162,7 @@
 
   
   $.fn.fieldFor = function(name) {
-    return $(this).find('di.' + name).find(':input')
+    return $(this).find('di.' + name).find(':input');
   };
 
 
@@ -170,9 +176,9 @@
 
   $.fn.listOfItems = function() {
     return $(this).each( function() {
-      $('li', this).livequery( function() { $(this).itemInList() } );
+      $('li', this).livequery( function() { $(this).itemInList(); } );
       $(this)
-        .unbind('dblclick').dblclick(function(e) { $(e.target).find('a.show,a.index').filter(':first').click() });
+        .unbind('dblclick').dblclick(function(e) { $(e.target).find('a.show,a.index').filter(':first').click(); });
     });
   };
 
@@ -182,15 +188,16 @@
         .addClass('ui-widget-content ui-corner-all ui-state-default')
         .filter(':has(a.show,a.index)')
           .css('cursor', 'pointer')
-          .hover( function() { $(this).addClass('ui-state-hover')}, function() { $(this).removeClass('ui-state-hover') })
-        .end()
+          .hover( function() { $(this).addClass('ui-state-hover'); }, function() { $(this).removeClass('ui-state-hover'); })
+        .end();
     });
   };
   $.expr[':'].resource = function(obj, index, meta, stack) {
-    if ( match = meta[3].match(/^(\w+)\/(\w+)$/) ) {
+    var match = meta[3].match(/^(\w+)\/(\w+)$/);
+    if ( match ) {
       return ($(obj).data('controller') == match[1] && $(obj).data('action') == match[2]);
     } else {
       return false;
     }
-  }
+  };
 })(jQuery);

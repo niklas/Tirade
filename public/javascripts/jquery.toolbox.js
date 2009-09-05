@@ -1,12 +1,19 @@
-var Toolbox = {
+/*jslint browser: true */
+/*global jQuery, Routing, History, myTextileSettings */
+
+
+var Toolbox = null;
+
+(function($){
+Toolbox = {
   defaults: {
   },
   open: function(options) {
     return this.findOrCreate(options);
   },
   findOrCreate: function(options) {
-    options = $.extend({}, this.defaults, options)
-    if ( this.element().length == 0 ) {
+    var settings = $.extend({}, this.defaults, options);
+    if ( !this.element().length ) {
       Toolbox.minHeight = 400;
       $('body').appendDom(Toolbox.Templates.toolbox);
       $('body #toolbox_body')
@@ -42,9 +49,9 @@ var Toolbox = {
       this.expireBehaviors();
       this.applyBehaviors();
       this.element().show();
-    };
+    }
     this.setSizes();
-    switch (options.mode) {
+    switch (settings.mode) {
       case 'tiled': 
         this.tile();
         break;
@@ -87,7 +94,7 @@ var Toolbox = {
     this.refreshPageButton = $.ui.button({cssclass: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { 
         var page = $('body > div.page_margins > div.page');
-        var url = page.metadata().url || window.location.pathname;
+        var url = page.metadata().url || '/';
         page.beBusy('refreshing');
         $.get(url);
         e.stopPropagation(); e.preventDefault();
@@ -99,10 +106,10 @@ var Toolbox = {
       .mousedown(function(ev) { ev.stopPropagation(); })
       .click(function(event) {
          if (Toolbox.sideBarVisible) {
-           Toolbox.sideBarOff()
+           Toolbox.sideBarOff();
            Toolbox.toggleSideBarButton.removeClass('ui-state-active');
          } else {
-           Toolbox.sideBarOn()
+           Toolbox.sideBarOn();
            Toolbox.toggleSideBarButton.addClass('ui-state-active');
          }
          return false;
@@ -154,7 +161,7 @@ var Toolbox = {
       },
       axis: 'x',
       duration: 555
-    })
+    });
 
     self.body.bind('prev.serialScroll', self.refreshBackButton );
     self.body.bind('next.serialScroll', self.refreshBackButton );
@@ -171,8 +178,8 @@ var Toolbox = {
       function() { 
         self.frameCount = self.frames().length;
         self.body.trigger('toolbox.frame.remove');
-        if (self.currentFrame().length == 0) {
-          self.goto( self.frameCount - 1 );
+        if (!self.currentFrame().length) {
+          self.goTo( self.frameCount - 1 );
         }
         $.tirade.history.sync();
       }
@@ -184,13 +191,13 @@ var Toolbox = {
         target.data('metadata', null);
         target.frameInToolbox();
       }
-    })
+    });
 
     $('> div.content > div.frame div.accordion', self.body).livequery(function() { 
-      active = 0;
-      if (name = Toolbox.activeSectionName) { 
-        active = '[name=' + name + ']' 
-      };
+      var active = 0;
+      if (Toolbox.activeSectionName) { 
+        active = '[name=' + Toolbox.activeSectionName + ']';
+      }
       $(this).accordion({ 
         header: 'h3.accordion_toggle', 
         selectedClass: 'selected',
@@ -203,7 +210,7 @@ var Toolbox = {
           //Toolbox.accordion().scrollTo(ui.newHeader, 500);
         }
       });
-    })
+    });
     $('> div.content > div.frame div.live_search input.search_term', self.body).livequery(function() {
       var field = $(this);
       $(this).attr("autocomplete", "off").typeWatch({
@@ -215,7 +222,7 @@ var Toolbox = {
             url: field.attr('href')
           });
         }
-      })
+      });
     });
     $('> div.content > div.frame div.live_search.polymorphic select.polymorph_search_url', self.body).livequery(function() { 
       var field = $(this);
@@ -223,10 +230,10 @@ var Toolbox = {
         $(this).siblings('input.search_term:first')
           .attr('href',field.val())
           .val('');
-      })
+      });
     });
    /* TODO Context Page only per head ? */
-    $('> div.content > div.frame form', self.body).livequery(function() { $(this).formInFrameInToolbox() });
+    $('> div.content > div.frame form', self.body).livequery(function() { $(this).formInFrameInToolbox(); });
 
     // Scroll to selected accordion section
     // TODO needed?
@@ -255,8 +262,8 @@ var Toolbox = {
 
     // search results items
     this.last(' di.association dd div.live_search div.search_results ul.list li').livequery(function() {
-      item = $(this);
-      association_list = item.parents('div.live_search').siblings('ul.list.ui-droppable:first');
+      var item = $(this);
+      var association_list = item.parents('div.live_search').siblings('ul.list.ui-droppable:first');
       item 
         .find('img.association').remove().end()
         .appendDom(Toolbox.Templates.addButton)
@@ -265,7 +272,7 @@ var Toolbox = {
             association_list.find('li').remove();
           }
           item.clone().appendTo(association_list);
-        })
+        });
     });
 
 
@@ -287,7 +294,7 @@ var Toolbox = {
     // Ajax callbacks
     this.element()
       .ajaxStop(function() {
-        Toolbox.element().unBusy()
+        Toolbox.element().unBusy();
       });
 
     this.setSizes();
@@ -295,7 +302,7 @@ var Toolbox = {
   expireBehaviors: function() {
     $('> div.content > div.frame:last', this.body).expire();
     $('> div.content > div.frame', this.body).expire();
-    this.last(' di.association dd div.live_search div.search_results ul.list li').expire()
+    this.last(' di.association dd div.live_search div.search_results ul.list li').expire();
     this.last(' a.toggle_live_search').expire();
   },
   setSizes: function() {
@@ -306,10 +313,10 @@ var Toolbox = {
       ); */
   },
   bodyHeight: function() {
-    return this.element().height() - this.decorationHeight()
+    return this.element().height() - this.decorationHeight();
   },
   decorationHeight: function() {
-    return this.element(' > div.head').height() + this.element(' > div.foot').height()
+    return this.element(' > div.head').height() + this.element(' > div.foot').height();
   },
   push: function(frame_html,options) {
     var frame = $(frame_html);
@@ -318,26 +325,27 @@ var Toolbox = {
     }
     frame.appendTo( this.content() );
     $.tirade.history.append(frame);
-    this.goto(frame);
+    this.goTo(frame);
   },
-  goto: function(frame) {
+  goTo: function(frame) {
+    var $frame, index;
     if (frame.jquery) {
-      var $frame = $(frame).closest('.frame');
-      var index = Math.max(0, this.frames().index($frame));
+      $frame = $(frame).closest('.frame');
+      index = Math.max(0, this.frames().index($frame));
     } else {
-      var $frame = this.frames().eq(index);
-      var index = frame;
+      $frame = this.frames().eq(index);
+      index = frame;
     }
     this.currentFrameIndex = index;
-    return this.body.trigger('goto', [index] );
+    return this.body.trigger('goTo', [index] );
   },
   error: function( content, options ) {
-    var options = jQuery.extend({
+    var settings = $.extend({
       href:       'error',
       title:      'Error',
       cssclass:      'error'
     }, options);
-    this.push(content, options);
+    this.push(content, settings);
   },
   // 
   surrounds: function(position) {
@@ -364,10 +372,11 @@ var Toolbox = {
     return Toolbox.frameIdCounter++;
   },
   refreshBackButton: function() {
-    if ( Toolbox.frameCount > 1 )
-      Toolbox.backButton.removeClass('ui-state-disabled')
-    else
-      Toolbox.backButton.addClass('ui-state-disabled')
+    if ( Toolbox.frameCount > 1 ) {
+      Toolbox.backButton.removeClass('ui-state-disabled');
+    } else {
+       Toolbox.backButton.addClass('ui-state-disabled');
+    }
   },
   overflowsOff: function() {
     Toolbox.overflows().css('overflow', 'visible');
@@ -381,23 +390,23 @@ var Toolbox = {
     return Toolbox
       .frames()
       .add('div.frame .accordion')
-      .add('div.frame .accordion_content')
+      .add('div.frame .accordion_content');
   },
   popAndRefreshLast: function() {
     this.last().prev().refresh();
     this.pop();
   },
   popAndUpdateWith: function(content,options) {
-    var options = jQuery.extend({ content: content }, options);
-    this.last().prev().update(options);
+    var settings = $.extend({ content: content }, options);
+    this.last().prev().update(settings);
     this.pop();
   },
   updateLastFrame: function(content,options) {
-    var options = jQuery.extend({
+    var settings = $.extend({
       title:      '[No Title]'
     }, options);
     this.last().html(content);
-    this.setTitle(options.title);
+    this.setTitle(settings.title);
   },
   setTitle: function(title) {
     if (!title) {
@@ -422,7 +431,7 @@ var Toolbox = {
     return this.element().unBusy();
   },
   every: function(selector, todo) {
-    $(selector, this.element()).livequery(todo)
+    $(selector, this.element()).livequery(todo);
   },
   beExclusiveDroppable: function() {
     if ( !this.exclusiveDroppable ) {
@@ -455,7 +464,7 @@ var Toolbox = {
     return this.content('> div.frame'+(rest||''));
   },
   frameByHref: function(href,rest) {
-    return this.frames('[href=' + href + ']'+(rest||''))
+    return this.frames('[href=' + href + ']'+(rest||''));
   },
   currentFrame: function() {
     return this.frames().eq(this.currentFrameIndex);
@@ -470,10 +479,10 @@ var Toolbox = {
     return this.frames(':last' +(rest||''));
   },
   head: function(rest) {
-    return this.element('> div.ui-dialog-titlebar:first'+(rest||''))
+    return this.element('> div.ui-dialog-titlebar:first'+(rest||''));
   },
   busyBox: function(rest) {
-    return this.element('> div.busy'+(rest||''))
+    return this.element('> div.busy'+(rest||''));
   },
   element: function(rest) {
     return $('div#toolbox' +(rest||''));
@@ -493,32 +502,33 @@ var Toolbox = {
     return true;
   },
   otherDroppables: function() {
-    return this.element().siblings(':not(#toolbox_sidebar)').find('.ui-droppable')
+    return this.element().siblings(':not(#toolbox_sidebar)').find('.ui-droppable');
   },
   accordion: function() {
-    return this.last(' div.accordion')
+    return this.last(' div.accordion');
   },
   openSectionByName: function(name) {
-    selector = '[name='+name+']:not(.selected)';
-    if (this.accordion().find(selector).length!=0) {
+    var selector = '[name='+name+']:not(.selected)';
+    if (this.accordion().find(selector).length) {
       return this.accordion().accordion('activate', selector);
     }
   },
   openPreferredSection: function() {
-    if (name = this.lastSectionName ||
+    if (this.lastSectionName ||
       this.last().prev().find('.selected.ui-accordion-header').attr('name')) {
-      return this.openSectionByName(name);
+      return this.openSectionByName(this.lastSectionName);
     }
   },
   saveActive: function(element) {
     if (element) {
-      if (name = element.attr('name')) {
+      var name = element.attr('name');
+      if (name) {
         this.activeSectionName = name;
       } else {
         this.activeSectionName = element.find('.selected.ui-accordion-header').attr('name');
       }
     } else {
-      this.saveActive( this.last() )
+      this.saveActive( this.last() );
     }
   },
   minimize: function() {
@@ -533,23 +543,22 @@ var Toolbox = {
             Toolbox.body.hide();
             Toolbox.sideBar.hide();
           }}
-        )
+        );
       });
       this.minimized = true;
     }
   },
   sideBarOn: function(after) {
-    if (this.sideBarVisible) 
-      return this.sideBar;
+    if (this.sideBarVisible) { return this.sideBar; }
     this.sideBarVisible = true;
     return this.sideBar.show().animate(
       { left: (Toolbox.element().position().left - Toolbox.sideBar.width())},
       { duration: 500, complete: after }
-    )
+    );
   },
   sideBarOff: function(after) {
     if (!this.sideBarVisible)  // And if it's already off?
-      return this.sideBar;   //  - I just walk away!
+       { return this.sideBar; }  //  - I just walk away!
     this.sideBarVisible = false;
     return this.sideBar.animate(
       { left: Toolbox.element().position().left},
@@ -557,10 +566,8 @@ var Toolbox = {
     );
   },
   sideBarToggle: function(after) {
-    if (this.sideBarVisible)
-      return this.sideBarOff(after)
-    else
-      return this.sideBarOn(after)
+    if (this.sideBarVisible) { return this.sideBarOff(after); }
+    else { return this.sideBarOn(after); }
   },
   linkBar: function() {
     return(Toolbox.last(' ul.linkbar'));
@@ -587,7 +594,7 @@ var Toolbox = {
       Toolbox.setSizes();
       this.element().animate(
         { height: this.oldHeight || 400}, 
-        { complete: function() { Toolbox.sideBarOn() }}
+        { complete: function() { Toolbox.sideBarOn(); }}
       );
       this.minimized = false;
     }
@@ -596,10 +603,10 @@ var Toolbox = {
     this.element()
       .data('height',   this.element().height())
       .data('width',    this.element().width())
-      .data('position', this.element().position())
+      .data('position', this.element().position());
   },
   maximize: function() {
-    if (Toolbox.windowState == 'normal') Toolbox.storeSizeAndPosition();
+    if (Toolbox.windowState == 'normal') { Toolbox.storeSizeAndPosition(); }
     if (Toolbox.windowState == 'tiled') {
       $('body').stop().animate( {paddingRight: 0}, 'slow', 'linear', $.tirade.focus.sync );
     }
@@ -628,17 +635,16 @@ var Toolbox = {
       top: position.top, 
       left: position.left
       },
-      'slow', 'linear', function() { Toolbox.sync.frames(); Toolbox.sync.sideBar() }
+      'slow', 'linear', function() { Toolbox.sync.frames(); Toolbox.sync.sideBar(); }
     );
     Toolbox.setWindowState('normal');
   },
   tile: function() {
-    if (Toolbox.windowState == 'normal') Toolbox.storeSizeAndPosition();
+    if (Toolbox.windowState == 'normal') { Toolbox.storeSizeAndPosition(); }
     Toolbox.toggleSideBarButton.addClass('ui-state-disabled');
     Toolbox.element().stop().animate(
       {height: '50%', width: '30%', top: '1%', left: '69%'},
-      'slow', 'linear', Toolbox.sync.frames
-    );
+      'slow', 'linear', Toolbox.sync.frames);
     Toolbox.sideBar.stop().animate(
       {height: '45%', width: '30%', top: '54%', left: '69%' },
       'slow', 'linear');
@@ -666,9 +672,9 @@ var Toolbox = {
     }
   },
   bottomLinkBar: function(rest) {
-    if (this.last('>ul.bottom_linkbar').length == 0) {
+    if (!this.last('>ul.bottom_linkbar').length) {
       this.last().appendDom(Toolbox.Templates.bottomLinkBar);
-    };
+    }
     return this.last('>ul.bottom_linkbar' + (rest||''));
   },
 
@@ -681,14 +687,14 @@ var Toolbox = {
       Toolbox.body.css({
         minHeight: Math.max(dialogHeight - nonContentHeight, 0),
         height: Math.max(dialogHeight - nonContentHeight, 0)
-      })
+      });
     },
     frames: function() {
       Toolbox.sync.body();
       Toolbox.sync.scroller();
     },
     scroller: function() {
-      if (Toolbox.last().length > 0) Toolbox.body[0].scrollLeft = Toolbox.last()[0].offsetLeft;
+      if (Toolbox.last().length) { Toolbox.body[0].scrollLeft = Toolbox.last()[0].offsetLeft; }
     },
     sideBar: function() {
       Toolbox.sync.sideBarSize();
@@ -711,7 +717,7 @@ var Toolbox = {
       Toolbox.sync.frames();
       Toolbox.sync.sideBar();
     }
-  },
+  }
 
 };
 
@@ -726,65 +732,66 @@ Toolbox.Templates = {
   toolbox: [
     { tagName: 'div', id: 'toolbox_body', 'class': 'body', childNodes: [
       { tagName: 'div', 'class': 'content ui-helper-clearfix', id: 'toolbox_content' }
-    ]},
-  ],
-}
+    ]}
+  ]
+};
 
-jQuery.fn.update = function(options) {
-  var options = jQuery.extend({ title: '[No Title]' }, options);
+$.fn.update = function(options) {
+  var settings = $.extend({ title: '[No Title]' }, options);
   $(this)
-    .attr('title',options.title)
-    .html(options.content);
+    .attr('title',settings.title)
+    .html(settings.content);
   Toolbox.setTitle();
   return $(this);
-}
-jQuery.fn.refresh = function() {
+};
+
+$.fn.refresh = function() {
   var href = $(this).closest('.frame').data('url');
   if (href) {
     if (href.match(/\?/)) {
-      href = href + '&refresh=1'
+      href = href + '&refresh=1';
     } else {
-      href = href + '?refresh=1'
+      href = href + '?refresh=1';
     }
     $.ajax({
       url: href,
       type: 'GET'
     });
   }
-}
+};
 
-jQuery.fn.useToolbox = function(options) {
+$.fn.useToolbox = function(options) {
   var defaults = {
     mode: 'normal',
     start: function() {}
   };
   return this.each(function() {
-    var options = $.extend(defaults, options);
-    if (options.icon) { $(this).uiIcon(icon); }
-    if ( $(this).hasClass('without_toolbox') ) return; /* next ? */
-    if ( $(this).hasClass('ui-uses-toolbox') ) return; /* next ? */
-    if ( $(this).hasClass('tiled') ) options.mode = 'tiled';
-    if ( $(this).hasClass('maximized') ) options.mode = 'maximized';
-    $(this).resourcefulLink(options).opensToolbox(options);
+    var settings = $.extend(defaults, options);
+    if (settings.icon) { $(this).uiIcon(settings.icon); }
+    if ( $(this).hasClass('without_toolbox') ) { return; } /* next ? */
+    if ( $(this).hasClass('ui-uses-toolbox') ) { return; } /* next ? */
+    if ( $(this).hasClass('tiled') )     { settings.mode = 'tiled'; }
+    if ( $(this).hasClass('maximized') ) { settings.mode = 'maximized'; }
+    $(this).resourcefulLink(settings).opensToolbox(settings);
   });
 };
 
-jQuery.fn.opensToolbox = function(options) {
+$.fn.opensToolbox = function(options) {
   var defaults = {
     mode: 'normal'
   };
 
   return this.each(function() {
-    var options = $.extend(defaults, options);
+    var settings = $.extend(defaults, options);
     $(this).addClass('ui-uses-toolbox').click(function(event) {
-      if (event.stopped) return false;
-      Toolbox.findOrCreate(options);
+      if (event.stopped) { return false; }
+      Toolbox.findOrCreate(settings);
       Toolbox.beBusy('Loading');
     });
   });
 };
 
-jQuery.fn.uiIcon = function(icon) {
+$.fn.uiIcon = function(icon) {
   return $(this).each(function() {
     var $a = $(this);
     var $span = $('<span />')
@@ -797,23 +804,23 @@ jQuery.fn.uiIcon = function(icon) {
   });
 };
 
-jQuery.fn.uiButton = function() {
+$.fn.uiButton = function() {
   return $(this).each(function() {
     var $a = $(this);
-    if ($a.hasClass('ui-button')) return;
+    if ($a.hasClass('ui-button')) { return; }
     $a.attr('title', $a.attr('title') || $a.text())
       .addClass('ui-corner-all ui-button ui-state-default')
       .hover(
-         function() { $(this).addClass('ui-state-hover') },
-         function() { $(this).removeClass('ui-state-hover') }
+         function() { $(this).addClass('ui-state-hover'); },
+         function() { $(this).removeClass('ui-state-hover'); }
        );
   });
 };
 
-jQuery.fn.frameInToolbox = function(options) {
+$.fn.frameInToolbox = function(options) {
   var defaults = {
   };
-  var options = $.extend(defaults, options);
+  var settings = $.extend(defaults, options);
   return $(this).each(function() {
     var frame = this;
     var $frame = $(this);
@@ -822,7 +829,8 @@ jQuery.fn.frameInToolbox = function(options) {
 
     // Count frames to address them directly from ManageResourceController
     var id = null;
-    if ( domid = $frame.attr('id') ) {
+    var domid = $frame.attr('id');
+    if ( domid ) {
       id = $frame.resourceId();
     } else {
       id = Toolbox.nextFrameId();
@@ -870,7 +878,7 @@ jQuery.fn.frameInToolbox = function(options) {
         .find('a:not(.ui-button)')
           .uiButton();
 
-    };
+    }
 
     $('ul.tree.root', frame).treeview().addClass('ui-widget-content ui-corner-all').find('div.hitarea').addClass('ui-icon');
 
@@ -878,27 +886,28 @@ jQuery.fn.frameInToolbox = function(options) {
   });
 };
 
-jQuery.fn.formInFrameInToolbox = function(options) {
+$.fn.formInFrameInToolbox = function(options) {
   var defaults = {
   };
-  var options = $.extend(defaults, options);
+  var settings = $.extend(defaults, options);
   return $(this).each(function() {
     var form = this;
     var $form = $(this);
     var $frame = $form.closest('.frame');
 
-    if (!form.action.match(/\.js$/)) form.action += '.js';
+    if (!form.action.match(/\.js$/)) { form.action += '.js'; }
 
-    if ($form.is('.edit_rendering')) $form.editRenderingFormInFrameInToolbox();
-    if ($form.is('.new_image.with_flash')) $form.newImageFormInFrameInToolbox();
+    if ($form.is('.edit_rendering'))  { $form.editRenderingFormInFrameInToolbox(); }
+    if ($form.is('.new_image.with_flash')) { $form.newImageFormInFrameInToolbox(); }
 
     $('textarea.markitup.textile').markItUp(myTextileSettings);
     $('textarea:not(.markitup)').each(function() {
-      if ( !$(this).data('hasElastic') )
+      if ( !$(this).data('hasElastic') ) {
         $(this).elastic().data('hasElastic', true);
+     }
     });
-    $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor() });
-    $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor() });
+    $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor(); });
+    $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor(); });
 
     $form.find(':submit')
       .addClass('ui-corner-all')
@@ -927,14 +936,14 @@ jQuery.fn.formInFrameInToolbox = function(options) {
   });
 };
 
-jQuery.fn.newImageFormInFrameInToolbox = function(options) {
+$.fn.newImageFormInFrameInToolbox = function(options) {
   var defaults = {
   };
-  var options = $.extend(defaults, options);
+  var settings = $.extend(defaults, options);
   return $(this).each(function() {
     var form = $(this);
-    $('<a/>').attr('href', '#').text("Go").click( function() { form.uploadifyUpload()  }).appendTo(form.parent());
-    $('<a/>').attr('href', '#').text("Clear").click( function() { form.uploadifyClearQueue()  }).appendTo(form.parent());
+    $('<a/>').attr('href', '#').text("Go").click( function() { form.uploadifyUpload(); }).appendTo(form.parent());
+    $('<a/>').attr('href', '#').text("Clear").click( function() { form.uploadifyClearQueue();  }).appendTo(form.parent());
     form.uploadify({
       uploader: '/flash/uploadify.swf',
       multi: true,
@@ -948,18 +957,18 @@ jQuery.fn.newImageFormInFrameInToolbox = function(options) {
       fileDataName: form.find(':input[type=file]:first').attr('name'),
       simUploadLimit: 1,
       buttonText: 'Browse',
-      cancelImg: '/images/icons/small/x.gif',
+      cancelImg: '/images/icons/small/x.gif'
     });
   });
 };
 
-jQuery.fn.editRenderingFormInFrameInToolbox = function(options) {
+$.fn.editRenderingFormInFrameInToolbox = function(options) {
   var defaults = {
   };
-  var options = $.extend(defaults, options);
+  var settings = $.extend(defaults, options);
   return $(this).each(function() {
     var form = $(this);
-    renderingAssignmentFormUpdate = function (e) {
+    var renderingAssignmentFormUpdate = function (e) {
       form.find('h3.what + dl')
         .find('> di:not(.assignment)').hide()
           .find(':input').disable();
@@ -982,7 +991,7 @@ jQuery.fn.editRenderingFormInFrameInToolbox = function(options) {
           scope.find(' > di :input').enable();  /* enable non-filtering scopes like order etc */
           break;
       }
-    }
+    };
     renderingAssignmentFormUpdate();
     form.find('select#rendering_assignment').change( renderingAssignmentFormUpdate );
     form.find('select#rendering_content_type').change( renderingAssignmentFormUpdate );
@@ -1002,25 +1011,25 @@ jQuery.fn.editRenderingFormInFrameInToolbox = function(options) {
 
       select_column.find('option').remove();
       $.each(meta.columns, function() {
-        $('<option value ="' + this.name + '">' + this.name +'</option>').appendTo(select_column)
-      })
+        $('<option value ="' + this.name + '">' + this.name +'</option>').appendTo(select_column);
+      });
 
       var updateComparisons = function() {
         select_comparison.find('option').remove();
         $.each(meta.comparisons[ select_column.val() ], function() {
-          $('<option value ="' + this + '">' + this +'</option>').appendTo(select_comparison)
-        }) 
-      }
+          $('<option value ="' + this + '">' + this +'</option>').appendTo(select_comparison);
+        });
+      };
 
       select_column.unbind('change').change( updateComparisons );
       updateComparisons();
 
       ok.click( function(ev) {
         var scope_name = select_column.val() + '_' + select_comparison.val();
-        var scope = pool.find('di.' + scope_name).clone()
+        var scope = pool.find('di.' + scope_name).clone();
         scope
           .find(':input').enable().end()
-          .find('a.remove').click(function() { scope.remove() }).end()
+          .find('a.remove').click(function() { scope.remove(); }).end()
           .insertAfter(define);
         ok.hide();
         define.find(':input').hide();
@@ -1032,7 +1041,7 @@ jQuery.fn.editRenderingFormInFrameInToolbox = function(options) {
   });
 };
 
-jQuery.ui.button = function(options) {
+$.ui.button = function(options) {
   var defaults = {
     hover: true,
     icon: 'help',
@@ -1040,21 +1049,22 @@ jQuery.ui.button = function(options) {
     href: '#',
     selectable: false
   };
-  var options = $.extend(defaults, options);
+  var settings = $.extend(defaults, options);
   var button = $('<a/>')
-    .addClass('ui-corner-all ui-state-default ui-icon-button ui-button ' + options.cssclass)
-    .attr('href', options.href)
+    .addClass('ui-corner-all ui-state-default ui-icon-button ui-button ' + settings.cssclass)
+    .attr('href', settings.href)
     .attr('role', 'button');
-  if (options.hover) button.hover(
+  if (settings.hover) { button.hover(
        function() { button.addClass('ui-state-hover'); },
        function() { button.removeClass('ui-state-hover'); }
-     );
+     );}
   $('<span/>')
-    .addClass('ui-icon ui-icon-' + options.icon)
-    .text(options.text)
-    .attr('title', options.title || options.text)
+    .addClass('ui-icon ui-icon-' + settings.icon)
+    .text(settings.text)
+    .attr('title', settings.title || settings.text)
     .appendTo(button);
-  if (!options.selectable) button.disableSelection();
-  return button
+  if (!settings.selectable) { button.disableSelection(); }
+  return button;
 };
 
+})(jQuery);

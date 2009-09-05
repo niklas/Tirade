@@ -1,9 +1,12 @@
+/*jslint browser: true */
+/*global jQuery, Routing, Toolbox  */
 /*
  * Stuff that has to do with Grids, Pages and Layout editing
  *
  * */
 
-Rendering = {
+(function($){
+var Rendering = {
   create: function(attributes) {
     $.ajax({
       url: Routing.renderings_url({format: 'js'}),
@@ -20,8 +23,8 @@ Rendering = {
     .click(function() {
       Toolbox.open();
       Toolbox.beBusy();
-      Rendering.create(attributes)
-    })
+      Rendering.create(attributes);
+    });
   },
   update: function(rendering, attributes) {
     rendering = $(rendering).closest('div.rendering');
@@ -37,7 +40,7 @@ Rendering = {
   }
 };
 
-Grid = {
+var Grid = {
   create: function(attributes) {
     $.ajax({
       url: Routing.grids_url({format: 'js'}),
@@ -54,8 +57,8 @@ Grid = {
     .click(function() {
       Toolbox.open();
       Toolbox.beBusy();
-      Grid.create(attributes)
-    })
+      Grid.create(attributes);
+    });
   },
   update: function(grid, attributes) {
     grid = $(grid).closest('div.grid');
@@ -153,7 +156,12 @@ $(function() {
   jQuery.fn.mirrorsLayout = function() {
     $('*.grid', this).livequery(function() {
       $(this).hover(
-        function() { if ( id = $(this).resourceId() ) $('div.page div.grid.grid_' + id).addClass('hover'); }, 
+        function() { 
+          var id = $(this).resourceId();
+          if ( id  ) { 
+            $('div.page div.grid.grid_' + id).addClass('hover'); 
+          }
+        }, 
         function() { $('div.page div.grid').removeClass('hover'); }
       );
     });
@@ -161,14 +169,17 @@ $(function() {
     // Mirror hovered Renderings
     $('*.rendering', this).livequery(function() {
       $(this).hover(
-        function() { if ( id = $(this).resourceId() ) $('div.page div.rendering#rendering_' + id).addClass('hover'); }, 
+        function() { 
+          var id = $(this).resourceId() ;
+          if ( id ) { $('div.page div.rendering#rendering_' + id).addClass('hover'); }
+        }, 
         function() { $('div.page div.rendering').removeClass('hover'); }
       );
     });
   };
 
 
-  if (!$.tirade) $.tirade = {};
+  if (!$.tirade) { $.tirade = {}; }
 
   $.extend($.tirade, {
     currentPageId: function() {
@@ -188,7 +199,7 @@ $(function() {
       left_children: '>div.rendering',
       buttons: function() {
         var grid = $(this);
-        buttons = [];
+        var buttons = [];
         if (grid.find('>.col').length > 1) {
           buttons.push( Grid.sortChildrenButton(grid) );
         }
@@ -201,15 +212,15 @@ $(function() {
               grid_id: grid.resourceId(),
               page_id: $.tirade.currentPageId()
             })
-            .click( function() { grid.beBusy() })
+            .click( function() { grid.beBusy(); })
           );
         }
-        if (grid.find('>div.rendering').length == 0) {
+        if ( !grid.find('>div.rendering').length ) {
           buttons.push( 
             Grid.createButton({
               append_to_parent_id: grid.resourceId(), width: 100
             })
-            .click( function() { grid.beBusy() })
+            .click( function() { grid.beBusy(); })
           );
         }
         return buttons;
@@ -221,7 +232,7 @@ $(function() {
         .href('#')
         .click( $grid.focus )
         .appendTo($grid);
-    };
+    }
   });
   $('body > div.page_margins > div.page div.grid div.rendering').livequery(function() {
     var $rendering = $(this);
@@ -231,10 +242,12 @@ $(function() {
       visit: function() {
         var $rendering = $(this);
         if ($rendering.is('.droppable')) {
-          if (acceptedClasses = $rendering.metadata().acceptDropOf) {
-            accepting = acceptedClasses.map( function(c) { return 'li.' + c }).join(',')
+          var acceptedClasses = $rendering.metadata().acceptDropOf;
+          var accepting;
+          if ( acceptedClasses ) {
+            accepting = acceptedClasses.map( function(c) { return 'li.' + c ;} ).join(',');
           } else {
-            accepting = 'li.record:not(.part)'
+            accepting = 'li.record:not(.part)';
           }
           $rendering.droppable({
             accept: accepting,
@@ -253,7 +266,7 @@ $(function() {
                 Rendering.update($rendering, {
                   content_type: droppee.type,
                   content_id: droppee.id
-                })
+                });
               }
             }
           });
@@ -269,14 +282,16 @@ $(function() {
         .text('Focus')
         .attr('href', '#')
         .attr('title', 'Focus')
-        .click( function() { $rendering.focusable('focus') } )
+        .click( function() { $rendering.focusable('focus'); } )
         .appendTo($rendering);
-    };
+    }
   });
 
   $('div.page div.warning').livequery(function() {
     $(this)
       .addClass('ui-state-highlight')
-      .addClass('ui-corner-all')
+      .addClass('ui-corner-all');
   });
 });
+
+})(jQuery);
