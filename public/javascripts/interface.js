@@ -116,6 +116,7 @@ ChiliBook.recipeFolder = 'javascripts/syntax/';
       zIndex: 9000, 
       appendTo: 'body',
       scroll: true,
+      distance: 17,
       cursor: 'crosshair',
       cursorAt: {top: -1, left: -1},
       drag: function(e,ui) {
