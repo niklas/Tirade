@@ -158,7 +158,7 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
     @view.stub!(:authorized?).and_return(true)
     @rendering = Factory :scoped_rendering, :scope_definition => { 
       :title => {:like => 'foo'}, 
-      :id => {:gt => 23, :lte => 42},
+      :id => {:greater_than => 23, :less_than_or_equal_to => 42},
       :order => 'ascend_by_title'
     }
     @builder = NormalFormBuilder.new :rendering, @rendering, @view, {}, nil
@@ -212,31 +212,31 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
       end
     end
 
-    it "should render a set of fields for 'id_gt'" do
+    it "should render a set of fields for 'id_greater_than'" do
       @html.should have_tag('div.scoping') do
         with_tag('select.scope_attribute[name=?]', 'scope_attribute') do
           with_tag('option[selected]', 'id')
         end
         with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
           with_tag('optgroup[label=?]', 'id') do
-            with_tag('option[selected]', 'gt')
+            with_tag('option[selected]', 'greater_than')
           end
         end
-        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_gt]',23)
+        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_greater_than]',23)
       end
     end
 
-    it "should render a set of fields for 'id_lte'" do
+    it "should render a set of fields for 'id_less_than_or_equal_to'" do
       @html.should have_tag('div.scoping') do
         with_tag('select.scope_attribute[name=?]', 'scope_attribute') do
           with_tag('option[selected]', 'id')
         end
         with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
           with_tag('optgroup[label=?]', 'id') do
-            with_tag('option[selected]', 'lte')
+            with_tag('option[selected]', 'less_than_or_equal_to')
           end
         end
-        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_lte]', 42)
+        with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_less_than_or_equal_to]', 42)
       end
     end
   end
