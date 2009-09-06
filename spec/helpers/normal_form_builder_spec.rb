@@ -192,6 +192,7 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
         end
         with_tag('select.order_direction') do
           with_tag('option[selected][value=?]', 'ascend')
+          with_tag('option[value=?]', 'descend')
         end
       end
     end

@@ -417,6 +417,18 @@ describe DocumentsController do
           with_tag('input.scope_value[type=text]')
         end
       end
+
+      it "should render a field to select ordering" do
+        do_request
+        response.should have_tag('div.order') do
+          with_tag('select.order_attribute') do
+            with_tag('option[value=?]', 'title')
+          end
+          with_tag('select.order_direction') do
+            with_tag('option[value=?]', 'ascend')
+          end
+        end
+      end
     end
 
   end
