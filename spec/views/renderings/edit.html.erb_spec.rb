@@ -20,14 +20,14 @@ describe "/renderings/edit.html.erb" do
       response.should have_tag("form[action=#{rendering_path(@rendering)}][method=post]") do
         with_tag('select#rendering_assignment[name=?]', 'rendering[assignment]')
         with_tag('di.define_scope dd') do
-          with_tag('div.scope.blueprint') do
+          with_tag('div.scoping.blueprint') do
             with_tag('select.scope_attribute') do
-              without_tag('option')
+              with_tag('option')
             end
             with_tag('select.scope_comparison') do
-              without_tag('option')
+              with_tag('option')
             end
-            with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute][comparison]')
+            with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute_comparison]')
           end
         end
       end
@@ -53,8 +53,8 @@ describe "/renderings/edit.html.erb" do
     it_should_behave_like 'every form'
     it "should render form elements for all scopes" do
       response.should have_tag('form di.define_scope dd') do
-        with_tag('div.scope') do
-          with_tag('input.scope_value[name=?][value=?]', 'rendering[scope_definition][title][like]', 'fnord')
+        with_tag('div.scoping') do
+          with_tag('input.scope_value[name=?][value=?]', 'rendering[scope_definition][title_like]', 'fnord')
         end
       end
     end
