@@ -12,11 +12,12 @@ module Tirade
       wrap('scope', {:label => 'Scope', :class => 'define_scope'}, inner)
     end
 
-    private
 
     def scope_blueprint
       single_scoping(Rendering::Scoping.new('attribute','comparison','value'), :class => 'blueprint', :style => 'display: none')
     end
+
+    private
 
     def single_scoping(scoping, opts={})
       @template.add_class_to_html_options opts, 'scoping'

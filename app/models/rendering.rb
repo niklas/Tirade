@@ -117,14 +117,21 @@ class Rendering < ActiveRecord::Base
   end
 
   def scopings
-    scope_definition.map do |att, comps|
-      comps.map do |comp, val|
-        Scoping.new(att.to_s, comp.to_s, val)
-      end if comps.respond_to?(:map) # FIXME finals are ignored...
+    normalized_scope_definition.map do |name, val|
+      Scoping.new_by_name(name.to_s, val)
     end.flatten.compact
   end
 
   class Scoping < Struct.new(:attribute, :comparison, :value)
+    Comparisons = %w( lt lte equals gte gt does_not_equal begins_with ends_with like )
+    SplitName = /^([\w_]+)_(#{Comparisons.join('|')})$/
+
+    def self.new_by_name(name, value)
+      if name =~ SplitName
+        new($1, $2, value)
+      end
+    end
+
     def name
       "#{attribute}_#{comparison}"
     end
@@ -146,7 +153,7 @@ class Rendering < ActiveRecord::Base
 
     given.select {|k,v| v.is_a?(Hash)}.each do |att, comps|
       comps.each do |comp, val|
-        filtered["#{att}_#{comp}"] = val
+        filtered["#{att}_#{comp}".to_sym] = val
       end
     end
     given.delete_if {|k,v| v.is_a?(Hash)}

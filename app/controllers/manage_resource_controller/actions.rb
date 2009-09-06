@@ -55,13 +55,19 @@ module ManageResourceController
     end
 
     def scopes
-      if model.acts_as?(:content)
-        @scopes = model.scopes_grouped_by_column
-      else
-        @scopes = {}
-      end
       respond_to do |wants|
-        wants.json { render :json => @scopes }
+        wants.json do
+          if model.acts_as?(:content)
+            @scopes = model.scopes_grouped_by_column
+          else
+            @scopes = {}
+          end
+          render :json => @scopes
+        end
+        wants.html do
+          @rendering = Rendering.new(:content_type => model.name, :assignment => 'scope')
+          render :partial => '/model/scope_blueprint'
+        end
       end
     end
       

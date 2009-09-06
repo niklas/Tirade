@@ -1,7 +1,0 @@
-#toolbox {
-  div.body {
-    > div.content {
-      background-color: <%= @colors[:base] %>;
-    }
-  }
-}

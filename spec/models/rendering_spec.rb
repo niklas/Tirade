@@ -390,6 +390,22 @@ describe Rendering, "scoped for multiple Documents with order" do
   end
 end
 
+describe Rendering::Scoping do
+  describe "creation by name" do
+    subject { Rendering::Scoping }
+    it "should split id_lt" do
+      subject.new_by_name('id_lt', 23).should == subject.new('id', 'lt', 23)
+    end
+    it "should split description_like" do
+      subject.new_by_name('description_like', 'fnord2342').should == subject.new('description', 'like', 'fnord2342')
+    end
+    it "should split title_equals" do
+      subject.new_by_name('title_equals', 'fnord').should == subject.new('title', 'equals', 'fnord')
+    end
+  end
+  
+end
+
 describe Rendering, "scoped by params" do
   def self.it_should_create_scope_from_params(scope, prms={})
     describe "with #{prms.inspect}" do
@@ -399,6 +415,10 @@ describe Rendering, "scoped by params" do
 
       it "should use conditions #{scope.conditions.inspect}" do
         @rendering.scope.conditions.should == scope.conditions
+      end
+
+      it "should normalize conditions" do
+        @rendering.normalized_scope_definition.should == scope.conditions
       end
 
       it "should have content_class of Document" do

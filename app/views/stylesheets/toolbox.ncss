@@ -150,16 +150,16 @@ body {
         .define_scope {
           dd {
             clear: both;
-            div.scope {
+            div.scoping {
               * { 
                 float: left;
-                margin: <%= @small %>;
+                margin: 1%;
               }
-              *.scope_attribute  { max-width: 20% }
-              *.scope_comparison { max-width: 25% }
-              *.scope_value      { max-width: 40% }
+              *.scope_attribute  { width: 20%; }
+              *.scope_comparison { width: 25%; }
+              *.scope_value      { width: 40%; }
               a.add {
-                position: static; float: left;
+                position: static; float: right;
               }
               a.remove {
                 position: static; float: right;

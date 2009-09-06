@@ -393,6 +393,32 @@ describe DocumentsController do
       end
     end
 
+    describe "get /scopes.html" do
+      integrate_views
+      def do_request
+        get :scopes, :format => 'html'
+      end
+      
+      it "should succeed" do
+        do_request
+        response.should be_success
+      end
+
+      it "should render scope_blueprint partial" do
+        do_request
+        response.should render_template('model/_scope_blueprint')
+      end
+
+      it "should render scoping blueprint div" do
+        do_request
+        response.should have_tag('div.scoping.blueprint') do
+          with_tag('select.scope_attribute')
+          with_tag('select.scope_comparison')
+          with_tag('input.scope_value[type=text]')
+        end
+      end
+    end
+
   end
 
 end
