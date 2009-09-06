@@ -8,6 +8,7 @@ module Tirade
         scopings.each do |scoping|
           html << single_scoping(scoping)
         end
+        html << scope_select_order
       end
       wrap('scope', {:label => 'Scope', :class => 'define_scope'}, inner)
     end
@@ -15,6 +16,16 @@ module Tirade
 
     def scope_blueprint
       single_scoping(Rendering::Scoping.new('attribute','comparison','value'), :class => 'blueprint', :style => 'display: none')
+    end
+
+    def scope_select_order
+      orders = @object.content_class.column_names.inject({}) {|map, c| map.merge({ c => ["ascend_by_#{c}", "descend_by_#{c}"] }) }
+      choices = @template.grouped_options_for_select(orders, @object.scope.order)
+      returning '' do |html|
+        fields_for "scope_definition", @object.scope, :builder => NormalFormBuilder do |scope_fields|
+          html << scope_fields.select(:order, choices, {}, :class => 'order')
+        end
+      end
     end
 
     private
@@ -28,10 +39,6 @@ module Tirade
       end
     end
 
-
-    def scope_wrap(inner, opts={})
-      @template.content_tag(:div, inner, opts)
-    end
 
     def select_order_scope(content_type)
       fields = content_type.column_names

@@ -975,7 +975,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       return original.clone(true)
         .hide()
         .removeClass('blueprint')
-        .appendTo(definer)
+        .insertAfter( definer.find('div.scoping:last') )
         .fadeIn(500);
     };
 

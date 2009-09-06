@@ -156,7 +156,11 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
     @view.stub!(:url_for).and_return('/foo')
     @view.stub!(:protect_against_forgery?).and_return(false)
     @view.stub!(:authorized?).and_return(true)
-    @rendering = Factory :scoped_rendering, :scope_definition => { :title => {:like => 'foo'}, :id => {:gt => 23, :lte => 42} }
+    @rendering = Factory :scoped_rendering, :scope_definition => { 
+      :title => {:like => 'foo'}, 
+      :id => {:gt => 23, :lte => 42},
+      :order => 'ascend_by_title'
+    }
     @builder = NormalFormBuilder.new :rendering, @rendering, @view, {}, nil
   end
 
@@ -178,6 +182,17 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
         with_tag('select.scope_attribute[name=?]', 'scope_attribute')
         with_tag('select.scope_comparison[name=?]', 'scope_comparison')
         with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute_comparison]')
+      end
+    end
+
+    it "should render a field to select ordering" do
+      @html.should have_tag('div.order') do
+        with_tag('select.order') do
+          with_tag('optgroup[label=?]', 'title') do
+            with_tag('option[selected]', 'ascend_by_title')
+            with_tag('option', 'descend_by_title')
+          end
+        end
       end
     end
 
