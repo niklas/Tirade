@@ -93,7 +93,7 @@ module Tirade
             snc::WILDCARD_CONDITIONS.keys + snc::BOOLEAN_CONDITIONS.keys
           else
             []
-          end
+          end.map(&:to_s)
         end
 
         # Does the table for globalize translations exist?
