@@ -29,7 +29,7 @@ describe UserSessionsController do
 
       it "should scroll the toolbox to the first frame (aka dashboard)" do
         do_login
-        response.body.should include(%Q[Toolbox.goto(0)])
+        response.body.should include(%Q[Toolbox.goTo(0)])
         
       end
       
