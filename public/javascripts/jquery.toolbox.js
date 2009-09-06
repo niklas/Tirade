@@ -1019,7 +1019,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
           cloneScoping( $(ev.target).closest('div.scoping') );
         });
         $.ui.button({icon: 'minus', text: 'remove', cssclass: 'remove'}).appendTo($self).click(function(ev) {
-          $(ev.target).closest('div.scoping').fadeOut(500, function() { $(this).remove() });
+          $(ev.target).closest('div.scoping').fadeOut(500, function() { $(this).remove(); });
         });
       }
     });
