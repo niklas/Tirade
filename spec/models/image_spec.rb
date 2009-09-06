@@ -16,10 +16,9 @@ describe Image do
 end
 
 describe "The Landscape Image" do
-  fixtures :images
   before(:each) do
     Image.attachment_definitions[:image][:path] = ':rails_root/spec/fixtures/:attachment/:id/:style/:basename.:extension'
-    @image = images(:landscape)
+    @image = Factory :image, :title => 'Irish Landscape', :image_file_name => 'irish_landscape.jpg', :id => 55
   end
 
   it "should be there" do

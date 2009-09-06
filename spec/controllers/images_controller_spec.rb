@@ -35,14 +35,15 @@ describe ImagesController do
         Image.any_instance.stubs(:id).returns(2342)
         post :create, :image => {:image => file }, :format => 'js'
       end
+      before( :each ) do
+        do_request
+      end
 
       it "should be successful" do
-        do_request
         response.should be_success
       end
 
       it "should wrap the JS response into HTML for iframe support" do
-        do_request
         response.body.should have_tag('html > body > script[type=text/javascript]', /window\.eval/)
       end
     end

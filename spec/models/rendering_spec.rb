@@ -153,34 +153,49 @@ describe Rendering, ' appended to the left column of the main page, containing a
   end
 end
 
-describe Rendering, ' appended to the left column of the main page, containing an Image', :type => :helper do
+describe Rendering, ' appended to the left column of the main page, containing an Image' do
   fixtures :all
   before(:each) do
     @page = pages(:main)
     @grid = grids(:layout_50_50_1)
-    @content = images(:landscape)
-    lambda do
-      @rendering = Rendering.create!(
+    @image = Factory :image
+    @creating_rendering = lambda { 
+      @rendering = Factory :rendering,
         :page => @page,
         :grid => @grid,
-        :content => @content,
+        :content => @image,
         :assignment => 'fixed',
         :part => parts(:image_preview)
-      )
-    end.should change(Rendering,:count).by(1)
+    }
+  end
+  it "should have a valid Image assigned" do
+    @image.should be_valid
+  end
+  it "should keep the Image in the db" do
+    image = Image.find(@image.id)
+  end
+  it "should be created successfully" do
+    @creating_rendering.should change(Rendering,:count).by(1)
   end
   it "should be the last item in the left column" do
+    @creating_rendering.call
     @page.renderings.for_grid(@grid).last.should == @rendering
   end
   it "should have the correct content_type set" do
+    @creating_rendering.call
     @rendering.content_type.should == 'Image'
   end
-  it "should find the content" do
-    lambda do
-      @found_content = @page.renderings.for_grid(@grid).last.content
-    end.should_not raise_error
-    @found_content.should be_instance_of(Image)
-    @found_content.should == @content
+  it "should have the correct content_id set" do
+    @creating_rendering.call
+    @rendering.content_id.should == @image.id
+  end
+  it "should find the Image by association" do
+    @creating_rendering.call
+    @rendering = Rendering.find(@rendering.id)
+    @found_content = @rendering.content
+    @found_content.should_not be_nil
+    @found_content.should be_an_instance_of(Image)
+    @found_content.should == @image
   end
 
 end
