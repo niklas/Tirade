@@ -162,7 +162,7 @@ body {
               }
               *.scope_attribute  { width: 20%; }
               *.scope_comparison { width: 25%; }
-              *.scope_value      { width: 33%; }
+              *.scope_value      { width: 25%; }
               a.ui-button {
                 position: static; 
                 float: right;
