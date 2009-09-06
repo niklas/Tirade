@@ -34,11 +34,11 @@ describe Document do
   describe "scopes for position" do
     subject { Document.scopes_for_column(:position) }
     it { should be_an Array }
-    it { should include 'lt'}
-    it { should include 'lte'}
+    it { should include 'less_than'}
+    it { should include 'less_than_or_equal_to'}
     it { should include 'equals'}
-    it { should include 'gte'}
-    it { should include 'gt'}
+    it { should include 'greater_than_or_equal_to'}
+    it { should include 'greater_than'}
   end
 
   describe "build from Factory" do

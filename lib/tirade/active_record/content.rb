@@ -89,7 +89,9 @@ module Tirade
           case col.type
           when :integer, :datetime
             snc::COMPARISON_CONDITIONS.keys + snc::BOOLEAN_CONDITIONS.keys
-          when :string, :text
+          when :string
+            snc::WILDCARD_CONDITIONS.keys + snc::BOOLEAN_CONDITIONS.keys + [:equals, :does_not_equal]
+          when :text
             snc::WILDCARD_CONDITIONS.keys + snc::BOOLEAN_CONDITIONS.keys
           else
             []
