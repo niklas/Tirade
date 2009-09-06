@@ -979,8 +979,23 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
         .fadeIn(500);
     };
 
-    $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo(definer.parent().find('dt')).click(function(ev) {
+    $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo(definer.parent().find('dt:first')).click(function(ev) {
       cloneScoping( definer.find('div.scoping.blueprint:first') );
+    });
+
+    $('div.order', definer).livequery(function() {
+      var $self = $(this);
+      var select_attribute = $self.find('select.order_attribute');
+      var select_direction = $self.find('select.order_direction');
+      var value = $self.find('input.order_value[type=hidden]');
+      var updateValueName = function() {
+        var d = select_direction.val();
+        var a = select_attribute.val();
+        var name = 'rendering[scope_definition][' + d + '_by_' + a + ']';
+        value.val( name );
+      };
+      $self.change( updateValueName );
+      updateValueName();
     });
 
     $('div.scoping', definer).livequery(function() {
@@ -996,14 +1011,18 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       };
       var updateComparisons = function() {
         var a = select_attribute.val();
+        var c = select_comparison.val();
         select_comparison
           .find('optgroup')
-            .hide()
+            .hide().disable()
             .filter('[label="' + a + '"]')
-              .show()
+              .show().enable()
             .end()
-          .end()
-          .val(null);
+          .end();
+        if ( !select_comparison.find('optgroup:visible').find('option[value="' + c + '"]').length ) {
+          select_comparison.val(null);
+        }
+
         updateValueName();
       };
       if ($self.hasClass('blueprint')) {
@@ -1056,7 +1075,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
         case 'scope':
           var t = form.enableField('content_type').val();
           definer.parent().show();
-          definer.show().find(':not(.blueprint) :input').enable();
+          definer.show().find('div.scoping:not(.blueprint) :input, div.order :input').enable();
           break;
       }
     };
@@ -1081,8 +1100,8 @@ $.ui.button = function(options) {
     .attr('href', settings.href)
     .attr('role', 'button');
   if (settings.hover) { button.hover(
-       function() { button.addClass('ui-state-hover'); },
-       function() { button.removeClass('ui-state-hover'); }
+       function() { $(this).addClass('ui-state-hover'); },
+       function() { $(this).removeClass('ui-state-hover'); }
      );}
   $('<span/>')
     .addClass('ui-icon ui-icon-' + settings.icon)

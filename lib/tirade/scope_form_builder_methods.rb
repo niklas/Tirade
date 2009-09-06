@@ -19,13 +19,16 @@ module Tirade
     end
 
     def scope_select_order
-      orders = @object.content_class.column_names.inject({}) {|map, c| map.merge({ c => ["ascend_by_#{c}", "descend_by_#{c}"] }) }
-      choices = @template.grouped_options_for_select(orders, @object.scope.order)
-      returning '' do |html|
-        fields_for "scope_definition", @object.scope, :builder => NormalFormBuilder do |scope_fields|
-          html << scope_fields.select(:order, choices, {}, :class => 'order')
+      ordering = @object.ordering
+      inner = returning '' do |html|
+        fields_for "scope_definition", ordering, :builder => self.class do |scope_fields|
+          html << label('Order')
+          html << scope_fields.select_without_wrap(:attribute, @object.content_class.column_names , {}, :name => 'order_attribute', :class => 'order_attribute', :declare => true)
+          html << scope_fields.select_without_wrap(:direction, ['ascend', 'descend'], {}, :name => 'order_direction', :class=> 'order_direction', :declare => true)
+          html << scope_fields.hidden_field(:order, :class => 'order_value')
         end
       end
+      @template.content_tag(:div, inner, :class => 'order')
     end
 
     private

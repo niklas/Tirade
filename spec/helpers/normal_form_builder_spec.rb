@@ -187,11 +187,11 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
 
     it "should render a field to select ordering" do
       @html.should have_tag('div.order') do
-        with_tag('select.order') do
-          with_tag('optgroup[label=?]', 'title') do
-            with_tag('option[selected]', 'ascend_by_title')
-            with_tag('option', 'descend_by_title')
-          end
+        with_tag('select.order_attribute') do
+          with_tag('option[selected][value=?]', 'title')
+        end
+        with_tag('select.order_direction') do
+          with_tag('option[selected][value=?]', 'ascend')
         end
       end
     end

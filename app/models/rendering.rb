@@ -141,6 +141,24 @@ class Rendering < ActiveRecord::Base
     end
   end
 
+  def ordering
+    defs = normalized_scope_definition
+    Ordering.new_by_name(defs[:order]) || Ordering.new('created_at', 'descend')
+  end
+
+  class Ordering < Struct.new(:attribute, :direction)
+
+    def self.new_by_name(name)
+      if name =~ /^(ascend|descend)_by_([\w_]+)$/
+        new($2, $1)
+      end
+    end
+
+    def order
+      "#{direction}_by_#{attribute}"
+    end
+  end
+
   # we save it like it came from the form, so we have to fix it for searchlogic
   def normalized_scope_definition
     given = scope_definition.dup
