@@ -394,7 +394,7 @@ describe Rendering::Scoping do
   describe "creation by name" do
     subject { Rendering::Scoping }
     it "should split id_lt" do
-      subject.new_by_name('id_lt', 23).should == subject.new('id', 'lt', 23)
+      subject.new_by_name('id_less_than', 23).should == subject.new('id', 'less_than', 23)
     end
     it "should split description_like" do
       subject.new_by_name('description_like', 'fnord2342').should == subject.new('description', 'like', 'fnord2342')
@@ -429,6 +429,7 @@ describe Rendering, "scoped by params" do
         lambda { @rendering.scope.all }.should_not raise_error
       end
 
+      unless (prms.keys-[:order, :order_attribute, :order_direction]).empty?
       it "should provide scopings (for form)" do
         lambda { @scopings = @rendering.scopings }.should_not raise_error
         @scopings.should be_an(Array)
@@ -443,6 +444,7 @@ describe Rendering, "scoped by params" do
           name.should == "#{scoping.attribute}_#{scoping.comparison}"
           scoping.send(name).should == scoping.value
         end
+      end
       end
     end
   end
@@ -461,11 +463,11 @@ describe Rendering, "scoped by params" do
   it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo'), 
     :order_attribute => 'title', :title => { :like => 'foo' }
 
-  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo', :id_lt => 23), 
-    :order_attribute => 'title', :title => { :like => 'foo' }, :id_lt => 23
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo', :id_less_than => 23), 
+    :order_attribute => 'title', :title => { :like => 'foo' }, :id_less_than => 23
 
-  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo', :id_gt => 23, :id_lte => 42), 
-    :order_attribute => 'title', :title => { :like => 'foo' }, :id => {:gt => 23, :lte => 42}
+  it_should_create_scope_from_params Document.search(:order => 'ascend_by_title', :title_like => 'foo', :id_greater_than => 23, :id_less_than_or_equal_to => 42), 
+    :order_attribute => 'title', :title => { :like => 'foo' }, :id => {:greater_than => 23, :less_than_or_equal_to => 42}
 end
 
 describe Rendering, "without content", :type => :helper do

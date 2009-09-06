@@ -123,8 +123,7 @@ class Rendering < ActiveRecord::Base
   end
 
   class Scoping < Struct.new(:attribute, :comparison, :value)
-    Comparisons = %w( lt lte equals gte gt does_not_equal begins_with ends_with like )
-    SplitName = /^([\w_]+)_(#{Comparisons.join('|')})$/
+    SplitName = /^([\w_]+)_(#{Searchlogic::NamedScopes::Conditions::PRIMARY_CONDITIONS.join('|')})$/
 
     def self.new_by_name(name, value)
       if name =~ SplitName

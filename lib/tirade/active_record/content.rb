@@ -85,11 +85,12 @@ module Tirade
         def scopes_for_column(col)
           col = columns_hash[col.to_s] unless col.is_a?(::ActiveRecord::ConnectionAdapters::Column)
           return [] if col.blank?
+          snc = Searchlogic::NamedScopes::Conditions
           case col.type
           when :integer, :datetime
-            %w( gt gte equals lte lt )
+            snc::COMPARISON_CONDITIONS.keys + snc::BOOLEAN_CONDITIONS.keys
           when :string, :text
-            %w( equals does_not_equal begins_with ends_with like )
+            snc::WILDCARD_CONDITIONS.keys + snc::BOOLEAN_CONDITIONS.keys
           else
             []
           end
