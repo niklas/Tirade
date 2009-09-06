@@ -978,7 +978,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
         .show();
     };
 
-    $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo(definer).click(function(ev) {
+    $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo(definer.parent().find('dt')).click(function(ev) {
       cloneScoping( definer.find('div.scoping.blueprint:first') );
     });
 
@@ -995,20 +995,24 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       };
       var updateComparisons = function() {
         var a = select_attribute.val();
-        select_comparison.find('option').remove();
-        $.each(scopes[a], function(i, com) {
-          $('<option />').attr('value', com).text(com).appendTo(select_comparison);
-        });
+        select_comparison
+          .find('optgroup')
+            .hide()
+            .filter('[label="' + a + '"]')
+              .show()
+            .end()
+          .end()
+          .val(null);
         updateValueName();
       };
       if ($self.hasClass('blueprint')) {
         $self.find(':input').disable();
       } else {
-        value.enable();
+        $self.find(':input').enable();
       }
       $self.change( updateValueName );
       select_attribute.change( updateComparisons );
-      updateValueName();
+      updateComparisons();
       if ( !$self.find('a.add, a.remove').length ) {
         $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo($self).click(function(ev) {
           cloneScoping( $(ev.target).closest('div.scoping') );
@@ -1021,12 +1025,12 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
 
     content_type.change(function() {
       if ('scope' == assignment.val()) {
+        definer.find('div.scoping').remove(); 
         var plural = $.string(content_type.val()).underscore().str + 's';
         var scope_url = Routing['scopes_'+  plural + '_path']();
         $.get( scope_url, '', function(html, status) {
           var new_blueprint = $(html).addClass('blueprint');
           if (new_blueprint.length) {
-            definer.find('div.scoping').remove(); 
             new_blueprint.appendTo(definer);
             cloneScoping(new_blueprint);
           }

@@ -4,7 +4,7 @@ module Tirade
     def define_scope
       inner = returning '' do |html|
         scopings = @object.scopings
-        html << scope_blueprint if scopings.blank?
+        html << scope_blueprint
         scopings.each do |scoping|
           html << single_scoping(scoping)
         end

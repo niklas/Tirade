@@ -173,9 +173,14 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
       @html.should_not be_blank
     end
 
-    it "should not render a blueprint, we can clone the existing ones" do
-      @html.should_not have_tag('div.scoping.blueprint')
+    it "should render a set of fields as blueprint (for the case the user removes all scopings)" do
+      @html.should have_tag('div.scoping.blueprint') do
+        with_tag('select.scope_attribute[name=?]', 'scope_attribute')
+        with_tag('select.scope_comparison[name=?]', 'scope_comparison')
+        with_tag('input.scope_value[type=text][name=?]', 'rendering[scope_definition][attribute_comparison]')
+      end
     end
+
 
     it "should render a set of fields for 'title_like'" do
       @html.should have_tag('div.scoping') do
@@ -183,7 +188,9 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
           with_tag('option[selected]', 'title')
         end
         with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
-          with_tag('option[selected]', 'like')
+          with_tag('optgroup[label=?]', 'title') do
+            with_tag('option[selected]', 'like')
+          end
         end
         with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][title_like]', 'foo')
       end
@@ -195,7 +202,9 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
           with_tag('option[selected]', 'id')
         end
         with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
-          with_tag('option[selected]', 'gt')
+          with_tag('optgroup[label=?]', 'id') do
+            with_tag('option[selected]', 'gt')
+          end
         end
         with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_gt]',23)
       end
@@ -207,7 +216,9 @@ describe NormalFormBuilder, 'in a form with existing scoping Rendering' do
           with_tag('option[selected]', 'id')
         end
         with_tag('select.scope_comparison[name=?]', 'scope_comparison') do
-          with_tag('option[selected]', 'lte')
+          with_tag('optgroup[label=?]', 'id') do
+            with_tag('option[selected]', 'lte')
+          end
         end
         with_tag('input.scope_value[type=text][name=?][value=?]', 'rendering[scope_definition][id_lte]', 42)
       end
