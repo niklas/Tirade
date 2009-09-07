@@ -1,6 +1,7 @@
 body {
   div.page_margins div.page {
     div.image {
+      margin: 0.3em auto;
       .left { float: left; }
       .right { float: right; }
       p.title {
