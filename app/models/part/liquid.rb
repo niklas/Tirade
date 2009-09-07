@@ -26,7 +26,8 @@ class Part < ActiveRecord::Base
 
   def options_with_object(obj)
     options.to_hash_with_defaults.merge({
-      filename.to_sym => obj
+      filename.to_sym => obj,
+      :object => obj
     })
   end
 
