@@ -1,14 +1,14 @@
 <% accordion_item "Translations" do %>
   <% translations = record.globalize_translations %>
-  <ul class="list">
+  <ul class="list records">
     <% Locale.activated.each do |locale| %>
       <% if record.translated_locales.include?(locale) %>
-        <li class="translation">
+        <li class="translation record">
         <%= t('shared.locale.name', :locale => locale) %>
           <%= link_to_show record, :params => {:locale => locale } %>
         </li>
       <% else %>
-        <li class="translation missing">
+        <li class="translation missing record">
           <%= t 'shared.locale.missing', :name => t("shared.locale.#{locale}") %>
           <%= link_to_edit record, :params => { :locale => locale } %>
         </li>
