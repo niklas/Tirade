@@ -6,7 +6,7 @@
  * */
 
 (function($){
-var Rendering = {
+window.Rendering = {
   create: function(attributes) {
     $.ajax({
       url: Routing.renderings_url({format: 'js'}),
@@ -40,7 +40,7 @@ var Rendering = {
   }
 };
 
-var Grid = {
+window.Grid = {
   create: function(attributes) {
     $.ajax({
       url: Routing.grids_url({format: 'js'}),
