@@ -21,3 +21,7 @@ config.action_view.cache_template_loading            = true
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
 
+if File.exists?('/usr/local/bin/identify')
+  Paperclip.options[:command_path] = "/usr/local/bin"
+end
+
