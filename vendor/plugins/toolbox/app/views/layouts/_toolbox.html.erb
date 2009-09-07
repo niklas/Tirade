@@ -1,5 +1,8 @@
 <ul class="linkbar">
   <%= yield :linkbar %>
+  <span class="locale">
+      <%= t('shared.locale.name', :locale => I18n.locale) %>
+  </span>
 </ul>
 <%= yield %>
 <% if content_given?(:bottom_linkbar) %>
