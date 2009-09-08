@@ -72,12 +72,12 @@ Toolbox = {
     this.header = this.element().find('> div.ui-widget-header.ui-dialog-titlebar:first').addClass('header');
 
     this.sideBar = $('<div />')
-      .addClass('sidebar left ui-corner-all ui-widget')
+      .addClass('sidebar left ui-corner-all ui-widget ui-widget-content')
       .attr('id', 'toolbox_sidebar')
       .appendTo('body');
 
     this.sideBarBody = $('<div />')
-      .addClass('sidebar_body ui-widget-content')
+      .addClass('sidebar_body')
       .appendTo( this.sideBar );
 
     this.history = $.tirade.history.build()
