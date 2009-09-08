@@ -194,29 +194,29 @@ div#toolbox_sidebar {
   width: 230px;
   height: 300px;
   z-index: 1000;
-  ul.history, ul.clipboard {
-    display: block;
-    padding: 0px;
-    margin: 0;
-  }
-  ul.history { 
-    max-height: 50%;
-    margin-bottom: 0.3em;
-  }
-  ul.clipboard { 
-    min-height: 20%;
-    max-height: 50%;
-    bottom: 25px;
-    padding-bottom: 5em;
-    margin-bottom: 0.3em;
-    li {
-      cursor: pointer;
+  div.sidebar_body {
+    position:absolute;
+    bottom:20px; top: 0;
+    left: 0; right: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    ul.history, ul.clipboard {
+      display: block;
+      padding: 0px;
+      margin: 0 0 0.3em 0;
+      overflow: hidden;
+    }
+    ul.clipboard { 
+      padding-bottom: 5em;
+      li {
+        cursor: pointer;
+      }
     }
   }
   div.actions {
     position:absolute;
     bottom:0;
-    height:18px;
+    height:20px;
     left:0;
     right:0;
     a {
@@ -224,8 +224,6 @@ div#toolbox_sidebar {
     }
   }
   ul {
-     padding: 0.3em;
-     margin: 2px 0;
      li {
         display: block;
         padding: 0.3em;

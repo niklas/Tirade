@@ -72,20 +72,27 @@ Toolbox = {
     this.header = this.element().find('> div.ui-widget-header.ui-dialog-titlebar:first').addClass('header');
 
     this.sideBar = $('<div />')
-      .addClass('sidebar left ui-corner-all')
+      .addClass('sidebar left ui-corner-all ui-widget')
       .attr('id', 'toolbox_sidebar')
       .appendTo('body');
 
+    this.sideBarBody = $('<div />')
+      .addClass('sidebar_body ui-widget-content')
+      .appendTo( this.sideBar );
+
     this.history = $.tirade.history.build()
-      .appendTo(Toolbox.sideBar);
+      .appendTo(Toolbox.sideBarBody);
 
     this.clipboard = $('<ul />')
-      .addClass('clipboard list records ui-widget-content ui-corner-all')
-      .appendTo(Toolbox.sideBar);
+      .addClass('clipboard list records')
+      .appendTo(Toolbox.sideBarBody);
 
     this.sideBarActions = $('<div />')
       .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
+
+    $('<a />').text('clipboard').uiButton().click(function() { Toolbox.switchSideBar('.clipboard'); }).appendTo(this.sideBarActions);
+    $('<a />').text('history').uiButton().click(function() { Toolbox.switchSideBar('.history'); }).appendTo(this.sideBarActions);
 
     this.toggleSideBarButton = $.ui.button({cssclass: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
       .mousedown(function(ev) { ev.stopPropagation(); })
@@ -552,8 +559,8 @@ Toolbox = {
     return this.sideBar.show().animate(
       { left: (Toolbox.element().position().left - Toolbox.sideBar.width())},
       { duration: 500, complete: function() {
-        Toolbox.element().trigger('tirade.sidebar.enabled')
-      }; }
+        Toolbox.element().trigger('tirade.sidebar.enabled');
+      }}
     );
   },
   sideBarOff: function() {
@@ -563,13 +570,23 @@ Toolbox = {
     return this.sideBar.animate(
       { left: Toolbox.element().position().left},
       { duration: 500, complete: function() {
-        Toolbox.element().trigger('tirade.sidebar.disabled')
-      }; }
+        Toolbox.element().trigger('tirade.sidebar.disabled');
+      }}
     );
   },
   sideBarToggle: function(after) {
     if (this.sideBarVisible) { return this.sideBarOff(after); }
     else { return this.sideBarOn(after); }
+  },
+  switchSideBar: function(target) {
+    var element = Toolbox.sideBar.find(target);
+    if (element.length) {
+      Toolbox.sideBar.find('ul').hide();
+      element.show();
+      Toolbox.sideBarActions.find('a')
+        .removeClass('ui-state-highlight')
+        .find(target).addClass('ui-state-highlight');
+    }
   },
   linkBar: function() {
     return(Toolbox.last(' ul.linkbar'));
@@ -705,15 +722,15 @@ Toolbox = {
     sideBarPosition: function() {
       if (Toolbox.sideBarVisible) {
         Toolbox.sideBar[0].style.left = (Toolbox.element().position().left - Toolbox.sideBar.width()) + 'px';
-        Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
+        Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 23) + 'px';
       } else {
         Toolbox.sideBar[0].style.left = (Toolbox.element().position().left) + 'px';
-        Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 42) + 'px';
+        Toolbox.sideBar[0].style.top =  (Toolbox.element().position().top + 23) + 'px';
       }
     },
     sideBarSize: function() {
       Toolbox.sideBar.width(  Toolbox.element().width() * 0.7 );
-      Toolbox.sideBar.height( Toolbox.element().height() * 0.9 );
+      Toolbox.sideBar.height( Toolbox.element().height() - 42 );
     },
     all: function() {
       Toolbox.sync.frames();

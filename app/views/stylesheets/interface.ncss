@@ -319,7 +319,7 @@ ul.list, dl, ul.tree {
     position: relative;
     text-align: left;
     padding: 0.3em;
-    margin: 1px 0;
+    margin: 1px;
     list-style: none;
     .image {
       img {
@@ -385,7 +385,7 @@ div.busy {
 }
 
 
-*.ui-dialog {
+*.ui-widget {
   *.ui-button {
     padding: 0px 10px;
     font-size: 13px;
@@ -395,6 +395,7 @@ div.busy {
     float: left;
     text-decoration: none;
     margin: 0 2px;
+    cursor: pointer;
     span { display: block; margin: 1px; }
   }
   *.ui-icon-button {
