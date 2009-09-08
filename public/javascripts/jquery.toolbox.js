@@ -87,10 +87,6 @@ Toolbox = {
       .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
 
-    this.pickFocusButton = $.ui.button({cssclass: 'toggle edit grid', text: 'Toggle Edit Layout', icon: 'suitcase'})
-      .appendTo(Toolbox.sideBarActions)
-      .click( $.tirade.focus.pick );
-
     this.refreshPageButton = $.ui.button({cssclass: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { 
         var page = $('body > div.page_margins > div.page');
@@ -115,6 +111,11 @@ Toolbox = {
          return false;
       })
       .appendTo(Toolbox.footer);
+
+    this.pickFocusButton = $.ui.button({cssclass: 'toggle edit grid', text: 'Pick an Element from Page', icon: 'suitcase'})
+      .appendTo( this.footer )
+      .click( $.tirade.focus.pick );
+
 
     this.leftButtons = $('<span/>')
       .addClass('buttons left')
