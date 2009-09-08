@@ -546,21 +546,25 @@ Toolbox = {
       this.minimized = true;
     }
   },
-  sideBarOn: function(after) {
+  sideBarOn: function() {
     if (this.sideBarVisible) { return this.sideBar; }
     this.sideBarVisible = true;
     return this.sideBar.show().animate(
       { left: (Toolbox.element().position().left - Toolbox.sideBar.width())},
-      { duration: 500, complete: after }
+      { duration: 500, complete: function() {
+        Toolbox.element().trigger('tirade.sidebar.enabled')
+      }; }
     );
   },
-  sideBarOff: function(after) {
+  sideBarOff: function() {
     if (!this.sideBarVisible)  // And if it's already off?
        { return this.sideBar; }  //  - I just walk away!
     this.sideBarVisible = false;
     return this.sideBar.animate(
       { left: Toolbox.element().position().left},
-      { duration: 500, complete: after }
+      { duration: 500, complete: function() {
+        Toolbox.element().trigger('tirade.sidebar.disabled')
+      }; }
     );
   },
   sideBarToggle: function(after) {
