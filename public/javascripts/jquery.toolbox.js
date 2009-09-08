@@ -87,17 +87,6 @@ Toolbox = {
       .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
 
-    this.refreshPageButton = $.ui.button({cssclass: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
-      .click(function(e) { 
-        var page = $('body > div.page_margins > div.page');
-        var url = page.metadata().url || '/';
-        page.beBusy('refreshing');
-        $.get(url);
-        e.stopPropagation(); e.preventDefault();
-        return false;
-      })
-      .appendTo(Toolbox.sideBarActions);
-
     this.toggleSideBarButton = $.ui.button({cssclass: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
       .mousedown(function(ev) { ev.stopPropagation(); })
       .click(function(event) {
@@ -115,6 +104,17 @@ Toolbox = {
     this.pickFocusButton = $.ui.button({cssclass: 'toggle edit grid', text: 'Pick an Element from Page', icon: 'suitcase'})
       .appendTo( this.footer )
       .click( $.tirade.focus.pick );
+
+    this.refreshPageButton = $.ui.button({cssclass: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
+      .click(function(e) { 
+        var page = $('body > div.page_margins > div.page');
+        var url = page.metadata().url || '/';
+        page.beBusy('refreshing');
+        $.get(url);
+        e.stopPropagation(); e.preventDefault();
+        return false;
+      })
+      .appendTo( this.footer );
 
 
     this.leftButtons = $('<span/>')
