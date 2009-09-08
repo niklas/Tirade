@@ -91,8 +91,9 @@ Toolbox = {
       .addClass('actions ui-widget-header ui-corner-all ui-helper-clearfix')
       .appendTo(Toolbox.sideBar);
 
-    $('<a />').text('clipboard').uiButton().click(function() { Toolbox.switchSideBar('.clipboard'); }).appendTo(this.sideBarActions);
-    $('<a />').text('history').uiButton().click(function() { Toolbox.switchSideBar('.history'); }).appendTo(this.sideBarActions);
+    $('<a />').addClass('clipboard').text('clipboard').uiButton().click(function() { Toolbox.switchSideBar('.clipboard'); }).appendTo(this.sideBarActions);
+    $('<a />').addClass('history').text('history').uiButton().click(function() { Toolbox.switchSideBar('.history'); }).appendTo(this.sideBarActions);
+    Toolbox.switchSideBar('.history');
 
     this.toggleSideBarButton = $.ui.button({cssclass: 'toggle-sidebar', icon: 'power', text: 'toggle sidebar'})
       .mousedown(function(ev) { ev.stopPropagation(); })
@@ -585,7 +586,7 @@ Toolbox = {
       element.show();
       Toolbox.sideBarActions.find('a')
         .removeClass('ui-state-highlight')
-        .find(target).addClass('ui-state-highlight');
+        .filter(target).addClass('ui-state-highlight');
     }
   },
   linkBar: function() {
