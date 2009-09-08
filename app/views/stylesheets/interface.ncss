@@ -387,14 +387,14 @@ div.busy {
 
 *.ui-widget {
   *.ui-button {
-    padding: 0px 10px;
+    padding: 0px 8px;
     font-size: 13px;
     line-height: 19px;
     display: block;
     height: 18px;
     float: left;
     text-decoration: none;
-    margin: 0 2px;
+    margin: 0 2px 0 0;
     cursor: pointer;
     span { display: block; margin: 1px; }
   }
