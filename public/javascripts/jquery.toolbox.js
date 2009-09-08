@@ -42,7 +42,6 @@ Toolbox = {
         .data('controller', 'user_sessions')
         .appendTo( this.content() );
 
-      $.tirade.history.sync();
       this.frameCount = 1;
       this.currentFrameIndex = 0;
       this.frameIdCounter = 1;
@@ -166,7 +165,7 @@ Toolbox = {
       onBefore: Toolbox.overflowsOff,
       onAfter:  function() {
         Toolbox.overflowsOn();
-        $.tirade.history.sync();
+        Toolbox.body.trigger('toolbox.frame.scrolled', [Toolbox.currentFrameIndex]);
       },
       axis: 'x',
       duration: 555
@@ -182,15 +181,14 @@ Toolbox = {
         self.frameCount = self.frames().length;
         $(this)
           .frameInToolbox()
-          .trigger('toolbox.frame.create');
+          .trigger('toolbox.frame.create', [this]);
       },
       function() { 
         self.frameCount = self.frames().length;
-        self.body.trigger('toolbox.frame.remove');
+        self.body.trigger('toolbox.frame.remove', [this]);
         if (!self.currentFrame().length) {
           self.goTo( self.frameCount - 1 );
         }
-        $.tirade.history.sync();
       }
     );
 
@@ -330,7 +328,6 @@ Toolbox = {
   push: function(frame_html,options) {
     this.content().append(frame_html);
     var frame = this.content('>div.frame:last');
-    $.tirade.history.append(frame);
     this.goTo(frame);
   },
   goTo: function(frame) {
