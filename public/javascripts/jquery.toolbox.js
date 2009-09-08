@@ -349,7 +349,7 @@ Toolbox = {
   surrounds: function(position) {
     return(
       Toolbox.element().surrounds(position) ||
-      Toolbox.sideBar.surrounds(position)
+      ( Toolbox.sideBarVisible && Toolbox.sideBar.surrounds(position) )
     );
   },
   pop: function() {
