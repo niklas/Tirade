@@ -119,6 +119,9 @@ ChiliBook.recipeFolder = 'javascripts/syntax/';
       distance: 17,
       cursor: 'crosshair',
       cursorAt: {top: -1, left: -1},
+      start: function(e, ui) {
+        Toolbox.switchSideBar('.clipboard');
+      },
       drag: function(e,ui) {
         if (Toolbox.surrounds(ui.absolutePosition)) {
           Toolbox.beExclusiveDroppable();
