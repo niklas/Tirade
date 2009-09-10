@@ -31,12 +31,18 @@ class PagesController < ManageResourceController::Base
     show_if_fresh(page)
   end
 
+  def update_page_on_moved(page)
+    super
+    page.clear
+    page.insert_page(object.parent)
+  end
+
   private
-  def show_if_fresh(page)
-    if @page.fresh?
+  def show_if_fresh(page, thepage=@page)
+    if thepage.fresh?
       page.clear
-      page.insert_page(@page)
-      page.focus_on(@page)
+      page.insert_page(thepage)
+      page.focus_on(thepage)
     end
   end
 
