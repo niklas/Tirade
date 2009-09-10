@@ -113,6 +113,19 @@ module Tirade
       wrap(assoc, {:class => 'one association'}, inner)
     end
 
+    def sort(assoc=:children, opts={})
+      unless @object.class.reflections.has_key?(assoc)
+        return "does not know about #{assoc.to_s.humanize}"
+      end
+      reflection = @object.class.reflections[assoc]
+      return "Wrong association type (#{reflection.macro}), needed has_many" unless [:has_many, :has_and_belongs_to_many].include?(reflection.macro)
+      things = @object.send(assoc)
+      inner = returning '' do |html|
+        html << @template.list_of(things, :force_list => true)
+      end
+      wrap(assoc, {:class => 'sort'}, inner)
+    end
+
     def actings
       returning '' do |html|
         @object.acting_roles.each do |role|
@@ -144,7 +157,7 @@ module Tirade
       end
     end
 
-    def select_parent(field=:wanted_parent_id, opts={})
+    def select_parent(field=:parent_id, opts={})
       choices = @template.nested_set_options(@object.class, @object) do |i|
         "#{'> ' * i.level} #{i.title}"
       end

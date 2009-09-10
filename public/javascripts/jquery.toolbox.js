@@ -926,6 +926,24 @@ $.fn.formInFrameInToolbox = function(options) {
     $('di.association.one dd > ul.list', form).livequery(function() { $(this).hasOneEditor(); });
     $('di.association.many dd > ul.list', form).livequery(function() { $(this).hasManyEditor(); });
 
+    $('di.sort dd > ul.list', form).livequery( function() {
+      $(this).find('li.record').draggable('destroy').end()
+      .sortable({
+        axis: 'y',
+        items: 'li.record',
+        update: function(event, ui) {
+          var $item = $(ui.item);
+          var left = $item.prev('li.record');
+          var right = $item.next('li.record');
+          if ( left.length ) {
+            console.debug("moved", $item.resourceURL(), "to right of", left.resourceId());
+          } else if ( right.length ) {
+            console.debug("moved", $item.resourceURL(), "to left of", right.resourceId());
+          }
+        }
+      });
+    });
+
     $form.find(':submit')
       .addClass('ui-corner-all')
       .addClass('ui-state-default')
