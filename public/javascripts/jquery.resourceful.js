@@ -111,13 +111,14 @@
     }
   };
 
-  $.fn.resourceURL = function() {
+  $.fn.resourceURL = function(a) {
     var typeAndId = $(this).typeAndId();
-    var route = Routing[typeAndId.resource + '_path'];
+    var action = a ?  a + '_' : '';
+    var route = Routing[action + typeAndId.resource + '_path'];
     if (route) {
       return route({id: typeAndId.id, format: 'js', authenticity_token: $.tirade.resourceful.authToken()});
     } else {
-      alert("resource not found: " + typeAndId.resorce);
+      alert("resource not found: " + typeAndId.resource);
     }
   };
 
