@@ -361,7 +361,7 @@ describe DocumentsController do
 
       before( :each ) do
         @document.stub!(:valid?).and_return(false)
-        Document.stub!(:find).and_return(@document)
+        Document.stub!(:find_by_slug).with(@document.to_param).and_return(@document)
       end
 
       it "should rerender the form" do
