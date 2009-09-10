@@ -73,8 +73,8 @@ class Page < ActiveRecord::Base
   def generated_url
     if !parent_id.nil?
       [parent.url, self.title.urlize].compact.join('/').sub(%r(^/),'')
-    elsif @wanted_parent_id.to_i != 0
-      [Page.find_by_id(@wanted_parent_id).andand.url, title.urlize].compact.join('/').sub(%r(^/),'')
+    elsif @move_to_new_parent_id.to_i != 0
+      [Page.find_by_id(@move_to_new_parent_id).andand.url, title.urlize].compact.join('/').sub(%r(^/),'')
     else
       ''
     end

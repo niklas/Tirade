@@ -21,7 +21,7 @@ describe "/pages/edit.html.erb" do
     #    with_tag('label', 'Title')
        with_tag('input#page_title[name=?]', "page[title]")
     #    with_tag('label', 'Parent Page')
-       with_tag('select#page_wanted_parent_id[name=?]', "page[wanted_parent_id]")
+       with_tag('select#page_parent_id[name=?]', "page[parent_id]")
     #    with_tag('label', 'Layout')
        with_tag('select#page_layout_id[name=?]', "page[layout_id]")
     #    with_tag('label', 'Width')

@@ -10,7 +10,7 @@
     <% end %>
 
     <% accordion_item "Hierarchy" do %>
-      <%= f.collection_select :wanted_parent_id, Folder.find(:all), :id, :title, :label => 'Parent Folder'  %>
+      <%= f.select_parent :parent_id, :label => 'Parent Folder' %>
     <% end %>
 
     <%= render_form_fields_for(f) %>

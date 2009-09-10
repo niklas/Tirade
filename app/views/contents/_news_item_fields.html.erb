@@ -1,4 +1,4 @@
-<%= news_item_fields.collection_select :wanted_parent_id, NewsFolder.find(:all), :id, :title, :label => 'Parent NewsFolder'  %>
+<%= news_item_fields.select_parent :parent_id, :label => 'Parent NewsFolder'  %>
 
 <%= news_item_fields.text_area :description, :rows => 7 %>
 <%= news_item_fields.text_area :body, :rows => 15 %>

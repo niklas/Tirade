@@ -33,7 +33,7 @@ describe "/contents/new.html.erb" do
         #  with_tag('label', 'Type')
         #  with_tag("select#news_item_type[name=?]", "news_item[type]")
         #end
-        with_tag("select#news_item_wanted_parent_id[name=?]", "news_item[wanted_parent_id]")
+        with_tag("select#news_item_parent_id[name=?]", "news_item[parent_id]")
       end
     end
   end
@@ -60,7 +60,7 @@ describe "/contents/new.html.erb" do
         #  with_tag('label', 'Type')
         #  with_tag("select#document_type[name=?]", "document[type]")
         #end
-        with_tag("select#document_wanted_parent_id[name=?]", "document[wanted_parent_id]")
+        with_tag("select#document_parent_id[name=?]", "document[parent_id]")
       end
     end
   end

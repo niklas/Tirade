@@ -78,7 +78,7 @@ describe "The Pages in the fixtures" do
     before(:each) do
       @page = Page.new(
         :title => 'yourself',
-        :wanted_parent_id => pages(:about).id
+        :parent_id => pages(:about).id
       )
     end
     it "should be valid" do

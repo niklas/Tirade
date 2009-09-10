@@ -10,7 +10,7 @@
       <%= panel_item( 
             h(news_folder.title) + 
             '   '  + 
-            link_to('new item', new_content_path(:content => {:type => 'NewsItem', :wanted_parent_id => news_folder.id}))
+            link_to('new item', new_content_path(:content => {:type => 'NewsItem', :parent_id => news_folder.id}))
           ) %>
       <% end %>
     <% end %>
