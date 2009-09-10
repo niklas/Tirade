@@ -936,9 +936,19 @@ $.fn.formInFrameInToolbox = function(options) {
           var left = $item.prev('li.record');
           var right = $item.next('li.record');
           if ( left.length ) {
-            console.debug("moved", $item.resourceURL(), "to right of", left.resourceId());
+            $item.closest('.list').beBusy('sorting');
+            $.ajax({
+              url: $item.resourceURL('move'),
+              type: 'PUT',
+              data: {right_of: left.resourceId()}
+            });
           } else if ( right.length ) {
-            console.debug("moved", $item.resourceURL(), "to left of", right.resourceId());
+            $item.closest('.list').beBusy('sorting');
+            $.ajax({
+              url: $item.resourceURL('move'),
+              type: 'PUT',
+              data: {left_of: right.resourceId()}
+            });
           }
         }
       });

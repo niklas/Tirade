@@ -70,6 +70,21 @@ module ManageResourceController
         end
       end
     end
+
+    def move
+      if left = params[:left_of]
+        object.move_to_left_of(left)
+      elsif right = params[:right_of]
+        object.move_to_right_of(right)
+      end
+      respond_to do |wants|
+        wants.js do
+          render :update do |page|
+            controller.send :update_page_on_moved, page
+          end
+        end
+      end
+    end
       
     private
     # Handle file uploads through iframe, see jquery.form.js and render_to_parent
@@ -158,6 +173,11 @@ module ManageResourceController
     def update_page_on_destroy(page)
       page.select_frame_for(object).remove
       page.select_frame(resource_name.pluralize, 'index').refresh()
+    end
+
+    def update_page_on_moved(page)
+      parent = object.parent
+      page.select_frame_for(parent, 'edit').find('.sort ul.list').replace_with( page.context.list_of(parent.children, :force_list => true) )
     end
 
     # name of partial to render on /index
