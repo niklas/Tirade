@@ -34,7 +34,7 @@ module ManageResourceController
     def multipart_form?
       object_params.andand.values.andand.any? do |d| 
         d.respond_to?(:content_type) || 
-          (d.respond_to?(:any?) && d.values.any? {|d2| d2.respond_to?(:content_type)} )
+          (d.respond_to?(:values) && d.values.any? {|d2| d2.respond_to?(:content_type)} )
       end
     end
 
