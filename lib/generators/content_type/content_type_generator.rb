@@ -45,6 +45,9 @@ class ContentTypeGenerator < ModelGenerator
       m.directory File.join(root,'config')
       m.template 'config/routes.rb', File.join(root, 'config/routes.rb')
 
+
+      m.directory File.join(root,'public', 'images', 'icons', 'types')
+
       m.readme 'INSTALLED'
 
     end
