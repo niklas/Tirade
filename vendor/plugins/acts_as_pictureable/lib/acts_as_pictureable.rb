@@ -38,10 +38,7 @@ module AlexPodaras
         end
         def new_image=(image_attributes)
           unless image_attributes.blank? || image_attributes[:image].blank?
-            transaction do
-              n = Image.create!(image_attributes)
-              self.picturizations.create!(:image => n)
-            end
+            self.images.build(image_attributes)
           end
         end
       end
