@@ -9,6 +9,7 @@
 
     <% accordion_item "What" do %>
       <%= f.select :assignment, Rendering::Assignments %>
+      <%= f.check_box :plural %>
       <%= f.has_one :content, :types => rendering.part.andand.preferred_types %>
 
       <% unless rendering.new_record? %>
