@@ -1,4 +1,7 @@
 <% accordion_item "Pictures" do %>
+  <% fields.fields_for :new_image do |image_fields| %>
+    <%= image_fields.file_field :image %>
+  <% end %>
   <%= fields.has_many :images, :foreign_key => 'image_ids' %>
 <% end %>
 
