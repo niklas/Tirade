@@ -1039,7 +1039,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       var updateValueName = function() {
         var d = select_direction.val();
         var a = select_attribute.val();
-        var name = 'rendering[scope_definition][' + d + '_by_' + a + ']';
+        var name = d + '_by_' + a;
         value.val( name );
       };
       $self.change( updateValueName );
