@@ -60,9 +60,9 @@ module InterfaceHelper
       add_class_to_html_options(opts, 'empty') if things.blank?
       content_tag(
         :ul,
-        things.collect do |thing|
+        things.andand.collect do |thing|
           list_item(thing, opts)
-        end.join(' '),
+        end.andand.join(' '),
         opts
       )
     end
