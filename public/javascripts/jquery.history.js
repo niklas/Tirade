@@ -82,7 +82,7 @@
         .attr('rel', $frame.attr('id') );
     },
     itemFor: function($frame) {
-      return this.items().filter('[rel=' + $($frame.attr('id')) + ']');
+      return this.items().filter('[rel=' + $($frame).attr('id') + ']');
     }
   });
 })(jQuery);
