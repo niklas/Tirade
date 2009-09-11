@@ -229,6 +229,7 @@ describe DocumentsController do
         ::Clipboard.stub!(:new).and_return(clipboard)
         clipboard.stub!(:<<).with(kind_of(Document)).and_return(true)
         do_request
+        response.body.should =~ /Toolbox.setClipboard/
       end
 
     end

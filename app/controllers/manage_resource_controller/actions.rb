@@ -125,6 +125,7 @@ module ManageResourceController
     def update_page_on_create(page)
       page.update_current_frame(object, 'show', :action => 'show')
       page.select_frame(resource_name.pluralize, 'index').refresh()
+      page.toolbox.set_clipboard render(:partial => 'clipboard/index')
     end
 
     def update_page_on_failed_create(page)
