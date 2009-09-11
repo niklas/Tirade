@@ -198,6 +198,9 @@ class Rendering < ActiveRecord::Base
   def content_type=(new_content_type)
     write_attribute(:content_type, new_content_type.to_s) unless new_content_type.to_s.blank?
   end
+  def content_type
+    read_attribute(:content_type) || part.andand.preferred_types.andand.first
+  end
   def content_id=(new_content_id)
     write_attribute(:content_id, new_content_id.to_i) unless new_content_id.to_i == 0
   end
