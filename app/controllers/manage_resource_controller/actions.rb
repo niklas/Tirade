@@ -125,6 +125,10 @@ module ManageResourceController
     def update_page_on_create(page)
       page.update_current_frame(object, 'show', :action => 'show')
       page.select_frame(resource_name.pluralize, 'index').refresh()
+      if object.respond_to?(:parent) && parent = object.parent
+        page.update_frame_for(parent)
+      end
+      page.update_frame_for(object.parent)
       page.toolbox.set_clipboard render(:partial => 'clipboard/index')
     end
 
@@ -156,6 +160,9 @@ module ManageResourceController
       page.select_frame_for(object, 'show').refresh()
       page.select_frame(resource_name.pluralize, 'index').refresh()
       page.update_current_frame(object, 'show', :action => 'show')
+      if object.respond_to?(:parent) && parent = object.parent
+        page.update_frame_for(parent)
+      end
     end
 
     def update_page_on_failed_update(page)
