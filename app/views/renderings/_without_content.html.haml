@@ -3,7 +3,7 @@
   %p 
     This Rendering has no Content.
     Focus this Rendering and drop
-  - if rendering.content_type.blank?
+  - unless rendering.has_content_type?
     a single one here or select a type.
     - unless rendering.part.nil?
       %h3== Avaiable Content Types for #{rendering.part.title}
