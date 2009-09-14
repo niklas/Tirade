@@ -28,7 +28,7 @@ class Part < ActiveRecord::Base
   acts_as_custom_configurable
   serialize :preferred_types, Array
 
-  attr_accessible :name, :options, :options_as_yaml, :preferred_types, :liquid, :use_theme, :define_options, :defined_options, :description
+  attr_accessible :name, :options, :options_as_yaml, :preferred_types, :liquid, :use_theme, :define_options, :defined_options, :description, :plural
   liquid_methods :name, :liquid
 
   PartsDir = File.join('parts','stock')
