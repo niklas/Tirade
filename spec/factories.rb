@@ -33,6 +33,11 @@ Factory.define :part do |f|
   f.sequence(:name) { |i| "Part ##{i}"}
   f.sequence(:filename) { |i| "part_#{i}" }
   f.preferred_types %w(Document)
+  f.plural false
+end
+
+Factory.define :plural_part , :parent => :part do |f|
+  f.plural true
 end
 
 Factory.define :static_part, :parent => :part do |f|
@@ -46,13 +51,11 @@ Factory.define :rendering do |f|
   f.assignment 'fixed'
   f.content_type 'Document'
   f.scope_definition({})
-  f.plural false
 end
 
 Factory.define :scoped_rendering, :parent => :rendering do |f|
   f.assignment 'scope'
-  f.content_type 'Document'
-  f.plural true
+  f.part {|part| part.association(:plural_part) }
 end
 
 Factory.define :image do |f|
