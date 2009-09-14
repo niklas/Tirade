@@ -68,6 +68,10 @@ class Rendering < ActiveRecord::Base
     !plural?
   end
 
+  def plural?
+    part.andand.plural?
+  end
+
   Assignments = %w(none fixed by_title_from_trailing_url scope).freeze unless defined?(Assignments)
 
   validates_inclusion_of :assignment, :in => Assignments

@@ -1,5 +1,5 @@
 class Part < ActiveRecord::Base
-  ConfigurationFields = [:preferred_types, :defined_options, :description].map(&:to_s) unless defined?(ConfigurationFields)
+  ConfigurationFields = [:preferred_types, :defined_options, :description, :plural].map(&:to_s) unless defined?(ConfigurationFields)
 
   def options_as_yaml
     self.options.to_yaml
