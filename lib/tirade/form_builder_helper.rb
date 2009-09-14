@@ -158,7 +158,7 @@ module Tirade
     end
 
     def select_parent(field=:parent_id, opts={})
-      choices = @template.nested_set_options(@object.class, @object) do |i|
+      choices = @template.nested_set_options(opts[:klass] || @object.class, @object) do |i|
         "#{'> ' * i.level} #{i.title}"
       end
       opts[:include_blank] = true
