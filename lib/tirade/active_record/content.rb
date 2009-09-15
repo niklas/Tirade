@@ -25,7 +25,7 @@ module Tirade
               has_slug :prepend_id => false, :source_column => :title_from_default_locale, :sync_slug => true
             end
             if translations = opts.delete(:translate)
-              translates *translations
+              translates *(translations - [:slug])
               unless translation_table_exists?
                 create_translation_table!(automatic_translation_fields) 
               end
@@ -141,7 +141,9 @@ module Tirade
 
         def title_from_default_locale
           if acts_as? :translated
-            globalize_translations.locale_equals(I18n.default_locale.to_s).first.andand.title || title
+            globalize.fetch(I18n.default_locale.to_s, :title) || 
+              globalize_translations.locale_equals(I18n.default_locale.to_s).first.andand.title ||
+              title
           else
             title
           end

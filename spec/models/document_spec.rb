@@ -77,6 +77,33 @@ describe Document do
       end
     end
 
+    describe "saved, updating title" do
+      before( :each ) do
+        @document.save
+        @updating = lambda { @document.update_attributes!(:title => 'Changed Title') }
+        @document.reload
+      end
+
+      it "should succeed" do
+        @updating.should_not raise_error
+      end
+
+      it "should update the title" do
+        @updating.call
+        @document.title.should == 'Changed Title'
+      end
+
+      it "should update the title in :en locale" do
+        @updating.call
+        @document.globalize_translations.locale_equals('en').first.title.should == 'Changed Title'
+      end
+
+      it "should update the slug" do
+        @updating.call
+        @document.slug.should == 'changed-title'
+      end
+    end
+
 
     describe "saved, switching to locale 'de'" do
       before( :each ) do
@@ -97,6 +124,10 @@ describe Document do
 
       it "should still have a title by falling back" do
         @document.title.should_not be_blank
+      end
+
+      it "should have a title from default locale (for slugs)" do
+        @document.title_from_default_locale.should_not be_blank
       end
 
 
@@ -127,6 +158,11 @@ describe Document do
           @updating.call
           @document.reload
           @document.title_from_default_locale.should_not == @document.title
+        end
+
+        it "should keep the slug from the default locale" do
+          @updating.call
+          @document.slug.should_not =~ /deutscher/i
         end
 
       end
