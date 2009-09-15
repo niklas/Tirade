@@ -1,16 +1,28 @@
 class RecordFrameRenderer < FrameRenderer
-  alias_method :record, :thingy
+  attr_reader :record
+  def initialize(record, template, opts={})
+    @record = record
+    super(template, opts)
+  end
   def meta
     super.merge({
-      :title => record.new_record? ? "new #{record.class_name}" : (record.title || "#{record.class_name} ##{record.id}"), 
-      :resource_name => template.resource_name,
       :id => record.id
     })
   end
 
-  def default_partial
-    'show'
+  def title
+    if record.new_record?
+      "new #{record_title}"
+    else
+      []
+      record_title
+    end
   end
+
+  def record_title
+    (record.title || "#{record.class_name} ##{record.id}")
+  end
+
 
   def inner
     tried_with_name = false
@@ -29,6 +41,7 @@ class RecordFrameRenderer < FrameRenderer
 
   def render_options
     super.merge({
+      :object => record,
       :locals => record ? {
         template.resource_name.to_sym => record
       } : nil
