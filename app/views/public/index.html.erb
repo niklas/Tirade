@@ -1,2 +1,5 @@
+<% content_for :head do %>
+  <base href="<%= url_for(:path => @page.path, :only_path => false, :trailing_slash => true) -%>" />
+<% end %>
 <%= render_page(@page) %>
 <%= render :partial => '/shared/loginout' %>
