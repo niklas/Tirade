@@ -21,8 +21,7 @@
 #
 
 class Content < ActiveRecord::Base
-  acts_as_tree
-  default_scope :order => 'position'
+  acts_as_tree :order => 'position'
 
   # TODO how to handle the #type correctly .. and when?
   attr_protected :type, :state, :owner_id, :owner, :published_at, :created_at, :updated_at
