@@ -198,7 +198,7 @@ describe DocumentsController do
 
       it "should render the contents form (document has no own yet )" do
         do_request
-        response.should render_template('contents/_form.html.erb')
+        response.should render_template('documents/_form.html.erb')
       end
 
     end
@@ -220,7 +220,7 @@ describe DocumentsController do
       it "should update the 'new' (current) frame with 'show'" do
         @request.env['Tirade-Frame'] = '2342'
         do_request
-        response.should render_template('contents/_show.html.erb')
+        response.should render_template('documents/_show.html.erb')
         response.should select_toolbox_frame('#frame_2342')
       end
 
@@ -256,7 +256,7 @@ describe DocumentsController do
 
       it "should rerender the form" do
         do_request
-        response.should render_template('contents/_form.html.erb')
+        response.should render_template('documents/_form.html.erb')
       end
 
       it "should show validation errors" do
@@ -283,7 +283,7 @@ describe DocumentsController do
 
       it "should render show partial" do
         do_request
-        response.should render_template('contents/_show.html.erb')
+        response.should render_template('documents/_show.html.erb')
       end
 
     end
@@ -299,7 +299,7 @@ describe DocumentsController do
 
       it "should render the contents form (document has no own yet )" do
         do_request
-        response.should render_template('contents/_form.html.erb')
+        response.should render_template('documents/_form.html.erb')
       end
 
       it "should replace the current frame ('show')" do
@@ -328,7 +328,7 @@ describe DocumentsController do
       it "should update current frame with 'show'" do
         @request.env['Tirade-Frame'] = '2342'
         do_request
-        response.should render_template('contents/_show.html.erb')
+        response.should render_template('documents/_show.html.erb')
         response.should select_toolbox_frame('#frame_2342')
       end
     end
@@ -367,7 +367,7 @@ describe DocumentsController do
 
       it "should rerender the form" do
         do_request
-        response.should render_template('contents/_form.html.erb')
+        response.should render_template('documents/_form.html.erb')
       end
 
       it "should show validation errors" do
