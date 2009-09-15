@@ -272,16 +272,29 @@ describe "The Renderings loaded by fixtures" do
 
 end
 
-describe Rendering, "with Page with trailing path" do
+describe Rendering, "with Folder in Page with trailing path" do
   before( :each ) do
-    @rendering = Factory(:rendering)
+    @folder = Factory(:folder)
+    @rendering = Factory :rendering, :content => @folder
     @page = @rendering.page
-    @trailing_path = ["Goodbye", "Morning", "Glory"]
+    @trailing_path = [ @folder.children.first.slug ]
     @rendering.page.trailing_path = @trailing_path
   end
 
   it "should keep the same page" do
     @rendering.page.should == @page
+  end
+
+  it "should be singular" do
+    @rendering.should be_singular
+  end
+
+  it "should have content" do
+    @rendering.should have_content
+  end
+
+  it "should have content with at least 3 children" do
+    @rendering.content.should have_at_least(3).children
   end
 
   it "should access this path" do
@@ -291,6 +304,11 @@ describe Rendering, "with Page with trailing path" do
   it "should include this path in its final options" do
     @rendering.final_options.should have_key('trailing_path_of_page')
     @rendering.final_options['trailing_path_of_page'].should == @trailing_path
+  end
+
+  it "should include a child having a slug like trailing_path_of_page" do
+    @rendering.final_options.should have_key('child')
+    @rendering.final_options['child'].should_not be_nil
   end
 end
 

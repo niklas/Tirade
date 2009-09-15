@@ -9,6 +9,16 @@ Factory.define :document do |f|
   f.body "A lot of Text"
 end
 
+Factory.define :folder do |f|
+  f.sequence(:title) { |i| "folder ##{i}"}
+  f.sequence(:slug) { |i| "folder-#{i}-slug"}
+  f.children do |c|
+    cs = []
+    3.times { cs << c.association(:document) }
+    cs
+  end
+end
+
 Factory.define :news_item do |f|
   f.sequence(:title) { |i| "News Item ##{i}"}
   f.sequence(:slug) { |i| "news-item-#{i}-slug"}

@@ -248,9 +248,13 @@ class Rendering < ActiveRecord::Base
   end
 
   def final_options
-    options.to_hash.
-      merge(context).
-      merge(part.andand.options || {})
+    returning options.to_hash do |o|
+      o.merge! context
+      if singular? && has_content? && content.respond_to?(:children) && content.acts_as?(:slugged) && !trailing_path_of_page.blank?
+        o.merge! 'child' => content.children.find_by_slug(trailing_path_of_page.first)
+      end
+      o.merge! part.andand.options || {}
+    end
   end
 
   def needs_content?
