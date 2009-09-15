@@ -1,0 +1,16 @@
+{% if child %}
+
+  {{ child | render: full_part }}
+
+{% else %}
+
+{% for child in object.children %}
+<div>
+  {{ child | render: preview_part }}
+  {% if show_more_link %}
+  <a href="{{ child.slug }}">{{ more_text }}</a>
+  {% endif %}
+</div>
+{% endfor %}
+
+{% endif %}
