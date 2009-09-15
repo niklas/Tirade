@@ -169,6 +169,7 @@
         .css('cursor', 'crosshair')
         .one('click', function(ev) {
           ev.stopPropagation();
+          ev.preventDefault();
           $(ev.target).closest('.ui-focusable').focusable('focus');
           $('body').css('cursor', 'auto');
           clicker.removeClass('ui-state-active');
