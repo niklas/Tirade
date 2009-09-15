@@ -1,0 +1,21 @@
+<% document ||= show || @document %>
+
+<% accordion do %>
+
+  <% accordion_item "General" do %>
+    <%= show document, :title %>
+    <%= show document, :parent %>
+  <% end %>
+
+  <% accordion_item 'Description' do %>
+    <%= show document, :description %>
+  <% end %>
+
+  <% accordion_item 'Body' do %>
+    <%= show document, :body %>
+  <% end %>
+
+  <%= actings_for document %>
+
+<% end %>
+

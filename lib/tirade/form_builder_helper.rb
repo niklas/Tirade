@@ -61,6 +61,10 @@ module Tirade
       wrap(field,options, super(field, options, html_options))
     end
 
+    def tree_select(field, collection, value_method, text_method, options = {}, html_options = {})
+      wrap(field, options, super)
+    end
+
     def check_box(field, options = {}, checked_value = "1", unchecked_value = "0")
       options[:class] ||= ''
       options[:class] += ' checkbox'
@@ -162,7 +166,7 @@ module Tirade
         "#{'> ' * i.level} #{i.title}"
       end
       opts[:include_blank] = true
-      opts[:label] = "Parent #{@object_name}"
+      opts[:label] ||= "Parent #{@object_name}"
       select field, choices, opts
     end
 
