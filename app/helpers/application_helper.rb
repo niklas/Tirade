@@ -43,10 +43,16 @@ module ApplicationHelper
     content = Page.find_by_url(content) if content.is_a?(String)
     return "[link target not found]" unless content
     label = opts.delete(:label) || content.title
-    url = [I18n.locale, content.url, opts.delete(:item_id)].compact.join('/')
-    link_to(label, '/' + url,opts)
+    url = public_content_path(content, opts)
+    link_to(label, url, opts)
   end
   alias :public_page_link :public_content_link
+
+  def public_content_path(content, opts={})
+    path = content.path
+    path += [opts.delete(:item_id)] if opts.has_key?(:item_id)
+    url_for(:path => path)
+  end
 
   def public_item_link_with_scaled_image(item,geom)
     parent = item.parent
