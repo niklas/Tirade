@@ -1,10 +1,13 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe RecordFrameRenderer do
+  subject do
+    @record = Factory :document
+    RecordFrameRenderer.new(@record, helper)
+  end
   before( :each ) do
     stubs_for_helper
-    @record = Factory :document
-    @r = RecordFrameRenderer.new(@record, template)
   end
+  it_should_behave_like 'every FrameRenderer'
 end
 

@@ -1,9 +1,7 @@
 class FrameRenderer
-  attr_reader :thingy, :template, :partial, :options
-  def initialize(thingy, partial, template, options={})
-    @thingy = thingy
+  attr_reader :template, :options
+  def initialize(template, options={})
     @template = template
-    @partial = partial || default_partial
     @options = options
     add_links
   end
@@ -16,8 +14,8 @@ class FrameRenderer
     end
   end
 
-  def default_partial
-    'show'
+  def partial
+    'frame'
   end
 
   def links
@@ -30,22 +28,12 @@ class FrameRenderer
     end
   end
 
-
-  def to_s
+  def html
     template.content_tag(:div, inner, html_options)
   end
 
   def inner
-    begin
-      template.render render_options
-    rescue ActionView::MissingTemplate => e
-      if !partial.starts_with?('/')
-        @partial = "/#{partial}"
-        retry
-      else
-        raise e
-      end
-    end
+    template.render render_options
   end
 
   def html_options
@@ -56,14 +44,6 @@ class FrameRenderer
     options
   end
 
-  def partial_name
-    if partial.index('/')
-      partial.split('/').last
-    else
-      partial
-    end
-  end
-
   def css
     ['frame']
   end
@@ -72,18 +52,23 @@ class FrameRenderer
     (options[:action] || controller.action_name).to_s
   end
 
+  def title
+    "Frame"
+  end
+
   def meta
     {
       :href => request.url, 
       :action => action, 
-      :controller => controller.controller_name
+      :controller => controller.controller_name,
+      :resource_name => template.resource_name,
+      :title => title
     }
   end
 
   def render_options
     {
       :layout => '/layouts/toolbox',
-      :object => thingy,
       :partial => partial,
     }
   end

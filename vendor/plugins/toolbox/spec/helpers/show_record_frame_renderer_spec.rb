@@ -1,19 +1,17 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe CollectionFrameRenderer do
+describe ShowRecordFrameRenderer do
   subject do
-    5.times { Factory :document }
-    @collection = Document.all
-    CollectionFrameRenderer.new(@collection, helper)
+    @record = Factory :document
+    ShowRecordFrameRenderer.new(@record, helper)
   end
   before( :each ) do
     stubs_for_helper
   end
-
   it_should_behave_like 'every FrameRenderer'
 
   it "should add resource identifier and metadata to div" do
-    html.should have_tag("div.frame.index.document[data]")
+    html.should have_tag("div.frame.document.document_#{@record.id}[data]")
   end
 end
 

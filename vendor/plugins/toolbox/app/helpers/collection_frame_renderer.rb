@@ -1,21 +1,27 @@
 class CollectionFrameRenderer < FrameRenderer
-  alias_method :collection, :thingy
-  def meta
-    super.merge({
-      :title => template.human_name.pluralize,
-      :resource_name => template.resource_name
-    })
+  attr_reader :collection
+  def initialize(collection, template, opts={})
+    @collection = collection
+    super(template, opts)
   end
+
+  def title
+    template.human_name.pluralize
+  end
+
   def render_options
     super.merge({
+      :object => collection,
       :locals => collection ? {
         template.resource_name.pluralize.to_sym => collection
       } : nil
     })
   end
-  def default_partial
+
+  def partial
     'list'
   end
+
   def css
     css = super
     css << 'index'

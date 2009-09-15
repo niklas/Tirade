@@ -25,23 +25,34 @@ describe ToolboxHelper do
   end
 
   it "should build a frame to show a record" do
-    helper.frame_for(@document).should have_tag("div.frame.document.document_#{@document.id}[data]")
+    ShowRecordFrameRenderer.should_receive(:new).with(@document, helper, {}).and_return(
+      mock(ShowRecordFrameRenderer, :html => 'show record')
+    )
+    helper.frame_for(@document).should == 'show record'
   end
 
   it "should build a frame to edit a record" do
-    helper.frame_for(@document, 'form').should have_tag("div.frame.document_#{@document.id}[data]")
+    EditRecordFrameRenderer.should_receive(:new).with(@document, helper, {}).and_return(
+      mock(EditRecordFrameRenderer, :html => 'edit record')
+    )
+    helper.frame_for(@document, 'edit').should == 'edit record'
   end
-
 
   it "should build a frame to create a record (given new record)" do
     document = Factory.build(:document)
-    helper.frame_for(document, 'form', :title => 'New Document').should have_tag("div.frame.document.new_document[data]")
+    EditRecordFrameRenderer.should_receive(:new).with(document, helper, {}).and_return(
+      mock(EditRecordFrameRenderer, :html => 'new record')
+    )
+    helper.frame_for(document, 'edit').should == 'new record'
   end
 
   it "should build a frame for a collection" do
     5.times { Factory(:document) }
     all_documents = Document.all
-    helper.frame_for(all_documents, 'list').should have_tag("div.frame.index.document[data]")
+    CollectionFrameRenderer.should_receive(:new).with(all_documents, helper, {}).and_return(
+      mock(CollectionFrameRenderer, :html => 'list of records')
+    )
+    helper.frame_for(all_documents).should == 'list of records'
   end
 
   it "should help to push a frame to toolbox to show a record" do
@@ -59,7 +70,7 @@ describe ToolboxHelper do
 
   it "should help to push a frame for a collection" do
     5.times { Factory(:document) }
-    helper.stub!(:frame_renderer_for).and_return( mock(:to_s => "Frame with collection") )
+    helper.stub!(:frame_renderer_for).and_return( mock(:html => "Frame with collection") )
     rjs_for.push_frame_for(Document.all).should == %Q[Toolbox.push("Frame with collection");]
   end
 
@@ -67,12 +78,10 @@ describe ToolboxHelper do
   it "should build frame for error" do
     error = mock(ActionView::TemplateError)
     ApplicationController.stub!(:rescue_templates).and_return('Spec::Mocks::Mock' => 'template_error')
-    helper.should_receive(:render).with(
-      :partial => '/toolbox/template_error',
-      :object => error,
-      :layout => '/layouts/toolbox'
-    ).and_return('error')
-    helper.frame_for_error(error).should have_tag('div.frame.error[data]')
+    ExceptionFrameRenderer.should_receive(:new).with(error, helper).and_return(
+      mock(ExceptionFrameRenderer, :html => 'error')
+    )
+    helper.frame_for_error(error).should == 'error'
   end
 
 

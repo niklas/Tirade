@@ -41,12 +41,23 @@ module ToolboxHelper
     page.context.request.headers['Tirade-Frame']
   end
 
-  def frame_for(thingy, partial='show', opts={})
-    frame_renderer_for(thingy, partial, opts).to_s
+  def frame_for(thingy, kind='show', opts={})
+    frame_renderer_for(thingy, kind, opts).html
   end
 
-  def frame_renderer_for(thingy, partial=nil, opts={})
-    FrameRenderer.for(thingy, partial, self, opts)
+  def frame_renderer_for(thingy, kind='show', opts={})
+    if thingy.respond_to?(:each)
+      CollectionFrameRenderer.new(thingy, self, opts)
+    else
+      case kind.to_s
+      when 'show'
+        ShowRecordFrameRenderer.new(thingy, self, opts)
+      when 'edit', 'form'
+        EditRecordFrameRenderer.new(thingy, self, opts)
+      else
+        FrameRenderer.new(self, opts)
+      end
+    end
   end
 
 
@@ -84,7 +95,7 @@ module ToolboxHelper
   end
 
   def frame_for_error(exception)
-    ExceptionFrameRenderer.new(exception, nil, self).to_s
+    ExceptionFrameRenderer.new(exception, self).html
   end
 
   # Update a single attribute with jquery.

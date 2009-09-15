@@ -1,8 +1,9 @@
 class ExceptionFrameRenderer < FrameRenderer
-  alias_method :exception, :thingy
-  def initialize(*args)
-    super
+  attr_reader :exception
+  def initialize(exception, template, opts={})
+    @exception = exception
     @partial = ApplicationController.rescue_templates[exception.class.name]
+    super(template, opts)
   end
   def css
     super + %w(error exception)
