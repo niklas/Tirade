@@ -51,7 +51,7 @@ module ApplicationHelper
   def public_content_path(content, opts={})
     path = content.path
     path += [opts.delete(:item_id)] if opts.has_key?(:item_id)
-    url_for(:path => path)
+    url_for(:path => path, :action => 'index', :controller => 'public')
   end
 
   def public_item_link_with_scaled_image(item,geom)
