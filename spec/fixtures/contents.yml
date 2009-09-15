@@ -9,8 +9,6 @@ introduction:
   position: 1
   parent_id: 1
   slug: 'introduction'
-  lft: 1
-  rgt: 10
 
 welcome:
   title: Welcome
@@ -22,8 +20,6 @@ welcome:
   position: 2
   parent_id: 1
   slug: 'welcome'
-  lft: 20
-  rgt: 30
 
 goodbye:
   title: Goodbye
@@ -36,8 +32,6 @@ goodbye:
   position: 3
   parent_id: 1
   slug: 'goodbye'
-  lft: 30
-  rgt: 40
 
 love_letter:
   title: Love Letter
@@ -50,8 +44,6 @@ love_letter:
   position: 4
   parent_id: 1
   slug: 'love-letter'
-  lft: 40
-  rgt: 50
 
     
 cheezeburgaz:
