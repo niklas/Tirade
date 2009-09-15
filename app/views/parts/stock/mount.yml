@@ -1,0 +1,18 @@
+--- 
+:preferred_types: 
+- Folder
+:description: Mount a Folder. Show a list of its children or the child specified by trailing URL
+:defined_options: 
+  more_text: 
+  - string
+  - More...
+  full_part: 
+  - string
+  - full_view_with_picture
+  show_more_link: 
+  - boolean
+  - "true"
+  preview_part: 
+  - string
+  - simple_preview
+:plural: false
