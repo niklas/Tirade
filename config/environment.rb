@@ -40,6 +40,7 @@ Rails::Initializer.run do |config|
   config.gem 'libxml-ruby', :version => '>=1.1.3', :lib => 'xml'
   config.gem 'lockdown', :lib => false, :version => '1.3.0'
   config.gem 'collectiveidea-awesome_nested_set', :source => 'http://gems.github.com', :version => '1.4.2', :lib => 'awesome_nested_set'
+  config.gem 'saturnflyer-acts_as_tree', :source => 'http://gems.github.com', :version => '1.2.3', :lib => 'acts_as_tree'
 
   # Add additional load paths for your own custom dirs
   config.load_paths += %W( 
