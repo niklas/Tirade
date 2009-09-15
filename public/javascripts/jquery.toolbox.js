@@ -917,7 +917,7 @@ $.fn.formInFrameInToolbox = function(options) {
     if ($form.is('.edit_rendering'))  { $form.editRenderingFormInFrameInToolbox(); }
     if ($form.is('.new_image.with_flash')) { $form.newImageFormInFrameInToolbox(); }
 
-    $('textarea.markitup.textile').markItUp(myTextileSettings);
+    $('textarea.markitup.textile:not(.markItUpEditor)').markItUp(myTextileSettings);
     $('textarea:not(.markitup)').each(function() {
       if ( !$(this).data('hasElastic') ) {
         $(this).elastic().data('hasElastic', true);
