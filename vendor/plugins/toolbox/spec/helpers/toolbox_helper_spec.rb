@@ -4,10 +4,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe ToolboxHelper do
 
   before( :each ) do
-    helper.stub!(:render).and_return("stubbed render call")
+    stubs_for_helper
     @document = Factory(:document)
-    helper.stub!(:human_name).and_return('Documents')
-    helper.stub!(:resource_name).and_return('document')
   end
 
   it "should help to select a frame by controller and action" do
