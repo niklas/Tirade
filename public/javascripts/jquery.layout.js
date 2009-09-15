@@ -24,6 +24,7 @@ window.Rendering = {
       Toolbox.open();
       Toolbox.beBusy();
       Rendering.create(attributes);
+      return false;
     });
   },
   update: function(rendering, attributes) {
@@ -58,6 +59,7 @@ window.Grid = {
       Toolbox.open();
       Toolbox.beBusy();
       Grid.create(attributes);
+      return false;
     });
   },
   update: function(grid, attributes) {
