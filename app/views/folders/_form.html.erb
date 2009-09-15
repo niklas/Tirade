@@ -1,0 +1,29 @@
+<% folder ||= form || @folder %>
+
+<% form_for(folder) do |f| %>
+  <% accordion do %>
+    <%= f.error_messages %>
+
+    <% accordion_item "General" do %>
+      <%= f.text_field :title %>
+      <%= f.tree_select :parent_id,  Folder.roots, :id, :title, :include_blank => true, :label => 'Parent Folder' %>
+    <% end %>
+
+    <% accordion_item 'Children' do %>
+      <%= f.sort :children %>
+    <% end %>
+
+    <% accordion_item 'Description' do %>
+      <%= f.text_area :description %>
+    <% end %>
+
+    <% accordion_item 'Body' do %>
+      <%= f.text_area :body %>
+    <% end %>
+
+    <%= f.actings %>
+
+    <%= f.submit %>
+
+  <% end %>
+<% end %>
