@@ -7,7 +7,8 @@ class Part < ActiveRecord::Base
 
   def render_with_content(content, assigns={}, context=nil)
     return '' if content.nil?
-    render(options_with_object(content).merge(assigns || {}),context)
+    options = options_with_object(content).merge(assigns || {})
+    render(options,context)
   end
 
   def render(assigns={},context=nil)
