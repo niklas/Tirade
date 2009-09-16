@@ -5,16 +5,19 @@ class RecordFrameRenderer < FrameRenderer
     super(template, opts)
   end
   def meta
-    super.merge({
-      :id => record.id
-    })
+    if record.new_record?
+      super
+    else
+      super.merge({
+        :id => record.id
+      })
+    end
   end
 
   def title
     if record.new_record?
-      "new #{record_title}"
+      "new #{record.class_name}"
     else
-      []
       record_title
     end
   end
@@ -56,17 +59,6 @@ class RecordFrameRenderer < FrameRenderer
       css << record.resource_name
     end
     css
-  end
-
-  def links
-    if action == 'show'
-      [
-        template.link_to_edit(record),
-        template.link_to_destroy(record)
-      ]
-    else
-      []
-    end
   end
 end
 

@@ -6,14 +6,6 @@ class FrameRenderer
     add_links
   end
 
-  def self.for(thingy, partial, template, opts={})
-    if thingy.respond_to?(:each)
-      CollectionFrameRenderer.new(thingy, partial, template, opts)
-    else
-      RecordFrameRenderer.new(thingy, partial, template, opts)
-    end
-  end
-
   def partial
     'frame'
   end
