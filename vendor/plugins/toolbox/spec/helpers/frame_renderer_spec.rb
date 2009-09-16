@@ -7,5 +7,6 @@ describe FrameRenderer do
     stubs_for_helper
   end
   it_should_behave_like 'every FrameRenderer'
+
 end
 

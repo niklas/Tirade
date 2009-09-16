@@ -147,6 +147,18 @@ module ApplicationHelper
     link_to(label, url, options)
   end
 
+  def link_to_cancel(label='Cancel')
+    link_to_function label do |page|
+      page.toolbox.pop
+    end
+  end
+
+  def link_to_ok(label='OK')
+    link_to_function label do |page|
+      page.toolbox.pop
+    end
+  end
+
   def title_for(thingy)
     thingy.andand.title || "#{thingy.class} ##{thingy.id}"
   end
