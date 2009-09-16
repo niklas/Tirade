@@ -168,8 +168,10 @@ module InterfaceHelper
 
   # We carry the name of the resource in the di@title
   def show(obj,name,opts={}, &block)
-    label = opts.delete(:label) || _(name.to_s.humanize)
-    label = nil if opts.delete(:skip_label)
+    label = opts.delete(:label)
+    if label != false
+      label ||= _(name.to_s.humanize)
+    end
     add_class_to_html_options(opts, name.to_s)
     opts[:title] ||= name.to_s
     opts[:dd] ||= {}
@@ -279,12 +281,6 @@ module InterfaceHelper
   def toolbox_item_cycle
     cycle('odd', 'even', :name => 'list_items')
   end
-
-  def back_link(label='Back',opts={})
-    add_class_to_html_options(opts, 'back')
-    li_link_to label, '#', opts
-  end
-
 
   def live_search_for(resource, opts={})
     inner = ''

@@ -8,11 +8,11 @@
   <% end %>
 
   <% accordion_item 'Description' do %>
-    <%= show document, :description %>
+    <%= show document, :description, :label => false %>
   <% end %>
 
   <% accordion_item 'Body' do %>
-    <%= show document, :body %>
+    <%= show document, :body, :label => false %>
   <% end %>
 
   <%= actings_for document %>

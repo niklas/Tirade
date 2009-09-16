@@ -10,11 +10,11 @@
     <% end %>
 
     <% accordion_item 'Description' do %>
-      <%= f.text_area :description %>
+      <%= f.text_area :description, :label => false %>
     <% end %>
 
     <% accordion_item 'Body' do %>
-      <%= f.text_area :body %>
+      <%= f.text_area :body, :label => false %>
     <% end %>
 
     <%= f.actings %>
