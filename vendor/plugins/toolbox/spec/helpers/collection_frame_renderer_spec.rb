@@ -23,7 +23,7 @@ describe CollectionFrameRenderer do
         :documents => @collection
       },
       :layout => '/layouts/toolbox',
-      :partial => 'list'
+      :partial => '/list'
     }
   end
 
