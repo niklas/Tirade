@@ -1,10 +1,8 @@
 <% rendering ||= form %>
-<% links do %>
-  <%= back_link 'cancel' %>
-<% end %>
-<%= error_messages_for :rendering, :object => rendering %>
 
 <% form_for(rendering) do |f| %>
+  <%= f.error_messages %>
+
   <% accordion do %>
 
     <% accordion_item "What" do %>
