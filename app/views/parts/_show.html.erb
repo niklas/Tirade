@@ -3,7 +3,7 @@
 <% accordion do %>
   
   <% accordion_item 'Preview' do %>
-    <% show part, :preview, :skip_label => true do %>
+    <% show part, :preview, :label => false do %>
       <div class="rendering <%= part.filename -%> <%= part.preferred_types.first.andand.domify %>">
         <%= part.render_with_fake_content %>
       </div>

@@ -86,9 +86,11 @@ module Tirade
       inner = ''
       inner << @template.list_of(things, :force_list => true)
       inner << @template.live_search_for(assoc.to_s.singularize)
-
       inner << @template.hidden_field_tag("#{@object_name}[#{fkey}][]","empty", :class => 'association_id')
-      wrap(assoc, {:class => 'many association'}, inner)
+
+      @template.add_class_to_html_options opts, 'many'
+      @template.add_class_to_html_options opts, 'associations'
+      wrap(assoc, opts, inner)
     end
 
     def has_one(assoc, opts={})
@@ -173,16 +175,22 @@ module Tirade
     private
     def wrap(field, options, tag_output)
       @template.add_class_to_html_options options, field.to_s
-      label = @template.content_tag(
-        :label,
-        (options.delete(:label) || field.to_s.humanize),
-        {:for => "#{@object_name.to_s}_#{field}"}
-      )
+      label = label_for(field, options.delete(:label))
       @template.content_tag(
         :div,
         label + ' ' + tag_output,
         options
       )
+    end
+
+    def label_for(field, given=nil)
+      if given != false
+        @template.content_tag(
+          :label, (given || field.to_s.humanize), {:for => "#{@object_name.to_s}_#{field}"}
+        )
+      else
+        ''
+      end
     end
 
   end
