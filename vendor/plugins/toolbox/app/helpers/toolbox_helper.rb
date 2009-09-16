@@ -50,12 +50,10 @@ module ToolboxHelper
       CollectionFrameRenderer.new(thingy, self, opts)
     else
       case kind.to_s
-      when 'show'
-        ShowRecordFrameRenderer.new(thingy, self, opts)
       when 'edit', 'form'
         EditRecordFrameRenderer.new(thingy, self, opts)
       else
-        FrameRenderer.new(self, opts)
+        ShowRecordFrameRenderer.new(thingy, self, opts)
       end
     end
   end
