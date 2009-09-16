@@ -19,7 +19,7 @@ class CollectionFrameRenderer < FrameRenderer
   end
 
   def partial
-    'list'
+    '/list'
   end
 
   def css
