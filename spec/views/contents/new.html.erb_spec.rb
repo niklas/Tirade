@@ -48,18 +48,12 @@ describe "/contents/new.html.erb" do
       render "/contents/new.html.erb"
       
       response.should have_tag("form[action=?][method=post]", documents_path) do
-        without_tag('p.default.warning')
+        with_tag('p.default.warning') # there is no fields partial for documents
         without_tag("input#document_state[name=?]", "document[state]")
         without_tag("input#document_position[name=?]", "document[position]")
         without_tag("input#document_lft[name=?]", "document[lft]")
         without_tag("input#document_rgt[name=?]", "document[rgt]")
         with_tag("input#document_title[name=?]", "document[title]")
-        with_tag("textarea#document_description[name=?]", "document[description]")
-        with_tag("textarea#document_body[name=?]", "document[body]")
-        #with_tag('div.type') do
-        #  with_tag('label', 'Type')
-        #  with_tag("select#document_type[name=?]", "document[type]")
-        #end
         with_tag("select#document_parent_id[name=?]", "document[parent_id]")
       end
     end
