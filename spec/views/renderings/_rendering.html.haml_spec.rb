@@ -10,7 +10,7 @@ describe "/rendering/_rendering.html.haml" do
   end
 
   def html
-    template.render_rendering @rendering
+    template.render_rendering(@rendering).dup
   end
 
   def have_rendering(select='',*args)
