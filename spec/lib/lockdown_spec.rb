@@ -10,7 +10,7 @@ describe "With Lockdown rules applied" do
     it { should include('stylesheets/toolbox') }
     it { should include('stylesheets/toolbox_colors') }
     it { should include('stylesheets/interface') }
-    it { should include('stylesheets/permissions') }
+    it { should include('stylesheets/content') }
     it { should include('stylesheets/focus') }
 
     it { should include('javascripts/named_routes') }
