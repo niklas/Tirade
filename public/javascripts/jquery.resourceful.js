@@ -187,6 +187,7 @@
     return $(this).each(function() {
       $(this)
         .addClass('ui-widget-content ui-corner-all ui-state-default')
+        .filter(':last-child').addClass('last').end()
         .filter(':has(a.show,a.index)')
           .css('cursor', 'pointer')
           .hover( function() { $(this).addClass('ui-state-hover'); }, function() { $(this).removeClass('ui-state-hover'); })

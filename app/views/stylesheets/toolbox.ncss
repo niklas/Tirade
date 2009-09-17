@@ -58,18 +58,18 @@ body {
     width: 100%;
     overflow-y: auto;
     height: 94%;
-    *.accordion_toggle {
+    *.ui-accordion-header {
       line-height: 2.3em;
       padding: 0pt 2.3em;
       clear: both;
     }
-    *.accordion_content {
+    *.ui-accordion-content {
       overflow: auto;
       padding: 0;
-      border: none;
       margin-bottom: 3px;
+      margin-top: -2px;
       *.ui-helper-clearfix.last {
-        margin-bottom: 23px;
+        margin-bottom: 15px;
       }
     }
   }
@@ -131,9 +131,8 @@ body {
     }
     dl {
       margin: 0;
-      width: 100%;
       di {
-        margin: 0.3em 0;
+        margin: 10px 0 17px 0;
         position: relative;
         dt {
           font-weight:bold;
