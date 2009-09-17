@@ -95,13 +95,13 @@
 
   // Returns image_23
   $.fn.resourceIdentifier = function() {
-    var m = $(this).attr('rel').match(/([\w_]+_\d+)/);
+    var m = $(this).closest('[rel]').attr('rel').match(/([\w_]+_\d+)/);
     if ( m ) { return(m[1]); }
   };
 
   // Returns { type: 'Image', id: 23 }
   $.fn.typeAndId = function() {
-    var match = $(this).attr('rel').match(/([\w_]+)_(\d+)/);
+    var match = $(this).closest('[rel]').attr('rel').match(/([\w_]+)_(\d+)/);
     if (match) {
       return({
         type: $.string(match[1]).gsub(/_/,'-').capitalize().camelize().str,
