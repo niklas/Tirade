@@ -20,6 +20,7 @@ Toolbox = {
         .dialog({
           closeOnEscape: false,
           minHeight: Toolbox.minHeight,
+          height: Toolbox.minHeight,
           minWidth: 300,
           title: 'Toolbox Dialog',
           dragStart: Toolbox.overflowsOff,

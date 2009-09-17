@@ -55,9 +55,7 @@ body {
     }
   }
   div.accordion {
-    width: 100%;
     overflow-y: auto;
-    height: 94%;
     *.ui-accordion-header {
       line-height: 2.3em;
       padding: 0pt 2.3em;
