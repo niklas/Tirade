@@ -22,8 +22,8 @@ welcome:
   slug: 'welcome'
 
 goodbye:
-  title: Goodbye
-  slug: goodbye
+  title: Goodbye Fella
+  slug: goodbye-fella
   description: This is goodbye to oyu
   body: If you read this, the page has come to an end
   type: Document

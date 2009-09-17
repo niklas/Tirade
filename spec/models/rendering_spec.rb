@@ -63,7 +63,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
   before(:each) do
     @page = pages(:main)
     @grid = grids(:layout_50_50_1)
-    @goodbye = Factory(:document, :title => 'Goodbye', :description => 'If you read this, the page has come to an end' )
+    @goodbye = Factory(:document, :title => 'This is the End', :description => 'If you read this, the page has come to an end' )
     lambda do
       @rendering = Rendering.create!(
         :page => @page,
@@ -77,7 +77,7 @@ describe Rendering, ' appended to the left column of the main page, containing a
     @rendering.should be_has_content
   end
   it "should have a speaking label" do
-    @rendering.label.should == 'Simple Preview: Goodbye'
+    @rendering.label.should == 'Simple Preview: This is the End'
   end
   it "should be the last item in the left column" do
     @page.renderings.for_grid(@grid).last.should == @rendering
