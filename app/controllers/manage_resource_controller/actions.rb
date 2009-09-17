@@ -112,7 +112,7 @@ module ManageResourceController
         end
       elsif wants_refresh?
         # TODO replace current_frame
-        page.update_frames :index => [collection, 'list']
+        page.update_current_frame(collection)
       else
         page.push_frame_for(collection, index_view)
       end
@@ -165,7 +165,7 @@ module ManageResourceController
     end
 
     def update_page_on_preview(page)
-      if object.acts_as?(:content)
+      if object.acts_as?(:content) && @context_page
         @context_page.renderings.for_content(object).each do |rendering|
           rendering.content = object
           rendering.touch

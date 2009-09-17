@@ -187,6 +187,32 @@ describe DocumentsController do
       end
 
     end
+
+    describe "get /index for refresh" do
+      def do_request(term='lot')
+        @request.env['Tirade-Frame'] = '2342'
+        get :index, :format => 'js', :refresh => 1
+      end
+
+      it_should_behave_like 'every request'
+
+      it "should set assigns" do
+        do_request
+        assigns[:collection].should_not be_blank
+        assigns[:documents].should_not be_blank
+      end
+
+      it "should render a list" do
+        do_request
+        response.should render_template('_list.html.erb')
+      end
+
+      it "should update the supplied frame" do
+        do_request
+        unescape_rjs(response.body).should have_text(%r~Toolbox.frames\("#frame_2342"\).html\(~)
+      end
+
+    end
     
     describe "get /new" do
       def do_request
@@ -287,6 +313,27 @@ describe DocumentsController do
       end
 
     end
+
+    describe "get /show for refresh" do
+      def do_request(term='lot')
+        @request.env['Tirade-Frame'] = '2342'
+        get :show, :id => @document.to_param, :format => 'js', :refresh => 1
+      end
+
+      it_should_behave_like 'every request'
+
+      it "should render show partial" do
+        do_request
+        response.should render_template('documents/_show.html.erb')
+      end
+
+      it "should update the supplied frame" do
+        do_request
+        response.should select_toolbox_frame(".document_#{@document.id}:resource(documents/show)")
+      end
+
+    end
+    
     
     describe "get /edit" do
 
@@ -376,6 +423,32 @@ describe DocumentsController do
       end
 
     end
+
+    describe "put /preview" do
+
+      def do_request
+        put :preview, :id => @document.to_param, :document => Factory.attributes_for(:document), :format => 'js'
+      end
+      
+      it_should_behave_like 'every request'
+
+      it "should not select any frame" do
+        do_request
+        unescape_rjs(response.body).should_not have_text(%r~Toolbox.frames~)
+        unescape_rjs(response.body).should_not have_text(%r~Toolbox.last~)
+      end
+
+      it "should update Renderings for previewed Content on current Page" do
+        @request.env['Tirade-Page'] = '42'
+        page = Factory :page
+        rendering = Factory :rendering
+        page.stub!(:renderings).and_return( mock(:for_content => [rendering]) )
+        Page.should_receive(:find_by_id).with('42').and_return( page )
+        do_request
+        unescape_rjs(response.body).should have_text(%r~rendering_#{rendering.id}.*replaceWith.*rendering_#{rendering.id}~)
+      end
+    end
+
 
     describe "get /scopes.json" do
       def do_request
