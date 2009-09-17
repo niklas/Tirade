@@ -114,7 +114,7 @@ Lockdown::System.configure do
 
   set_permission(:generated_stylesheets).
     with_controller(:stylesheets).
-    only_methods(:toolbox, :toolbox_colors, :interface, :focus, :permissions).
+    only_methods(:toolbox, :toolbox_colors, :interface, :focus, :content).
     set_as_public_access
 
   set_permission(:theme).
