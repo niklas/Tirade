@@ -168,6 +168,7 @@ module ManageResourceController
       if object.acts_as?(:content)
         @context_page.renderings.for_content(object).each do |rendering|
           rendering.content = object
+          rendering.touch
           page.update_rendering(rendering)
         end
       end
