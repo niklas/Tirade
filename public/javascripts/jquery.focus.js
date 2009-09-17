@@ -141,7 +141,7 @@
       return this;
     },
     goTo: function(element, options) {
-      var e =  $(element);
+      var e =  $(element).filter('[rel]');
       var callback;
       if ( !e.length ) { return; }
       if (this.current) {
