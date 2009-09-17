@@ -71,8 +71,8 @@ class Grid < ActiveRecord::Base
   def yaml_sub_class
     returning [] do |css|
       css << "subc#{float || 'l'}"
-      css << 'subcolumns' unless empty?
       css << 'leaf' if children.empty?
+      css << 'subcolumns' unless children.empty?
     end.flatten.uniq.join(' ')
   end
 
