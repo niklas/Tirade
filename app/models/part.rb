@@ -69,7 +69,7 @@ class Part < ActiveRecord::Base
   end
 
   def title
-    returning name do |n|
+    returning name.dup do |n|
       if !current_plugin.blank?
         n << " (plugin: #{current_plugin})"
       elsif in_theme?
