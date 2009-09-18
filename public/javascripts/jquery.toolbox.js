@@ -812,6 +812,7 @@ $.fn.opensToolbox = function(options) {
 $.fn.uiIcon = function(icon) {
   return $(this).each(function() {
     var $a = $(this);
+    if ($a.hasClass('ui-icon-button')) { return; }
     var $span = $('<span />')
       .addClass('ui-icon ui-icon-' + icon)
       .html( $a.html() );
@@ -869,6 +870,10 @@ $.fn.frameInToolbox = function(options) {
     var $linkbar = $('ul.linkbar', frame);
 
     if ($linkbar.length) {
+      $frame.scroll(function(e) {
+        $linkbar.css('top', $frame.scrollTop());
+      });
+      $linkbar.next().css('marginTop', $linkbar.outerHeight() + 3);
       $linkbar
         .addClass('ui-widget-header ui-corner-bottom')
         .find('a.ok')
@@ -955,13 +960,15 @@ $.fn.formInFrameInToolbox = function(options) {
       });
     });
 
-    $form.find(':submit')
-      .addClass('ui-corner-all')
-      .addClass('ui-state-default')
-      .hover(
-         function() { $(this).addClass('ui-state-hover'); },
-         function() { $(this).removeClass('ui-state-hover'); }
-       );
+    var $submit = $form.find(':submit');
+    if ($submit.length) {
+      $('<a />')
+        .addClass('submit')
+        .text( $submit.val() )
+        .uiButton()
+        .click( function(e) { $form.submit() } )
+        .appendTo( $frame.find('.linkbar') );
+    }
 
     if ($frame.data('action') == 'edit') {
       $form.preview();
