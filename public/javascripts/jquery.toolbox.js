@@ -966,7 +966,7 @@ $.fn.formInFrameInToolbox = function(options) {
         .addClass('submit')
         .text( $submit.val() )
         .uiButton()
-        .click( function(e) { $form.submit() } )
+        .click( function(e) { $form.submit(); } )
         .appendTo( $frame.find('.linkbar') );
     }
 
