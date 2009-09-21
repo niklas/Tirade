@@ -1036,6 +1036,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
     };
 
     $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo(definer.parent().find('dt:first')).click(function(ev) {
+      if (ev) { ev.stopPropagation(); ev.preventDefault(); }
       cloneScoping( definer.find('div.scoping.blueprint:first') );
     });
 
@@ -1091,9 +1092,11 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       updateComparisons();
       if ( !$self.find('a.add, a.remove').length ) {
         $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo($self).click(function(ev) {
+          if (ev) { ev.stopPropagation(); ev.preventDefault(); }
           cloneScoping( $(ev.target).closest('div.scoping') );
         });
         $.ui.button({icon: 'minus', text: 'remove', cssclass: 'remove'}).appendTo($self).click(function(ev) {
+          if (ev) { ev.stopPropagation(); ev.preventDefault(); }
           $(ev.target).closest('div.scoping').fadeOut(500, function() { $(this).remove(); });
         });
       }
