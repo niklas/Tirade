@@ -1,0 +1,20 @@
+<% news_item ||= show || @news_item %>
+
+<% accordion do %>
+
+  <% accordion_item "General" do %>
+    <%= show news_item, :title %>
+  <% end %>
+
+  <% accordion_item 'Description' do %>
+    <%= show news_item, :description, :label => false %>
+  <% end %>
+
+  <% accordion_item 'Body' do %>
+    <%= show news_item, :body, :label => false %>
+  <% end %>
+
+  <%= actings_for news_item %>
+
+<% end %>
+

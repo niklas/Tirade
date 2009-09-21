@@ -1,0 +1,5 @@
+<% links do %>
+  <%= new_news_item_link(:label => 'new Item', :title => 'new Item', 
+                        :class => 'new news_item with_toolbox', :attributes => {:parent_id => news_folder.id}) %>
+<% end %>
+<%= list_of news_folder.children %>
