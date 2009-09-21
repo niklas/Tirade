@@ -169,7 +169,8 @@ ChiliBook.recipeFolder = 'javascripts/syntax/';
     var item = $(this);
     item.find('a.association').remove();
     $.ui.button({icon: 'circle-close', text: 'remove', cssclass: 'association remove'})
-      .click(function(event) { 
+      .click(function(ev) { 
+        if (ev) { ev.stopPropagation(); ev.preventDefault(); }
         item.remove(); 
         $.ajax({
           url: Routing.clipboard_url(),

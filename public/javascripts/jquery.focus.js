@@ -164,7 +164,7 @@
     pick: function(ev) {
       var clicker = $(this);
       clicker.addClass('ui-state-active');
-      if (ev) { ev.stopPropagation(); ev.preventDefault() }
+      if (ev) { ev.stopPropagation(); ev.preventDefault(); }
       $('body')
         .css('cursor', 'crosshair')
         .one('click', function(ev) {
@@ -179,7 +179,7 @@
     },
     back: function(ev) {
       if (!$.tirade.focus.exists()) { return; }
-      if (ev) { ev.stopPropagation(); ev.preventDefault() }
+      if (ev) { ev.stopPropagation(); ev.preventDefault(); }
       var e = $.tirade.focus.current;
       var options = $.tirade.focus.currentOptions;
       if (options.parent) {
@@ -259,7 +259,7 @@
           .attr('href', '#')
           .text( $self.attr('title') || $self.metadata().title || $self.typeAndId().type )
           .click(function(ev) { 
-            if (ev) { ev.stopPropagation(); ev.preventDefault() }
+            if (ev) { ev.stopPropagation(); ev.preventDefault(); }
             $self.focusable('focus'); 
             return false;
           })
