@@ -3,7 +3,6 @@ class Part < ActiveRecord::Base
   class TemplateError < Exception; end
 
   attr_accessor :html
-  attr_accessor :template
 
   def render_with_content(content, assigns={}, context=nil)
     return '' if content.nil?
@@ -14,11 +13,14 @@ class Part < ActiveRecord::Base
   def render(assigns={},context=nil)
     #return %Q~rwc: <pre>#{assigns.to_yaml}</pre>~
     begin
-      self.template = Liquid::Template.parse(liquid)
-      self.html = self.template.render(assigns.stringify_keys, context)
+      self.html = compiled_liquid.render(assigns.stringify_keys, context)
     rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
       raise TemplateError, %Q[could not compile liquid template '#{filename_with_extention}': #{e.message.h}] 
     end
+  end
+
+  def compiled_liquid
+    @compiled_liquid ||= Liquid::Template.parse(liquid)
   end
 
   def render_with_fake_content(assigns={})
@@ -127,8 +129,7 @@ class Part < ActiveRecord::Base
   def must_be_renderable
     begin
       if @liquid || liquid_loadable?
-        self.render_with_fake_content
-        if t = self.template
+        if t = compiled_liquid
           t.errors.each do |e|
             self.errors.add(:liquid, '<pre>' + e.clean_message.h + e.clean_backtrace.first.h + '</pre>')
           end
