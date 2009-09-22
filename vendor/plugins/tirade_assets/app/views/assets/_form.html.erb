@@ -1,6 +1,6 @@
 <% asset ||= form %>
 
-<% form_for asset do |f| %>
+<% form_for asset, :html => {:multipart => true } do |f| %>
 
   <%= f.error_messages %>
 
