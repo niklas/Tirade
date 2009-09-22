@@ -6,6 +6,9 @@
     <%= show asset, :title %>
     <%= show asset, :file_content_type, :label => 'Type' %>
     <%= show asset, :file_file_size, :label => 'Size' %>
+    <% show asset, :url, :label => 'Download' do %>
+      <%= link_to asset.file.url, asset.file.url, :target => '_blank' %>
+    <% end %>
   <% end %>
 
   <% accordion_item 'Description' do %>
