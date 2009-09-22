@@ -22,6 +22,8 @@ module ContentFilter
     %Q~<a href="/#{base_url}/#{content.slug}">#{content.title}</a>~
   end
 
+  alias :link :title_link
+
   def link_to_page(page, title=nil)
     title ||= page.title
     %Q~<a href="/#{I18n.locale}/#{page.url}">#{title}</a>~
