@@ -1,0 +1,7 @@
+{% if object.image %}
+{{ object.image | scale: geometry | to_image }}
+{% endif %}
+<div class="box">
+  <h3>{{ object.title }}</h3>
+  <div class="description">{{ object.description | markup }}</div>
+</div>
