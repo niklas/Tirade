@@ -28,7 +28,7 @@ class Content < ActiveRecord::Base
 
   liquid_methods :title, :description, :body, :slug
   validates_presence_of :title
-  markup :description, :body
+  markup :description, :body, :summary
 
 
   # FIXME please spec
