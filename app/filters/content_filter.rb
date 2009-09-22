@@ -5,8 +5,8 @@ module ContentFilter
     if part = Part.find_by_filename(partial_name)
       part.render_with_content(
         content, 
-        @context.registers['rendering_context'], 
-        :registers => @context.registers
+        { :registers => @context.registers, :page => @context['page'] },
+        @context.registers['rendering_context']
       ) 
     else
       %Q~<div class="warning">Part '#{partial_name}' not found.</div>~
@@ -18,11 +18,40 @@ module ContentFilter
   end
 
   def title_link(content, base_url=nil)
-    base_url ||= content.table_name
-    %Q~<a href="/#{base_url}/#{content.slug}">#{content.title}</a>~
+    if base_url.blank?
+      %Q~<a href="#{content.slug}">#{content.title}</a>~
+    else
+      %Q~<a href="/#{base_url}/#{content.slug}">#{content.title}</a>~
+    end
   end
 
-  alias :link :title_link
+
+  def link(content, title=nil)
+    title ||= content.title
+    url = []
+    if content.respond_to?(:slug)
+      url << @context['page'].andand.url
+      url << content.slug 
+    else
+    end
+    if url.empty?
+      %Q~<a href="#{content}">#{title}</a>~
+    else
+      %Q~<a href="/#{url.join('/')}">#{title}</a>~
+    end
+  end
+
+  def link_tag(title,url)
+    %Q~<a href="#{url}">#{title}</a>~
+  end
+
+  def relative_link(content, parent)
+    if page = @context['page']
+      link content, "#{page.slug}/#{parent.slug}"
+    else
+      link content, parent.slug
+    end
+  end
 
   def link_to_page(page, title=nil)
     title ||= page.title

@@ -31,7 +31,7 @@ module Tirade
               end
               acts_as! :translated
             end
-            if liquids = (opts.delete(:liquid) || []) + [:slug, :table_name]
+            if liquids = (opts.delete(:liquid) || []) + [:slug, :table_name, :resource_name, :controller_name]
               liquid_methods *liquids
               acts_as! :marked_up
             end
