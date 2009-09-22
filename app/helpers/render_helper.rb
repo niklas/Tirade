@@ -31,7 +31,7 @@ module RenderHelper
 
   # does not work on scoped renderings
   def render_rendering(rendering, locals = {})
-    #locals.reverse_merge! :page => false, :grid => false
+    locals.reverse_merge! :page => false, :grid => false
     #key = ActiveSupport::Cache.expand_cache_key([rendering, locals[:page], @trailing_path_of_page])
     #Rails.cache.fetch(key) {
     #}
