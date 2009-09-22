@@ -1,0 +1,18 @@
+<% asset ||= show || @asset %>
+
+<% accordion do %>
+
+  <% accordion_item "General" do %>
+    <%= show asset, :title %>
+    <%= show asset, :file_content_type, :label => 'Type' %>
+    <%= show asset, :file_file_size, :label => 'Size' %>
+  <% end %>
+
+  <% accordion_item 'Description' do %>
+    <%= show asset, :description, :label => false %>
+  <% end %>
+  
+  <%= actings_for asset %>
+
+<% end %>
+
