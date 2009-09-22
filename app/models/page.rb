@@ -84,7 +84,7 @@ class Page < ActiveRecord::Base
   # Grids may inherit renderings from parent page
   def renderings_for_grid(grid)
     rs = renderings.for_grid(grid)
-    if rs.empty? && grid.inherit_renderings? && !root? && inherits_layout?
+    if rs.empty? && grid.inherit_renderings? && !root?
       parent.renderings_for_grid(grid)
     else
       rs
