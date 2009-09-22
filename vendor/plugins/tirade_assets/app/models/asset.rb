@@ -4,7 +4,7 @@ class Asset < ActiveRecord::Base
   markup :description
 
   has_attached_file :file
-  validates_attachment_presence
+  validates_attachment_presence :file
 
   def self.sample
     new(
