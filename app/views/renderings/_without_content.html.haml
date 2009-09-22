@@ -13,4 +13,8 @@
       = render :partial => 'renderings/avaiable_types', :object => Tirade::ActiveRecord::Content.classes
   - else
     == a #{index_link_to(rendering.content_type.constantize, :class => 'with_toolbox', :label => rendering.content_type)} 
+    - if page ||= @page || @context_page 
+      - if suggestions = rendering.content_type.constantize.title_like(page.title)
+        %h3 Suggestions
+        = render_list_of suggestions
     or specify a scope in the toolbox.

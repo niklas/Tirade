@@ -68,6 +68,8 @@ module InterfaceHelper
     end
   end
 
+  alias :render_list_of :list_of
+
   def list_item(thing,opts={})
     return '' unless thing
     if thing.is_a?(ActiveRecord::Base)
