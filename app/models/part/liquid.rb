@@ -138,6 +138,8 @@ class Part < ActiveRecord::Base
         # TODO warning when :liquid is not loadable?
         #self.errors.add(:liquid, "No Liquid markup code found")
       end
+    rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
+      self.errors.add(:liquid, e.message)
     rescue TemplateError => e
       self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
     rescue TemplateNotFound => e
