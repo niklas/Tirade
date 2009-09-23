@@ -249,11 +249,19 @@ class Rendering < ActiveRecord::Base
 
   def final_options
     returning options.to_hash do |o|
+      o.reverse_merge! part.andand.options_hash || {}
       o.merge! context
-      if singular? && has_content? && content.respond_to?(:children) && content.acts_as?(:slugged) && !trailing_path_of_page.blank?
-        o.merge! 'child' => content.children.find_by_slug(trailing_path_of_page.first)
+      o.merge! content_association_options || {}
+    end
+  end
+
+  def content_association_options
+    if singular? && has_content?
+      association_name = options.to_hash_with_defaults['association'] || :children
+      association = content.class.reflections[association_name.to_sym]
+      if association && !trailing_path_of_page.blank?
+        return { 'child' => content.send(association_name).find_by_slug(trailing_path_of_page.first) }
       end
-      o.merge! part.andand.options || {}
     end
   end
 
