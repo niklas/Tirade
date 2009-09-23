@@ -84,8 +84,8 @@ class Rendering < ActiveRecord::Base
     when 'none'
       false
     when 'by_title_from_trailing_url'
-      if content_type && content_slug = trailing_path_of_page.first.andand.sluggify
-        content_type.constantize.find_by_slug(content_slug)
+      if content_type
+        content_type.constantize.find_by_path(trailing_path_of_page)
       end
     when 'scope'
       plural? ? content_by_scope : content_by_scope.first

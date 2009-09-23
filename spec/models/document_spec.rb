@@ -195,3 +195,35 @@ describe Document do
   end
 
 end
+
+describe Document, "find_by_path" do
+  it "should find nothing if no path supplied" do
+    Document.find_by_path(nil).should be_blank
+  end
+  it "should find nothing if empty path supplied" do
+    Document.find_by_path([]).should be_blank
+  end
+
+  describe "supplying one element" do
+
+    it "should Document.find_by_slug with it" do
+      Document.should_receive(:find_by_slug).with('single-slug').and_return('a Document')
+      Document.find_by_path(['single-slug']).should == 'a Document'
+    end
+
+    it "should Document.find_by_slug with sluggiefied version of it" do
+      Document.should_receive(:find_by_slug).with('single-slug').and_return('a Document')
+      Document.find_by_path(['Single Slug']).should == 'a Document'
+    end
+    
+  end
+
+  describe "supplying two elements" do
+    it "should try each sluggified element until somehting is found" do
+      Document.should_receive(:find_by_slug).with('first').and_return(nil)
+      Document.should_receive(:find_by_slug).with('second').and_return('a Document')
+      Document.find_by_path(%w(First Second)).should == 'a Document'
+    end
+  end
+
+end

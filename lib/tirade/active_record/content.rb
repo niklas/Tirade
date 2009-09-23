@@ -66,6 +66,16 @@ module Tirade
           }
         end
 
+        # Tries to find the content by something like the trailing_path_of_page
+        def find_by_path(path)
+          return unless acts_as?(:slugged)
+          unless path.blank?
+            found = nil
+            path.map(&:sluggify).detect {|slug| found = find_by_slug slug}
+            found
+          end
+        end
+
         def controller_name
           name.underscore.pluralize
         end
