@@ -186,6 +186,10 @@ module ActsAsConfigurable
       end
     end
 
+    def options_hash
+      options.to_hash_with_defaults
+    end
+
     # define the options through a form
     def define_options
       define = {
