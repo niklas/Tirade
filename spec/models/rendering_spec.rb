@@ -378,7 +378,7 @@ end
 describe "A Rendering", "with an assignment by_title_from_trailing_url " do
   before(:each) do
     @rendering = Factory :rendering, :assignment => 'by_title_from_trailing_url'
-    @rendering.stub!(:trailing_path_of_page).and_return('goodbye')
+    @rendering.stub!(:trailing_path_of_page).and_return(['goodbye'])
   end
   it "should be valid" do
     @rendering.should be_valid
