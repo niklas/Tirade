@@ -260,7 +260,8 @@ class Rendering < ActiveRecord::Base
       association_name = options.to_hash_with_defaults['association'] || :children
       association = content.class.reflections[association_name.to_sym]
       if association && !trailing_path_of_page.blank?
-        return { 'child' => content.send(association_name).find_by_slug(trailing_path_of_page.first) }
+        items = content.send(association_name)
+        return { 'children' => items, 'child' => items.find_by_slug(trailing_path_of_page.first) }
       end
     end
   end
