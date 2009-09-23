@@ -41,10 +41,12 @@ class Part < ActiveRecord::Base
     self.class.extention
   end
   # The Liquid markup saved in the #active_liquid_path
-  def liquid(reload=false)
-    @liquid = nil if reload
+  def liquid(reload_code=false)
+    @liquid = nil if reload_code
     @liquid ||= if liquid_loadable?
                   load_liquid_from active_liquid_path
+                elsif new_record?
+                  nil
                 else
                   '<div class="warning">no liquid code found</div>' # verschwindibus!
                 end
@@ -129,29 +131,26 @@ class Part < ActiveRecord::Base
   def must_be_renderable
     begin
       if @liquid || liquid_loadable?
-        if t = compiled_liquid
-          t.errors.each do |e|
-            self.errors.add(:liquid, '<pre>' + e.clean_message.h + e.clean_backtrace.first.h + '</pre>')
-          end
-        end
+        compiled_liquid
       else
         # TODO warning when :liquid is not loadable?
         #self.errors.add(:liquid, "No Liquid markup code found")
       end
     rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
-      self.errors.add(:liquid, e.message)
+      errors.add(:liquid, e.message)
     rescue TemplateError => e
-      self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
+      errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
     rescue TemplateNotFound => e
-      self.errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
+      errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
     rescue UnsupportedContentType => e
-      self.errors.add(:content_type, e.message)
+      errors.add(:content_type, e.message)
     end
 
-    must_have_valid_html
+    must_have_valid_html if errors.on(:liquid).blank?
   end
 
   def must_have_valid_html
+    self.html = render_with_fake_content
     unless html.blank?
       parser = XML::Parser.string "<div>#{html}</div>"
       msgs = []
