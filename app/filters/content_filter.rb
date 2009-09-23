@@ -25,37 +25,24 @@ module ContentFilter
     end
   end
 
-
-  def link(content, title=nil)
-    title ||= content.title
-    url = []
-    if content.respond_to?(:slug)
-      url << @context['page'].andand.url
-      url << content.slug 
-    else
-    end
-    if url.empty?
-      %Q~<a href="#{content}">#{title}</a>~
-    else
-      %Q~<a href="/#{url.join('/')}">#{title}</a>~
-    end
-  end
-
   def link_tag(title,url)
     %Q~<a href="#{url}">#{title}</a>~
   end
 
-  def relative_link(content, parent)
-    if page = @context['page']
-      link content, "#{page.slug}/#{parent.slug}"
+  def link(title, object_or_url)
+    case object_or_url
+    when Page
+      link_to_page(object_or_url, title)
+    when String
+      link_tag(title, object_or_url)
     else
-      link content, parent.slug
+      link_tag(title, object_or_url.slug)
     end
   end
 
   def link_to_page(page, title=nil)
     title ||= page.title
-    %Q~<a href="/#{I18n.locale}/#{page.url}">#{title}</a>~
+    link_tag(title, "/#{I18n.locale}/#{page.url}")
   end
 
 end
