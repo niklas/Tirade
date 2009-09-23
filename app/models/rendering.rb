@@ -264,7 +264,7 @@ class Rendering < ActiveRecord::Base
         if trailing_path_of_page.blank?
           { 'children' => items }
         else
-          { 'children' => items, 'child' => items.find_by_slug(trailing_path_of_page.first) }
+          { 'children' => items, 'child' => items.find_by_path(trailing_path_of_page) }
         end
       end
     end
