@@ -1,5 +1,5 @@
 {% if object.image %}
-{{ object.image | scale: geometry | to_image }}
+  {{ object.image | scale: geometry | to_image | link: object }}
 {% endif %}
 <div class="box">
   <h3>{{ object.title | link: object }}</h3>
