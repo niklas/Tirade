@@ -1,0 +1,12 @@
+--- 
+:description: just shows the markupped summary
+:preferred_types: 
+- Document
+- Folder
+- Image
+- NewsItem
+- NewsFolder
+- Product
+:defined_options: {}
+
+:plural: false

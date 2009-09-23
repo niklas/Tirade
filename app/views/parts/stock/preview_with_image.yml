@@ -1,0 +1,13 @@
+--- 
+:description: Shows title with description and the first Image
+:defined_options: 
+  geometry: 
+  - string
+  - 66x
+:plural: false
+:preferred_types: 
+- Document
+- Folder
+- NewsItem
+- NewsFolder
+- Product

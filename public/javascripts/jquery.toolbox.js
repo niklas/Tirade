@@ -20,6 +20,7 @@ Toolbox = {
         .dialog({
           closeOnEscape: false,
           minHeight: Toolbox.minHeight,
+          height: Toolbox.minHeight,
           minWidth: 300,
           title: 'Toolbox Dialog',
           dragStart: Toolbox.overflowsOff,
@@ -811,6 +812,7 @@ $.fn.opensToolbox = function(options) {
 $.fn.uiIcon = function(icon) {
   return $(this).each(function() {
     var $a = $(this);
+    if ($a.hasClass('ui-icon-button')) { return; }
     var $span = $('<span />')
       .addClass('ui-icon ui-icon-' + icon)
       .html( $a.html() );
@@ -868,6 +870,10 @@ $.fn.frameInToolbox = function(options) {
     var $linkbar = $('ul.linkbar', frame);
 
     if ($linkbar.length) {
+      $frame.scroll(function(e) {
+        $linkbar.css('top', $frame.scrollTop());
+      });
+      $linkbar.next().css('marginTop', $linkbar.outerHeight() + 3);
       $linkbar
         .addClass('ui-widget-header ui-corner-bottom')
         .find('a.ok')
@@ -954,13 +960,15 @@ $.fn.formInFrameInToolbox = function(options) {
       });
     });
 
-    $form.find(':submit')
-      .addClass('ui-corner-all')
-      .addClass('ui-state-default')
-      .hover(
-         function() { $(this).addClass('ui-state-hover'); },
-         function() { $(this).removeClass('ui-state-hover'); }
-       );
+    var $submit = $form.find(':submit');
+    if ($submit.length) {
+      $('<a />')
+        .addClass('submit')
+        .text( $submit.val() )
+        .uiButton()
+        .click( function(e) { $form.submit(); } )
+        .appendTo( $frame.find('.linkbar') );
+    }
 
     if ($frame.data('action') == 'edit') {
       $form.preview();
@@ -1028,6 +1036,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
     };
 
     $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo(definer.parent().find('dt:first')).click(function(ev) {
+      if (ev) { ev.stopPropagation(); ev.preventDefault(); }
       cloneScoping( definer.find('div.scoping.blueprint:first') );
     });
 
@@ -1083,9 +1092,11 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
       updateComparisons();
       if ( !$self.find('a.add, a.remove').length ) {
         $.ui.button({icon: 'plus', text: 'add', cssclass: 'add'}).prependTo($self).click(function(ev) {
+          if (ev) { ev.stopPropagation(); ev.preventDefault(); }
           cloneScoping( $(ev.target).closest('div.scoping') );
         });
         $.ui.button({icon: 'minus', text: 'remove', cssclass: 'remove'}).appendTo($self).click(function(ev) {
+          if (ev) { ev.stopPropagation(); ev.preventDefault(); }
           $(ev.target).closest('div.scoping').fadeOut(500, function() { $(this).remove(); });
         });
       }

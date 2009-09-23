@@ -1,0 +1,24 @@
+<% asset ||= form %>
+
+<% form_for asset, :html => {:multipart => true } do |f| %>
+
+  <%= f.error_messages %>
+
+  <% accordion do %>
+
+    <% accordion_item 'General' do %>
+      <%= f.text_field :title %>
+      <%= f.file_field :file %>
+    <% end %>
+
+    <% accordion_item 'Description' do %>
+      <%= f.text_area :description, :label => false %>
+    <% end %>
+
+
+    <%= f.actings %>
+
+  <% end %>
+
+  <%= f.submit %>
+<% end %>

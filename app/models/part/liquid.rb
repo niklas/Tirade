@@ -3,7 +3,6 @@ class Part < ActiveRecord::Base
   class TemplateError < Exception; end
 
   attr_accessor :html
-  attr_accessor :template
 
   def render_with_content(content, assigns={}, context=nil)
     return '' if content.nil?
@@ -14,11 +13,14 @@ class Part < ActiveRecord::Base
   def render(assigns={},context=nil)
     #return %Q~rwc: <pre>#{assigns.to_yaml}</pre>~
     begin
-      self.template = Liquid::Template.parse(liquid)
-      self.html = self.template.render(assigns.stringify_keys, context)
+      self.html = compiled_liquid.render(assigns.stringify_keys, context)
     rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
       raise TemplateError, %Q[could not compile liquid template '#{filename_with_extention}': #{e.message.h}] 
     end
+  end
+
+  def compiled_liquid
+    @compiled_liquid ||= Liquid::Template.parse(liquid)
   end
 
   def render_with_fake_content(assigns={})
@@ -39,10 +41,12 @@ class Part < ActiveRecord::Base
     self.class.extention
   end
   # The Liquid markup saved in the #active_liquid_path
-  def liquid(reload=false)
-    @liquid = nil if reload
+  def liquid(reload_code=false)
+    @liquid = nil if reload_code
     @liquid ||= if liquid_loadable?
                   load_liquid_from active_liquid_path
+                elsif new_record?
+                  nil
                 else
                   '<div class="warning">no liquid code found</div>' # verschwindibus!
                 end
@@ -127,28 +131,26 @@ class Part < ActiveRecord::Base
   def must_be_renderable
     begin
       if @liquid || liquid_loadable?
-        self.render_with_fake_content
-        if t = self.template
-          t.errors.each do |e|
-            self.errors.add(:liquid, '<pre>' + e.clean_message.h + e.clean_backtrace.first.h + '</pre>')
-          end
-        end
+        compiled_liquid
       else
         # TODO warning when :liquid is not loadable?
         #self.errors.add(:liquid, "No Liquid markup code found")
       end
+    rescue Liquid::SyntaxError => e # FIXME does not work yet, we want to escape the error
+      errors.add(:liquid, e.message)
     rescue TemplateError => e
-      self.errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
+      errors.add(:liquid, '<pre><b>Liquid Error:</b>' + e.message.h + '</pre>')
     rescue TemplateNotFound => e
-      self.errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
+      errors.add(:liquid, '<pre><b>Liquid Template not found:</b>' + e.message.h + '</pre>')
     rescue UnsupportedContentType => e
-      self.errors.add(:content_type, e.message)
+      errors.add(:content_type, e.message)
     end
 
-    must_have_valid_html
+    must_have_valid_html if errors.on(:liquid).blank?
   end
 
   def must_have_valid_html
+    self.html = render_with_fake_content
     unless html.blank?
       parser = XML::Parser.string "<div>#{html}</div>"
       msgs = []

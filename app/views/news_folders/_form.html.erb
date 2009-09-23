@@ -1,0 +1,24 @@
+<% news_folder ||= form || @news_folder %>
+
+<% form_for(news_folder) do |f| %>
+  <% accordion do %>
+    <%= f.error_messages %>
+
+    <% accordion_item "General" do %>
+      <%= f.text_field :title %>
+    <% end %>
+
+    <% accordion_item 'Description' do %>
+      <%= f.text_area :description %>
+    <% end %>
+
+    <% accordion_item 'Body' do %>
+      <%= f.text_area :body %>
+    <% end %>
+
+    <%= f.actings %>
+
+    <%= f.submit %>
+
+  <% end %>
+<% end %>

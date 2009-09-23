@@ -1,5 +1,6 @@
 - unless grid.replacement.nil?
   - grid = grid.replacement
+  - page = false
 - options = {}
 - add_class_to_html_options options, dom_id(grid)
 - add_class_to_html_options options, grid.yaml_sub_class
@@ -24,7 +25,13 @@
         - renderings.each do |rendering|
           = render_rendering(rendering, :page => page, :grid => grid)
     - else
-      %div= "no children and no page given. empty?"
+      - renderings = grid.renderings
+      - if renderings.empty?
+        %div= "no children or page given and no global renderings found. empty?"
+      - else
+        %div.col{:class => grid.yaml_column_class}
+        - renderings.each do |rendering|
+          = render_rendering(rendering, :page => page, :grid => grid)
   - else
     - grid.children.each do |child|
       = render_grid(child, :page => page)

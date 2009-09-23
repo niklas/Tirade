@@ -15,6 +15,10 @@ module TextFilter
   end
 
   def markup(text)
-    RedCloth.new(text).to_html
+    if text.blank?
+      text
+    else
+      RedCloth.new(text).to_html
+    end
   end
 end

@@ -310,6 +310,15 @@ describe Rendering, "with Folder in Page with trailing path" do
     @rendering.final_options.should have_key('child')
     @rendering.final_options['child'].should_not be_nil
   end
+
+  it "should include all children in final_options" do
+    @rendering.final_options.should have_key('children')
+    @rendering.final_options['children'].should_not be_blank
+    @rendering.final_options['children'].each do |child|
+      child.should_not be_blank
+      child.should be_a(ActiveRecord::Base)
+    end
+  end
 end
 
 describe "renderable Rendering", :shared => true do

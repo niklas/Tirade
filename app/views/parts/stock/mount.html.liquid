@@ -4,8 +4,8 @@
 
 {% else %}
 
-{% for child in object.children %}
-<div>
+{% for child in children %}
+<div class="item">
   {{ child | render: preview_part }}
   {% if show_more_link %}
   <a href="{{ child.slug }}">{{ more_text }}</a>

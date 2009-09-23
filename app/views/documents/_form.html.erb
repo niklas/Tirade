@@ -9,6 +9,10 @@
       <%= f.tree_select :parent_id,  Folder.roots, :id, :title, :include_blank => true, :label => 'Parent Folder' %>
     <% end %>
 
+    <% accordion_item 'Summary' do %>
+      <%= f.text_area :summary, :label => false %>
+    <% end %>
+
     <% accordion_item 'Description' do %>
       <%= f.text_area :description, :label => false %>
     <% end %>

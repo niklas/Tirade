@@ -29,12 +29,13 @@ module RenderHelper
     render_grid(grid, :page => page)
   end
 
+  # does not work on scoped renderings
   def render_rendering(rendering, locals = {})
     locals.reverse_merge! :page => false, :grid => false
-    key = ActiveSupport::Cache.expand_cache_key([rendering, locals[:page], @trailing_path_of_page])
-    Rails.cache.fetch(key) {
-      render(:partial => 'renderings/rendering', :object => rendering, :locals => locals)
-    }
+    #key = ActiveSupport::Cache.expand_cache_key([rendering, locals[:page], @trailing_path_of_page])
+    #Rails.cache.fetch(key) {
+    #}
+    render(:partial => 'renderings/rendering', :object => rendering, :locals => locals)
   end
 
   def div_wrap(inner, css, opts={})

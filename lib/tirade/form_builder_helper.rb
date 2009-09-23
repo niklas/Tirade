@@ -90,6 +90,7 @@ module Tirade
 
       @template.add_class_to_html_options opts, 'many'
       @template.add_class_to_html_options opts, 'associations'
+      @template.add_class_to_html_options opts, 'association'
       wrap(assoc, opts, inner)
     end
 
@@ -116,7 +117,7 @@ module Tirade
           inner << @template.hidden_field_tag("#{@object_name}[#{reflection.options[:foreign_type]}]", nil, :class => 'association_type')
         end
       end
-      wrap(assoc, {:class => 'one association'}, inner)
+      wrap(assoc, {:class => 'one association associations'}, inner)
     end
 
     def sort(assoc=:children, opts={})

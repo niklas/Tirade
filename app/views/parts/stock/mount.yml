@@ -15,4 +15,7 @@
   preview_part: 
   - string
   - simple_preview
+  association: 
+  - string
+  - children
 :plural: false

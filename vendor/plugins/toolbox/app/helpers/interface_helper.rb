@@ -68,6 +68,8 @@ module InterfaceHelper
     end
   end
 
+  alias :render_list_of :list_of
+
   def list_item(thing,opts={})
     return '' unless thing
     if thing.is_a?(ActiveRecord::Base)
@@ -265,7 +267,7 @@ module InterfaceHelper
   def di_dt_dd(dt,dd, opts={})
     dd_opts = opts.delete(:dd)
     add_class_to_html_options(opts, toolbox_row_cycle)
-    add_class_to_html_options(opts, 'ui-corner-all')
+    add_class_to_html_options(opts, 'ui-corner-bottom')
     add_class_to_html_options(opts, 'ui-helper-clearfix')
     content_tag(:di,
                 (dt.blank? ? '' : content_tag(:dt, dt)) +

@@ -1,5 +1,3 @@
 <% image ||= show %>
 
-<% div_for image do %>
-  <%= image_tag(image.image.url, :style => 'max-width: 100%') %>
-<% end %>
+<%= image_tag(image.image.url, :style => 'max-width: 100%') %>

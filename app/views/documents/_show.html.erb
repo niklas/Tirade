@@ -7,6 +7,11 @@
     <%= show document, :parent %>
   <% end %>
 
+  <% accordion_item 'Summary' do %>
+    <%= show document, :summary, :label => false %>
+  <% end %>
+
+
   <% accordion_item 'Description' do %>
     <%= show document, :description, :label => false %>
   <% end %>

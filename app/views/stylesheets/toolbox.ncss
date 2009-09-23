@@ -55,21 +55,19 @@ body {
     }
   }
   div.accordion {
-    width: 100%;
     overflow-y: auto;
-    height: 94%;
-    *.accordion_toggle {
+    *.ui-accordion-header {
       line-height: 2.3em;
       padding: 0pt 2.3em;
       clear: both;
     }
-    *.accordion_content {
+    *.ui-accordion-content {
       overflow: auto;
       padding: 0;
-      border: none;
       margin-bottom: 3px;
+      margin-top: -2px;
       *.ui-helper-clearfix.last {
-        margin-bottom: 23px;
+        margin-bottom: 15px;
       }
     }
   }
@@ -85,12 +83,11 @@ body {
       margin:0pt;
       padding: 3px;
       z-index: 2;
-      li {
-        a,button,input.submit {
+      position: absolute;
+      left: 3px; right: 3px;
+      a {
+        .submit {
           float: right;
-          padding: 0.3em;
-          margin: 0;
-          text-decoration:none;
         }
       }
     }
@@ -131,9 +128,8 @@ body {
     }
     dl {
       margin: 0;
-      width: 100%;
       di {
-        margin: 0.3em 0;
+        margin: 10px 0 17px 0;
         position: relative;
         dt {
           font-weight:bold;

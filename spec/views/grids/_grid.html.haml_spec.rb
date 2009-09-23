@@ -79,6 +79,7 @@ describe "/grids/_grid.html.haml" do
       @grid.replacement.should == @replacement
       grids(:layout_50_50_1).replacement.should == @replacement
       @replacement.should have(1).rendering
+      #@replacement.should have(1).renderings_for_page(pages(:main))
     end
     it "should render both columns in the 50/50 layout for the main page, replacing the left column" do
       @html = template.render_grid_in_page grids(:layout50_50), pages(:main)

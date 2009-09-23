@@ -35,6 +35,9 @@ describe 'A Part with a name' do
   it "should know its liquid path for writing" do
     @part.theme_path.should =~ %r~themes/test/views/parts/stock/general_preview.html.liquid~
   end
+  it "should have no code" do
+    @part.code.should be_blank
+  end
   it "should not write its liquid code to a file (because it is blank) on saving" do
     #File.stub!(:open).with(any_args()).and_return(true)
     File.should_not_receive(:open).with(@part.theme_path,'w')

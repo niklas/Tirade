@@ -1,0 +1,25 @@
+<% news_item ||= form || @news_item %>
+
+<% form_for(news_item) do |f| %>
+  <% accordion do %>
+    <%= f.error_messages %>
+
+    <% accordion_item "General" do %>
+      <%= f.text_field :title %>
+      <%= f.hidden_field :parent_id %>
+    <% end %>
+
+    <% accordion_item 'Description' do %>
+      <%= f.text_area :description, :label => false %>
+    <% end %>
+
+    <% accordion_item 'Body' do %>
+      <%= f.text_area :body, :label => false %>
+    <% end %>
+
+    <%= f.actings %>
+
+    <%= f.submit %>
+
+  <% end %>
+<% end %>
