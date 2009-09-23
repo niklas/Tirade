@@ -113,7 +113,7 @@ class Rendering < ActiveRecord::Base
   end
 
   def content_by_scope(thescope=self.scope)
-    scope.all
+    thescope.all
   end
 
   def scope_definition
