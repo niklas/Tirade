@@ -257,6 +257,7 @@ class Rendering < ActiveRecord::Base
     returning options.to_hash do |o|
       o.reverse_merge! part.andand.options_hash || {}
       o.merge! context
+      o.merge!( {'current_locale' => I18n.locale.to_s})
       o.merge! content_association_options || {}
     end
   end

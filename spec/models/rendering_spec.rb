@@ -339,6 +339,11 @@ describe "renderable Rendering", :shared => true do
     @rendering.final_options.should have_key('trailing_path_of_page')
     @rendering.final_options['trailing_path_of_page'].should == @trailing_path
   end
+
+  it "should give current_locale into the part" do
+    @rendering.final_options.should have_key('current_locale')
+    @rendering.final_options['current_locale'].should == I18n.locale.to_s
+  end
 end
 
 describe "A Rendering", "with a fixed assigned Document" do
