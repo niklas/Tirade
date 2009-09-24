@@ -11,7 +11,6 @@ class ClipboardController < ApplicationController
 
   def destroy
     @clipboard.delete params[:id]
-    render :action => 'index'
   end
 end
 
