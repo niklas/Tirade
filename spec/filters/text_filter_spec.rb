@@ -16,6 +16,9 @@ describe TextFilter, :type => :helper do
     def have_img_tag_for(image)
       have_tag('img[src=?][alt=?]', image.url, image.title)
     end
+    def with_img_tag_for(image)
+      with_tag('img[src=?][alt=?]', image.url, image.title)
+    end
 
     describe "[image] tags" do
 
@@ -34,6 +37,25 @@ describe TextFilter, :type => :helper do
       it "should find image by slug" do
         Image.should_receive(:find_by_slug).with("my-image").and_return(@image)
         f("[image:my-image]").should have_img_tag_for(@image)
+      end
+
+
+      describe "giving {}" do
+        it "should show image with its title under it" do
+          f("[image:23]{}").should have_tag('div.image') do
+            with_img_tag_for(@image)
+            with_tag('span.title', @image.title)
+          end
+        end
+      end
+
+      describe "giving {Extra Description}" do
+        it "should show image with Extra Description under it" do
+          f("[image:23]{Extra Description}").should have_tag('div.image') do
+            with_img_tag_for(@image)
+            with_tag('span.title', 'Extra Description')
+          end
+        end
       end
       
     end
