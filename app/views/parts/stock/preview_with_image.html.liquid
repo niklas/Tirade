@@ -2,6 +2,12 @@
   {{ object.image | scale: geometry | to_image | link: object }}
 {% endif %}
 <div class="box">
-  <h3>{{ object.title | link: object }}</h3>
+  <h3>
+  {% if base_url && base_url != '' %}
+    {{ object | title_link: base_url }}
+  {% else %}
+    {{ object.title | link: object }}
+  {% endif %}
+  </h3>
   <div class="description">{{ object.description | markup }}</div>
 </div>

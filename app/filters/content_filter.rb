@@ -35,6 +35,8 @@ module ContentFilter
       link_to_page(object_or_url, title)
     when String
       link_tag(title, object_or_url)
+    when nil
+      link_tag(title, title)
     else
       link_tag(title, object_or_url.slug)
     end

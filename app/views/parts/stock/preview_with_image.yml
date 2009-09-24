@@ -4,6 +4,9 @@
   geometry: 
   - string
   - 66x
+  base_url:
+  - string
+  - 
 :plural: false
 :preferred_types: 
 - Document
