@@ -7,7 +7,7 @@
 {% endif %}
 
 
-<div class="body">
+<div class="body ui-helper-clearfix">
 {% if show_picture and full_view_with_picture.image %}
   <div class="image {{ align_picture }} ui-helper-clearfix">
   {{ full_view_with_picture.image | scale: geometry | to_image }}
