@@ -21,9 +21,10 @@ describe Grid, "structure of DDM Page" do
 
   it "should provide correct CSS classes" do
     grids(:main_vs_sidebar).yaml_sub_class.should include('subcolumns')
+    grids(:main_vs_sidebar).yaml_sub_class.should include('equalize')
     grids(:main_vs_sidebar).yaml_sub_class.should include('subcl')
 
-    grids(:menu_vs_content).yaml_sub_class.should include('subcolumns')
+    grids(:menu_vs_content).yaml_sub_class.should_not include('subcolumns')
     grids(:menu_vs_content).yaml_sub_class.should include('subcl')
     grids(:menu_vs_content).yaml_column_class.should == 'c75l'
 

@@ -23,9 +23,9 @@ describe "/grids/_grid.html.haml" do
 
   it "should render the proper YAML tags"do 
     html.should have_tag 'div.page.page_1337'do 
-      with_tag 'div#grid_1.subcolumns.grid.grid_1.main_vs_sidebar'do 
+      with_tag 'div#grid_1.subcolumns.equalize.grid.grid_1.main_vs_sidebar'do 
         with_tag 'div.col.c75l'do 
-          with_tag 'div#grid_2.subcolumns.grid.grid_2.main_menu_vs_content'do 
+          with_tag 'div#grid_2:not(.subcolumns).grid.grid_2.main_menu_vs_content'do 
             with_tag 'div.col.c38l'do 
               with_tag 'div#grid_4.subcl.leaf.grid.grid_4.menu'do 
                 #with_tag 'div.rendering.menu'do 
