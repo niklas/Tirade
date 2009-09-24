@@ -39,11 +39,14 @@
       - if rendering.part.singular? && content.respond_to?(:each)
         - content.each do |item|
           - out << capture do
-            %div{:class => item.resource_name, :rel => dom_id(item)}
-              = rendering.part.render_with_content(item,rendering.final_options,rendering.context_in_registers)
+            = render :partial => 'renderings/rendering_with_content', :locals => {:rendering => rendering, :content => item}
       - else
-        - out << capture do
-          = rendering.part.render_with_content(content,rendering.final_options,rendering.context_in_registers)
+        - if content.respond_to?(:each)
+          - out << capture do
+            = rendering.part.render_with_content(content,rendering.final_options,rendering.context_in_registers)
+        - else
+          - out << capture do
+            = render :partial => 'renderings/rendering_with_content', :locals => {:rendering => rendering, :content => content}
   - elsif rendering.part.andand.static?
     - out << capture do
       = rendering.part.render(rendering.final_options, rendering.context_in_registers)
