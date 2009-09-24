@@ -27,6 +27,7 @@
     <%= show rendering, :part, :selectable => true %>
     <%= show rendering, :css_classes, :label => 'extra CSS classes' %>
     <% if rendering.part %>
+      <%= show rendering, :hide_if_trailing_path_not_blank? %>
       <%= show rendering, :options %>
     <% end %>
   <% end %>

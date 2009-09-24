@@ -639,3 +639,21 @@ describe Rendering, "with extra CSS classes" do
     it_should_behave_like 'valid Rendering'
   end
 end
+
+describe Rendering, "with hide_if_trailing_path_not_blank" do
+
+  before( :each ) do
+    @rendering = Factory :rendering, :hide_if_trailing_path_not_blank => true
+  end
+
+  it "should not be hidden if no trailig path supplied" do
+    @rendering.stub!(:trailing_path_of_page).and_return([])
+    @rendering.should_not be_hidden
+  end
+
+  it "should be hidden if trailig path supplied" do
+    @rendering.stub!(:trailing_path_of_page).and_return(['trailing', 'path'])
+    @rendering.should be_hidden
+  end
+  
+end

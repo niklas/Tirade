@@ -23,6 +23,7 @@
 
     <% if f.object.part %>
       <% accordion_item "Options" do %>
+        <%= f.check_box :hide_if_trailing_path_not_blank %>
         <%= f.select_options %>
       <% end %>
     <% end %>

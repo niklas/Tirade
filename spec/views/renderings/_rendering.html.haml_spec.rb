@@ -13,6 +13,11 @@ describe "/rendering/_rendering.html.haml" do
     template.render_rendering(@rendering).dup
   end
 
+  def html_in_page(page)
+    template.render_rendering(@rendering, :locals => {:page => page}).dup
+  end
+
+
   def have_rendering(select='',*args)
     select = ".#{select}" if select =~ /^\w/
     have_tag("div.rendering#{select}", *args)
@@ -152,6 +157,19 @@ describe "/rendering/_rendering.html.haml" do
       end
 
       it_should_behave_like 'finished component'
+    end
+
+    describe "which is hidden" do
+
+      before( :each ) do
+        @rendering = Factory :rendering
+        @rendering.stub!(:hidden?).and_return(true)
+      end
+
+      it "should not even get rendered" do
+        html_in_page(@page).should_not have_tag("div.rendering_#{@rendering.id}")
+      end
+      
     end
 
   end

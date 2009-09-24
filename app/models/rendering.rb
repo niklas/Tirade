@@ -27,7 +27,7 @@ class Rendering < ActiveRecord::Base
     Tirade::ActiveRecord::Content.classes
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope, :css_classes, :css_classes_list
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope, :css_classes, :css_classes_list, :hide_if_trailing_path_not_blank
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
@@ -79,6 +79,11 @@ class Rendering < ActiveRecord::Base
   def trailing_path_of_page
     page.andand.trailing_path || []
   end
+
+  def hidden?
+    hide_if_trailing_path_not_blank? && !trailing_path_of_page.blank?
+  end
+
   def content_with_dynamic_assignments
     case assignment
     when 'none'
