@@ -86,6 +86,7 @@ end
 
 namespace :db do
   task :download, :roles => [:db] do
+    puts "Dumping and downloading remote production db"
     run_respond "cd #{current_release} && rake db:dump_production" do |text,stream,state|
       case text
         when /Password:/ then 
@@ -97,3 +98,22 @@ namespace :db do
   end
 end
 
+
+namespace :assets do
+  task :download do
+    host = roles[:web].servers.first.host
+    command = "rsync -avzP --delete --exclude 'custom' #{user}@#{host}:/home/www/tirade/shared/public/upload public"
+    puts "Syncing all assets from #{host}"
+    puts command
+    system(command)
+  end
+end
+
+namespace :development do
+  task :sync_from_production do
+    db.download
+    puts "loading dump into local development db"
+    system('rake db:load_production_dump_into_development')
+    assets.download
+  end
+end
