@@ -394,6 +394,13 @@ describe "A Rendering", "with an assignment by_title_from_trailing_url " do
     Document.should_receive(:find_by_slug).with('goodbye').and_return( content )
     @rendering.content.should == content
   end
+  it "should not be hidden" do
+    @rendering.should_not be_hidden
+  end
+  it "should be hidden if no trailing path supplied" do
+    @rendering.stub!(:trailing_path_of_page).and_return([])
+    @rendering.should be_hidden
+  end
   it_should_behave_like 'renderable Rendering'
 end
 
@@ -657,3 +664,4 @@ describe Rendering, "with hide_if_trailing_path_not_blank" do
   end
   
 end
+

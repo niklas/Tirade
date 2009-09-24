@@ -81,7 +81,8 @@ class Rendering < ActiveRecord::Base
   end
 
   def hidden?
-    hide_if_trailing_path_not_blank? && !trailing_path_of_page.blank?
+    (hide_if_trailing_path_not_blank? && !trailing_path_of_page.blank?) ||
+      (assignment == 'by_title_from_trailing_url' && trailing_path_of_page.blank?)
   end
 
   def content_with_dynamic_assignments
