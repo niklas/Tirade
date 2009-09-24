@@ -1023,6 +1023,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
     var form = $(this);
     var assignment = form.find('select#rendering_assignment');
     var content_type = form.find('select#rendering_content_type');
+    var live_search = form.find('di.association.one.content .live_search');
 
     var definer = form.find('di.define_scope dd');
     var scopes = null;
@@ -1103,9 +1104,10 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
     });
 
     content_type.change(function() {
+      var plural = $.string(content_type.val()).underscore().str + 's';
+
       if ('scope' == assignment.val()) {
         definer.find('div.scoping').remove(); 
-        var plural = $.string(content_type.val()).underscore().str + 's';
         var scope_url = Routing['scopes_'+  plural + '_path']();
         $.get( scope_url, '', function(html, status) {
           var new_blueprint = $(html).addClass('blueprint');
@@ -1115,6 +1117,8 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
           }
         }, 'html');
       }
+      live_search.find('.search_results').addClass( plural );
+      live_search.find(':input').attr('href', Routing[plural + '_url']() );
     });
 
     var updateVisibilityOfContent = function (e) {
@@ -1127,6 +1131,8 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
           break;
         case 'fixed':
           form.find('di.association.one.content').show().find('input.association_id, input.association_type').enable();
+          live_search.find(':input').enable();
+          form.enableField('content_type');
           break;
         case 'by_title_from_trailing_url':
           form.enableField('content_type');
