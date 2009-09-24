@@ -48,7 +48,14 @@ class Part < ActiveRecord::Base
 
   has_fulltext_search :name, :filename
   named_scope :for_content, lambda {|content|
-    t = content.is_a?(String) ? content : content.class_name
+    t = case content
+    when String
+      content
+    when Array
+      content.first
+    else
+      content.class_name
+    end
     {:conditions => ['preferred_types LIKE ?', "%#{t}%"]}
   }
 
