@@ -64,6 +64,10 @@ class Part < ActiveRecord::Base
     self.options = {}
   end
 
+  def singular?
+    !plural?
+  end
+
   def preferred_types_classes
     preferred_types.map(&:constantize)
   end

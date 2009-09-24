@@ -36,8 +36,14 @@
       - add_class_to_html_options options, content.class.to_s.domify
       - add_class_to_html_options options, content.title.domify unless !content.respond_to?(:title) || content.title.blank?
     - unless rendering.part.nil?
-      - out << capture do
-        = rendering.part.render_with_content(rendering.content,rendering.final_options,rendering.context_in_registers)
+      - if rendering.part.singular? && content.respond_to?(:each)
+        - content.each do |item|
+          - out << capture do
+            %div{:class => item.resource_name, :rel => dom_id(item)}
+              = rendering.part.render_with_content(item,rendering.final_options,rendering.context_in_registers)
+      - else
+        - out << capture do
+          = rendering.part.render_with_content(content,rendering.final_options,rendering.context_in_registers)
   - elsif rendering.part.andand.static?
     - out << capture do
       = rendering.part.render(rendering.final_options, rendering.context_in_registers)

@@ -172,6 +172,27 @@ describe "/rendering/_rendering.html.haml" do
       
     end
 
+    describe "with a singular Part but scoped for multiple Contents" do
+      before( :each ) do
+        @documents = []
+        5.times { @documents << Factory(:document, :description => 'fn0rd') }
+        @rendering = Factory :scoped_rendering, :part => Factory(:part, :plural => false),
+          :scope_definition => {:order => 'ascending_by_title', :description_equals => 'fn0rd'}
+
+        @rendering.part.should be_singular
+        @rendering.content.should have(5).records
+      end
+
+      it "should wrap each content in an own div" do
+        html.should have_tag('div.rendering') do
+          @documents.each do |document|
+            with_tag("div.document[rel=?]", "document_#{document.id}")
+          end
+        end
+      end
+      
+    end
+
   end
 
 

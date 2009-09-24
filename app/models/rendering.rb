@@ -92,8 +92,8 @@ class Rendering < ActiveRecord::Base
       if content_type
         content_type.constantize.find_by_path(trailing_path_of_page)
       end
-    when 'scope'
-      plural? ? content_by_scope : content_by_scope.first
+  when 'scope'
+    content_by_scope
     else
       content_without_dynamic_assignments
     end
@@ -261,9 +261,9 @@ class Rendering < ActiveRecord::Base
   end
 
   def content_association_options
-    if singular? && has_content?
+    if part.singular? && has_content? && content.is_a?(ActiveRecord::Base)
       association_name = options.to_hash_with_defaults['association'] || :children
-      association = content.class.reflections[association_name.to_sym]
+      association = content_class.reflections[association_name.to_sym]
       if association
         items = content.send(association_name)
         if trailing_path_of_page.blank?
