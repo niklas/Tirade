@@ -18,6 +18,7 @@ CONFIG[:thumbnail_size] = '60x60#'
 CONFIG[:upload_images_path] = '/upload/'
 
 class Image < ActiveRecord::Base
+  default_scope :order => 'created_at DESC'
   has_attached_file :image,
                     :styles => {
                       :thumbnail => CONFIG[:thumbnail_size],

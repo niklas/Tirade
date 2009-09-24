@@ -1,4 +1,4 @@
-{% if object.image %}
+{% if object.has_image? %}
   {{ object.image | scale: geometry | to_image | link: object }}
 {% endif %}
 <div class="box">

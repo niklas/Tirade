@@ -36,6 +36,9 @@ module AlexPodaras
         def image
           images.first
         end
+        def has_image?
+          !image.nil?
+        end
         def new_image=(image_attributes)
           unless image_attributes.blank? || image_attributes[:image].blank?
             self.images.build(image_attributes)
