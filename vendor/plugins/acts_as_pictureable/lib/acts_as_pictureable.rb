@@ -10,8 +10,6 @@ module AlexPodaras
         def acts_as_pictureable(options = {})
           has_many :picturizations, :as => :pictureable, :dependent => :destroy
           has_many :images, :as => :pictureable, :through => :picturizations, :order => 'position'
-          robustify_has_many :images
-          robustify_has_many :picturizations
           acts_as! :pictureable
           if defined?(Image) && Image < ActiveRecord::Base
             unless Image.reflections.has_key?(:picturizations)
