@@ -18,7 +18,7 @@ module TextFilter
     if text.blank?
       text
     else
-      textilize(text)
+      textilize( brekkify(text) )
     end
   end
 
