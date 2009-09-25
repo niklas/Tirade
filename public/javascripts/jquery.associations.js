@@ -124,13 +124,15 @@
       var item = this.element;
       var o = this.options;
       var list = item.closest(o.list);
-      var id = item.resourceId();
+      var attrs = item.typeAndId();
 
       /* Add hidden input field with id, template is an empty one */
-      list
-        .removeClass('empty')
-        .siblings('input.association_id[type=hidden][value=empty]')
-          .clone().enable().attr('value',id).appendTo(item);
+      if (attrs ) {
+        list
+          .removeClass('empty')
+          .siblings('input.association_id[type=hidden][value=empty]')
+            .clone().enable().attr('value', attrs.id).appendTo(item);
+      }
 
       item.find('a.association').remove();
       $.ui.button({icon: 'minus', text: 'remove', cssclass: 'association remove'})
