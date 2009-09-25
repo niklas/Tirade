@@ -30,26 +30,45 @@ module TextFilter
   def brekkify(text)
     in_brackets = '[^\]]'
     in_braces = '[^\}]'
-    text.gsub! /\[(#{in_brackets}+?):(#{in_brackets}+?)\](?:\{(#{in_braces}*?)\})?/im do |ctag|
-      name = $1.strip
+    text.gsub /\[(#{in_brackets}+?):(#{in_brackets}+?)\](?:\{(#{in_braces}*?)\})?/im do |ctag|
+      command = $1
       id_or_slug = $2
-      id = id_or_slug.to_i
       title = $3
+
+
+      name, *classes = command.split('.').map(&:strip)
+      classes ||= []
+      wrap = !classes.empty?
+      
+      id = id_or_slug.to_i
 
       tag = case name
       when 'image'
-        if image = id > 0 ? Image.find_by_id(id) : Image.find_by_slug(id_or_slug)
-          title = image.title if !title.nil? && title.empty?
+        if image = Image.find_by_id(id) || Image.find_by_slug(id_or_slug)
+          if !title.nil? && title.empty?
+            title = image.title 
+            wrap = true
+          end
           %Q[<img src="#{image.url}" alt="#{image.title}"/>]
+        else
+          %Q[<div class="warning">Image not found: '#{id_or_slug}'</div>]
         end
       else
         '%%% unknown %%%'
       end
 
-      if title.blank?
+      title_tag = if title.blank?
+        title
+      else
+        wrap = true
+        %Q[<span class="title">#{title}</span>]
+      end
+
+      unless wrap
         tag
       else
-        %Q[<div class="#{name}">#{tag}<span class="title">#{title}</span></div>]
+        classes << name
+        %Q[<div class="#{classes.uniq.join(' ')}">#{tag}#{title_tag}</div>]
       end
     end
   end

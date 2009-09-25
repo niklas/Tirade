@@ -39,6 +39,15 @@ describe TextFilter, :type => :helper do
         f("[image:my-image]").should have_img_tag_for(@image)
       end
 
+      it "should show warning if image not found by id" do
+        Image.should_receive(:find_by_slug).with('my-image').and_return(nil)
+        f("[image:my-image]").should have_tag('div.warning', /Image not found/)
+      end
+
+      it "should show warning if image not found by slug" do
+        Image.should_receive(:find_by_id).with(23).and_return(nil)
+        f("[image:23]").should have_tag('div.warning', /Image not found/)
+      end
 
       describe "giving {}" do
         it "should show image with its title under it" do
@@ -57,7 +66,34 @@ describe TextFilter, :type => :helper do
           end
         end
       end
+
+      describe "giving alignment" do
+        it "should align the image right" do
+          f("[image.right:23]").should have_tag('div.image.right') do
+            with_img_tag_for(@image)
+          end
+        end
+        it "should align the image left" do
+          f("[image.left:23]").should have_tag('div.image.left') do
+            with_img_tag_for(@image)
+          end
+        end
+      end
       
+      describe "giving alignment and title" do
+        it "should align the image right" do
+          f("[image.right:23]{Title}").should have_tag('div.image.right') do
+            with_img_tag_for(@image)
+            with_tag('span.title', 'Title')
+          end
+        end
+        it "should align the image left" do
+          f("[image.left:23]{Title}").should have_tag('div.image.left') do
+            with_img_tag_for(@image)
+            with_tag('span.title', 'Title')
+          end
+        end
+      end
     end
 
     
