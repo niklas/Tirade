@@ -2,9 +2,21 @@ body {
   div.page_margins div.page {
     div.image {
       margin: 0.3em auto;
-      .left { float: left; }
-      .right { float: right; }
-      p.title {
+      .left { 
+        float: left;
+        margin-left: 0;
+        margin-right: 0.3em;
+      }
+      .right { 
+        float: right;
+        margin-right: 0;
+        margin-left: 0.3em;
+      }
+      .middle, .center {
+        text-align: center;
+      }
+      *.title {
+        display: block;
         margin: 0.3em auto;
         font-size: 75%;
       }
