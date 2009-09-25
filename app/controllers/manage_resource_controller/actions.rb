@@ -149,7 +149,11 @@ module ManageResourceController
     def update_page_on_edit(page)
       model.without_modification do
         object.attributes = object_params
-        page.update_current_frame(object, 'form')
+        if page.current_frame?
+          page.update_current_frame(object, 'form')
+        else
+          page.push_frame_for(object, 'form')
+        end
       end
     end
 

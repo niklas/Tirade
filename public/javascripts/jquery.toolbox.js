@@ -113,6 +113,27 @@ Toolbox = {
       .appendTo( this.footer )
       .click( $.tirade.focus.pick );
 
+    this.pickContentButton = $.ui.button({cssclass: 'pick edit content', text: 'Pick a Content from Page to edit', icon: 'pencil'})
+      .appendTo( this.footer )
+      .click( function(ev) {
+        var clicker = $(this);
+        clicker.addClass('ui-state-active');
+        if (ev) { ev.stopPropagation(); ev.preventDefault(); }
+        $('body')
+          .css('cursor', 'crosshair')
+          .one('click', function(ev) {
+            if (ev) { ev.stopPropagation(); ev.preventDefault(); }
+            var content = $(ev.target).closest('[rel]:not(.rendering,.grid,.col)');
+            if (content.length) {
+              $.get( content.resourceURL('edit')  );
+            }
+            $('body').css('cursor', 'auto');
+            clicker.removeClass('ui-state-active');
+            return false;
+          });
+        return false;
+      });
+
     this.refreshPageButton = $.ui.button({cssclass: 'refresh_page', text: 'Refresh Page', icon: 'arrowrefresh-1-w'})
       .click(function(e) { 
         var page = $('body > div.page_margins > div.page');

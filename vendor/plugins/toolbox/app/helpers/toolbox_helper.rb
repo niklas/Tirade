@@ -41,6 +41,10 @@ module ToolboxHelper
     page.context.request.headers['Tirade-Frame']
   end
 
+  def current_frame?
+    !current_frame_id.blank?
+  end
+
   def frame_for(thingy, kind='show', opts={})
     frame_renderer_for(thingy, kind, opts).html
   end
