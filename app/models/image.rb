@@ -28,7 +28,7 @@ class Image < ActiveRecord::Base
                     :url => "#{CONFIG[:upload_images_path]}:attachment/:id/:style/:basename.:extension"
   
   has_fulltext_search :title, :image_file_name
-  acts_as_content :liquid => [:title, :image_file_name, :image]
+  acts_as_content :liquid => [:title, :image_file_name, :image, :slug]
 
   def self.attachment_names
     [:image]
@@ -37,7 +37,13 @@ class Image < ActiveRecord::Base
   # validates_presence_of :image_file_name
   validates_attachment_presence :image
   
-  before_create :generate_title
+  before_validation_on_create :generate_title
+
+
+  # for slugs
+  def title_from_default_locale
+    image_file_name.sub(/\.[^\.]+$/, '')
+  end
 
   def icon_path
     image.url(:icon)
