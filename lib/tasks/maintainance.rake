@@ -8,7 +8,7 @@ namespace :tirade do
         content_class.transaction do
           content_class.without_timestamps do
             content_class.all.each do |record|
-              record.update_attribute :slug , record.title.sluggify
+              record.update_attributes! :slug => record.title.andand.sluggify
             end
           end
         end
