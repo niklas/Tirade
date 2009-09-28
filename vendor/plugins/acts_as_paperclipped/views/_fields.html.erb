@@ -1,0 +1,7 @@
+<% accordion_item "Assets" do %>
+  <% fields.fields_for :new_asset do |asset_fields| %>
+    <%= asset_fields.file_field :file %>
+  <% end %>
+  <%= fields.has_many :assets, :foreign_key => 'asset_ids', :label => false %>
+<% end %>
+
