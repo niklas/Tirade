@@ -1,3 +1,4 @@
+{% if object.assets != empty %}
 <h3>Downloads</h3>
 <ul class="assets">
 {% for asset in object.assets %}
@@ -6,3 +7,4 @@
   </li>
 {% endfor %}
 </ul>
+{% endif %}
