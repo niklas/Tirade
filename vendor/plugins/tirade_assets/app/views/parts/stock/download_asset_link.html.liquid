@@ -1,0 +1,13 @@
+<a href="{{ object.file_url }}">
+
+{% if show_icon %}
+  <img class="icon" src="/images/icons/types/{{ object.icon_name }}.png" />
+{% endif %}
+
+{% if title == '' %}
+  {{ object.title }}
+{% else %}
+  {{ title }}
+{% endif %}
+
+</a>

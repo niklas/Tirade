@@ -1,0 +1,11 @@
+--- 
+:defined_options: {}
+
+:description: Shows a download link for every asset of the given Content
+:preferred_types: 
+- Document
+- Folder
+- NewsItem
+- NewsFolder
+- Product
+:plural: false

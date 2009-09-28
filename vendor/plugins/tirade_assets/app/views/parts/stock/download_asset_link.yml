@@ -1,0 +1,12 @@
+--- 
+:defined_options: 
+  title: 
+  - string
+  - ""
+  show_icon: 
+  - boolean
+  - "true"
+:description: Link to download an asset with optional icon
+:preferred_types: 
+- Asset
+:plural: false

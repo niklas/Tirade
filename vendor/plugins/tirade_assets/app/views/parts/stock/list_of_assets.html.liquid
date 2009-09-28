@@ -1,0 +1,8 @@
+<h3>Downloads</h3>
+<ul class="assets">
+{% for asset in object.assets %}
+  <li class="asset">
+  {{ asset | render: 'download_asset_link' }}
+  </li>
+{% endfor %}
+</ul>
