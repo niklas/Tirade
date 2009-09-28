@@ -42,7 +42,11 @@ class Image < ActiveRecord::Base
 
   # for slugs
   def title_from_default_locale
-    image_file_name.sub(/\.[^\.]+$/, '')
+    if title.blank?
+      image_file_name.sub(/\.[^\.]+$/, '')
+    else
+      title
+    end
   end
 
   def icon_path
