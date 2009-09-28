@@ -63,6 +63,7 @@ Spec::Runner.configure do |config|
     [Part, Rendering, Page].each do |klass|
       klass.active_controller = mock_controller
     end
+    Part.any_instance.stub!(:save_code_to!).and_return(true)
   end
 end
 

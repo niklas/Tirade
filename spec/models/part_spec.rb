@@ -51,8 +51,7 @@ describe 'A Part with a name' do
       @part.liquid = '<p>some content</p>'
     end
     it "should write its liquid to a file in themes on save" do
-      File.stub!(:open).with(any_args()).and_return(true)
-      File.should_receive(:open).with(@part.theme_path,'w')
+      @part.should_receive(:save_code_to!).with(@part.theme_path)
       lambda { @part.save! }.should_not raise_error
     end
   end
