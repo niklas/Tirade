@@ -41,7 +41,7 @@ class Content < ActiveRecord::Base
   named_scope :child_of, lambda {|p| p.nil? ? {} : {:conditions => {:parent_id => p.is_a?(Content) ? p.id : p}}}
   has_fulltext_search :title, :description, :body
   acts_as_pictureable
-  acts_as! :pictureable
+  acts_as_paperclipped
 
   has_slug :prepend_id => false
 
