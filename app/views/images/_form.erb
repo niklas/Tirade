@@ -3,5 +3,6 @@
 <% form_for @image, :html => {:multipart => true} do |f|%>
   <div class="upload_images" />
   <%= f.file_field :image %>
+  <%= f.text_field :title %>
   <%= f.submit 'Upload Images' %>
 <% end %>
