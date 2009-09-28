@@ -314,6 +314,7 @@ ul.list, dl, ul.tree {
   img.icon {
     margin: 0 6px 0 0;
     float: left;
+    width: 16px;
   }
   li { 
     position: relative;

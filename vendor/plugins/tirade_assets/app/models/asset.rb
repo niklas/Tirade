@@ -1,5 +1,5 @@
 class Asset < ActiveRecord::Base
-  acts_as_content :liquid => [:title, :description, :file_url]
+  acts_as_content :liquid => [:title, :description, :file_url, :icon_name]
   attr_accessible :title, :description, :file
   markup :description
 
@@ -17,6 +17,17 @@ class Asset < ActiveRecord::Base
               :title => 'An Asset',
               :description => 'Description of Asset' 
           )
+  end
+
+  def icon_name
+    case file.andand.content_type
+    when /pdf/i
+      'pdf'
+    when /plain/i
+      'text'
+    else
+      'file'
+    end
   end
 end
 
