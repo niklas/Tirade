@@ -55,6 +55,14 @@ describe ToolboxHelper do
     helper.frame_for(all_documents).should == 'list of records'
   end
 
+  it "should build a frame using suplied partial" do
+    document = Factory.build(:document)
+    EditRecordFrameRenderer.should_receive(:new).with(document, helper, {:partial => 'special_documents/form'}).and_return(
+      mock(EditRecordFrameRenderer, :html => 'special form')
+    )
+    helper.frame_for(document, 'form', :partial => 'special_documents/form').should == 'special form'
+  end
+
   it "should help to push a frame to toolbox to show a record" do
     helper.stub!(:frame_for).and_return('Frame Content')
     rjs_for.push_frame_for(@document).should == %Q[Toolbox.push("Frame Content");]

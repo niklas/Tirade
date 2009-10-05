@@ -94,3 +94,27 @@ describe EditRecordFrameRenderer, 'for a new document' do
     subject.links.should include('[Cancel Link]')
   end
 end
+
+describe EditRecordFrameRenderer, "with partial override" do
+  subject do
+    @partial = 'special/form'
+    @record = Factory.build :document
+    EditRecordFrameRenderer.new(@record, helper, :partial => @partial)
+  end
+  before( :each ) do
+    stubs_for_helper
+  end
+  it_should_behave_like 'every FrameRenderer'
+
+  it "should use the given partial" do
+    subject.render_options.should == {
+      :object => @record,
+      :locals => {
+        :document => @record
+      },
+      :layout => '/layouts/toolbox',
+      :partial => 'special/form'
+    }
+  end
+  
+end

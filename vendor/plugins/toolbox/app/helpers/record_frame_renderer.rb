@@ -4,6 +4,11 @@ class RecordFrameRenderer < FrameRenderer
     @record = record
     super(template, opts)
   end
+
+  def partial
+    "#{record.resource_name.pluralize}/#{partial_name}"
+  end
+
   def meta
     if record.new_record?
       super

@@ -3,6 +3,7 @@ class FrameRenderer
   def initialize(template, options={})
     @template = template
     @options = options
+    @partial = options.delete(:partial)
     add_links
   end
 
@@ -61,7 +62,7 @@ class FrameRenderer
   def render_options
     {
       :layout => '/layouts/toolbox',
-      :partial => partial,
+      :partial => @partial || partial,
     }
   end
 
