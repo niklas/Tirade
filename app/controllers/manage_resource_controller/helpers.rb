@@ -3,7 +3,7 @@ module ManageResourceController
 
     def self.included(base)
       base.class_eval do
-        before_filter :set_form_builder, :except => [:index,:show,:destroy]
+        prepend_before_filter :set_form_builder, :except => [:index,:show,:destroy]
         before_filter :set_context_page
         helper_method :non_form_submit?
       end
