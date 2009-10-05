@@ -983,6 +983,7 @@ $.fn.formInFrameInToolbox = function(options) {
 
     var $submit = $form.find(':submit');
     if ($submit.length) {
+      $frame.find('.linkbar a.submit').remove();
       $('<a />')
         .addClass('submit')
         .text( $submit.val() )
