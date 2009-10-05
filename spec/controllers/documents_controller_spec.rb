@@ -443,7 +443,7 @@ describe DocumentsController do
         page = Factory :page
         rendering = Factory :rendering
         page.stub!(:renderings).and_return( mock(:for_content => [rendering]) )
-        Page.should_receive(:find_by_id).with('42').and_return( page )
+        Page.should_receive(:find_by_id).with(42).and_return( page )
         do_request
         unescape_rjs(response.body).should have_text(%r~rendering_#{rendering.id}.*replaceWith.*rendering_#{rendering.id}~)
       end
