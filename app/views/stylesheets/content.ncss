@@ -1,7 +1,7 @@
 body {
   div.page_margins div.page {
     div.image {
-      margin: 0.3em auto;
+      margin: 1px auto 10px;
       .left { 
         float: left;
         margin-left: 0;
