@@ -125,6 +125,7 @@ Toolbox = {
             if (ev) { ev.stopPropagation(); ev.preventDefault(); }
             var content = $(ev.target).closest('[rel]:not(.rendering,.grid,.col)');
             if (content.length) {
+              Toolbox.beBusy('Selecting');
               $.get( content.resourceURL('edit')  );
             }
             $('body').css('cursor', 'auto');
