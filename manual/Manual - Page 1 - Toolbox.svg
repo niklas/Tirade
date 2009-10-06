@@ -224,9 +224,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="246.61752"
-     inkscape:cy="557.24075"
+     inkscape:zoom="2"
+     inkscape:cx="251.3551"
+     inkscape:cy="557.51956"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1604"
@@ -269,137 +269,133 @@
        x="277"
        y="358.83838" />
     <g
-       id="g5231"
-       transform="translate(19.580704,34.143335)">
+       transform="translate(0.919861,117.20085)"
+       id="g5262">
       <g
-         id="g5262"
-         transform="translate(-18.660843,83.057516)">
-        <g
-           id="g5409">
-          <text
-             id="text2859-9-2"
-             y="220.16133"
-             x="209.08014"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             xml:space="preserve"><tspan
-               id="tspan3777"
-               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-               y="220.16133"
-               x="209.08014"
-               sodipodi:role="line">Back Button</tspan></text>
-          <text
-             id="text3781"
-             y="231.64661"
-             x="209.16084"
-             style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             xml:space="preserve"><tspan
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               y="231.64661"
-               x="209.16084"
-               id="tspan3783"
-               sodipodi:role="line">go back one frame</tspan></text>
-        </g>
-      </g>
-      <g
-         transform="translate(416.33916,4.4860874)"
-         id="g5262-5">
-        <g
-           id="g5304"
-           transform="translate(-170,-41.428571)">
-          <text
-             id="text2859-9-2-7"
-             y="220.16133"
-             x="209.08014"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             xml:space="preserve"><tspan
-               id="tspan3777-0"
-               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-               y="220.16133"
-               x="209.08014"
-               sodipodi:role="line">Split View Button</tspan></text>
-          <text
-             id="text3781-5"
-             y="231.64661"
-             x="209.16084"
-             style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             xml:space="preserve"><tspan
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               y="231.64661"
-               x="209.16084"
-               id="tspan3783-8"
-               sodipodi:role="line">moves the Toolbox next to your page</tspan><tspan
-               id="tspan5302"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               y="244.14661"
-               x="209.16084"
-               sodipodi:role="line">to not obscure your view</tspan></text>
-        </g>
-      </g>
-      <g
-         transform="translate(251.33916,8.0575164)"
-         id="g5262-54">
+         id="g5409">
         <text
            xml:space="preserve"
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
            x="209.08014"
            y="220.16133"
-           id="text2859-9-2-3"><tspan
+           id="text2859-9-2"><tspan
              sodipodi:role="line"
              x="209.08014"
              y="220.16133"
              style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             id="tspan3777-04">Window Mode Button</tspan></text>
+             id="tspan3777">Back Button</tspan></text>
         <text
            xml:space="preserve"
            style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            x="209.16084"
            y="231.64661"
-           id="text3781-55"><tspan
+           id="text3781"><tspan
              sodipodi:role="line"
-             id="tspan3783-4"
+             id="tspan3783"
              x="209.16084"
              y="231.64661"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">switches the Toolbox to normal mode,</tspan><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">go back one frame</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g5262-5"
+       transform="translate(435.91986,38.629422)">
+      <g
+         transform="translate(-170,-41.428571)"
+         id="g5304">
+        <text
+           xml:space="preserve"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           x="209.08014"
+           y="220.16133"
+           id="text2859-9-2-7"><tspan
+             sodipodi:role="line"
+             x="209.08014"
+             y="220.16133"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             id="tspan3777-0">Split View Button</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           x="209.16084"
+           y="231.64661"
+           id="text3781-5"><tspan
+             sodipodi:role="line"
+             id="tspan3783-8"
+             x="209.16084"
+             y="231.64661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">moves the Toolbox next to your page</tspan><tspan
              sodipodi:role="line"
              x="209.16084"
              y="244.14661"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             id="tspan5345">hovering over your page</tspan></text>
+             id="tspan5302">to not obscure your view</tspan></text>
       </g>
+    </g>
+    <g
+       id="g5262-54"
+       transform="translate(270.91986,42.200851)">
+      <text
+         id="text2859-9-2-3"
+         y="220.16133"
+         x="209.08014"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         xml:space="preserve"><tspan
+           id="tspan3777-04"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           y="220.16133"
+           x="209.08014"
+           sodipodi:role="line">Window Mode Button</tspan></text>
+      <text
+         id="text3781-55"
+         y="231.64661"
+         x="209.16084"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           y="231.64661"
+           x="209.16084"
+           id="tspan3783-4"
+           sodipodi:role="line">switches the Toolbox to normal mode,</tspan><tspan
+           id="tspan5345"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           y="244.14661"
+           x="209.16084"
+           sodipodi:role="line">hovering over your page</tspan></text>
+    </g>
+    <g
+       transform="translate(75.885681,104.89334)"
+       id="g5415">
       <g
-         id="g5415"
-         transform="translate(56.304977,70.75)">
-        <g
-           id="g5262-54-0"
-           transform="translate(199.40918,-17.692484)">
-          <text
-             id="text2859-9-2-3-4"
-             y="220.16133"
+         transform="translate(199.40918,-17.692484)"
+         id="g5262-54-0">
+        <text
+           xml:space="preserve"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           x="209.08014"
+           y="220.16133"
+           id="text2859-9-2-3-4"><tspan
+             sodipodi:role="line"
              x="209.08014"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             xml:space="preserve"><tspan
-               id="tspan3777-04-6"
-               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-               y="220.16133"
-               x="209.08014"
-               sodipodi:role="line">Fullscreen Button</tspan></text>
-          <text
-             id="text3781-55-4"
-             y="231.64661"
+             y="220.16133"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             id="tspan3777-04-6">Fullscreen Button</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           x="209.16084"
+           y="231.64661"
+           id="text3781-55-4"><tspan
+             sodipodi:role="line"
              x="209.16084"
-             style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             xml:space="preserve"><tspan
-               id="tspan5345-3"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               y="231.64661"
-               x="209.16084"
-               sodipodi:role="line">switches the Toolbox to full screen,</tspan><tspan
-               id="tspan5386"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               y="244.14661"
-               x="209.16084"
-               sodipodi:role="line">covering the whole page</tspan></text>
-        </g>
+             y="231.64661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5345-3">switches the Toolbox to full screen,</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="244.14661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5386">covering the whole page</tspan></text>
       </g>
     </g>
     <g
@@ -455,7 +451,7 @@
            id="tspan5345-8-7">shows where you are</tspan></text>
     </g>
     <g
-       transform="translate(-124.08014,152.20085)"
+       transform="translate(-123.87377,277.20085)"
        id="g5262-54-7-5-0">
       <text
          xml:space="preserve"
@@ -486,7 +482,7 @@
            id="tspan5491">with the currently show stuff</tspan></text>
     </g>
     <g
-       transform="translate(-124.16085,200.71558)"
+       transform="translate(-123.87377,172.20085)"
        id="g5262-54-7-5-0-9">
       <text
          xml:space="preserve"
@@ -517,7 +513,7 @@
            id="tspan5532">(here: a Document)</tspan></text>
     </g>
     <g
-       transform="translate(-124.08014,262.20085)"
+       transform="translate(-123.87377,352.20085)"
        id="g5262-54-7-5-0-9-6">
       <text
          xml:space="preserve"
@@ -693,7 +689,7 @@
            id="tspan5714">click this to select a component of a Page</tspan></text>
     </g>
     <g
-       transform="translate(280.91986,342.20085)"
+       transform="translate(280.83916,390.71558)"
        id="g5262-54-7-5-0-9-6-6-4-2">
       <text
          xml:space="preserve"
@@ -759,5 +755,85 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            id="tspan5781">Scroll down to see more</tspan></text>
     </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="M 470,212.36218 416.66267,365.7615"
+       id="path5829"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="M 475,257.36218 429.92092,365.58472"
+       id="path5831"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="M 443.0024,365.23117 480,302.36218"
+       id="path5833"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 485,347.36218 -29.0929,18.57609"
+       id="path5835"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 485,422.36218 -20,5"
+       id="path5845"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 465,607.36218 20,0"
+       id="path5847"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 365,627.36218 0,-20"
+       id="path5853"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 315,610.36218 10,122"
+       id="path5855"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 300,610.36218 20,172"
+       id="path5857"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 285,610.36218 30,207"
+       id="path5859"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 328,610.36218 2,77"
+       id="path5863"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 140,567.36218 200,-65"
+       id="path5865"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 160,387.36218 124,1"
+       id="path5867"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 200,492.36218 135,-105"
+       id="path5869"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 220,352.36218 63,15"
+       id="path5871"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 300,317.36218 20,50"
+       id="path5873"
+       inkscape:connector-type="polyline" />
   </g>
 </svg>
