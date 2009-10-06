@@ -32,7 +32,7 @@ class StylesheetsController < ApplicationController
       :selected     => '#bdbdbd',
       :text         => '#222222',
 
-      :input        => '#ffffff',
+      :input        => '#f1f5f6',
       :input_border => '#777777',
       :element      => '#bbbbbb',
       :border_dark  => '#dedede',

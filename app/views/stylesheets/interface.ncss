@@ -162,7 +162,7 @@ form {
     float: none;
   }
   textarea {
-    background-color: <%= @colors[:input] %>;
+    background: <%= @colors[:input] %> url(../images/input-bg.jpg) no-repeat;
     color:  <%= @colors[:text] %>;
     border-color: <%= @colors[:input_border] %>;
     border-style: solid none;
@@ -172,7 +172,7 @@ form {
     float: right;
     [type="text"],[type="password"] {
       width: 75%;
-      background-color: <%= @colors[:input] %>;
+      background: <%= @colors[:input] %> url(../images/input-bg.jpg) no-repeat;
       color:  <%= @colors[:text] %>;
       border-color: <%= @colors[:input_border] %>;
       border-style: none none solid none;
