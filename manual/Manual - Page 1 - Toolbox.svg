@@ -224,16 +224,26 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="230.56128"
-     inkscape:cy="574.61542"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="246.61752"
+     inkscape:cy="557.24075"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1604"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
      inkscape:window-y="3"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5795" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="85.206367,747.76542"
+       id="guide5797" />
+  </sodipodi:namedview>
   <metadata
      id="metadata4">
     <rdf:RDF>
@@ -260,10 +270,10 @@
        y="358.83838" />
     <g
        id="g5231"
-       transform="translate(3,-4.5)">
+       transform="translate(19.580704,34.143335)">
       <g
          id="g5262"
-         transform="translate(-23,-22.5)">
+         transform="translate(-18.660843,83.057516)">
         <g
            id="g5409">
           <text
@@ -291,7 +301,7 @@
         </g>
       </g>
       <g
-         transform="translate(75.148588,-56.442484)"
+         transform="translate(416.33916,4.4860874)"
          id="g5262-5">
         <g
            id="g5304"
@@ -326,7 +336,7 @@
         </g>
       </g>
       <g
-         transform="translate(138.00574,-112.87106)"
+         transform="translate(251.33916,8.0575164)"
          id="g5262-54">
         <text
            xml:space="preserve"
@@ -357,10 +367,11 @@
              id="tspan5345">hovering over your page</tspan></text>
       </g>
       <g
-         id="g5415">
+         id="g5415"
+         transform="translate(56.304977,70.75)">
         <g
            id="g5262-54-0"
-           transform="translate(190.03418,-42.692484)">
+           transform="translate(199.40918,-17.692484)">
           <text
              id="text2859-9-2-3-4"
              y="220.16133"
@@ -392,7 +403,7 @@
       </g>
     </g>
     <g
-       transform="translate(244.74846,37.450374)"
+       transform="translate(280.91986,132.20085)"
        id="g5262-54-7">
       <text
          xml:space="preserve"
@@ -418,7 +429,7 @@
            id="tspan5345-8">closes the Toolbox</tspan></text>
     </g>
     <g
-       transform="translate(-56.62739,108.32441)"
+       transform="translate(27.91986,82.20085)"
        id="g5262-54-7-5">
       <text
          xml:space="preserve"
@@ -444,7 +455,7 @@
            id="tspan5345-8-7">shows where you are</tspan></text>
     </g>
     <g
-       transform="translate(-166.38175,146.70037)"
+       transform="translate(-124.08014,152.20085)"
        id="g5262-54-7-5-0">
       <text
          xml:space="preserve"
@@ -475,7 +486,7 @@
            id="tspan5491">with the currently show stuff</tspan></text>
     </g>
     <g
-       transform="translate(-113.3225,200.45037)"
+       transform="translate(-124.16085,200.71558)"
        id="g5262-54-7-5-0-9">
       <text
          xml:space="preserve"
@@ -506,7 +517,7 @@
            id="tspan5532">(here: a Document)</tspan></text>
     </g>
     <g
-       transform="translate(-150.51781,297.7824)"
+       transform="translate(-124.08014,262.20085)"
        id="g5262-54-7-5-0-9-6">
       <text
          xml:space="preserve"
@@ -537,7 +548,7 @@
            id="tspan5573">(here: a list of Documents)</tspan></text>
     </g>
     <g
-       transform="translate(-158.0168,358.8664)"
+       transform="translate(130.91986,422.20085)"
        id="g5262-54-7-5-0-9-6-6">
       <text
          xml:space="preserve"
@@ -568,7 +579,7 @@
            id="tspan5614">and do not change their behaviour</tspan></text>
     </g>
     <g
-       transform="translate(-161.50996,455.45037)"
+       transform="translate(110.91986,602.20085)"
        id="g5262-54-7-5-0-9-6-6-8">
       <text
          xml:space="preserve"
@@ -594,7 +605,7 @@
            id="tspan5614-5">toggles the visibility of the Sidebar</tspan></text>
     </g>
     <g
-       transform="translate(14.490036,489.95037)"
+       transform="translate(121.00056,518.68612)"
        id="g5262-54-7-5-0-9-6-6-2">
       <text
          xml:space="preserve"
@@ -625,7 +636,7 @@
            id="tspan5720">quickly go to the 'edit' action.</tspan></text>
     </g>
     <g
-       transform="translate(-122.00996,533.95037)"
+       transform="translate(126.00056,473.68612)"
        id="g5262-54-7-5-0-9-6-6-3">
       <text
          xml:space="preserve"
@@ -656,7 +667,7 @@
            id="tspan5724">this does not affect the Toolbox</tspan></text>
     </g>
     <g
-       transform="translate(53.490036,450.95037)"
+       transform="translate(116.00056,568.68612)"
        id="g5262-54-7-5-0-9-6-6-4">
       <text
          xml:space="preserve"
@@ -682,7 +693,7 @@
            id="tspan5714">click this to select a component of a Page</tspan></text>
     </g>
     <g
-       transform="translate(284.65361,508.70037)"
+       transform="translate(280.91986,342.20085)"
        id="g5262-54-7-5-0-9-6-6-4-2">
       <text
          xml:space="preserve"
@@ -708,7 +719,7 @@
            id="tspan5714-9">you need more place?</tspan><tspan
            sodipodi:role="line"
            x="209.16084"
-           y="231.64661"
+           y="244.14661"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            id="tspan5777">drag this to resize the Toolbox</tspan></text>
     </g>
