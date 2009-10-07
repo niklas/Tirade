@@ -7,7 +7,7 @@ namespace :tirade do
       svgs.zip(pdfs).each do |svg,pdf|
         system 'inkscape', '-A', pdf, svg
       end
-      system "gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=manual/Manual.pdf", *pdfs
+      system "gs -q -sPAPERSIZE=a4 -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=manual/Manual.pdf manual/Manual\\ -*pdf"
       pdfs.each do |pdf|
         File.delete(pdf)
       end
