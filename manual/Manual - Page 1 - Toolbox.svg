@@ -215,6 +215,13 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective5885"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      inkscape:document-units="mm"
@@ -224,11 +231,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="251.3551"
-     inkscape:cy="557.51956"
-     inkscape:current-layer="layer1"
-     showgrid="true"
+     inkscape:zoom="1"
+     inkscape:cx="395.848"
+     inkscape:cy="586.60195"
+     inkscape:current-layer="g5304-4"
+     showgrid="false"
      inkscape:window-width="1604"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
@@ -835,5 +842,65 @@
        d="m 300,317.36218 20,50"
        id="path5873"
        inkscape:connector-type="polyline" />
+    <g
+       id="g5262-5-3"
+       transform="translate(46.045524,-69.037055)">
+      <g
+         transform="translate(-170,-41.428571)"
+         id="g5304-4">
+        <text
+           xml:space="preserve"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           x="209.08014"
+           y="220.16133"
+           id="text2859-9-2-7-1"><tspan
+             sodipodi:role="line"
+             x="209.08014"
+             y="220.16133"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             id="tspan3777-0-8">Toolbox</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           x="209.16084"
+           y="231.64661"
+           id="text3781-5-8"><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="231.64661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5302-0">the Toolbox is THE interface to Tirade, your Content and your Pages.</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="244.14661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5927">It contains all the actions and tasks you will need to accomplish your goals be it</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="256.64661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5929">* quickly fixing a typo on a Page</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="269.14661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5931">* adding another block of text to your Page</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="281.64661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5933">* attaching an Image to a Document or</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="294.14661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5935">* creating a new Page from scratch</tspan><tspan
+             sodipodi:role="line"
+             x="209.16084"
+             y="294.14661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan5937" /></text>
+      </g>
+    </g>
   </g>
 </svg>
