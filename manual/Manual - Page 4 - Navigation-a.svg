@@ -504,152 +504,6 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective5304"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <inkscape:perspective
-       id="perspective5413"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <marker
-       inkscape:stockid="SquareS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="SquareS-8"
-       style="overflow:visible">
-      <path
-         id="path3850-6"
-         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-         transform="scale(0.2,0.2)" />
-    </marker>
-    <marker
-       inkscape:stockid="DotS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="DotS-8"
-       style="overflow:visible">
-      <path
-         id="path3841-5"
-         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
-         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
-    </marker>
-    <inkscape:perspective
-       id="perspective5413-1"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <marker
-       inkscape:stockid="SquareS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="SquareS-9"
-       style="overflow:visible">
-      <path
-         id="path3850-7"
-         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-         transform="scale(0.2,0.2)" />
-    </marker>
-    <marker
-       inkscape:stockid="DotS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="DotS-3"
-       style="overflow:visible">
-      <path
-         id="path3841-0"
-         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
-         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
-    </marker>
-    <inkscape:perspective
-       id="perspective5499"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <marker
-       inkscape:stockid="SquareS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="SquareS-6"
-       style="overflow:visible">
-      <path
-         id="path3850-0"
-         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-         transform="scale(0.2,0.2)" />
-    </marker>
-    <marker
-       inkscape:stockid="DotS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="DotS-1"
-       style="overflow:visible">
-      <path
-         id="path3841-9"
-         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
-         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
-    </marker>
-    <inkscape:perspective
-       id="perspective5605"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
-    <marker
-       inkscape:stockid="SquareS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="SquareS-7"
-       style="overflow:visible">
-      <path
-         id="path3850-01"
-         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-         transform="scale(0.2,0.2)" />
-    </marker>
-    <marker
-       inkscape:stockid="DotS"
-       orient="auto"
-       refY="0"
-       refX="0"
-       id="DotS-0"
-       style="overflow:visible">
-      <path
-         id="path3841-53"
-         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
-         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
-    </marker>
-    <inkscape:perspective
-       id="perspective5726"
-       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
-       inkscape:vp_z="1 : 0.5 : 1"
-       inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_x="0 : 0.5 : 1"
-       sodipodi:type="inkscape:persp3d" />
   </defs>
   <sodipodi:namedview
      inkscape:document-units="mm"
@@ -659,9 +513,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="418.33662"
-     inkscape:cy="386.20291"
+     inkscape:zoom="2.8284271"
+     inkscape:cx="216.92216"
+     inkscape:cy="755.93987"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1604"
@@ -669,16 +523,14 @@
      inkscape:window-x="0"
      inkscape:window-y="3"
      inkscape:window-maximized="1"
-     showguides="false"
-     inkscape:guide-bbox="true"
-     inkscape:snap-smooth-nodes="true"
-     inkscape:object-nodes="true">
+     showguides="true"
+     inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
        id="grid5795" />
     <sodipodi:guide
        orientation="1,0"
-       position="64,747.76542"
+       position="85.206367,747.76542"
        id="guide5797" />
     <sodipodi:guide
        orientation="0,1"
@@ -690,64 +542,20 @@
        id="guide3177" />
     <sodipodi:guide
        orientation="1,0"
-       position="677,769.23167"
+       position="623.66818,779.23167"
        id="guide3199" />
     <sodipodi:guide
        orientation="1,0"
-       position="485.78236,958.8368"
-       id="guide5279" />
+       position="44,1053"
+       id="guide3050" />
     <sodipodi:guide
        orientation="1,0"
-       position="254.55844,931.25963"
-       id="guide5281" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="757.31136,364.8671"
-       id="guide5285" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="48.443651,859.84185"
-       id="guide5360" />
-    <sodipodi:guide
-       orientation="-0.70710678,0.70710678"
-       position="541.875,396.875"
-       id="guide5456" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="585.25,464.75"
-       id="guide5458" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="560.5,515"
-       id="guide5460" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="279.5,421.5"
-       id="guide5575" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="239.5,700"
-       id="guide5631" />
+       position="683,923"
+       id="guide3052" />
     <sodipodi:guide
        orientation="0.70710678,0.70710678"
-       position="560.5,751.5"
-       id="guide5633" />
-    <sodipodi:guide
-       orientation="0.70710678,0.70710678"
-       position="394.5,461"
-       id="guide5708" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="439.5,507.25"
-       id="guide5712" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="403.25,501.25"
-       id="guide5714" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="150.9673,436.99199"
-       id="guide5716" />
+       position="184.02454,798.85388"
+       id="guide5232" />
   </sodipodi:namedview>
   <metadata
      id="metadata4">
@@ -792,206 +600,24 @@
            sodipodi:role="line">This will show you how to navigate through the Toolbox to edit a Document.</tspan></text>
     </g>
     <g
-       transform="translate(37.927171,11.21483)"
+       transform="translate(-114.08014,-172.49885)"
        id="g3108">
       <g
          transform="translate(-9.7936322,126)"
          id="g3042">
-        <g
-           id="g5247">
-          <g
-             id="g5268"
-             transform="translate(41.206367,9.5703126e-7)">
-            <text
-               id="text2859-9-2-3-2-3-2-4-2-3-8-2"
-               y="220.16133"
-               x="209.08014"
-               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-               xml:space="preserve"><tspan
-                 id="tspan3777-04-7-0-7-1-6-6-2-1"
-                 style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-                 y="220.16133"
-                 x="209.08014"
-                 sodipodi:role="line">Show Button</tspan></text>
-            <text
-               id="text3781-55-1-8-7-6-2-1-5-3"
-               y="231.64661"
-               x="209.16084"
-               style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               xml:space="preserve"><tspan
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-                 y="231.64661"
-                 x="209.16084"
-                 sodipodi:role="line"
-                 id="tspan5245">Every item or list has </tspan><tspan
-                 id="tspan5262"
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-                 y="244.14661"
-                 x="209.16084"
-                 sodipodi:role="line">an arrow on its right side.</tspan><tspan
-                 id="tspan5264"
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-                 y="256.64661"
-                 x="209.16084"
-                 sodipodi:role="line" /><tspan
-                 id="tspan5266"
-                 style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-                 y="269.14661"
-                 x="209.16084"
-                 sodipodi:role="line">Click to show this item.</tspan></text>
-          </g>
-        </g>
-      </g>
-    </g>
-    <g
-       id="g5236"
-       transform="translate(232.87782,-138.24264)">
-      <g
-         id="g5665"
-         transform="translate(0,21.25)">
         <text
-           id="text2859-9-2-3-2-3-2-4-2-3-8-2-7"
-           y="271.44571"
-           x="252.82384"
-           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           xml:space="preserve"><tspan
-             id="tspan3777-04-7-0-7-1-6-6-2-1-0"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             y="271.44571"
-             x="252.82384"
-             sodipodi:role="line">List Documents</tspan></text>
-        <text
-           id="text3781-55-1-8-7-6-2-1-5-3-4"
-           y="282.93097"
-           x="252.90454"
-           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           xml:space="preserve"><tspan
-             id="tspan3137"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="282.93097"
-             x="252.90454"
-             sodipodi:role="line">Lists all Documents</tspan></text>
-      </g>
-    </g>
-    <path
-       inkscape:connector-type="polyline"
-       id="path3139"
-       d="m 254.94662,285.73459 231.25995,0"
-       style="fill:none;stroke:#000000;stroke-width:2.77086616;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.69271654, 0.69271654;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
-    <image
-       y="206.66248"
-       x="64"
-       id="image2961"
-       height="253.14423"
-       width="190.94662"
-       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Documents-Highlight.png" />
-    <image
-       y="687.49506"
-       x="67.12587"
-       id="image2975"
-       height="253.14423"
-       width="187.43257"
-       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Edit-Document-Description.png" />
-    <image
-       y="206.66248"
-       x="486.20657"
-       id="image2989"
-       height="253.14423"
-       width="190.79343"
-       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Item-higlight.png" />
-    <image
-       y="687.49506"
-       x="485.78235"
-       id="image3017"
-       height="253.14423"
-       width="187.43257"
-       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Show-Document-Description.png" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:2.77086616;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.69271654, 0.69271654;stroke-dashoffset:0;marker-end:url(#Arrow1Mend);display:inline"
-       d="m 655.04927,459.8067 -0.99662,227.68836"
-       id="path4585"
-       inkscape:connector-type="polyline" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:2.77086616;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.69271654, 0.69271654;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
-       d="m 485.78235,710.06717 -231.22391,0"
-       id="path4587"
-       inkscape:connector-type="polyline" />
-    <g
-       transform="translate(42.81841,432.45159)"
-       id="g4953">
-      <g
-         id="g6750"
-         transform="translate(47.999999,-6.4999998)">
-        <g
-           id="g5699"
-           transform="translate(3,4)">
-          <text
-             xml:space="preserve"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             x="209.08014"
-             y="220.16133"
-             id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3"><tspan
-               sodipodi:role="line"
-               x="209.08014"
-               y="220.16133"
-               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-               id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7">Edit Button</tspan></text>
-          <text
-             xml:space="preserve"
-             style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             x="209.16084"
-             y="231.64661"
-             id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4"><tspan
-               id="tspan4890-5"
-               sodipodi:role="line"
-               x="209.16084"
-               y="231.64661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">If you want to replace</tspan><tspan
-               sodipodi:role="line"
-               x="209.16084"
-               y="244.14661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               id="tspan4945">the dumb filling text with</tspan><tspan
-               sodipodi:role="line"
-               x="209.16084"
-               y="256.64661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               id="tspan4947">some really supporting prosa,</tspan><tspan
-               sodipodi:role="line"
-               x="209.16084"
-               y="269.14661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-               id="tspan6748">click the edit button.</tspan></text>
-        </g>
-        <text
-           xml:space="preserve"
-           style="font-size:10px;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-           x="452"
-           y="682.36218"
-           id="text5689"
-           transform="translate(-90.818409,-425.95159)"><tspan
-             sodipodi:role="line"
-             id="tspan5691"></tspan></text>
-      </g>
-    </g>
-    <g
-       id="g5023"
-       transform="translate(-145.08014,395.20886)">
-      <g
-         id="g5648">
-        <text
-           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-9"
+           id="text2859-9-2-3-2-3-2-4-2-3-8-2"
            y="220.16133"
            x="209.08014"
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
            xml:space="preserve"><tspan
-             id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-2"
+             id="tspan3777-04-7-0-7-1-6-6-2-1"
              style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
              y="220.16133"
              x="209.08014"
-             sodipodi:role="line">Editing Document</tspan></text>
+             sodipodi:role="line">Show Button</tspan></text>
         <text
-           id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-2"
+           id="text3781-55-1-8-7-6-2-1-5-3"
            y="231.64661"
            x="209.16084"
            style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
@@ -1000,208 +626,414 @@
              y="231.64661"
              x="209.16084"
              sodipodi:role="line"
-             id="tspan5011">You can change multiple attributes at</tspan><tspan
+             id="tspan3036">Every Item or List you are allowed to see has an arrow on its right side.</tspan></text>
+      </g>
+    </g>
+    <text
+       id="text2859-9-2-3-2-3-2-4-2-3-8-2-7"
+       y="271.44571"
+       x="252.82384"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+       xml:space="preserve"><tspan
+         id="tspan3777-04-7-0-7-1-6-6-2-1-0"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="271.44571"
+         x="252.82384"
+         sodipodi:role="line">List Documents</tspan></text>
+    <text
+       id="text3781-55-1-8-7-6-2-1-5-3-4"
+       y="282.93097"
+       x="252.90454"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+       xml:space="preserve"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="282.93097"
+         x="252.90454"
+         sodipodi:role="line"
+         id="tspan3036-5">Starting at the Dashboard, open the </tspan><tspan
+         id="tspan3131"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="295.43097"
+         x="252.90454"
+         sodipodi:role="line">Accordion Item &quot;Contents&quot;, move the</tspan><tspan
+         id="tspan3135"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="307.93097"
+         x="252.90454"
+         sodipodi:role="line">mouse to &quot;Documents&quot; and click on</tspan><tspan
+         id="tspan3137"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="320.43097"
+         x="252.90454"
+         sodipodi:role="line">the appearing arrow</tspan></text>
+    <path
+       inkscape:connection-end="#image2989"
+       inkscape:connection-start="#image2961"
+       inkscape:connector-type="polyline"
+       id="path3139"
+       d="m 234.94662,333.23459 257.25995,0"
+       style="fill:none;stroke:#000000;stroke-width:2.77086614;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.69271654,0.69271654;marker-end:url(#Arrow1Mend);stroke-dashoffset:0" />
+    <g
+       id="g4394"
+       transform="translate(136.08075,285.81737)">
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         x="209.08014"
+         y="220.16133"
+         id="text2859-9-2-3-2-3-2-4-2-3-8-2-1"><tspan
+           sodipodi:role="line"
+           x="209.08014"
+           y="220.16133"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           id="tspan3777-04-7-0-7-1-6-6-2-1-9">Show Document</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         x="209.16084"
+         y="231.64661"
+         id="text3781-55-1-8-7-6-2-1-5-3-6"><tspan
+           id="tspan3036-8"
+           sodipodi:role="line"
+           x="209.16084"
+           y="231.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">If you want to see what is inside a Document,</tspan><tspan
+           id="tspan4390"
+           sodipodi:role="line"
+           x="209.16084"
+           y="244.14661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">you can show it by clicking on its arrow.</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.77086614;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend);display:inline;stroke-miterlimit:4;stroke-dasharray:0.69271654,0.69271654;stroke-dashoffset:0"
+       d="m 587.68362,459.8067 0.0737,116.16846"
+       id="path4392"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#image2989"
+       inkscape:connection-end="#image3003" />
+    <image
+       y="206.66248"
+       x="44"
+       id="image2961"
+       height="253.14423"
+       width="190.94662"
+       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Documents-Highlight.png" />
+    <image
+       y="575.97516"
+       x="44"
+       id="image2975"
+       height="253.14423"
+       width="187.43257"
+       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Edit-Document-Description.png" />
+    <image
+       y="206.66248"
+       x="492.20657"
+       id="image2989"
+       height="253.14423"
+       width="190.79343"
+       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Item-higlight.png" />
+    <image
+       y="575.97516"
+       x="492.67535"
+       id="image3003"
+       height="253.14423"
+       width="190.32465"
+       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Show-Document.png" />
+    <image
+       y="753.47516"
+       x="269.06067"
+       id="image3017"
+       height="253.14423"
+       width="187.43257"
+       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Show-Document-Description.png" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.77086614;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend);stroke-miterlimit:4;stroke-dasharray:0.69271654,0.69271654;stroke-dashoffset:0"
+       d="m 492.67535,777.59952 -36.18211,28.53596"
+       id="path4585"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#image3003"
+       inkscape:connection-end="#image3017" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.77086614;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow1Mend);stroke-miterlimit:4;stroke-dasharray:0.69271654,0.69271654;stroke-dashoffset:0"
+       d="m 269.06067,806.13546 -37.6281,-29.67638"
+       id="path4587"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#image3017"
+       inkscape:connection-end="#image2975" />
+    <g
+       transform="translate(263.5818,636.64916)"
+       id="g4831">
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         x="209.08014"
+         y="220.16133"
+         id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2"><tspan
+           sodipodi:role="line"
+           x="209.08014"
+           y="220.16133"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           id="tspan3777-04-7-0-7-1-6-6-2-1-9-2">Accordion</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         x="209.16084"
+         y="231.64661"
+         id="text3781-55-1-8-7-6-2-1-5-3-6-1"><tspan
+           id="tspan4390-1"
+           sodipodi:role="line"
+           x="209.16084"
+           y="231.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">The Document named &quot;Support&quot; is shown.</tspan><tspan
+           sodipodi:role="line"
+           x="209.16084"
+           y="244.14661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan4827">Click on a Accordion Item to look at the </tspan><tspan
+           sodipodi:role="line"
+           x="209.16084"
+           y="256.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan4829">relevant section (&quot;Description&quot;)</tspan></text>
+    </g>
+    <g
+       id="g4899"
+       transform="translate(263.4237,760.3927)">
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         x="209.08014"
+         y="220.16133"
+         id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1"><tspan
+           sodipodi:role="line"
+           x="209.08014"
+           y="220.16133"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1">Description</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         x="209.16084"
+         y="231.64661"
+         id="text3781-55-1-8-7-6-2-1-5-3-6-1-0"><tspan
+           sodipodi:role="line"
+           x="209.16084"
+           y="231.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan4829-2">You should now see the description of the</tspan><tspan
+           id="tspan4890"
+           sodipodi:role="line"
+           x="209.16084"
+           y="244.14661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">Document named &quot;Support&quot;.</tspan></text>
+    </g>
+    <g
+       transform="translate(59.61174,464.10696)"
+       id="g4953">
+      <g
+         id="g6750"
+         transform="translate(47.999999,-6.4999998)">
+        <text
+           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3"
+           y="220.16133"
+           x="209.08014"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           xml:space="preserve"><tspan
+             id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             y="220.16133"
+             x="209.08014"
+             sodipodi:role="line">Edit Button</tspan></text>
+        <text
+           id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4"
+           y="231.64661"
+           x="209.16084"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           xml:space="preserve"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="231.64661"
+             x="209.16084"
+             sodipodi:role="line"
+             id="tspan4890-5">Let's say you want to replace</tspan><tspan
+             id="tspan4945"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="244.14661"
+             x="209.16084"
+             sodipodi:role="line">the dumb filling text with some </tspan><tspan
+             id="tspan4947"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="256.64661"
+             x="209.16084"
+             sodipodi:role="line">really supporting prosa, click </tspan><tspan
+             id="tspan6748"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="269.14661"
+             x="209.16084"
+             sodipodi:role="line">the edit button &quot;pencil&quot;.</tspan></text>
+      </g>
+    </g>
+    <text
+       id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-9"
+       y="598.16644"
+       x="269.08997"
+       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+       xml:space="preserve"><tspan
+         id="tspan4947-4"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="598.16644"
+         x="269.08997"
+         sodipodi:role="line">If you do not need the Document,</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="610.66644"
+         x="269.08997"
+         sodipodi:role="line"
+         id="tspan5167">you can delete it forever. </tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="623.16644"
+         x="269.08997"
+         sodipodi:role="line"
+         id="tspan5169" /><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         y="635.66644"
+         x="269.08997"
+         sodipodi:role="line"
+         id="tspan5171">Be careful! It will be just gone!</tspan></text>
+    <text
+       id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-2"
+       y="586.68115"
+       x="269.00928"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+       xml:space="preserve"><tspan
+         id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-4"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         y="586.68115"
+         x="269.00928"
+         sodipodi:role="line">Destroy Button</tspan></text>
+    <path
+       inkscape:connector-type="polyline"
+       id="path6761"
+       d="m 538.99999,851.86219 30,-184.5"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline;marker-end:url(#SquareM)" />
+    <path
+       inkscape:connector-type="polyline"
+       id="path6767"
+       d="m 467.49999,974.86218 -119.5,-37.49999"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    <path
+       inkscape:connector-type="polyline"
+       id="path6769"
+       d="m 162,868.36219 -38,-98.5"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+    <g
+       id="g5023"
+       transform="translate(-165.16085,652.10108)">
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         x="209.08014"
+         y="220.16133"
+         id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-9"><tspan
+           sodipodi:role="line"
+           x="209.08014"
+           y="220.16133"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-2">Editing Document</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         x="209.16084"
+         y="231.64661"
+         id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-2"><tspan
+           sodipodi:role="line"
+           x="209.16084"
+           y="231.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan4947-0">You now should see a full fledged text box</tspan><tspan
+           id="tspan5009"
+           sodipodi:role="line"
+           x="209.16084"
+           y="244.14661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">to edit the description of &quot;Support&quot;.</tspan><tspan
+           id="tspan5011"
+           sodipodi:role="line"
+           x="209.16084"
+           y="256.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">You can change other attributes in the</tspan><tspan
+           id="tspan5013"
+           sodipodi:role="line"
+           x="209.16084"
+           y="269.14661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">same run by selecting the relevant</tspan><tspan
+           id="tspan5021"
+           sodipodi:role="line"
+           x="209.16084"
+           y="281.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">Accordion item.</tspan></text>
+    </g>
+    <g
+       transform="translate(-123.87377,237.57613)"
+       id="g5023-6">
+      <g
+         id="g5109"
+         transform="translate(0,45.961941)">
+        <text
+           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-9-5"
+           y="220.16133"
+           x="209.08014"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           xml:space="preserve"><tspan
+             id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-2-2"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             y="220.16133"
+             x="209.08014"
+             sodipodi:role="line">Saving Changes</tspan></text>
+        <text
+           id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-2-7"
+           y="231.64661"
+           x="209.16084"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           xml:space="preserve"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="231.64661"
+             x="209.16084"
+             sodipodi:role="line"
+             id="tspan5019-2">When you are finished, click the &quot;Submit&quot;</tspan><tspan
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
              y="244.14661"
              x="209.16084"
              sodipodi:role="line"
-             id="tspan5013">the same time by selecting the</tspan><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="256.64661"
-             x="209.16084"
-             sodipodi:role="line"
-             id="tspan5021">relevant Accordion item.</tspan></text>
+             id="tspan5021-7">Button in the top right corner.</tspan></text>
       </g>
     </g>
     <path
-       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
-       d="m 362.5,352.36218 249.5,0 42.625,42.625"
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 391.11843,582.7549 128.33988,16.52862"
+       id="path6736"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 312.49999,673.36219 -34.5625,96.375"
+       id="path6738"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 388.99999,673.36219 109.5,-67.5"
+       id="path6759"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 102.5,531.1122 102.99999,61.24999"
+       id="path6804"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="M 446.49999,188.36221 658.99998,392.8622"
+       id="path6808"
+       inkscape:connector-type="polyline" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.12598425;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:8.50393701,8.50393701;marker-end:url(#DotS);opacity:0.55000000000000004;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none"
+       d="m 78.5,168.61218 0,22.75 43.37842,0 88.625,88.625"
        id="path2978"
-       sodipodi:nodetypes="ccc" />
-    <g
-       id="g5236-8"
-       transform="translate(-188.82384,-121.09615)">
-      <g
-         id="g5352"
-         transform="translate(2.7197266e-6,4.2426405)">
-        <text
-           id="text2859-9-2-3-2-3-2-4-2-3-8-2-7-5"
-           y="271.44571"
-           x="252.82384"
-           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           xml:space="preserve"><tspan
-             id="tspan3777-04-7-0-7-1-6-6-2-1-0-2"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             y="271.44571"
-             x="252.82384"
-             sodipodi:role="line">Dashboard</tspan></text>
-        <text
-           id="text3781-55-1-8-7-6-2-1-5-3-4-6"
-           y="282.93097"
-           x="252.90454"
-           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           xml:space="preserve"><tspan
-             id="tspan3137-9"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="282.93097"
-             x="252.90454"
-             sodipodi:role="line">The Dashboard is the first Frame in</tspan><tspan
-             id="tspan5348"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="295.43097"
-             x="252.90454"
-             sodipodi:role="line">the Toolbox. Everything can be</tspan><tspan
-             id="tspan5350"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="307.93097"
-             x="252.90454"
-             sodipodi:role="line">reached from here.</tspan></text>
-      </g>
-    </g>
-    <path
-       sodipodi:nodetypes="cccc"
-       id="path5254-6"
-       d="m 400.81277,551.11218 38.75,-0.27214 0,85.875 65.61479,65.51363"
-       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
-    <g
-       id="g5396"
-       transform="translate(-13.169491,-80.75483)">
-      <g
-         id="g5466">
-        <text
-           id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-9"
-           y="646.95679"
-           x="316.46613"
-           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           xml:space="preserve"><tspan
-             id="tspan4947-4"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="646.95679"
-             x="316.46613"
-             sodipodi:role="line">If you do not need the</tspan><tspan
-             id="tspan5462"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="659.45679"
-             x="316.46613"
-             sodipodi:role="line">Document anymore,</tspan><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="671.95679"
-             x="316.46613"
-             sodipodi:role="line"
-             id="tspan5167">you can delete it forever. </tspan><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="684.45679"
-             x="316.46613"
-             sodipodi:role="line"
-             id="tspan5169" /><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="696.95679"
-             x="316.46613"
-             sodipodi:role="line"
-             id="tspan5171">Be careful! </tspan><tspan
-             id="tspan5464"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="709.45679"
-             x="316.46613"
-             sodipodi:role="line">It will be just gone!</tspan></text>
-        <text
-           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-2"
-           y="635.4715"
-           x="316.38544"
-           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           xml:space="preserve"><tspan
-             id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-4"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             y="635.4715"
-             x="316.38544"
-             sodipodi:role="line">Destroy Button</tspan></text>
-      </g>
-    </g>
-    <path
-       sodipodi:nodetypes="ccc"
-       id="path5254-7"
-       d="m 376.61265,646.36218 61.9206,-0.0794 56.25171,55.87671"
-       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
-    <g
-       id="g5396-5"
-       transform="translate(-31.385437,151.59162)">
-      <g
-         id="g5466-5">
-        <text
-           id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-9-5"
-           y="646.95679"
-           x="316.46613"
-           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           xml:space="preserve"><tspan
-             id="tspan5464-7"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="646.95679"
-             x="316.46613"
-             sodipodi:role="line">Saves or creates the Document.</tspan></text>
-        <text
-           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-2-1"
-           y="635.4715"
-           x="316.38544"
-           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           xml:space="preserve"><tspan
-             id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-4-3"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             y="635.4715"
-             x="316.38544"
-             sodipodi:role="line">Submit Button</tspan></text>
-      </g>
-    </g>
-    <path
-       sodipodi:nodetypes="ccc"
-       id="path5254-7-2"
-       d="m 279.5,781.97092 0,-18.10874 -50.75171,-50.37671"
-       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
-    <path
-       sodipodi:nodetypes="ccc"
-       id="path5254-7-2-2"
-       d="m 273.86061,352.58977 0,-18.10874 -41.25171,-41.37671"
-       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
-    <g
-       id="g5023-4"
-       transform="translate(276.70222,395.20886)">
-      <g
-         id="g5648-9">
-        <g
-           id="g5769">
-          <text
-             xml:space="preserve"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             x="209.08014"
-             y="220.16133"
-             id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-2-1-3-9-2"><tspan
-               sodipodi:role="line"
-               x="209.08014"
-               y="220.16133"
-               style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-               id="tspan3777-04-7-0-7-1-6-6-2-1-9-2-1-7-2-8">Showing Document</tspan></text>
-          <text
-             xml:space="preserve"
-             style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             x="209.16084"
-             y="231.64661"
-             id="text3781-55-1-8-7-6-2-1-5-3-6-1-0-4-2-8"><tspan
-               id="tspan5013-3"
-               sodipodi:role="line"
-               x="209.16084"
-               y="231.64661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">You can view all attributes by </tspan><tspan
-               id="tspan5021-4"
-               sodipodi:role="line"
-               x="209.16084"
-               y="244.14661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">selecting the relevant </tspan><tspan
-               id="tspan5767"
-               sodipodi:role="line"
-               x="209.16084"
-               y="244.14661"
-               style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">Accordion item.</tspan></text>
-        </g>
-      </g>
-    </g>
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>
