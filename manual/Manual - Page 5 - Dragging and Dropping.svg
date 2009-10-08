@@ -396,6 +396,138 @@
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
          transform="matrix(-0.4,0,0,-0.4,-4,0)" />
     </marker>
+    <inkscape:perspective
+       id="perspective4030"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS"
+       style="overflow:visible">
+      <path
+         id="path3850"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS"
+       style="overflow:visible">
+      <path
+         id="path3841"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4047"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-5"
+       style="overflow:visible">
+      <path
+         id="path3850-1"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-7"
+       style="overflow:visible">
+      <path
+         id="path3841-4"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4064"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-9"
+       style="overflow:visible">
+      <path
+         id="path3850-6"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-2"
+       style="overflow:visible">
+      <path
+         id="path3841-1"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective2985"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-7"
+       style="overflow:visible">
+      <path
+         id="path3850-8"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-5"
+       style="overflow:visible">
+      <path
+         id="path3841-3"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      inkscape:document-units="mm"
@@ -406,16 +538,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="515.09606"
-     inkscape:cy="350.82808"
-     inkscape:current-layer="g3057"
+     inkscape:cx="406.77267"
+     inkscape:cy="667.85831"
+     inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1604"
+     inkscape:window-width="1680"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
      inkscape:window-y="3"
      inkscape:window-maximized="1"
-     showguides="true"
+     showguides="false"
      inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
@@ -432,6 +564,18 @@
        orientation="1,0"
        position="623.66818,779.23167"
        id="guide3199" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="26.5,864.25"
+       id="guide2930" />
+    <sodipodi:guide
+       orientation="0.70710678,0.70710678"
+       position="65.5,812.5"
+       id="guide2932" />
+    <sodipodi:guide
+       orientation="-0.70710678,0.70710678"
+       position="247,654"
+       id="guide2951" />
   </sodipodi:namedview>
   <metadata
      id="metadata4">
@@ -449,6 +593,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <image
+       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Start-Dragging.png"
+       width="326.55609"
+       height="253.14423"
+       id="image3039"
+       x="33.668182"
+       y="206.66248" />
     <g
        id="g3057"
        transform="translate(302,10)">
@@ -496,6 +647,11 @@
            x="84.919632"
            sodipodi:role="line"
            id="tspan3576">to the Clipboard to find them later.</tspan></text>
+      <path
+         sodipodi:nodetypes="ccc"
+         id="path5254-7-1-0-2"
+         d="m -275.19709,125.61749 -0.30291,65.24469 75.18001,75.21488"
+         style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
     </g>
     <image
        xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Sidebar-Dragging-Sidebar-Hover.png"
@@ -504,13 +660,6 @@
        id="image3025"
        x="303.06012"
        y="495.66248" />
-    <image
-       xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Start-Dragging.png"
-       width="326.55609"
-       height="253.14423"
-       id="image3039"
-       x="33.668182"
-       y="206.66248" />
     <g
        transform="translate(289.08125,248.48684)"
        id="g3124">
@@ -594,36 +743,40 @@
     </g>
     <g
        id="g3191-4"
-       transform="translate(-49.74419,478.23684)">
-      <text
-         transform="scale(1.0033766,0.99663471)"
-         id="text2859-9-2-7-1-5-3-1"
-         y="76.633606"
-         x="84.838654"
-         style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1.0033766px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-         xml:space="preserve"><tspan
-           id="tspan3777-0-8-9-9-1"
-           style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke-width:1.0033766;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           y="76.633606"
+       transform="translate(-59.037084,514.23684)">
+      <g
+         id="g2970"
+         transform="translate(0,1.2928932)">
+        <text
+           xml:space="preserve"
+           style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1.0033766px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
            x="84.838654"
-           sodipodi:role="line">Drop Hover</tspan></text>
-      <text
-         transform="scale(1.0033766,0.99663471)"
-         id="text3781-5-8-7-4-3"
-         y="88.157661"
-         x="84.919632"
-         style="font-size:10.03376675px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-         xml:space="preserve"><tspan
-           id="tspan3189-9"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           y="76.633606"
+           id="text2859-9-2-7-1-5-3-1"
+           transform="scale(1.0033766,0.99663471)"><tspan
+             sodipodi:role="line"
+             x="84.838654"
+             y="76.633606"
+             style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke-width:1.0033766;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             id="tspan3777-0-8-9-9-1">Drop Hover</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:10.03376675px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           x="84.919632"
            y="88.157661"
-           x="84.919632"
-           sodipodi:role="line">While dragging an Item over a droppable area</tspan><tspan
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           y="100.69987"
-           x="84.919632"
-           sodipodi:role="line"
-           id="tspan3237">it is marked active. You can drop it here and now.</tspan></text>
+           id="text3781-5-8-7-4-3"
+           transform="scale(1.0033766,0.99663471)"><tspan
+             sodipodi:role="line"
+             x="84.919632"
+             y="88.157661"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             id="tspan3189-9">While dragging an Item over a droppable area</tspan><tspan
+             id="tspan3237"
+             sodipodi:role="line"
+             x="84.919632"
+             y="100.69987"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">it is marked active. You can drop it here and now.</tspan></text>
+      </g>
     </g>
     <image
        y="768.66248"
@@ -632,40 +785,44 @@
        height="253.14423"
        width="321.7301"
        xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Clipboard-Dropped.png" />
-    <text
-       xml:space="preserve"
-       style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1.0033766px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-       x="398.43039"
-       y="850.54565"
-       id="text2859-9-2-7-1-5-3-1-2"
-       transform="scale(1.0033766,0.99663474)"><tspan
-         sodipodi:role="line"
-         x="398.43039"
+    <g
+       id="g3011"
+       transform="translate(-4,12)">
+      <text
+         transform="scale(1.0033766,0.99663474)"
+         id="text2859-9-2-7-1-5-3-1-2"
          y="850.54565"
-         style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke-width:1.0033766;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-         id="tspan3777-0-8-9-9-1-8">Dropped Item</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10.03376675px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-       x="398.51138"
-       y="862.0697"
-       id="text3781-5-8-7-4-3-9"
-       transform="scale(1.0033766,0.99663474)"><tspan
-         id="tspan3237-0"
-         sodipodi:role="line"
-         x="398.51138"
+         x="398.43039"
+         style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1.0033766px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         xml:space="preserve"><tspan
+           id="tspan3777-0-8-9-9-1-8"
+           style="font-size:14.04727268px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke-width:1.0033766;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           y="850.54565"
+           x="398.43039"
+           sodipodi:role="line">Dropped Item</tspan></text>
+      <text
+         transform="scale(1.0033766,0.99663474)"
+         id="text3781-5-8-7-4-3-9"
          y="862.0697"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">The Document &quot;Passive&quot; was dropped</tspan><tspan
-         id="tspan3338"
-         sodipodi:role="line"
          x="398.51138"
-         y="874.61194"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">to the Clipboard. You will now find it</tspan><tspan
-         id="tspan3340"
-         sodipodi:role="line"
-         x="398.51138"
-         y="887.15411"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">faster and can use it in an association.</tspan></text>
+         style="font-size:10.03376675px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         xml:space="preserve"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           y="862.0697"
+           x="398.51138"
+           sodipodi:role="line"
+           id="tspan3237-0">The Document &quot;Passive&quot; was dropped</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           y="874.61194"
+           x="398.51138"
+           sodipodi:role="line"
+           id="tspan3338">to the Clipboard. You will now find it</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           y="887.15411"
+           x="398.51138"
+           sodipodi:role="line"
+           id="tspan3340">faster and can use it in an association.</tspan></text>
+    </g>
     <path
        inkscape:connection-end="#image3295"
        inkscape:connection-start="#image3025"
@@ -681,19 +838,19 @@
        d="m 313.62816,459.8067 33.05406,35.85578"
        style="fill:none;stroke:#000000;stroke-width:2.77086616000000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;color:#000000;stroke-miterlimit:4;stroke-dasharray:0.69271654000000005, 0.69271654000000005;stroke-dashoffset:0;marker:none;marker-end:url(#Arrow1Mend);visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <path
-       inkscape:connector-type="polyline"
-       id="path3346"
-       d="m 45,169.36218 50,100"
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+       sodipodi:nodetypes="ccc"
+       id="path5254-7-1-0"
+       d="m 370.58338,320.52242 -45.76232,0.0187 -98.79066,98.83635"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
     <path
-       inkscape:connector-type="polyline"
-       id="path3348"
-       d="m 365,323.36218 -140,97"
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       sodipodi:nodetypes="ccc"
+       id="path5254-7-1-0-20"
+       d="m 106.11044,588.51439 198.39205,-0.0187 34.89561,-33.9814"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
     <path
-       inkscape:connector-type="polyline"
-       id="path3350"
-       d="m 124,546.36218 217,7"
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+       sodipodi:nodetypes="ccc"
+       id="path5254-7-1-0-20-3"
+       d="m 390.62834,854.34714 -198.39205,-0.0187 -34.89561,-33.9814"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
   </g>
 </svg>

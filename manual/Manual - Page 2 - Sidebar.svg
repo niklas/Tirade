@@ -299,6 +299,270 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3486"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS"
+       style="overflow:visible">
+      <path
+         id="path3850"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS"
+       style="overflow:visible">
+      <path
+         id="path3841"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3503"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-5"
+       style="overflow:visible">
+      <path
+         id="path3850-9"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-3"
+       style="overflow:visible">
+      <path
+         id="path3841-5"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective2974"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-1"
+       style="overflow:visible">
+      <path
+         id="path3850-3"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-7"
+       style="overflow:visible">
+      <path
+         id="path3841-7"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective2974-6"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-4"
+       style="overflow:visible">
+      <path
+         id="path3850-5"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-2"
+       style="overflow:visible">
+      <path
+         id="path3841-0"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3049"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-12"
+       style="overflow:visible">
+      <path
+         id="path3850-2"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-1"
+       style="overflow:visible">
+      <path
+         id="path3841-50"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3083"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-3"
+       style="overflow:visible">
+      <path
+         id="path3850-7"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-0"
+       style="overflow:visible">
+      <path
+         id="path3841-6"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3117"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-7"
+       style="overflow:visible">
+      <path
+         id="path3850-4"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-35"
+       style="overflow:visible">
+      <path
+         id="path3841-61"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3151-7"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-6"
+       style="overflow:visible">
+      <path
+         id="path3850-0"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-10"
+       style="overflow:visible">
+      <path
+         id="path3841-2"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      inkscape:document-units="mm"
@@ -308,17 +572,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="515.09606"
-     inkscape:cy="829.40606"
-     inkscape:current-layer="g5262-54-7-5-0-9-6-6-8-0-5"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="489.06784"
+     inkscape:cy="856.93754"
+     inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1604"
+     inkscape:window-width="1680"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
      inkscape:window-y="3"
      inkscape:window-maximized="1"
-     showguides="true"
+     showguides="false"
      inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
@@ -339,6 +603,22 @@
        orientation="1,0"
        position="623.66818,779.23167"
        id="guide3199" />
+    <sodipodi:guide
+       orientation="-0.70710678,0.70710678"
+       position="210.5,685"
+       id="guide2941" />
+    <sodipodi:guide
+       orientation="0.70710678,0.70710678"
+       position="457,576.5"
+       id="guide2962" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="483.5,446"
+       id="guide2964" />
+    <sodipodi:guide
+       orientation="0.70710678,0.70710678"
+       position="374.05949,351.07852"
+       id="guide3178" />
   </sodipodi:namedview>
   <metadata
      id="metadata4">
@@ -357,7 +637,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <g
-       transform="translate(315.98083,307.04203)"
+       transform="translate(279.98083,310.6718)"
        id="g5262-54-7-5-0-9-6-6-8">
       <text
          xml:space="preserve"
@@ -382,11 +662,6 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            id="tspan5614-5">toggles the visibility of the Sidebar</tspan></text>
     </g>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="m 442.68482,460.16025 74.91735,60.45763"
-       id="path5859"
-       inkscape:connector-type="polyline" />
     <g
        id="g3031"
        transform="matrix(1.0067647,0,0,1,-125.36938,-143.78562)">
@@ -451,7 +726,7 @@
        width="323.72195"
        xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Sidebar-History.png" />
     <g
-       transform="translate(-105.12874,35.996355)"
+       transform="translate(-105.12874,75.996355)"
        id="g5262-54-7-5-0-9-6-6-8-7">
       <g
          id="g3108"
@@ -495,61 +770,39 @@
              sodipodi:role="line">destroying the currenty shown one.</tspan></text>
       </g>
     </g>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="M 301.58104,233.53253 137.17872,246.26045"
-       id="path3139"
-       inkscape:connector-type="polyline" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="M 301.40427,258.98837 240.06275,238.3055"
-       id="path3141"
-       inkscape:connector-type="polyline" />
     <g
-       transform="translate(81.19389,307.1718)"
-       id="g5262-54-7-5-0-9-6-6-8-0">
+       id="g3024"
+       transform="translate(74,-42)">
       <text
          xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-         x="209.08014"
-         y="220.16133"
+         x="129.27403"
+         y="572.83313"
          id="text2859-9-2-3-2-3-2-4-2-3-8-1"><tspan
            sodipodi:role="line"
-           x="209.08014"
-           y="220.16133"
+           x="129.27403"
+           y="572.83313"
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
            id="tspan3777-04-7-0-7-1-6-6-2-2">Switch Clipboard / History</tspan></text>
       <text
          xml:space="preserve"
          style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-         x="209.16084"
-         y="231.64661"
+         x="129.35474"
+         y="584.31842"
          id="text3781-55-1-8-7-6-2-1-5-0"><tspan
            sodipodi:role="line"
-           x="209.16084"
-           y="231.64661"
+           x="129.35474"
+           y="584.31842"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            id="tspan5614-5-0">only on of both can be shown at once, so</tspan><tspan
            sodipodi:role="line"
-           x="209.16084"
-           y="244.14661"
+           x="129.35474"
+           y="596.81842"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            id="tspan3179">you have to toggle between them.</tspan></text>
-      <path
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-         d="M 309.75,511.23718 326.86011,441.5987"
-         id="path3181"
-         transform="translate(-81.19389,-307.1718)"
-         inkscape:connector-type="polyline" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-         d="M 368.40263,441.42192 320.1426,469.88297"
-         id="path3183"
-         transform="translate(-81.19389,-307.1718)"
-         inkscape:connector-type="polyline" />
     </g>
     <g
-       transform="translate(-105.12874,548.90665)"
+       transform="translate(-105.12874,588.90665)"
        id="g5262-54-7-5-0-9-6-6-8-7-0">
       <g
          id="g3108-6"
@@ -592,7 +845,7 @@
              sodipodi:role="line"
              id="tspan3260">If you create a new Item somewhere,</tspan><tspan
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="306.64661"
+             y="281.64661"
              x="209.16084"
              sodipodi:role="line"
              id="tspan3278">it will be added to your Clipboard.</tspan></text>
@@ -606,7 +859,7 @@
        width="316.20978"
        xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Clipboard-Item-Hover.png" />
     <g
-       transform="translate(44.22325,442.44123)"
+       transform="translate(-203.54804,467.18997)"
        id="g5262-54-7-5-0-9-6-6-8-7-0-7">
       <g
          id="g3108-6-6"
@@ -653,57 +906,70 @@
       </g>
     </g>
     <g
-       transform="translate(71.468064,838.80298)"
-       id="g5262-54-7-5-0-9-6-6-8-0-5">
-      <g
-         id="g3501"
-         transform="translate(-195.34184,-79.60155)">
-        <text
-           id="text2859-9-2-3-2-3-2-4-2-3-8-1-0"
-           y="220.16133"
+       transform="translate(-123.87378,705.20143)"
+       id="g3501">
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         x="209.08014"
+         y="220.16133"
+         id="text2859-9-2-3-2-3-2-4-2-3-8-1-0"><tspan
+           sodipodi:role="line"
            x="209.08014"
-           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           xml:space="preserve"><tspan
-             id="tspan3777-04-7-0-7-1-6-6-2-2-4"
-             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-             y="220.16133"
-             x="209.08014"
-             sodipodi:role="line">Switch Clipboard / History</tspan></text>
-        <text
-           id="text3781-55-1-8-7-6-2-1-5-0-9"
-           y="231.64661"
+           y="220.16133"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           id="tspan3777-04-7-0-7-1-6-6-2-2-4">Switch Clipboard / History</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         x="209.16084"
+         y="231.64661"
+         id="text3781-55-1-8-7-6-2-1-5-0-9"><tspan
+           sodipodi:role="line"
            x="209.16084"
-           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           xml:space="preserve"><tspan
-             id="tspan3179-7"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="231.64661"
-             x="209.16084"
-             sodipodi:role="line">notice that after switching the colors</tspan><tspan
-             id="tspan3499"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-             y="244.14661"
-             x="209.16084"
-             sodipodi:role="line">of the buttons have changed</tspan></text>
-      </g>
-      <path
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-         d="m 262.97583,444.231 55.25,-6.75"
-         id="path3181-4"
-         transform="translate(-81.19389,-307.1718)"
-         inkscape:connector-type="polyline" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-         d="m 153.5,758.61218 154.09145,-8.18459"
-         id="path3508"
-         transform="translate(-71.468064,-838.80298)"
-         inkscape:connector-type="polyline" />
-      <path
-         style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-         d="M 307.06112,767.66331 259.25,753.11218"
-         id="path3510"
-         transform="translate(-71.468064,-838.80298)"
-         inkscape:connector-type="polyline" />
+           y="231.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan3179-7">notice that after switching the colors</tspan><tspan
+           sodipodi:role="line"
+           x="209.16084"
+           y="244.14661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan3499">of the buttons have changed</tspan></text>
     </g>
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="M 135.57941,287.28278 290.75,287.11218 331.97791,246.32187"
+       id="path5254-7-22-1-0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       sodipodi:nodetypes="ccc"
+       id="path5254-7"
+       d="m 483.5551,526.86169 0.5238,-23.9206 -42.64123,-43.13439"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
+    <path
+       sodipodi:nodetypes="ccc"
+       id="path5254-7-2"
+       d="m 283.47941,514.85138 -0.5238,-31.9206 42.64123,-43.13439"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
+    <path
+       sodipodi:nodetypes="ccc"
+       id="path5254-7-29"
+       d="m 328.97941,514.35138 -0.5238,-31.4206 42.64123,-43.13439"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 251.43987,922.13708 50.16523,0.1706 41.22791,40.79032"
+       id="path5254-7-22-1-0-9"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 151.21089,798.68034 155.1706,-0.1706 41.22791,-40.79031"
+       id="path5254-7-22-1-0-92"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 188.56623,689.45373 173.51788,-0.14545 57.88242,57.72337"
+       id="path5254-7-22-1-0-92-5"
+       sodipodi:nodetypes="ccc" />
   </g>
 </svg>

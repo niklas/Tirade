@@ -334,6 +334,238 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3520"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS"
+       style="overflow:visible">
+      <path
+         id="path3850"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS"
+       style="overflow:visible">
+      <path
+         id="path3841"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3537"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-3"
+       style="overflow:visible">
+      <path
+         id="path3850-1"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-4"
+       style="overflow:visible">
+      <path
+         id="path3841-6"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3747"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend"
+       style="overflow:visible">
+      <path
+         id="path7355"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective2963"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3762"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-38"
+       style="overflow:visible">
+      <path
+         id="path3850-0"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-9"
+       style="overflow:visible">
+      <path
+         id="path3841-7"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3036"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-35"
+       style="overflow:visible">
+      <path
+         id="path3850-9"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-3"
+       style="overflow:visible">
+      <path
+         id="path3841-4"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3036-3"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-5"
+       style="overflow:visible">
+      <path
+         id="path3850-6"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-5"
+       style="overflow:visible">
+      <path
+         id="path3841-9"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective3087"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <inkscape:perspective
+       id="perspective3172"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-57"
+       style="overflow:visible">
+      <path
+         id="path3850-4"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-1"
+       style="overflow:visible">
+      <path
+         id="path3841-2"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      inkscape:document-units="mm"
@@ -343,17 +575,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="346.39859"
-     inkscape:cy="346.82722"
+     inkscape:zoom="2.0000001"
+     inkscape:cx="396.02843"
+     inkscape:cy="831.22577"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1604"
+     inkscape:window-width="1680"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
      inkscape:window-y="3"
      inkscape:window-maximized="1"
-     showguides="true"
+     showguides="false"
      inkscape:guide-bbox="true">
     <inkscape:grid
        type="xygrid"
@@ -374,6 +606,26 @@
        orientation="1,0"
        position="623.66818,779.23167"
        id="guide3199" />
+    <sodipodi:guide
+       orientation="0.70710678,0.70710678"
+       position="255.97265,776.40323"
+       id="guide2922" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="161,398.99999"
+       id="guide3160" />
+    <sodipodi:guide
+       orientation="-0.70710678,0.70710678"
+       position="395.74999,377.74999"
+       id="guide3162" />
+    <sodipodi:guide
+       orientation="0.70710678,0.70710678"
+       position="194.49999,745.99998"
+       id="guide3198" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="198.49999,767.49998"
+       id="guide3200" />
   </sodipodi:namedview>
   <metadata
      id="metadata4">
@@ -474,7 +726,7 @@
     </g>
     <g
        id="g3068"
-       transform="translate(122.0048,103.42939)">
+       transform="translate(81.699714,20.036676)">
       <text
          xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
@@ -514,66 +766,45 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif" /></text>
     </g>
     <g
-       transform="translate(-123.95448,336.66066)"
+       transform="translate(-123.95448,318.66066)"
        id="g3068-2">
-      <text
-         xml:space="preserve"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-         x="209.08014"
-         y="220.16133"
-         id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-4"><tspan
-           sodipodi:role="line"
-           x="209.08014"
+      <g
+         id="g3144"
+         transform="translate(0,54)">
+        <text
+           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-4"
            y="220.16133"
-           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
-           id="tspan3777-04-7-0-7-1-6-6-2-1-7-1">Switching to CMS</tspan></text>
-      <text
-         xml:space="preserve"
-         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-         x="209.16084"
-         y="231.64661"
-         id="text3781-55-1-8-7-6-2-1-5-3-4-6"><tspan
-           id="tspan2967-1-5"
-           sodipodi:role="line"
-           x="209.16084"
+           x="209.08014"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           xml:space="preserve"><tspan
+             id="tspan3777-04-7-0-7-1-6-6-2-1-7-1"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             y="220.16133"
+             x="209.08014"
+             sodipodi:role="line">Disappeared</tspan></text>
+        <text
+           id="text3781-55-1-8-7-6-2-1-5-3-4-6"
            y="231.64661"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif">Hovering over the next Accordion Item &quot;CMS&quot; and clicking it.</tspan><tspan
-           sodipodi:role="line"
            x="209.16084"
-           y="244.14661"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           id="tspan3172">Observe:</tspan><tspan
-           sodipodi:role="line"
-           x="209.16084"
-           y="256.64661"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           id="tspan3174">  1) The &quot;Contents&quot; list gets compressed</tspan><tspan
-           sodipodi:role="line"
-           x="209.16084"
-           y="269.14661"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
-           id="tspan3180">  2) The &quot;CMS&quot; list gets expanded and marked as active (pink)</tspan></text>
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           xml:space="preserve"><tspan
+             id="tspan3174"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="231.64661"
+             x="209.16084"
+             sodipodi:role="line">The &quot;Contents&quot; list gets compressed until only</tspan><tspan
+             id="tspan3142"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="244.14661"
+             x="209.16084"
+             sodipodi:role="line">its head is visible.</tspan><tspan
+             id="tspan3180"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="256.64661"
+             x="209.16084"
+             sodipodi:role="line" /></text>
+      </g>
     </g>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="m 325.26912,345.2554 -49.49748,-9.19239"
-       id="path3186"
-       inkscape:connector-type="polyline" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="M 375.4737,556.68033 275.06454,427.98689"
-       id="path3188"
-       inkscape:connector-type="polyline" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="M 296.19703,592.74278 434.16356,570.11536"
-       id="path3190"
-       inkscape:connector-type="polyline" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
-       d="m 404.38437,603.34938 29.07209,-13.43503"
-       id="path3192"
-       inkscape:connector-type="polyline" />
     <g
        transform="translate(-123.87377,571.61807)"
        id="g3068-2-1">
@@ -619,5 +850,88 @@
        height="253.14423"
        width="190.32465"
        xlink:href="file:///home/niklas/rails/tirade/manual/images/Toolbox-Accordion-Hover.png" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:2.77086616000000019;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;color:#000000;stroke-miterlimit:4;stroke-dasharray:0.69271654000000005, 0.69271654000000005;stroke-dashoffset:0;marker:none;marker-end:url(#Arrow1Mend);visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="M 275.53101,415.20584 433.18954,551.01029"
+       id="path2941"
+       inkscape:connector-type="polyline"
+       inkscape:connection-start="#image2948"
+       inkscape:connection-end="#image2934" />
+    <g
+       transform="translate(83.019342,179.60569)"
+       id="g3005">
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+         x="209.08014"
+         y="220.16133"
+         id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-4-2"><tspan
+           sodipodi:role="line"
+           x="209.08014"
+           y="220.16133"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           id="tspan3777-04-7-0-7-1-6-6-2-1-7-1-6">Accordion Head</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+         x="209.16084"
+         y="231.64661"
+         id="text3781-55-1-8-7-6-2-1-5-3-4-6-4"><tspan
+           sodipodi:role="line"
+           x="209.16084"
+           y="231.64661"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           id="tspan3180-2">Hover over the next Accordion Item &quot;CMS&quot; and click it.</tspan></text>
+    </g>
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 287.81886,394.99548 -95.50816,-0.0794 -32.00558,31.92154"
+       id="path5254-7"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 169.11683,589.03279 248.38316,-0.1706 22.10021,-21.24891"
+       id="path5254-7-1"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 156.78066,653.36219 260.21933,0 66.79439,-66.30348"
+       id="path5254-7-9"
+       sodipodi:nodetypes="ccc" />
+    <g
+       transform="translate(-94.386129,449.01474)"
+       id="g3068-2-4">
+      <g
+         id="g3131"
+         transform="translate(-30,-12)">
+        <text
+           id="text2859-9-2-3-2-3-2-4-2-3-8-2-1-4-27"
+           y="220.16133"
+           x="209.08014"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+           xml:space="preserve"><tspan
+             id="tspan3777-04-7-0-7-1-6-6-2-1-7-1-4"
+             style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
+             y="220.16133"
+             x="209.08014"
+             sodipodi:role="line">Expanded</tspan></text>
+        <text
+           id="text3781-55-1-8-7-6-2-1-5-3-4-6-03"
+           y="231.64661"
+           x="209.16084"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+           xml:space="preserve"><tspan
+             id="tspan3180-3"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
+             y="231.64661"
+             x="209.16084"
+             sodipodi:role="line">The &quot;CMS&quot; list gets expanded and marked as active (pink)</tspan></text>
+      </g>
+    </g>
+    <path
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)"
+       d="m 540.86667,285.14132 -367.50817,0.0794 -18.63148,-18.29564"
+       id="path5254-7-2"
+       sodipodi:nodetypes="ccc" />
   </g>
 </svg>

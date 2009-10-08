@@ -15,7 +15,7 @@
    id="svg2816"
    version="1.1"
    inkscape:version="0.47pre1 r21720"
-   sodipodi:docname="Manual - Page 4 - Navigation.svg"
+   sodipodi:docname="Manual - Page 4.0 - Use Cases Basics.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs3">
@@ -661,10 +661,10 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
      inkscape:cx="418.33662"
-     inkscape:cy="159.92874"
-     inkscape:current-layer="g3031"
+     inkscape:cy="215.08307"
+     inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1604"
+     inkscape:window-width="1680"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
      inkscape:window-y="3"
@@ -873,11 +873,6 @@
              sodipodi:role="line">Lists all Documents</tspan></text>
       </g>
     </g>
-    <path
-       inkscape:connector-type="polyline"
-       id="path3139"
-       d="m 254.94662,285.73459 231.25995,0"
-       style="fill:none;stroke:#000000;stroke-width:2.77086616;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.69271654, 0.69271654;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
     <image
        y="206.66248"
        x="64"
@@ -971,7 +966,7 @@
            id="text5689"
            transform="translate(-90.818409,-425.95159)"><tspan
              sodipodi:role="line"
-             id="tspan5691"></tspan></text>
+             id="tspan5691" /></text>
       </g>
     </g>
     <g
@@ -1161,6 +1156,11 @@
        id="path5254-7-2-2"
        d="m 273.86061,352.58977 0,-18.10874 -41.25171,-41.37671"
        style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
+    <path
+       inkscape:connector-type="polyline"
+       id="path3139"
+       d="m 254.94662,285.73459 231.25995,0"
+       style="fill:none;stroke:#000000;stroke-width:2.77086616;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.69271654, 0.69271654;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)" />
     <g
        id="g5023-4"
        transform="translate(276.70222,395.20886)">

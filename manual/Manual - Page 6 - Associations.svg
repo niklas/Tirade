@@ -15,7 +15,7 @@
    id="svg2816"
    version="1.1"
    inkscape:version="0.47pre1 r21720"
-   sodipodi:docname="Manual - Page 6 - Assiciations.svg"
+   sodipodi:docname="Manual - Page 6 - Associations.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
   <defs
      id="defs3">
@@ -424,6 +424,105 @@
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
          transform="matrix(-0.4,0,0,-0.4,-4,0)" />
     </marker>
+    <inkscape:perspective
+       id="perspective4081"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS"
+       style="overflow:visible">
+      <path
+         id="path3850"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS"
+       style="overflow:visible">
+      <path
+         id="path3841"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective4098"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-0"
+       style="overflow:visible">
+      <path
+         id="path3850-4"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-8"
+       style="overflow:visible">
+      <path
+         id="path3841-7"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
+    <inkscape:perspective
+       id="perspective2983"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="SquareS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="SquareS-1"
+       style="overflow:visible">
+      <path
+         id="path3850-9"
+         d="M -5,-5 -5,5 5,5 5,-5 -5,-5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+    <marker
+       inkscape:stockid="DotS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="DotS-6"
+       style="overflow:visible">
+      <path
+         id="path3841-2"
+         d="m -2.5,-1 c 0,2.76 -2.24,5 -5,5 -2.76,0 -5,-2.24 -5,-5 0,-2.76 2.24,-5 5,-5 2.76,0 5,2.24 5,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none;marker-end:none"
+         transform="matrix(0.2,0,0,0.2,1.48,0.2)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      inkscape:document-units="mm"
@@ -433,12 +532,12 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="328.59855"
-     inkscape:cy="513.21679"
+     inkscape:zoom="2"
+     inkscape:cx="310.51662"
+     inkscape:cy="710.92128"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1604"
+     inkscape:window-width="1680"
      inkscape:window-height="1020"
      inkscape:window-x="1440"
      inkscape:window-y="3"
@@ -572,7 +671,7 @@
        x="41.485107"
        y="258.7124" />
     <g
-       transform="translate(814.51843,157.20737)"
+       transform="translate(810.01843,173.45737)"
        id="g3057-8">
       <g
          id="g2935-7">
@@ -661,7 +760,7 @@
       </g>
     </g>
     <g
-       transform="translate(869.99956,-240.76316)"
+       transform="translate(869.99956,-243.51316)"
        id="g3057-8-3">
       <g
          id="g2935-7-9">
@@ -806,5 +905,20 @@
        inkscape:connector-type="polyline"
        inkscape:connection-start="#image2983"
        inkscape:connection-end="#image2997" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path5254-7-1-0-2"
+       d="m 300.80292,260.11749 0.0423,46.22217 152.65478,0.77252 136.12823,136.12824"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path5254-7-1-0"
+       d="m 239.93833,676.847 -0.18827,-11.01297 -24.82405,-0.006 -34.89561,-33.9814"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
+    <path
+       sodipodi:nodetypes="cccc"
+       id="path5254-7-1-0-1"
+       d="m 375.92056,758.895 -0.18827,76.51297 -24.82405,0.006 -34.89561,33.9814"
+       style="opacity:0.55;fill:none;stroke:#000000;stroke-width:2.12598419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:8.50393701, 8.50393701;stroke-dashoffset:0;marker-start:url(#SquareS);marker-mid:none;marker-end:url(#DotS)" />
   </g>
 </svg>
