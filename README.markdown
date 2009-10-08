@@ -23,13 +23,30 @@ results of your actions instantly and even let you interact with your site.
 
 ## Features
 
-* free hovering Toolbox with heavy AJAX support
-* build up your site by dragging content to your site
-* editing any content will preview it on the currently shown page
-* easy create your own custom content types
-* translations for every content type
+What does Tirade has to offer?
+
+* Toolbox hovering over your page, heavy AJAX dependant
+* comes with common Content Types build in: Document, Folder, Image, News Folder, Asset
+* not enough? simply create your own custom Content Types
+* build up your site by dragging and dropping Content
+* editing any Content will preview it on the currently shown page (if present)
 * define your boxed-based layouts in the browser
 * inherit your layouts through all sub pages
+* write one Document, show it multiple times in different ways on your site
+* drop Contents once, show it on all sub pages, for example a disclaimer
+* translations for every Content Type
+* a set of HTML snippets to put your Content on your site
+* Theme support - you can change the appearance of your site with one click 
+* you upload a big Image, Tirade will scale it to any size you want, aspect aware
+* ...
+
+## Antifeatures
+
+What is missing in Tirade?
+
+* modification of the design (CSS) in the Toolbox - this should be done by a designer
+* some features are hidden, hard to find or complex to use - working on that
+* reading minds - you must write Content yourself
 * ...
 
 ## Stability
