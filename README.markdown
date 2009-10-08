@@ -7,8 +7,8 @@ This is my turn.
 
 ## Idea
 
-Most of the CMSs out there distingish between a public frontend for the
-visitors (aka "your site") and a backend to manage .. yeah: your site.
+Most of the CMSs out there distinguish between a public frontend for the
+visitors (aka "your site") and a backend to manage ... yeah: your site.
 
 My problem with this is: When you are in the process of building your site the
 first time or modifying it or its components later, you still have to switch
@@ -17,9 +17,9 @@ switch back, edit again... You want to know how your nicely written
 essay looks to your visitors. 
 
 Tirade tries to accomplish that by presenting you the whole backend on your
-front page, but without interferring with the layout or design. This is where
+front page, but without interfering with the layout or design. This is where
 the Toolbox comes in. It hovers over you page and enables you to see the
-results of your actions immediatly and even let you interact with your site.
+results of your actions instantly and even let you interact with your site.
 
 ## Features
 
@@ -29,7 +29,7 @@ results of your actions immediatly and even let you interact with your site.
 * easy create your own custom content types
 * translations for every content type
 * define your boxed-based layouts in the browser
-* inherit your layouts through all subpages
+* inherit your layouts through all sub pages
 * ...
 
 ## Stability
@@ -38,7 +38,7 @@ Tirade is all still another experiment of mine. There -may- will be quirks,
 crashes or frequent uglyness. I appreciate your help by sending me bug
 reports, creating tickets, forking it or just by talking to me.
 
-I try to test everything I can (mostly with rspec), but the whole Javascript
+I try to test everything I can (mostly with rSpec), but the whole Javascript
 part is still a shoot from the hips..
 
 ## Thanks
