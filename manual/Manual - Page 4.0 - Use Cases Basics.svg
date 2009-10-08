@@ -661,12 +661,12 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4142136"
      inkscape:cx="418.33662"
-     inkscape:cy="386.20291"
-     inkscape:current-layer="layer1"
+     inkscape:cy="159.92874"
+     inkscape:current-layer="g3031"
      showgrid="false"
      inkscape:window-width="1604"
      inkscape:window-height="1020"
-     inkscape:window-x="0"
+     inkscape:window-x="1440"
      inkscape:window-y="3"
      inkscape:window-maximized="1"
      showguides="false"
@@ -778,7 +778,7 @@
            style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;font-family:Nimbus Sans L;-inkscape-font-specification:Nimbus Sans L"
            y="220.16133"
            x="209.08014"
-           sodipodi:role="line">Toolbox Navigation</tspan></text>
+           sodipodi:role="line">Basic Navigation</tspan></text>
       <text
          id="text3781-5-8"
          y="231.64661"
@@ -789,7 +789,7 @@
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Serif;-inkscape-font-specification:Serif"
            y="231.64661"
            x="209.16084"
-           sodipodi:role="line">This will show you how to navigate through the Toolbox to edit a Document.</tspan></text>
+           sodipodi:role="line">How to navigate through the Toolbox.</tspan></text>
     </g>
     <g
        transform="translate(37.927171,11.21483)"
