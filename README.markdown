@@ -1,7 +1,7 @@
 ## Introduction
 
 A smart person once told me that every programmer soon or later comes to a
-point where (and when) he writes his own Content Management System.
+point where (and when) she writes her own Content Management System.
 
 This is my turn.
 
@@ -19,7 +19,7 @@ essay looks to your visitors.
 Tirade tries to accomplish that by presenting you the whole backend on your
 front page, but without interfering with the layout or design. This is where
 the Toolbox comes in. It hovers over you page and enables you to see the
-results of your actions instantly and even let you interact with your site.
+results of your actions instantly and even lets you interact with your site.
 
 ## Features
 
@@ -52,10 +52,10 @@ What is missing in Tirade?
 ## Stability
 
 Tirade is all still another experiment of mine. There -may- will be quirks,
-crashes or frequent uglyness. I appreciate your help by sending me bug
+crashes or frequent uglyness. I'd appreciate any of your help by sending me bug
 reports, creating tickets, forking it or just by talking to me.
 
-I try to test everything I can (mostly with rSpec), but the whole Javascript
+I try to test everything as I go (primarily with rSpec), but the whole Javascript
 part is still a shoot from the hips..
 
 ## Thanks
@@ -69,5 +69,5 @@ I use several plugins, extentions and hacks I found across the interwebs - a lis
 
 ## Fin
 
-Try it out and tell me about it.
+Check it out and give me feedback!
 

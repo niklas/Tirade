@@ -15,7 +15,7 @@ Clipboard
 
 Content Type
 
-* everything that holds information you created, ie. Documents, Images etc.
+* everything that contains information you created, ie. Documents, Images etc.
 * if you see the word "Contents", think of your current/favourite type.
 
 Document
@@ -24,7 +24,7 @@ Document
 
 Frame
 
-* the Toolbox can hold multiple Frames, but can only show one at a time
+* the Toolbox contains multiple Frames, but can only show one at a time
 * can contain a List, a full view of a Contents or a form to create/edit a Contents
 
 News Folder
@@ -38,14 +38,14 @@ News Item
 
 History
 
-* get rewritten every time you use the Toolbox (...)
-* keeps track of all the Frames you opened in the Toolbox
+* is being rewritten every time you use the Toolbox (...)
+* is keeping track of all the Frames you opened in the Toolbox
 
 Image
 
 * a picture, photo or sketch.
-* Accepted formats: JPEG, GIF, PNG
-* will be saved in original dimensions, but can be scaled on demand
+* accepted formats: JPEG, GIF, PNG
+* will be saved in original dimensions, but can be scaled on demand, keeping aspect ratio
 
 Side Bar
 
