@@ -51,7 +51,8 @@ module ApplicationHelper
   def public_content_path(content, opts={})
     path = content.path
     path += [opts.delete(:item_id)] if opts.has_key?(:item_id)
-    url_for(:path => path, :action => 'index', :controller => 'public')
+    # trailing slash only if path is not empty, else the routing filter will yiel to trailing slashes
+    url_for(:path => path, :action => 'index', :controller => 'public', :trailing_slash => !path.empty?)
   end
 
   def public_item_link_with_scaled_image(item,geom)

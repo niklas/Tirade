@@ -19,9 +19,9 @@ module ContentFilter
 
   def title_link(content, base_url=nil)
     if base_url.blank?
-      %Q~<a href="#{content.slug}">#{content.title}</a>~
+      %Q~<a href="#{content.slug}/">#{content.title}</a>~
     else
-      %Q~<a href="/#{base_url}/#{content.slug}">#{content.title}</a>~
+      %Q~<a href="/#{base_url}/#{content.slug}/">#{content.title}</a>~
     end
   end
 
@@ -44,7 +44,7 @@ module ContentFilter
 
   def link_to_page(page, title=nil)
     title ||= page.title
-    link_tag(title, "/#{I18n.locale}/#{page.url}")
+    link_tag(title, "/#{I18n.locale}/#{page.url}/")
   end
 
 end
