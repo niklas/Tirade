@@ -72,12 +72,12 @@ class Page < ActiveRecord::Base
 
   def generated_url
     if !parent_id.nil?
-      [parent.url, self.title.urlize].compact.join('/').sub(%r(^/),'')
+      [parent.url, self.title.urlize].compact.join('/')
     elsif @move_to_new_parent_id.to_i != 0
-      [Page.find_by_id(@move_to_new_parent_id).andand.url, title.urlize].compact.join('/').sub(%r(^/),'')
+      [Page.find_by_id(@move_to_new_parent_id).andand.url, title.urlize].compact.join('/')
     else
       ''
-    end
+    end.sub(%r(^/),'')
   end
 
   # Find all the renderings to show on this grid on this page
