@@ -4,19 +4,19 @@ describe RenderingsController do
   describe "route generation" do
 
     it "should map { :controller => 'renderings', :action => 'index' } to /manage/renderings" do
-      route_for(:controller => "renderings", :action => "index").should == "/manage/renderings"
+      route_for(:controller => "renderings", :action => "index", :locale => 'en').should == "/en/manage/renderings"
     end
   
     it "should map { :controller => 'renderings', :action => 'new' } to /manage/renderings/new" do
-      route_for(:controller => "renderings", :action => "new").should == "/manage/renderings/new"
+      route_for(:controller => "renderings", :action => "new", :locale => 'en').should == "/en/manage/renderings/new"
     end
   
     it "should map { :controller => 'renderings', :action => 'show', :id => 1 } to /manage/renderings/1" do
-      route_for(:controller => "renderings", :action => "show", :id => '1').should == "/manage/renderings/1"
+      route_for(:controller => "renderings", :action => "show", :id => '1', :locale => 'en').should == "/en/manage/renderings/1"
     end
   
     it "should map { :controller => 'renderings', :action => 'edit', :id => 1 } to /manage/renderings/1/edit" do
-      route_for(:controller => "renderings", :action => "edit", :id => '1').should == "/manage/renderings/1/edit"
+      route_for(:controller => "renderings", :action => "edit", :id => '1', :locale => 'en').should == "/en/manage/renderings/1/edit"
     end
   
   end

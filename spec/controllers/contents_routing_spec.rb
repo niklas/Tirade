@@ -4,19 +4,19 @@ describe ContentsController do
   describe "route generation" do
 
     it "should map { :controller => 'contents', :action => 'index' } to /manage/contents" do
-      route_for(:controller => "contents", :action => "index").should == "/manage/contents"
+      route_for(:controller => "contents", :action => "index", :locale => 'en').should == "/en/manage/contents"
     end
   
     it "should map { :controller => 'contents', :action => 'new' } to /manage/contents/new" do
-      route_for(:controller => "contents", :action => "new").should == "/manage/contents/new"
+      route_for(:controller => "contents", :action => "new", :locale => 'en').should == "/en/manage/contents/new"
     end
   
     it "should map { :controller => 'contents', :action => 'show', :id => 1 } to /manage/contents/1" do
-      route_for(:controller => "contents", :action => "show", :id => '1').should == "/manage/contents/1"
+      route_for(:controller => "contents", :action => "show", :id => '1', :locale => 'en').should == "/en/manage/contents/1"
     end
   
     it "should map { :controller => 'contents', :action => 'edit', :id => 1 } to /manage/contents/1/edit" do
-      route_for(:controller => "contents", :action => "edit", :id => '1').should == "/manage/contents/1/edit"
+      route_for(:controller => "contents", :action => "edit", :id => '1', :locale => 'en').should == "/en/manage/contents/1/edit"
     end
   
   end

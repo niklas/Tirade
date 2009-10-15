@@ -4,19 +4,19 @@ describe PartsController do
   describe "route generation" do
 
     it "should map { :controller => 'parts', :action => 'index' } to /manage/parts" do
-      route_for(:controller => "parts", :action => "index").should == "/manage/parts"
+      route_for(:controller => "parts", :action => "index", :locale => 'en').should == "/en/manage/parts"
     end
   
     it "should map { :controller => 'parts', :action => 'new' } to /manage/parts/new" do
-      route_for(:controller => "parts", :action => "new").should == "/manage/parts/new"
+      route_for(:controller => "parts", :action => "new", :locale => 'en').should == "/en/manage/parts/new"
     end
   
     it "should map { :controller => 'parts', :action => 'show', :id => 1 } to /manage/parts/1" do
-      route_for(:controller => "parts", :action => "show", :id => '1').should == "/manage/parts/1"
+      route_for(:controller => "parts", :action => "show", :id => '1', :locale => 'en').should == "/en/manage/parts/1"
     end
   
     it "should map { :controller => 'parts', :action => 'edit', :id => 1 } to /manage/parts/1/edit" do
-      route_for(:controller => "parts", :action => "edit", :id => '1').should == "/manage/parts/1/edit"
+      route_for(:controller => "parts", :action => "edit", :id => '1', :locale => 'en').should == "/en/manage/parts/1/edit"
     end
   
   end
