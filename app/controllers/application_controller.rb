@@ -32,6 +32,7 @@ class ApplicationController < ActionController::Base
   #  * no slashes (aka supcontrollers)
   #
   # => ["users", "roles", "images"] ...
+  # FIXME remove
   def primary_controller_names
     ActionController::Routing::Routes.routes.collect {|r| r.defaults[:controller] }.uniq.compact.
       reject { |c| c=~%r~/~}.
@@ -40,10 +41,12 @@ class ApplicationController < ActionController::Base
   helper_method :primary_controller_names
   
 
+  # FIXME is this needed anymore?
   def violate_mvc
     [Grid, Rendering, Part].each { |k| k.active_controller = self }
   end
   
+  # TODO remove, make possible fro within app
   def require_http_auth
     if `hostname` =~ /soykaf|lanpartei/i 
       if auth =  APP_CONFIG['http_auth']
