@@ -507,4 +507,108 @@ describe DocumentsController do
 
   end
 
+  describe "Requesting XML" do
+
+    before( :each ) do
+      @document = Factory.create :document
+    end
+
+    describe "unauthorized" do
+
+      describe "get index.xml" do
+        def do_request
+          get :index, :format => 'xml'
+        end
+
+        it "should not be successful" do
+          do_request
+          response.should_not be_success
+        end
+      end
+
+      describe "get show.xml" do
+        def do_request
+          get :show, :id => @document.to_param, :format => 'xml'
+        end
+
+        it "should not be successful" do
+          do_request
+          response.should_not be_success
+        end
+
+        it "should deny access" do
+          do_request
+          response.code.should == "401"
+        end
+      end
+      
+    end
+
+
+    describe "authorized to read" do
+
+      before( :each ) do
+        login_with_group :read_documents
+        login_standard
+      end
+
+      describe "successful request", :shared => true do
+        
+        it "should be successful" do
+          do_request
+          response.should be_success
+        end
+
+        it "should return proper HTTP code" do
+          do_request
+          response.code.should == "200"
+        end
+
+        it "should xml" do
+          do_request
+          response.body.should include('xml')
+        end
+
+      end
+
+
+      describe "get index.xml" do
+        def do_request
+          get :index, :format => 'xml'
+        end
+
+        it_should_behave_like 'successful request'
+
+        it "should return a XML-formatted list of Documents" do
+          do_request
+          response.should have_tag('documents') do
+            with_tag('document') do
+              with_tag('title')
+              with_tag('body')
+            end
+          end
+        end
+
+      end
+
+      describe "get show.xml" do
+        def do_request
+          get :show, :id => @document.to_param, :format => 'xml'
+        end
+
+        it_should_behave_like 'successful request'
+
+        it "should return a XML-formmated Document" do
+          do_request
+          response.should have_tag('document') do
+            with_tag('title', @document.title)
+            with_tag('body', @document.body)
+          end
+        end
+      end
+
+    end
+
+  end
+
 end

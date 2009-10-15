@@ -1,4 +1,6 @@
 class UserSession < Authlogic::Session::Base
+  include Authlogic::Session::HttpAuth
+
   #logout_on_timeout true
 
   # to satisfy interface helper

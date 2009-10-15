@@ -30,6 +30,12 @@ module ManageResourceController
           end
         end
         hide_action :update_page_on_preview
+        index.wants.xml do
+          render :xml => collection
+        end
+        show.wants.xml do
+          render :xml => object
+        end
       end
     end
     def self.included(base)
