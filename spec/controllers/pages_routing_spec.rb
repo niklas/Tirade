@@ -4,19 +4,19 @@ describe PagesController do
   describe "route generation" do
 
     it "should map { :controller => 'pages', :action => 'index' } to /manage/pages" do
-      route_for(:controller => "pages", :action => "index").should == "/manage/pages"
+      route_for(:controller => "pages", :action => "index", :locale => 'en').should == "/en/manage/pages"
     end
   
     it "should map { :controller => 'pages', :action => 'new' } to /manage/pages/new" do
-      route_for(:controller => "pages", :action => "new").should == "/manage/pages/new"
+      route_for(:controller => "pages", :action => "new", :locale => 'en').should == "/en/manage/pages/new"
     end
   
     it "should map { :controller => 'pages', :action => 'show', :id => 1 } to /manage/pages/1" do
-      route_for(:controller => "pages", :action => "show", :id => '1').should == "/manage/pages/1"
+      route_for(:controller => "pages", :action => "show", :id => '1', :locale => 'en').should == "/en/manage/pages/1"
     end
   
     it "should map { :controller => 'pages', :action => 'edit', :id => 1 } to /manage/pages/1/edit" do
-      route_for(:controller => "pages", :action => "edit", :id => '1').should == "/manage/pages/1/edit"
+      route_for(:controller => "pages", :action => "edit", :id => '1', :locale => 'en').should == "/en/manage/pages/1/edit"
     end
   
   end
