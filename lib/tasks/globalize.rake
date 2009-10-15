@@ -3,8 +3,8 @@ namespace :tirade do
     desc <<-EODESC
       Initialize the given locale with the data already saved in the real content types.
     EODESC
-    task :init => :environment do
-      locale = ENV['LOCALE'] || ENV['locale']
+    task :init, [:locale] => [:environment] do |task, args|
+      locale = args.locale
       if locale.blank?
         STDERR.puts "please give a locale to initialize"
         exit
