@@ -56,20 +56,20 @@ describe DocumentsController do
 
   describe "route generation" do
 
-    it "should map { :controller => 'documents', :action => 'index' } to /manage/documents" do
-      route_for(:controller => "documents", :action => "index").should == "/manage/documents"
+    it "should map { :controller => 'documents', :action => 'index' } to /en/manage/documents" do
+      route_for(:controller => "documents", :action => "index", :locale => 'en').should == "/en/manage/documents"
     end
   
-    it "should map { :controller => 'documents', :action => 'new' } to /manage/documents/new" do
-      route_for(:controller => "documents", :action => "new").should == "/manage/documents/new"
+    it "should map { :controller => 'documents', :action => 'new' } to /en/manage/documents/new" do
+      route_for(:controller => "documents", :action => "new", :locale => 'en').should == "/en/manage/documents/new"
     end
   
-    it "should map { :controller => 'documents', :action => 'show', :id => 1 } to /manage/documents/1" do
-      route_for(:controller => "documents", :action => "show", :id => '1').should == "/manage/documents/1"
+    it "should map { :controller => 'documents', :action => 'show', :id => 1 } to /en/manage/documents/1" do
+      route_for(:controller => "documents", :action => "show", :id => '1', :locale => 'en').should == "/en/manage/documents/1"
     end
   
-    it "should map { :controller => 'documents', :action => 'edit', :id => 1 } to /manage/documents/1/edit" do
-      route_for(:controller => "documents", :action => "edit", :id => '1').should == "/manage/documents/1/edit"
+    it "should map { :controller => 'documents', :action => 'edit', :id => 1 } to /en/manage/documents/1/edit" do
+      route_for(:controller => "documents", :action => "edit", :id => '1', :locale => 'en').should == "/en/manage/documents/1/edit"
     end
 
     it "should map document_path(document) to /en/manage/documents/:id" do
