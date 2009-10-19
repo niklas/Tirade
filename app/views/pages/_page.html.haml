@@ -2,7 +2,7 @@
 - margin_options = {}
 - margin_options[:style] = page.style if layout
 - options = {}
-- options[:data] = {:url => page.url, :title => page.title}.to_json if logged_in?
+- options[:data] = {:url => page.url_with_trailing_path, :title => page.title}.to_json if logged_in?
 - add_class_to_html_options options, dom_id(page)
 - add_class_to_html_options options, page.css_classes unless page.css_classes.blank?
 - add_class_to_html_options options, 'thepage'

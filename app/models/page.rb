@@ -139,6 +139,10 @@ class Page < ActiveRecord::Base
     title_with_url
   end
 
+  def url_with_trailing_path
+    (path + (trailing_path || []) ).compact.join('/')
+  end
+
   @@rebuilding = false
   def self.rebuild_with_status!
     @@rebuilding = true

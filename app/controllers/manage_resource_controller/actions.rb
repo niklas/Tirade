@@ -176,10 +176,16 @@ module ManageResourceController
 
     def update_page_on_preview(page)
       if object.acts_as?(:content) && @context_page
-        @context_page.renderings.for_content(object).each do |rendering|
-          rendering.content = object
-          rendering.touch
-          page.update_rendering(rendering)
+        renderings = @context_page.renderings.for_content(object)
+        if renderings.empty?
+          page.clear
+          page.insert_page(@context_page)
+        else
+          renderings.each do |rendering|
+            rendering.content = object
+            rendering.touch
+            page.update_rendering(rendering)
+          end
         end
       end
     end
