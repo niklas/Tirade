@@ -1,3 +1,6 @@
 <% image ||= show %>
 
+<p>
+To use this image you can put <tt>[image:<%= image.slug %>]</tt> into the body of a Document
+</p>
 <%= image_tag(image.image.url, :style => 'max-width: 100%') %>
