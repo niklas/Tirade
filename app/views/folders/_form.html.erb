@@ -13,6 +13,10 @@
       <%= f.sort :children %>
     <% end %>
 
+    <% accordion_item 'Summary' do %>
+      <%= f.text_area :summary %>
+    <% end %>
+
     <% accordion_item 'Description' do %>
       <%= f.text_area :description %>
     <% end %>
