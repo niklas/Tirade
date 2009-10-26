@@ -35,11 +35,11 @@ class ContentTypeGenerator < ModelGenerator
       m.template 'views/_show.html.erb', File.join(root, 'app/views', table_name, "_show.html.erb")
       m.template 'views/_form.html.erb', File.join(root, 'app/views', table_name, "_form.html.erb")
       m.template 'views/_list_item.html.erb', File.join(root, 'app/views', table_name, "_list_item.html.erb")
-
+       
       unless options[:skip_migration]
-        m.directory File.join(root, 'db/migrate', table_name)
-        m.template 'model:migration.rb', File.join(root, 'db/migrate', "001_create_#{table_name}.rb"),
-          :assigns => { :migration_name => "Create#{class_name.pluralize.gsub(/::/, '')}" }
+        m.migration_template 'model:migration.rb', File.join(root, 'db/migrate'), :assigns => {
+          :migration_name => "Create#{class_name.pluralize.gsub(/::/, '')}"
+        }, :migration_file_name => "create_#{file_path.gsub(/\//, '_').pluralize}"
       end
 
       m.directory File.join(root,'config')
