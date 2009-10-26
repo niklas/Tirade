@@ -51,9 +51,11 @@ module ManageResourceController
         end_of_association_chain.
           search(params[:search].andand[:term] || params[:term]).
           paginate(:page => params[:page])
-      else
+      elsif model < ActiveRecord::Base
         end_of_association_chain.
           paginate(:page => params[:page])
+      else
+        end_of_association_chain.all
       end
     end
 
