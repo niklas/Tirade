@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/localized_country_select"]
+	path = vendor/plugins/localized_country_select
+	url = git://github.com/karmi/localized_country_select.git
