@@ -22,4 +22,13 @@
               %li
                 = icon_for(content.class.to_s)
                 = link_to_function content.title, %Q[Rendering.update(this, {content_type: '#{content.class}', content_id: #{content.id}})], :class => 'update rendering'
+      - if neighbors = rendering.brothers_on_page && !neighbors.blank?
+        %h3 Reuse
+        %ul.list.records
+          - neighbors.each do |neig|
+            %li
+              == Same Content like #{neig.title} on the same Page
+              = link_to_function neig.id, %Q[Rendering.update(this, {content_type: '#{neig.content_type}', content_id: #{neig.content_id}, assignment: '#{neig.assignment}', scope_definition: #{j neig.scope_definition}})], :class => 'update rendering'
+
+
     or specify a scope in the toolbox.

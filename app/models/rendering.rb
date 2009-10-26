@@ -253,6 +253,10 @@ class Rendering < ActiveRecord::Base
     page.renderings.with_part(self.part)
   end
 
+  def brothers_on_page
+    page.renderings.content_type_equals(content_type)
+  end
+
   def final_options
     returning options.to_hash do |o|
       o.reverse_merge! part.andand.options_hash || {}
