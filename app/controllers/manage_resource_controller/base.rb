@@ -50,10 +50,9 @@ module ManageResourceController
       if model.acts_as?(:content)
         end_of_association_chain.
           search(params[:search].andand[:term] || params[:term]).
-          paginate(:page => params[:page])
+          all
       elsif model < ActiveRecord::Base
-        end_of_association_chain.
-          paginate(:page => params[:page])
+        end_of_association_chain.all
       else
         end_of_association_chain.all
       end
