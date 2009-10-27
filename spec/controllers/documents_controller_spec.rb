@@ -607,6 +607,17 @@ describe DocumentsController do
         end
       end
 
+      describe "get show.xml for nonexisting Document" do
+        def do_request
+          get :show, :id => 'doesnotexist', :format => 'xml'
+        end
+
+        it "should return 404 error code" do
+          do_request
+          response.code.should == '404'
+        end
+      end
+
     end
 
   end

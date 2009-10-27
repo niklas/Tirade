@@ -36,6 +36,9 @@ module ManageResourceController
         show.wants.xml do
           render :xml => object
         end
+        show.failure.wants.xml do
+          render :nothing => true, :status => 404
+        end
       end
     end
     def self.included(base)
