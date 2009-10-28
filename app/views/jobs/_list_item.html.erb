@@ -2,4 +2,8 @@
 <% if job.has_arguments? %>
   <%= job.arguments.inspect %>
 <% end %>
-(<%= time_ago_in_words job.run_at %> ago)
+<% if job.locked_at? %>
+  (running since <%= time_ago_in_words job.locked_at %>)
+<% else %>
+  (waiting <%= time_ago_in_words job.run_at %>)
+<% end %>
