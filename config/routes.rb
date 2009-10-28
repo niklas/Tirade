@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
       parts.resources :plugin, :controller => 'part/plugin', :only => [:show, :destroy]
     end
 
-    manage.resources :jobs, :except => [:edit, :update, :destroy]
+    manage.resources :jobs, :except => [:edit, :update]
 
     #manage.part_theme 'part/:id/theme/:theme', :controller => 'part/theme', :action => 'show'
     #manage.delete_part_theme 'part/:id/theme/:theme', :controller => 'part/theme', :action => 'delete', :conditions => {:method => :delete}
