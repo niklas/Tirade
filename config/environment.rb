@@ -49,6 +49,7 @@ Rails::Initializer.run do |config|
     #{RAILS_ROOT}/app/filters 
     #{RAILS_ROOT}/app/tags 
     #{RAILS_ROOT}/app/controllers/part
+    #{RAILS_ROOT}/lib/jobs
   )
 
   # Force all environments to use the same logger level

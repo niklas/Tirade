@@ -1,0 +1,5 @@
+<%= job.title %>
+<% if job.has_arguments? %>
+  <%= job.arguments.inspect %>
+<% end %>
+(<%= time_ago_in_words job.run_at %> ago)

@@ -1,0 +1,29 @@
+<% accordion do %>
+
+  <% accordion_item "General" do %>
+    <%= show job, :title %>
+    <%= show job, :priority %>
+
+    <% if job.has_arguments? && payload = job.payload_object %>
+      <% payload.members.each do |mem| %>
+        <%= show payload, mem %>
+      <% end %>
+    <% end %>
+
+  <% end %>
+
+  <% accordion_item "Performance" do %>
+    <%= show job, :created_at %>
+    <%= show job, :run_at %>
+    <%= show job, :locked_at %>
+    <%= show job, :failed_at if job.failed? %>
+    <%= show job, :attempts %>
+  <% end %>
+
+  <% if job.failed? %>
+    <% accordion_item "Error" do %>
+      <%= show job, :last_error, :label => false %>
+    <% end %>
+  <% end %>
+
+<% end %>
