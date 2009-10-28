@@ -1,5 +1,17 @@
 <% form_for job do |f| %>
-  <%= f.select :job, Job::Supported %>
-  <%= f.text_field :argument %>
-  <%= f.submit "Start" %>
+  <% accordion do %>
+
+    <%= f.error_messages %>
+
+    <% accordion_item "General" do %>
+      <%= f.select :job, Job::Supported %>
+      <%= f.text_field :argument, :label => 'Argument, depending on Job' %>
+    <% end %>
+
+    <% accordion_item "Schedule" do %>
+      <%= f.datetime_select :run_at %>
+    <% end %>
+
+    <%= f.submit "Start" %>
+  <% end %>
 <% end %>
