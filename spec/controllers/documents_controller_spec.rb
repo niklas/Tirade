@@ -178,7 +178,7 @@ describe DocumentsController do
 
       it "should render a list" do
         do_request
-        response.should render_template('contents/_list_item.erb')
+        response.should render_template('documents/_list_item.erb')
       end
 
       it "should pupulate a div.search_results" do
