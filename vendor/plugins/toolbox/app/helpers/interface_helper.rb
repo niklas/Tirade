@@ -86,9 +86,10 @@ module InterfaceHelper
 
   def single_item(thing, opts={})
     partial = opts[:partial] || 'list_item'
-    partial = "/#{thing.table_name}/#{partial}" unless partial =~ %r~^/~
+    singular = thing.class.name.underscore
+    partial = "/#{singular.pluralize}/#{partial}" unless partial =~ %r~^/~
     icon_for(thing) + 
-    render( :partial => partial, :object => thing, :locals => {:model => thing, thing.table_name.singularize.to_sym => thing}) +
+    render( :partial => partial, :object => thing, :locals => {:model => thing, singular.to_sym => thing}) +
     show_link_to(thing)
   end
 
@@ -195,7 +196,7 @@ module InterfaceHelper
         return content_tag(:span, "cannot show #{obj.class}##{name}: #{h e.message}", :class => 'warning')
       end
 
-      if val.is_a?(String) and obj.markup?(name)
+      if val.is_a?(String) && obj.respond_to?(:markup?) && obj.markup?(name)
         val = markup(val)
       end
       val = "(#{val.class})\n#{debug(val)}" unless val.is_a?(String)
