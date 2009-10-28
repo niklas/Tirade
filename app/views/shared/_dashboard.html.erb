@@ -33,7 +33,7 @@
 
   <% accordion_item "CMS" do %>
     <ul class="list">
-      <% %w(pages grids parts renderings).each do |cname| %>
+      <% %w(pages grids parts renderings jobs).each do |cname| %>
         <li>
           <%= icon_for(cname.singularize) %>
           <%= cname.humanize %>
