@@ -15,7 +15,7 @@
   <% accordion_item "Performance" do %>
     <%= show job, :created_at %>
     <%= show job, :run_at %>
-    <%= show job, :locked_at %>
+    <%= show job, :locked_at if job.locked_at.present? %>
     <%= show job, :failed_at if job.failed? %>
     <%= show job, :attempts %>
   <% end %>

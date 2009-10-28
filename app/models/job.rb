@@ -1,7 +1,7 @@
 class Job < Delayed::Job
   attr_accessor :job
   attr_accessor :argument
-  attr_accessible :job, :argument
+  attr_accessible :job, :argument, :run_at
   Supported = %w(
     StaticExportMailJob
     StaticExportRsyncJob
@@ -15,7 +15,7 @@ class Job < Delayed::Job
   end
 
   def has_arguments?
-    !payload_object.members.blank?
+    payload_object && payload_object.respond_to?(:members) && !payload_object.members.blank?
   rescue Delayed::DeserializationError => e   # there is no #['handler#] availabe yet
     false
   end
