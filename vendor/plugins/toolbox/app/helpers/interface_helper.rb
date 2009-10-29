@@ -253,8 +253,9 @@ module InterfaceHelper
   def render_as_attribute(record)
     return 'none' if record.nil?
     partial = 'attribute'
+    singular = record.class.name.underscore
     begin
-      render(:partial => "/#{record.table_name}/#{partial}", :object => record)
+      render(:partial => "/#{singular.pluralize}/#{partial}", :object => record, :locals => { :model => record, singular.to_sym => record })
     rescue ActionView::MissingTemplate => e
       if partial == 'attribute'
         partial = 'list_item'
