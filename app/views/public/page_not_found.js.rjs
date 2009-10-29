@@ -1,2 +1,3 @@
-page.clear
-page.select('body').append(render(:partial => 'page_not_found'))
+page.notification <<-EOM ,:title => '404 Page not Found'
+  Page <em>#{h @page.url }</em> not found.
+EOM

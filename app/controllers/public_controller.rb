@@ -28,7 +28,7 @@ class PublicController < ApplicationController
   end
 
   def page_not_found
-    @page = Page.new(:url => @full_path.andand.join('/') || '')
+    @page = Page.new(:url => @full_path.andand.map(&:urlize).andand.join('/') || '')
     respond_to do |wants|
       wants.html { render :action => 'page_not_found' }
       wants.js   { render :action => 'page_not_found' }
