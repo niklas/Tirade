@@ -58,6 +58,7 @@ module AuthenticatedSystem
       respond_to do |format|
         format.js do
           render :update do |page|
+            page.notification e.message, :title => 'Access denied'
             page.push_frame_for(UserSession.new, 'edit', :partial => 'user_sessions/form')
           end
         end
