@@ -909,9 +909,7 @@ $.fn.frameInToolbox = function(options) {
           .uiIcon('pencil').useToolbox({
             beforeSend: function(request) {
               // FIXME must set Tirade-Page here AGAIN because the callbacks from ajaxSetup get overwritten by this one :(
-              var page = $('body > div.page_margins > div.page');
-              request.setRequestHeader("Tirade-Page", page.resourceId() );
-              request.setRequestHeader("Tirade-URL", page.metadata().url );
+              $.tirade.addPageContextToRequest(request);
               request.setRequestHeader("Tirade-Frame", id );
             }
           });
@@ -1006,9 +1004,7 @@ $.fn.formInFrameInToolbox = function(options) {
       },
       beforeSend: function(request) {
         // FIXME must set Tirade-Page here AGAIN because the callbacks from ajaxSetup get overwritten by this one :(
-        var page = $('body > div.page_margins > div.page');
-        request.setRequestHeader("Tirade-Page", page.resourceId() );
-        request.setRequestHeader("Tirade-URL", page.metadata().url );
+        $.tirade.addPageContextToRequest(request);
         request.setRequestHeader("Tirade-Frame", $frame.resourceId() );
       }
     });

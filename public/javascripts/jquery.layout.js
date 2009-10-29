@@ -186,6 +186,13 @@ $(function() {
   $.extend($.tirade, {
     currentPageId: function() {
       return $('body div.page').resourceId();
+    },
+    addPageContextToRequest: function (req) {
+      var page = $('body > div.page_margins > div.page');
+      if (page.length) {
+        request.setRequestHeader("Tirade-Page", page.resourceId() );
+        request.setRequestHeader("Tirade-URL", page.metadata().url );
+      }
     }
   });
 

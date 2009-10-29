@@ -77,9 +77,7 @@ ChiliBook.recipeFolder = 'javascripts/syntax/';
   $.ajaxSetup({
     dataType: 'script',
     beforeSend: function(request) {
-      var page = $('body > div.page_margins > div.page');
-      request.setRequestHeader("Tirade-Page", page.resourceId() );
-      request.setRequestHeader("Tirade-URL", page.metadata().url );
+      $.tirade.addPageContextToRequest(request);
     }
   });
 
