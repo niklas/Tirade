@@ -23,7 +23,6 @@ describe ImagesController do
 
   describe "using Toolbox" do
     before( :each ) do
-      login_standard
       login_with_groups :admin_images
     end
 

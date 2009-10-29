@@ -9,7 +9,6 @@ describe "/renderings/edit.html.erb" do
   
   before do
     login_with_group :admin_renderings
-    login_standard
   end
 
   describe "every form", :shared => true do

@@ -117,7 +117,6 @@ describe DocumentsController do
 
     before( :each ) do
       login_with_group :admin_documents
-      login_standard
       Document.destroy_all
       @document = Factory.create(:document)
       @documents = [@document]
@@ -549,7 +548,6 @@ describe DocumentsController do
 
       before( :each ) do
         login_with_group :read_documents
-        login_standard
       end
 
       describe "successful request", :shared => true do

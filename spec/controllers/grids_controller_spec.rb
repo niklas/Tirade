@@ -12,7 +12,6 @@ describe GridsController do
     fixtures :users
     before(:each) do
       login_with_group :admin_grids
-      login_standard
       @grid = Grid.new
       Grid.stub!(:find).and_return(@grid)
     end

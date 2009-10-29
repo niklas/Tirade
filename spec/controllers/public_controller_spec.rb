@@ -141,10 +141,9 @@ describe PublicController, "accessing not existing page" do
   end
 end
 
-describe PublicController, "accessing a page without layout" do
+describe PublicController, "accessing a page without layout as layout admin" do
   integrate_views
   before( :each ) do
-    login_standard
     login_with_groups :layout_administration
     @page = Factory(:page, :layout => nil)
   end

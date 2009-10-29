@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe PartsController do
   before(:each) do
     login_with_group :admin_parts
-    login_standard
     Part.stub!(:sync!).and_return(true)
   end
 
