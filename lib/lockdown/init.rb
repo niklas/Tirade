@@ -136,26 +136,24 @@ Lockdown::System.configure do
     set_permission(read).
       with_controller(resource).
       only_methods(:show, :index)
-    set_protected_access read
     set_user_group read, read
 
     manage = "manage_#{resource}".to_sym
     set_permission(manage).
       with_controller(resource).
       except_methods(:destroy)
-    set_protected_access manage
     set_user_group manage, manage
 
     admin = "admin_#{resource}".to_sym
     set_permission(admin).
       with_controller(resource)
-    set_protected_access admin
     set_user_group admin, admin
 
   end
 
 
-  Tirade::ActiveRecord::Content.symbols.each do |resource|
+  Tirade::ActiveRecord::Content.classes.each do |klass|
+    resource = klass.name.underscore.pluralize
     set_tiered_permissions resource
   end
 

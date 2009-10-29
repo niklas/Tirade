@@ -18,7 +18,7 @@ module ManageResourceController
     include ManageResourceController::Helpers
     include ManageResourceController::Actions
     include ManageResourceController::Notifications
-    include Lockdown::Session
+    #include Lockdown::Session # do we ever need this _here_?
 
     rescue_from 'ActionView::TemplateError', :with => :rescue_error
     rescue_from 'ActionView::MissingTemplate', :with => :rescue_error
