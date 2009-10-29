@@ -187,7 +187,7 @@ $(function() {
     currentPageId: function() {
       return $('body div.page').resourceId();
     },
-    addPageContextToRequest: function (req) {
+    addPageContextToRequest: function (request) {
       var page = $('body > div.page_margins > div.page');
       if (page.length) {
         request.setRequestHeader("Tirade-Page", page.resourceId() );
