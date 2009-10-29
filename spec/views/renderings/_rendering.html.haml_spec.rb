@@ -5,7 +5,7 @@ describe "/rendering/_rendering.html.haml" do
   include RenderHelper
   before( :each ) do
     login_standard
-    login_with_groups :admin_renderings
+    login_with_groups :admin_renderings, :read_documents
     template.view_paths.unshift 'app/views'
   end
 
