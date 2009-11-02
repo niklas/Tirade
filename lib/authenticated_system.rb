@@ -68,9 +68,7 @@ module AuthenticatedSystem
           return
         end
         format.xml do
-          headers["Status"] = "Unauthorized"
-          headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-          render :text => e.message, :status => "401 Unauthorized"
+          request_http_basic_authentication
           return
         end
       end
