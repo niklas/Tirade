@@ -73,6 +73,11 @@ namespace :deploy do
   task :clear_caches, :roles => [:app] do
     run "cd #{current_release} && rake cache:clear:all themes:cache:remove tmp:cache:clear"
   end
+
+  desc "Sync migrations from plugins before migrating database"
+  task :before_migrate, :roles => [:db] do
+    run "cd #{current_release} && rake tirade:plugins:sync_migrations"
+  end
 end
 
 # give block with |aText,aStream,aState| that returns response or nil
