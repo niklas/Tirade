@@ -1,4 +1,4 @@
-class NamedRoutesController < ActionController::Base
+class NamedRoutesController < ApplicationController
   caches_page :generate
   skip_before_filter :login_required
 
