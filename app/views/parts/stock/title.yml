@@ -1,0 +1,15 @@
+--- 
+:description: shows just the Title
+:preferred_types: 
+- Document
+- Folder
+- NewsItem
+- NewsFolder
+- Image
+- Product
+- Asset
+- Reseller
+- Page
+:defined_options: {}
+
+:plural: false
