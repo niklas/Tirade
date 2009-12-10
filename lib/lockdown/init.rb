@@ -129,6 +129,11 @@ Lockdown::System.configure do
     only_methods(:custom).
     set_as_public_access
 
+  set_permission(:countries).
+    with_controller(:countries).
+    only_methods(:index, :show).
+    set_as_public_access
+
   def set_tiered_permissions(resource)
     resource = resource.to_sym
 
