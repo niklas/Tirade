@@ -7,6 +7,7 @@
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
       <%= f.hidden_field :parent_id %>
+      <%= f.datetime_select :expires_at %>
     <% end %>
 
     <% accordion_item 'Description' do %>
