@@ -18,4 +18,13 @@ module PublicHelper
   def exporting?
     request && !request.headers['Tirade-Exporting'].blank?
   end
+
+  def alternate_locale_link(page, locale)
+    tag :link, 
+      :type => 'alternate',
+      :lang => locale.to_s.downcase,
+      :class => 'alternate_locale',
+      :href => url_for(:path => page.path, :trailing_slash => !page.path.empty?, :locale => locale),
+      :media => 'all'
+  end
 end

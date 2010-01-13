@@ -1,5 +1,8 @@
 body {
   div.page_margins div.page {
+    ul.locale_switcher {
+      display: none;
+    }
     div.image {
       margin: 1px auto 10px;
       .left { 
