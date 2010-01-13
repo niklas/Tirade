@@ -3,7 +3,7 @@ module Tirade
     module Content
       include ActsAs
 
-      Scopes = %w(order limit skip recent with_later_than_now).freeze unless defined?(Scopes)
+      Scopes = %w(order limit skip recent with_later_than_now not_expired).freeze unless defined?(Scopes)
 
       def self.included(base)
         base.class_inheritable_reader :marked_up_fields
@@ -63,6 +63,9 @@ module Tirade
             else
               {}
             end
+          }
+          named_scope :not_expired, lambda {
+            ['expired_at IS NULL OR ? < expires_at', Time.now]
           }
         end
 
