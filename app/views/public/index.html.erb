@@ -2,4 +2,4 @@
   <base href="<%= url_for(:path => @page.path, :trailing_slash => !@page.path.empty?) -%>" />
 <% end %>
 <%= render_page(@page) %>
-<%= render :partial => '/shared/loginout' %>
+<%= render :partial => '/shared/loginout' unless exporting? %>

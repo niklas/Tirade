@@ -14,4 +14,8 @@ module PublicHelper
       end
     end
   end
+
+  def exporting?
+    request && !request.headers['Tirade-Exporting'].blank?
+  end
 end
