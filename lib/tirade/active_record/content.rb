@@ -35,6 +35,14 @@ module Tirade
               liquid_methods *liquids
               acts_as! :marked_up
             end
+
+            if column_names.include?('expires_at')
+              named_scope :not_expired, lambda {
+                { :conditions => ['expires_at IS NULL OR ? < expires_at', Time.now] }
+              }
+            else
+              named_scope :not_expired, {}
+            end
           end
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?
@@ -63,9 +71,6 @@ module Tirade
             else
               {}
             end
-          }
-          named_scope :not_expired, lambda {
-            { :conditions => ['expires_at IS NULL OR ? < expires_at', Time.now] }
           }
         end
 
