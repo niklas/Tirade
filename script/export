@@ -63,6 +63,5 @@ begin
   end
 
 ensure
-  #purge
-  STDERR.puts "purging..."
+  purge
 end

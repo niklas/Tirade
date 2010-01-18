@@ -2,6 +2,9 @@ require 'fileutils'
 require 'find'
 module Tirade
 module Exporting
+
+  ArchivePath = File.join(RAILS_ROOT, 'public', 'exports')
+
   def check_directory
     unless File.directory? export_dir
       raise RuntimeError, "could not create temporary directory"
@@ -9,8 +12,7 @@ module Exporting
   end
 
   def export_dir
-    #@export_dir ||= `mktemp -t -d`.chomp
-    @export_dir ||= '/var/www.gsmk'
+    @export_dir ||= `mktemp -t -d`.chomp
   end
 
   def logfile
@@ -30,8 +32,6 @@ module Exporting
   # Mirrors the whole Site to the filesystem
   def mirror
     check_directory
-
-    #return # fixed content, just for testing
 
     log "Mirroring to #{export_dir}"
     command = %Q[wget --output-file=#{logfile} --directory-prefix=#{export_dir} --force-directories --no-host-directories --mirror #{@host}]
@@ -62,19 +62,34 @@ module Exporting
 
   def syncto(target)
     log "Syncing to #{target}"
-    sh "rsync -azvPc --delete-after --rsh=ssh #{export_dir} #{target}"
+    sh "rsync -azqc --delete-after --rsh=ssh #{export_dir}/ #{target}"
+  end
+
+  def mailto(address)
+    zip
+    log "sending mail with attached zip to #{address}"
+    ExportMailer.deliver_zip(address, zip)
   end
 
   # Zip the +export_dir+, return the filename.zip
   def zip
-    zip = `mktemp -t static_export_XXXXXXXXXX`.chomp + '.zip'
-    sh %Q[cd #{export_dir} && zip -rXq #{zip} .]
-    zip
+    return @zip if @zip.present?
+    log "Zipping"
+    @zip = `mktemp -t static_export_XXXXXXXXXX`.chomp + '.zip'
+    sh %Q[cd #{export_dir} && zip -rXq #{zip} . -x \\*.log]
+    @zip
   end
 
   # Purges the files of the exported Site
   def purge
+    if @zip.present?
+      log "Archiving zip to #{ArchivePath}"
+      FileUtils.mkdir_p ArchivePath
+      FileUtils.mv @zip, ArchivePath
+    end
+    log "Removing temp files"
     FileUtils.rm_rf export_dir
   end
+
 end
 end
