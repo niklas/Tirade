@@ -12,7 +12,7 @@ module Exporting
   end
 
   def export_dir
-    @export_dir ||= `mktemp -t -d`.chomp
+    @export_dir ||= `mktemp -d /tmp/tirade.XXXXXXXXXX`.chomp
   end
 
   def logfile
@@ -75,7 +75,7 @@ module Exporting
   def zip
     return @zip if @zip.present?
     log "Zipping"
-    @zip = `mktemp -t static_export_XXXXXXXXXX`.chomp + '.zip'
+    @zip = `mktemp /tmp/static_export_XXXXXXXXXX`.chomp + '.zip'
     sh %Q[cd #{export_dir} && zip -rXq #{zip} . -x \\*.log]
     @zip
   end
