@@ -119,6 +119,7 @@ class Rendering < ActiveRecord::Base
   end
 
   def content_by_scope(thescope=self.scope)
+    thescope.not_expired = true
     thescope.all
   end
 
