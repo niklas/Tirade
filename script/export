@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+# script/export --locales de,en,ru --mailto fn0rd@foobar (wget, zip, mail mit link)
+# script/export --locales all --syncto fn0rd@123.1.1.1:/var/www --syncto fn0rd@142.1.1.1:/var/www
+require 'optparse'
+
+
+@locales   = ['en']
+@addresses = []
+@targets   = []
+@host      = 'http://localhost'
+@verbose   = false
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: script/export [options]"
+  opts.separator ''
+
+  opts.on '-l', '--locales de,en,fr', Array, "Comma separated list of locales to export." do |list|
+    @locales << list
+  end
+
+  opts.on '-m', '--mailto fn0rd@example.com', String, "Mail address where the zipped export is sent to." do |address|
+    @addresses << address
+  end
+
+  opts.on '-s', '--syncto user@host:/path', String, "Target for rsync." do |target|
+    @targets << target
+  end
+
+  opts.on '-a', '--apphost http://localhost', String, "Host to mirror from." do |host|
+    @host = host
+  end
+
+  opts.on_tail("-h", "--help", "Show this help screen") do |string|
+    STDERR.puts opts
+    exit
+  end
+
+  opts.on_tail("-v", "--verbose", "show debugging output") do |string|
+    @verbose = true
+  end
+end.parse!
+
+if (@addresses + @targets).empty?
+  STDERR.puts "please specify at least one --mailto or --syncto"
+  exit
+end
+
+require File.dirname(__FILE__) + '/../config/environment'
+include Tirade::Exporting
+
+begin
+  mirror
+  @targets.each do |target|
+    syncto target
+  end
+
+  unless @addresses.empty?
+    zip
+    @addresses.each do |address|
+      mailto address
+    end
+  end
+
+ensure
+  #purge
+  STDERR.puts "purging..."
+end

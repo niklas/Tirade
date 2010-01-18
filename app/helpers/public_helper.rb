@@ -27,4 +27,12 @@ module PublicHelper
       :href => url_for(:path => page.path, :trailing_slash => !page.path.empty?, :locale => locale),
       :media => 'all'
   end
+
+  def wanted_locales
+    if request.headers['Tirade-Locales'].present?
+      Locale.activated & request.headers['Tirade-Locales'].split(',').map(&:to_sym)
+    else
+      Locale.activated
+    end
+  end
 end
