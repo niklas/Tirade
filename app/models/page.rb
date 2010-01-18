@@ -80,6 +80,14 @@ class Page < ActiveRecord::Base
     end.sub(%r(^/),'')
   end
 
+  def main_content
+    Array( renderings.for_grid(biggest_grid).first.content ).first
+  end
+
+  def biggest_grid
+    grids.title_like('Content').first || grids.title_like('Main').first || grids.first
+  end
+
   # Find all the renderings to show on this grid on this page
   # Grids may inherit renderings from parent page
   def renderings_for_grid(grid)
