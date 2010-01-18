@@ -81,7 +81,7 @@ class Page < ActiveRecord::Base
   end
 
   def main_content
-    Array( renderings.for_grid(biggest_grid).first.content ).first
+    Array( renderings.for_grid(biggest_grid).first.content ).first rescue nil
   end
 
   def biggest_grid
