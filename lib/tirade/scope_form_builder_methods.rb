@@ -9,6 +9,7 @@ module Tirade
           html << single_scoping(scoping)
         end
         html << scope_select_order
+        html << scope_hide_expired_content
       end
       wrap('scope', {:label => 'Scope', :class => 'define_scope'}, inner)
     end
@@ -32,6 +33,11 @@ module Tirade
     end
 
     private
+
+    def scope_hide_expired_content
+      inner = check_box(:hide_expired_content)
+      @template.content_tag(:div, inner, :class => 'hide_expired_content')
+    end
 
     def single_scoping(scoping, opts={})
       @template.add_class_to_html_options opts, 'scoping'

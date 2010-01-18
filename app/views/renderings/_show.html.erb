@@ -10,6 +10,7 @@
 
   <% accordion_item "What" do %>
     <%= show rendering, :assignment %>
+    <%= show rendering, :hide_expired_content %>
     <%= show rendering, :scope if rendering.assignment == 'scope' %>
     <%=
       case rendering.assignment 

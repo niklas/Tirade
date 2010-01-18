@@ -27,7 +27,7 @@ class Rendering < ActiveRecord::Base
     Tirade::ActiveRecord::Content.classes
   end
 
-  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope, :css_classes, :css_classes_list, :hide_if_trailing_path_not_blank
+  attr_accessible :position, :page, :grid, :content, :content_id, :content_type, :part, :part_id, :grid_id, :page_id, :options, :assignment, :scope_definition, :scope, :css_classes, :css_classes_list, :hide_if_trailing_path_not_blank, :hide_expired_content
   validates_presence_of :grid_id
   validates_presence_of :page_id
   validates_presence_of :content_type, :if => :content_id
@@ -119,8 +119,11 @@ class Rendering < ActiveRecord::Base
   end
 
   def content_by_scope(thescope=self.scope)
-    thescope.not_expired = true
-    thescope.all
+    if hide_expired_content?
+      thescope.not_expired(true).all
+    else
+      thescope.all
+    end
   end
 
   def scope_definition

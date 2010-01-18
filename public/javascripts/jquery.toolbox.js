@@ -1163,7 +1163,7 @@ $.fn.editRenderingFormInFrameInToolbox = function(options) {
         case 'scope':
           var t = form.enableField('content_type').val();
           definer.parent().show();
-          definer.show().find('div.scoping:not(.blueprint) :input, div.order :input').enable();
+          definer.show().find('div.scoping:not(.blueprint) :input, div.order :input, div.hide_expired_content :input').enable();
           break;
       }
     };
