@@ -93,8 +93,8 @@ class Rendering < ActiveRecord::Base
       if content_type
         content_type.constantize.find_by_path(trailing_path_of_page)
       end
-  when 'scope'
-    content_by_scope
+    when 'scope'
+      content_by_scope
     else
       content_without_dynamic_assignments
     end
