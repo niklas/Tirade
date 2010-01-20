@@ -4,24 +4,21 @@ main:
   url: ""
   parent_id: NULL
   layout_id: 5050
-  lft: 1
-  rgt: 1000
+  position: 1
 
 welcome:
   id: 11
   title: Welcome
   url: 'welcome'
   parent_id: 42000 # main
-  lft: 2
-  rgt: 100
+  position: 2
  
 meta:
   id: 12
   title: Meta
   url: 'meta'
   parent_id: 42000 # main
-  lft: 102
-  rgt: 200
+  position: 102
 
 
 about:
@@ -29,24 +26,21 @@ about:
   title: About
   url: 'meta/about'
   parent_id: 12 # meta
-  lft: 103
-  rgt: 110
+  position: 103
 
 portal:
   id: 13
   title: Portal
   url: 'portal'
   parent_id: 42000 # main
-  lft: 202
-  rgt: 300
+  position: 202
 
 children_section:
   id: 131
   title: Children Section
   url: 'portal/children-section'
   parent_id: 13 # portal
-  lft: 205
-  rgt: 220
+  position: 205
 
 hammers:
   id: 1311
@@ -54,8 +48,7 @@ hammers:
   url: 'portal/children-section/huge-brutal-hammers'
   parent_id: 131
   layout: layout33_33_33
-  lft: 206
-  rgt: 210
+  position: 206
 
 fluffy_animals:
   id: 1312
@@ -63,8 +56,7 @@ fluffy_animals:
   url: 'portal/children-section/fluffy-animals'
   parent_id: 131
   layout: layout33_33_33
-  lft: 211
-  rgt: 216
+  position: 211
 
 ddm:
   id: 1337

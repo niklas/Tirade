@@ -1,5 +1,5 @@
 begin
-  [Page,Grid].each do |klass|
+  [Grid].each do |klass|
     ActiveRecord::Base.logger.info("Rebuilding tree structure for #{klass}")
     klass.rebuild!
   end

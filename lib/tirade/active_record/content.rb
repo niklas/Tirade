@@ -43,6 +43,10 @@ module Tirade
             else
               named_scope :not_expired, {}
             end
+
+            if column_names.include?('position')
+              default_scope :order => 'position'
+            end
           end
           named_scope :with_later_than_now, lambda { |f|
             if !f.blank?

@@ -127,3 +127,9 @@ module CollectiveIdea::Acts::NestedSet::InstanceMethods
 end
 
 #ThemeController.send :include, Sass::ThemeSupport
+
+
+Liquid::Condition.operators.merge!({
+  'starts_with' => lambda { |cond, left, right| left && right ? left.starts_with?(right) : false },
+  'ends_with' => lambda { |cond, left, right| left && right ? left.ends_with?(right) : false }
+})

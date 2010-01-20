@@ -164,9 +164,17 @@ module Tirade
       end
     end
 
+    # FIXME do not show impossible movies
     def select_parent(field=:parent_id, opts={})
-      choices = @template.nested_set_options(opts[:klass] || @object.class, @object) do |i|
-        "#{'> ' * i.level} #{i.title}"
+      klass = opts[:klass] || @object.class
+      if klass.column_names.include?('url')
+        choices = klass.all(:order => 'url').map do |i|
+          ["#{'> ' * i.level} #{i.title}", i.id]
+        end
+      else
+        choices = klass.all(:order => 'parent_id').map do |i|
+          [i.title, i.id]
+        end
       end
       opts[:include_blank] = true
       opts[:label] ||= "Parent #{@object_name}"
@@ -174,6 +182,7 @@ module Tirade
     end
 
     private
+
     def wrap(field, options, tag_output)
       @template.add_class_to_html_options options, field.to_s
       label = label_for(field, options.delete(:label))

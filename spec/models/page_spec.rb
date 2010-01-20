@@ -18,7 +18,6 @@ describe "The Pages in the fixtures" do
   fixtures :pages, :grids
 
   before(:each) do
-    Page.rebuild!
     @pages = Page.find(:all)
   end
 

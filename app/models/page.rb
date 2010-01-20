@@ -17,14 +17,14 @@
 #
 
 class Page < ActiveRecord::Base
-  acts_as_nested_set
+  acts_as_tree :order => 'position'
   include Tirade::ActiveRecord::CssClasses
 
   attr_protected :created_at, :updated_at
 
   acts_as_renderer
   acts_as_content :liquid => [
-    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root, :public_siblings, :lft, :rgt, :root?, :id
+    :title, :url, :parent, :public_children, :trailing_path, :path, :slug, :root, :public_siblings, :lft, :rgt, :root?, :id, :is_child_of?
   ]
   has_fulltext_search :title, :url
 
@@ -119,8 +119,26 @@ class Page < ActiveRecord::Base
     return page
   end
 
+  def root?
+    parent_id.nil? || root == self
+  end
+
+  def is_child_of?(other)
+    other.url.starts_with?(other.url)
+  end
+
   def path
-    self_and_ancestors.reject(&:root?).collect(&:slug)
+    if root?
+      []
+    elsif parent.andand.root?
+      [slug]
+    else
+      parent.path + [slug]
+    end
+  end
+
+  def level
+    root? ? 0 : url.count('/') + 1
   end
 
   def slug
@@ -149,19 +167,6 @@ class Page < ActiveRecord::Base
 
   def url_with_trailing_path
     (path + (trailing_path || []) ).compact.join('/')
-  end
-
-  @@rebuilding = false
-  def self.rebuild_with_status!
-    @@rebuilding = true
-    rebuild_without_status!
-    @@rebuilding = false
-  end
-  def self.rebuilding?
-    @@rebuilding
-  end
-  class << self
-    alias_method_chain :rebuild!, :status
   end
 
   def render
