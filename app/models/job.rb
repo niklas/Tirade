@@ -3,8 +3,7 @@ class Job < Delayed::Job
   attr_accessor :argument
   attr_accessible :job, :argument, :run_at
   Supported = %w(
-    StaticExportMailJob
-    StaticExportRsyncJob
+    StaticExportJob
   )
   validates_inclusion_of :job, :in => Supported
 
