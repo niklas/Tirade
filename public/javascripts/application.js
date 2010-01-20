@@ -10,7 +10,7 @@
         .attr('href', $link.attr('href'))
         .attr('title', $link.attr('lang'))
         .addClass( window.location.pathname == $link.attr('href') ? 'active' : null )
-        .text( $link.attr('lang') )
+        .text( (i > 0 ? '| ' : '') + $link.attr('lang') )
         .appendTo( $locale_switcher )
         .wrap('<li></li>');
     });
