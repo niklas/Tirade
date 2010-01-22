@@ -1,6 +1,7 @@
 development:
   video_feed_url: 'http://de.esperanto.mtvi.com/global/reporting/videos/video_rights_list.jhtml?regionCode=DE&previousDays=1'
   video_base_url: 'http://de.esperanto.mtvi.com'
+  public_base_url: 'http://localpublic_base_url:3000'
   content_types:
     - Document
     - Folder
@@ -9,12 +10,14 @@ development:
 test:
   video_feed_url: 'http://example.com/video/feeds'
   video_base_url: 'http://example.com/videos'
+  public_base_url: 'http://localpublic_base_url:3000'
   content_types:
     - Document
     - Folder
     - Image
 
 production:
+  public_base_url: 'http://localpublic_base_url:3000'
   http_auth:
     name: tirade
     password: secret

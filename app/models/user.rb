@@ -50,5 +50,9 @@ class User < ActiveRecord::Base
   def full_name
     login
   end
+
+  # FIXME in development, User class gets reloaded, but this association not reapplied
+  # from vendor/plugins/tirade_gsmk_products
+  has_one :reseller
   
 end

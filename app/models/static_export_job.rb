@@ -4,11 +4,11 @@ class StaticExportJob < Struct.new(:argv)
     result = %x{#{command}}
     
     if $?.exitstatus != 0
-      update_attribute :last_error, result
+      raise RuntimeError, result
     end
   end
 
   def command
-    %Q[echo '#{argv}'; exit 99]
+    %Q[script/export #{argv} RAILS_ENV=#{RAILS_ENV}]
   end
 end

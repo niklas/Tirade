@@ -178,6 +178,8 @@ Lockdown::System.configure do
     only_methods(:show, :edit, :update)
   set_protected_access :own_account
 
+  set_permission(:export).with_controller(:jobs).only_methods(:create_export, :create_reseller_export)
+  set_protected_access :export
 
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   # Built-in user groups

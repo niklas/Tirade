@@ -20,6 +20,8 @@ ActionController::Routing::Routes.draw do |map|
     end
 
     manage.resources :jobs, :except => [:edit, :update]
+    manage.create_export_job 'jobs/export_job', :controller => :jobs, :action => :create_export, :method => :post
+    manage.create_reseller_export_job 'jobs/reseller_export_job', :controller => :jobs, :action => :create_reseller_export, :method => :post
 
     #manage.part_theme 'part/:id/theme/:theme', :controller => 'part/theme', :action => 'show'
     #manage.delete_part_theme 'part/:id/theme/:theme', :controller => 'part/theme', :action => 'delete', :conditions => {:method => :delete}
