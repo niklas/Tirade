@@ -61,6 +61,7 @@ module Exporting
   end
 
   def syncto(target)
+    target += '/' unless target.ends_with?('/')
     log "Syncing to #{target}"
     sh "rsync -azqc --delete-after --rsh=ssh #{export_dir}/ #{target}"
   end
