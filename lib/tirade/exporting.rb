@@ -63,7 +63,7 @@ module Exporting
   def syncto(target)
     target += '/' unless target.ends_with?('/')
     log "Syncing to #{target}"
-    sh "rsync -azqc --delete-after --rsh=ssh #{export_dir}/ #{target}"
+    sh "chmod 755 #{export_dir}; rsync -azqc --delete-after --no-perms --chmod=ugo=rwX --rsh=ssh #{export_dir}/ #{target}"
   end
 
   def mailto(address)
