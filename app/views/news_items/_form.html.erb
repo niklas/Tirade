@@ -6,7 +6,7 @@
 
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
-      <%= f.hidden_field :parent_id %>
+      <%= f.collection_select :parent_id, NewsFolder.all, :id, :title, :include_blank => 'none', :label => 'News Folder' %>
       <%= f.datetime_select :expires_at %>
     <% end %>
 
