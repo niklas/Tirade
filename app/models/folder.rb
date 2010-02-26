@@ -21,7 +21,7 @@
 #
 
 class Folder < Content
-  acts_as_content :liquid => [:title, :description, :body, :slug, :image, :summary, :images, :has_image?, :asset, :assets],
+  acts_as_content :liquid => [:title, :description, :body, :slug, :image, :summary, :images, :has_image?, :asset, :assets, :position],
     :translate => [:title, :description, :body]
   def self.root
     find_by_parent_id nil

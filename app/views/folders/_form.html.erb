@@ -6,6 +6,7 @@
 
     <% accordion_item "General" do %>
       <%= f.text_field :title %>
+      <%= f.text_field :position %>
       <%= f.tree_select :parent_id,  Folder.roots, :id, :title, :include_blank => true, :label => 'Parent Folder' %>
     <% end %>
 
