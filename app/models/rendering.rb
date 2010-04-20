@@ -119,10 +119,11 @@ class Rendering < ActiveRecord::Base
   end
 
   def content_by_scope(thescope=self.scope)
+    thescope.current_scope.delete(:order)
     if hide_expired_content?
-      thescope.not_expired(true).all
+      thescope.not_expired(true).order(ordering.order).all
     else
-      thescope.all
+      thescope.order(ordering.order).all
     end
   end
 
