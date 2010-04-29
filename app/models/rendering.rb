@@ -176,7 +176,7 @@ class Rendering < ActiveRecord::Base
   # we save it like it came from the form, so we have to fix it for searchlogic
   def normalized_scope_definition
     given = scope_definition.dup
-    filtered = {}
+    filtered = {}.with_indifferent_access
 
     if attribute = given.delete(:order_attribute)
       direction = given.delete(:order_direction) || 'ascend'
