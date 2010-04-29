@@ -1,5 +1,5 @@
 <% content_for :head do %>
-  <base href="<%= url_for(:path => @page.path, :trailing_slash => !@page.path.empty?) -%>" />
+  <base href="<%= url_for(:path => @page.path, :trailing_slash => !@page.path.empty?, :only_path => false) -%>" />
   <% wanted_locales.each do |locale| %>
     <%= alternate_locale_link @page, locale %>
   <% end %>
