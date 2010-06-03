@@ -1,4 +1,5 @@
 class ExportMailer < ActionMailer::Base
+  default_url_options[:host] = SITE_URL
   def zip(address, zip_path)
     recipients   address
     from         Settings.export_mail_address || %(Tirade <tirade+no-reply@lanpartei.de>)
