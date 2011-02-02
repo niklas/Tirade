@@ -36,7 +36,7 @@ Rails::Initializer.run do |config|
   config.gem 'andand'
   config.gem 'mime-types', :lib => 'mime/types'
   config.gem 'searchlogic', :version => '>=2.3.9', :source => 'http://gemcutter.org'
-  config.gem 'binarylogic-authlogic', :source => 'http://gems.github.com', :lib => 'authlogic'
+  config.gem 'authlogic'
   config.gem 'libxml-ruby', :version => '>=1.1.3', :lib => 'xml'
   config.gem 'lockdown', :lib => false, :version => '1.3.2', :source => 'http://gemcutter.org'
   config.gem 'collectiveidea-awesome_nested_set', :source => 'http://gems.github.com', :version => '1.4.2', :lib => 'awesome_nested_set'
